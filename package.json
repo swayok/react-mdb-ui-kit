@@ -1,0 +1,70 @@
+{
+    "name": "swayok-react-mdb-ui-kit",
+    "version": "1.0.0",
+    "description": "React components based on free version of MDB styles",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/swayok/react-mdb-ui-kit.git"
+    },
+    "keywords": [
+        "React",
+        "UI",
+        "kit",
+        "MDB",
+        "Bootstrap"
+    ],
+    "author": "Alexander Filippov",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/swayok/react-mdb-ui-kit/issues"
+    },
+    "homepage": "https://github.com/swayok/react-mdb-ui-kit#readme",
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "@mdi/js": "^7.4.47",
+        "@types/autosize": "^4.0.3",
+        "@types/dompurify": "^3.0.5",
+        "@types/image-blob-reduce": "^4.1.4",
+        "@types/node": "^18.15.3",
+        "@types/numeral": "^2.0.5",
+        "@types/react": "^18.3.12",
+        "@types/react-dom": "^18.3.1",
+        "@types/react-transition-group": "^4.4.11",
+        "autosize": "^6.0.1",
+        "ckeditor4": "^4.22.0",
+        "ckeditor4-react": "^4.3.0",
+        "clsx": "^2.1.1",
+        "dayjs": "^1.11.13",
+        "dompurify": "^3.1.7",
+        "drag-drop-touch": "^1.3.1",
+        "exif-js": "^2.3.0",
+        "image-blob-reduce": "^4.1.0",
+        "numeral": "^2.0.6",
+        "postcss": "^8.4.47",
+        "pusher-js": "^8.3.0",
+        "react": ">=18.0.0",
+        "react-calendar": "^5.1.0",
+        "react-dom": ">=18.0.0",
+        "react-popper": "^2.3.0",
+        "react-transition-group": "^4.4.5",
+        "react-virtuoso": "^4.12.3"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.25.9",
+        "@typescript-eslint/eslint-plugin": "^8.11.0",
+        "@typescript-eslint/parser": "^8.11.0",
+        "autoprefixer": "^10.4.20",
+        "eslint": "^8.57.1",
+        "eslint-config-standard": "^17.1.0",
+        "eslint-plugin-react": "^7.37.2",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "sass": "^1.80.4",
+        "sass-loader": "^16.0.2",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.7.2"
+    }
+}

@@ -1,0 +1,222 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "ignorePatterns": [
+        "app.min.js",
+        "webpack.mix.js",
+        ".eslintrc.js"
+    ],
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "tsconfigRootDir": ".",
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {
+                "project": "./tsconfig.json"
+            }
+        },
+        "react": {
+            "version": "detect"
+        },
+        "propWrapperFunctions": [
+            // The names of any function used to wrap propTypes, e.g. `forbidExtraProps`.
+            // If this isn't set, any propTypes wrapped in a function will be skipped.
+            "forbidExtraProps",
+            {
+                "property": "freeze",
+                "object": "Object"
+            },
+            {
+                "property": "myFavoriteWrapper"
+            },
+            // for rules that check exact prop wrappers.
+            {
+                "property": "forbidExtraProps",
+                "exact": true
+            }
+        ],
+        "componentWrapperFunctions": [
+            // The name of any function used to wrap components, e.g., Mobx `observer` function.
+            // If this isn't set, components wrapped by these functions will be skipped.
+            "observer",
+            // `property`
+            {
+                "property": "styled"
+            },
+            // `object` is optional
+            {
+                "property": "observer",
+                "object": "Mobx"
+            },
+            {
+                "property": "observer",
+                "object": "<pragma>"
+            }
+            // sets `object` to whatever value `settings.react.pragma` is set to
+        ],
+        "formComponents": [
+            // Components used as alternatives to <form> for forms, e.g. <Form endpoint={ url } />
+            "CustomForm",
+            {
+                "name": "Form",
+                "formAttribute": "endpoint"
+            }
+        ],
+        "linkComponents": [
+            // Components used as alternatives to <a> for linking, e.g. <Link to={ url } />
+            "Hyperlink",
+            {
+                "name": "Link",
+                "linkAttribute": "to"
+            },
+            {
+                "name": "NavLink",
+                "linkAttribute": "to"
+            }
+        ]
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        // В функциональных компонентах React часто нужно использовать декларативный формат функций
+        // и размещать их вне компонента, если они не влияют на состояние компонента.
+        // Стрелочный вариант (const x = () => {}) требует объявления ДО использования, а это не удобно
+        // т.к. код компонента оказывается в конце файла, и нужно туда скролить, тратя время.
+        "func-style": [
+            "error",
+            "declaration",
+            {
+                "allowArrowFunctions": true
+            }
+        ],
+        "arrow-body-style": [
+            "error",
+            "as-needed"
+        ],
+        "object-shorthand": [
+            "error",
+            "always",
+            {
+                "avoidExplicitReturnArrows": true
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "never"
+            }
+        ],
+        // Больше мешает чем помогает: this.method() короче чем
+        // this.constructor.method() + пихать всё что не использует this
+        // в прототип класса - плохая идея.
+        // 'class-methods-use-this': ['error'],
+        "class-methods-use-this": "off",
+        "no-in": "off",
+        "curly": [
+            "error",
+            "all"
+        ],
+        "max-statements-per-line": [
+            "error",
+            {
+                "max": 1
+            }
+        ],
+        "react/jsx-uses-vars": "error",
+        "react/jsx-uses-react": "error",
+        // Не дает использовать значения с типами, содержащими any.
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        // Явно указанные типы всегда лучше читаются.
+        "@typescript-eslint/no-inferrable-types": "off",
+        // Иногда нужно использовать () => {}.
+        "@typescript-eslint/no-empty-function": "off",
+        // Иногда нужно использовать @ts-ignore на пакетах, не имеющих типов для TypeScript.
+        "@typescript-eslint/ban-ts-comment": "off",
+        // Не критично.
+        "@typescript-eslint/ban-types": "off",
+        // Мешает указывать перечисление значений в смеси с простым типом: "blue" | "green" | string.
+        "@typescript-eslint/no-redundant-type-constituents": "off",
+        // Мешает делать сложные условия в хуках.
+        "react-hooks/exhaustive-deps": "off",
+        // Заставляет вставлять слишком много eslint-disable-next-line.
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        // Ругается на catch(e) {}, если e не используется внутри, а иногда не важно что там за ошибка.
+        "no-unused-vars": "off",
+        // Настраиваем так, чтобы не ругалось на '_e'.
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "caughtErrors": "all",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_",
+                "ignoreRestSiblings": true
+            }
+        ]
+//        "@typescript-eslint/no-unused-expressions": [
+//            "error",
+//            {
+//                // Разрешаем использование логических операторов: timeout && clearTimeout(timeout).
+//                "allowShortCircuit": true,
+//                "allowTernary": false,
+//                "allowTaggedTemplates": false,
+//                "enforceForJSX": false
+//            }
+//        ]
+    }
+}
