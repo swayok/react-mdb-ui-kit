@@ -1,0 +1,823 @@
+@import "file_picker";
+
+// Форма.
+form {
+    .collapse.dynamic-form-collapse {
+        height: auto !important;
+    }
+}
+
+// Ошибка формы (не путать с ошибкой поля ввода!).
+.form-error {
+    color: $textColorRed;
+    text-align: center;
+}
+
+// Поле ввода.
+.form-outline {
+    input.form-control {
+        background-color: $input-bg;
+
+        &.is-invalid {
+            margin-bottom: 1.5em;
+        }
+
+        &.is-invalid ~ .invalid-feedback {
+            margin-top: -1.25rem;
+        }
+
+        &.is-invalid.no-message,
+        &.is-valid.no-message {
+            margin-bottom: 0;
+        }
+
+        &:not(.form-control-sm) {
+            min-height: 46px;
+        }
+
+        &.active ~ .form-label.unlimited-width {
+            width: auto !important;
+            max-width: none !important;
+            z-index: 2;
+        }
+    }
+
+    input.form-control,
+    textarea.form-control {
+        &.no-label::placeholder {
+            color: $input-placeholder-color;
+            opacity: 1;
+        }
+
+        &[readonly] {
+            background-color: $input-readonly-background-color;
+            cursor: not-allowed;
+            resize: none;
+            outline: none;
+        }
+    }
+
+    .form-outline-textarea-wrapper {
+        border-radius: $input-border-radius;
+        overflow: hidden;
+
+        &.focus ~ .form-label {
+            color: $input-focus-label-color;
+            transform: $input-focus-active-label-transform
+        }
+
+        &.form-control-lg.focus ~ .form-label {
+            transform: $input-focus-active-label-transform-lg
+        }
+
+        &.form-control-sm.focus ~ .form-label {
+            transform: $input-focus-active-label-transform-sm
+        }
+    }
+
+    .form-input-addon-text {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.85rem 0 0.85rem;
+        color: $form-label-color;
+
+        .form-input-addon-text-content {
+            min-width: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+}
+
+// Разъяснение к полю ввода (см <InputInfo>).
+.form-input-info {
+    color: $textColorGray;
+    font-size: 0.85rem;
+    margin-top: -1rem;
+    padding-left: $input-info-padding-x;
+    padding-right: $input-info-padding-x;
+}
+
+// Корректировка стилизации при срабатывании автозаполнения в Chrome Browser и аналогичных.
+// Не применять глобально!
+input.autofill-restyle {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:active,
+    &:-webkit-autofill:focus {
+        box-shadow: 0 0 0 1000px #FFF inset !important;
+    }
+}
+
+// Контейнер поля ввода с возможностью отображения ошибки.
+.form-validation-container {
+
+    transition: padding 0.3s;
+    text-align: left;
+
+    &.is-invalid {
+        //padding-bottom: 0.75rem;
+    }
+
+    .form-validation-error-container {
+        .invalid-feedback {
+            display: block !important;
+            position: relative !important;
+            margin-top: 0 !important;
+            padding: $input-error-padding-top $input-error-padding-x 0 $input-error-padding-x;
+        }
+    }
+
+    .form-validation-input {
+        &.form-outline,
+        > .input-group {
+            .form-control.is-invalid {
+                margin-bottom: 0 !important;
+            }
+        }
+
+        &.form-check + .form-validation-error-container .invalid-feedback {
+            padding-left: 1.9rem;
+        }
+    }
+
+    .form-dropdown-select & {
+        .form-validation-input .form-control.is-invalid {
+            margin-bottom: 0 !important;
+        }
+    }
+}
+
+// Группа полей ввода с <label>.
+.input-group {
+    flex-direction: row;
+    margin-bottom: 1.5rem;
+
+    .form-outline {
+        margin-bottom: 0 !important;
+    }
+
+    > .form-outline:last-child:not(:first-child) {
+        .form-control {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    .input-group-text {
+        height: auto;
+    }
+
+    &.with-input-label {
+        .form-outline {
+            flex: 1;
+        }
+
+        .input-group-text {
+            min-height: 40px;
+            height: auto;
+            padding-top: 0.4em;
+        }
+    }
+
+    .input-group-item {
+        &.first {
+            &.form-outline,
+            > .form-outline {
+                &,
+                input,
+                .form-notch-trailing {
+                    border-top-right-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+                }
+            }
+        }
+
+        &.center {
+            margin-left: -0.6px !important;
+
+            &.form-outline,
+            > .form-outline {
+                &,
+                input,
+                .form-notch-leading,
+                .form-notch-trailing {
+                    border-radius: 0 !important;
+                }
+            }
+        }
+
+        &.last {
+            margin-left: -0.6px !important;
+
+            &.form-outline,
+            > .form-outline {
+                &,
+                input,
+                .form-notch-leading {
+                    border-top-left-radius: 0 !important;
+                    border-bottom-left-radius: 0 !important;
+                }
+            }
+        }
+    }
+}
+
+// Переключатель (switch).
+@mixin switch-color($activeTrackColor, $activeButtonColor) {
+    .form-check-input[type=checkbox] {
+        &:checked {
+            background-color: $activeTrackColor;
+
+            &:after,
+            &:focus:after {
+                background-color: $activeButtonColor;
+            }
+        }
+    }
+}
+
+.form-check {
+
+    &:not(.form-switch) {
+        .form-check-input {
+            &[type=checkbox],
+            &[type=radio] {
+                width: 1.25rem;
+                height: 1.25rem;
+                margin-top: 0;
+            }
+
+            &[type=checkbox]:checked:after {
+                margin-left: 0.3rem;
+                margin-top: 0;
+            }
+        }
+    }
+
+    .form-check-label {
+        min-height: 1.3rem;
+        line-height: 1.3;
+        user-select: none;
+    }
+
+    //&.is-invalid {
+    //    .form-check-label {
+    //        color: $form-feedback-invalid-color;
+    //    }
+    //}
+
+    &.label-after-input,
+    &.label-before-input {
+        &,
+        .form-validation-input {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .form-check-input {
+            flex-shrink: 0;
+            float: none;
+        }
+    }
+
+    &.label-after-input {
+        .form-check-input {
+            margin-right: 0.5rem;
+
+            &[type=checkbox] {
+                margin-right: 0.7rem;
+            }
+        }
+    }
+
+    &.label-before-input {
+        .form-check-input {
+            margin-left: 0.5rem;
+
+            &[type=checkbox] {
+                margin-left: 0.7rem;
+            }
+        }
+    }
+
+    &.form-check-sm {
+        .form-check-input {
+            &[type=checkbox] {
+                width: 1rem;
+                height: 1rem;
+                margin-top: 1px;
+
+                &:before {
+                    width: 0.7rem;
+                    height: 0.7rem;
+                }
+
+                &:after {
+                    width: 0.3rem;
+                    height: 0.65rem;
+                    margin-left: 0.2rem;
+                }
+
+                &:checked:after {
+                    margin-left: 0.24rem;
+                }
+            }
+        }
+
+        &.label-after-input {
+            .form-check-input {
+                &[type=checkbox] {
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.form-switch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    min-height: auto;
+
+    .form-check-input {
+        margin-top: 1px;
+        // Требуется чтобы исправить отображение переключателя поверх
+        // всплывающего меню и других компонентов отображаемых над переключателем.
+        z-index: 0;
+    }
+
+    &.label-before-input {
+        padding-left: 0;
+        padding-right: 0;
+
+        .form-check-input {
+            margin-right: 0;
+            margin-left: 8px;
+            float: none;
+        }
+
+        .form-check-label {
+            min-height: 0;
+        }
+    }
+
+    .form-check-input[type=checkbox] {
+        &:after {
+            box-shadow: none !important;
+        }
+
+        &:focus:after {
+            background-color: $form-switch-form-check-input-after-background-color;
+        }
+    }
+
+    @include switch-color(
+        $form-switch-form-check-input-checked-track-background-color,
+        $form-switch-form-check-input-checked-checkbox-after-background-color
+    );
+
+    &.theme-green {
+        @include switch-color(
+            lighten($backgroundGreen, 30%),
+            $backgroundGreen
+        );
+    }
+}
+
+// Слайдер.
+.range {
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+
+    .range-thumb {
+        position: absolute;
+        display: block;
+        top: -15px;
+        color: $themeColor;
+        margin-left: -15px;
+        width: 30px;
+        text-align: center;
+    }
+
+    .form-range-label {
+        color: $form-label-color;
+
+        .selected-value {
+            font-weight: 500;
+            color: $input-color;
+        }
+    }
+
+    input.form-range {
+        margin-top: 1px;
+    }
+
+    &.min-max-value-label-below {
+        padding-bottom: 1.25rem;
+
+        .range-input-container {
+            position: relative;
+        }
+
+        .form-range-min,
+        .form-range-max {
+            position: absolute;
+            bottom: -1.15rem;
+        }
+
+        .form-range-min {
+            left: 0;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .form-range-max {
+            right: 0;
+            text-align: right;
+            white-space: nowrap;
+        }
+    }
+}
+
+// Имитация поля ввода.
+.form-outline.readonly-pseudoinput {
+    position: relative;
+
+    div.form-control {
+        background-color: $input-bg;
+        cursor: pointer;
+        line-height: 1.3; //< needed to fix 40.5 height instead of 40.0
+
+        &.disabled {
+            cursor: not-allowed;
+            background-color: $input-disabled-background-color;
+        }
+
+        &.with-chevron {
+            padding-right: 30px;
+        }
+
+        > span {
+            vertical-align: middle;
+        }
+    }
+
+    .chevron {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        margin-top: -10px;
+        @include mdi-icon-color($textColorMuted);
+    }
+}
+
+// <FormSelect> и <FormSelectBasic> - выбор значения из выпадающего списка.
+.form-dropdown-select {
+
+    .dropdown-toggle {
+        position: relative;
+
+        input,
+        input[readonly] {
+            background-color: $input-bg;
+            cursor: pointer;
+            padding-right: 30px;
+            user-select: none;
+        }
+
+        input[disabled] {
+            cursor: not-allowed;
+            background-color: $input-disabled-background-color;
+        }
+    }
+
+    &:not(.mode-inline) {
+        .chevron {
+            position: absolute;
+            right: 6px; // 30px (input padding) - 24px (icon width)
+            top: 50%;
+            margin-top: -12px;
+            @include mdi-icon-color($textColorMuted);
+        }
+    }
+
+    .dropdown-menu {
+        &.fade-out {
+            animation-duration: 0s;
+        }
+
+        &.fade-in {
+            animation-duration: 0.4s;
+        }
+
+        &.form-dropdown-select-menu-dropup-offset {
+            inset: auto auto 10px 0 !important;
+        }
+
+        .form-dropdown-select-search {
+            font-size: 1rem !important;
+            height: 64px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .dropdown-item {
+            &.empty-option {
+                color: $textColorMuted;
+            }
+        }
+
+        .dropdown-item.active {
+            background-color: $backgroundLightGray;
+        }
+    }
+
+    input.empty-option-selected {
+        color: $form-label-color;
+    }
+}
+
+.form-select-with-modal {
+    position: relative;
+
+    .form-outline {
+        input,
+        input[readonly] {
+            background-color: $input-bg;
+            cursor: pointer;
+            padding-right: 30px;
+        }
+
+        input[disabled] {
+            cursor: not-allowed;
+            background-color: $input-disabled-background-color;
+        }
+
+    }
+
+    .chevron {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        margin-top: -11px;
+        @include mdi-icon-color($textColorMuted);
+    }
+
+    .loading {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        @include mdi-icon-color($textColorSecondary);
+    }
+}
+
+.form-select-with-modal-modal {
+    .form-select-with-modal-option {
+        display: block;
+        background-color: $whiteBgColor;
+        transition: background-color 0.2s linear;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        color: $textColorSecondary;
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &.focus,
+        &.focus.active {
+            background-color: $dropdown-link-hover-bg;
+            text-decoration: none;
+        }
+
+        &.active {
+            background-color: $dropdown-state-background-color;
+        }
+
+        &.disabled {
+            cursor: not-allowed;
+            color: $textColorMuted;
+
+            &:hover,
+            &:focus {
+                background-color: $whiteBgColor !important;
+            }
+        }
+    }
+
+    .form-select-with-modal-options-group {
+
+        .form-select-with-modal-options-group-header {
+            color: $themeColor;
+            font-weight: 500;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.2;
+        }
+
+        .form-select-with-modal-option {
+            padding-left: 1.5rem;
+        }
+    }
+}
+
+// Поле выбора даты и времени.
+.form-dropdown-date-picker {
+
+    .dropdown-toggle {
+        position: relative;
+
+        input,
+        input[readonly] {
+            background-color: $input-bg;
+            cursor: pointer;
+            padding-right: 30px;
+        }
+
+        input[disabled] {
+            cursor: not-allowed;
+            background-color: $input-disabled-background-color;
+        }
+    }
+
+    .dropdown-menu {
+        &.fade-out {
+            animation-duration: 0s;
+        }
+
+        &.fade-in {
+            animation-duration: 0.4s;
+        }
+
+        &.form-dropdown-date-picker-menu-dropup-offset,
+        &[data-popper-placement|="top"] {
+            inset: auto auto 10px 0 !important;
+        }
+
+        .react-calendar {
+            border: 0 none;
+        }
+    }
+}
+
+// Переключатель видимости введенного пароля.
+.password-input-wrapper {
+    padding-right: 40px;
+
+    .password-input-type-switch {
+        display: block;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -20px;
+
+    }
+}
+
+// Поле ввода с автоматическим ростом высоты по мере ввода текста.
+textarea.autogrow {
+    overflow-y: auto !important;
+    height: 65px; //< required for animation to work
+    min-height: 65px; //< required for animation to work
+    transition: height 0.1s linear, $input-transition !important;
+    resize: none;
+
+    &.minimal {
+        min-height: 2.5rem;
+        height: 2.5rem;
+        line-height: 1.6rem;
+        padding-top: 0.45rem;
+        padding-bottom: 0.45rem;
+    }
+}
+
+// Простое поле ввода без украшательств.
+@mixin form-input {
+    background-color: $input-bg;
+    padding: 4px 4px 4px 8px;
+    border: 1px solid $form-notch-div-border-color;
+    border-radius: 8px;
+    font-size: 14px;
+    color: $input-color;
+    width: 100%;
+    line-height: 1.5;
+    background-clip: padding-box;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:disabled,
+    &.disabled,
+    &[readonly] {
+        background-color: $input-disabled-background-color;
+        color: $input-disabled-text-color;
+        opacity: 1;
+    }
+
+    &::placeholder {
+        color: $input-placeholder-color;
+        opacity: 1;
+    }
+}
+
+input.form-input {
+    @include form-input;
+    height: 32px;
+}
+
+textarea.form-input {
+
+}
+
+.buttons-switch-input {
+    .btn-group {
+        > .btn {
+            min-width: 80px;
+        }
+    }
+}
+
+// CKEditor:
+
+.ckeditor-container {
+    label.form-label {
+        position: absolute;
+        transform: $input-focus-active-label-transform;
+        background-color: #FFF;
+        line-height: 14px;
+        padding: 0 2px 0 2px;
+        top: 15px;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        left: 0.75rem;
+        pointer-events: none;
+        transform-origin: 0 0;
+        margin-bottom: 0;
+    }
+
+    .cke {
+        border-radius: 4px;
+        border-width: 0 !important;
+
+        .cke_toolbar {
+            a.cke_button {
+                padding: 4px 6px 4px 6px !important;
+
+                &:hover {
+                    border: 0 none !important;
+                    padding: 4px 6px 4px 6px !important;
+                }
+            }
+        }
+
+        .cke_top {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border: 1px solid $input-border-color !important;
+            border-bottom-width: 0 !important;
+            background-color: #FFF;
+        }
+
+        .cke_contents {
+            border: 1px solid  $input-border-color !important;
+        }
+
+        .cke_bottom {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border: 1px solid  $input-border-color !important;
+            border-top-width: 0 !important;
+        }
+    }
+}
+
+// <Checkboxes>
+
+.checkboxes-input {
+    .checkboxes-input-label {
+        font-weight: 500;
+        text-align: center;
+        color: $form-label-color;
+    }
+}

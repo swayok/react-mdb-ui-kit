@@ -1,0 +1,37 @@
+// Поля ввода.
+
+$input-bg: #fff;
+$input-color: $textColorSecondary;
+$input-border-color: $borderColorInput;
+
+// Настройка placeholder для полей ввода.
+$input-placeholder-color: $textColorSecondarySemitransparent;
+
+// Состояние полей ввода: disabled.
+$input-disabled-background-color: #e6e6e6;
+$input-disabled-text-color: $textColorSecondary;
+
+// Состояние полей ввода: readonly.
+$input-readonly-background-color: #f6f6f6;
+
+// Состояние полей ввода: focus.
+$input-focus-border-color: fade-out($themeColor, opacity($themeColor) - 0.6);
+$input-focus-label-color: $themeColor;
+
+// Названия для полей ввода.
+
+$form-label-color: $textColorSecondarySemitransparent;
+
+// Дополнения к полям ввода.
+$input-chevron-color: $textColorSecondarySemitransparent;
+
+// Стилизованная обертка для полей ввода.
+$form-notch-div-border-color: $input-border-color;
+
+// Переключатель значений.
+// Переключатель выключен (checked === false)
+$form-switch-form-check-input-background-color: lighten($textColorMuted, 25%);
+$form-switch-form-check-input-after-background-color: $textColorMuted;
+// Переключатель включен (checked === true)
+$form-switch-form-check-input-checked-track-background-color: lighten($backgroundGreen, 30%);
+$form-switch-form-check-input-checked-checkbox-after-background-color: darken($backgroundGreen, 7%);

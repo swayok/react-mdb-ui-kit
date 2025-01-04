@@ -1,0 +1,20 @@
+// Настройки кнопок.
+
+$btn-transition: color 0.25s linear, background-color 0.25s linear, border-color 0.25s linear, box-shadow 0.25s linear, opacity 0.25s linear;
+$btn-box-shadow: none;
+$btn-hover-box-shadow: none;
+$btn-border-width: 1px;
+$btn-font-size: 0.8rem;
+$btn-font-weight: 500;
+
+// Размер кнопок: обычный.
+$btn-line-height: 1.5rem;
+$btn-padding-bottom: $btn-padding-top;
+
+// Размер кнопок: уменьшенный.
+$btn-line-height-sm: $btn-line-height;
+$btn-padding-bottom-sm: $btn-padding-top-sm;
+
+// Размер кнопок: увеличенный.
+$btn-line-height-lg: 1.7rem;
+$btn-padding-bottom-lg: $btn-padding-top-lg;

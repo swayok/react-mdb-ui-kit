@@ -1,0 +1,28 @@
+// Компонент <Collapse>.
+.collapsible {
+    overflow: hidden;
+
+    &.vertical {
+        @include transition($transition-collapse);
+
+        &.opened:not(.transition) {
+            height: auto !important;
+        }
+    }
+
+    &.horizontal {
+        @include transition($transition-collapse-horizontal);
+
+        &.opened:not(.transition) {
+            width: auto !important;
+        }
+    }
+
+    &.opened:not(.transition) {
+        overflow: visible;
+    }
+
+    &.closed:not(.transition) {
+        display: none;
+    }
+}

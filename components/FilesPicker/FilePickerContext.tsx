@@ -2,7 +2,7 @@ import React from 'react'
 import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
 import {mdiFileExcelOutline, mdiFileOutline, mdiFileWordOutline} from '@mdi/js'
 import {FilePickerContextProps, FilePickerTranslations} from '../../types/FilePicker'
-import {mdiFilePdfOutline} from '../../../../resources/react/helpers/icons'
+import {mdiFilePdfOutline} from '../../helpers/icons'
 
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = {

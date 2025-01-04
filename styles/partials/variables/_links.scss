@@ -1,0 +1,8 @@
+// Настройка ссылок.
+$link-color: $textColor;
+$link-hover-color: $themeColor;
+$link-disabled-color: $textColorMuted;
+
+// <button class="btn btn-link">.
+$btn-link-color: $link-color;
+$btn-link-hover-color: $link-hover-color;

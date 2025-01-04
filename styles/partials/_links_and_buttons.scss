@@ -1,0 +1,230 @@
+a {
+    transition: color 0.2s linear;
+
+    @include contained-mdi-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+
+    @include contained-custom-svg-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+
+    &.disabled:not(.btn),
+    &[disabled]:not(.btn) {
+        color: $link-disabled-color !important;
+        cursor: not-allowed;
+    }
+
+    &[class*=text-]:not(.btn) {
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &.active {
+            color: $link-color !important;
+        }
+
+        &.side-nav-link {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.clickable {
+    display: inline-block;
+    color: $textColor;
+    cursor: pointer;
+    transition: color 0.2s linear;
+
+    @include contained-mdi-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+
+    @include contained-custom-svg-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+
+    &:hover {
+        color: $link-hover-color;
+    }
+
+    &.disabled,
+    &[disabled] {
+        color: $nav-link-disabled-color !important;
+        cursor: not-allowed;
+    }
+
+    &.btn-hover-theme {
+        @include contained-mdi-icon-color-in-link-for-states(
+                $themeColor !important,
+                $backgroundGray !important
+        );
+
+        @include contained-custom-svg-icon-color-in-link-for-states(
+                $themeColor !important,
+                $backgroundGray !important
+        );
+    }
+}
+
+@each $color, $value in $colors {
+    a,
+    .clickable {
+        &.text-#{$color} {
+            $hoverColor: lighten($value, 10%);
+
+            @include contained-mdi-icon-color-in-link(
+                    $value !important,
+                    $hoverColor !important,
+                    $link-disabled-color !important
+            );
+
+            &:hover {
+                color: $hoverColor !important;
+            }
+        }
+    }
+}
+
+.btn {
+    &.btn-with-icon {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .mdi-icon,
+        .custom-icon {
+            margin-right: 0.5em;
+        }
+
+        &.btn-with-icon-outline {
+
+            @each $color, $value in $theme-colors {
+                &.btn-#{$color} {
+                    @include contained-mdi-icon-color($value);
+                }
+            }
+        }
+    }
+
+    &[disabled],
+    &.disabled {
+        cursor: not-allowed;
+        pointer-events: auto;
+    }
+
+    &[class*='btn-outline-'] {
+        border-width: 1px;
+
+        &[disabled],
+        &.disabled {
+            border: 1px solid $backgroundGray;
+        }
+    }
+
+    @each $color, $value in $theme-colors {
+        &.btn-#{$color} {
+            border: 1px solid $value;
+
+            @include contained-mdi-icon-color-in-button($value)
+        }
+    }
+
+    &.btn-link {
+        padding: 0;
+        font-size: $font-size-base;
+        font-weight: normal;
+        box-shadow: none !important;
+        text-transform: none;
+
+        &:hover,
+        &:focus {
+            background-color: transparent;
+        }
+    }
+
+    &.btn-icon {
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        box-shadow: none !important;
+
+        &,
+        &:hover,
+        &:focus {
+            background-color: transparent !important;
+        }
+
+        &.btn-hover-theme {
+            &:hover,
+            &:focus {
+                @include contained-mdi-icon-color-in-link-for-states(
+                        $themeColor !important,
+                        $backgroundGray !important
+                )
+            }
+        }
+    }
+
+    &.btn-outline-gray {
+        color: $textColor;
+
+        &:hover {
+            background-color: $backgroundGray;
+        }
+
+        &.btn-hover-theme {
+            &:hover {
+                background-color: $themeColor;
+                color: $textColorDarkBg;
+                border-color: $themeColor;
+            }
+
+            &[disabled]:hover {
+                background-color: lighten($backgroundGray, 5%);
+                color: $textColor;
+                border-color: $backgroundGray;
+            }
+        }
+    }
+
+    &.btn-outline-light {
+        color: $textColor;
+
+        &[disabled] {
+            color: $textColorMuted;
+        }
+    }
+
+    &.btn-primary:hover {
+        background-color: lighten($themeColor, 8%);
+    }
+
+    &.btn-orange:hover {
+        background-color: lighten($backgroundOrange, 8%);
+    }
+}
+
+.btn-group {
+    > .btn:not(:first-child) {
+        margin-left: -0.6px;
+    }
+}

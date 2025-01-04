@@ -1,0 +1,43 @@
+// Таблицы данных (data grids).
+$table-striped-bg-factor: 0.02;
+$table-th-font-weight: 500;
+$table-font-size: 0.9em;
+$table-color: #000000;
+
+$table-striped-bg: #f9f9f9;
+$table-hover-bg: #f0f0f0;
+
+$table-filters-bg: #FFF !default;
+
+$table-container-bg: #FFF !default;
+
+$table-header-bg: #FFF;
+$table-header-text-color: $text-muted;
+$table-header-borders: darken($table-header-bg, 10%);
+$table-header-shadow: $box-shadow-2;
+
+$table-footer-bg: #FFF;
+$table-footer-text-color: $table-header-text-color;
+$table-vertical-separator-color: $border-color;
+
+$table-error-bg: rgba(255, 255, 255, 0.6);
+
+$data-grid-cell-padding-font-weight: 400 !default;
+$data-grid-cell-padding-x: 1rem !default;
+$data-grid-cell-padding-y: 1rem !default;
+$data-grid-cell-padding-x-sm: $data-grid-cell-padding-x !default;
+$data-grid-cell-padding-y-sm: $table-cell-padding-y-sm !default;
+
+// Пагинация.
+$pagination-active-bg: $themeColor;
+$pagination-active-transition: background-color 0.2s linear;
+$pagination-active-disabled-color: $textColorMutedOnDark;
+$pagination-active-disabled-bg: $backgroundLightGray;
+$pagination-active-disabled-color: $textColorMuted;
+$pagination-active-box-shadow: none;
+
+// Подсветка строк таблицы.
+$table-highlight-bg-blue: #ebfbff;
+$table-highlight-bg-red: #fff5f5;
+$table-highlight-bg-green: #f3fff2;
+$table-highlight-bg-gray: #f8f8f8;

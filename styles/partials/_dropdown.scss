@@ -1,0 +1,58 @@
+// Выпадающее меню
+.dropdown-menu {
+    overflow-y: auto;
+
+    li.active > .dropdown-item {
+        background-color: $dropdown-active-background-color;
+    }
+}
+
+.dropdown-item {
+    transition: background-color 0.2s linear;
+    color: $textColorSecondary;
+
+    &:hover,
+    &:focus {
+        color: $textColorSecondary;
+    }
+
+    &.active {
+        background-color: $dropdown-active-background-color;
+    }
+
+    &.disabled,
+    &[disabled] {
+        color: $link-disabled-color;
+    }
+
+    &.form-multiselect-dropdown-option {
+        &.disabled,
+        &[disabled] {
+            pointer-events: auto;
+        }
+    }
+
+    &:not(.form-multiselect-dropdown-option):not(.text-*) {
+        @include contained-mdi-icon-color-in-link(
+                $textColorSecondary !important,
+                $textColorSecondary !important,
+                $link-disabled-color !important
+        );
+        @include contained-custom-svg-icon-color-in-link(
+                $textColorSecondary !important,
+                $textColorSecondary !important,
+                $link-disabled-color !important
+        );
+    }
+}
+
+.dropdown-header {
+    color: $themeColor;
+    font-weight: 500;
+}
+
+.dropdown-toggle {
+    &:after {
+        display: none !important;
+    }
+}

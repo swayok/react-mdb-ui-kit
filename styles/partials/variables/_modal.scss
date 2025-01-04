@@ -1,0 +1,12 @@
+// Модальные окна.
+
+$modal-backdrop-bg: #515151;
+$modal-backdrop-opacity: 0.47;
+$modal-content-bg: #fff;
+$modal-content-border-width: 0;
+$modal-content-box-shadow-xs: 0 1px 60px 0 rgba(0, 0, 0, 0.2), 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 1px 60px 0 fade-out($themeColor, opacity($themeColor) - 0.24);
+$modal-content-box-shadow-sm-up: $modal-content-box-shadow-xs;
+$modal-header-border-width: 0;
+$modal-footer-border-width: 0;
+//$modal-header-padding
+//$modal-inner-padding

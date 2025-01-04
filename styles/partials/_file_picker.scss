@@ -1,0 +1,160 @@
+// Прикрепление файлов: отображение прикрепленных файлов
+.file-picker-previews-container {
+
+    &.d-flex {
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+
+    &.file-picker-previews-scale-on-hover {
+        .file-picker-preview-wrapper.file-picker-preview-for-image {
+
+            a.file-picker-preview-container {
+                outline: none !important;
+            }
+
+            .file-picker-preview-delete {
+                transition: opacity 0.1s linear;
+
+                &:hover {
+                    opacity: 1 !important;
+                }
+            }
+
+            &:hover,
+            &.active {
+                z-index: 999;
+
+                .file-picker-preview-delete {
+                    opacity: 0;
+                }
+            }
+
+            &.active .file-picker-preview .file-picker-preview-image {
+                transform: scale(2);
+                transform-origin: center center;
+            }
+
+            .file-picker-preview {
+                .file-picker-preview-image {
+                    @include transition(transform 0.1s linear);
+                }
+
+                &:hover .file-picker-preview-image {
+                    transform: scale(2);
+                    transform-origin: center center;
+                }
+            }
+        }
+    }
+
+    .file-picker-preview {
+        display: block;
+        border-radius: 12px;
+        background-color: $backgroundLightGray;
+        box-shadow: $box-shadow-2-strong;
+
+        canvas {
+            border-radius: 12px;
+        }
+
+        .file-picker-preview-image {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            pointer-events: none;
+        }
+    }
+
+    .file-picker-preview-delete {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        top: -6px;
+        right: -6px;
+        z-index: 2;
+
+        // Фон под иконку для лучшей видимости
+        &:after {
+            content: '';
+            z-index: 1;
+            position: absolute;
+            display: block;
+            width: 18px;
+            height: 18px;
+            top: 50%;
+            left: 50%;
+            margin-top: -9px;
+            margin-left: -9px;
+            background-color: #FFF;
+            border-radius: 50%;
+        }
+
+        svg {
+            z-index: 2;
+        }
+    }
+
+    .file-picker-previews-adder {
+        border-radius: 12px;
+        border: 2px dashed $textColorBlue;
+        @include transition(border-color 200ms linear);
+
+        &:hover {
+            border-color: lighten($textColorBlue, 10%);
+        }
+
+        &.disabled {
+            border-color: $textColorMuted;
+        }
+
+        @include contained-mdi-icon-color-in-link(
+                $textColorBlue,
+                lighten($textColorBlue, 10%),
+                $textColorMuted
+        )
+    }
+
+    &.file-picker-previews-white-bg {
+        .file-picker-preview {
+            background-color: $backgroundWhite;
+            box-shadow: $box-shadow-3;
+        }
+    }
+
+    .drag-and-drop-item {
+        &.drag-and-drop-toggler,
+        .drag-and-drop-toggler {
+            cursor: move;
+        }
+
+        &.drag-and-drop-current {
+            .file-picker-preview-image {
+                transform: scale(1) !important;
+                @include transition(none !important);
+            }
+        }
+
+        &.drag-and-drop-over {
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -12px;
+                height: 100%;
+                width: 4px;
+                background-color: $borderColorBlue;
+            }
+        }
+
+        > .editable {
+            transition: background-color 0.2s linear;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.03);
+            }
+        }
+    }
+}

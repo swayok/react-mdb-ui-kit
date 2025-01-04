@@ -1,0 +1,237 @@
+@import '../mdb/bootstrap-rtl-fix/functions';
+@import '../mdb/free/functions';
+@import '../mdb/bootstrap-rtl-fix/mixins';
+@import 'mixins';
+
+@import "animations";
+@import "css_grid";
+@import "helpers";
+@import "icons";
+@import "links_and_buttons";
+@import "loading_indicator";
+@import "collapse";
+@import "card";
+@import "dropdown";
+@import "inputs";
+@import "modal";
+@import "react_calendar";
+@import "images_previewer";
+@import "images_carousel_modal";
+@import "rating_stars";
+@import "drag_and_drop";
+@import "data_grid";
+
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+.with-icon {
+    display: inline-block;
+    vertical-align: top;
+
+    svg.mdi-icon,
+    svg.custom-icon {
+        vertical-align: text-top;
+    }
+}
+
+.with-icon-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    svg.mdi-icon,
+    svg.custom-icon {
+        vertical-align: top;
+    }
+}
+
+.badge {
+    &.bg-gray {
+        color: $textColorGray;
+    }
+}
+
+.input-default-bg {
+    background-color: $input-bg !important;
+}
+
+.note p {
+    font-weight: 400;
+
+    b,
+    strong {
+        font-weight: 500;
+    }
+}
+
+.async-data-loading-container {
+    min-height: 150px;
+    transition: height 0.2s linear;
+    position: relative;
+    z-index: 100;
+}
+
+.collapse {
+    &.show {
+        height: auto !important;
+    }
+}
+
+.youtube-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; // 16:9
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}
+
+.section-divider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: $textColorGray;
+
+    span {
+        white-space: nowrap;
+        display: block;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        flex: 1;
+        height: 0;
+        border-top: 1px solid $section-divider-color;
+    }
+
+    &.darker {
+        &:before,
+        &:after {
+            border-top-color: $section-divider-color-darker;
+        }
+    }
+}
+
+.recaptcha > div > div {
+    display: flex;
+    place-content: center;
+}
+
+table:not(.data-grid) {
+    tbody {
+        td {
+            font-weight: 400;
+        }
+
+        > tr.odd {
+            > td,
+            > th {
+                background-color: $table-striped-bg;
+            }
+        }
+    }
+}
+
+.app-content-table-container {
+    background-color: #FFF;
+    box-shadow: $box-shadow-2-strong;
+}
+
+table.card-item-info-table {
+    width: 100%;
+
+    td,
+    th {
+        padding: 0.3em 0.6em 0.3em 0.3em;
+    }
+
+    th {
+        color: $textColorMuted;
+        font-weight: normal;
+        white-space: nowrap;
+        width: 10%;
+    }
+}
+
+table.table-no-border-for-last-row {
+    tbody > tr:last-child td {
+        border-bottom-width: 0 !important;
+    }
+}
+
+.tooltip {
+    .tooltip-text-red {
+        color: $textColorRedOnDark;
+    }
+
+    .tooltip-text-blue {
+        color: $textColorBlueOnDark;
+    }
+
+    .tooltip-text-green {
+        color: $textColorGreenOnDark;
+    }
+
+    .tooltip-text-muted {
+        color: $textColorMutedOnDark;
+    }
+
+    .tooltip-text-orange {
+        color: $textColorOrangeOnDark;
+    }
+}
+
+#error-page {
+    .logo {
+        .layout-mobile & img {
+            width: 290px;
+            height: auto !important;
+        }
+    }
+}
+
+// Всплывающие подсказки (очень странная у них верстка, еще и кривая если текста много)
+.notyf {
+
+    .notyf__toast {
+        background-color: $backgroundBlue;
+
+        &.notyf__toast--success {
+            background-color: darken($backgroundGreen, 5%);
+        }
+
+        &.notyf__toast--error {
+            background-color: $backgroundRed;
+        }
+    }
+
+    .notyf__ripple {
+        display: none;
+    }
+}
+
+body[data-recaptcha-badge='1'] {
+    .grecaptcha-badge {
+        transform: translateX(0) !important;
+    }
+}
+
+.grecaptcha-badge {
+    z-index: $zindex-modal + 50 !important;
+    transform: translateX(100%) !important;
+    @include transition(all 0.3s ease 0s !important);
+}
+

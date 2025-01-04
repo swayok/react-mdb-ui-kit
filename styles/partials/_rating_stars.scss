@@ -1,0 +1,24 @@
+.rating-stars {
+
+    .rating-stars-star {
+        @include contained-mdi-icon-color($textColorOrange);
+        line-height: 1;
+
+        > svg {
+            vertical-align: top;
+        }
+    }
+
+    &.interactive {
+
+        .rating-stars-star {
+            cursor: pointer;
+
+            @include contained-mdi-icon-color-in-link(
+                    $textColorMuted,
+                    $textColorOrange,
+                    $textColorMuted
+            )
+        }
+    }
+}

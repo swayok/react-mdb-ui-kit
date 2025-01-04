@@ -1,0 +1,66 @@
+// Поля ввода.
+
+$enable-validation-icons: false;
+$input-bg: #fff;
+
+// Размер полей ввода: обычный.
+$input-line-height: $btn-line-height;
+$input-border-radius: $btn-border-radius;
+$input-padding-top: $btn-padding-top;
+$input-padding-bottom: $btn-padding-bottom;
+
+// Размер полей ввода: уменьшенный.
+$input-line-height-sm: $btn-line-height-sm;
+$input-border-radius-sm: $btn-border-radius-sm;
+$input-font-size-sm: 1rem;
+$input-padding-left-sm: 0.8rem;
+$input-padding-right-sm: $input-padding-left-sm;
+$input-padding-top-sm: $btn-padding-top-sm;
+$input-padding-bottom-sm: $btn-padding-top-sm;
+
+// Размер полей ввода: увеличенный.
+$input-line-height-lg: $btn-line-height-lg;
+$input-border-radius-lg: $btn-border-radius-lg;
+$input-font-size-lg: 1rem;
+$input-padding-top-lg: $btn-padding-top-lg;
+$input-padding-bottom-lg: $btn-padding-top-lg;
+
+// Состояние полей ввода: disabled.
+$input-transition: border-color 0.3s linear, margin 0.15s linear;
+
+// Названия для полей ввода.
+
+$form-label-transition: all 0.25s linear;
+
+// Размер названий для полей ввода: обычный.
+$form-label-padding-top: $btn-padding-top * 1.075;
+$input-focus-active-label-transform: translateY(-1.45rem) translateY(0.1rem) scale(0.9);
+
+// Размер названий для полей ввода: уменьшенный.
+$form-label-padding-top-sm: $btn-padding-top-sm;
+$form-label-font-size-sm: $input-font-size-sm;
+$input-focus-active-label-transform-sm: translateY(-1.2rem) translateY(0.1rem) translateX(-0.05rem) scale(0.9);
+
+// Размер названий для полей ввода: увеличенный.
+$form-label-padding-top-lg: $btn-padding-top-lg;
+$form-label-font-size-lg: $input-font-size-lg;
+$input-focus-active-label-transform-lg: translateY(-1.5rem) translateY(0.1rem) scale(0.9);
+
+// Дополнения к полям ввода.
+$input-error-padding-x: $input-padding-left;
+$input-error-padding-top: 0.25rem;
+$input-info-padding-x: $input-padding-left;
+
+// Переключатель значений.
+$form-switch-form-check-input-after-transition: background-color 0.3s, transform 0.3s, margin-left 0.3s;
+$form-switch-form-check-input-focus-before-transition: box-shadow 0.3s, transform 0.3s, margin-left 0.3s;
+// Переключатель выключен (checked === false)
+$form-switch-form-check-input-focus-before-box-shadow: none;
+// Переключатель включен (checked === true)
+$form-switch-form-check-input-checked-focus-before-transition: $form-switch-form-check-input-focus-before-transition;
+$form-switch-form-check-input-checked-checkbox-after-transition: $form-switch-form-check-input-after-transition;
+$form-switch-form-check-input-checked-focus-before-box-shadow: none;
+
+// Form check.
+$form-check-input-focus-before-box-shadow: none;
+$form-check-input-checked-focus-before-box-shadow: none;

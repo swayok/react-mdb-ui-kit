@@ -1,0 +1,390 @@
+.data-grid-table-container {
+    position: relative;
+    z-index: 1;
+    background-color: $table-container-bg;
+    min-height: 150px;
+
+    > table.data-grid {
+        position: relative;
+        z-index: 1;
+
+        > tbody {
+            font-weight: 400;
+        }
+
+        .data-grid-highlight-blue {
+            background-color: $table-highlight-bg-blue;
+        }
+
+        .data-grid-highlight-red {
+            background-color: $table-highlight-bg-red;
+        }
+
+        .data-grid-highlight-green {
+            background-color: $table-highlight-bg-green;
+        }
+
+        .data-grid-highlight-gray {
+            background-color: $table-highlight-bg-gray;
+        }
+
+        > tbody,
+        > thead,
+        > tfoot {
+            > tr {
+                > td,
+                > th,
+                .data-grid-column-header {
+                    padding: $data-grid-cell-padding-y $data-grid-cell-padding-x;
+                    font-weight: $data-grid-cell-padding-font-weight;
+                }
+            }
+        }
+
+        &.table-sm {
+            > tbody,
+            > thead,
+            > tfoot {
+                > tr {
+                    > td,
+                    > th,
+                    .data-grid-column-header {
+                        padding: $data-grid-cell-padding-y-sm $data-grid-cell-padding-x-sm;
+                    }
+                }
+            }
+        }
+
+        > thead > tr {
+            th {
+                background-color: $table-header-bg;
+                border-color: $table-header-borders;
+                color: $table-header-text-color;
+                vertical-align: middle;
+                position: relative;
+
+                &.with-ripple {
+                    padding: 0 !important;
+                }
+
+                &.ripple-surface {
+                    display: table-cell;
+                }
+
+                .data-grid-column-header.ripple-surface {
+                    display: block;
+                }
+            }
+
+            .data-grid-column-header {
+                position: static; // нужно для позиционирования иконки сортировки.
+                height: 100%;
+                min-height: 24px;
+                line-height: 1.3;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+
+                &.cursor {
+                    user-select: none;
+                }
+
+                .data-grid-sortable-label {
+                    margin-right: 7px;
+                }
+
+                .data-grid-sort-icon {
+                    position: absolute;
+                    right: 4px;
+                }
+            }
+        }
+
+        > tfoot > tr {
+            > th,
+            > td {
+                background-color: $table-header-bg;
+                border-color: $table-header-borders;
+                color: $table-header-text-color;
+                font-weight: 600;
+            }
+        }
+
+        &.table-striped-manually {
+            &.table-hover > tbody {
+                > tr.odd {
+                    > td,
+                    > th {
+                        background-color: $table-striped-bg;
+                    }
+
+                    &:hover {
+                        > td,
+                        > th {
+                            background-color: $table-hover-bg;
+                        }
+                    }
+                }
+
+                > tr.even:hover {
+                    > td.data-grid-column-sticky-left,
+                    > td.data-grid-column-sticky-right {
+                        background-color: $table-hover-bg;
+                    }
+                }
+            }
+        }
+
+        &.table-hover {
+            > tbody > tr {
+                > td,
+                > th {
+                    transition: $table-hover-transition;
+                }
+            }
+        }
+
+        &.align-top {
+            > tbody > tr {
+                > td,
+                > th {
+                    vertical-align: top;
+                }
+            }
+        }
+
+        &.align-middle {
+            > tbody > tr {
+                > td,
+                > th {
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        &.align-bottom {
+            > tbody > tr {
+                > td,
+                > th {
+                    vertical-align: bottom;
+                }
+            }
+        }
+
+        table.subtable {
+            width: 100%;
+            border-width: 0;
+            background-color: transparent;
+
+            > tbody {
+                > tr {
+                    > td,
+                    > th {
+                        padding: 0 0.25rem 0.25rem 0;
+
+                        &:last-child {
+                            padding-right: 0;
+                        }
+                    }
+
+                    &:last-child {
+                        > td,
+                        > th {
+                            padding-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.data-grid-flex {
+        > table.data-grid {
+            border-top-width: 0;
+
+            > thead > tr > th {
+                border-width: 0;
+                top: 0;
+                position: sticky;
+                z-index: 10;
+                font-weight: $table-th-font-weight;
+
+                // Required to fix styling artifacts for position: sticky;
+                overflow: visible;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    pointer-events: none;
+                    left: 0;
+                    right: 0;
+                    bottom: -1px;
+                    top: 0;
+                    border-bottom: 1px solid $table-header-borders;
+                    //box-shadow: $table-header-shadow;
+                }
+
+                &.data-grid-column-sticky-left {
+                    z-index: 11;
+                }
+            }
+
+            > tbody > tr,
+            > thead > tr {
+                > .data-grid-column-sticky-left,
+                > .data-grid-column-sticky-right {
+                    position: sticky;
+                    top: 0;
+
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        width: 1px;
+                        background-color: $table-header-borders;
+                    }
+                }
+
+                > td.data-grid-column-sticky-left,
+                > td.data-grid-column-sticky-right {
+                    background-color: $table-header-bg;
+                }
+
+                > .data-grid-column-sticky-left {
+                    left: 0;
+                }
+
+                > .data-grid-column-sticky-right {
+                    right: 0;
+                }
+
+                > .data-grid-column-sticky-left:before {
+                    right: -1px;
+                }
+
+                > .data-grid-column-sticky-right:before {
+                    left: -1px;
+                }
+
+                > th.data-grid-column-sticky-left,
+                > th.data-grid-column-sticky-right {
+                    &:before {
+                    }
+                }
+            }
+
+            &.table-bordered {
+                > thead > tr > th {
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        pointer-events: none;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        border-left: 1px solid $table-header-borders;
+                    }
+
+                    &:first-child::after {
+                        border-left-width: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    > .data-grid-no-items {
+        position: relative;
+        z-index: 10;
+    }
+
+    > .data-grid-loading {
+        position: absolute;
+        z-index: $zindex-tooltip + 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    > .data-grid-error {
+        position: absolute;
+        z-index: $zindex-tooltip + 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $table-error-bg;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    thead.data-grid-headers-hidden {
+        td,
+        th {
+            position: relative !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+
+            * {
+                display: none !important;
+            }
+
+            &:after,
+            &:before {
+                display: none !important;
+            }
+        }
+    }
+
+}
+
+.data-grid-filters {
+    position: relative;
+    z-index: 10;
+    background-color: $table-filters-bg;
+}
+
+.data-grid-footer {
+    position: relative;
+    z-index: 9;
+    background-color: $table-footer-bg;
+    color: $table-footer-text-color;
+
+    .page-item {
+        .page-link {
+            cursor: pointer;
+            min-width: 36px;
+            text-align: center;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            user-select: none;
+        }
+
+        @include contained-mdi-icon-color-in-link-for-states(
+            $link-hover-color,
+            $link-disabled-color
+        );
+
+        &.active.disabled {
+            .page-link {
+                background-color: $pagination-active-disabled-bg;
+                color: $pagination-active-disabled-color;
+            }
+        }
+    }
+
+    .data-grid-vertical-separator {
+        height: 26px;
+    }
+}
+
+.data-grid-vertical-separator {
+    display: inline-block;
+    width: 0;
+    height: 26px;
+    margin: 0 0.5rem;
+    border-right: 1px solid $table-vertical-separator-color;
+}

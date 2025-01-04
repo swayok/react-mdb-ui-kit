@@ -1,0 +1,82 @@
+svg.mdi-icon {
+    @include mdi-icon-color($textColor);
+    pointer-events: none;
+    flex-shrink: 0;
+
+    path {
+        transition: fill 0.2s linear;
+    }
+
+    &.mdi-rotatable {
+        transition: transform 0.1s linear;
+        transform: rotate(0deg);
+        transform-origin: 50% 50%;
+    }
+
+    @each $color, $value in $colors {
+        &.text-#{$color} {
+            @include mdi-icon-color($value !important);
+        };
+
+        .clickable:hover &.text-#{$color},
+        a:hover &.text-#{$color} {
+            @include mdi-icon-color(lighten($value, 10%) !important);
+        }
+    }
+
+    @each $color, $value in $theme-colors {
+        &.theme-#{$color} {
+            @include mdi-icon-color($value !important);
+        };
+
+        .clickable:hover &.theme-#{$color},
+        a:hover &.theme-#{$color} {
+            @include mdi-icon-color(lighten($value, 10%) !important);
+        }
+    }
+}
+
+svg.custom-icon {
+    pointer-events: none;
+    flex-shrink: 0;
+
+    g, path, rect, circle, ellipse {
+        transition: fill 0.2s linear, stroke 0.2s linear;
+    }
+
+    &.colored-by-fill {
+        fill: $textColor;
+        stroke: none;
+    }
+
+    &.colored-by-stroke {
+        fill: none;
+        stroke: $textColor;
+    }
+
+    &.custom-icon-rotatable {
+        transition: transform 0.1s linear;
+        transform: rotate(0deg);
+        transform-origin: 50% 50%;
+    }
+
+    @each $color, $value in $colors {
+        &.text-#{$color} {
+            @include custom-icon-color($value !important);
+        };
+
+        a:hover &.text-#{$color} {
+            @include custom-icon-color(lighten($value, 10%) !important);
+        }
+    }
+
+    @each $color, $value in $theme-colors {
+        &.theme-#{$color} {
+            @include custom-icon-color($value !important);
+        };
+
+        a:hover &.theme-#{$color} {
+            @include custom-icon-color(lighten($value, 10%) !important);
+        }
+    }
+}

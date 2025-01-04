@@ -1,0 +1,13 @@
+// CSS grid.
+
+$css-grid-max-columns: 8;
+$css-grid-max-rows: 8;
+$css-grid-columns-gaps: (
+    '0': 0,
+    '1': 0.25rem,
+    '2': 0.5rem,
+    '3': 1rem,
+    '4': 1.5rem,
+    '5': 3rem,
+);
+$css-grid-rows-gaps: $css-grid-columns-gaps;
