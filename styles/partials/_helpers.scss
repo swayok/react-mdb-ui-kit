@@ -121,6 +121,10 @@
     }
 }
 
+.shadow-card {
+    box-shadow: $card-box-shadow;
+}
+
 @each $color, $value in $colors {
     .text-#{$color} {
         color: $value !important;
