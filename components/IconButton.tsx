@@ -10,6 +10,8 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     color?: TextColors | 'link',
     onClick: (event: React.MouseEvent<HTMLDivElement>) => void,
     tooltipProps?: Omit<TooltipProps, 'onClick' | 'title' | 'disableClickHandler'>,
+    // Использовать центрирование иконки через flexbox (.with-icon-flex)?
+    useFlexBox?: boolean,
     iconClassName?: string,
     iconStyle?: CSSProperties,
 }
@@ -27,11 +29,13 @@ function IconButton(props: IconButtonProps) {
         reusableItemContainerClass,
         style,
         iconStyle,
+        useFlexBox,
         ...otherProps
     } = props
 
     const wrapperClass: string = clsx(
-        'clickable with-icon d-inline-block',
+        'clickable',
+        useFlexBox ? 'with-icon-flex': 'd-inline-block with-icon',
         color ? 'text-' + props.color : null,
         disabled ? 'disabled' : null,
         className
