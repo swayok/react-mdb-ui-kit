@@ -26,19 +26,32 @@ function ReorderableList<PayloadType = unknown>(
 ) {
 
     // Позиция перетаскиваемого элемента.
-    const [draggingElementPosition, setDraggingElementPosition] = useState<number | null>(null)
+    const [
+        draggingElementPosition,
+        setDraggingElementPosition,
+    ] = useState<number | null>(null)
     // Данные перетаскиваемого элемента.
-    const [draggingElementPayload, setDraggingElementPayload] = useState<PayloadType | null>(null)
+    const [
+        draggingElementPayload,
+        setDraggingElementPayload,
+    ] = useState<PayloadType | undefined>(undefined)
     // Позиция элемента, над котором производится перетаскивание.
-    const [draggingOverElementPosition, setDraggingOverElementPosition] = useState<number | null>(null)
+    const [
+        draggingOverElementPosition,
+        setDraggingOverElementPosition,
+    ] = useState<number | null>(null)
     // Данные элемента, над котором производится перетаскивание.
-    const [draggingOverElementPayload, setDraggingOverElementPayload] = useState<PayloadType | null>(null)
+    const [
+        draggingOverElementPayload,
+        setDraggingOverElementPayload,
+    ] = useState<PayloadType | undefined>(undefined)
 
     // Отмена перетаскивания.
     const cancelDragging = () => {
         setDraggingElementPosition(null)
-        setDraggingElementPayload(null)
+        setDraggingElementPayload(undefined)
         setDraggingOverElementPosition(null)
+        setDraggingOverElementPayload(undefined)
     }
 
     const contextProps: ReorderableListContextProps<PayloadType> = getReorderableListContextDefaults<PayloadType>({
@@ -54,12 +67,12 @@ function ReorderableList<PayloadType = unknown>(
         draggingOverElementPosition,
         draggingOverElementPayload: draggingOverElementPayload as PayloadType,
 
-        onDragStart(position: number, payload: PayloadType | null) {
+        onDragStart(position: number, payload?: PayloadType) {
             // console.log('start', {position, payload});
             setDraggingElementPosition(position)
             setDraggingElementPayload(payload)
         },
-        onDragEnter(position: number, payload: PayloadType | null) {
+        onDragEnter(position: number, payload?: PayloadType) {
             // console.log('over', {position, payload});
             if (draggingElementPosition !== null) {
                 setDraggingOverElementPosition(position)

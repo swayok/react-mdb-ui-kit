@@ -4,9 +4,9 @@ import FileAPI, {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../help
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerFileInfo,
     FilePickerProps,
     FilePickerUploadInfo,
+    FilePickerFileInfo,
 } from '../../types/FilePicker'
 import ErrorBoundary from '../ErrorBoundary'
 import ToastService from '../../services/ToastService'
@@ -21,7 +21,7 @@ const positionDelta: number = 1
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
 // и отображении списка выбранных файлов т.к. создает контекст с состоянием и действиями.
-function FilePicker(props: FilePickerProps) {
+function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
 
     const {
         allowImages = true,
@@ -165,16 +165,8 @@ function FilePicker(props: FilePickerProps) {
                     error: isInvalidFileType ? mimeTypeInfo as string : null,
                     info: null,
                     position,
-                    uploadingCancelled: false,
                     isDeleted: false,
-                    uploading: {
-                        isUploading: null,
-                        isUploaded: false,
-                        canRetry: false,
-                        alreadyRetried: false,
-                        uploadedPercent: 0,
-                        uploadingXhr: null,
-                    },
+                    isNew: true,
                 }
                 if (isInvalidFileType || !file.isImage) {
                     // Файл должен быть отображен либо с ошибкой, либо без превью (если не картинка).
@@ -309,7 +301,7 @@ function FilePicker(props: FilePickerProps) {
                     rejectIfNotAllFilesAreValid: boolean = false,
                     useUidAsFileName: boolean = false
                 ): Promise<FilePickerUploadInfo[]> {
-                    return new Promise<FilePickerUploadInfo[]>( (resolve, reject) => {
+                    return new Promise<FilePickerUploadInfo[]>((resolve, reject) => {
                         const validFiles: FilePickerFileInfo[] = getValidFiles()
                         if (detachInvalidFiles) {
                             setFiles(validFiles)
@@ -337,9 +329,6 @@ function FilePicker(props: FilePickerProps) {
                     })
                 },
                 reset(): void {
-                    for (let i = 0; i < files.length; i++) {
-                        files[i].uploading.uploadingXhr?.abort()
-                    }
                     setFiles([])
                 },
             }

@@ -4,7 +4,7 @@ import FileAPI, {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../help
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerFileInfo,
+    FilePickerWithUploaderFileInfo,
     FilePickerUploadInfo,
     FilePickerWithUploaderProps,
 } from '../../types/FilePicker'
@@ -23,7 +23,7 @@ import getCookieValue from '../../helpers/getCookieValue'
 
 type State = {
     // Новые прикрепленные файлы.
-    files: FilePickerContextProps['files'],
+    files: FilePickerContextProps<FilePickerWithUploaderFileInfo>['files'],
     // Состояние отправки файлов на сервер.
     isUploading: boolean,
 };
@@ -49,6 +49,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         imagesCompression: 0.92,
         translations: filePickerDefaultTranslations,
         dropInvalidFiles: false,
+        fileUploadingRequestTimeout: 30000,
     }
 
     state: State = {
@@ -134,7 +135,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     // Запуск отправки файлов на сервер.
     startUploading = (
         rejectIfNotAllValidFilesUploaded: boolean
-    ): Promise<Array<FilePickerFileInfo>> => new Promise((resolve, reject) => {
+    ): Promise<Array<FilePickerWithUploaderFileInfo>> => new Promise((resolve, reject) => {
         if (this.state.isUploading) {
             reject(new Error('already_uploading'))
             return
@@ -180,7 +181,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Получить список отправленных на сервер файлов.
-    getUploadedFiles = (): Array<FilePickerFileInfo> => {
+    getUploadedFiles = (): Array<FilePickerWithUploaderFileInfo> => {
         const ret = []
         const validFiles = this.getValidFiles()
         for (let i = 0; i < validFiles.length; i++) {
@@ -193,7 +194,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Получить список корректных файлов.
-    getValidFiles = (): Array<FilePickerFileInfo> => {
+    getValidFiles = (): Array<FilePickerWithUploaderFileInfo> => {
         const ret = []
         for (let i = 0; i < this.state.files.length; i++) {
             if (FilePickerHelpers.isValidFile(this.state.files[i])) {
@@ -255,7 +256,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                     />
                     {this.renderUploadedFilesInputs()}
 
-                    <ReorderableList<FilePickerFileInfo>
+                    <ReorderableList<FilePickerWithUploaderFileInfo>
                         itemsCount={this.getNotDeletedFilesCount()}
                         minPosition={minMaxPositions.min}
                         maxPosition={minMaxPositions.max}
@@ -322,7 +323,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         file: FileAPISelectedFileInfo,
         position: number,
         pendingFilesToBeAdded: number
-    ): Promise<FilePickerFileInfo> => {
+    ): Promise<FilePickerWithUploaderFileInfo> => {
         if (!this.canAttachMoreFiles(pendingFilesToBeAdded)) {
             // control files count
             ToastService.error(
@@ -342,7 +343,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                 return Promise.reject(new Error('already_attached'))
             }
         }
-        return new Promise<FilePickerFileInfo>((resolve, reject) => {
+        return new Promise<FilePickerWithUploaderFileInfo>((resolve, reject) => {
             try {
                 const mimeTypeInfo: string | FilePickerContextMimeTypeInfo = this.validateFileType(file)
                 const isInvalidFileType: boolean = typeof mimeTypeInfo === 'string'
@@ -352,7 +353,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                         6000
                     )
                 }
-                const processedFile: FilePickerFileInfo = {
+                const processedFile: FilePickerWithUploaderFileInfo = {
                     UID: fileUID,
                     file,
                     error: isInvalidFileType ? mimeTypeInfo as string : null,
@@ -429,7 +430,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     private getNextFilePosition = (): number => {
         const maxValue = (this.props.existingFiles || [])
             .concat(this.state.files)
-            .reduce((carry: FilePickerFileInfo | null, file): FilePickerFileInfo => {
+            .reduce((carry: FilePickerWithUploaderFileInfo | null, file): FilePickerWithUploaderFileInfo => {
                 if (!carry) {
                     return file
                 }
@@ -446,12 +447,12 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     // Окончание перетаскивания файлов.
     private onDragFinish = (
         _draggedElementPosition: number,
-        draggedElementPayload: FilePickerFileInfo,
+        draggedElementPayload: FilePickerWithUploaderFileInfo,
         _droppedOnElementPosition: number,
-        droppedOnElementPayload: FilePickerFileInfo
+        droppedOnElementPayload: FilePickerWithUploaderFileInfo
     ): void => {
         const newPosition: number = droppedOnElementPayload.position
-        const allFiles: FilePickerFileInfo[] = (this.props.existingFiles || [])
+        const allFiles: FilePickerWithUploaderFileInfo[] = (this.props.existingFiles || [])
             .concat(this.state.files)
         // Смещаем все файлы с позицией >= той, что у файла, на который перетащили другой файл на 1.
         for (let i = 0; i < allFiles.length; i++) {
@@ -478,11 +479,11 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         }
         const selectedFiles: Array<FileAPISelectedFileInfo> = FileAPI.getFiles(event.target, true)
         // console.log('[FilePicker] new files', selectedFiles);
-        const newFilesList: Array<FilePickerFileInfo> = []
+        const newFilesList: Array<FilePickerWithUploaderFileInfo> = []
         let newMaxPosition: number = this.getNextFilePosition()
         for (let i = 0; i < selectedFiles.length; i++) {
             try {
-                const processedFile: FilePickerFileInfo = await this.processNewFile(
+                const processedFile: FilePickerWithUploaderFileInfo = await this.processNewFile(
                     selectedFiles[i],
                     newMaxPosition,
                     newFilesList.length
@@ -581,7 +582,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Файл может быть отправлен на сервер?
-    private canBeUploaded(file: FilePickerFileInfo): boolean {
+    private canBeUploaded(file: FilePickerWithUploaderFileInfo): boolean {
         if (file.isDeleted || file.uploading.isUploaded) {
             return false
         }
@@ -592,8 +593,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Обработка нажатия на кнопку удаления файла.
-    private onFileDelete = (file: FilePickerFileInfo, delay?: number) => {
-        let removedFile: FilePickerFileInfo | null = null
+    private onFileDelete = (file: FilePickerWithUploaderFileInfo, delay?: number) => {
+        let removedFile: FilePickerWithUploaderFileInfo | null = null
         this.setState((state: State) => {
             for (let i = 0; i < state.files.length; i++) {
                 if (file.UID === this.state.files[i].UID) {
@@ -655,7 +656,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Запуск отправки файла на сервер.
-    private startFileUploading(fileUID: FilePickerFileInfo['UID']): Promise<void> {
+    private startFileUploading(fileUID: FilePickerWithUploaderFileInfo['UID']): Promise<void> {
         return new Promise((resolve, reject) => {
             this.setState((state: State) => {
                 for (let i = 0; i < state.files.length; i++) {
@@ -687,7 +688,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Удаление файла с сервера.
-    private deleteFileFromServer(file: FilePickerFileInfo): Promise<boolean> {
+    private deleteFileFromServer(file: FilePickerWithUploaderFileInfo): Promise<boolean> {
         if (!this.props.deleteUrl) {
             return Promise.reject(new Error('deleteUrl is not set'))
         }
@@ -764,14 +765,14 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Отправка файла на сервер (выполнение запроса к серверу).
-    private sendFileToServer(file: FilePickerFileInfo): Promise<void> {
+    private sendFileToServer(file: FilePickerWithUploaderFileInfo): Promise<void> {
         if (!this.props.uploadUrl) {
             return Promise.reject(new Error('uploadUrl is not set'))
         }
         return new Promise((resolve, reject) => {
             this
                 .getFileInfoForUpload(file)
-                .then((fileInfo: FilePickerUploadInfo) => {
+                .then((fileInfo: FilePickerUploadInfo<FilePickerWithUploaderFileInfo>) => {
                     const formData = new FormData()
                     if (this.props.uploadMethod !== 'post') {
                         formData.append('_method', this.props.uploadMethod.toUpperCase())
@@ -783,7 +784,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                     xhr.setRequestHeader('X-XSRF-TOKEN', getCookieValue('XSRF-TOKEN') || '')
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
                     xhr.setRequestHeader('Accept', 'application/json')
-                    xhr.timeout = Config.fileUploadingRequestTimeout
+                    xhr.timeout = this.props.fileUploadingRequestTimeout || 30000
                     //xhr.setRequestHeader('Content-Type', 'multipart/form-data'); //< this header causes fails!!
                     let throttler: number | null = null
                     xhr.upload.addEventListener('progress', (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
@@ -881,8 +882,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
 
     // Завершение оправки файла на сервер.
     private finishFileUploading(
-        fileUID: FilePickerFileInfo['UID'],
-        uploadedFileInfo: FilePickerFileInfo['uploading']['uploadedFileInfo']
+        fileUID: FilePickerWithUploaderFileInfo['UID'],
+        uploadedFileInfo: FilePickerWithUploaderFileInfo['uploading']['uploadedFileInfo']
     ): Promise<void> {
         return new Promise(resolve => {
             this.setState((state: State) => {
@@ -908,7 +909,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
 
     // Завершение оправки файла на сервер в случае ошибки.
     private finishFileUploadingWithError(
-        fileUID: FilePickerFileInfo['UID'],
+        fileUID: FilePickerWithUploaderFileInfo['UID'],
         error: string,
         allowRetry: boolean
     ): Promise<void> {
@@ -936,7 +937,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Отмена оправки файла на сервер.
-    private abortFileUploading(fileUID: FilePickerFileInfo['UID']): Promise<void> {
+    private abortFileUploading(fileUID: FilePickerWithUploaderFileInfo['UID']): Promise<void> {
         return new Promise(resolve => {
             this.setState((state: State) => {
                 for (let i = 0; i < state.files.length; i++) {
@@ -961,7 +962,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     }
 
     // Обновление прогресса отправки файла на сервер.
-    private updateUploadProgressForFile(fileUID: FilePickerFileInfo['UID'], totalSize: number, uploaded: number): void {
+    private updateUploadProgressForFile(fileUID: FilePickerWithUploaderFileInfo['UID'], totalSize: number, uploaded: number): void {
         this.setState((state: State) => {
             for (let i = 0; i < state.files.length; i++) {
                 if (state.files[i].UID === fileUID) {
@@ -980,10 +981,10 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
 
     // Получение информации о файле для отправки на сервер.
     private getFileInfoForUpload(
-        file: FilePickerFileInfo,
+        file: FilePickerWithUploaderFileInfo,
         useUidAsFileName: boolean = false
-    ): Promise<FilePickerUploadInfo> {
-        return FilePickerHelpers.getFileInfoForUpload(
+    ): Promise<FilePickerUploadInfo<FilePickerWithUploaderFileInfo>> {
+        return FilePickerHelpers.getFileInfoForUpload<FilePickerWithUploaderFileInfo>(
             file,
             useUidAsFileName,
             this.props.maxImageSize,

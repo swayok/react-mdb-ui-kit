@@ -1,18 +1,18 @@
-import React, {AllHTMLAttributes, useContext, useState} from 'react'
-import ReorderableListContext from './ReorderableListContext'
+import React, {AllHTMLAttributes, useState} from 'react'
+import {useReorderableListContext} from './ReorderableListContext'
 import clsx from 'clsx'
 import ReorderableListItemContext, {getReorderableListItemContextDefaults} from './ReorderableListItemContext'
-import {AnyObject, ComponentPropsWithModifiableTag} from '../../types/Common'
+import {ComponentPropsWithModifiableTag} from '../../types/Common'
 
-export interface DragAndDropItemProps extends Omit<ComponentPropsWithModifiableTag, 'draggable'> {
+export interface DragAndDropItemProps<PayloadType = unknown> extends Omit<ComponentPropsWithModifiableTag, 'draggable'> {
     position: number,
     disabled?: boolean,
-    payload?: AnyObject | null,
+    payload?: PayloadType,
     wrapperRef?: React.RefObject<HTMLElement>,
 }
 
 // Перетаскиваемый элемент списка.
-function ReorderableListItem(props: DragAndDropItemProps) {
+function ReorderableListItem<PayloadType = unknown>(props: DragAndDropItemProps<PayloadType>) {
     const {
         tag,
         children,
@@ -34,20 +34,26 @@ function ReorderableListItem(props: DragAndDropItemProps) {
         minPosition,
         maxPosition,
         droppedItemPlacement,
-    } = useContext(ReorderableListContext)
+    } = useReorderableListContext<PayloadType>()
 
     // Имеется ли специальный дочерний элемент, который используется для активации перетаскивания?
-    const [hasChildToggler, setHasChildToggler] = useState<boolean>(false)
+    const [
+        hasChildToggler,
+        setHasChildToggler,
+    ] = useState<boolean>(false)
     // Активировано ли перетаскивание?
-    const [childTogglerDragStarted, setChildTogglerDragStarted] = useState<boolean>(false)
+    const [
+        childTogglerDragStarted,
+        setChildTogglerDragStarted,
+    ] = useState<boolean>(false)
 
     const calculatedProps: AllHTMLAttributes<unknown> = {}
     const isDisabled = disabled || isDisabledByContext
     if (!isDisabled) {
         calculatedProps.draggable = !hasChildToggler || childTogglerDragStarted
-        calculatedProps.onDragStart = () => onDragStart(position, payload || null)
+        calculatedProps.onDragStart = () => onDragStart(position, payload)
         calculatedProps.onDragEnter = () => {
-            onDragEnter(position, payload || null)
+            onDragEnter(position, payload)
         }
         calculatedProps.onDragOver = (event: React.DragEvent<HTMLElement>) => {
             // Ищем ближайший элемент с классом drag-and-drop-item.
@@ -118,4 +124,4 @@ function ReorderableListItem(props: DragAndDropItemProps) {
     )
 }
 
-export default React.memo(ReorderableListItem)
+export default React.memo(ReorderableListItem) as typeof ReorderableListItem

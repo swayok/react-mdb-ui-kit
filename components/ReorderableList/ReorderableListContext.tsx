@@ -1,15 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 
 // Свойства контекста для ReorderableList.
 export type ReorderableListContextProps<T = unknown> = {
     itemsCount: number,
-    // Где будет размещен перетаскиваемый элемент: перед элементом на который перетаскивается или после?
+    // Где будет размещен перетаскиваемый элемент: перед элементом, на который перетаскивается, или после?
     droppedItemPlacement: 'before' | 'after',
     minPosition: number,
     maxPosition: number,
     isDisabled: boolean,
-    onDragStart: (position: number, payload: T) => void,
-    onDragEnter: (position: number, payload: T) => void,
+    onDragStart: (position: number, payload?: T) => void,
+    onDragEnter: (position: number, payload?: T) => void,
     onDragEnd: () => void,
     draggingElementPosition: number | null,
     draggingElementPayload: T,
@@ -47,5 +47,9 @@ export function getReorderableListContextDefaults<T = unknown>(
 const ReorderableListContext = React.createContext<ReorderableListContextProps>(
     getReorderableListContextDefaults()
 )
+
+export function useReorderableListContext<T = unknown>(): ReorderableListContextProps<T> {
+    return useContext(ReorderableListContext) as unknown as ReorderableListContextProps<T>
+}
 
 export default ReorderableListContext

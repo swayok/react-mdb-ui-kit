@@ -12,18 +12,24 @@ import {mdiAlertCircle, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} fr
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerFileInfo,
-    FilePickerFilePreviewProps,
+    FilePickerWithUploaderFileInfo,
+    FilePickerFilePreviewProps, FilePickerFileInfo,
 } from '../../types/FilePicker'
 import withStable from '../../helpers/withStable'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
+import FilePickerHelpers from './FilePickerHelpers'
 
 // Компонент предпросмотра прикрепленного файла (только картинка или иконка).
-function FilePickerFilePreviewWithoutInfo(props: FilePickerFilePreviewProps) {
+function FilePickerFilePreviewWithoutInfo(
+    props: FilePickerFilePreviewProps<FilePickerFileInfo | FilePickerWithUploaderFileInfo>
+) {
 
     const imagePreviewContainer = useRef<HTMLDivElement>(null)
     const context = useContext<FilePickerContextProps>(FilePickerContext)
-    const [isImagePreviewError, setImagePreviewError] = useState<boolean>(false)
+    const [
+        isImagePreviewError,
+        setImagePreviewError,
+    ] = useState<boolean>(false)
 
     const transitionRef = useRef<HTMLElement>(null)
 
@@ -188,20 +194,22 @@ function FilePickerFilePreviewWithoutInfo(props: FilePickerFilePreviewProps) {
                             {preview}
                         </div>
                         <div className="pt-2">
-                            <div className="file-picker-preview-uploading-indicator">
-                                <Loading
-                                    loading={!!file.uploading.isUploading}
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        minHeight: 'auto',
-                                        minWidth: 'auto',
-                                        height: previewSize,
-                                        width: previewSize,
-                                    }}
-                                />
-                            </div>
+                            {'uploading' in file && (
+                                <div className="file-picker-preview-uploading-indicator">
+                                    <Loading
+                                        loading={!!file.uploading.isUploading}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            minHeight: 'auto',
+                                            minWidth: 'auto',
+                                            height: previewSize,
+                                            width: previewSize,
+                                        }}
+                                    />
+                                </div>
+                            )}
                             {file.error && (
                                 <div
                                     className="file-picker-preview-error-indicator cursor d-flex align-items-center justify-content-center"
@@ -228,12 +236,12 @@ function FilePickerFilePreviewWithoutInfo(props: FilePickerFilePreviewProps) {
                     <a
                         className={clsx(
                             'file-picker-preview-delete z-index-2 d-block d-flex flex-row align-items-center justify-content-center',
-                            !canDeleteFile(file) || context.isDisabled ? 'disabled' : null
+                            !FilePickerHelpers.canDeleteFile(file) || context.isDisabled ? 'disabled' : null
                         )}
                         href="#"
                         onClick={e => {
                             e.preventDefault()
-                            if (canDeleteFile(file)) {
+                            if (FilePickerHelpers.canDeleteFile(file)) {
                                 onDelete(file)
                             }
                         }}
@@ -251,15 +259,3 @@ function FilePickerFilePreviewWithoutInfo(props: FilePickerFilePreviewProps) {
 }
 
 export default withStable(['onDelete'], FilePickerFilePreviewWithoutInfo)
-
-// Возможно ли удалить файл?
-function canDeleteFile(file: FilePickerFileInfo): boolean {
-    if (file.error) {
-        return true
-    } else if (file.uploading.uploadedFileInfo) {
-        return true
-    } else if (!file.uploading.isUploading) {
-        return true
-    }
-    return false
-}

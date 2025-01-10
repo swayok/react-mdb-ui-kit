@@ -28,7 +28,19 @@ interface Props extends AllHTMLAttributes<HTMLDivElement> {
 // Блок со списком предпросмотров прикрепленных картинок.
 function FilePickerPreviewsWithoutInfo(props: Props) {
 
-    const context = useContext<FilePickerContextProps>(FilePickerContext)
+    const {
+        maxFiles,
+        existingFiles,
+        files,
+        reorderable,
+        translations,
+        isDisabled,
+        canAttachMoreFiles,
+        pickFile,
+        getNextFilePosition,
+        onExistingFileDelete,
+        onFileDelete,
+    } = useContext<FilePickerContextProps>(FilePickerContext)
 
     const {
         children,
@@ -38,6 +50,7 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
         previewSize = 100,
         alwaysVisible,
         scaleImageOnHover,
+        adderIcon,
         ...otherProps
     } = props
 
@@ -50,40 +63,40 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
     )
 
     const previews = []
-    for (let i = 0; i < context.existingFiles.length; i++) {
+    for (let i = 0; i < existingFiles.length; i++) {
         previews.push(
             <FilePickerFilePreviewWithoutInfo
-                key={'existing-file-preview-' + context.existingFiles[i].UID}
-                file={context.existingFiles[i]}
+                key={'existing-file-preview-' + existingFiles[i].UID}
+                file={existingFiles[i]}
                 className={itemClassName}
                 previewSize={previewSize}
                 onDelete={file => {
-                    context.onExistingFileDelete(file, 210)
+                    onExistingFileDelete(file, 210)
                 }}
             />
         )
     }
-    for (let i = 0; i < context.files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
         previews.push(
             <FilePickerFilePreviewWithoutInfo
-                key={'file-preview-' + context.files[i].UID}
-                file={context.files[i]}
+                key={'file-preview-' + files[i].UID}
+                file={files[i]}
                 className={itemClassName}
                 previewSize={previewSize}
                 onDelete={file => {
-                    if (!context.isDisabled) {
-                        context.onFileDelete(file, 210)
+                    if (!isDisabled) {
+                        onFileDelete(file, 210)
                     }
                 }}
             />
         )
     }
 
-    const adderPosition: number = context.getNextFilePosition() + 100000
+    const adderPosition: number = getNextFilePosition() + 100000
 
     return (
         <Collapse
-            show={alwaysVisible || context.files.length > 0}
+            show={alwaysVisible || files.length > 0}
             showImmediately={alwaysVisible}
         >
             <div
@@ -96,8 +109,8 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
                     className={clsx(
                         'file-picker-previews-adder rounded-6 mb-4 ms-3 me-3 p-3 cursor',
                         'd-flex flex-row justify-content-center align-items-center',
-                        context.reorderable ? 'file-picker-previews-reorderable' : null,
-                        !context.canAttachMoreFiles() || context.isDisabled ? 'disabled' : null,
+                        reorderable ? 'file-picker-previews-reorderable' : null,
+                        !canAttachMoreFiles() || isDisabled ? 'disabled' : null,
                         pickerButtonClassName
                     )}
                     style={{
@@ -108,22 +121,22 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
                     href="#"
                     onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                         e.preventDefault()
-                        if (context.canAttachMoreFiles()) {
-                            context.pickFile()
+                        if (canAttachMoreFiles()) {
+                            pickFile()
                         } else {
                             ToastService.error(
-                                context.translations.error.too_many_files(context.maxFiles as number)
+                                translations.error.too_many_files(maxFiles as number)
                             )
                         }
                     }}
                 >
                     <Icon
-                        path={props.adderIcon || (context.maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
+                        path={adderIcon || (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
                         size={Math.round(previewSize / 2)}
                     />
                 </a>
                 {/* Заполнитель пустого пространства в конце */}
-                {context.files.length % 2 === 0 && (
+                {files.length % 2 === 0 && (
                     <div
                         className="flex-1 d-none d-sm-block"
                         style={{

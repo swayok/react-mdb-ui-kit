@@ -12,19 +12,28 @@ import {mdiAlertCircle, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} fr
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerFileInfo,
-    FilePickerFilePreviewProps,
+    FilePickerWithUploaderFileInfo,
+    FilePickerFilePreviewProps, FilePickerFileInfo,
 } from '../../types/FilePicker'
 import withStable from '../../helpers/withStable'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
+import FilePickerHelpers from './FilePickerHelpers'
 
 // Компонент предпросмотра прикрепленного файла.
-function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
+function FilePickerFilePreview(
+    props: FilePickerFilePreviewProps<FilePickerFileInfo | FilePickerWithUploaderFileInfo>
+) {
 
     const imagePreviewContainer = useRef<HTMLDivElement>(null)
     const context = useContext<FilePickerContextProps>(FilePickerContext)
-    const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
-    const [isImagePreviewError, setImagePreviewError] = useState<boolean>(false)
+    const [
+        canvas,
+        setCanvas,
+    ] = useState<HTMLCanvasElement | null>(null)
+    const [
+        isImagePreviewError,
+        setImagePreviewError,
+    ] = useState<boolean>(false)
 
     const transitionRef = useRef<HTMLElement>(null)
 
@@ -81,7 +90,7 @@ function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
         </div>
     )
 
-    const renderUploadingStatus = (file: FilePickerFileInfo) => {
+    const renderUploadingStatus = (file: FilePickerWithUploaderFileInfo) => {
         if (file.uploading.isUploading) {
             return (
                 <div className="mt-1 text-primary">
@@ -131,8 +140,8 @@ function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
     const renderFileInfo = () => (
         <div className="text-start">
             <div className="fw600 mb-1 text-break">{file.file.name}</div>
-            <div>{context.translations.file_size}: {getFileSizeMb(file)}Mb</div>
-            {renderUploadingStatus(file)}
+            <div>{context.translations.file_size}: {FilePickerHelpers.getFileSizeMb(file)}Mb</div>
+            {'uploading' in file && renderUploadingStatus(file)}
             {!!file.error && (
                 <div className="text-danger mt-1 d-flex flex-row">
                     {context.translations.error_label}: {file.error}
@@ -176,18 +185,20 @@ function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
                         <div className="pt-2">
                             {renderFileInfo()}
                             <div className="file-picker-preview-uploading-indicator">
-                                <Loading
-                                    loading={!!file.uploading.isUploading}
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        minHeight: 'auto',
-                                        minWidth: 'auto',
-                                        height: previewSize,
-                                        width: previewSize,
-                                    }}
-                                />
+                                {'uploading' in file && (
+                                    <Loading
+                                        loading={!!file.uploading.isUploading}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            minHeight: 'auto',
+                                            minWidth: 'auto',
+                                            height: previewSize,
+                                            width: previewSize,
+                                        }}
+                                    />
+                                )}
                             </div>
                             {!!file.error && (
                                 <div
@@ -215,12 +226,12 @@ function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
                     <a
                         className={clsx(
                             'file-picker-preview-delete d-block d-flex flex-row align-items-center justify-content-center',
-                            !canDeleteFile(file) || context.isDisabled ? 'disabled' : null
+                            !FilePickerHelpers.canDeleteFile(file) || context.isDisabled ? 'disabled' : null
                         )}
                         href="#"
                         onClick={e => {
                             e.preventDefault()
-                            if (canDeleteFile(file)) {
+                            if (FilePickerHelpers.canDeleteFile(file)) {
                                 onDelete(file)
                             }
                         }}
@@ -247,19 +258,4 @@ function FilePickerFilePreview(props: FilePickerFilePreviewProps) {
 
 export default withStable(['onDelete'], FilePickerFilePreview)
 
-// Размер файла в мегабайтах.
-function getFileSizeMb(file: FilePickerFileInfo): number {
-    return Math.round(file.file.size / 1024 / 1024 * 100) / 100
-}
 
-// Возможно ли удалить файл?
-function canDeleteFile(file: FilePickerFileInfo): boolean {
-    if (file.error) {
-        return true
-    } else if (file.uploading.uploadedFileInfo) {
-        return true
-    } else if (!file.uploading.isUploading) {
-        return true
-    }
-    return false
-}
