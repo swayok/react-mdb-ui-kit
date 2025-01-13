@@ -1,32 +1,15 @@
-import React, {AllHTMLAttributes, useContext} from 'react'
+import React, {useContext} from 'react'
 import clsx from 'clsx'
 import FilePickerContext from './FilePickerContext'
-import {FilePickerContextProps} from '../../types/FilePicker'
+import {FilePickerContextProps, FilePickerPreviewsWithoutInfoProps} from '../../types/FilePicker'
 import Collapse from '../Collapse'
 import Icon from '../Icon'
 import {mdiFolderOpenOutline, mdiPlus} from '@mdi/js'
 import FilePickerFilePreviewWithoutInfo from './FilePickerFilePreviewWithoutInfo'
 import ToastService from '../../services/ToastService'
 
-interface Props extends AllHTMLAttributes<HTMLDivElement> {
-    // Размер предпросмотра.
-    previewSize?: number;
-    // Показывать этот блок всегда или только когда есть прикрепленные файлы?
-    // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
-    // поэтому его можно скрывать до прикрепления первого файла.
-    alwaysVisible?: boolean;
-    // CSS классы для предпросмотров.
-    itemClassName?: string;
-    // CSS классы для кнопки добавления файла.
-    pickerButtonClassName?: string;
-    // Иконка для кнопки добавления картинки.
-    adderIcon?: string;
-    // Увеличивать картинку при наведении курсора?
-    scaleImageOnHover?: boolean;
-}
-
 // Блок со списком предпросмотров прикрепленных картинок.
-function FilePickerPreviewsWithoutInfo(props: Props) {
+function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps) {
 
     const {
         maxFiles,
@@ -47,7 +30,9 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
         className,
         itemClassName,
         pickerButtonClassName,
+        imagePreviewClassName,
         previewSize = 100,
+        imagePreviewSize = previewSize,
         alwaysVisible,
         scaleImageOnHover,
         adderIcon,
@@ -69,7 +54,9 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
                 key={'existing-file-preview-' + existingFiles[i].UID}
                 file={existingFiles[i]}
                 className={itemClassName}
+                imageClassName={imagePreviewClassName}
                 previewSize={previewSize}
+                imagePreviewSize={imagePreviewSize}
                 onDelete={file => {
                     onExistingFileDelete(file, 210)
                 }}
@@ -83,6 +70,7 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
                 file={files[i]}
                 className={itemClassName}
                 previewSize={previewSize}
+                imagePreviewSize={imagePreviewSize}
                 onDelete={file => {
                     if (!isDisabled) {
                         onFileDelete(file, 210)
@@ -107,7 +95,7 @@ function FilePickerPreviewsWithoutInfo(props: Props) {
                 {previews}
                 <a
                     className={clsx(
-                        'file-picker-previews-adder rounded-6 mb-4 ms-3 me-3 p-3 cursor',
+                        'file-picker-previews-adder rounded-6 p-3 cursor',
                         'd-flex flex-row justify-content-center align-items-center',
                         reorderable ? 'file-picker-previews-reorderable' : null,
                         !canAttachMoreFiles() || isDisabled ? 'disabled' : null,

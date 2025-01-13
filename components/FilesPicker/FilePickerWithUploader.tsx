@@ -392,7 +392,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                 //         },
                 //     })
                 // }
-                console.error('[FilePicker] processNewFile error: ', {
+                console.error('[FilePickerWithUploader] processNewFile error: ', {
                     file,
                     error: e,
                 })

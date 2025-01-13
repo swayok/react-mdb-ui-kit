@@ -2,8 +2,8 @@
 .file-picker-previews-container {
 
     &.d-flex {
-        margin-left: -1rem;
-        margin-right: -1rem;
+        column-gap: 1rem;
+        row-gap: 1.5rem;
     }
 
     &.file-picker-previews-scale-on-hover {

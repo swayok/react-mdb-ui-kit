@@ -19,8 +19,12 @@ export default {
     ): FilePickerFileInfo[] {
         const normalized: FilePickerFileInfo[] = []
         for (let i = 0; i < value.length; i++) {
-            if (typeof value[i] !== 'object' || !('UID' in value[i]) || !('id' in value[i])) {
-                // Значение не является объектом с UID и id, пропускаем его.
+            if (
+                !value[i]
+                || typeof value[i] !== 'object'
+                || (!('UID' in value[i]) && !('id' in value[i]))
+            ) {
+                // Значение не является объектом с UID или id, пропускаем его.
                 continue
             }
             if ('id' in value[i]) {
@@ -117,31 +121,33 @@ export default {
         maxImageSize?: number,
         convertImageToJpeg?: boolean,
         imagesCompression?: number
-    ): Promise<Blob> {
-        if (!file.file.isImage) {
-            return Promise.resolve(file.file as Blob)
-        } else {
-            return new Promise(((resolve, reject) => {
-                new FileApiImageManipulation(file.file)
-                    .setMaxSize(maxImageSize)
-                    .getCanvas()
-                    .then((canvas: HTMLCanvasElement) => {
-                        file.resizedCanvas = canvas
-                        canvas.toBlob(
-                            (data: Blob | null) => {
-                                if (!data) {
-                                    reject(new Error('failed_to_get_image_blob'))
-                                } else {
-                                    resolve(data)
-                                }
-                            },
-                            convertImageToJpeg ? 'image/jpeg' : undefined,
-                            imagesCompression
-                        )
-                    })
-                    .catch(() => reject(new Error('failed_to_resize_file')))
-            }))
+    ): Promise<Blob | File> {
+        if (
+            !file.file.isImage
+            || file.file.type === 'image/svg+xml'
+        ) {
+            return Promise.resolve(file.file)
         }
+        return new Promise(((resolve, reject) => {
+            new FileApiImageManipulation(file.file)
+                .setMaxSize(maxImageSize)
+                .getCanvas()
+                .then((canvas: HTMLCanvasElement) => {
+                    file.resizedCanvas = canvas
+                    canvas.toBlob(
+                        (data: Blob | null) => {
+                            if (!data) {
+                                reject(new Error('failed_to_get_image_blob'))
+                            } else {
+                                resolve(data)
+                            }
+                        },
+                        convertImageToJpeg ? 'image/jpeg' : undefined,
+                        imagesCompression
+                    )
+                })
+                .catch(() => reject(new Error('failed_to_resize_file')))
+        }))
     },
 
     // Валидация типа и размера файла.
@@ -173,15 +179,13 @@ export default {
 
     // Может ли пользователь удалить этот файл?
     canDeleteFile(file: FilePickerFileInfo | FilePickerWithUploaderFileInfo): boolean {
-        if (file.error) {
+        if (!file.error || !('uploading' in file)) {
             return true
         }
-        if ('uploading' in file) {
-            if (file.uploading.uploadedFileInfo) {
-                return true
-            } else if (!file.uploading.isUploading) {
-                return true
-            }
+        if (file.uploading.uploadedFileInfo) {
+            return true
+        } else if (!file.uploading.isUploading) {
+            return true
         }
         return false
     },

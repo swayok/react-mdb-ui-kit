@@ -34,11 +34,14 @@ function FilePickerFilePreviewWithoutInfo(
     const transitionRef = useRef<HTMLElement>(null)
 
     const {
-        className,
+        className = 'mb-4',
+        imageClassName,
+        fileClassName,
         previewSize,
+        imagePreviewSize = previewSize,
         file,
-        onDelete,
         style,
+        onDelete,
         onClick,
         onFocus,
         onBlur,
@@ -108,9 +111,12 @@ function FilePickerFilePreviewWithoutInfo(
             <div
                 className="file-picker-preview-image rounded-6 d-flex flex-row align-items-stretch"
                 ref={imagePreviewContainer}
-                style={previewSizes}
+                style={{
+                    width: imagePreviewSize,
+                    height: imagePreviewSize,
+                }}
             >
-                {getPreviewPlaceholder(props.previewSize, isImagePreviewError, style)}
+                {getPreviewPlaceholder(previewSize, isImagePreviewError, style)}
             </div>
         )
     } else {
@@ -118,7 +124,7 @@ function FilePickerFilePreviewWithoutInfo(
             <div
                 className={clsx(
                     'file-picker-preview-file rounded-6 d-flex align-items-center justify-content-center',
-                    className
+                    fileClassName
                 )}
                 style={previewSizes}
             >
@@ -140,7 +146,7 @@ function FilePickerFilePreviewWithoutInfo(
                 position={file.position}
                 payload={file}
                 className={clsx(
-                    'file-picker-preview-wrapper ms-3 me-3 mb-4 rounded-6 shadow-0',
+                    'file-picker-preview-wrapper rounded-6 shadow-0',
                     previewInfo.preview === 'image'
                         ? 'file-picker-preview-for-image'
                         : 'file-picker-preview-for-file',
@@ -190,7 +196,13 @@ function FilePickerFilePreviewWithoutInfo(
                             onMouseLeave?.(e)
                         }}
                     >
-                        <div className="file-picker-preview">
+                        <div
+                            className={clsx(
+                                'file-picker-preview d-flex align-items-center justify-content-center',
+                                previewInfo.preview === 'image' ? imageClassName : null
+                            )}
+                            style={previewSizes}
+                        >
                             {preview}
                         </div>
                         <div className="pt-2">
@@ -236,7 +248,9 @@ function FilePickerFilePreviewWithoutInfo(
                     <a
                         className={clsx(
                             'file-picker-preview-delete z-index-2 d-block d-flex flex-row align-items-center justify-content-center',
-                            !FilePickerHelpers.canDeleteFile(file) || context.isDisabled ? 'disabled' : null
+                            (!FilePickerHelpers.canDeleteFile(file) || context.isDisabled)
+                                ? 'disabled'
+                                : null
                         )}
                         href="#"
                         onClick={e => {

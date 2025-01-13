@@ -37,7 +37,7 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
         convertImagesToJpeg = false,
         imagesCompression = 0.92,
         translations = filePickerDefaultTranslations,
-        dropInvalidFiles = false,
+        dropInvalidFiles = maxFiles === 1,
         allowedMimeTypes,
         useUidAsFileName,
         value = [],
@@ -174,18 +174,20 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
                     convertImagesToJpeg
                 )
                 // 2. Сжимаем и конвертируем в JPEG, если необходимо.
-                Object.assign(
-                    processedFile.file,
-                    // Получаем обработанный Blob.
-                    await FilePickerHelpers.compressFile(
-                        processedFile,
-                        maxImageSize,
-                        convertImagesToJpeg,
-                        imagesCompression
-                    ),
-                    // Заменяем имя файла.
+                const compressedFile: Blob | File = await FilePickerHelpers.compressFile(
+                    processedFile,
+                    maxImageSize,
+                    convertImagesToJpeg,
+                    imagesCompression
+                )
+                // Заменяем оригинальный файл измененным, с нормализованным названием.
+                processedFile.file = Object.assign(
+                    new File([compressedFile], normalizedFileName, {
+                        lastModified: processedFile.file.lastModified,
+                        type: compressedFile.type,
+                    }),
                     {
-                        name: normalizedFileName,
+                        isImage: true,
                     }
                 )
                 // 3. Получаем дополнительные данные о картинке (размеры, exif, превью).
@@ -201,7 +203,7 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
             //         },
             //     })
             // }
-            console.error('[FilePicker] processNewFile error: ', {
+            console.error('[SimplifiedFilePicker] processNewFile error: ', {
                 file,
                 error: e,
             })
@@ -241,7 +243,21 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
             }
         }
         if (newFilesList.length > 0) {
-            onChange(files.concat(newFilesList))
+            if (maxFiles === 1) {
+                // Нужно пометить файл из БД удалённым.
+                const filesToDelete = files.filter(file => !file.isNew)
+                for (let i = 0; i < filesToDelete.length; i++) {
+                    if (!filesToDelete[i].isDeleted) {
+                        filesToDelete[i] = {
+                            ...filesToDelete[i],
+                            isDeleted: true,
+                        }
+                    }
+                }
+                onChange(filesToDelete.concat(newFilesList))
+            } else {
+                onChange(files.concat(newFilesList))
+            }
         }
     }
 

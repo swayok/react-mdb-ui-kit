@@ -163,7 +163,7 @@ export interface SimplifiedFilePickerProps {
     // Разрешить не картинки?
     allowFiles?: boolean;
     // Максимальное количество файлов для загрузки.
-    maxFiles: FilePickerContextProps<FilePickerFileInfo>['maxFiles'];
+    maxFiles?: FilePickerContextProps<FilePickerFileInfo>['maxFiles'];
     // Максимальный размер файлов на диске (не действует на картинки).
     maxFileSizeKb?: number;
     // Использовать UID вместо оригинального имени прикрепляемого файла.
@@ -210,6 +210,31 @@ export interface FilePickerWithUploaderProps extends Omit<FilePickerProps<FilePi
     deleteUrl?: string | null;
     // HTTP метод удаления файлов с сервера, по умолчанию: delete.
     deleteMethod: ApiRequestMethod;
+}
+
+/**
+ * Свойства компонента, который отображает список прикрепленных файлов.
+ */
+export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HTMLDivElement> {
+    // Размер контейнера предпросмотра прикрепленного файла.
+    previewSize?: number;
+    // Размер предпросмотра картинки.
+    // По умолчанию: previewSize.
+    imagePreviewSize?: number;
+    // Показывать этот блок всегда или только когда есть прикрепленные файлы?
+    // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
+    // поэтому его можно скрывать до прикрепления первого файла.
+    alwaysVisible?: boolean;
+    // CSS классы для контейнера предпросмотра файла или картинки.
+    itemClassName?: string;
+    // CSS классы для предпросмотра картинки.
+    imagePreviewClassName?: string;
+    // CSS классы для кнопки добавления файла.
+    pickerButtonClassName?: string;
+    // Иконка для кнопки добавления картинки.
+    adderIcon?: string;
+    // Увеличивать картинку при наведении курсора?
+    scaleImageOnHover?: boolean;
 }
 
 // Тексты для компонентов выбора файлов для загрузки на сервер.
@@ -276,7 +301,7 @@ export interface FilePickerFileInfoFromDB {
     // URL к файлу.
     url: string;
     // Позиция в списке.
-    position?: number;
+    position?: number | null;
 }
 
 // Информация о прикрепленном файле и состоянии его загрузки на сервер.
@@ -298,10 +323,16 @@ export interface FilePickerWithUploaderFileInfo extends FilePickerFileInfo {
 export interface FilePickerFilePreviewProps<
     T extends FilePickerFileInfo = FilePickerFileInfo
 > extends AllHTMLAttributes<HTMLElement> {
-    file: T;
-    previewSize: number;
-    onDelete: (file: T) => void;
     key: string;
+    file: T;
+    // Размер контейнера предпросмотра прикрепленного файла.
+    previewSize: number;
+    // Размер предпросмотра картинки.
+    // По умолчанию: previewSize.
+    imagePreviewSize?: number;
+    imageClassName?: string;
+    fileClassName?: string;
+    onDelete: (file: T) => void;
 }
 
 // Позиция нового файла в списке.
