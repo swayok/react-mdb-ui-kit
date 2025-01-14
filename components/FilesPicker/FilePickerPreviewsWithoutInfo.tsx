@@ -22,6 +22,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         pickFile,
         getNextFilePosition,
         onExistingFileDelete,
+        onExistingFileRestore,
         onFileDelete,
     } = useContext<FilePickerContextProps>(FilePickerContext)
 
@@ -34,18 +35,12 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         previewSize = 100,
         imagePreviewSize = previewSize,
         alwaysVisible,
-        scaleImageOnHover,
+        scaleImageOnHover = false,
         adderIcon,
+        showDeletedFiles = false,
+        animatePreviews,
         ...otherProps
     } = props
-
-    const cssClasses = clsx(
-        'file-picker-previews-container d-flex flex-row flex-wrap',
-        'align-items-stretch justify-content-around',
-        'justify-content-sm-start',
-        scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
-        className
-    )
 
     const previews = []
     for (let i = 0; i < existingFiles.length; i++) {
@@ -53,13 +48,18 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
             <FilePickerFilePreviewWithoutInfo
                 key={'existing-file-preview-' + existingFiles[i].UID}
                 file={existingFiles[i]}
+                animate={animatePreviews}
                 className={itemClassName}
                 imageClassName={imagePreviewClassName}
                 previewSize={previewSize}
                 imagePreviewSize={imagePreviewSize}
                 onDelete={file => {
-                    onExistingFileDelete(file, 210)
+                    if (!isDisabled) {
+                        onExistingFileDelete(file, animatePreviews ? 210 : undefined)
+                    }
                 }}
+                showIfDeleted={showDeletedFiles}
+                onRestore={onExistingFileRestore || undefined}
             />
         )
     }
@@ -68,12 +68,13 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
             <FilePickerFilePreviewWithoutInfo
                 key={'file-preview-' + files[i].UID}
                 file={files[i]}
+                animate={animatePreviews}
                 className={itemClassName}
                 previewSize={previewSize}
                 imagePreviewSize={imagePreviewSize}
                 onDelete={file => {
                     if (!isDisabled) {
-                        onFileDelete(file, 210)
+                        onFileDelete(file, animatePreviews ? 210 : undefined)
                     }
                 }}
             />
@@ -84,11 +85,17 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
 
     return (
         <Collapse
-            show={alwaysVisible || files.length > 0}
+            show={alwaysVisible || files.length > 0 || existingFiles.length > 0}
             showImmediately={alwaysVisible}
         >
             <div
-                className={cssClasses}
+                className={clsx(
+                    'file-picker-previews-container d-flex flex-row flex-wrap',
+                    'align-items-stretch justify-content-around',
+                    'justify-content-sm-start',
+                    scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
+                    className
+                )}
                 {...otherProps}
             >
                 {children}
@@ -124,7 +131,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                     />
                 </a>
                 {/* Заполнитель пустого пространства в конце */}
-                {files.length % 2 === 0 && (
+                {(files.length + existingFiles.length) % 2 === 0 && (
                     <div
                         className="flex-1 d-none d-sm-block"
                         style={{

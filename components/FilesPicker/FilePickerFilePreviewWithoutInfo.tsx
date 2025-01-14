@@ -8,12 +8,19 @@ import Card from '../Card/Card'
 import CardBody from '../Card/CardBody'
 import Loading from '../Loading'
 import Icon from '../Icon'
-import {mdiAlertCircle, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} from '@mdi/js'
+import {
+    mdiAlertCircle,
+    mdiBackupRestore,
+    mdiCloseCircleOutline,
+    mdiImageBroken,
+    mdiImageFrame,
+} from '@mdi/js'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerFilePreviewProps,
     FilePickerWithUploaderFileInfo,
-    FilePickerFilePreviewProps, FilePickerFileInfo,
 } from '../../types/FilePicker'
 import withStable from '../../helpers/withStable'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
@@ -25,7 +32,12 @@ function FilePickerFilePreviewWithoutInfo(
 ) {
 
     const imagePreviewContainer = useRef<HTMLDivElement>(null)
-    const context = useContext<FilePickerContextProps>(FilePickerContext)
+    const {
+        previews,
+        translations,
+        fallbackPreview,
+        isDisabled,
+    } = useContext<FilePickerContextProps>(FilePickerContext)
     const [
         isImagePreviewError,
         setImagePreviewError,
@@ -34,14 +46,17 @@ function FilePickerFilePreviewWithoutInfo(
     const transitionRef = useRef<HTMLElement>(null)
 
     const {
-        className = 'mb-4',
+        className,
         imageClassName,
         fileClassName,
         previewSize,
         imagePreviewSize = previewSize,
+        animate = true,
         file,
         style,
         onDelete,
+        onRestore,
+        showIfDeleted = false,
         onClick,
         onFocus,
         onBlur,
@@ -76,6 +91,11 @@ function FilePickerFilePreviewWithoutInfo(
         }
     }, [imagePreviewContainer.current, file.file.previewDataUrl])
 
+    // Не продолжаем, если файл удалён при определенном наборе значений других свойств.
+    if (!animate && !showIfDeleted && file.isDeleted) {
+        return null
+    }
+
     // Заполнитель предпросмотра файла.
     const getPreviewPlaceholder = (
         previewSize: number,
@@ -94,10 +114,10 @@ function FilePickerFilePreviewWithoutInfo(
         </div>
     )
 
-    const previewInfo: FilePickerContextMimeTypeInfo = context.previews[file.file.type] || {
+    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.type] || {
         type: 'file',
         extensions: [],
-        preview: context.fallbackPreview,
+        preview: fallbackPreview,
     } as FilePickerContextMimeTypeInfo
 
     const previewSizes: CSSProperties = {
@@ -116,7 +136,7 @@ function FilePickerFilePreviewWithoutInfo(
                     height: imagePreviewSize,
                 }}
             >
-                {getPreviewPlaceholder(previewSize, isImagePreviewError, style)}
+                {getPreviewPlaceholder(imagePreviewSize, isImagePreviewError, style)}
             </div>
         )
     } else {
@@ -133,122 +153,121 @@ function FilePickerFilePreviewWithoutInfo(
         )
     }
 
-    return (
-        <CSSTransition
-            in={!file.isDeleted}
-            classNames="scale-and-fade"
-            timeout={300}
-            appear
-            nodeRef={transitionRef}
+    const content = (
+        <ReorderableListItem
+            tag={Card}
+            position={file.position}
+            payload={file}
+            className={clsx(
+                'file-picker-preview-wrapper rounded-6 shadow-0',
+                previewInfo.preview === 'image'
+                    ? 'file-picker-preview-for-image'
+                    : 'file-picker-preview-for-file',
+                className
+            )}
+            style={{
+                ...previewSizes,
+                order: file.position,
+            }}
+            wrapperRef={transitionRef}
         >
-            <ReorderableListItem
-                tag={Card}
-                position={file.position}
-                payload={file}
-                className={clsx(
-                    'file-picker-preview-wrapper rounded-6 shadow-0',
-                    previewInfo.preview === 'image'
-                        ? 'file-picker-preview-for-image'
-                        : 'file-picker-preview-for-file',
-                    className
-                )}
+            <CardBody
+                className="position-relative p-0"
                 style={{
                     ...previewSizes,
-                    order: file.position,
+                    ...style,
                 }}
-                wrapperRef={transitionRef}
+                {...containerProps}
             >
-                <CardBody
-                    className="position-relative p-0"
-                    style={{
-                        ...previewSizes,
-                        ...style,
-                    }}
-                    {...containerProps}
-                >
-                    <a
-                        className="file-picker-preview-container d-block position-relative z-index-1 d-flex flex-row align-items-start justify-content-start"
-                        href="#"
-                        onClick={e => {
-                            e.preventDefault()
-                            // Scale toggle картинки для touch-устройств.
-                            if (e.currentTarget.parentElement?.parentElement?.classList.contains('active')) {
-                                e.currentTarget.blur()
-                            } else {
-                                e.currentTarget.focus()
-                            }
+                <a
+                    className={clsx(
+                        'file-picker-preview-container position-relative z-index-1',
+                        'd-flex flex-row align-items-start justify-content-start',
+                        (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
+                    )}
+                    href="#"
+                    onClick={e => {
+                        e.preventDefault()
+                        // Scale toggle картинки для touch-устройств.
+                        if (e.currentTarget.parentElement?.parentElement?.classList.contains('active')) {
+                            e.currentTarget.blur()
+                        } else {
+                            e.currentTarget.focus()
+                        }
 
-                            onClick?.(e)
-                        }}
-                        onFocus={e => {
-                            // Scale up картинки для touch-устройств.
-                            e.currentTarget.parentElement?.parentElement?.classList.add('active')
-                            onFocus?.(e)
-                        }}
-                        onBlur={e => {
-                            // Scale down картинки для touch-устройств.
-                            e.currentTarget.parentElement?.parentElement?.classList.remove('active')
-                            onBlur?.(e)
-                        }}
-                        onMouseLeave={e => {
-                            // Scale down картинки для touch-устройств.
-                            e.currentTarget.parentElement?.parentElement?.classList.remove('active')
-                            onMouseLeave?.(e)
-                        }}
+                        onClick?.(e)
+                    }}
+                    onFocus={e => {
+                        // Scale up картинки для touch-устройств.
+                        e.currentTarget.parentElement?.parentElement?.classList.add('active')
+                        onFocus?.(e)
+                    }}
+                    onBlur={e => {
+                        // Scale down картинки для touch-устройств.
+                        e.currentTarget.parentElement?.parentElement?.classList.remove('active')
+                        onBlur?.(e)
+                    }}
+                    onMouseLeave={e => {
+                        // Scale down картинки для touch-устройств.
+                        e.currentTarget.parentElement?.parentElement?.classList.remove('active')
+                        onMouseLeave?.(e)
+                    }}
+                >
+                    <div
+                        className={clsx(
+                            'file-picker-preview d-flex align-items-center justify-content-center',
+                            previewInfo.preview === 'image' ? imageClassName : null
+                        )}
+                        style={previewSizes}
                     >
-                        <div
-                            className={clsx(
-                                'file-picker-preview d-flex align-items-center justify-content-center',
-                                previewInfo.preview === 'image' ? imageClassName : null
-                            )}
-                            style={previewSizes}
-                        >
-                            {preview}
-                        </div>
-                        <div className="pt-2">
-                            {'uploading' in file && (
-                                <div className="file-picker-preview-uploading-indicator">
-                                    <Loading
-                                        loading={!!file.uploading.isUploading}
-                                        style={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            minHeight: 'auto',
-                                            minWidth: 'auto',
-                                            height: previewSize,
-                                            width: previewSize,
-                                        }}
-                                    />
-                                </div>
-                            )}
-                            {file.error && (
-                                <div
-                                    className="file-picker-preview-error-indicator cursor d-flex align-items-center justify-content-center"
+                        {preview}
+                    </div>
+                    <div className="pt-2">
+                        {'uploading' in file && (
+                            <div className="file-picker-preview-uploading-indicator">
+                                <Loading
+                                    loading={!!file.uploading.isUploading}
                                     style={{
                                         position: 'absolute',
                                         top: 0,
                                         left: 0,
+                                        minHeight: 'auto',
+                                        minWidth: 'auto',
                                         height: previewSize,
                                         width: previewSize,
-                                        zIndex: 101,
                                     }}
-                                    onClick={() => ToastService.error(file.error as string)}
-                                >
-                                    <Icon
-                                        path={mdiAlertCircle}
-                                        size={Math.max(50, Math.round(previewSize / 3))}
-                                        className="bg-white text-red"
-                                        style={{borderRadius: '50%'}}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </a>
+                                />
+                            </div>
+                        )}
+                        {file.error && (
+                            <div
+                                className="file-picker-preview-error-indicator cursor d-flex align-items-center justify-content-center"
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    height: previewSize,
+                                    width: previewSize,
+                                    zIndex: 101,
+                                }}
+                                onClick={() => ToastService.error(file.error as string)}
+                            >
+                                <Icon
+                                    path={mdiAlertCircle}
+                                    size={Math.max(50, Math.round(previewSize / 3))}
+                                    className="bg-white text-red"
+                                    style={{borderRadius: '50%'}}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </a>
+                {!file.isDeleted && (
                     <a
                         className={clsx(
-                            'file-picker-preview-delete z-index-2 d-block d-flex flex-row align-items-center justify-content-center',
-                            (!FilePickerHelpers.canDeleteFile(file) || context.isDisabled)
+                            'file-picker-preview-delete z-index-2',
+                            'd-flex flex-row align-items-center justify-content-center',
+                            (!FilePickerHelpers.canDeleteFile(file) || isDisabled)
                                 ? 'disabled'
                                 : null
                         )}
@@ -266,10 +285,46 @@ function FilePickerFilePreviewWithoutInfo(
                             className="text-red"
                         />
                     </a>
-                </CardBody>
-            </ReorderableListItem>
-        </CSSTransition>
+                )}
+                {file.isDeleted && onRestore && (
+                    <a
+                        className={clsx(
+                            'file-picker-preview-restore z-index-2',
+                            'd-flex flex-row align-items-center justify-content-center'
+                        )}
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault()
+                            onRestore(file)
+                        }}
+                        title={translations.restore}
+                    >
+                        <Icon
+                            path={mdiBackupRestore}
+                            size={24}
+                            className="text-blue"
+                        />
+                    </a>
+                )}
+            </CardBody>
+        </ReorderableListItem>
     )
+
+    if (animate) {
+        return (
+            <CSSTransition
+                in={!file.isDeleted || showIfDeleted}
+                classNames="scale-and-fade"
+                timeout={300}
+                appear
+                nodeRef={transitionRef}
+            >
+                {content}
+            </CSSTransition>
+        )
+    }
+
+    return content
 }
 
 export default withStable(['onDelete'], FilePickerFilePreviewWithoutInfo)

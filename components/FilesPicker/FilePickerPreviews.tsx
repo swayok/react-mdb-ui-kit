@@ -19,12 +19,29 @@ interface Props extends AllHTMLAttributes<HTMLDivElement> {
     itemClassName?: string;
     // CSS классы для кнопки добавления файла.
     pickerButtonClassName?: string;
+    // Показывать удаленные файлы, полученные из БД.
+    // Также добавляется возможность восстановить файл.
+    showDeletedFiles?: boolean;
+    // Анимировать добавление и удаление файла.
+    animatePreviews?: boolean;
 }
 
 // Блок со списком предпросмотров прикрепленных картинок.
 function FilePickerPreviews(props: Props) {
 
-    const context = useContext<FilePickerContextProps>(FilePickerContext)
+    const {
+        existingFiles,
+        onExistingFileDelete,
+        onExistingFileRestore,
+        files,
+        onFileDelete,
+        isDisabled,
+        translations,
+        getNextFilePosition,
+        canAttachMoreFiles,
+        pickFile,
+        maxFiles,
+    } = useContext<FilePickerContextProps>(FilePickerContext)
 
     const {
         className,
@@ -32,6 +49,8 @@ function FilePickerPreviews(props: Props) {
         pickerButtonClassName,
         previewSize = 100,
         alwaysVisible,
+        showDeletedFiles,
+        animatePreviews,
         children,
         ...otherProps
     } = props
@@ -42,37 +61,45 @@ function FilePickerPreviews(props: Props) {
     )
 
     const previews = []
-    for (let i = 0; i < context.existingFiles.length; i++) {
+    for (let i = 0; i < existingFiles.length; i++) {
         previews.push(
             <FilePickerFilePreview
-                key={'existing-file-preview-' + context.existingFiles[i].UID}
-                file={context.existingFiles[i]}
+                key={'existing-file-preview-' + existingFiles[i].UID}
+                file={existingFiles[i]}
+                animate={animatePreviews}
                 previewSize={previewSize}
-                onDelete={file => context.onExistingFileDelete(file, 210)}
+                onDelete={file => {
+                    if (!isDisabled) {
+                        onExistingFileDelete(file, animatePreviews ? 210 : undefined)
+                    }
+                }}
+                showIfDeleted={showDeletedFiles}
+                onRestore={onExistingFileRestore || undefined}
             />
         )
     }
-    for (let i = 0; i < context.files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
         previews.push(
             <FilePickerFilePreview
-                key={'file-preview-' + context.files[i].UID}
-                file={context.files[i]}
+                key={'file-preview-' + files[i].UID}
+                file={files[i]}
+                animate={animatePreviews}
                 className={itemClassName}
                 previewSize={previewSize}
                 onDelete={(file: FilePickerFileInfo) => {
-                    if (!context.isDisabled) {
-                        context.onFileDelete(file, 210)
+                    if (!isDisabled) {
+                        onFileDelete(file, animatePreviews ? 210 : undefined)
                     }
                 }}
             />
         )
     }
 
-    const adderPosition: number = context.getNextFilePosition() + 100000
+    const adderPosition: number = getNextFilePosition() + 100000
 
     return (
         <Collapse
-            show={alwaysVisible || context.files.length > 0}
+            show={alwaysVisible || files.length > 0 || existingFiles.length > 0}
             showImmediately={alwaysVisible}
         >
             <div
@@ -84,7 +111,7 @@ function FilePickerPreviews(props: Props) {
                 <a
                     className={clsx(
                         'file-picker-previews-adder full-width full-height d-flex flex-row justify-content-center align-items-center me-auto cursor p-3',
-                        !context.canAttachMoreFiles() || context.isDisabled ? 'disabled' : null,
+                        !canAttachMoreFiles() || isDisabled ? 'disabled' : null,
                         pickerButtonClassName
                     )}
                     style={{
@@ -94,13 +121,11 @@ function FilePickerPreviews(props: Props) {
                     href="#"
                     onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                         e.preventDefault()
-                        if (context.canAttachMoreFiles()) {
-                            context.pickFile()
+                        if (canAttachMoreFiles()) {
+                            pickFile()
                         } else {
                             ToastService.error(
-                                context.translations.error.too_many_files(
-                                    context.maxFiles as number
-                                )
+                                translations.error.too_many_files(maxFiles as number)
                             )
                         }
                     }}
@@ -110,11 +135,11 @@ function FilePickerPreviews(props: Props) {
                         size={Math.round(previewSize / 2)}
                     />
                     <div className="fs-5 ms-2">
-                        {context.translations.attach_file}
+                        {translations.attach_file}
                     </div>
                 </a>
                 {/* Заполнитель пустого пространства в конце */}
-                {context.files.length % 2 === 0 && (
+                {(files.length + existingFiles.length) % 2 === 0 && (
                     <div
                         style={{
                             order: adderPosition + 100,

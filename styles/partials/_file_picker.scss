@@ -11,10 +11,18 @@
 
             a.file-picker-preview-container {
                 outline: none !important;
+                @include transition(opacity 0.1s linear);
+
+                &:hover,
+                &.active {
+                    // При наведении на удалённую картинку нужно убрать изменение opacity.
+                    opacity: 1 !important;
+                }
             }
 
-            .file-picker-preview-delete {
-                transition: opacity 0.1s linear;
+            .file-picker-preview-delete,
+            .file-picker-preview-restore {
+                @include transition(opacity 0.1s linear);
 
                 &:hover {
                     opacity: 1 !important;
@@ -25,25 +33,24 @@
             &.active {
                 z-index: 999;
 
-                .file-picker-preview-delete {
+                .file-picker-preview-delete,
+                .file-picker-preview-restore {
                     opacity: 0;
                 }
             }
 
-            &.active .file-picker-preview .file-picker-preview-image {
-                transform: scale(2);
-                transform-origin: center center;
-            }
-
             .file-picker-preview {
-                .file-picker-preview-image {
-                    @include transition(transform 0.1s linear);
-                }
+                @include transition(transform 0.1s linear);
 
-                &:hover .file-picker-preview-image {
+                &:hover {
                     transform: scale(2);
                     transform-origin: center center;
                 }
+            }
+
+            &.active .file-picker-preview {
+                transform: scale(2);
+                transform-origin: center center;
             }
         }
     }
@@ -66,7 +73,8 @@
         }
     }
 
-    .file-picker-preview-delete {
+    .file-picker-preview-delete,
+    .file-picker-preview-restore {
         position: absolute;
         width: 36px;
         height: 36px;
@@ -150,7 +158,7 @@
         }
 
         > .editable {
-            transition: background-color 0.2s linear;
+            @include transition(background-color 0.2s linear);
 
             &:hover {
                 background-color: rgba(0, 0, 0, 0.03);

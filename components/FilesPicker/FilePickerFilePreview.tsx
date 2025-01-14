@@ -8,7 +8,7 @@ import Card from '../Card/Card'
 import CardBody from '../Card/CardBody'
 import Loading from '../Loading'
 import Icon from '../Icon'
-import {mdiAlertCircle, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} from '@mdi/js'
+import {mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} from '@mdi/js'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
@@ -25,7 +25,12 @@ function FilePickerFilePreview(
 ) {
 
     const imagePreviewContainer = useRef<HTMLDivElement>(null)
-    const context = useContext<FilePickerContextProps>(FilePickerContext)
+    const {
+        previews,
+        fallbackPreview,
+        translations,
+        isDisabled,
+    } = useContext<FilePickerContextProps>(FilePickerContext)
     const [
         canvas,
         setCanvas,
@@ -43,6 +48,9 @@ function FilePickerFilePreview(
         file,
         onDelete,
         style,
+        animate = true,
+        onRestore,
+        showIfDeleted = false,
         ...containerProps
     } = props
 
@@ -72,6 +80,11 @@ function FilePickerFilePreview(
         }
     }, [imagePreviewContainer.current])
 
+    // Не продолжаем, если файл удалён при определенном наборе значений других свойств.
+    if (!animate && !showIfDeleted && file.isDeleted) {
+        return null
+    }
+
     // Заполнитель предпросмотра файла.
     const getPreviewPlaceholder = (
         previewSize: number,
@@ -94,28 +107,28 @@ function FilePickerFilePreview(
         if (file.uploading.isUploading) {
             return (
                 <div className="mt-1 text-primary">
-                    {context.translations.status.uploading(file.uploading.uploadedPercent)}
+                    {translations.status.uploading(file.uploading.uploadedPercent)}
                 </div>
             )
         } else if (file.uploading.isUploaded) {
             return (
                 <div className="mt-1 text-success">
-                    {context.translations.status.uploaded}
+                    {translations.status.uploaded}
                 </div>
             )
         } else {
             return (
                 <div className="mt-1 text-orange">
-                    {context.translations.status.not_uploaded}
+                    {translations.status.not_uploaded}
                 </div>
             )
         }
     }
 
-    const previewInfo: FilePickerContextMimeTypeInfo = context.previews[file.file.type] || {
+    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.type] || {
         type: 'file',
         extensions: [],
-        preview: context.fallbackPreview,
+        preview: fallbackPreview,
     } as FilePickerContextMimeTypeInfo
 
     let preview
@@ -140,93 +153,101 @@ function FilePickerFilePreview(
     const renderFileInfo = () => (
         <div className="text-start">
             <div className="fw600 mb-1 text-break">{file.file.name}</div>
-            <div>{context.translations.file_size}: {FilePickerHelpers.getFileSizeMb(file)}Mb</div>
+            <div>{translations.file_size}: {FilePickerHelpers.getFileSizeMb(file)}Mb</div>
             {'uploading' in file && renderUploadingStatus(file)}
             {!!file.error && (
                 <div className="text-danger mt-1 d-flex flex-row">
-                    {context.translations.error_label}: {file.error}
+                    {translations.error_label}: {file.error}
                 </div>
             )}
         </div>
     )
 
-    return (
-        <CSSTransition
-            in={!file.isDeleted}
-            classNames="scale-and-fade"
-            timeout={300}
-            appear
-            nodeRef={transitionRef}
+    const actionIconStyle: CSSProperties = {
+        position: 'absolute',
+        width: 36,
+        height: 36,
+        top: -6,
+        right: -6,
+        zIndex: 2,
+    }
+
+    const content = (
+        <ReorderableListItem
+            tag={Card}
+            position={file.position}
+            payload={file}
+            className="file-picker-preview-wrapper shadow-0 border border-1"
+            style={{
+                order: file.position,
+            }}
+            wrapperRef={transitionRef}
         >
-            <ReorderableListItem
-                tag={Card}
-                position={file.position}
-                payload={file}
-                className="file-picker-preview-wrapper shadow-0 border border-1"
-                style={{
-                    order: file.position,
-                }}
-                wrapperRef={transitionRef}
+            <CardBody
+                className={clsx('position-relative p-3 pe-4 full-height', className)}
+                style={Object.assign(
+                    {
+                        minHeight: previewSize,
+                    },
+                    style || {}
+                )}
+                {...containerProps}
             >
-                <CardBody
-                    className={clsx('position-relative p-3 pe-4 full-height', className)}
-                    style={Object.assign(
-                        {
-                            minHeight: previewSize,
-                        },
-                        style || {}
-                    )}
-                    {...containerProps}
-                >
-                    <div className="position-relative d-flex flex-row align-items-start justify-content-start">
-                        <div className="file-picker-preview me-4">
-                            {preview}
-                        </div>
-                        <div className="pt-2">
-                            {renderFileInfo()}
-                            <div className="file-picker-preview-uploading-indicator">
-                                {'uploading' in file && (
-                                    <Loading
-                                        loading={!!file.uploading.isUploading}
-                                        style={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            minHeight: 'auto',
-                                            minWidth: 'auto',
-                                            height: previewSize,
-                                            width: previewSize,
-                                        }}
-                                    />
-                                )}
-                            </div>
-                            {!!file.error && (
-                                <div
-                                    className="file-picker-preview-error-indicator d-flex align-items-center justify-content-center"
+                <div className={clsx(
+                    'file-picker-preview-container position-relative z-index-1',
+                    'd-flex flex-row align-items-start justify-content-start',
+                    (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
+                )}>
+                    <div className="file-picker-preview me-4">
+                        {preview}
+                    </div>
+                    <div className="pt-2">
+                        {renderFileInfo()}
+                        <div className="file-picker-preview-uploading-indicator">
+                            {'uploading' in file && (
+                                <Loading
+                                    loading={!!file.uploading.isUploading}
                                     style={{
                                         position: 'absolute',
                                         top: 0,
                                         left: 0,
+                                        minHeight: 'auto',
+                                        minWidth: 'auto',
                                         height: previewSize,
                                         width: previewSize,
-                                        zIndex: 101,
                                     }}
-                                    onClick={() => ToastService.error(file.error as string)}
-                                >
-                                    <Icon
-                                        path={mdiAlertCircle}
-                                        size={Math.max(40, Math.round(previewSize / 3))}
-                                        className="bg-white text-red"
-                                        style={{borderRadius: '50%'}}
-                                    />
-                                </div>
+                                />
                             )}
                         </div>
+                        {!!file.error && (
+                            <div
+                                className="file-picker-preview-error-indicator d-flex align-items-center justify-content-center"
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    height: previewSize,
+                                    width: previewSize,
+                                    zIndex: 101,
+                                }}
+                                onClick={() => ToastService.error(file.error as string)}
+                            >
+                                <Icon
+                                    path={mdiAlertCircle}
+                                    size={Math.max(40, Math.round(previewSize / 3))}
+                                    className="bg-white text-red"
+                                    style={{borderRadius: '50%'}}
+                                />
+                            </div>
+                        )}
                     </div>
+                </div>
+                {!file.isDeleted && (
                     <a
                         className={clsx(
-                            'file-picker-preview-delete d-block d-flex flex-row align-items-center justify-content-center',
-                            !FilePickerHelpers.canDeleteFile(file) || context.isDisabled ? 'disabled' : null
+                            'file-picker-preview-delete',
+                            'd-flex flex-row align-items-center justify-content-center',
+                            !FilePickerHelpers.canDeleteFile(file) || isDisabled ? 'disabled' : null
                         )}
                         href="#"
                         onClick={e => {
@@ -235,14 +256,7 @@ function FilePickerFilePreview(
                                 onDelete(file)
                             }
                         }}
-                        style={{
-                            position: 'absolute',
-                            width: 36,
-                            height: 36,
-                            top: -6,
-                            right: -6,
-                            zIndex: 2,
-                        }}
+                        style={actionIconStyle}
                     >
                         <Icon
                             path={mdiCloseCircleOutline}
@@ -250,10 +264,46 @@ function FilePickerFilePreview(
                             className="text-red"
                         />
                     </a>
-                </CardBody>
-            </ReorderableListItem>
-        </CSSTransition>
+                )}
+                {file.isDeleted && onRestore && (
+                    <a
+                        className={clsx(
+                            'file-picker-preview-restore',
+                            'd-flex flex-row align-items-center justify-content-center'
+                        )}
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault()
+                            onRestore(file)
+                        }}
+                        style={actionIconStyle}
+                    >
+                        <Icon
+                            path={mdiBackupRestore}
+                            size={24}
+                            className="text-blue"
+                        />
+                    </a>
+                )}
+            </CardBody>
+        </ReorderableListItem>
     )
+
+    if (animate) {
+        return (
+            <CSSTransition
+                in={!file.isDeleted}
+                classNames="scale-and-fade"
+                timeout={300}
+                appear
+                nodeRef={transitionRef}
+            >
+                {content}
+            </CSSTransition>
+        )
+    }
+
+    return content
 }
 
 export default withStable(['onDelete'], FilePickerFilePreview)

@@ -42,6 +42,7 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
         useUidAsFileName,
         value = [],
         onChange,
+        onAttachmentError,
         children,
     } = props
 
@@ -231,6 +232,8 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
                 newMaxPosition++
                 if (FilePickerHelpers.isValidFile(processedFile) || !dropInvalidFiles) {
                     newFilesList.push(processedFile)
+                } else if (processedFile.error) {
+                    onAttachmentError?.(processedFile.error, processedFile)
                 }
             } catch (e: unknown) {
                 if (e !== null) { //< except for a file is already added or there no more places left
@@ -278,10 +281,44 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
                         }
                     }
                     onChange(updates)
+                    return
                 }
             }
         },
         [onChange, files]
+    )
+
+    // Обработка нажатия на кнопку восстановления файла.
+    const onExistingFileRestore = useCallback(
+        (file: FilePickerFileInfo) => {
+            if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
+                ToastService.error(translations.error.too_many_files(maxFiles as number))
+                return
+            }
+            for (let i = 0; i < files.length; i++) {
+                if (file.UID === files[i].UID) {
+                    if (files[i].isNew) {
+                        return
+                    }
+                    const updatedFile = {
+                        ...files[i],
+                        isDeleted: false,
+                    }
+                    if (maxFiles === 1) {
+                        // Режим одного файла.
+                        // Заменяем весь список файлов на восстановленный.
+                        onChange([updatedFile])
+                    } else {
+                        // Разрешено прикрепление нескольких файлов.
+                        const updates: FilePickerFileInfo[] = files.slice()
+                        updates[i] = updatedFile
+                        onChange(updates)
+                    }
+                    return
+                }
+            }
+        },
+        [onChange, files, canAttachMoreFiles, maxFiles]
     )
 
     // Окончание перетаскивания файлов.
@@ -325,6 +362,7 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
         previews: allowedFileTypes,
         existingFiles: files.filter(file => !file.isNew),
         onExistingFileDelete: onFileDelete,
+        onExistingFileRestore,
         files: files.filter(file => file.isNew),
         reorderable,
         isDisabled: disabled,

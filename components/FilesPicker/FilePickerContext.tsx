@@ -143,6 +143,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
     existingFiles: [],
     onExistingFileDelete() {
     },
+    onExistingFileRestore: null,
     files: [],
     reorderable: false,
     getNextFilePosition: () => 0,

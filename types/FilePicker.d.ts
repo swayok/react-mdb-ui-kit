@@ -29,8 +29,10 @@ export type FilePickerContextProps<T extends FilePickerFileInfo = FilePickerFile
     fallbackPreview: FilePickerContextMimeTypePreviewRenderer,
     // Список ранее прикрепленных файлов.
     existingFiles: T[],
-    // Удаление ранее прикрепленного файла.
+    // Удаление файла из БД.
     onExistingFileDelete: (file: T, delay?: number) => void,
+    // Восстановление удаленного файла, полученного из БД.
+    onExistingFileRestore?: ((file: T) => void) | null,
     // Список новых прикрепленных файлов.
     files: T[],
     // Запуск прикрепления файла (программное нажатие на <input type="file">).
@@ -116,9 +118,9 @@ export interface FilePickerProps<T extends FilePickerFileInfo = FilePickerFileIn
         isValid: boolean,
     ) => void;
     // Файл удалён (откреплён).
-    onFileRemoved?: (
-        file: T,
-    ) => void;
+    onFileRemoved?: (file: T) => void;
+    // Удаленный файл восстановлен.
+    onFileRestored?: (file: T) => void;
     // Вкл/Выкл доступности интерактивных элементов компонента.
     disabled?: boolean;
     // Максимальный размер стороны картинки в пикселях.
@@ -189,6 +191,8 @@ export interface SimplifiedFilePickerProps {
     reorderable?: boolean;
     // Изменения в списке файлов.
     onChange: (files: FilePickerFileInfo[]) => void;
+    // Дополнительный обработчик ошибки при прикреплении файла.
+    onAttachmentError?: (error: string, file: FilePickerFileInfo) => void;
 }
 
 // Свойства компонента выбора файлов для загрузки на сервер,
@@ -235,6 +239,11 @@ export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HT
     adderIcon?: string;
     // Увеличивать картинку при наведении курсора?
     scaleImageOnHover?: boolean;
+    // Показывать удаленные файлы, полученные из БД.
+    // Также добавляется возможность восстановить файл.
+    showDeletedFiles?: boolean;
+    // Анимировать добавление и удаление файла.
+    animatePreviews?: boolean;
 }
 
 // Тексты для компонентов выбора файлов для загрузки на сервер.
@@ -332,7 +341,11 @@ export interface FilePickerFilePreviewProps<
     imagePreviewSize?: number;
     imageClassName?: string;
     fileClassName?: string;
+    showIfDeleted?: boolean;
     onDelete: (file: T) => void;
+    onRestore?: (file: T) => void;
+    // Анимировать появление и удаление файла.
+    animate?: boolean;
 }
 
 // Позиция нового файла в списке.

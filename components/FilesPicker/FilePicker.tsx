@@ -38,6 +38,7 @@ function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
         allowedMimeTypes,
         onFileAttached,
         onFileRemoved,
+        onFileRestored,
         onReorder,
         onExistingFileDelete,
         apiRef,
@@ -247,7 +248,10 @@ function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
                         removedFile = updates[i]
                         if (delay) {
                             // Нужно дождаться окончания анимации удаления.
-                            updates[i].isDeleted = true
+                            updates[i] = {
+                                ...updates[i],
+                                isDeleted: true,
+                            }
                         } else {
                             updates.splice(i, 1)
                         }
@@ -278,6 +282,47 @@ function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
             }
         },
         [onFileRemoved]
+    )
+
+    // Обработка нажатия на кнопку восстановления файла.
+    const onExistingFileRestore = useCallback(
+        (file: FilePickerFileInfo) => {
+            if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
+                ToastService.error(translations.error.too_many_files(maxFiles as number))
+                return
+            }
+            for (let i = 0; i < files.length; i++) {
+                let restoredFile: FilePickerFileInfo | null = null
+                setFiles(files => {
+                    for (let i = 0; i < files.length; i++) {
+                        if (file.UID === files[i].UID) {
+                            if (files[i].isNew) {
+                                return files
+                            }
+                            const updatedFile = {
+                                ...files[i],
+                                isDeleted: false,
+                            }
+                            if (maxFiles === 1) {
+                                // Режим одного файла.
+                                // Заменяем весь список файлов на восстановленный.
+                                return [updatedFile]
+                            }
+                            // Разрешено прикрепление нескольких файлов.
+                            const updates: FilePickerFileInfo[] = files.slice()
+                            updates[i] = updatedFile
+                            restoredFile = updates[i]
+                            return updates
+                        }
+                    }
+                    return files
+                })
+                if (restoredFile) {
+                    onFileRestored?.(restoredFile)
+                }
+            }
+        },
+        [onFileRestored, files, canAttachMoreFiles, maxFiles]
     )
 
     // Обновление публичного API.
@@ -385,6 +430,7 @@ function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
         previews: allowedFileTypes,
         existingFiles,
         onExistingFileDelete,
+        onExistingFileRestore,
         files,
         reorderable,
         isDisabled: disabled,
