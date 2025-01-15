@@ -12,7 +12,9 @@ export type FormValuesHookReturn<FormData, FormErrors> = {
     formValues: Readonly<FormData>,
     // Задать все значения формы.
     setFormValues: (
-        values: FormData | ((state: Readonly<FormData>) => FormData)
+        values: FormData | ((state: Readonly<FormData>) => FormData),
+        // Сбросить флаг formHasChanges в false.
+        resetHasChangesFlag?: boolean
     ) => void,
     // Задать часть значений формы.
     setSomeFormValues: (values: Partial<FormData>) => void,
@@ -22,6 +24,10 @@ export type FormValuesHookReturn<FormData, FormErrors> = {
         value: FormData[Key] | SetValueFn<FormData[Key]>,
         resetError?: boolean | keyof FormErrors
     ) => void,
+    // Были ли изменения в данных формы относительно начальных значений.
+    formHasChanges: boolean,
+    // Задать флаг наличия изменений в данных формы.
+    setFormHasChanges: (value: boolean) => void,
     // Сброс значений полей ввода в initialFormValues.
     reset: () => void,
     // Ошибки полей ввода.
@@ -58,13 +64,18 @@ export default function useFormValues<
     // Данные формы.
     const [
         formValues,
-        setFormValues,
+        setFormValuesState,
     ] = useState<FormData>({...initialValuesMemo})
     // Ошибки полей ввода формы.
     const [
         formErrors,
         setFormErrors,
     ] = useState<FormErrors>({} as FormErrors)
+
+    const [
+        formHasChanges,
+        setFormHasChanges,
+    ] = useState<boolean>(false)
 
     // Задать ошибку для ключа.
     const setFormError = useInputErrorSetter<FormErrors>(
@@ -95,6 +106,18 @@ export default function useFormValues<
         []
     )
 
+    // Обертка над setFormValuesState для отслеживания наличия изменений в данных формы.
+    const setFormValues: FormValuesHookReturn<FormData, FormErrors>['setFormValues'] = useCallback(
+        (
+            values: FormData | ((state: Readonly<FormData>) => FormData),
+            resetChangesFlag?: boolean
+        ): void => {
+            setFormValuesState(values)
+            setFormHasChanges(!resetChangesFlag)
+        },
+        []
+    )
+
     // Состояние отправки данных в API.
     const [
         isSubmitting,
@@ -121,9 +144,14 @@ export default function useFormValues<
             []
         ),
         setFormValue,
+
+        formHasChanges,
+        setFormHasChanges,
+
         reset: useCallback(() => {
             setFormValues(initialValuesMemo)
         }, [initialValuesMemo]),
+
         formErrors,
         setFormErrors: useCallback(
             (
@@ -144,6 +172,7 @@ export default function useFormValues<
             []
         ),
         setFormError,
+
         isSubmitting,
         setIsSubmitting,
     }

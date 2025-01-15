@@ -64,6 +64,10 @@
 
 @include fade('fade', 0.3s);
 
+// Анимация прозрачности для быстрой смены содержимого (fade).
+
+@include fade('fade-switch', 0.1s);
+
 // Анимация смены страниц (fade, но быстрее).
 
 @include fade('page-switch', 0.2s);

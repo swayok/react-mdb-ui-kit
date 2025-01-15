@@ -137,7 +137,7 @@
         }
 
         &.drag-and-drop-current {
-            .file-picker-preview-image {
+            .file-picker-preview {
                 transform: scale(1) !important;
                 @include transition(none !important);
             }

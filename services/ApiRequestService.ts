@@ -534,4 +534,11 @@ export default class ApiRequestService {
 
         return params
     }
+
+    // Вывод данных из FormData в консоль.
+    static logFormData(data: FormData) {
+        const test: AnyObject = {}
+        data.forEach((v, k) => test[k] = v)
+        console.log(test)
+    }
 }

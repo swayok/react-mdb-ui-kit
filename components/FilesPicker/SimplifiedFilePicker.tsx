@@ -330,12 +330,22 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
     ): void => {
         const newPosition: number = droppedOnElementPayload.position
         // Задаем позицию перетаскиваемого файла = позиции файла, на который перетащили.
-        const updates: FilePickerFileInfo[] = files.slice()
+        const updates: FilePickerFileInfo[] = []
         // Смещаем все файлы с позицией >= той, что у файла, на который перетащили другой файл на 1.
-        for (let i = 0; i < updates.length; i++) {
-            // console.log(updates[i].file.name, updates[i].position)
-            if (updates[i].position >= newPosition) {
-                updates[i].position++
+        for (let i = 0; i < files.length; i++) {
+            // console.log(files[i].file.name, files[i].position)
+            if (files[i].UID === draggedElementPayload.UID) {
+                updates.push({
+                    ...files[i],
+                    position: newPosition,
+                })
+            } else if (files[i].position >= newPosition) {
+                updates.push({
+                    ...files[i],
+                    position: files[i].position + 1,
+                })
+            } else {
+                updates.push(files[i])
             }
         }
         draggedElementPayload.position = newPosition

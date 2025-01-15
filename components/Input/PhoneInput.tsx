@@ -90,7 +90,7 @@ function PhoneInput(props: PhoneInputProps) {
             inputRef={inputReference}
             placeholder={placeholder}
             {...otherProps}
-            value={value ? normalizeValue(value, template, focused) : ''}
+            value={value ? formatPhoneNumber(value, template, focused) : ''}
             allowedChars={/\d/}
             maxLength={25}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -112,7 +112,7 @@ function PhoneInput(props: PhoneInputProps) {
                                     ) + input.value.substring(endPosition)
                                     input.value = newValue
                                     input.setSelectionRange(cursorPosition, cursorPosition)
-                                    onChange(e, cleanPhoneNumber(newValue, template, valueCleaner))
+                                    onChange(e, valueCleaner(newValue))
                                     e.preventDefault()
                                 }
                                 // Если символ не жестко задан в шаблоне, то используем
@@ -143,7 +143,7 @@ function PhoneInput(props: PhoneInputProps) {
                                     cursorPositionRef.current = cursorPosition
                                     input.value = newValue
                                     input.setSelectionRange(cursorPosition, cursorPosition)
-                                    onChange(e, cleanPhoneNumber(newValue, template, valueCleaner))
+                                    onChange(e, valueCleaner(newValue))
                                     e.preventDefault()
                                 } else {
                                     // not a hardcoded character - use default behavior
@@ -192,7 +192,7 @@ function PhoneInput(props: PhoneInputProps) {
                     e.preventDefault()
                     return
                 }
-                const value = normalizeValue(
+                const value = formatPhoneNumber(
                     e.currentTarget.value,
                     template,
                     focused
@@ -211,7 +211,7 @@ function PhoneInput(props: PhoneInputProps) {
                 }
                 cursorPositionRef.current = nextCursorPosition
                 e.currentTarget.setSelectionRange(nextCursorPosition, nextCursorPosition)
-                onChange(e, cleanPhoneNumber(value, template, valueCleaner))
+                onChange(e, valueCleaner(value))
             }}
             onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
                 setFocused(true)
@@ -233,7 +233,7 @@ function PhoneInput(props: PhoneInputProps) {
             }}
             onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
                 e.preventDefault()
-                const value = normalizeValue(
+                const value = formatPhoneNumber(
                     e.clipboardData.getData('text/plain'),
                     template,
                     focused
@@ -241,7 +241,7 @@ function PhoneInput(props: PhoneInputProps) {
                 e.currentTarget.value = value
                 onChange(
                     e as unknown as React.ChangeEvent<HTMLInputElement>,
-                    cleanPhoneNumber(value, template, valueCleaner)
+                    valueCleaner(value)
                 )
             }}
         />
@@ -252,38 +252,43 @@ function PhoneInput(props: PhoneInputProps) {
 function isValidValue(value: string, template: string): boolean {
     const expectedMaxDigitsCount: number = template.replace(/[^_]/g, '').length
     // Если новое значение имеет больше цифр чем ожидается, то считаем его неправильным.
-    return cleanPhoneNumber(value, template).length <= expectedMaxDigitsCount
+    return removeTemplateCharacters(value, template).length <= expectedMaxDigitsCount
 }
 
-// Нормализация введенного значения по шаблону.
-function normalizeValue(value: string, template: string, focused: boolean): string {
+// Нормализация значения по шаблону и очистка результата от лишних символов.
+export function normalizeAndCleanPhoneNumber(
+    value: string | null | undefined,
+    template: string,
+    valueCleaner: (value: string) => string = value => value.replace(/[^+0-9]+/g, '')
+): string {
+    if (typeof value !== 'string' || value.trim() === '') {
+        return ''
+    }
+    return valueCleaner(formatPhoneNumber(value, template, false))
+}
+
+// Форматирование введенного значения по шаблону.
+export function formatPhoneNumber(value: string, template: string, focused: boolean): string {
     if (value.length === 0) {
         return focused ? template : ''
     }
-    value = cleanPhoneNumber(value, template)
-    let normalizedValue: string = ''
+    value = removeTemplateCharacters(value, template)
+    let formattedValue: string = ''
     let digitIndex: number = 0
     for (let i = 0; i < template.length; i++) {
         if (template[i] === '_' && digitIndex < value.length) {
-            normalizedValue += value[digitIndex]
+            formattedValue += value[digitIndex]
             digitIndex++
         } else {
-            normalizedValue += template[i]
+            formattedValue += template[i]
         }
     }
-    // console.log('normalizeValue', {value, normalizedValue})
-    return normalizedValue
+    // console.log('formattedValue', {value, normalizedValue})
+    return formattedValue
 }
 
-// Удаление фиксированной части из начала значения и не цифр из того, что осталось.
-export function cleanPhoneNumber(
-    value: string,
-    template: string,
-    valueCleaner?: (value: string) => string
-): string {
-    if (valueCleaner) {
-        return valueCleaner(value)
-    }
+// Удаление фиксированной части из начала значения и не цифровых символов.
+function removeTemplateCharacters(value: string, template: string): string {
     const fixedTemplatePart: string = template.replace(/^([^_ ]+).*$/, '$1').replace(/([+*.])/g, '.')
     return value.replace(new RegExp(`^${fixedTemplatePart}`), '').replace(/[^0-9]+/g, '')
 }

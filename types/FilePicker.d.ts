@@ -347,15 +347,3 @@ export interface FilePickerFilePreviewProps<
     // Анимировать появление и удаление файла.
     animate?: boolean;
 }
-
-// Позиция нового файла в списке.
-export type NewFilePosition = {
-    name: string,
-    position: number,
-}
-
-// Позиция существующего файла в списке.
-export type ExistingFilePosition = {
-    id: number,
-    position: number,
-}
