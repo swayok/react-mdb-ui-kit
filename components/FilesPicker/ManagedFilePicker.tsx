@@ -4,7 +4,7 @@ import FileAPI, {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../help
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerProps,
+    ManagedFilePickerProps,
     FilePickerUploadInfo,
     FilePickerFileInfo,
 } from '../../types/FilePicker'
@@ -21,7 +21,7 @@ const positionDelta: number = 1
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
 // и отображении списка выбранных файлов т.к. создает контекст с состоянием и действиями.
-function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
+function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
 
     const {
         allowImages = true,
@@ -485,6 +485,6 @@ function FilePicker(props: FilePickerProps<FilePickerFileInfo>) {
 
 export default withStable(
     ['onFileAttached', 'onExistingFileDelete', 'onFileRemoved', 'onReorder'],
-    FilePicker
+    ManagedFilePicker
 )
 

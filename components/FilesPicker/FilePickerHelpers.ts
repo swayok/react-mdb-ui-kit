@@ -3,7 +3,7 @@ import {
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFileInfoFromDB,
-    FilePickerProps,
+    ManagedFilePickerProps,
     FilePickerUploadInfo, FilePickerWithUploaderFileInfo,
 } from '../../types/FilePicker'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
@@ -154,7 +154,7 @@ export default {
     validateFileTypeAndSize(
         file: FileAPISelectedFileInfo,
         mimes: FilePickerContextProps['previews'],
-        translations: FilePickerProps['translations'],
+        translations: ManagedFilePickerProps['translations'],
         maxFileSizeKb?: number
     ): string | FilePickerContextMimeTypeInfo {
         const extension = file.name.replace(/^.+\.([a-zA-Z0-9]{3,4})$/, '$1').toLowerCase()

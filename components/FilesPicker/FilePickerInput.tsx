@@ -5,7 +5,7 @@ import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
-    SimplifiedFilePickerProps,
+    FilePickerInputProps,
 } from '../../types/FilePicker'
 import ErrorBoundary from '../ErrorBoundary'
 import ToastService from '../../services/ToastService'
@@ -25,7 +25,7 @@ const positionDelta: number = 1
  * Фактически - список файлов передается через свойство value, а изменения возвращаются
  * через вызов onChange.
  */
-export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
+export default function FilePickerInput(props: FilePickerInputProps) {
 
     const {
         allowImages = true,
@@ -204,7 +204,7 @@ export default function SimplifiedFilePicker(props: SimplifiedFilePickerProps) {
             //         },
             //     })
             // }
-            console.error('[SimplifiedFilePicker] processNewFile error: ', {
+            console.error('[FilePickerInput] processNewFile error: ', {
                 file,
                 error: e,
             })

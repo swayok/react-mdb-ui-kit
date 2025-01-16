@@ -88,7 +88,7 @@ export type FilePickerApi<T extends FilePickerFileInfo = FilePickerFileInfo> = {
  * Компонент не обеспечивает отображение файлов, только управление списком.
  * Для отображения файлов нужно использовать вложенные компоненты (children).
  */
-export interface FilePickerProps<T extends FilePickerFileInfo = FilePickerFileInfo> {
+export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePickerFileInfo> {
     /**
      * Компоненты для отображения прикрепленных файлов.
      *
@@ -150,7 +150,7 @@ export interface FilePickerProps<T extends FilePickerFileInfo = FilePickerFileIn
  * Компонент не обеспечивает отображение файлов, только управление списком.
  * Для отображения файлов нужно использовать вложенные компоненты (children).
  */
-export interface SimplifiedFilePickerProps {
+export interface FilePickerInputProps {
     /**
      * Компоненты для отображения прикрепленных файлов.
      *
@@ -197,7 +197,7 @@ export interface SimplifiedFilePickerProps {
 
 // Свойства компонента выбора файлов для загрузки на сервер,
 // с модулем автоматической загрузки.
-export interface FilePickerWithUploaderProps extends Omit<FilePickerProps<FilePickerWithUploaderFileInfo>, 'apiRef'> {
+export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps<FilePickerWithUploaderFileInfo>, 'apiRef'> {
     // Вкл/выкл автозагрузки файлов на сервер сразу после прикрепления.
     autoUpload: boolean;
     // URL для отправки файлов на сервер.
@@ -217,7 +217,30 @@ export interface FilePickerWithUploaderProps extends Omit<FilePickerProps<FilePi
 }
 
 /**
- * Свойства компонента, который отображает список прикрепленных файлов.
+ * Свойства компонента, который отображает список прикрепленных файлов с информацией
+ * о прикрепленных файлах (имя, размер и т.п.).
+ */
+export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElement> {
+    // Размер предпросмотра.
+    previewSize?: number;
+    // Показывать этот блок всегда или только когда есть прикрепленные файлы?
+    // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
+    // поэтому его можно скрывать до прикрепления первого файла.
+    alwaysVisible?: boolean;
+    // CSS классы для предпросмотров.
+    itemClassName?: string;
+    // CSS классы для кнопки добавления файла.
+    pickerButtonClassName?: string;
+    // Показывать удаленные файлы, полученные из БД.
+    // Также добавляется возможность восстановить файл.
+    showDeletedFiles?: boolean;
+    // Анимировать добавление и удаление файла.
+    animatePreviews?: boolean;
+}
+
+/**
+ * Свойства компонента, который отображает список прикрепленных файлов в виде
+ * небольших preview-блоков.
  */
 export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.

@@ -6,9 +6,13 @@ import {ComponentPropsWithModifiableTag} from '../../types/Common'
 type Props = ComponentPropsWithModifiableTag
 
 // Элемент, при нажатии на который запускается выбор файла для прикрепления.
-function FilePickerTrigger<TagProps = unknown>(props: Props & TagProps) {
+function FilePickerTrigger<TagProps = unknown>(
+    props: Props & Omit<TagProps, 'onClick'>
+) {
 
-    const context = useContext<FilePickerContextProps>(FilePickerContext)
+    const {
+        pickFile,
+    } = useContext<FilePickerContextProps>(FilePickerContext)
 
     const {
         onClick,
@@ -25,7 +29,7 @@ function FilePickerTrigger<TagProps = unknown>(props: Props & TagProps) {
             onClick={(e: React.MouseEvent<HTMLElement>) => {
                 e.preventDefault()
                 onClick?.(e)
-                context.pickFile()
+                pickFile()
             }}
         >
             {children}

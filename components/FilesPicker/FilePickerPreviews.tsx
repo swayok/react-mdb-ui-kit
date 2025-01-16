@@ -1,33 +1,15 @@
-import React, {AllHTMLAttributes, useContext} from 'react'
+import React, {useContext} from 'react'
 import clsx from 'clsx'
 import FilePickerContext from './FilePickerContext'
 import FilePickerFilePreview from './FilePickerFilePreview'
 import ToastService from '../../services/ToastService'
-import {FilePickerContextProps, FilePickerFileInfo} from '../../types/FilePicker'
+import {FilePickerContextProps, FilePickerFileInfo, FilePickerPreviewsProps} from '../../types/FilePicker'
 import Collapse from '../Collapse'
 import Icon from '../Icon'
 import {mdiPlus} from '@mdi/js'
 
-interface Props extends AllHTMLAttributes<HTMLDivElement> {
-    // Размер предпросмотра.
-    previewSize?: number;
-    // Показывать этот блок всегда или только когда есть прикрепленные файлы?
-    // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
-    // поэтому его можно скрывать до прикрепления первого файла.
-    alwaysVisible?: boolean;
-    // CSS классы для предпросмотров.
-    itemClassName?: string;
-    // CSS классы для кнопки добавления файла.
-    pickerButtonClassName?: string;
-    // Показывать удаленные файлы, полученные из БД.
-    // Также добавляется возможность восстановить файл.
-    showDeletedFiles?: boolean;
-    // Анимировать добавление и удаление файла.
-    animatePreviews?: boolean;
-}
-
 // Блок со списком предпросмотров прикрепленных картинок.
-function FilePickerPreviews(props: Props) {
+function FilePickerPreviews(props: FilePickerPreviewsProps) {
 
     const {
         existingFiles,

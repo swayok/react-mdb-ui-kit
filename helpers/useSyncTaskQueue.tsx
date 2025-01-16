@@ -1,4 +1,4 @@
-import React from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {flushSync} from 'react-dom'
 
 type Task = () => Promise<void> | void
@@ -24,12 +24,12 @@ const defaultOptions: SyncQueueOptions = {
 
 // Синхронная очередь заданий.
 export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): SyncQueue {
-    const [queue, setQueue] = React.useState<QueueState>({
+    const [queue, setQueue] = useState<QueueState>({
         isProcessing: false,
         tasks: [],
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!params.shouldProcess) {
             return
         }
@@ -62,7 +62,7 @@ export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptio
     return {
         tasks: queue.tasks,
         isProcessing: queue.isProcessing,
-        addTask: React.useCallback(task => {
+        addTask: useCallback(task => {
             setQueue(prev => ({
                 isProcessing: prev.isProcessing,
                 tasks: [...prev.tasks, task],
