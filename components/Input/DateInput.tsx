@@ -152,7 +152,6 @@ function DateInput(props: DateInputProps) {
                                 showCalendarIcon ? 'me-2' : null
                             )}
                             disabled={props.disabled}
-                            useFlexBox
                             onClick={e => {
                                 e.preventDefault()
                                 e.stopPropagation()

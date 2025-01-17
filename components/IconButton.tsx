@@ -10,10 +10,12 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     color?: TextColors | 'link',
     onClick: (event: React.MouseEvent<HTMLDivElement>) => void,
     tooltipProps?: Omit<TooltipProps, 'onClick' | 'title' | 'disableClickHandler'>,
-    // Использовать центрирование иконки через flexbox (.with-icon-flex)?
-    useFlexBox?: boolean,
     iconClassName?: string,
     iconStyle?: CSSProperties,
+    // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
+    // Если false: использовать CSS класс 'with-icon-flex' для центрирования иконки по вертикали.
+    // По умолчанию: false.
+    inline?: boolean,
 }
 
 // Иконка-кнопка со всплывающей подсказкой при наведении
@@ -29,13 +31,13 @@ function IconButton(props: IconButtonProps) {
         reusableItemContainerClass,
         style,
         iconStyle,
-        useFlexBox,
+        inline = false,
         ...otherProps
     } = props
 
     const wrapperClass: string = clsx(
         'clickable',
-        useFlexBox ? 'with-icon-flex': 'd-inline-block with-icon',
+        inline ? 'd-inline-block with-icon' : 'with-icon-flex',
         color ? 'text-' + props.color : null,
         disabled ? 'disabled' : null,
         className

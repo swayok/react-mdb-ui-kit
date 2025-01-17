@@ -1,4 +1,4 @@
-import React, {AnchorHTMLAttributes} from 'react'
+import React, {AnchorHTMLAttributes, CSSProperties} from 'react'
 import Icon from './Icon'
 import clsx from 'clsx'
 import Tooltip, {TooltipProps} from './Tooltip'
@@ -17,8 +17,13 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     path: string | SvgIconInfo,
     size?: number | null,
     iconClassName?: string,
+    iconStyle?: CSSProperties,
     disabled?: boolean,
     visible?: boolean,
+    // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
+    // Если false: использовать CSS класс 'with-icon-flex' для центрирования иконки по вертикали.
+    // По умолчанию: false.
+    inline?: boolean,
 }
 
 // Ссылка в виде иконки без подписи
@@ -31,6 +36,7 @@ function IconHref(props: IconHrefProps) {
         disabled,
         iconProps,
         iconClassName,
+        iconStyle,
         className,
         onClick,
         path,
@@ -40,6 +46,7 @@ function IconHref(props: IconHrefProps) {
         external,
         visible,
         children,
+        inline = false,
         ...linkProps
     } = props
 
@@ -62,7 +69,7 @@ function IconHref(props: IconHrefProps) {
             {...urlProps}
             title={tooltip}
             className={clsx(
-                'with-icon-flex inline-block',
+                inline ? 'd-inline-block with-icon' : 'with-icon-flex',
                 color ? 'text-' + props.color : null,
                 disabled ? 'disabled' : null,
                 className
@@ -81,6 +88,7 @@ function IconHref(props: IconHrefProps) {
                 size={size}
                 {...iconProps}
                 className={iconClassName}
+                style={iconStyle}
                 path={path}
             />
             {children}
