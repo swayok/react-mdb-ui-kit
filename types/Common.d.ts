@@ -170,20 +170,18 @@ export type HttpErrorsTranslations = {
 }
 
 /**
- * Базовый набор настроек локали для LocaleManager.
- * @see LocalesManager
+ * Базовый набор настроек языка для LanguagesManager.
+ * @see LanguagesManager
  */
-export interface BasicLocaleConfig {
+export interface BasicLanguageConfig {
     // Код языка локали: vi, ru, ...
     language: string;
     // Код региона локали: vn, ru, ...
     region: string,
-    // Код локали: vi-VN, ru-RU, ...
+    // Полный код локали: vi-VN, ru-RU, ...
     full: string;
     // Название локали для выпадающего меню смены локали.
     label: string;
-    // Название языка для выпадающего меню смены локали.
-    languageLabel: string,
     // Вариации локали в нижнем регистре.
     variations: string[];
     // Загрузчик словаря для приложения и всех сторонних пакетов (datetime и т.п.).
@@ -194,16 +192,33 @@ export interface BasicLocaleConfig {
         localeConfig: NumeralJSLocale,
         defaultFormat: string,
     };
+    // Настройки форматирования даты и времени.
     dateTime: {
         /**
          * Формат даты для DateTimeService.
          * По умолчанию: L.
          *
+         * @see DateTimeService
          * @see https://day.js.org/docs/en/display/format
          * @see https://day.js.org/docs/en/plugin/localized-format
          */
         dateFormat?: 'L' | string,
     }
+}
+
+/**
+ * Базовый набор настроек региона для RegionsManager.
+ * @see RegionsManager
+ */
+export interface BasicRegionConfig {
+    // Код региона локали: vn, ru, ...
+    region: string,
+    // Код языка локали: vi, ru, ...
+    defaultLanguage: string;
+    // Название локали для выпадающего меню смены локали.
+    label: string;
+    // Вариации локали в нижнем регистре.
+    variations: string[];
 }
 
 // Часть методов и свойств CKEditor.

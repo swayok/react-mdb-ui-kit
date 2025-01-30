@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import {BasicLocaleConfig} from '../types/Common'
+import {BasicLanguageConfig} from '../types/Common'
 import utc from 'dayjs/plugin/utc'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
@@ -48,10 +48,10 @@ export default class DateTimeService {
     }
 
     // Установка локали пакета (глобально) из настроек локализации.
-    static setDefaultLocaleFromConfig(locale: BasicLocaleConfig): void {
-        dayjs.locale(locale.language.toLowerCase())
-        if (locale.dateTime.dateFormat) {
-            this.setDefaultFormat(locale.dateTime.dateFormat)
+    static setDefaultLanguageFromConfig(config: BasicLanguageConfig): void {
+        dayjs.locale(config.language.toLowerCase())
+        if (config.dateTime.dateFormat) {
+            this.setDefaultFormat(config.dateTime.dateFormat)
         }
     }
 
