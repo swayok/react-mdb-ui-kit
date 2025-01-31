@@ -177,6 +177,7 @@ export interface BasicLanguageConfig {
     // Код языка локали: vi, ru, ...
     language: string;
     // Код региона локали: vn, ru, ...
+    // todo: remove BasicLanguageConfig.region
     region: string,
     // Полный код локали: vi-VN, ru-RU, ...
     full: string;
@@ -189,8 +190,7 @@ export interface BasicLanguageConfig {
     loader: () => Promise<AnyObject>;
     // Настройки форматирования чисел.
     numeral: {
-        localeConfig: NumeralJSLocale,
-        defaultFormat: string,
+        localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>,
     };
     // Настройки форматирования даты и времени.
     dateTime: {
@@ -211,14 +211,19 @@ export interface BasicLanguageConfig {
  * @see RegionsManager
  */
 export interface BasicRegionConfig {
-    // Код региона локали: vn, ru, ...
+    // Код региона: vn, ru, ...
     region: string,
-    // Код языка локали: vi, ru, ...
+    // Языка региона по умолчанию: vi, ru, ...
     defaultLanguage: string;
     // Название локали для выпадающего меню смены локали.
     label: string;
     // Вариации локали в нижнем регистре.
     variations: string[];
+    // Настройки форматирования чисел.
+    numeral: {
+        localeConfig: Pick<NumeralJSLocale, 'currency'>,
+        defaultFormat: string,
+    },
 }
 
 // Часть методов и свойств CKEditor.

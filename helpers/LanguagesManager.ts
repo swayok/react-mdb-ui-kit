@@ -1,6 +1,6 @@
 import {AnyObject, BasicLanguageConfig, FormSelectOption, FormSelectOptionsList} from '../types/Common'
-import numeral from 'numeral'
 import DateTimeService from '../services/DateTimeService'
+import NumbersService from '../services/NumbersService'
 
 // Автоматически определенная локаль.
 let detectedLanguage: BasicLanguageConfig | undefined
@@ -21,7 +21,7 @@ export default class LanguagesManager<
     private loadedTranslations: AnyObject<DictionaryType> = {}
 
     // Основная локаль.
-    private primaryLanguage?: LanguageConfigType
+    private primaryLanguage: LanguageConfigType
     // Строки для основной локали.
     private translations?: DictionaryType
 
@@ -42,19 +42,7 @@ export default class LanguagesManager<
     ) {
         this.languages = languages
         this.defaultLanguage = defaultLanguage
-
-        // Регистрация локалей для numeral.
-        for (const key in languages) {
-            if (languages[key].language in numeral.locales) {
-                // Если не удалять, то ругается в режиме dev hot/watch
-                delete numeral.locales[languages[key].language]
-            }
-            numeral.register(
-                'locale',
-                languages[key].language,
-                languages[key].numeral.localeConfig
-            )
-        }
+        this.primaryLanguage = defaultLanguage
     }
 
     // Список локалей.
@@ -74,7 +62,7 @@ export default class LanguagesManager<
 
     // Текущая локаль.
     getPrimaryLanguage(): LanguageConfigType {
-        return this.primaryLanguage as LanguageConfigType
+        return this.primaryLanguage
     }
 
     // Словарь для текущей локали.
@@ -174,10 +162,8 @@ export default class LanguagesManager<
         this.primaryLanguage = config
         this.translations = this.loadedTranslations[config.language]
         window.document.documentElement.lang = config.language
-        // Настройка форматирования чисел для локали
-        numeral.reset()
-        numeral.defaultFormat(config.numeral.defaultFormat)
-        numeral.locale(config.language)
+        // Меняем язык форматирования чисел.
+        NumbersService.setLanguage(config.language)
         // Настройка локали для сервиса работы с датой и временем.
         DateTimeService.setDefaultLanguageFromConfig(config)
     }

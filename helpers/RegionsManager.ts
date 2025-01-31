@@ -1,4 +1,5 @@
 import {AnyObject, BasicRegionConfig, FormSelectOption, FormSelectOptionsList} from '../types/Common'
+import NumbersService from '../services/NumbersService'
 
 // Автоматически определенная локаль.
 let detectedRegion: BasicRegionConfig | undefined
@@ -15,7 +16,7 @@ export default class RegionsManager<
     private readonly defaultRegion: RegionConfigType
 
     // Основная локаль.
-    private primaryRegion?: RegionConfigType
+    private primaryRegion: RegionConfigType
 
     // Имя URL Query аргумента для изменения языка интерфейса.
     static getUrlQueryArgName(): string {
@@ -31,6 +32,7 @@ export default class RegionsManager<
     ) {
         this.regions = regions
         this.defaultRegion = defaultRegion
+        this.primaryRegion = defaultRegion
     }
 
     // Список локалей.
@@ -45,7 +47,7 @@ export default class RegionsManager<
 
     // Текущая локаль.
     getPrimaryRegion(): RegionConfigType {
-        return this.primaryRegion as RegionConfigType
+        return this.primaryRegion
     }
 
     // Получить список опций для компонентов смены локализации
@@ -121,6 +123,8 @@ export default class RegionsManager<
     // Установка и настройка основного региона.
     setPrimaryRegion(config: RegionConfigType): void {
         this.primaryRegion = config
+        // Меняем регион форматирования чисел.
+        NumbersService.setRegion(config.region)
     }
 }
 
