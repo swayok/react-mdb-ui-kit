@@ -7,11 +7,12 @@ let detectedRegion: BasicRegionConfig | undefined
 // Менеджер регионов (определение, хранение, загрузка, изменение).
 export default class RegionsManager<
     RegionConfigType extends BasicRegionConfig = BasicRegionConfig,
+    RegionCode extends string = string
 > {
     // Имя URL Query аргумента для задания новой локали.
     private static readonly defaultUrlQueryArgName: string = 'region'
     // Список доступных локалей.
-    private readonly regions: AnyObject<RegionConfigType>
+    private readonly regions: AnyObject<RegionConfigType, RegionCode>
     // Локаль по умолчанию.
     private readonly defaultRegion: RegionConfigType
 
@@ -27,7 +28,7 @@ export default class RegionsManager<
 
     // Конструктор.
     constructor(
-        regions: AnyObject<RegionConfigType>,
+        regions: AnyObject<RegionConfigType, RegionCode>,
         defaultRegion: RegionConfigType
     ) {
         this.regions = regions
@@ -36,7 +37,7 @@ export default class RegionsManager<
     }
 
     // Список локалей.
-    getRegions(): AnyObject<RegionConfigType> {
+    getRegions(): AnyObject<RegionConfigType, RegionCode> {
         return this.regions
     }
 
@@ -51,12 +52,12 @@ export default class RegionsManager<
     }
 
     // Получить список опций для компонентов смены локализации
-    getRegionsListAsOptions(): FormSelectOptionsList<string, RegionConfigType> {
-        const ret: FormSelectOption<string, RegionConfigType>[] = []
+    getRegionsListAsOptions(): FormSelectOptionsList<RegionCode, RegionConfigType> {
+        const ret: FormSelectOption<RegionCode, RegionConfigType>[] = []
         for (const key in this.regions) {
             const config: RegionConfigType = this.regions[key]
             ret.push({
-                value: config.region,
+                value: config.region as RegionCode,
                 label: config.label,
                 extra: config,
             })
@@ -71,14 +72,14 @@ export default class RegionsManager<
         }
         // Поиск в глобальной конфигурации.
         const globalConfigLanguage = this.findRegion(
-            getRegionFromGlobalConfig()
+            this.getRegionFromGlobalConfig()
         )
         if (globalConfigLanguage) {
             detectedRegion = globalConfigLanguage
             return globalConfigLanguage
         }
         // Поискать подходящую локаль среди языков браузера.
-        const languages = getLanguagesFromUserAgent()
+        const languages = this.getLanguagesFromUserAgent()
         for (let i = 0; i < languages.length; i++) {
             const language: RegionConfigType | null = this.findRegion(languages[i])
             if (language) {
@@ -90,34 +91,34 @@ export default class RegionsManager<
     }
 
     // Поиск поддерживаемой локали по коду или языку.
-    findRegion<T extends BasicRegionConfig = RegionConfigType>(
+    findRegion(
         languageOrLocale: string | null
-    ): T | null {
+    ): RegionConfigType | null {
         if (!languageOrLocale) {
             return null
         }
         for (const key in this.regions) {
             const language = this.regions[key]
             if (this.regions[key].variations.includes(languageOrLocale.toLowerCase())) {
-                return language as unknown as T
+                return language
             }
         }
         return null
     }
 
     // Поиск поддерживаемой локали по коду или языку или возврат локали по умолчанию.
-    findRegionOrDefault<T extends BasicRegionConfig = RegionConfigType>(
+    findRegionOrDefault(
         languageOrLocale: string | null
-    ): T {
+    ): RegionConfigType {
         if (languageOrLocale) {
             for (const key in this.regions) {
                 const language = this.regions[key]
                 if (this.regions[key].variations.includes(languageOrLocale.toLowerCase())) {
-                    return language as unknown as T
+                    return language
                 }
             }
         }
-        return this.getDefaultRegion() as unknown as T
+        return this.getDefaultRegion()
     }
 
     // Установка и настройка основного региона.
@@ -126,22 +127,24 @@ export default class RegionsManager<
         // Меняем регион форматирования чисел.
         NumbersService.setRegion(config.region)
     }
+
+    // Достать локаль из URL.
+    private getRegionFromGlobalConfig(): string | null {
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return window?.config?.region || null
+    }
+
+    // Достать предпочтительные локали из User-Agent.
+    private getLanguagesFromUserAgent(): string[] {
+        if ('languages' in window.navigator) {
+            return navigator.languages.slice()
+        }
+        if ('language' in window.navigator) {
+            return [(window.navigator as Navigator).language]
+        }
+        return []
+    }
 }
 
-// Достать локаль из URL.
-function getRegionFromGlobalConfig(): string | null {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return window?.config?.region || null
-}
 
-// Достать предпочтительные локали из User-Agent.
-function getLanguagesFromUserAgent(): string[] {
-    if ('languages' in window.navigator) {
-        return navigator.languages.slice()
-    }
-    if ('language' in window.navigator) {
-        return [(window.navigator as Navigator).language]
-    }
-    return []
-}

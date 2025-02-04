@@ -173,12 +173,15 @@ export type HttpErrorsTranslations = {
  * Базовый набор настроек языка для LanguagesManager.
  * @see LanguagesManager
  */
-export interface BasicLanguageConfig {
+export interface BasicLanguageConfig<
+    LanguageCode extends string = string,
+    RegionCode extends string = string,
+> {
     // Код языка локали: vi, ru, ...
-    language: string;
+    language: LanguageCode;
     // Код региона локали: vn, ru, ...
     // todo: remove BasicLanguageConfig.region
-    region: string,
+    region: RegionCode,
     // Полный код локали: vi-VN, ru-RU, ...
     full: string;
     // Название локали для выпадающего меню смены локали.
@@ -210,11 +213,14 @@ export interface BasicLanguageConfig {
  * Базовый набор настроек региона для RegionsManager.
  * @see RegionsManager
  */
-export interface BasicRegionConfig {
+export interface BasicRegionConfig<
+    RegionCode extends string = string,
+    LanguageCode extends string = string,
+> {
     // Код региона: vn, ru, ...
-    region: string,
+    region: RegionCode,
     // Языка региона по умолчанию: vi, ru, ...
-    defaultLanguage: string;
+    defaultLanguage: LanguageCode;
     // Название локали для выпадающего меню смены локали.
     label: string;
     // Вариации локали в нижнем регистре.

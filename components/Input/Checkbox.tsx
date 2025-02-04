@@ -4,7 +4,7 @@ import {ReactComponentOrTagName} from '../../types/Common'
 import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 import {PropsWithForwardedRef, withStableAndRef} from '../../helpers/withStable'
 import HtmlContent from '../HtmlContent'
-import UserBehaviorService from 'swayok-react-mdb-ui-kit/services/UserBehaviorService'
+import UserBehaviorService from '../../services/UserBehaviorService'
 
 export interface CheckboxProps extends AllHTMLAttributes<HTMLInputElement> {
     // Обертка

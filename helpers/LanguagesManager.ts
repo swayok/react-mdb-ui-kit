@@ -8,17 +8,18 @@ let detectedLanguage: BasicLanguageConfig | undefined
 // Менеджер локализаций (определение, хранение, загрузка, изменение).
 export default class LanguagesManager<
     LanguageConfigType extends BasicLanguageConfig = BasicLanguageConfig,
-    DictionaryType = AnyObject
+    DictionaryType extends object = AnyObject,
+    LanguageCode extends string = string,
 > {
     // Имя URL Query аргумента для задания новой локали.
     private static readonly defaultUrlQueryArgName: string = 'lang'
     // Список доступных локалей.
-    private readonly languages: AnyObject<LanguageConfigType>
+    private readonly languages: AnyObject<LanguageConfigType, LanguageCode>
     // Локаль по умолчанию.
     private readonly defaultLanguage: LanguageConfigType
 
     // Загруженные локали (строки).
-    private loadedTranslations: AnyObject<DictionaryType> = {}
+    private loadedTranslations: AnyObject<DictionaryType, LanguageCode> = {}
 
     // Основная локаль.
     private primaryLanguage: LanguageConfigType
@@ -37,7 +38,7 @@ export default class LanguagesManager<
 
     // Конструктор.
     constructor(
-        languages: AnyObject<LanguageConfigType>,
+        languages: AnyObject<LanguageConfigType, LanguageCode>,
         defaultLanguage: LanguageConfigType
     ) {
         this.languages = languages
@@ -46,7 +47,7 @@ export default class LanguagesManager<
     }
 
     // Список локалей.
-    getLanguages(): AnyObject<LanguageConfigType> {
+    getLanguages(): AnyObject<LanguageConfigType, LanguageCode> {
         return this.languages
     }
 
@@ -56,7 +57,7 @@ export default class LanguagesManager<
     }
 
     // Список загруженных словарей.
-    getLoadedTranslations(): AnyObject<DictionaryType> {
+    getLoadedTranslations(): AnyObject<DictionaryType, LanguageCode> {
         return this.loadedTranslations
     }
 
@@ -71,32 +72,15 @@ export default class LanguagesManager<
     }
 
     // Получить список опций для компонентов смены локализации
-    getLanguagesListAsOptions(): FormSelectOptionsList<string, LanguageConfigType> {
-        const ret: FormSelectOption<string, LanguageConfigType>[] = []
+    getLanguagesListAsOptions(): FormSelectOptionsList<LanguageCode, LanguageConfigType> {
+        const ret: FormSelectOption<LanguageCode, LanguageConfigType>[] = []
         for (const key in this.languages) {
             const config: LanguageConfigType = this.languages[key]
             ret.push({
-                value: config.language,
+                value: config.language as LanguageCode,
                 label: config.label,
                 extra: config,
             })
-        }
-        return ret
-    }
-
-    // Получить список опций для компонентов смены языка в пределах текущей локали.
-    // todo: вынести это
-    getLanguagesListForPrimaryLocaleRegionAsOptions(): FormSelectOptionsList<string, LanguageConfigType> {
-        const ret: FormSelectOption<string, LanguageConfigType>[] = []
-        for (const key in this.languages) {
-            const language: LanguageConfigType = this.languages[key]
-            if (language.region === this.primaryLanguage?.region) {
-                ret.push({
-                    value: language.language,
-                    label: language.label,
-                    extra: language,
-                })
-            }
         }
         return ret
     }
@@ -108,14 +92,14 @@ export default class LanguagesManager<
         }
         // Поиск в глобальной конфигурации.
         const globalConfigLanguage = this.findLanguage(
-            getLanguageFromGlobalConfig()
+            this.getLanguageFromGlobalConfig()
         )
         if (globalConfigLanguage) {
             detectedLanguage = globalConfigLanguage
             return globalConfigLanguage
         }
         // Поискать подходящую локаль среди языков браузера.
-        const languages = getLanguagesFromUserAgent()
+        const languages = this.getLanguagesFromUserAgent()
         for (let i = 0; i < languages.length; i++) {
             const language: LanguageConfigType | null = this.findLanguage(languages[i])
             if (language) {
@@ -127,34 +111,30 @@ export default class LanguagesManager<
     }
 
     // Поиск поддерживаемой локали по коду или языку.
-    findLanguage<T extends BasicLanguageConfig = LanguageConfigType>(
-        languageOrLocale: string | null
-    ): T | null {
+    findLanguage(languageOrLocale: string | null): LanguageConfigType | null {
         if (!languageOrLocale) {
             return null
         }
         for (const key in this.languages) {
             const language = this.languages[key]
             if (this.languages[key].variations.includes(languageOrLocale.toLowerCase())) {
-                return language as unknown as T
+                return language
             }
         }
         return null
     }
 
     // Поиск поддерживаемой локали по коду или языку или возврат локали по умолчанию.
-    findLanguageOrDefault<T extends BasicLanguageConfig = LanguageConfigType>(
-        languageOrLocale: string | null
-    ): T {
+    findLanguageOrDefault(languageOrLocale: string | null): LanguageConfigType {
         if (languageOrLocale) {
             for (const key in this.languages) {
                 const language = this.languages[key]
                 if (this.languages[key].variations.includes(languageOrLocale.toLowerCase())) {
-                    return language as unknown as T
+                    return language
                 }
             }
         }
-        return this.getDefaultLanguage() as unknown as T
+        return this.getDefaultLanguage()
     }
 
     // Установка и настройка основной локали. Использовать только через loadTranslations!
@@ -216,22 +196,22 @@ export default class LanguagesManager<
             }
         }
     }
-}
 
-// Достать локаль из URL.
-function getLanguageFromGlobalConfig(): string | null {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return window?.config?.language || null
-}
+    // Достать локаль из URL.
+    private getLanguageFromGlobalConfig(): string | null {
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return window?.config?.language || null
+    }
 
-// Достать предпочтительные локали из User-Agent.
-function getLanguagesFromUserAgent(): string[] {
-    if ('languages' in window.navigator) {
-        return navigator.languages.slice()
+    // Достать предпочтительные локали из User-Agent.
+    private getLanguagesFromUserAgent(): string[] {
+        if ('languages' in window.navigator) {
+            return navigator.languages.slice()
+        }
+        if ('language' in window.navigator) {
+            return [(window.navigator as Navigator).language]
+        }
+        return []
     }
-    if ('language' in window.navigator) {
-        return [(window.navigator as Navigator).language]
-    }
-    return []
 }
