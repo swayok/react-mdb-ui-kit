@@ -54,11 +54,11 @@ export default class RegionsManager<
     getRegionsListAsOptions(): FormSelectOptionsList<string, RegionConfigType> {
         const ret: FormSelectOption<string, RegionConfigType>[] = []
         for (const key in this.regions) {
-            const language: RegionConfigType = this.regions[key]
+            const config: RegionConfigType = this.regions[key]
             ret.push({
-                value: language.region,
-                label: language.label,
-                extra: language,
+                value: config.region,
+                label: config.label,
+                extra: config,
             })
         }
         return ret

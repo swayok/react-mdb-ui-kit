@@ -74,11 +74,11 @@ export default class LanguagesManager<
     getLanguagesListAsOptions(): FormSelectOptionsList<string, LanguageConfigType> {
         const ret: FormSelectOption<string, LanguageConfigType>[] = []
         for (const key in this.languages) {
-            const language: LanguageConfigType = this.languages[key]
+            const config: LanguageConfigType = this.languages[key]
             ret.push({
-                value: language.full,
-                label: language.label,
-                extra: language,
+                value: config.language,
+                label: config.label,
+                extra: config,
             })
         }
         return ret
