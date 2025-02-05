@@ -16,15 +16,33 @@ export default function getDefaultWysiwygConfig(
                 onInstanceReady?.(event)
             },
         },
-        extraPlugins: 'base64image',
+        extraPlugins: 'base64image,justify',
         removeButtons: '',
         toolbar: [
-            {name: 'clipboard', items: ['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText']},
-            {name: 'editing', items: ['Scayt']},
-            {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']},
-            {name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter']},
-            {name: 'links', items: ['Link', 'Unlink']},
-            {name: 'insert', items: ['base64image', /*'Image',*/ /*'Table',*/ 'HorizontalRule', 'SpecialChar']},
+            {
+                name: 'clipboard',
+                items: ['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText'],
+            },
+            {
+                name: 'editing',
+                items: ['Scayt'],
+            },
+            {
+                name: 'basicstyles',
+                items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'],
+            },
+            {
+                name: 'paragraph',
+                items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter'],
+            },
+            {
+                name: 'links',
+                items: ['Link', 'Unlink'],
+            },
+            {
+                name: 'insert',
+                items: ['base64image', /*'Image',*/ /*'Table',*/ 'HorizontalRule', 'SpecialChar'],
+            },
         ],
         versionCheck: false,
     }
