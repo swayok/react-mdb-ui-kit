@@ -66,7 +66,6 @@ function VirtualizedSelectInputOptions<
     } = props
 
     const virtuoso = useVirtuosoLibAsync()
-    console.log(virtuoso)
 
     // Конвертация дерева опций в плоский массив.
     const flatOptions: OptionOrGroup<OptionValueType, OptionExtrasType>[] = useMemo(
