@@ -79,7 +79,7 @@ export default class NavigationService {
         // чтобы не мешать выполнению основного функционала.
         setTimeout(() => {
             if (oldLocation && this.makeUrlFromLocation(oldLocation) === this.makeUrlFromLocation(location)) {
-                // URL не изменился (изменился только location.key).
+                // URL не изменился.
                 return
             }
             for (const navigationCallbacksKey in this.navigationCallbacks) {
