@@ -100,11 +100,11 @@ export class LocaleService<
 
     // Загрузка словаря для локали (асинхронная).
     async loadTranslations(
-        locale: LanguageConfig,
+        languageConfig: LanguageConfig,
         useAsPrimary: boolean,
         reload: boolean = false
     ): Promise<Translations> {
-        return this.languagesManager.loadTranslations(locale, useAsPrimary, reload)
+        return this.languagesManager.loadTranslations(languageConfig, useAsPrimary, reload)
     }
 
     // Словарь для текущей локали.
@@ -123,8 +123,8 @@ export class LocaleService<
     }
 
     // Сменить текущую локаль.
-    switchLanguage(locale: LanguageConfig): Promise<Translations> {
-        return this.languagesManager.loadTranslations(locale, true)
+    switchLanguage(languageConfig: LanguageConfig): Promise<Translations> {
+        return this.languagesManager.loadTranslations(languageConfig, true)
     }
 
     // Регистрация обработчика обновления строк локали (только в режиме dev hot/watch).

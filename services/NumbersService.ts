@@ -50,11 +50,8 @@ class NumbersService {
         regions: AnyObject<BasicRegionConfig> | null = null,
         defaultRegion: BasicRegionConfig | null = null
     ): void {
-        // Удаляем существующие локали в numeral.
-        // Если не удалять, то ругается в режиме dev hot/watch
-        for (const key in numeral.locales) {
-            delete numeral.locales[key]
-        }
+        // Внимание: нельзя удалять numeral.locales полностью т.к. numeral ломается!
+
         // Собираем форматы чисел по умолчанию для каждого региона.
         this.formatsByRegion = {}
         for (const key in regions) {
@@ -63,6 +60,9 @@ class NumbersService {
         // Добавляем локали в numeral.
         for (const lang in languages) {
             const languageConfig = languages[lang]
+            // Удаляем существующие локали в numeral.
+            // Если не удалять, то ругается в режиме dev hot/watch.
+            delete numeral.locales[languageConfig.language]
             // Локаль = язык.
             numeral.register(
                 'locale',
@@ -81,6 +81,9 @@ class NumbersService {
                     languageConfig.language,
                     regionConfig.region
                 )
+                // Удаляем существующие локали в numeral.
+                // Если не удалять, то ругается в режиме dev hot/watch.
+                delete numeral.locales[localeCode]
                 numeral.register(
                     'locale',
                     localeCode,
