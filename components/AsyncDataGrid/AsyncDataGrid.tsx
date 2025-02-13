@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import AsyncDataGridContext, {asyncDataGridDefaultLimit, getAsyncDataGridContextDefaults} from './AsyncDataGridContext'
-import AsyncDataGridService from './AsyncDataGridService'
+import {AsyncDataGridApi} from './AsyncDataGridApi'
 import {ApiError} from '../../services/ApiRequestService'
 import {handleErrorResponse} from '../../helpers/ApiRequestErrorHelpers'
 import {normalizeOffset} from '../DataGrid/dataGridHelpers'
@@ -210,7 +210,7 @@ function AsyncDataGrid<
         if (!silent) {
             setIsLoading(true)
         }
-        AsyncDataGridService.getRows<RowDataType, FiltersDataType>(
+        AsyncDataGridApi.getRows<RowDataType, FiltersDataType>(
             props.apiUrl,
             props.apiMethod || 'GET',
             {

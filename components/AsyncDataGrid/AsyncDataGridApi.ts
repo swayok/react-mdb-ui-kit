@@ -1,15 +1,15 @@
-import ApiRequestService from '../../services/ApiRequestService'
+import {ApiRequestService} from '../../services/ApiRequestService'
 import {AnyObject} from '../../types/Common'
 import {DataGridOrderingDirection} from '../../types/DataGrid'
 import {AsyncDataGridRows} from '../../types/AsyncDataGrid'
 
 // Сервис для загрузки данных с сервера для таблицы.
-export default class AsyncDataGridService {
+export const AsyncDataGridApi = {
 
     /**
      * Запросить список строк для таблицы через GET запрос.
      */
-    static async getRows<
+    async getRows<
         RowDataType extends object = AnyObject,
         FiltersDataType extends object = AnyObject,
     >(
@@ -36,12 +36,12 @@ export default class AsyncDataGridService {
             abortController
         )
             .then(response => response.data)
-    }
+    },
 
     /**
      * Запросить список строк для таблицы через POST запрос.
      */
-    static async getRowsAsPost<
+    async getRowsAsPost<
         RowDataType extends object = AnyObject,
         FiltersDataType extends object = AnyObject,
     >(
@@ -66,7 +66,7 @@ export default class AsyncDataGridService {
                 abortController
             )
             .then(response => response.data)
-    }
+    },
 }
 
 // Получить набор фильтров, которые имеют не пустое значение.

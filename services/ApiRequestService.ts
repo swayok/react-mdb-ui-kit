@@ -57,7 +57,7 @@ export interface ApiRequestOptions extends Omit<
 export type ApiRequestMethod = 'get' | 'post' | 'put' | 'delete'
 
 // Сервис отправки запросов к API.
-export default class ApiRequestService {
+export class ApiRequestService {
 
     // Настройки сервиса.
     private static config: ApiRequestServiceConfig = {
