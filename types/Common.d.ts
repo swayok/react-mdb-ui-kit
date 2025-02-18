@@ -190,6 +190,13 @@ export interface BasicLanguageConfig<
     variations: string[];
     // Загрузчик словаря для приложения и всех сторонних пакетов (datetime и т.п.).
     // Должен вернуть словарь для приложения.
+    // Примеры:
+    // () => (await import('../locales/vi')).default .
+    // С загрузкой переводов из dayjs:
+    // () => {
+    //     await import('dayjs/locale/en.js')
+    //     return (await import('../locales/en')).default
+    // }
     loader: () => Promise<AnyObject>;
     // Настройки форматирования чисел.
     numeral: {
