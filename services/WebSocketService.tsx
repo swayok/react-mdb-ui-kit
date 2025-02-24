@@ -48,7 +48,7 @@ abstract class WebSocketService {
         disableStats: true,
         enabledTransports: ['ws', 'wss'],
     }
-    private static laravelEcho: Echo | null = null
+    private static laravelEcho: Echo<'pusher'> | null = null
     private static authInfo: WebSocketServiceAuthInfo | null = null
     private static isConnected: boolean = false
     private static channels: AnyObject<Channel> = {}
@@ -84,7 +84,7 @@ abstract class WebSocketService {
         userId: number,
         authToken: string | null,
         channels: AnyObject<string>
-    ): Echo | null {
+    ): Echo<'pusher'> | null {
         this.disconnect()
         try {
             this.authInfo = {
@@ -103,7 +103,9 @@ abstract class WebSocketService {
                     },
                 }
             } // else: то авторизация не требуется или происходит через cookies.
-            this.laravelEcho = new Echo(laravelEchoConfig)
+            // Затыкаем eslint т.к. пакет laravel-echo не экспортирует тип EchoOptions.
+            // eslint-disable-next-line
+            this.laravelEcho = new Echo<'pusher'>(laravelEchoConfig as any)
             for (const channelAlias in channels) {
                 const channelName: string = channels[channelAlias]
                 const channel: Channel = this.laravelEcho.private(channelName)
