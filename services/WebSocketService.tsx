@@ -111,7 +111,8 @@ abstract class WebSocketService {
                 this.channelAliases[channelAlias] = channelName
                 console.log(`[WebSocketService] Connected to '${channelName}' channel`)
                 // Ловим все события для отладки
-                if (process.env.NODE_ENV !== 'production') {
+                // @ts-ignore
+                if (process?.env?.NODE_ENV !== 'production') {
                     console.log('[WebSocketService] Started listening for all subscriptions, events and errors')
                     channel.subscribed(() => {
                         console.log('[WebSocketService] subscription success')
