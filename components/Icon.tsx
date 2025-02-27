@@ -6,21 +6,23 @@ import {SvgIconInfo} from '../types/Common'
 import SvgIcon, {SvgIconProps} from './SvgIcon'
 
 export interface AppIconProps extends Omit<IconProps, 'path'> {
-    path: IconProps['path'] | SvgIconInfo;
-    label?: string | number;
-    tooltip?: string;
-    tooltipProps?: Omit<TooltipProps, 'title'>;
-    centerIconInTooltip?: boolean;
+    path: IconProps['path'] | SvgIconInfo
+    label?: string | number
+    tooltip?: string
+    tooltipProps?: Omit<TooltipProps, 'title'>
+    centerIconInTooltip?: boolean
+    tooltipMaxWidth?: number
 }
 
 // SVG-иконка с дополнительными функциями (всплывающая подсказка, подпись).
-export default function Icon(props: AppIconProps) {
+function Icon(props: AppIconProps) {
     const {
         className,
         label,
         tooltip,
         tooltipProps,
         centerIconInTooltip,
+        tooltipMaxWidth,
         path,
         ...otherProps
     } = props
@@ -61,11 +63,15 @@ export default function Icon(props: AppIconProps) {
             className: tooltipWrapperClassName,
             tag: tooltipTag,
             disableClickHandler: tooltipDisableClickHandler,
+            tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
             ...otherTooltipProps
         } = tooltipProps || {}
-        const commonTooltipProps = {
+        const commonTooltipProps: Partial<TooltipProps> = {
             title: tooltip,
-            disableClickHandler: tooltipDisableClickHandler === undefined ? true : tooltipDisableClickHandler,
+            disableClickHandler: tooltipDisableClickHandler === undefined
+                ? true
+                : tooltipDisableClickHandler,
+            tooltipMaxWidth: tooltipMaxWidthFromProps,
         }
         if (label !== undefined) {
             return (
@@ -104,3 +110,5 @@ export default function Icon(props: AppIconProps) {
         }
     }
 }
+
+export default React.memo(Icon)

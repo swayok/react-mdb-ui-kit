@@ -10,14 +10,16 @@ export interface TooltipProps extends Omit<ComponentPropsWithModifiableTag, 'tit
     options?: Omit<Partial<PopperJS.Options>, 'placement'>,
     title?: string | React.ReactNode,
     tooltipClassName?: string,
+    tooltipTextClassName?: string,
     tooltipStyle?: CSSProperties,
+    tooltipMaxWidth?: number,
     containsInteractiveElements?: boolean,
     disableClickHandler?: boolean,
     disableHover?: boolean
 }
 
 // Всплывающая подсказка.
-function Tooltip(props: TooltipProps) {
+function Tooltip<PropsType>(props: TooltipProps & PropsType) {
 
     const {
         children,
@@ -29,7 +31,9 @@ function Tooltip(props: TooltipProps) {
         onMouseLeave,
         onTouchStart,
         tooltipClassName,
-        tooltipStyle,
+        tooltipTextClassName,
+        tooltipStyle = {},
+        tooltipMaxWidth,
         containsInteractiveElements,
         disableClickHandler,
         disableHover,
@@ -37,15 +41,33 @@ function Tooltip(props: TooltipProps) {
     } = props
 
     //< do not use useRef() because props.tag can be functional component with forwarded ref
-    const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
-    const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
+    const [
+        referenceElement,
+        setReferenceElement,
+    ] = useState<HTMLElement | null>(null)
+    const [
+        popperElement,
+        setPopperElement,
+    ] = useState<HTMLDivElement | null>(null)
 
-    const [isOpenState, setIsOpenState] = useState(false)
-    const [isClicked, setIsClicked] = useState(false)
-    const [isFaded, setIsFaded] = useState(false)
-    const [isReadyToHide, setIsReadyToHide] = useState(false)
+    const [
+        isOpenState,
+        setIsOpenState,
+    ] = useState(false)
+    const [
+        isClicked,
+        setIsClicked,
+    ] = useState(false)
+    const [
+        isFaded,
+        setIsFaded,
+    ] = useState(false)
+    const [
+        isReadyToHide,
+        setIsReadyToHide,
+    ] = useState(false)
 
-    // Is last interaction done using touchscreen?
+    // Было ли последнее взаимодействие осуществлено с помощью touch screen?
     const isTouchEvent = useRef<boolean>(false)
 
     const tooltipClasses = clsx(
@@ -91,8 +113,8 @@ function Tooltip(props: TooltipProps) {
     const handleOnMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
         if (
             disableHover
-            // There is a problem when tooltip is cliked by touch event,
-            // but click handler is disabled: tooltip remains always visible.
+            // There is a problem when the tooltip is clicked by touch event,
+            // but the click handler is disabled: the tooltip remains always visible.
             || (isTouchEvent.current && disableClickHandler)
         ) {
             isTouchEvent.current = false
@@ -181,6 +203,10 @@ function Tooltip(props: TooltipProps) {
         )
     }
 
+    if (tooltipMaxWidth) {
+        tooltipStyle.maxWidth = tooltipMaxWidth
+    }
+
     return (
         <>
             <Tag
@@ -203,7 +229,7 @@ function Tooltip(props: TooltipProps) {
                     role="tooltip"
                 >
                     <div
-                        className="tooltip-inner"
+                        className={clsx('tooltip-inner', tooltipTextClassName)}
                         style={tooltipStyle}
                     >
                         {title}
@@ -215,4 +241,4 @@ function Tooltip(props: TooltipProps) {
     )
 }
 
-export default React.memo(Tooltip)
+export default React.memo(Tooltip) as typeof Tooltip
