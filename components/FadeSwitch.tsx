@@ -1,5 +1,6 @@
 import React from 'react'
 import {CSSTransition, SwitchTransition} from 'react-transition-group'
+import clsx from 'clsx'
 
 type Props = {
     transitionKey: string | boolean | number,
@@ -14,6 +15,9 @@ type Props = {
     // По умолчанию: fade.
     // Длительность анимаций по умолчанию: 300 | 200 | 100.
     animation?: 'fade' | 'fade-switch' | 'page-switch',
+    // CSS класс для контейнера.
+    // Используется только при отсутствии transitionRef.
+    className?: string,
 }
 
 // Анимированная смена children.
@@ -27,6 +31,7 @@ function FadeSwitch(props: Props) {
         mountOnEnter = true,
         transitionRef = containerRef,
         animation = 'fade',
+        className,
         children,
     } = props
 
@@ -56,7 +61,7 @@ function FadeSwitch(props: Props) {
                     <>{children}</>
                 ) : (
                     <div
-                        className="animated-content-container"
+                        className={clsx('animated-content-container', className)}
                         ref={transitionRef as React.RefObject<HTMLDivElement>}
                     >
                         {children}
