@@ -289,8 +289,70 @@ export function formatPhoneNumber(value: string, template: string, focused: bool
 
 // Удаление фиксированной части из начала значения и не цифровых символов.
 function removeTemplateCharacters(value: string, template: string): string {
-    const fixedTemplatePart: string = template.replace(/^([^_ ]+).*$/, '$1').replace(/([+*.])/g, '.')
+    const fixedTemplatePart: string = template.replace(/^([^_ ]+).*$/, '$1').replace(/([+*.])/g, '\\$1')
     return value.replace(new RegExp(`^${fixedTemplatePart}`), '').replace(/[^0-9]+/g, '')
+}
+
+// Проверка функции removeTemplateCharacters.
+export function testRemoveTemplateCharacters() {
+    const ret = []
+    let values = [
+        '+79771234567',
+        '+7 (977) 123-45-67',
+        '+7(977)123-45-67',
+        '+7(977)1234567',
+        '7(977)1234567', //< Тут ожидается несоответствие с expectedValue, т.к. нет + в начале.
+        '(977)1234567',
+        '(977)123-45-67',
+        '9771234567',
+    ]
+    let template = '+7 (___) ___-__-__'
+    let expectedValue = '9771234567'
+    for (const value of values) {
+        const result = removeTemplateCharacters(value, template)
+        ret.push({
+            value,
+            template,
+            result,
+            match: expectedValue === result,
+        })
+    }
+    values = [
+        '0900123456789',
+        '0900 123 456 789',
+        '0900-123-456-789',
+        '900123456789',
+        '900 123 456 789',
+        '900-123-456-789',
+    ]
+    template = '0___ ___ ___'
+    expectedValue = '900123456789'
+    for (const value of values) {
+        const result = removeTemplateCharacters(value, template)
+        ret.push({
+            value,
+            template,
+            result: removeTemplateCharacters(value, template),
+            match: expectedValue === result,
+        })
+    }
+    values = [
+        '0090123456789',
+        '0090 123 456 789',
+        '0090-123-456-789',
+        '090 123 456 789', // Тут ожидается несоответствие.
+    ]
+    expectedValue = '090123456789'
+    for (const value of values) {
+        const result = removeTemplateCharacters(value, template)
+        ret.push({
+            value,
+            template,
+            result: removeTemplateCharacters(value, template),
+            match: expectedValue === result,
+        })
+    }
+    return ret
 }
 
 // Поиск позиции курсора в поле ввода.
