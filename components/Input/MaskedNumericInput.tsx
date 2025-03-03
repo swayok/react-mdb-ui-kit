@@ -87,8 +87,6 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
         }
     }, [inputReference.current, value, focused, template, minCursorPosition])
 
-    console.log(template.length)
-
     return (
         <Input
             inputRef={inputReference}
