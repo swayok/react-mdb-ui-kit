@@ -2,13 +2,13 @@ import React, {useEffect, useRef, useState} from 'react'
 import Input, {InputProps} from './Input'
 import withStable from '../../helpers/withStable'
 
-export interface PhoneInputProps extends Omit<InputProps, 'onChange'> {
-    // Шаблон номера телефона.
+export interface MaskedNumericInputProps extends Omit<InputProps, 'onChange' | 'maxLength'> {
+    // Шаблон значения.
     // Например, "+7 (___) ___-__-__".
     // Подчеркивание - это цифра, которую может ввести пользователь,
     // всё остальное - это неизменные символы (включая пробелы).
     template: string,
-    // Функция для очистки номера телефона для onChange().
+    // Функция для очистки значения для onChange().
     // По умолчанию: value => value.replace(/[^+0-9]+/g, '')
     // Пример: template = '0___ ___ ___'.
     // Введено: value = '0999 888 777'.
@@ -18,8 +18,8 @@ export interface PhoneInputProps extends Omit<InputProps, 'onChange'> {
     // Чистое значение: '+79998887766'.
     // Если нужно другое поведение, то можно задать свою функцию очистки значения.
     valueCleaner?: (value: string) => string,
-    // Минимальная позиция курсора в поле ввода, если ввод номера телефона начинается
-    // не с нулевой позиции.
+    // Минимальная позиция курсора в поле ввода,
+    // если ввод значения начинается не с нулевой позиции.
     // Пример: для template = "+7 (___) ___-__-__"
     // minCursorPosition = 3 (индекс первого подчеркивания).
     minCursorPosition: number,
@@ -36,13 +36,15 @@ export interface PhoneInputProps extends Omit<InputProps, 'onChange'> {
 const isHardcodedCharacterRegexp = /[ ()-]/
 const rtrimRegexp = /[)_ -]+$/
 
-// Поле ввода для номера телефона с настраиваемым шаблоном.
-function PhoneInput(props: PhoneInputProps) {
+// Поле ввода для числового значения в соответствии с маской.
+// Примеры: номер телефона, номер банковской карты, номер паспорта.
+function MaskedNumericInput(props: MaskedNumericInputProps) {
     const {
         template,
         valueCleaner = value => value.replace(/[^+0-9]+/g, ''),
         placeholder = template,
         minCursorPosition,
+        allowedChars = /\d/,
         onChange,
         onFocus,
         onBlur,
@@ -85,14 +87,17 @@ function PhoneInput(props: PhoneInputProps) {
         }
     }, [inputReference.current, value, focused, template, minCursorPosition])
 
+    console.log(template.length)
+
     return (
         <Input
             inputRef={inputReference}
             placeholder={placeholder}
             {...otherProps}
-            value={value ? formatPhoneNumber(value, template, focused) : ''}
-            allowedChars={/\d/}
-            maxLength={25}
+            value={value ? formatValueForMask(value, template, focused) : ''}
+            allowedChars={allowedChars}
+            // +1 нужен, т.к. шаблон занимает всё место, что мешает его заполнению т.к. блокируется ввод.
+            maxLength={template.length + 1}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (!e.altKey && !e.ctrlKey && !e.shiftKey && !e.metaKey) {
                     const input = e.currentTarget
@@ -192,7 +197,7 @@ function PhoneInput(props: PhoneInputProps) {
                     e.preventDefault()
                     return
                 }
-                const value = formatPhoneNumber(
+                const value = formatValueForMask(
                     e.currentTarget.value,
                     template,
                     focused
@@ -233,7 +238,7 @@ function PhoneInput(props: PhoneInputProps) {
             }}
             onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
                 e.preventDefault()
-                const value = formatPhoneNumber(
+                const value = formatValueForMask(
                     e.clipboardData.getData('text/plain'),
                     template,
                     focused
@@ -256,7 +261,7 @@ function isValidValue(value: string, template: string): boolean {
 }
 
 // Нормализация значения по шаблону и очистка результата от лишних символов.
-export function normalizeAndCleanPhoneNumber(
+export function normalizeAndCleanMaskedValue(
     value: string | null | undefined,
     template: string,
     valueCleaner: (value: string) => string = value => value.replace(/[^+0-9]+/g, '')
@@ -264,11 +269,11 @@ export function normalizeAndCleanPhoneNumber(
     if (typeof value !== 'string' || value.trim() === '') {
         return ''
     }
-    return valueCleaner(formatPhoneNumber(value, template, false))
+    return valueCleaner(formatValueForMask(value, template, false))
 }
 
 // Форматирование введенного значения по шаблону.
-export function formatPhoneNumber(value: string, template: string, focused: boolean): string {
+export function formatValueForMask(value: string, template: string, focused: boolean): string {
     if (value.length === 0) {
         return focused ? template : ''
     }
@@ -427,7 +432,7 @@ function isHardcodedCharacter(char: string): boolean {
     return String(char || '').match(isHardcodedCharacterRegexp) !== null
 }
 
-export default withStable<PhoneInputProps>(
+export default withStable<MaskedNumericInputProps>(
     ['onChange', 'onFocus', 'onBlur', 'valueCleaner'],
-    PhoneInput
+    MaskedNumericInput
 )
