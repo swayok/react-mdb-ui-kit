@@ -30,8 +30,6 @@
         "@types/image-blob-reduce": "^4.1.4",
         "@types/node": "^18.15.3",
         "@types/numeral": "^2.0.5",
-        "@types/react": "^18.3.12",
-        "@types/react-dom": "^18.3.1",
         "@types/react-transition-group": "^4.4.11",
         "autosize": "^6.0.1",
         "ckeditor4": "4.22.1",
@@ -52,6 +50,8 @@
         "react-virtuoso": "^4.12.3"
     },
     "peerDependencies": {
+        "@types/react": ">=18.0.0",
+        "@types/react-dom": ">=18.0.0",
         "react": ">=18.0.0",
         "react-dom": ">=18.0.0"
     },
