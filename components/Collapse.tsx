@@ -39,7 +39,7 @@ function Collapse(props: CollapseProps) {
     } = props
 
     const localRef = useRef<HTMLElement>(null)
-    const containerRef: React.RefObject<HTMLElement> = wrapperRef || localRef
+    const containerRef: React.RefObject<HTMLElement | null> = wrapperRef || localRef
     const isRenderedOnce = useRef<boolean>(false)
     const cssProperty: 'width' | 'height' = horizontal ? 'width' : 'height'
 

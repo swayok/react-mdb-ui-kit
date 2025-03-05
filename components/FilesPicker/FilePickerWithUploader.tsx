@@ -32,7 +32,7 @@ const positionDelta: number = 1
 
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
-// и отображении списка выбранных файлов т.к. создает контекст с состоянием и действиями.
+// и отображении списка выбранных файлов, т.к. создает контекст с состоянием и действиями.
 export default class FilePickerWithUploader extends React.Component<FilePickerWithUploaderProps, State> {
 
     static defaultProps: Partial<FilePickerWithUploaderProps> = {
@@ -57,7 +57,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         isUploading: false,
     }
 
-    inputRef: React.RefObject<HTMLInputElement>
+    inputRef: React.RefObject<HTMLInputElement | null>
 
     // Конструктор
     constructor(props: FilePickerWithUploaderProps) {

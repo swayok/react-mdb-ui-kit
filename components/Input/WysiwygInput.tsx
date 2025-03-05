@@ -206,8 +206,7 @@ function WysiwygInput(props: WysiwygInputProps) {
                 <CKEditorReact
                     className={inputClasses}
                     onFocus={updateLabelWidth}
-                    onBeforeLoad={config => {
-                        console.log('onBeforeLoad', config)
+                    onBeforeLoad={(config: CKEditorConfig) => {
                         // Меняем timestamp, чтобы CSS/JS файлы, загружаемые для редактора, были актуальными.
                         // @ts-ignore
                         if (window.config?.wysiwygAssetsVersion) {

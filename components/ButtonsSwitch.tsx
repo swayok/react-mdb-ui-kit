@@ -16,12 +16,6 @@ export interface ButtonsSwitchProps<ValueType = string> extends Omit<AllHTMLAttr
     onChange: (value: ValueType) => void,
 }
 
-const defaultProps: Partial<ButtonsSwitchProps> = {
-    inactiveColor: 'gray',
-    activeColor: 'blue',
-    small: true,
-}
-
 // Выбор одной или нескольких опций из вариантов в виде кнопок.
 function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>) {
 
@@ -30,10 +24,10 @@ function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>)
         disabled,
         options,
         buttonsProps,
-        small,
-        large,
-        inactiveColor,
-        activeColor,
+        small = true,
+        large = false,
+        inactiveColor = 'gray',
+        activeColor = 'blue',
         onChange,
         className,
         ...wrapperProps
@@ -48,16 +42,12 @@ function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>)
         buttons.push(
             <Button
                 key={'button-' + i}
-                small={small === undefined ? defaultProps.small : small}
+                small={small}
                 large={large}
                 outline={!isSelected}
                 {...buttonsProps}
                 {...option.attributes as unknown as typeof buttonsProps}
-                color={
-                    isSelected
-                        ? (activeColor || defaultProps.activeColor)
-                        : (inactiveColor || defaultProps.inactiveColor)
-                }
+                color={isSelected ? activeColor : inactiveColor}
                 disabled={disabled || option.disabled}
                 onClick={() => {
                     onChange(option.value)

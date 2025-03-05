@@ -8,7 +8,7 @@ export interface DragAndDropItemProps<PayloadType = unknown> extends Omit<Compon
     position: number,
     disabled?: boolean,
     payload?: PayloadType,
-    wrapperRef?: React.RefObject<HTMLElement>,
+    wrapperRef?: React.RefObject<HTMLElement | null>,
 }
 
 // Перетаскиваемый элемент списка.

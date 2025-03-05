@@ -14,7 +14,7 @@ const activeInputLabelSizeMultipliers = {
 
 export interface InputProps extends AllHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
     textarea?: boolean;
-    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement>;
+    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
     label?: string;
     labelId?: string;
     labelClass?: string;

@@ -11,8 +11,8 @@ const DepsSymbol: string = `${Prefix}DepsSymbol`
 export type PropsWithForwardedRef<Props, HtmlElementType extends HTMLElement | null = HTMLElement> = React.PropsWithoutRef<Props> & {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     forwardedRef: Props extends any
-        ? ('ref' extends keyof Props ? Props['ref'] : React.ForwardedRef<HtmlElementType>)
-        : React.ForwardedRef<HtmlElementType>;
+        ? ('ref' extends keyof Props ? Props['ref'] : React.ForwardedRef<HtmlElementType | null>)
+        : React.ForwardedRef<HtmlElementType | null>;
 }
 
 /**
@@ -151,10 +151,11 @@ export function withStableAndRef<
 
     const ComponentWithRef = forwardRef<HtmlElementType, ComponentProps>(
         // @ts-ignore
-        (props: ComponentProps, ref: React.ForwardedRef<HtmlElementType>) =>
+        (props: ComponentProps, ref: React.ForwardedRef<HtmlElementType | null>) =>
             React.createElement<ComponentProps & PropsWithForwardedRef<HtmlElementType>>(
                 // @ts-ignore
                 StableComponent,
+                // @ts-ignore
                 Object.assign({forwardedRef: ref}, props)
             )
     )
