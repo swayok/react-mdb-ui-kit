@@ -39,8 +39,7 @@ export default class PollingService {
 
     // Остановка выполнения функции name.
     static stopPolling(name: string): void {
-        console.log('[Polling] ended: ' + name)
-        this.clearPollingTimeout(name)
+        this.clearPollingTimeout(name, true)
     }
 
     // Остановка всех функций.
@@ -51,10 +50,13 @@ export default class PollingService {
     }
 
     // Удаление тайм-аута (остановка выполнения функции name).
-    private static clearPollingTimeout(name: string): void {
+    private static clearPollingTimeout(name: string, isStopped: boolean = false): void {
         if (this.timeouts[name]) {
             window.clearTimeout(this.timeouts[name])
             delete this.timeouts[name]
+            if (isStopped) {
+                console.log('[Polling] ended: ' + name)
+            }
         }
     }
 
