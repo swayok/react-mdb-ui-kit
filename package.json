@@ -2,7 +2,6 @@
     "name": "swayok-react-mdb-ui-kit",
     "version": "1.0.0",
     "description": "React components based on free version of MDB styles",
-    "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -23,6 +22,9 @@
         "url": "https://github.com/swayok/react-mdb-ui-kit/issues"
     },
     "homepage": "https://github.com/swayok/react-mdb-ui-kit#readme",
+    "files": [
+        "./"
+    ],
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "@mdi/js": "^7.4.47",

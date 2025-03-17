@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import {ApiError} from '../services/ApiRequestService'
 
-type HookConfig<DataType> = {
+export interface UseApiGetRequestHookConfig<DataType> {
     // Запустить загрузку сразу же при монтировании компонента?
     // По умолчанию: true.
     autoStart?: boolean,
@@ -15,7 +15,7 @@ type HookConfig<DataType> = {
     initialData?: DataType
 }
 
-type HookReturn<DataType> = {
+export interface UseApiGetRequestHookReturn<DataType> {
     data?: DataType,
     loading: boolean,
     error: ApiError | null,
@@ -28,16 +28,17 @@ type HookReturn<DataType> = {
 // Реализует стандартный вариант запроса данных с индикатором загрузки и обработкой ошибок.
 export default function useApiGetRequest<DataType>(
     sendRequest: () => Promise<DataType>,
-    options?: HookConfig<DataType>,
+    options?: UseApiGetRequestHookConfig<DataType>,
+    // Отвечает за пересоздание функции запроса данных из API.
     key?: string | number
-): HookReturn<DataType> {
+): UseApiGetRequestHookReturn<DataType> {
 
     const {
         autoStart = true,
         defaultIsLoadingState = true,
         resetDataBeforeReload = true,
         initialData,
-    } = (options || {})
+    } = (options ?? {})
 
     // Данные.
     const [
