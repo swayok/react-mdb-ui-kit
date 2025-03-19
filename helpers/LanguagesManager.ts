@@ -33,7 +33,7 @@ export default class LanguagesManager<
     static getUrlQueryArgName(): string {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.languageUrlQueryArgName || this.defaultUrlQueryArgName
+        return window?.config?.languageUrlQueryArgName ?? this.defaultUrlQueryArgName
     }
 
     // Конструктор.
@@ -68,7 +68,7 @@ export default class LanguagesManager<
 
     // Словарь для текущей локали.
     getTranslations(): DictionaryType {
-        return this.translations as DictionaryType
+        return this.translations!
     }
 
     // Получить список опций для компонентов смены локализации
@@ -100,8 +100,8 @@ export default class LanguagesManager<
         }
         // Поискать подходящую локаль среди языков браузера.
         const languages = this.getLanguagesFromUserAgent()
-        for (let i = 0; i < languages.length; i++) {
-            const language: LanguageConfigType | null = this.findLanguage(languages[i])
+        for (const item of languages) {
+            const language: LanguageConfigType | null = this.findLanguage(item)
             if (language) {
                 return detectedLanguage = language
             }
@@ -177,8 +177,8 @@ export default class LanguagesManager<
     // Обрабатываем все обновленные через Hto Module Reload файлы локализаций
     // и, при необходимости, перезагружаем их.
     handleHotModuleReload(updatedFiles: string[]): void {
-        for (let i = 0; i < updatedFiles.length; i++) {
-            const language = updatedFiles[i].replace(/^.*\/([a-z]{2})\.(tsx?|jsx?)$/, '$1')
+        for (const item of updatedFiles) {
+            const language = item.replace(/^.*\/([a-z]{2})\.(tsx?|jsx?)$/, '$1')
             if (language.length === 2) {
                 if (this.getPrimaryLanguage()?.language === language) {
                     // Текущую локализацию бесшовно перезагружаем.
@@ -201,7 +201,7 @@ export default class LanguagesManager<
     private getLanguageFromGlobalConfig(): string | null {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.language || null
+        return window?.config?.language ?? null
     }
 
     // Достать предпочтительные локали из User-Agent.

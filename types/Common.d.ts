@@ -5,8 +5,12 @@ import {NumeralJSLocale} from 'numeral'
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
 // Это удобно для абстрактных объектов получаемых извне и для подсказок в IDE.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyObject<ValuesType = any, Keys = string> = Record<Keys extends string ? Keys : keyof Keys, ValuesType>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/consistent-indexed-object-style
+export interface AnyObject<ValuesType = any, Keys = string> extends Record<
+    Keys extends string ? Keys | string : keyof Keys | string, ValuesType
+> {
+    [key: string]: ValuesType;
+}
 
 // Объект, в котором все ключи должны быть числами.
 // По сути - это массив, в котором индексы не упорядочены.
@@ -68,7 +72,9 @@ export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> exten
 export type FormSelectOptionsList<Value = string, Extras = AnyObject> = FormSelectOption<Value, Extras>[]
 
 // Опция или группа опция для SelectInput.
-export type FormSelectOptionOrGroup<Value = string, Extras = AnyObject> = FormSelectOption<Value, Extras> | FormSelectOptionGroup<Value, Extras>
+export type FormSelectOptionOrGroup<Value = string, Extras = AnyObject> =
+    FormSelectOption<Value, Extras>
+    | FormSelectOptionGroup<Value, Extras>
 
 // Список содержащий и опции и группы опций для SelectInput.
 export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject> = FormSelectOptionOrGroup<Value, Extras>[]

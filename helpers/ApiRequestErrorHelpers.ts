@@ -8,7 +8,10 @@ export const ValidationErrorHttpCode: number = 422
 export const UnauthorisedErrorHttpCode: number = 401
 export const AccessDeniedErrorHttpCode: number = 403
 
-export type ApiRequestErrorHelpersConfig = {
+/**
+ * Глобальные настройки обработки ошибок от API.
+ */
+export interface ApiRequestErrorHelpersConfig {
     logoutRoute: string,
     translator: () => HttpErrorsTranslations
 }
@@ -20,28 +23,109 @@ let config: ApiRequestErrorHelpersConfig = {
     },
 }
 
+/**
+ * Задать глобальные настройки обработки ошибок от API.
+ */
 export function configureApiRequestErrorHelpers(newConfig: ApiRequestErrorHelpersConfig): void {
     config = newConfig
 }
 
-export type ErrorHandlers = {
+/**
+ * Обработчики ошибок и настройки обработки ошибок от API.
+ */
+export interface ErrorHandlers {
+    /**
+     * Если true, то отключает вызов handleMessage при ошибке валидации данных (HTTP 422).
+     * По умолчанию: false.
+     *
+     * @see handleErrorResponse()
+     */
     suppressValidationErrorMessage?: boolean,
+    /**
+     * Если true, то отключает вызов handleMessage при ошибке авторизации (HTTP 401).
+     * По умолчанию: false.
+     *
+     * @see handleErrorResponse()
+     */
     suppressUnauthorisedErrorMessage?: boolean,
+    /**
+     * Отключает обработку ошибок для указанных HTTP кодов.
+     *
+     * @see handleErrorResponse()
+     */
     suppressErrorMessagesForHttpCodes?: number[],
+    /**
+     * Обработчик ошибки при отправке запроса.
+     *
+     * @see handleRequestSendingError()
+     */
     requestSendingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
+    /**
+     * Обработчик ошибки при парсинге данных ответа.
+     *
+     * @see handleResponseParsingError()
+     */
     responseParsingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
+    /**
+     * Обработчик ошибки 408 (Request Timeout).
+     *
+     * @see handleRequestTimeoutResponse()
+     * @see TimeoutErrorHttpCode
+     */
     timeoutError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
-    // next 2 handlers triggered only by default http4xxError - handleHttp4xxErrorResponse()
+    /**
+     * Следующие 3 обработчика вызываются в стандартном http4xxError обработчике.
+     *
+     * @see handleHttp4xxErrorResponse()
+     */
+    /**
+     * Обработчик ошибки валидации данных (HTTP 422).
+     * По умолчанию: null.
+     *
+     * @see ValidationErrorHttpCode
+     */
     validationErrors?: null | ((errors: AnyObject<string>, response: ApiError) => void),
+    /**
+     * Обработчик ошибки HTTP 403 (Access Denied).
+     *
+     * @see handleAuthorisationErrorResponse()
+     * @see AccessDeniedErrorHttpCode
+     */
     unauthorisedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    /**
+     * Обработчик ошибки HTTP 401 (Unauthorized).
+     *
+     * @see handleAccessDeniedErrorResponse()
+     * @see UnauthorisedErrorHttpCode
+     */
     accessDeniedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
-    // replaces validationErrors and unauthorisedError handlers - use handleHttp4xxErrorResponse() inside to trigger that handlers
+    /**
+     * Обработчик ошибок HTTP 4xx (400-499).
+     * Задание этого обработчика отключит использование обработчиков
+     * validationErrors, unauthorisedError, accessDeniedError, которые вызываются
+     * в стандартном http4xxError обработчике.
+     *
+     * @see handleHttp4xxErrorResponse()
+     */
     http4xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    /**
+     * Обработчик ошибок HTTP 5xx (500-599).
+     * @see handleHttp5xxErrorResponse()
+     */
     http5xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    /**
+     * @see handleMessageFromResponse()
+     */
     handleMessage?: null | ((response: ApiResponse | ApiError, message?: string, messageType?: ApiResponseData['_message_type']) => void),
+    /**
+     * Вызывается при любой HTTP ошибке (HTTP код >= 400), даже если ошибка
+     * уже была обработана другим обработчиком HTTP ошибок.
+     * Если произошла на HTTP ошибка, то не вызывается.
+     */
     anyHttpError?: ((response: ApiError, handlers: ErrorHandlers) => void),
-};
+}
 
+// Стандартные обработчики ошибок и настройки обработки ошибок.
 const defaultErrorHandlers: ErrorHandlers = {
     suppressValidationErrorMessage: false,
     suppressUnauthorisedErrorMessage: false,
@@ -50,7 +134,7 @@ const defaultErrorHandlers: ErrorHandlers = {
     responseParsingError: handleResponseParsingError,
     timeoutError: handleRequestTimeoutResponse,
     unauthorisedError: handleAuthorisationErrorResponse,
-    accessDeniedError: handleAccessDeniedErrorErrorResponse,
+    accessDeniedError: handleAccessDeniedErrorResponse,
     http5xxError: handleHttp5xxErrorResponse,
     http4xxError: handleHttp4xxErrorResponse,
     handleMessage: handleMessageFromResponse,
@@ -59,7 +143,7 @@ const defaultErrorHandlers: ErrorHandlers = {
 /**
  * Обработка ошибочного ответа от сервера.
  * @param {ApiError} error
- * @param {ErrorHandlers} handlers Позволяет переопределить обработчики ошибок используемые по умолчанию.
+ * @param {ErrorHandlers} handlers Позволяет переопределить обработчики ошибок, используемые по умолчанию.
  */
 export function handleErrorResponse(error: ApiError, handlers: ErrorHandlers = {}): void {
     if (error.request) {
@@ -264,7 +348,7 @@ export function handleAuthorisationErrorResponse(response: ApiError, handlers: E
 }
 
 // Обработка ошибки ограничения доступа.
-export function handleAccessDeniedErrorErrorResponse(response: ApiError, handlers: ErrorHandlers): void {
+export function handleAccessDeniedErrorResponse(response: ApiError, handlers: ErrorHandlers): void {
     if (!response.data._message) {
         handlers.handleMessage?.(response, config.translator().code403.toast, 'error')
     }
@@ -297,7 +381,7 @@ export function handleSuccessResponseData<T extends ApiResponseData = ApiRespons
     }
 }
 
-// Отображает сообщение через ToastService если есть параметр response.data._message.
+// Отображает сообщение через ToastService, если есть параметр response.data._message.
 // Тип сообщения по умолчанию success для HTTP code >= 100 и < 400 или error для HTTP code < 100 и >= 400.
 // Тип сообщения может быть изменен параметром response.data._message_type
 export function handleMessageFromResponse(
@@ -350,8 +434,8 @@ export function extractAndNormalizeValidationErrorsFromResponseData(responseData
         const errorsForKey = errors[key]
         if (Array.isArray(errorsForKey)) {
             const normalizedErrorsList = []
-            for (let i = 0; i < errorsForKey.length; i++) {
-                normalizedErrorsList.push(String(errorsForKey[i]).trim().replace(/[.;]$/, ''))
+            for (const item of errorsForKey) {
+                normalizedErrorsList.push(String(item).trim().replace(/[.;]$/, ''))
             }
             errors[key] = normalizedErrorsList.join('; ') + '.'
         }
@@ -359,7 +443,10 @@ export function extractAndNormalizeValidationErrorsFromResponseData(responseData
     return errors as AnyObject<string>
 }
 
-export type NormalizedNestedLaravelValidationErrors = AnyObject<string | NormalizedNestedLaravelValidationErrors>
+// Нормализованный набор ошибок валидации данных полученных из Laravel для массивов и объектов.
+export interface NormalizedNestedLaravelValidationErrors {
+    [Key: string]: (string | NormalizedNestedLaravelValidationErrors)
+}
 
 /**
  * Нормализация ошибок валидации данных полученных из Laravel для массивов и объектов.
@@ -370,26 +457,26 @@ export type NormalizedNestedLaravelValidationErrors = AnyObject<string | Normali
  * Рекурсивно.
  * @param errors
  */
-export function normalizeValidationErrorsKeysForArraysAndObjects(
-    errors: AnyObject<string>
+export function normalizeValidationErrorsKeysForArraysAndObjects<ErrorsType extends object = AnyObject<string>>(
+    errors: ErrorsType
 ): NormalizedNestedLaravelValidationErrors {
     const ret: NormalizedNestedLaravelValidationErrors = {}
     for (const errorsKey in errors) {
         const parts = errorsKey.split('.', 2)
         if (parts.length === 0) {
             // Обычный ключ
-            ret[errorsKey] = errors[errorsKey]
+            ret[errorsKey] = errors[errorsKey] as string
             continue
         }
         if (!(parts[0] in ret)) {
             ret[parts[0]] = {}
         } else if (typeof ret[parts[0]] !== 'object') {
-            // Конфликт с другим ключом содержащим строку
-            ret[errorsKey] = errors[errorsKey]
+            // Конфликт с другим ключом, содержащим строку
+            ret[errorsKey] = errors[errorsKey] as string
             continue
         }
 
-        (ret[parts[0]] as AnyObject<string>)[parts[1]] = errors[errorsKey]
+        (ret[parts[0]] as AnyObject<string>)[parts[1]] = errors[errorsKey] as string
     }
     for (const retKey in ret) {
         if (typeof retKey === 'object') {
