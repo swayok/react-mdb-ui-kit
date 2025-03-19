@@ -5,18 +5,16 @@ import {NumeralJSLocale} from 'numeral'
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
 // Это удобно для абстрактных объектов получаемых извне и для подсказок в IDE.
-export interface AnyObject<ValuesType = unknown, Keys = string> extends Record<Keys extends string ? Keys : keyof Keys, ValuesType> {
-    [key: string]: ValuesType;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyObject<ValuesType = any, Keys = string> = Record<Keys extends string ? Keys : keyof Keys, ValuesType>
 
 // Объект, в котором все ключи должны быть числами.
 // По сути - это массив, в котором индексы не упорядочены.
-export interface NumericKeysObject<ValuesType = unknown> {
-    [key: number]: ValuesType;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type NumericKeysObject<ValuesType = any> = Record<number, ValuesType>;
 
 // Информация о типе устройства и ширине страницы.
-export type UILayout = {
+export interface UILayout {
     deviceType: 'desktop' | 'tablet' | 'mobile',
     isWide: boolean,
     bootstrapSize: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl',
@@ -35,7 +33,7 @@ export type NoteColors = 'primary' | 'secondary' | 'light'
     | 'success' | 'danger' | 'warning' | 'info' | string
 
 // Минимальное и максимальное значение.
-export type MinMax = {
+export interface MinMax {
     min: number,
     max: number
 }
@@ -60,7 +58,7 @@ export interface FormSelectOption<Value = string, Extras = AnyObject> extends An
 // Группа опций для SelectInput.
 export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> extends AnyObject {
     label: string;
-    options: Array<FormSelectOption<Value, Extras>>;
+    options: FormSelectOption<Value, Extras>[];
     groupHeaderAttributes?: DropdownItemProps;
     optionsContainerAttributes?: HTMLProps<HTMLDivElement>;
     extra?: Extras;
@@ -87,7 +85,7 @@ export interface ComponentPropsWithModifiableTag<T extends HTMLElement = HTMLEle
 // Информация о не оптимизированной SVG иконке.
 // Иконка может быть нестандартного размера и иметь сложную структуру.
 // При этом иконку можно будет использовать так же как MDIIcon через компонент.
-export type SvgIconInfo = {
+export interface SvgIconInfo {
     width: number,
     height: number,
     content: string,
@@ -98,7 +96,7 @@ export type SvgIconInfo = {
 }
 
 // Переводы ошибок
-export type HttpErrorsTranslations = {
+export interface HttpErrorsTranslations {
     go_back: string,
     code401: {
         toast: string,
@@ -240,7 +238,7 @@ export interface BasicRegionConfig<
 }
 
 // Часть методов и свойств CKEditor.
-export type CKEditorInstance = {
+export interface CKEditorInstance {
     getData: (rawValue?: string) => string,
     setData: (rawValue?: string) => string,
     setReadOnly: (value: boolean) => void,

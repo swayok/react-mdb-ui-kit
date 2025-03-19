@@ -12,7 +12,7 @@ export default function useInputErrorSetter<
     return useCallback((key: keyof FormErrors, message?: string | null) => {
         setErrors(errors => setInputError<FormErrors>(
             errors,
-            key as string,
+            key,
             message
         ))
         callbackRef.current?.(key, message)

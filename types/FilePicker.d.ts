@@ -8,9 +8,9 @@ export type FilePickerContextMimeTypePreviewRenderer =
     (previewWidth: number, fileName: string) => React.ReactNode
 
 // Настройки предпросмотра для типа файлов.
-export type FilePickerContextMimeTypeInfo = {
+export interface FilePickerContextMimeTypeInfo {
     // Расширения файлов, например: ['jpeg', 'jpg'].
-    extensions: Array<string>,
+    extensions: string[],
     // Рендерер.
     preview: FilePickerContextMimeTypePreviewRenderer | 'image',
     // Тип файла.
@@ -18,7 +18,7 @@ export type FilePickerContextMimeTypeInfo = {
 }
 
 // Состояние компонентов выбора файлов для загрузки на сервер.
-export type FilePickerContextProps<T extends FilePickerFileInfo = FilePickerFileInfo> = {
+export interface FilePickerContextProps<T extends FilePickerFileInfo = FilePickerFileInfo> {
     // Максимальное кол-во файлов.
     maxFiles: number | null,
     // Набор собственных компонентов для отображения предпросмотра прикрепленного файла.
@@ -56,7 +56,7 @@ export type FilePickerContextProps<T extends FilePickerFileInfo = FilePickerFile
 }
 
 // Публичное API компонента выбора файлов для загрузки на сервер.
-export type FilePickerApi<T extends FilePickerFileInfo = FilePickerFileInfo> = {
+export interface FilePickerApi<T extends FilePickerFileInfo = FilePickerFileInfo> {
     /**
      * Получить данные файлов для отправки на сервер при отправке не этим компонентом.
      * Картинки конвертируются и ужимаются в соответствии с настройками:
@@ -97,7 +97,7 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
      */
     children: React.ReactNode | React.ReactNode[];
     // Ссылка на API компонента.
-    apiRef?: React.RefObject<FilePickerApi<T>>
+    apiRef?: React.RefObject<FilePickerApi<T> | null>
     // Список ранее прикрепленных файлов.
     existingFiles?: T[];
     // Удаление ранее прикрепленного файла.
@@ -159,7 +159,7 @@ export interface FilePickerInputProps {
      */
     children: React.ReactNode | React.ReactNode[];
     // Список ранее прикрепленных файлов.
-    value?: Array<FilePickerFileInfoFromDB | FilePickerFileInfo>;
+    value?: (FilePickerFileInfoFromDB | FilePickerFileInfo)[];
     // Разрешить картинки?
     allowImages?: boolean;
     // Разрешить не картинки?
@@ -270,7 +270,7 @@ export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HT
 }
 
 // Тексты для компонентов выбора файлов для загрузки на сервер.
-export type FilePickerTranslations = {
+export interface FilePickerTranslations {
     file_size: string,
     error_label: string,
     error: {

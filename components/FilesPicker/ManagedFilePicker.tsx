@@ -97,8 +97,7 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         (): FilePickerContextProps['previews'] => {
             if (allowedMimeTypes) {
                 const ret: FilePickerContextProps['previews'] = {}
-                for (let i = 0; i < allowedMimeTypes.length; i++) {
-                    const mimeType: string = allowedMimeTypes[i]
+                for (const mimeType of allowedMimeTypes) {
                     if (mimeType in FilePickerContextPropsDefaults.previews) {
                         ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
                     }
@@ -131,14 +130,14 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         if (!canAttachMoreFiles(pendingFilesToBeAdded)) {
             // Контроль количества прикрепленных файлов.
             ToastService.error(
-                translations.error.too_many_files(maxFiles as number)
+                translations.error.too_many_files(maxFiles!)
             )
             return Promise.reject(new Error('too_many_files'))
         }
         const fileUID: string = FilePickerHelpers.makeFileID(file)
         // Проверка на прикрепление уже прикрепленного файла.
-        for (let i = 0; i < files.length; i++) {
-            if (files[i].UID === fileUID) {
+        for (const item of files) {
+            if (item.UID === fileUID) {
                 ToastService.error(
                     translations.error.already_attached(file.name)
                 )
@@ -205,9 +204,9 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         if (disabled) {
             return Promise.resolve()
         }
-        const selectedFiles: Array<FileAPISelectedFileInfo> = FileAPI.getFiles(event.target, true)
+        const selectedFiles: FileAPISelectedFileInfo[] = FileAPI.getFiles(event.target, true)
         // console.log('[FilePicker] new files', selectedFiles);
-        const newFilesList: Array<FilePickerFileInfo> = []
+        const newFilesList: FilePickerFileInfo[] = []
         let newMaxPosition: number = getNextFilePosition()
         for (let i = 0; i < selectedFiles.length; i++) {
             try {
@@ -288,38 +287,36 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
     const onExistingFileRestore = useCallback(
         (file: FilePickerFileInfo) => {
             if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
-                ToastService.error(translations.error.too_many_files(maxFiles as number))
+                ToastService.error(translations.error.too_many_files(maxFiles!))
                 return
             }
-            for (let i = 0; i < files.length; i++) {
-                let restoredFile: FilePickerFileInfo | null = null
-                setFiles(files => {
-                    for (let i = 0; i < files.length; i++) {
-                        if (file.UID === files[i].UID) {
-                            if (files[i].isNew) {
-                                return files
-                            }
-                            const updatedFile = {
-                                ...files[i],
-                                isDeleted: false,
-                            }
-                            if (maxFiles === 1) {
-                                // Режим одного файла.
-                                // Заменяем весь список файлов на восстановленный.
-                                return [updatedFile]
-                            }
-                            // Разрешено прикрепление нескольких файлов.
-                            const updates: FilePickerFileInfo[] = files.slice()
-                            updates[i] = updatedFile
-                            restoredFile = updates[i]
-                            return updates
+            let restoredFile: FilePickerFileInfo | null = null
+            setFiles(files => {
+                for (let i = 0; i < files.length; i++) {
+                    if (file.UID === files[i].UID) {
+                        if (files[i].isNew) {
+                            return files
                         }
+                        const updatedFile = {
+                            ...files[i],
+                            isDeleted: false,
+                        }
+                        if (maxFiles === 1) {
+                            // Режим одного файла.
+                            // Заменяем весь список файлов на восстановленный.
+                            return [updatedFile]
+                        }
+                        // Разрешено прикрепление нескольких файлов.
+                        const updates: FilePickerFileInfo[] = files.slice()
+                        updates[i] = updatedFile
+                        restoredFile = updates[i]
+                        return updates
                     }
-                    return files
-                })
-                if (restoredFile) {
-                    onFileRestored?.(restoredFile)
                 }
+                return files
+            })
+            if (restoredFile) {
+                onFileRestored?.(restoredFile)
             }
         },
         [onFileRestored, files, canAttachMoreFiles, maxFiles]
@@ -330,16 +327,15 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         if (apiRef) {
             const getValidFiles = () => {
                 const ret = []
-                for (let i = 0; i < files.length; i++) {
-                    if (FilePickerHelpers.isValidFile(files[i])) {
-                        ret.push(files[i])
+                for (const item of files) {
+                    if (FilePickerHelpers.isValidFile(item)) {
+                        ret.push(item)
                     }
                 }
                 // console.log('[FilePicker] valid files', ret);
                 return ret
             }
-            // @ts-ignore - игнорируем readonly т.к. тут мы сами контролируем содержимое.
-            apiRef['current'] = {
+            apiRef.current = {
                 getValidFiles,
                 getFilesForUpload(
                     detachInvalidFiles: boolean,
@@ -355,9 +351,9 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
                             return
                         }
                         const promises = []
-                        for (let i = 0; i < validFiles.length; i++) {
+                        for (const item of validFiles) {
                             promises.push(FilePickerHelpers.getFileInfoForUpload(
-                                validFiles[i],
+                                item,
                                 useUidAsFileName,
                                 maxImageSize,
                                 convertImagesToJpeg,
@@ -380,8 +376,7 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         }
         return () => {
             if (apiRef) {
-                // @ts-ignore - игнорируем readonly т.к. тут мы сами контролируем содержимое.
-                apiRef['current'] = null
+                apiRef.current = null
             }
         }
     }, [apiRef, files, maxImageSize, convertImagesToJpeg, imagesCompression])
@@ -399,10 +394,9 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         const existingFilesUpdates: FilePickerFileInfo[] = (existingFiles || []).slice()
         const allFiles: FilePickerFileInfo[] = existingFilesUpdates.concat(stateUpdates)
         // Смещаем все файлы с позицией >= той, что у файла, на который перетащили другой файл на 1.
-        for (let i = 0; i < allFiles.length; i++) {
-            console.log(allFiles[i].file.name, allFiles[i].position)
-            if (allFiles[i].position >= newPosition) {
-                allFiles[i].position++
+        for (const item of allFiles) {
+            if (item.position >= newPosition) {
+                item.position++
             }
         }
         draggedElementPayload.position = newPosition
@@ -413,7 +407,7 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
     // Можно ли менять позиции файлов?
     const reorderable: boolean = (
         !!props.reorderable
-        && (props?.maxFiles || 2) > 1
+        && (props?.maxFiles ?? 2) > 1
     )
 
     // Данные контекста.

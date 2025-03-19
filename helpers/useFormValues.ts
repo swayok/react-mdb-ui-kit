@@ -5,50 +5,50 @@ import useInputErrorSetter from './useInputErrorSetter'
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
 // Возвращаемые хуком значения и методы.
-export type FormValuesHookReturn<FormData, FormErrors> = {
+export interface FormValuesHookReturn<FormData, FormErrors> {
     // Начальные значения полей ввода.
-    initialFormValues: Readonly<FormData>,
+    initialFormValues: Readonly<FormData>
     // Значения полей ввода.
-    formValues: Readonly<FormData>,
+    formValues: Readonly<FormData>
     // Задать все значения формы.
     setFormValues: (
         values: FormData | ((state: Readonly<FormData>) => FormData),
         // Сбросить флаг formHasChanges в false.
         resetHasChangesFlag?: boolean
-    ) => void,
+    ) => void
     // Задать часть значений формы.
-    setSomeFormValues: (values: Partial<FormData>) => void,
+    setSomeFormValues: (values: Partial<FormData>) => void
     // Задать одно значение формы.
     setFormValue: <Key extends keyof FormData>(
         key: Key,
         value: FormData[Key] | SetValueFn<FormData[Key]>,
         resetError?: boolean | keyof FormErrors
-    ) => void,
+    ) => void
     // Были ли изменения в данных формы относительно начальных значений.
-    formHasChanges: boolean,
+    formHasChanges: boolean
     // Задать флаг наличия изменений в данных формы.
-    setFormHasChanges: (value: boolean) => void,
+    setFormHasChanges: (value: boolean) => void
     // Сброс значений полей ввода в initialFormValues.
-    reset: () => void,
+    reset: () => void
     // Ошибки полей ввода.
-    formErrors: Readonly<FormErrors>,
+    formErrors: Readonly<FormErrors>
     setFormErrors: (
         values: Partial<FormErrors> | ((state: Readonly<FormErrors>) => FormErrors),
         // Объединить с существующими ошибками или заменить полностью?
         // Не работает, если values - функция.
         merge?: boolean
-    ) => void,
-    setFormError: (key: keyof FormErrors, message: string | null) => void,
+    ) => void
+    setFormError: (key: keyof FormErrors, message: string | null) => void
     // Состояние отправки данных в API.
-    isSubmitting: Readonly<boolean>,
-    setIsSubmitting: (value: boolean | ((prevState: boolean) => boolean)) => void,
+    isSubmitting: Readonly<boolean>
+    setIsSubmitting: (value: boolean | ((prevState: boolean) => boolean)) => void
 }
 
 // Хук для стандартной работы с данными формы.
 // Дает возможность управления данными формы и ошибками.
 export default function useFormValues<
-    FormData extends Record<string, unknown>,
-    FormErrors extends AnyObject<string | null> = AnyObject<string | null, keyof FormData>
+    FormData extends AnyObject,
+    FormErrors extends AnyObject = AnyObject<string | null, keyof FormData>
 >(
     initialValues: FormData | (() => FormData),
     deps?: React.DependencyList,
@@ -58,7 +58,7 @@ export default function useFormValues<
     // Кеширование начальных значений.
     const initialValuesMemo: FormData = useMemo(
         (): FormData => typeof initialValues === 'function' ? initialValues() : initialValues,
-        deps || []
+        deps ?? []
     )
 
     // Данные формы.
@@ -95,9 +95,10 @@ export default function useFormValues<
                 [key]: (typeof value === 'function' ? (value as SetValueFn<FormData[Key]>)(state[key]) : value),
             }))
             if (resetError) {
+                // noinspection SuspiciousTypeOfGuard
                 setFormError(
                     typeof resetError === 'boolean'
-                        ? key as keyof FormErrors
+                        ? key as unknown as keyof FormErrors
                         : resetError,
                     null
                 )

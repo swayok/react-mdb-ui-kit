@@ -1,7 +1,7 @@
 import ApiRequestDebugService from './ApiRequestDebugService'
 import {AnyObject, ApiResponseData} from '../types/Common'
 
-export type ApiRequestServiceConfig = {
+export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.
     baseApiUrl: string,
     // Максимальное время ожидания ответа от API.
@@ -11,7 +11,7 @@ export type ApiRequestServiceConfig = {
     // Список запросов, которые не нужно выводить в консоль.
     // Формат: pathname без baseApiUrl, точно такие же, какие передаются в
     // ApiRequestService.get(pathname) / ApiRequestService.post(pathname)
-    notLoggableRequests: Array<string>,
+    notLoggableRequests: string[],
     // Добавить опции или заголовки к вопросу.
     beforeSend?: (headers: Headers, request: RequestInit) => void,
 }
@@ -85,7 +85,7 @@ export class ApiRequestService {
     // Выполнить HTTP POST запрос.
     static post<T extends ApiResponseData = ApiResponseData>(
         url: string,
-        data?: AnyObject | FormData,
+        data?: object | FormData,
         options: ApiRequestOptions = {},
         abortController?: AbortController
     ): Promise<ApiResponse<T>> {
@@ -168,7 +168,7 @@ export class ApiRequestService {
             const logData = (action: 'Request' | string, data: AnyObject, isError: boolean = false) => {
                 if (isError || this.isLoggableRequest(relativeUrl, fullUrl)) {
                     const logTime: string = (new Date()).toLocaleTimeString('en', {hour12: false})
-                    const requestMethod: string = ((data._method || typeToLog) as string).toUpperCase()
+                    const requestMethod: string = ((data._method ?? typeToLog) as string).toUpperCase()
                     data.request = requestInit
                     console[isError ? 'error' : 'log'](
                         `[API][${logTime}][${action}][${requestMethod}] ${decodeURI(fullUrl)}`,
@@ -236,7 +236,7 @@ export class ApiRequestService {
     ): AbortSignal {
         const timeout: number = customTimeout === false
             ? 86400000
-            : (customTimeout || this.config.timeout)
+            : (customTimeout ?? this.config.timeout)
         const timeoutSignal: AbortSignal = AbortSignal.timeout(timeout)
         if (abortController) {
             return AbortSignal.any([
@@ -336,7 +336,7 @@ export class ApiRequestService {
                         && 'text' in rejectInfo.data
                         && String(rejectInfo.data.text)
                             .slice(0, 1000)
-                            .match(/class="html-exception-content"/) !== null
+                            .includes('class="html-exception-content"')
                     ) {
                         ApiRequestDebugService.setExceptionHtml(String(rejectInfo.data.text))
                     }
@@ -502,6 +502,7 @@ export class ApiRequestService {
         const fillParams = (obj: object | unknown[], prefix?: string) => {
             // Индекс массива или ключ объекта.
             let p: number | string
+            // eslint-disable-next-line @typescript-eslint/no-for-in-array
             for (p in obj) {
                 if (p in obj) {
                     const key: string = prefix ? prefix + '[' + String(p) + ']' : String(p)
