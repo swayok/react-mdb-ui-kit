@@ -206,7 +206,7 @@ export class CacheServiceClass<NameT extends string = string> {
             && 'data' in cacheItem
             && 'exp' in cacheItem
             && cacheItem.uid === regionOrLang
-            && DateTimeService.unix(cacheItem.exp).isAfter()
+            && DateTimeService.unixSeconds(cacheItem.exp).isAfter()
         )
     }
 }

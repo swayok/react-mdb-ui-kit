@@ -56,7 +56,7 @@ function Modal(props: ModalProps) {
     const [staticModal, setStaticModal] = useState<boolean>(false)
 
     const modalInnerRef = useRef<HTMLDivElement>(null)
-    const modalReference = modalRef ? modalRef : modalInnerRef
+    const modalReference = modalRef ?? modalInnerRef
 
     const classes = clsx(
         'modal',
@@ -69,7 +69,7 @@ function Modal(props: ModalProps) {
     const backdropClasses = clsx('modal-backdrop', 'fade', isOpenBackdrop && 'show', 'depth-' + depth)
 
     useEffect(() => {
-        setIsOpenModal(show || null)
+        setIsOpenModal(show ?? null)
     }, [])
 
     const closeModal = useCallback((inner: boolean) => {
@@ -225,7 +225,7 @@ function Modal(props: ModalProps) {
 
     let modalsContainer: HTMLElement = document.body
     if (typeof container === 'string') {
-        modalsContainer = document.getElementById(container) || document.body
+        modalsContainer = document.getElementById(container) ?? document.body
     }
 
     return (

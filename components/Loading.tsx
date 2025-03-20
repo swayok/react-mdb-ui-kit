@@ -2,7 +2,7 @@ import React, {CSSProperties, useEffect, useState} from 'react'
 import {CSSTransition} from 'react-transition-group'
 import clsx from 'clsx'
 
-export type LoadingProps = {
+export interface LoadingProps {
     loading: boolean,
     overlayColor?: 'solid-default' | 'solid-white' | 'semitransparent-default' | 'semitransparent-white',
     overlayFillsParent?: boolean,

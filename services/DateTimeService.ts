@@ -89,9 +89,19 @@ export default class DateTimeService {
         return dayjs(date, format, locale, strict)
     }
 
-    // Для манипуляций с конкретной датой и временем из UNIX timestamp.
+    // Для манипуляций с конкретной датой и временем из UNIX timestamp (t в секундах).
     static unix(t: number): DateTimeInstance {
+        return this.unixSeconds(t)
+    }
+
+    // Для манипуляций с конкретной датой и временем из UNIX timestamp (t в секундах).
+    static unixSeconds(t: number): DateTimeInstance {
         return dayjs.unix(t)
+    }
+
+    // Для манипуляций с конкретной датой и временем из UNIX timestamp (t в миллисекундах).
+    static unixMs(t: number): DateTimeInstance {
+        return dayjs.unix(t / 1000)
     }
 
     // Время в UTC.

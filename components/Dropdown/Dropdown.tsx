@@ -1,4 +1,3 @@
-/* eslint-disable func-style */
 import clsx from 'clsx'
 import React, {useId, useLayoutEffect, useState} from 'react'
 import DropdownContext, {DropdownOpenState} from './DropdownContext'
@@ -110,11 +109,11 @@ function Dropdown(props: DropdownProps) {
         } else if (dropleft) {
             setIsPlacement('left-start')
         } else {
-            setIsPlacement(placement || 'bottom-start')
+            setIsPlacement(placement ?? 'bottom-start')
         }
     }, [dropleft, dropright, dropup, placement])
 
-    const popperModifiers: Array<PopperJS.Modifier<unknown, object>> = [PopperJS.flip]
+    const popperModifiers: PopperJS.Modifier<unknown, object>[] = [PopperJS.flip]
     if (offset) {
         popperModifiers.push({...PopperJS.offset, options: {offset: Array.isArray(offset) ? offset : [0, offset]}})
     }

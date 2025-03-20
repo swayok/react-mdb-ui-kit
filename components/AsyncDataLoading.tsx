@@ -7,7 +7,7 @@ import FadeSwitch from './FadeSwitch'
 
 export interface AsyncDataLoadingProps<DataType = undefined> {
     loading: boolean | null;
-    loadingLabel?: string;
+    loadingLabel?: string | React.ReactNode;
     error?: boolean | number;
     errorMessage: string;
     onReload?: () => void;
@@ -25,7 +25,7 @@ export interface AsyncDataLoadingProps<DataType = undefined> {
 function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<DataType>) {
 
     // Можно ли показывать контент?
-    const canShowContent = (): boolean => props.showContent || props.showContent === undefined
+    const canShowContent = (): boolean => props.showContent ?? props.showContent === undefined
 
     // Отрисовка контента.
     const renderContents = () => {
@@ -39,7 +39,7 @@ function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<Dat
                 />
             )
         } else if (props.loading === false && !props.error && canShowContent()) {
-            return props.render(props.loadedData as DataType) || <div/>
+            return props.render(props.loadedData as DataType) ?? <div/>
         } else {
             return <div/>
         }

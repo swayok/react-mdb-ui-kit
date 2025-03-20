@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import withStable from '../helpers/withStable'
 
-type Props = {
+interface Props {
     // Секунд до 0.
     seconds: number,
     // Вызывается при достижении 0.
@@ -11,21 +11,34 @@ type Props = {
     // Вызывается на каждый tick.
     onTick?: (seconds: number) => void,
     // Замена отображения.
-    formatter?: (seconds: number) => string | React.ReactNode,
+    formatter?: ((seconds: number) => string | React.ReactNode),
     // Дополнительные CSS классы для <span> элемента.
     className?: string,
+    // Перезапуск отсчета при достижении 0.
+    // Если число, то оно будет использовано для задания нового значения seconds.
+    restartOnZero?: boolean | number,
 }
 
 // Обратный отсчет.
 function Countdown(props: Props) {
 
-    const [seconds, setSeconds] = useState<number>(props.seconds)
+    const [
+        seconds,
+        setSeconds,
+    ] = useState<number>(props.seconds)
 
     useEffect(() => {
+        if (props.seconds === 0) {
+            return
+        }
         let seconds = props.seconds
         const interval = window.setInterval(() => {
             if (seconds === 0) {
-                return
+                if (props.restartOnZero) {
+                    seconds = props.seconds + 1
+                } else {
+                    return
+                }
             }
             seconds--
             setSeconds(Math.max(0, seconds))
