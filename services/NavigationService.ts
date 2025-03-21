@@ -10,7 +10,7 @@ export type ExtractRouteParams<Path> = Path extends `${infer Segment}/${infer Re
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     : ExtractRouteParam<Path, {}>
 
-export type NavigationServiceConfig = {
+export interface NavigationServiceConfig {
     // URL без локали.
     rootUrl: string,
     // URL с локалью.
@@ -104,7 +104,7 @@ export default class NavigationService {
 
     // Получить текущую локацию.
     static getLocation(): Location | null {
-        return this.location as Location
+        return this.location!
     }
 
     // Задать ключ страницы с вложенным обработчиком навигации внутри.
@@ -118,7 +118,7 @@ export default class NavigationService {
     }
 
     // Переход на страницу.
-    static navigate<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    static navigate<QueryArgsType = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
@@ -128,14 +128,14 @@ export default class NavigationService {
     }
 
     // Замена текущей страницы.
-    static replace<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    static replace<QueryArgsType = AnyObject<string>>(
         relativeUrl: null | string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null
     ): void {
         this._navigate(
             'replace',
-            relativeUrl || this.location?.pathname || '/',
+            relativeUrl ?? this.location?.pathname ?? '/',
             params,
             queryArgs
         )
@@ -148,7 +148,7 @@ export default class NavigationService {
             return
         }
         if (window.history.state && window.history.state.idx > 0 || !fallbackUrl) {
-            this.navigator(-1)
+            void this.navigator(-1)
         } else {
             this.replace(fallbackUrl)
         }
@@ -176,7 +176,7 @@ export default class NavigationService {
     }
 
     // Переход на страницу.
-    private static _navigate<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    private static _navigate<QueryArgsType = AnyObject<string>>(
         action: 'navigate' | 'replace',
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
@@ -199,14 +199,14 @@ export default class NavigationService {
             JSON.stringify({relativeUrl, params, queryArgs, url}, null, 2)
         )
 
-        this.navigator(url, {
+        void this.navigator(url, {
             replace: action === 'replace',
             state: from ? {from} : undefined,
         })
     }
 
     // Сборка относительного URL из частей.
-    static makeUrl<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    static makeUrl<QueryArgsType = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null
@@ -223,7 +223,7 @@ export default class NavigationService {
     }
 
     // Сборка абсолютного URL из частей.
-    static makeFullUrl<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    static makeFullUrl<QueryArgsType = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
@@ -234,7 +234,7 @@ export default class NavigationService {
     }
 
     // Сборка абсолютного URL для API из частей.
-    static makeFullApiUrl<QueryArgsType extends AnyObject<string> = AnyObject<string>>(
+    static makeFullApiUrl<QueryArgsType = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null
@@ -281,6 +281,6 @@ export default class NavigationService {
     // Получение пути для текущей страницы (pathname).
     // Без URL query и других частей.
     static getCurrentPath(): string | null {
-        return this.location?.pathname || null
+        return this.location?.pathname ?? null
     }
 }
