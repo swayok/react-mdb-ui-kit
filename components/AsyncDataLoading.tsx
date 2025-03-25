@@ -8,6 +8,8 @@ import FadeSwitch from './FadeSwitch'
 export interface AsyncDataLoadingProps<DataType = undefined> {
     loading: boolean | null;
     loadingLabel?: string | React.ReactNode;
+    // Отложить отображение индикатора загрузки на указанное кол-во миллисекунд.
+    loadingShowDelay?: number | null;
     error?: boolean | number;
     errorMessage: string;
     onReload?: () => void;
@@ -63,6 +65,7 @@ function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<Dat
         >
             <Loading
                 loading={!!props.loading && !props.error}
+                showDelay={props.loadingShowDelay}
                 label={props.loadingLabel}
                 floating
             />

@@ -11,6 +11,7 @@ export interface LoadingProps {
     floating?: boolean,
     style?: CSSProperties,
     label?: string | React.ReactNode,
+    // Отложить отображение анимации на указанное кол-во миллисекунд.
     showDelay?: number | null
 }
 
