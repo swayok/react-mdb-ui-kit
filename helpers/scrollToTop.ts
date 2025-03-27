@@ -6,7 +6,7 @@ export default function scrollToTop(
     container?: HTMLElement | null
 ) {
     // "document.documentElement.scrollTo" is the magic for React Router Dom v6.
-    (container || document.documentElement).scrollTo({
+    (container ?? document.documentElement).scrollTo({
         top: 0,
         left: 0,
         behavior: behavior as never,

@@ -9,11 +9,9 @@ function CardBody(props: CardBodyProps, ref: React.ForwardedRef<HTMLAllCollectio
     const {
         className,
         children,
-        tag,
+        tag: Tag = 'div',
         ...otherProps
     } = props
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

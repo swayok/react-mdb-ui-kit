@@ -32,7 +32,7 @@ function Card(props: CardProps, ref: React.ForwardedRef<HTMLAllCollection>) {
         border,
         borderColor,
         background,
-        tag,
+        tag: Tag = 'div',
         shadow,
         alignment,
         ...otherProps
@@ -47,8 +47,6 @@ function Card(props: CardProps, ref: React.ForwardedRef<HTMLAllCollection>) {
         alignment ? `text-${alignment}` : null,
         className
     )
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

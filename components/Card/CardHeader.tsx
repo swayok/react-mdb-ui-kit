@@ -19,7 +19,7 @@ function CardHeader(props: CardHeaderProps, ref: React.ForwardedRef<HTMLAllColle
         border,
         borderColor,
         background,
-        tag,
+        tag: Tag = 'div',
         ...otherProps
     } = props
 
@@ -30,8 +30,6 @@ function CardHeader(props: CardHeaderProps, ref: React.ForwardedRef<HTMLAllColle
         background ? `bg-${background}` : null,
         className
     )
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

@@ -9,11 +9,9 @@ function CardTitle(props: CardTitleProps, ref: React.ForwardedRef<HTMLAllCollect
     const {
         className,
         children,
-        tag,
+        tag: Tag = 'div',
         ...otherProps
     } = props
-
-    const Tag = tag || 'div'
 
     return (
         <Tag
