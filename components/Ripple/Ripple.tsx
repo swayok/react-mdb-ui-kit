@@ -1,11 +1,13 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes, useCallback, useEffect, useState} from 'react'
+import React, {AllHTMLAttributes, RefObject, useCallback, useEffect, useRef, useState} from 'react'
 import RippleWave from './RippleWave'
 import {ButtonColors, ReactComponentOrTagName} from '../../types/Common'
 
 export interface RippleProps extends AllHTMLAttributes<HTMLElement> {
     rippleUnbound?: boolean;
+    // Центрирование относительно кнопки, а не относительно курсора.
     rippleColor?: ButtonColors;
+    minRippleRadius?: number;
     rippleRadius?: number;
     rippleDuration?: number;
     rippleCentered?: boolean;
@@ -13,7 +15,7 @@ export interface RippleProps extends AllHTMLAttributes<HTMLElement> {
     noRipple?: boolean;
 }
 
-type RippleStyle = {
+interface RippleWaveStyle {
     left: string,
     top: string,
     height: string,
@@ -23,7 +25,7 @@ type RippleStyle = {
     backgroundImage?: string
 }
 
-type DiameterOptions = {
+interface DiameterOptions {
     offsetX: number,
     offsetY: number,
     height: number,
@@ -36,15 +38,27 @@ const HEX_COLOR_LENGTH = 7
 
 // Анимация волны при нажатии кнопки или другого элемента.
 function Ripple(props: RippleProps, ref: React.ForwardedRef<HTMLAllCollection>) {
-    const [rippleStyles, setRippleStyles] = useState<Array<RippleStyle>>([])
-    const [isBsColor, setIsBsColor] = useState(false)
+    const [
+        rippleWaves,
+        setRippleWaves,
+    ] = useState<RippleWaveStyle[]>([])
+
+    const [
+        isBsColor,
+        setIsBsColor,
+    ] = useState(false)
+
+    const timeout = useRef<number>(null)
+    const refs = getRef(ref, useRef<HTMLAllCollection>(null))
 
     const {
         className,
         rippleTag: Tag = 'div',
-        rippleCentered,
+        rippleCentered = false,
         rippleDuration = 500,
-        rippleUnbound,
+        rippleUnbound = false,
+        // Если <=0, то вычисляется автоматически.
+        minRippleRadius = 0,
         rippleRadius = 0,
         rippleColor = 'dark',
         children,
@@ -53,42 +67,18 @@ function Ripple(props: RippleProps, ref: React.ForwardedRef<HTMLAllCollection>) 
         ...otherProps
     } = props
 
-    useEffect(() => {
-        if (noRipple) {
-            return
-        }
-        const timer = setTimeout(() => {
-            if (rippleStyles.length > 0) {
-                setRippleStyles(rippleStyles.splice(1, rippleStyles.length - 1))
-            }
-        }, rippleDuration)
-
-        return () => {
-            clearTimeout(timer)
-        }
-    }, [rippleDuration, rippleStyles])
-
-    useEffect(() => {
-        if (noRipple) {
-            return
-        }
-        const timer = setTimeout(() => {
-            if (rippleStyles.length > 0) {
-                setRippleStyles(rippleStyles.splice(1, rippleStyles.length - 1))
-            }
-        }, rippleDuration)
-
-        return () => {
-            clearTimeout(timer)
-        }
-    }, [noRipple, rippleDuration, rippleStyles])
+    // Останавливаем таймер при демонтаже.
+    useEffect(
+        () => () => window.clearTimeout(timeout.current ?? undefined),
+        []
+    )
 
     const classes = noRipple
         ? className
         : clsx(
             'ripple',
             'ripple-surface',
-            rippleUnbound ? 'ripple-surface-unbound' : null,
+            rippleUnbound ? 'ripple-surface-unbound' : 'ripple-surface-inbound',
             isBsColor ? `ripple-surface-${rippleColor}` : null,
             className
         )
@@ -113,10 +103,23 @@ function Ripple(props: RippleProps, ref: React.ForwardedRef<HTMLAllCollection>) 
     // Нажатие на элемент: запуск проигрывания анимации волны.
     const handleClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
         if (!noRipple) {
-            const styles = getStyles(e, rippleRadius, rippleCentered, rippleDuration)
+            const styles = getStyles(
+                e,
+                refs.localRef.current as (HTMLElement | null),
+                rippleRadius,
+                minRippleRadius,
+                rippleDuration,
+                rippleCentered
+            )
             styles.backgroundImage = setupColor()
 
-            setRippleStyles(rippleStyles => rippleStyles.concat(styles))
+            setRippleWaves(rippleStyles => rippleStyles.concat(styles))
+
+            // Удаляем все <RippleWave> по окончании анимации последней запущенной волны.
+            window.clearTimeout(timeout.current ?? undefined)
+            timeout.current = window.setTimeout(() => {
+                setRippleWaves([])
+            }, rippleDuration + 100)
         }
         onClick?.(e)
     }, [noRipple, onClick, rippleRadius, rippleCentered, rippleDuration, setupColor])
@@ -125,13 +128,17 @@ function Ripple(props: RippleProps, ref: React.ForwardedRef<HTMLAllCollection>) 
         <Tag
             className={classes}
             onClick={handleClick}
-            ref={ref}
+            ref={refs.elementRef}
             {...otherProps}
         >
             {children}
-            {!noRipple && rippleStyles.map((item: RippleStyle, i: number) => (
-                <RippleWave key={i} style={item}/>
-            ))}
+            {!noRipple && (
+                <div className="ripple-waves-wrapper">
+                    {rippleWaves.map((style: RippleWaveStyle, i: number) => (
+                        <RippleWave key={i} style={style}/>
+                    ))}
+                </div>
+            )}
         </Tag>
     )
 }
@@ -145,10 +152,10 @@ function colorToRGB(color?: string): number[] {
     if (color.toLowerCase() === 'transparent') {
         return DEFAULT_RIPPLE_COLOR
     }
-    if (color[0] === '#') {
+    if (color.startsWith('#')) {
         return hexToRgb(color)
     }
-    if (color.indexOf('rgb') === 0) {
+    if (color.startsWith('rgb')) {
         return rgbaToRgb(color)
     }
 
@@ -216,8 +223,15 @@ function getDiameter(data: DiameterOptions) {
     return diameter * 2
 }
 
-function getStyles(e: React.MouseEvent, rippleRadius?: number, rippleCentered?: boolean, rippleDuration?: number): RippleStyle {
-    const itemRect = (e.target as HTMLElement).getBoundingClientRect()
+function getStyles(
+    e: React.MouseEvent,
+    element: HTMLElement | null,
+    rippleRadius: number,
+    minRippleRadius: number,
+    rippleDuration: number,
+    rippleCentered: boolean
+): RippleWaveStyle {
+    const itemRect = (element ?? e.target as HTMLElement).getBoundingClientRect()
 
     const offsetX = e.clientX - itemRect.left
     const offsetY = e.clientY - itemRect.top
@@ -237,14 +251,45 @@ function getStyles(e: React.MouseEvent, rippleRadius?: number, rippleCentered?: 
     }
 
     const diameter = getDiameter(diameterOptions)
-    const radiusValue = rippleRadius || diameter / 2
+    const normalizedRadius = Math.max(
+        minRippleRadius,
+        rippleRadius > 0 ? rippleRadius : diameter / 2
+    )
 
     return {
-        left: rippleCentered ? `${width / 2 - radiusValue}px` : `${offsetX - radiusValue}px`,
-        top: rippleCentered ? `${height / 2 - radiusValue}px` : `${offsetY - radiusValue}px`,
-        height: rippleRadius ? `${rippleRadius * 2}px` : `${diameter}px`,
-        width: rippleRadius ? `${rippleRadius * 2}px` : `${diameter}px`,
+        left: rippleCentered ? `${width / 2 - normalizedRadius}px` : `${offsetX - normalizedRadius}px`,
+        top: rippleCentered ? `${height / 2 - normalizedRadius}px` : `${offsetY - normalizedRadius}px`,
+        height: `${normalizedRadius * 2}px`,
+        width: `${normalizedRadius * 2}px`,
         transitionDelay: `0s, ${opacity.delay}ms`,
         transitionDuration: `${rippleDuration}ms, ${opacity.duration}ms`,
+    }
+}
+
+/**
+ * Нормализация ref.
+ */
+function getRef(
+    ref: React.ForwardedRef<HTMLAllCollection>,
+    fallbackRef: RefObject<HTMLAllCollection | null>
+): {
+    elementRef: ((instance: HTMLAllCollection | null) => void) | RefObject<HTMLAllCollection | null>,
+    localRef: RefObject<HTMLAllCollection | null>,
+} {
+    let elementRef
+    let localRef = fallbackRef
+    if (!ref) {
+        elementRef = fallbackRef
+    } else if (typeof ref === 'function') {
+        elementRef = (newRef: HTMLAllCollection | null) => {
+            ref(newRef)
+            fallbackRef.current = newRef
+        }
+    } else {
+        elementRef = localRef = ref
+    }
+    return {
+        elementRef,
+        localRef,
     }
 }

@@ -144,9 +144,7 @@ export class ApiRequestService {
             // Контроллер отмены выполнения запроса извне или по тайм-ауту.
             requestInit.signal = this.getAbortSignal(abortController, options.timeout)
 
-            if (!data) {
-                data = {}
-            }
+            data ??= {}
             const typeToLog = type
             if (type === 'delete') {
                 type = 'post'
@@ -166,6 +164,9 @@ export class ApiRequestService {
             requestInit.method = type
 
             const logData = (action: 'Request' | string, data: AnyObject, isError: boolean = false) => {
+                if (isError && 'type' in data && data.type === 'abort') {
+                    return
+                }
                 if (isError || this.isLoggableRequest(relativeUrl, fullUrl)) {
                     const logTime: string = (new Date()).toLocaleTimeString('en', {hour12: false})
                     const requestMethod: string = ((data._method ?? typeToLog) as string).toUpperCase()

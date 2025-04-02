@@ -35,9 +35,7 @@ function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
     }
     if (width) {
         additionalStyles.width = normalizeDimensionForReactStyles(width)
-        if (!additionalStyles.minWidth) {
-            additionalStyles.minWidth = normalizeDimensionForReactStyles(width)
-        }
+        additionalStyles.minWidth ??= normalizeDimensionForReactStyles(width)
     }
     if (maxWidth) {
         additionalStyles.maxWidth = normalizeDimensionForReactStyles(maxWidth)
@@ -55,7 +53,7 @@ function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
                 noRipple={!sortable}
                 rippleColor="primary"
                 rippleTag="div"
-                rippleRadius={100}
+                minRippleRadius={100}
                 className={clsx(
                     'data-grid-column-header',
                     sortable ? 'cursor' : null,

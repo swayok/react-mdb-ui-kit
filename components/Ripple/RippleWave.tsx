@@ -1,27 +1,26 @@
-import clsx from 'clsx'
-import React, {HTMLProps, useEffect, useState} from 'react'
+import React, {HTMLProps, useEffect, useRef} from 'react'
 
 // Отыгрывание анимации "Волна".
-function RippleWave(props: HTMLProps<HTMLDivElement>) {
-    const [isActive, setIsActive] = useState(false)
+function RippleWave(props: Omit<HTMLProps<HTMLDivElement>, 'ref'>) {
 
-    const rippleClasses: string = clsx(
-        'ripple-wave',
-        isActive ? 'active' : null
-    )
+    const elementRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        const secondTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-            setIsActive(true)
-        }, 50)
-
-        return () => {
-            clearTimeout(secondTimer)
+        if (!elementRef.current) {
+            return
         }
-    }, [])
+        // Без задержки анимация не отыгрывается.
+        setTimeout(() => {
+            elementRef.current?.classList.add('active')
+        }, 50)
+    }, [elementRef.current])
 
     return (
-        <div className={rippleClasses} {...props}/>
+        <div
+            className="ripple-wave"
+            ref={elementRef}
+            {...props}
+        />
     )
 }
 
