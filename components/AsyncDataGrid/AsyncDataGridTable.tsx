@@ -75,7 +75,7 @@ function AsyncDataGridTable<RowDataType extends object = AnyObject>(
             <FadeIn visible={totalCount === 0 && !loading}>
                 {(!noItemsMessage || typeof noItemsMessage === 'string') ? (
                     <DataGridNoItems flexFill={fillHeight}>
-                        {noItemsMessage || translations.no_items}
+                        {noItemsMessage ?? translations.no_items}
                     </DataGridNoItems>
                 ) : (
                     <>{noItemsMessage}</>

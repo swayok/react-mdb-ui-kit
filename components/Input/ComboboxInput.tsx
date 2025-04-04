@@ -18,7 +18,7 @@ interface Props extends Omit<InputProps, 'onChange'> {
 function ComboboxInput(props: Props) {
 
     const {
-        options,
+        options = [],
         active,
         onBlur,
         onFocus,
@@ -29,7 +29,7 @@ function ComboboxInput(props: Props) {
 
     // Отфильтрованные опции.
     const [filteredOptions, setFilteredOptions] = useState<FormSelectOptionsList<string>>(
-        (options || []) as FormSelectOptionsList<string>
+        options as FormSelectOptionsList<string>
     )
     // Нужно ли показывать результаты быстрого поиска?
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
@@ -40,8 +40,8 @@ function ComboboxInput(props: Props) {
     useEffect(() => {
         setFilteredOptions(
             filterOptions(
-                props.value || '',
-                (options || []) as FormSelectOptionsList<string>
+                props.value ?? '',
+                options as FormSelectOptionsList<string>
             )
         )
     }, [options, props.value])
@@ -56,7 +56,7 @@ function ComboboxInput(props: Props) {
                 event.preventDefault()
                 const value: string | number | null = filteredOptions[dropdownSelectedItem].value
                 props.onChange?.(value ? String(value) : '', event)
-                setFilteredOptions((options || []) as FormSelectOptionsList<string>)
+                setFilteredOptions(options as FormSelectOptionsList<string>)
                 setShowDropdown(false)
             }
             return
@@ -100,18 +100,20 @@ function ComboboxInput(props: Props) {
     return (
         <Input
             {...inputProps}
-            active={active || (props.value || '').length > 0}
+            active={active ?? (props.value ?? '').length > 0}
             onChange={event => onChange(
                 event.currentTarget.value,
                 event as React.FormEvent<HTMLInputElement>
             )}
             onBlur={event => {
-                // Таймаут требуется чтобы успел отработать клик на кнопку в выпадающем меню.
+                // Тайм-аут требуется, чтобы успел отработать клик на кнопку в выпадающем меню.
                 setTimeout(() => setShowDropdown(false), 150)
                 onBlur?.(event)
             }}
             onFocus={event => {
-                hasOptions && setShowDropdown(true)
+                if (hasOptions) {
+                    setShowDropdown(true)
+                }
                 onFocus?.(event)
             }}
             onKeyDown={onSearchInputKeyDown}

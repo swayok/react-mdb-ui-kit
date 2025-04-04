@@ -9,7 +9,6 @@ import withStable from '../../helpers/withStable'
 export interface DropdownProps extends Omit<ComponentPropsWithModifiableTag, 'open'> {
     group?: boolean,
     isOpen?: boolean,
-    closeOnClickOutside?: boolean,
     dropup?: boolean,
     dropright?: boolean,
     dropleft?: boolean,
@@ -22,11 +21,15 @@ export interface DropdownProps extends Omit<ComponentPropsWithModifiableTag, 'op
     positioningContainer?: 'toggler' | 'wrapper'
     placement?: PopperJS.Placement,
 
+    // Закрывать меню при клике вне его.
+    closeOnClickOutside?: boolean,
+    // Вызывается при клике вне выпадающего меню, даже если closeOnClickOutside === false.
+    onClickOutside?: (event: MouseEvent) => void,
     // Начало открытия выпадающего меню.
     // Функция close может его закрыть по требованию внешнего компонента.
     onOpen?: (close: () => void) => void,
     onOpened?: () => void,
-    onClose?: () => void,
+    onClose?: (clickedOutside?: boolean) => void,
     onClosed?: () => void,
 }
 
@@ -38,6 +41,7 @@ function Dropdown(props: DropdownProps) {
         group,
         isOpen,
         closeOnClickOutside = true,
+        onClickOutside,
         children,
         dropup,
         dropright,
@@ -101,9 +105,11 @@ function Dropdown(props: DropdownProps) {
     // Идентификатор выпадающего меню.
     const id: string = useId()
 
+    const isManaged: boolean = isOpen !== undefined
+
     useLayoutEffect(() => {
         if (dropup) {
-            setIsPlacement('top-start')
+            setIsPlacement(dropleft === true ? 'top-end' : 'top-start')
         } else if (dropright) {
             setIsPlacement('right-start')
         } else if (dropleft) {
@@ -117,6 +123,7 @@ function Dropdown(props: DropdownProps) {
     if (offset) {
         popperModifiers.push({...PopperJS.offset, options: {offset: Array.isArray(offset) ? offset : [0, offset]}})
     }
+
     const {styles, attributes} = usePopper(
         positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement,
         popperElement,
@@ -143,35 +150,58 @@ function Dropdown(props: DropdownProps) {
         }
     }, [isOpen])
 
-    useLayoutEffect(() => {
-        if (!closeOnClickOutside) {
-            // Этот функционал запрещен.
-            return
-        }
-        const abortController = new AbortController()
-        document.addEventListener(
-            'mousedown',
-            (event: MouseEvent) => {
-                const dropdownElement = positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement
-                if (popperElement && currentOpenState && dropdownElement) {
-                    if (
-                        !popperElement.contains(event.target as Node)
-                        && !dropdownElement.contains(event.target as Node)
-                        && !isClosed(currentOpenState)
-                    ) {
-                        const isToggler = (event.target as HTMLElement).className.match(/(^|\s)dropdown-toggle($|\s)/)
-                        if (!isToggler || (event.target as HTMLElement).getAttribute('data-id') != id) {
-                            setCurrentOpenState('close')
+    useLayoutEffect(
+        () => {
+            if (!closeOnClickOutside && !onClickOutside) {
+                // Этот функционал запрещен.
+                return
+            }
+            const abortController = new AbortController()
+            document.addEventListener(
+                'mousedown',
+                (event: MouseEvent) => {
+                    const dropdownElement = positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement
+                    if (popperElement && currentOpenState && dropdownElement) {
+                        if (
+                            !popperElement.contains(event.target as Node)
+                            && !dropdownElement.contains(event.target as Node)
+                            && !isClosed(currentOpenState)
+                        ) {
+                            const isToggler = (event.target as HTMLElement).className.match(
+                                /(^|\s)dropdown-toggle($|\s)/)
+                            if (!isToggler || (event.target as HTMLElement).getAttribute('data-id') != id) {
+                                if (closeOnClickOutside) {
+                                    if (isManaged && onClose) {
+                                        onClose(true)
+                                    } else {
+                                        setCurrentOpenState('close')
+                                    }
+                                }
+                                if (onClickOutside) {
+                                    onClickOutside(event)
+                                }
+                            }
                         }
                     }
-                }
-            },
-            {signal: abortController.signal}
-        )
-        return () => {
-            abortController.abort()
-        }
-    }, [closeOnClickOutside, currentOpenState, popperElement, referenceElement, wrapperReferenceElement, id])
+                },
+                {signal: abortController.signal}
+            )
+            return () => {
+                abortController.abort()
+            }
+        },
+        [
+            closeOnClickOutside,
+            currentOpenState,
+            popperElement,
+            referenceElement,
+            wrapperReferenceElement,
+            id,
+            isManaged,
+            onClose,
+            onClickOutside,
+        ]
+    )
 
     useLayoutEffect(() => {
         if (currentOpenState) {
@@ -181,7 +211,11 @@ function Dropdown(props: DropdownProps) {
 
     useLayoutEffect(() => {
         if (disabled && !isClosed(currentOpenState)) {
-            setCurrentOpenState('close')
+            if (isManaged && onClose) {
+                onClose()
+            } else {
+                setCurrentOpenState('close')
+            }
         }
     }, [disabled])
 
@@ -200,11 +234,13 @@ function Dropdown(props: DropdownProps) {
 
         if (currentOpenState === 'open') {
             // we need to open closed dropdown
-            onOpen?.((): void => {
-                if (isOpened(currentOpenState)) {
-                    setCurrentOpenState('close')
-                }
-            })
+            if (!isManaged) {
+                onOpen?.((): void => {
+                    if (isOpened(currentOpenState)) {
+                        setCurrentOpenState('close')
+                    }
+                })
+            }
             if (animation) {
                 setCurrentOpenState('opening')
                 setAnimationTimer(window.setTimeout(() => {
@@ -218,7 +254,9 @@ function Dropdown(props: DropdownProps) {
                 }, 30)
             }
         } else {
-            onClose?.()
+            if (!isManaged) {
+                onClose?.()
+            }
             if (animation) {
                 setCurrentOpenState('closing')
                 setAnimationTimer(window.setTimeout(() => {
@@ -236,13 +274,28 @@ function Dropdown(props: DropdownProps) {
 
     const toggleOpenClose = (): void => {
         if (!disabled) {
-            setCurrentOpenState(isOpened(currentOpenState) ? 'close' : 'open')
+            const opened = isOpened(currentOpenState)
+            if (isManaged && ((opened && onClose) || (!opened && onOpen))) {
+                if (opened && onClose) {
+                    onClose()
+                } else if (onOpen) {
+                    onOpen(onClose ?? (() => setCurrentOpenState('close')))
+                }
+            } else {
+                setCurrentOpenState(opened ? 'close' : 'open')
+            }
         }
     }
 
     const handleClose = (): void => {
-        if (isOpened(currentOpenState) && !disabled) {
-            setCurrentOpenState('close')
+        if (isManaged) {
+            if (isOpened(currentOpenState) && !disabled) {
+                if (isManaged && onClose) {
+                    onClose()
+                } else {
+                    setCurrentOpenState('close')
+                }
+            }
         }
     }
 

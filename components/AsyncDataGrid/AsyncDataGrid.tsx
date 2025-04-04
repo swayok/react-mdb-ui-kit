@@ -4,7 +4,12 @@ import {AsyncDataGridApi} from './AsyncDataGridApi'
 import {ApiError} from '../../services/ApiRequestService'
 import {handleErrorResponse} from '../../helpers/ApiRequestErrorHelpers'
 import {normalizeOffset} from '../DataGrid/dataGridHelpers'
-import {AsyncDataGridContextProps, AsyncDataGridProps, AsyncDataGridRows} from '../../types/AsyncDataGrid'
+import {
+    AsyncDataGridContextMenuProps,
+    AsyncDataGridContextProps,
+    AsyncDataGridProps,
+    AsyncDataGridRows,
+} from '../../types/AsyncDataGrid'
 import {AnyObject} from '../../types/Common'
 import {DataGridOrderingDirection} from '../../types/DataGrid'
 import DataGridContext from '../DataGrid/DataGridContext'
@@ -15,7 +20,26 @@ import toggleValueInArray from '../../helpers/toggleValueInArray'
 function AsyncDataGrid<
     RowDataType extends object,
     FiltersDataType extends object = AnyObject
->(props: AsyncDataGridProps<FiltersDataType>) {
+>(props: AsyncDataGridProps<FiltersDataType, RowDataType>) {
+
+    const {
+        storeStateInUrlQuery,
+        startingOffset,
+        defaultLimit = asyncDataGridDefaultLimit,
+        limits,
+        defaultOrderBy,
+        defaultOrderDirection,
+        showFiltersPanelByDefault = false,
+        forcedFilters = {} as FiltersDataType,
+        defaultFilters = {} as FiltersDataType,
+        startingFilters = {} as FiltersDataType,
+        apiUrl,
+        apiMethod = 'GET',
+        preloaderProps,
+        translations,
+        ContextMenu,
+        children,
+    } = props
 
     // Состояние готовности компонента.
     const [
@@ -31,7 +55,7 @@ function AsyncDataGrid<
     const [
         loading,
         setIsLoading,
-    ] = useState<AsyncDataGridContextProps['loading']>(!!props.storeStateInUrlQuery)
+    ] = useState<AsyncDataGridContextProps['loading']>(!!storeStateInUrlQuery)
     const [
         loadingError,
         setLoadingError,
@@ -40,38 +64,42 @@ function AsyncDataGrid<
     const [
         limit,
         setLimit,
-    ] = useState<AsyncDataGridContextProps['limit']>(props.defaultLimit || props.limits?.[0] || asyncDataGridDefaultLimit)
+    ] = useState<AsyncDataGridContextProps['limit']>(
+        defaultLimit ?? limits?.[0] ?? asyncDataGridDefaultLimit
+    )
     // Смещение выборки строк.
     const [
         offset,
         setOffset,
-    ] = useState<AsyncDataGridContextProps['offset']>(props.startingOffset || 0)
+    ] = useState<AsyncDataGridContextProps['offset']>(startingOffset ?? 0)
     // Сортировка.
     const [
         orderBy,
         setOrderBy,
-    ] = useState<AsyncDataGridContextProps['orderBy']>(props.defaultOrderBy || null)
+    ] = useState<AsyncDataGridContextProps['orderBy']>(defaultOrderBy ?? null)
     const [
         orderDirection,
         setOrderDirection,
-    ] = useState<AsyncDataGridContextProps['orderDirection']>(props.defaultOrderDirection || 'asc')
+    ] = useState<AsyncDataGridContextProps['orderDirection']>(
+        defaultOrderDirection ?? 'asc'
+    )
     // Фильтры.
     const [
         isFiltersPanelOpened,
         setIsFiltersPanelOpened,
-    ] = useState<boolean>(!!props.showFiltersPanelByDefault)
+    ] = useState<boolean>(showFiltersPanelByDefault)
     const [
         filters,
         setFilters,
-    ] = useState<FiltersDataType>({
-        ...(props.defaultFilters || {}),
-        ...(props.startingFilters || {}),
-    } as FiltersDataType)
+    ] = useState<FiltersDataType>(() => ({
+        ...defaultFilters,
+        ...startingFilters,
+    }))
     // Строки.
     const [
         rows,
         setRows,
-    ] = useState<Array<RowDataType>>([])
+    ] = useState<RowDataType[]>([])
     // Всего строк.
     const [
         totalCount,
@@ -86,12 +114,45 @@ function AsyncDataGrid<
     const [
         selectedRows,
         setSelectedRows,
-    ] = useState<Array<number | string>>([])
+    ] = useState<(number | string)[]>([])
 
     const selectRow = useCallback(
         (rowId: number | string, selected: boolean) => {
             setSelectedRows(ids => toggleValueInArray(ids, rowId, selected))
         },
+        []
+    )
+
+    // Контекстное меню для строк.
+    const [
+        contextMenuProps,
+        setContextMenuProps,
+    ] = useState<Omit<AsyncDataGridContextMenuProps<RowDataType>, 'onClose'>>(() => ({
+        show: false,
+    }))
+
+    // Открыть контекстное меню для строки.
+    const openContextMenu: AsyncDataGridContextProps<RowDataType>['openContextMenu'] = useCallback(
+        (
+            event: React.MouseEvent<HTMLTableRowElement>,
+            rowData: RowDataType,
+            rowIndex: number
+        ) => {
+            setContextMenuProps({
+                mouseEvent: event,
+                rowData,
+                rowIndex,
+                show: true,
+            })
+        },
+        []
+    )
+
+    // Закрыть контекстное меню для строки.
+    const closeContextMenu: AsyncDataGridContextProps<RowDataType>['closeContextMenu'] = useCallback(
+        () => setContextMenuProps({
+            show: false,
+        }),
         []
     )
 
@@ -147,7 +208,7 @@ function AsyncDataGrid<
     const resetFilters = useCallback(
         (resetOffset: boolean = false): void => {
             applyFilters(
-                (props.defaultFilters ? {...props.defaultFilters} : {}) as FiltersDataType,
+                {...defaultFilters},
                 resetOffset
             )
         },
@@ -155,21 +216,27 @@ function AsyncDataGrid<
     )
 
     // Получен новый набор строк.
-    const onSetRows = useCallback((newRows: Array<RowDataType>, newTotalCount?: number) => {
-        setRows(newRows)
-        if (newTotalCount !== undefined) {
-            setTotalCount(newTotalCount)
-        }
-        // Сбрасываем выбранные строки.
-        setSelectedRows([])
-    }, [])
+    const onSetRows = useCallback(
+        (newRows: RowDataType[], newTotalCount?: number) => {
+            setRows(newRows)
+            if (newTotalCount !== undefined) {
+                setTotalCount(newTotalCount)
+            }
+            // Сбрасываем выбранные строки.
+            setSelectedRows([])
+        },
+        []
+    )
 
     // Обновление данные в текущем наборе строк.
     // Так можно внести изменения в одну или несколько строк,
     // не перезагружая данные из API.
-    const updateRows = useCallback((callback: (rows: Array<RowDataType>) => Array<RowDataType>): void => {
-        setRows(callback)
-    }, [])
+    const updateRows = useCallback(
+        (callback: (rows: RowDataType[]) => RowDataType[]): void => {
+            setRows(callback)
+        },
+        []
+    )
 
     // Изменение данных одной строки.
     const updateRow = useCallback((
@@ -189,7 +256,7 @@ function AsyncDataGrid<
             matcherFn = matcher
         }
         //const matcherFn = matcher || (row: RowDataType, updates: Partial<RowDataType>) => rowMatcherById<RowDataType>(row, updates, matcher || 'id')
-        updateRows((rows: Array<RowDataType>) => rows.map(
+        updateRows((rows: RowDataType[]) => rows.map(
             (row: RowDataType) => {
                 if (!matcherFn(row, updates)) {
                     return row
@@ -211,8 +278,8 @@ function AsyncDataGrid<
             setIsLoading(true)
         }
         AsyncDataGridApi.getRows<RowDataType, FiltersDataType>(
-            props.apiUrl,
-            props.apiMethod || 'GET',
+            apiUrl,
+            apiMethod,
             {
                 limit,
                 offset,
@@ -220,7 +287,7 @@ function AsyncDataGrid<
                     ? [{column: orderBy, direction: orderDirection}]
                     : undefined,
             },
-            {...filters, ...props.forcedFilters},
+            {...filters, ...forcedFilters},
             newAbortController
         )
             .then((response: AsyncDataGridRows<RowDataType>) => {
@@ -237,7 +304,7 @@ function AsyncDataGrid<
                     setIsLoading(false)
                 }
             })
-    }, [props.apiUrl, filters, limit, offset, orderBy, orderDirection])
+    }, [apiUrl, filters, limit, offset, orderBy, orderDirection])
 
     // Перезагрузка набора строк из API.
     const reload = useCallback((silent?: boolean) => {
@@ -249,7 +316,7 @@ function AsyncDataGrid<
         if (initialized) {
             loadData()
         }
-    }, [props.apiUrl, filters, drawsCount, initialized])
+    }, [apiUrl, filters, drawsCount, initialized])
 
     // Изменено общее количество строк или смещение.
     useEffect(() => {
@@ -263,7 +330,7 @@ function AsyncDataGrid<
 
     // Монтаж/демонтаж компонента.
     useEffect(() => {
-        if (!props.storeStateInUrlQuery) {
+        if (!storeStateInUrlQuery) {
             setIsInitialized(true)
         }
         return () => {
@@ -280,20 +347,20 @@ function AsyncDataGrid<
         RowDataType,
         FiltersDataType
     > = getAsyncDataGridContextDefaults<RowDataType, FiltersDataType>({
-        translations: props.translations,
+        translations,
 
-        apiUrl: props.apiUrl,
+        apiUrl,
 
         initialized,
         drawsCount,
         loading,
         setIsLoading,
         loadingError,
-        preloaderProps: props.preloaderProps,
-        storeStateInUrlQuery: props.storeStateInUrlQuery,
+        preloaderProps,
+        storeStateInUrlQuery,
 
-        limits: props.limits,
-        defaultLimit: props.defaultLimit || asyncDataGridDefaultLimit,
+        limits,
+        defaultLimit,
         limit,
         setLimit: onSetLimit,
 
@@ -301,15 +368,15 @@ function AsyncDataGrid<
         setOffset: onSetOffset,
 
         filters,
-        defaultFilters: props.defaultFilters || {} as FiltersDataType,
-        forcedFilters: props.forcedFilters || {},
+        defaultFilters,
+        forcedFilters,
         applyFilters,
         resetFilters,
         isFiltersPanelOpened,
         setIsFiltersPanelOpened,
 
-        defaultOrderBy: props.defaultOrderBy,
-        defaultOrderDirection: props.defaultOrderDirection,
+        defaultOrderBy,
+        defaultOrderDirection,
         orderBy,
         orderDirection,
         setOrder: onSetOrder,
@@ -325,6 +392,8 @@ function AsyncDataGrid<
         selectedRows,
         setSelectedRows,
         selectRow,
+        openContextMenu: ContextMenu ? openContextMenu : undefined,
+        closeContextMenu: ContextMenu ? closeContextMenu : undefined,
         reload,
     })
 
@@ -337,7 +406,7 @@ function AsyncDataGrid<
         <SimpleContext.Provider
             value={{
                 ...contextProps,
-                unfilteredRowsCount: totalCount || 0,
+                unfilteredRowsCount: totalCount ?? 0,
                 visibleRows: rows,
                 setVisibleRows(): void {
                 },
@@ -358,7 +427,15 @@ function AsyncDataGrid<
                         }}
                     />
                 )}
-                {props.children}
+                {ContextMenu && (
+                    // Контекстное меню должно быть в начале, чтобы можно было вычислить
+                    // смещения таблицы относительно страницы.
+                    <ContextMenu
+                        {...contextMenuProps}
+                        onClose={closeContextMenu}
+                    />
+                )}
+                {children}
             </AsyncContext.Provider>
         </SimpleContext.Provider>
     )
