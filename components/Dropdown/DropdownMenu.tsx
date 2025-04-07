@@ -106,7 +106,7 @@ function DropdownMenu(props: DropdownMenuProps) {
             className={classes}
             style={{position: 'absolute', zIndex: 1000, ...styles.popper, ...style}}
             {...otherProps}
-            {...(attributes.popper || {})}
+            {...(attributes.popper ?? {})}
             // Если так не сделать, то popper неправильно определит своё положение
             // в контейнере когда alwaysMounted = true.
             ref={alwaysMounted && !attachElements ? undefined : setPopperElement}

@@ -22,9 +22,15 @@ export interface DropdownProps extends Omit<ComponentPropsWithModifiableTag, 'op
     placement?: PopperJS.Placement,
 
     // Закрывать меню при клике вне его.
+    // По умолчанию: true,
     closeOnClickOutside?: boolean,
     // Вызывается при клике вне выпадающего меню, даже если closeOnClickOutside === false.
     onClickOutside?: (event: MouseEvent) => void,
+    // Закрывать меню при прокрутке вне его.
+    // По умолчанию: false,
+    closeOnScrollOutside?: boolean,
+    // Вызывается при прокрутке вне выпадающего меню, даже если closeOnClickOutside === false.
+    onScrollOutside?: (event: Event) => void,
     // Начало открытия выпадающего меню.
     // Функция close может его закрыть по требованию внешнего компонента.
     onOpen?: (close: () => void) => void,
@@ -42,6 +48,8 @@ function Dropdown(props: DropdownProps) {
         isOpen,
         closeOnClickOutside = true,
         onClickOutside,
+        closeOnScrollOutside = false,
+        onScrollOutside,
         children,
         dropup,
         dropright,
@@ -152,46 +160,60 @@ function Dropdown(props: DropdownProps) {
 
     useLayoutEffect(
         () => {
-            if (!closeOnClickOutside && !onClickOutside) {
-                // Этот функционал запрещен.
-                return
-            }
             const abortController = new AbortController()
-            document.addEventListener(
-                'mousedown',
-                (event: MouseEvent) => {
-                    const dropdownElement = positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement
-                    if (popperElement && currentOpenState && dropdownElement) {
-                        if (
-                            !popperElement.contains(event.target as Node)
-                            && !dropdownElement.contains(event.target as Node)
-                            && !isClosed(currentOpenState)
-                        ) {
-                            const isToggler = (event.target as HTMLElement).className.match(
-                                /(^|\s)dropdown-toggle($|\s)/)
-                            if (!isToggler || (event.target as HTMLElement).getAttribute('data-id') != id) {
-                                if (closeOnClickOutside) {
-                                    if (isManaged && onClose) {
-                                        onClose(true)
-                                    } else {
-                                        setCurrentOpenState('close')
-                                    }
-                                }
-                                if (onClickOutside) {
-                                    onClickOutside(event)
+            const handleEvent = (target: Node): boolean => {
+                const dropdownElement = positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement
+                if (popperElement && currentOpenState && dropdownElement) {
+                    if (
+                        !popperElement.contains(target)
+                        && !dropdownElement.contains(target)
+                        && !isClosed(currentOpenState)
+                    ) {
+                        const isToggler = (target as HTMLElement).className.match(
+                            /(^|\s)dropdown-toggle($|\s)/)
+                        if (!isToggler || (target as HTMLElement).getAttribute('data-id') != id) {
+                            if (closeOnClickOutside) {
+                                if (isManaged && onClose) {
+                                    onClose(true)
+                                } else {
+                                    setCurrentOpenState('close')
                                 }
                             }
+                            return true
                         }
                     }
-                },
-                {signal: abortController.signal}
-            )
+                }
+                return false
+            }
+            if (closeOnClickOutside || onClickOutside) {
+                document.addEventListener(
+                    'mousedown',
+                    (event: MouseEvent) => {
+                        if (handleEvent(event.target as Node) && onClickOutside) {
+                            onClickOutside(event)
+                        }
+                    },
+                    {signal: abortController.signal}
+                )
+            }
+            if (closeOnScrollOutside) {
+                document.addEventListener(
+                    'scroll',
+                    (event: Event) => {
+                        if (handleEvent(event.target as Node) && onScrollOutside) {
+                            onScrollOutside(event)
+                        }
+                    },
+                    {signal: abortController.signal}
+                )
+            }
             return () => {
                 abortController.abort()
             }
         },
         [
             closeOnClickOutside,
+            closeOnScrollOutside,
             currentOpenState,
             popperElement,
             referenceElement,

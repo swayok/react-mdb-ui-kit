@@ -74,7 +74,9 @@ export interface AsyncDataGridContextProps<
     openContextMenu?: (
         event: React.MouseEvent<HTMLTableRowElement>,
         rowData: RowDataType,
-        rowIndex: number
+        rowIndex: number,
+        // Установка индикатора выполнения действия над строкой.
+        setIsProcessing: (isProcessing: boolean) => void,
     ) => void
     // Закрыть контекстное меню для строки.
     closeContextMenu?: () => void
@@ -177,7 +179,7 @@ export interface AsyncDataGridDefaultLayoutProps<
     hover?: AsyncDataGridTableProps['hover']
     bordered?: AsyncDataGridTableProps['bordered']
     small?: AsyncDataGridTableProps['small']
-    // Возможность спрятать подвал (пагинатор, кол-во строк).
+    // Возможность спрятать подвал (пагинатор, количество строк).
     hideFooter?: boolean
     // Настройка подвала таблицы (<AsyncDataGridFooter>).
     footerProps?: Partial<AsyncDataGridFooterProps>
@@ -298,5 +300,8 @@ export interface AsyncDataGridContextMenuProps<
     mouseEvent?: React.MouseEvent<HTMLElement>
     rowIndex?: number
     rowData?: RowDataType
+    permissions: AsyncDataGridContextProps['permissions']
+    disabled?: boolean
+    setIsProcessing: AsyncDataGridContextProps['setIsLoading']
     onClose: () => void
 }

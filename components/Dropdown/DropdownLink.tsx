@@ -36,7 +36,7 @@ function DropdownLink(props: DropdownLinkProps) {
         urlProps.target = target
     }
     if (tag === 'a' && href && !external) {
-        // Конвертируем в <Link> чтобы работало с навигацией
+        // Конвертируем в <Link>, чтобы работало с навигацией
         Tag = Link
         urlProps.to = href
     } else if (tag === 'a') {

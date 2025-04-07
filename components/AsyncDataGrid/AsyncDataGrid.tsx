@@ -127,8 +127,10 @@ function AsyncDataGrid<
     const [
         contextMenuProps,
         setContextMenuProps,
-    ] = useState<Omit<AsyncDataGridContextMenuProps<RowDataType>, 'onClose'>>(() => ({
+    ] = useState<Omit<AsyncDataGridContextMenuProps<RowDataType>, 'onClose' | 'permissions'>>(() => ({
         show: false,
+        setIsProcessing() {
+        },
     }))
 
     // Открыть контекстное меню для строки.
@@ -136,13 +138,15 @@ function AsyncDataGrid<
         (
             event: React.MouseEvent<HTMLTableRowElement>,
             rowData: RowDataType,
-            rowIndex: number
+            rowIndex: number,
+            setIsProcessing: (isProcessing: boolean) => void
         ) => {
             setContextMenuProps({
                 mouseEvent: event,
                 rowData,
                 rowIndex,
                 show: true,
+                setIsProcessing,
             })
         },
         []
@@ -152,6 +156,8 @@ function AsyncDataGrid<
     const closeContextMenu: AsyncDataGridContextProps<RowDataType>['closeContextMenu'] = useCallback(
         () => setContextMenuProps({
             show: false,
+            setIsProcessing() {
+            },
         }),
         []
     )
@@ -427,11 +433,12 @@ function AsyncDataGrid<
                         }}
                     />
                 )}
-                {ContextMenu && (
+                {ContextMenu && !loading && (
                     // Контекстное меню должно быть в начале, чтобы можно было вычислить
                     // смещения таблицы относительно страницы.
                     <ContextMenu
                         {...contextMenuProps}
+                        permissions={permissions}
                         onClose={closeContextMenu}
                     />
                 )}

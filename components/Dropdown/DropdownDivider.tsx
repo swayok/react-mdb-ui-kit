@@ -8,12 +8,10 @@ export type DropdownDividerProps = ComponentPropsWithModifiableTag
 function DropdownDivider(props: DropdownDividerProps) {
 
     const {
-        tag,
+        tag: Tag = 'div',
         className,
         ...otherProps
     } = props
-
-    const Tag = tag || 'div'
 
     return (
         <Tag
