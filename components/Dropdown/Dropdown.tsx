@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, {useId, useLayoutEffect, useState} from 'react'
+import React, {useCallback, useId, useLayoutEffect, useRef, useState} from 'react'
 import DropdownContext, {DropdownOpenState} from './DropdownContext'
 import {usePopper} from 'react-popper'
 import * as PopperJS from '@popperjs/core'
@@ -100,10 +100,9 @@ function Dropdown(props: DropdownProps) {
         activeIndex,
         setActiveIndex,
     ] = useState<number | null>(null)
-    const [
-        itemsCount,
-        setItemsCount,
-    ] = useState<number>(0)
+    // Кол-во пунктов меню.
+    const itemsCountRef = useRef<number>(0)
+
     // Контроль активности всех вложенных DropdownItem, DropdownLink и DropdownButton.
     const [
         isAllItemsDisabled,
@@ -158,10 +157,12 @@ function Dropdown(props: DropdownProps) {
         }
     }, [isOpen])
 
+    // Обработка глобальных событий (нажатие мыши, скроллинг) для закрытия меню при
+    // срабатывании событий вне меню.
     useLayoutEffect(
         () => {
             const abortController = new AbortController()
-            const handleEvent = (target: Node): boolean => {
+            const handleEvent = (target: Node, autoClose: boolean): boolean => {
                 const dropdownElement = positioningContainer === 'wrapper' ? wrapperReferenceElement : referenceElement
                 if (popperElement && currentOpenState && dropdownElement) {
                     if (
@@ -172,7 +173,7 @@ function Dropdown(props: DropdownProps) {
                         const isToggler = (target as HTMLElement).className.match(
                             /(^|\s)dropdown-toggle($|\s)/)
                         if (!isToggler || (target as HTMLElement).getAttribute('data-id') != id) {
-                            if (closeOnClickOutside) {
+                            if (autoClose) {
                                 if (isManaged && onClose) {
                                     onClose(true)
                                 } else {
@@ -189,22 +190,30 @@ function Dropdown(props: DropdownProps) {
                 document.addEventListener(
                     'mousedown',
                     (event: MouseEvent) => {
-                        if (handleEvent(event.target as Node) && onClickOutside) {
+                        if (
+                            !isClosed(currentOpenState)
+                            && handleEvent(event.target as Node, closeOnClickOutside)
+                            && onClickOutside
+                        ) {
                             onClickOutside(event)
                         }
                     },
-                    {signal: abortController.signal}
+                    {signal: abortController.signal, capture: true}
                 )
             }
-            if (closeOnScrollOutside) {
+            if (closeOnScrollOutside || onScrollOutside) {
                 document.addEventListener(
                     'scroll',
                     (event: Event) => {
-                        if (handleEvent(event.target as Node) && onScrollOutside) {
+                        if (
+                            !isClosed(currentOpenState)
+                            && handleEvent(event.target as Node, closeOnScrollOutside)
+                            && onScrollOutside
+                        ) {
                             onScrollOutside(event)
                         }
                     },
-                    {signal: abortController.signal}
+                    {signal: abortController.signal, capture: true}
                 )
             }
             return () => {
@@ -222,15 +231,18 @@ function Dropdown(props: DropdownProps) {
             isManaged,
             onClose,
             onClickOutside,
+            onScrollOutside,
         ]
     )
 
+    // Задание активного элемента меню при открытии.
     useLayoutEffect(() => {
-        if (currentOpenState) {
+        if (currentOpenState === 'open') {
             setActiveIndex(selectFirstOnOpen ? 1 : null)
         }
     }, [selectFirstOnOpen, currentOpenState])
 
+    // Закрытие меню при изменении disabled на true.
     useLayoutEffect(() => {
         if (disabled && !isClosed(currentOpenState)) {
             if (isManaged && onClose) {
@@ -241,6 +253,7 @@ function Dropdown(props: DropdownProps) {
         }
     }, [disabled])
 
+    // Обработка открытия/закрытия меню и работа с анимацией.
     useLayoutEffect(() => {
         if (currentOpenState !== 'close' && currentOpenState !== 'open') {
             // we only act when state is 'open' or 'close'.
@@ -294,7 +307,8 @@ function Dropdown(props: DropdownProps) {
         }
     }, [currentOpenState])
 
-    const toggleOpenClose = (): void => {
+    // Открыть или закрыть меню в зависимости от текущего состояния.
+    const toggleOpenClose = useCallback((): void => {
         if (!disabled) {
             const opened = isOpened(currentOpenState)
             if (isManaged && ((opened && onClose) || (!opened && onOpen))) {
@@ -307,9 +321,10 @@ function Dropdown(props: DropdownProps) {
                 setCurrentOpenState(opened ? 'close' : 'open')
             }
         }
-    }
+    }, [disabled, currentOpenState, isManaged, onClose, onOpen])
 
-    const handleClose = (): void => {
+    // Закрыть меню.
+    const handleClose = useCallback((): void => {
         if (isManaged) {
             if (isOpened(currentOpenState) && !disabled) {
                 if (isManaged && onClose) {
@@ -319,7 +334,53 @@ function Dropdown(props: DropdownProps) {
                 }
             }
         }
-    }
+    }, [isManaged, currentOpenState, disabled, onClose])
+
+    // Подсветить предыдущий пункт меню.
+    const moveActiveIndexUp = useCallback(() => {
+        setActiveIndex((activeIndex: null | number) => {
+            let nextIndex = activeIndex === null ? 0 : activeIndex - 1
+            if (nextIndex <= 0) {
+                nextIndex = itemsCountRef.current
+            }
+            return nextIndex
+        })
+    }, [])
+
+    // Подсветить следующий пункт меню.
+    const moveActiveIndexDown = useCallback(() => {
+        setActiveIndex((activeIndex: null | number) => {
+            let nextIndex = activeIndex === null ? 1 : activeIndex + 1
+            if (nextIndex > itemsCountRef.current) {
+                nextIndex = 1
+            }
+            return nextIndex
+        })
+    }, [])
+
+    // Увеличить счетчик пунктов меню.
+    const increment = useCallback(
+        (): number => {
+            const newItemsCount: number = (itemsCountRef.current < 0)
+                ? 1
+                : itemsCountRef.current + 1
+            itemsCountRef.current = newItemsCount
+            return newItemsCount
+        },
+        []
+    )
+
+    // Уменьшить счетчик пунктов меню.
+    const decrement = useCallback(
+        (): number => {
+            const newItemsCount = (itemsCountRef.current <= 0)
+                ? 0
+                : itemsCountRef.current - 1
+            itemsCountRef.current = newItemsCount
+            return newItemsCount
+        },
+        []
+    )
 
     const classes = clsx(
         group ? 'btn-group' : 'dropdown',
@@ -337,7 +398,10 @@ function Dropdown(props: DropdownProps) {
                 handleClose,
                 toggleOpenClose,
                 isOpened: isOpened(currentOpenState),
-                isAnimationActive: currentOpenState === 'opening' || currentOpenState === 'closing',
+                isAnimationActive: (
+                    currentOpenState === 'opening'
+                    || currentOpenState === 'closing'
+                ),
                 isVisible: currentOpenState != 'closed',
                 setReferenceElement,
                 setPopperElement,
@@ -345,43 +409,11 @@ function Dropdown(props: DropdownProps) {
                 attributes,
                 activeIndex,
                 setActiveIndex,
-                moveActiveIndexUp() {
-                    setActiveIndex((activeIndex: null | number) => {
-                        let nextIndex = activeIndex === null ? 0 : activeIndex - 1
-                        if (nextIndex <= 0) {
-                            nextIndex = itemsCount
-                        }
-                        return nextIndex
-                    })
-                },
-                moveActiveIndexDown() {
-                    setActiveIndex((activeIndex: null | number) => {
-                        let nextIndex = activeIndex === null ? 1 : activeIndex + 1
-                        if (nextIndex > itemsCount) {
-                            nextIndex = 1
-                        }
-                        return nextIndex
-                    })
-                },
-                itemsCount,
-                increment() {
-                    return new Promise(resolve => {
-                        setItemsCount((itemsCount: number) => {
-                            const newItemsCount = (itemsCount < 0) ? 1 : itemsCount + 1
-                            resolve(newItemsCount)
-                            return newItemsCount
-                        })
-                    })
-                },
-                decrement() {
-                    return new Promise(resolve => {
-                        setItemsCount((itemsCount: number) => {
-                            const newItemsCount = (itemsCount <= 0) ? 0 : itemsCount - 1
-                            resolve(newItemsCount)
-                            return newItemsCount
-                        })
-                    })
-                },
+                moveActiveIndexUp,
+                moveActiveIndexDown,
+                increment,
+                decrement,
+                itemsCountRef,
                 isAllItemsDisabled,
                 setIsAllItemsDisabled,
             }}
@@ -406,6 +438,6 @@ function isClosed(state: DropdownOpenState): boolean {
 }
 
 export default withStable<DropdownProps>(
-    ['onOpen', 'onClose', 'onOpened', 'onClosed'],
+    ['onOpen', 'onClose', 'onOpened', 'onClosed', 'onClickOutside', 'onScrollOutside'],
     Dropdown
 )

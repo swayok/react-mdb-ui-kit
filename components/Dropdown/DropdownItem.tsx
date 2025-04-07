@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useDropdownContext} from './DropdownContext'
 import clsx from 'clsx'
 import {AnyObject, ComponentPropsWithModifiableTag} from '../../types/Common'
@@ -28,34 +28,35 @@ function DropdownItem(props: DropdownItemProps) {
         handleClose,
         increment,
         decrement,
+        itemsCountRef,
         setActiveIndex,
-        itemsCount,
         isAllItemsDisabled: dropdownDisabled,
     } = useDropdownContext()
 
-    const [
-        index,
-        setIndex,
-    ] = useState<undefined | number>(undefined)
+    const indexRef = React.useRef<number | null>(null)
 
+    // Регистрация подсвечиваемого пункта меню и получение индекса.
     useEffect(() => {
         if (highlightable) {
-            increment()
-                .then((index: number) => {
-                    setIndex(index)
-                    if (active) {
-                        setActiveIndex(index)
-                    }
-                })
-                .catch(() => {
-                })
-            return decrement
+            indexRef.current = increment()
+            return () => {
+                decrement()
+                indexRef.current = null
+            }
         } else {
             return () => {
             }
         }
-    }, [highlightable, active, itemsCount])
+    }, [highlightable, itemsCountRef.current])
 
+    // Активация подсветки пункта меню.
+    useEffect(() => {
+        if (active && indexRef.current) {
+            setActiveIndex(indexRef.current)
+        }
+    }, [highlightable, active, indexRef.current])
+
+    // Обработка нажатия на пункт меню.
     const handleClickItem = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (props.disabled || dropdownDisabled) {
             e.preventDefault()
@@ -72,8 +73,8 @@ function DropdownItem(props: DropdownItemProps) {
     const activityProps: AnyObject = {}
     let activityClassName: string | null = ''
     if (highlightable) {
-        activityProps['data-index'] = index
-        const isActive = activeIndex === index
+        activityProps['data-index'] = indexRef.current
+        const isActive = activeIndex === indexRef.current
         activityProps['data-active'] = isActive
         activityClassName = isActive ? 'active' : null
     } else if (active) {
