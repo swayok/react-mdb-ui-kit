@@ -60,6 +60,10 @@ function AsyncDataGrid<
         loadingError,
         setLoadingError,
     ] = useState<AsyncDataGridContextProps['loadingError']>(false)
+    const [
+        validationErrors,
+        setValidationErrors,
+    ] = useState<AnyObject | null>(null)
     // Ограничение количества строк.
     const [
         limit,
@@ -280,6 +284,7 @@ function AsyncDataGrid<
         const newAbortController: AbortController = new AbortController()
         setAbortController(newAbortController)
         setLoadingError(false)
+        setValidationErrors(null)
         if (!silent) {
             setIsLoading(true)
         }
@@ -305,7 +310,11 @@ function AsyncDataGrid<
             })
             .catch((error: ApiError) => {
                 if (error.errorType !== 'abort') {
-                    handleErrorResponse(error)
+                    handleErrorResponse(error, {
+                        validationErrors(errors) {
+                            setValidationErrors(errors)
+                        },
+                    })
                     setLoadingError(true)
                     setIsLoading(false)
                 }
@@ -362,6 +371,7 @@ function AsyncDataGrid<
         loading,
         setIsLoading,
         loadingError,
+        validationErrors,
         preloaderProps,
         storeStateInUrlQuery,
 

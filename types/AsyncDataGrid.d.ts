@@ -14,6 +14,7 @@ export interface AsyncDataGridContextProps<
     loading: boolean
     setIsLoading: (loading: boolean) => void
     loadingError: boolean
+    validationErrors: AnyObject<string> | null
     preloaderProps?: Omit<
         AsyncDataGridLoadingProps,
         'loading' | 'error' | 'onReload' | 'showContent'

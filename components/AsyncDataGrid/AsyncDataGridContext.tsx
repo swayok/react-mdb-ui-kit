@@ -16,6 +16,7 @@ const defaultProps: AsyncDataGridContextProps<AnyObject, AnyObject> = {
     loading: false,
     setIsLoading(){},
     loadingError: false,
+    validationErrors: null,
     storeStateInUrlQuery: false,
 
     apiUrl: '',

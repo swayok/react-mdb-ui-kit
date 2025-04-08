@@ -3,6 +3,9 @@ import {AnyObject} from '../../types/Common'
 import {DataGridOrderingDirection} from '../../types/DataGrid'
 import {AsyncDataGridRows} from '../../types/AsyncDataGrid'
 
+// Имя ключа, используемого для отправки фильтров в API.
+export const asyncDataGridApiFiltersKey = 'filters'
+
 // Сервис для загрузки данных с сервера для таблицы.
 export const AsyncDataGridApi = {
 
@@ -18,7 +21,7 @@ export const AsyncDataGridApi = {
         config: {
             limit?: number,
             offset?: number,
-            order?: Array<{ column: string, direction: DataGridOrderingDirection }>
+            order?: { column: string, direction: DataGridOrderingDirection }[]
         },
         filters?: FiltersDataType,
         abortController?: AbortController
@@ -30,7 +33,7 @@ export const AsyncDataGridApi = {
             url,
             {
                 ...config,
-                filters: effectiveFilters,
+                [asyncDataGridApiFiltersKey]: effectiveFilters,
             },
             {timeout: 60000},
             abortController
@@ -49,7 +52,7 @@ export const AsyncDataGridApi = {
         config: {
             limit?: number,
             offset?: number,
-            order?: Array<{ column: string, direction: DataGridOrderingDirection }>
+            order?: { column: string, direction: DataGridOrderingDirection }[]
         },
         filters?: FiltersDataType,
         abortController?: AbortController
@@ -60,7 +63,7 @@ export const AsyncDataGridApi = {
                 url,
                 {
                     ...config,
-                    filters: effectiveFilters,
+                    [asyncDataGridApiFiltersKey]: effectiveFilters,
                 },
                 {timeout: 60000},
                 abortController
@@ -84,7 +87,7 @@ export function removeEmptyFiltersForAsyncDataGrid(filters?: object | null): Any
                 )
                 || (
                     Array.isArray(value)
-                    && (value as Array<unknown>).length === 0
+                    && (value as unknown[]).length === 0
                 )
             ) {
                 continue
