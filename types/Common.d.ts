@@ -17,6 +17,12 @@ export interface AnyObject<ValuesType = any, Keys = string> extends Record<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type NumericKeysObject<ValuesType = any> = Record<number, ValuesType>;
 
+// Ref любого вида.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyRefObject<Value = any> = React.RefObject<Value>
+    | React.MutableRefObject<Value>
+    | React.ForwardedRef<Value>
+
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {
     deviceType: 'desktop' | 'tablet' | 'mobile',
@@ -84,21 +90,21 @@ export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject> =
 export type ReactComponentOrTagName = React.ComponentProps<any>
 
 // Компонент имеет свойство tag, которое может быть React компонентом или реальным HTML тегом (строкой).
-export interface ComponentPropsWithModifiableTag<T extends HTMLElement = HTMLElement> extends AllHTMLAttributes<T> {
-    tag?: ReactComponentOrTagName;
+export interface ComponentPropsWithModifiableTag extends AllHTMLAttributes<HTMLElement> {
+    tag?: ReactComponentOrTagName
 }
 
 // Информация о не оптимизированной SVG иконке.
 // Иконка может быть нестандартного размера и иметь сложную структуру.
 // При этом иконку можно будет использовать так же как MDIIcon через компонент.
 export interface SvgIconInfo {
-    width: number,
-    height: number,
-    content: string,
+    width: number
+    height: number
+    content: string
     // 'various' - различные способы окраски для разных элементов.
     // В этом случае иконка будет перекрашивать только stroke="#000" и fill="#000".
     // Все остальные случаи остаются "как есть".
-    coloredBy: 'stroke' | 'fill' | 'various',
+    coloredBy: 'stroke' | 'fill' | 'various'
 }
 
 // Переводы ошибок

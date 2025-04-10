@@ -1,10 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {
-    DataGridOrderingPanelOption,
-    DataGridOrderingPanelOptionType,
-    DataGridOrderingPanelProps,
-} from '../../types/DataGrid'
+import {DataGridOrderingPanelOptionType, DataGridOrderingPanelProps} from '../../types/DataGrid'
 import DataGridOrderingPanelLabel from './DataGridOrderingPanelLabel'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import IconButton from '../IconButton'
@@ -20,7 +16,7 @@ import {
 } from '@mdi/js'
 import {useDataGridContext} from './DataGridContext'
 
-type OrderingDirectionIcons = {
+interface OrderingDirectionIcons {
     asc: string,
     desc: string
 }
@@ -32,9 +28,9 @@ function DataGridOrderingPanel<
 
     const {
         translations,
-        orderBy,
-        orderDirection,
         defaultOrderBy,
+        orderBy = defaultOrderBy,
+        orderDirection,
         setOrder,
         loading,
     } = useDataGridContext()
@@ -42,8 +38,8 @@ function DataGridOrderingPanel<
     const {
         options,
         resetOffset,
-        paddings,
-        disabled,
+        paddings = 'py-1 px-2',
+        disabled = false,
         noLabel,
         className,
         ...otherProps
@@ -52,15 +48,17 @@ function DataGridOrderingPanel<
     // Получение иконок для кнопок направления сортировки.
     const directionIcons: OrderingDirectionIcons = getOrderDirectionIcons(
         options,
-        orderBy || defaultOrderBy
+        orderBy
     )
+
+    const isDisabled: boolean = disabled || loading
 
     return (
         <div
             {...otherProps}
             className={clsx(
                 'data-grid-ordering m-0 d-flex flex-row align-items-center justify-content-start',
-                paddings || paddings === undefined ? 'py-1 px-2' : null,
+                paddings,
                 className
             )}
         >
@@ -68,13 +66,13 @@ function DataGridOrderingPanel<
                 <DataGridOrderingPanelLabel/>
             )}
             <SelectInput<SortableColumn>
-                value={(orderBy || defaultOrderBy || '') as SortableColumn}
+                value={(orderBy ?? '') as SortableColumn}
                 options={options}
                 small
                 mode="inline"
                 wrapperClass="m-0"
                 dropdownFluidWidth={false}
-                disabled={disabled || loading}
+                disabled={isDisabled}
                 onChange={(value: SortableColumn): void => {
                     setOrder(value, orderDirection, !!resetOffset)
                 }}
@@ -84,9 +82,9 @@ function DataGridOrderingPanel<
                 color={orderDirection === 'asc' ? 'theme' : 'muted'}
                 tooltip={translations.ordering.ascending}
                 className="ms-3"
-                disabled={disabled || loading}
+                disabled={isDisabled}
                 onClick={(): void => {
-                    setOrder(orderBy || defaultOrderBy || '', 'asc', !!resetOffset)
+                    setOrder(orderBy ?? '', 'asc', !!resetOffset)
                 }}
             />
             <IconButton
@@ -94,9 +92,9 @@ function DataGridOrderingPanel<
                 color={orderDirection === 'desc' ? 'theme' : 'muted'}
                 tooltip={translations.ordering.descending}
                 className="ms-3"
-                disabled={disabled || loading}
+                disabled={isDisabled}
                 onClick={(): void => {
-                    setOrder(orderBy || defaultOrderBy || '', 'desc', !!resetOffset)
+                    setOrder(orderBy ?? '', 'desc', !!resetOffset)
                 }}
             />
         </div>
@@ -125,15 +123,14 @@ const orderingDirectionIcons: Record<DataGridOrderingPanelOptionType, OrderingDi
     },
 }
 
-// Получить иконки сортировки в зависимости от типа колонки по которой идет сортировка.
+// Получить иконки сортировки в зависимости от типа колонки, по которой идет сортировка.
 function getOrderDirectionIcons(
     options: DataGridOrderingPanelProps['options'],
     orderBy: string | null
 ): OrderingDirectionIcons {
-    for (let i = 0; i < options.length; i++) {
-        const option: DataGridOrderingPanelOption = options[i]
+    for (const option of options) {
         if (option.value === orderBy) {
-            const type: DataGridOrderingPanelOptionType = option.type || 'default'
+            const type: DataGridOrderingPanelOptionType = option.type ?? 'default'
             return orderingDirectionIcons[type]
         }
     }
