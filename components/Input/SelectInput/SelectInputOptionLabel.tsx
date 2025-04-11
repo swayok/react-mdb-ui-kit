@@ -3,10 +3,10 @@ import {AnyObject, FormSelectOptionOrGroup} from '../../../types/Common'
 import HtmlContent from '../../../components/HtmlContent'
 import {SelectInputProps} from './SelectInput'
 
-export type SelectInputOptionLabelProps<
+export interface SelectInputOptionLabelProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject
-> = {
+> {
     option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>;
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel'];
     labelContainsHtml?: boolean;

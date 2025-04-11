@@ -6,8 +6,7 @@ import {
     AnyRefObject,
     ComponentPropsWithModifiableTag,
     ReactComponentOrTagName,
-} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DropdownDropDirection} from './DropdownContext'
+} from '../../types/Common'
 
 export interface DropdownProps
     extends Omit<
@@ -24,6 +23,7 @@ export interface DropdownProps
     autoClose?: boolean | 'outside' | 'inside'
     ref?: AnyRefObject
     isRTL?: boolean
+    offset?: DropdownMenuOffset | number
 }
 
 export interface DropdownToggleProps extends ComponentPropsWithModifiableTag {
@@ -40,9 +40,11 @@ export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
     align?: DropdownAlign
     rootCloseEvent?: 'click' | 'mousedown'
     popperConfig?: Omit<UsePopperOptions, 'enabled' | 'placement' | 'offset'>
-    offset?: Offset | number
+    offset?: DropdownMenuOffset | number
     variant?: DropdownMenuVariant
     isNavbar?: boolean
+    closeOnScrollOutside?: boolean
+    maxHeight?: number
 }
 
 export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
@@ -64,6 +66,8 @@ export interface DropdownDividerProps extends ComponentPropsWithModifiableTag {
 export interface DropdownHeaderProps extends ComponentPropsWithModifiableTag {
     ref?: AnyRefObject
 }
+
+export type DropdownMenuOffset = Offset
 
 export type DropdownDropDirection =
     | 'up'

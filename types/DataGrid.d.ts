@@ -313,7 +313,10 @@ export interface DataGridPaginationProps extends Omit<
 
 // Свойства кнопки, открывающей выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.
-export interface DataGridPaginationHiddenPagesProps extends HTMLAttributes<HTMLDivElement> {
+export interface DataGridPaginationPagesListProps extends Omit<
+    HTMLAttributes<HTMLDivElement>,
+    'onSelect' | 'onToggle'
+> {
     totalCount: number
     offset: number
     limit: number

@@ -354,13 +354,8 @@
     color: $table-footer-text-color;
 
     .page-item {
-        .page-link {
-            cursor: pointer;
-            min-width: 36px;
-            text-align: center;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            user-select: none;
+        &.dropdown-item {
+            padding: 0;
         }
 
         @include contained-mdi-icon-color-in-link-for-states(
@@ -374,6 +369,15 @@
                 color: $pagination-active-disabled-color;
             }
         }
+    }
+
+    .page-link {
+        cursor: pointer;
+        min-width: 36px;
+        text-align: center;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        user-select: none;
     }
 
     .data-grid-vertical-separator {

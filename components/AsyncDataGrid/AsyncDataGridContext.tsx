@@ -64,7 +64,10 @@ export function getAsyncDataGridContextDefaults<RowDataType extends object = Any
 ): AsyncDataGridContextProps<RowDataType, FiltersDataType> {
     return {
         ...defaultProps as unknown as AsyncDataGridContextProps<RowDataType, FiltersDataType>,
-        ...props,
+        ...Object.fromEntries(
+            Object.entries(props ?? {})
+                .filter(entry => entry[1] !== undefined)
+        ),
     }
 }
 

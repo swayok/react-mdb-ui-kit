@@ -1,29 +1,29 @@
 import Echo, {Channel} from 'laravel-echo'
 import React, {useEffect} from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from 'swayok-react-mdb-ui-kit/helpers/withStable'
+import {AnyObject} from '../types/Common'
+import withStable from '../helpers/withStable'
 
-type WebSocketServiceAuthInfo = {
-    userId: number,
-    authToken: string | null,
+interface WebSocketServiceAuthInfo {
+    userId: number
+    authToken: string | null
     channels: AnyObject<string>
 }
 
 // Настройки Laravel Echo.
 export interface LaravelEchoConfigType {
-    broadcaster: 'pusher' | string;
-    key?: string;
-    wsHost?: string;
-    wsPort?: string;
-    wssPort?: string | number;
-    cluster?: string;
-    authEndpoint?: string;
-    forceTLS: boolean;
-    encrypted: boolean;
-    disableStats: boolean;
-    enabledTransports: Array<'ws' | 'wss' | string>;
+    broadcaster: 'pusher' | string
+    key?: string
+    wsHost?: string
+    wsPort?: string
+    wssPort?: string | number
+    cluster?: string
+    authEndpoint?: string
+    forceTLS: boolean
+    encrypted: boolean
+    disableStats: boolean
+    enabledTransports: ('ws' | 'wss' | string)[]
     auth?: {
-        headers?: AnyObject<string>,
+        headers?: AnyObject<string>
     }
 }
 
@@ -31,11 +31,11 @@ export type WebsocketEventData = AnyObject
 export type WebsocketEventHandler<EventData extends WebsocketEventData = WebsocketEventData> = (eventData: EventData) => void
 export type WebsocketUnsubscribeHandler = () => void;
 
-type WebsocketSubscription = {
-    id: string,
-    event: string,
-    handler: WebsocketEventHandler,
-    channels: string[] | null,
+interface WebsocketSubscription {
+    id: string
+    event: string
+    handler: WebsocketEventHandler
+    channels: string[] | null
 }
 
 // Сервис для работы с web сокетами и уведомлениями через них.
@@ -60,7 +60,7 @@ abstract class WebSocketService {
         if (!this.isValidConfig(laravelEchoConfig)) {
             return
         }
-        this.laravelEchoConfig = laravelEchoConfig as LaravelEchoConfigType
+        this.laravelEchoConfig = laravelEchoConfig!
         if (this.authInfo) {
             this.connect(
                 this.authInfo.userId,
@@ -73,8 +73,7 @@ abstract class WebSocketService {
     // Валидация настроек Laravel Echo.
     private static isValidConfig(config: LaravelEchoConfigType | null): boolean {
         return !!(
-            config
-            && config.key
+            config?.key
             && config.wsHost
         )
     }
@@ -173,7 +172,7 @@ abstract class WebSocketService {
                 {
                     id,
                     eventName: event,
-                    channel: this.subscriptions[id].channels || 'all',
+                    channel: this.subscriptions[id].channels ?? 'all',
                 }
             )
             return () => {
@@ -183,7 +182,7 @@ abstract class WebSocketService {
             id,
             event,
             handler: handler as WebsocketEventHandler,
-            channels: channels || null,
+            channels: channels ?? null,
         }
         this.activateSubscription(this.subscriptions[id])
         return () => {
@@ -251,10 +250,9 @@ abstract class WebSocketService {
     private static getChannelsForSubscription(subscription: WebsocketSubscription): AnyObject<Channel> {
         if (subscription.channels) {
             const channelsToListen: AnyObject<Channel> = {}
-            for (let i = 0; i < subscription.channels.length; i++) {
-                const channelNameOrAlias: string = subscription.channels[i]
+            for (const channelNameOrAlias of subscription.channels) {
                 if (channelNameOrAlias in this.channels) {
-                    channelsToListen[subscription.channels[i]] = this.channels[subscription.channels[i]]
+                    channelsToListen[channelNameOrAlias] = this.channels[channelNameOrAlias]
                 } else if (channelNameOrAlias in this.channelAliases) {
                     const channelName: string = this.channelAliases[channelNameOrAlias]
                     channelsToListen[channelName] = this.channels[channelName]
@@ -274,7 +272,7 @@ abstract class WebSocketService {
 
 export default WebSocketService
 
-export type WebSocketConnectorProps = {
+export interface WebSocketConnectorProps {
     key: string,
     userId: number,
     authToken?: string | null,
@@ -292,7 +290,7 @@ function WebSocketConnectorComponent(props: WebSocketConnectorProps) {
 
     // Открыть/закрыть соединение.
     useEffect(() => {
-        WebSocketService.connect(props.userId, props.authToken || null, props.channels)
+        WebSocketService.connect(props.userId, props.authToken ?? null, props.channels)
         return () => {
             WebSocketService.disconnect()
         }
@@ -307,10 +305,10 @@ function WebSocketConnectorComponent(props: WebSocketConnectorProps) {
 
 export const WebSocketConnector = React.memo(WebSocketConnectorComponent)
 
-export type WebSocketEventsHandlerProps<EventData extends WebsocketEventData = WebsocketEventData> = {
-    subscriptionId: string,
-    event: string,
-    handler: WebsocketEventHandler<EventData>,
+export interface WebSocketEventsHandlerProps<EventData extends WebsocketEventData = WebsocketEventData> {
+    subscriptionId: string
+    event: string
+    handler: WebsocketEventHandler<EventData>
     // Список каналов, на которые нужно подписаться.
     // Если null: подписаться на все каналы.
     // Можно использовать псевдонимы каналов, указанные при вызове WebSocketConnector (channels).

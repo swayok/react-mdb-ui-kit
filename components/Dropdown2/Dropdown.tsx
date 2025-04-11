@@ -1,12 +1,13 @@
-import React from 'react'
-import {useMemo} from 'react'
-import BaseDropdown, {ToggleMetadata} from '@restart/ui/Dropdown'
-import {useUncontrolled} from 'uncontrollable'
 import useEventCallback from '@restart/hooks/useEventCallback'
-import {DropdownContext} from './DropdownContext'
+import BaseDropdown, {ToggleMetadata} from '@restart/ui/Dropdown'
 import clsx from 'clsx'
-import {DropdownDropDirection, DropdownProps} from './DropdownTypes'
-import {getDropdownMenuPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown2/getDropdownMenuPlacement'
+import React, {useMemo} from 'react'
+import {DropdownContextValue} from './DropdownContext'
+import {DropdownMenuOffset} from './DropdownTypes'
+import {useUncontrolled} from 'uncontrollable'
+import {DropdownContext} from './DropdownContext'
+import {DropdownProps} from './DropdownTypes'
+import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 export function Dropdown(props: DropdownProps) {
     const {
@@ -23,6 +24,7 @@ export function Dropdown(props: DropdownProps) {
         autoClose = true,
         ref,
         isRTL,
+        offset,
         ...otherProps
     } = useUncontrolled(props, {show: 'onToggle'})
 
@@ -47,7 +49,8 @@ export function Dropdown(props: DropdownProps) {
 
     const handleToggle = useEventCallback(
         (nextShow: boolean, meta: ToggleMetadata) => {
-            /** Checking if target of event is ToggleButton,
+            /**
+             * Checking if target of event is ToggleButton,
              * if it is then nullify mousedown event
              */
             const isToggleButton = (
@@ -59,7 +62,7 @@ export function Dropdown(props: DropdownProps) {
             }
 
             if (
-                meta.originalEvent!.currentTarget === document
+                meta.originalEvent?.currentTarget === document
                 && (
                     meta.source !== 'keydown'
                     || (meta.originalEvent as KeyboardEvent)?.key === 'Escape'
@@ -76,17 +79,26 @@ export function Dropdown(props: DropdownProps) {
 
     const placement = getDropdownMenuPlacement(
         align === 'end',
-        drop as DropdownDropDirection,
+        drop,
         isRTL
     )
 
-    const contextValue = useMemo(
-        () => ({
+    const normalizedOffset: DropdownMenuOffset | undefined = typeof offset === 'number'
+        ? [0, offset] as DropdownMenuOffset
+        : offset
+    const contextValue: DropdownContextValue = useMemo(
+        (): DropdownContextValue => ({
             align,
             drop,
             isRTL,
+            offset: normalizedOffset,
         }),
-        [align, drop, isRTL]
+        [
+            align,
+            drop,
+            isRTL,
+            (Array.isArray(normalizedOffset) ? normalizedOffset.join(',') : normalizedOffset),
+        ]
     )
 
     const directionClasses = {
@@ -115,7 +127,7 @@ export function Dropdown(props: DropdownProps) {
                     className={clsx(
                         className,
                         show && 'show',
-                        directionClasses[drop as DropdownDropDirection]
+                        directionClasses[drop]
                     )}
                 />
             </BaseDropdown>

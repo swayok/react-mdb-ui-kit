@@ -66,7 +66,7 @@ function Input(props: InputProps) {
         label,
         labelId,
         labelClass,
-        wrapperTag,
+        wrapperTag = 'div',
         wrapperClass = 'mb-4',
         wrapperStyle,
         wrapperProps,
@@ -98,8 +98,8 @@ function Input(props: InputProps) {
     const inputEl = useRef<HTMLInputElement>(null)
     const textareaEl = useRef<HTMLTextAreaElement>(null)
 
-    const labelReference = labelRef ? labelRef : labelEl
-    const inputReference = inputRef ? inputRef : (textarea ? textareaEl : inputEl)
+    const labelReference = labelRef ?? labelEl
+    const inputReference = inputRef ?? (textarea ? textareaEl : inputEl)
 
     const [labelNotchWidth, setLabelNotchWidth] = useState<number | string>(0)
     const [isFocused, setFocused] = useState<boolean>(false)
@@ -122,7 +122,7 @@ function Input(props: InputProps) {
     } else if (large && !small) {
         size = 'large'
     }
-    const hasNotEmptyValue: boolean = (String(value || '').length || 0) > 0
+    const hasNotEmptyValue: boolean = (String(value ?? '').length || 0) > 0
     const inputClassesCalculated = clsx(
         active || isFocused || hasNotEmptyValue ? 'active' : null,
         size === 'small' ? 'form-control-sm' : null,
@@ -138,11 +138,11 @@ function Input(props: InputProps) {
 
     const updateWidth = useCallback(
         () => {
-            if (label && label.length) {
+            if (label?.length) {
                 if (labelReference.current && labelReference.current.clientWidth !== 0) {
                     let multiplier: number = activeInputLabelSizeMultipliers[size]
                     if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
-                        multiplier = activeInputLabelSizeMultiplier[size] as number
+                        multiplier = activeInputLabelSizeMultiplier[size]!
                     }
                     setLabelNotchWidth(labelReference.current.clientWidth * multiplier + 8)
                 } else if (labelNotchWidth === 0) {
@@ -182,15 +182,15 @@ function Input(props: InputProps) {
                     return
                 }
                 let cleanPastedText: string = ''
-                for (let i = 0; i < pastedText.length; i++) {
-                    if (allowedChars.test(pastedText[i])) {
-                        cleanPastedText += pastedText[i]
+                for (const char of pastedText) {
+                    if (allowedChars.test(char)) {
+                        cleanPastedText += char
                     }
                 }
                 e.clipboardData.setData('text', cleanPastedText)
-                input.value = input.value.substring(0, input.selectionStart || 0)
+                input.value = input.value.substring(0, input.selectionStart ?? 0)
                     + cleanPastedText
-                    + input.value.substring(input.selectionEnd || 0)
+                    + input.value.substring(input.selectionEnd ?? 0)
                 // @ts-ignore
                 handleChange(e)
             }
@@ -247,7 +247,7 @@ function Input(props: InputProps) {
     )
 
     const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> = {}
-    let WrapperTag: ReactComponentOrTagName = wrapperTag || 'div'
+    let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {
             console.warn(
@@ -256,7 +256,7 @@ function Input(props: InputProps) {
             )
         }
         WrapperTag = InputValidationError;
-        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid === undefined ? false : invalid;
+        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid ?? false;
         (additionalWrapperProps as InputValidationErrorProps).error = validationMessage
         if (validationMessageClassName) {
             (additionalWrapperProps as InputValidationErrorProps).errorClassName = validationMessageClassName

@@ -1,34 +1,41 @@
 import React, {CSSProperties} from 'react'
+import {
+    DropdownDropDirection,
+    DropdownProps,
+    DropdownToggleProps,
+} from '../../Dropdown2/DropdownTypes'
 import Icon from '../../Icon'
 import clsx from 'clsx'
-import Dropdown, {DropdownProps} from '../../Dropdown/Dropdown'
-import DropdownToggle, {DropdownToggleProps} from '../../Dropdown/DropdownToggle'
-import DropdownMenu from '../../Dropdown/DropdownMenu'
+import {Dropdown} from '../../Dropdown2/Dropdown'
+import {DropdownToggle} from '../../Dropdown2/DropdownToggle'
+import {DropdownMenu} from '../../Dropdown2/DropdownMenu'
 import Input, {InputProps} from '../Input'
 import InputValidationError from '../InputValidationError'
 import {mdiChevronDown} from '@mdi/js'
 import withStable from '../../../helpers/withStable'
 
 export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
-    children: React.ReactNode | React.ReactNode[];
+    children: React.ReactNode | React.ReactNode[]
     // Режим отображения.
     // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода, подходит для вставки в текст или в панель навигации.
     // Если input: внешний вид соответствует полю ввода c {chevron} в конце блока.
-    mode?: 'inline' | 'input';
+    mode?: 'inline' | 'input'
     // Настройки выпадающего меню.
-    dropdownMenuClassName?: string;
-    dropdownToggleClassName?: string;
-    dropdownProps?: Omit<DropdownProps, 'dropup' | 'className' | 'disabled'>;
-    dropup?: boolean;
+    dropdownMenuClassName?: string
+    dropdownToggleClassName?: string
+    dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
+    drop?: DropdownDropDirection
     // Максимальная высота выпадающего меню.
-    maxHeight?: number | null;
+    maxHeight?: number | null
     // Минимальная ширина выпадающего меню.
-    minWidth?: null | number | string;
+    minWidth?: null | number | string
     // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.
     // Если false: ширина выпадающего меню зависит от ширины опций.
-    dropdownFluidWidth?: boolean;
+    dropdownFluidWidth?: boolean
+    // Нужно ли закрывать выпадающее меню при выборе опции.
+    closeDropdownOnSelect?: boolean
     // Дополнительные элементы, которые нужно вставить после поля ввода.
-    addon?: React.ReactNode | React.ReactNode[];
+    addon?: React.ReactNode | React.ReactNode[]
 }
 
 // Выбор одного из вариантов.
@@ -45,7 +52,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         wrapperStyle,
         dropdownProps,
         children,
-        dropup,
+        drop = 'down',
         maxHeight = 500,
         minWidth = '100%',
         dropdownFluidWidth = true,
@@ -54,6 +61,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         validationMessageClassName,
         withoutValidationMessage,
         addon,
+        closeDropdownOnSelect = true,
         ...inputProps
     } = props
 
@@ -66,7 +74,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         dropdownMenuStyle.minWidth = minWidth
     }
 
-    const isDropUp: boolean = dropup || ['top', 'top-start', 'top-end'].includes(props.dropdownProps?.placement || '')
+    const isDropUp: boolean = ['up', 'up-centered'].includes(drop)
     const chevron = (
         <Icon
             path={mdiChevronDown}
@@ -101,18 +109,14 @@ function SelectInputBasic(props: SelectInputBasicProps) {
                     )}
                     wrapperClass="m-0"
                     wrapperTag={DropdownToggle}
-                    wrapperProps={{tag: 'div'} as DropdownToggleProps}
+                    wrapperProps={{
+                        tag: 'div',
+                    } as DropdownToggleProps}
                     active={inputProps.value !== null && inputProps.value !== ''}
                     readOnly
                     withoutValidationMessage
                     onFocus={e => {
-                        e.currentTarget.selectionStart = 0
-                        e.currentTarget.selectionEnd = 0
-                    }}
-                    onKeyDown={e => {
-                        if (e.key !== 'Tab') {
-                            e.currentTarget.click()
-                        }
+                        e.currentTarget?.setSelectionRange(0, 0)
                     }}
                     {...inputProps}
                 >
@@ -148,15 +152,16 @@ function SelectInputBasic(props: SelectInputBasicProps) {
                 wrapperClass
             )} //< form-outline here needed to apply .input-group styles
             style={wrapperStyle}
-            dropup={!!dropup}
+            drop={drop}
             disabled={props.disabled}
-            closeOnClickOutside={true}
+            autoClose={closeDropdownOnSelect ? true : 'outside'}
+            focusFirstItemOnShow={true}
         >
             {dropdownToggle}
             <DropdownMenu
                 className={clsx(
                     'shadow-2-strong',
-                    dropup && props.label ? 'form-dropdown-select-menu-dropup-offset' : null,
+                    isDropUp && props.label ? 'form-dropdown-select-menu-dropup-offset' : null,
                     dropdownFluidWidth ? 'full-width' : null,
                     dropdownMenuClassName
                 )}

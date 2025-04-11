@@ -72,7 +72,7 @@ function SelectInputOptions<
                 const {
                     className: containerClassName,
                     ...optionsContainerAttributes
-                } = (group.optionsContainerAttributes || {})
+                } = (group.optionsContainerAttributes ?? {})
 
                 if (group.options.length === 0) {
                     // Пропускаем пустую группу.
@@ -118,7 +118,7 @@ function SelectInputOptions<
                         isActive={selectedOption?.value === option.value}
                         renderOptionLabel={renderOptionLabel}
                         labelContainsHtml={labelsContainHtml}
-                        disabled={option.disabled || disableOptions?.includes(option.value)}
+                        disabled={option.disabled ?? disableOptions?.includes(option.value)}
                         onSelect={onSelect}
                     />
                 )

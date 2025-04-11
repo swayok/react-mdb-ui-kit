@@ -100,11 +100,25 @@ function VirtualizedSelectInputOptions<
 
     return (
         <virtuoso.Virtuoso
-            data={flatOptions}
+            data={
+                search && keywordsRegexp
+                    ? flatOptions.filter(option => (
+                        option.isGroup
+                        || shouldDisplaySelectInputOption(
+                            option.data.label,
+                            option.data.value,
+                            hideEmptyOptionInDropdown,
+                            search,
+                            keywordsRegexp,
+                            labelsContainHtml
+                        )
+                    ))
+                    : flatOptions
+            }
             style={{
                 height,
             }}
-            context={selectedOption?.value || null}
+            context={selectedOption?.value ?? null}
             itemContent={(index, option, context) => {
                 if (option.isGroup) {
                     return (
@@ -116,29 +130,29 @@ function VirtualizedSelectInputOptions<
                             labelContainsHtml={labelsContainHtml}
                         />
                     )
-                } else {
+                } else if (shouldDisplaySelectInputOption(
+                    option.data.label,
+                    option.data.value,
+                    hideEmptyOptionInDropdown,
+                    search,
+                    keywordsRegexp,
+                    labelsContainHtml
+                )) {
                     return (
                         <SelectInputOption
                             key={'option-' + index}
-                            visible={shouldDisplaySelectInputOption(
-                                option.data.label,
-                                option.data.value,
-                                hideEmptyOptionInDropdown,
-                                search,
-                                keywordsRegexp,
-                                labelsContainHtml
-                            )}
                             option={option.data}
                             index={index}
                             groupIndex={option.groupIndex}
                             isActive={context === option.data.value}
                             renderOptionLabel={renderOptionLabel}
                             labelContainsHtml={labelsContainHtml}
-                            disabled={option.data.disabled || disableOptions?.includes(option.data.value)}
+                            disabled={!!option.data.disabled || disableOptions?.includes(option.data.value)}
                             onSelect={onSelect}
                         />
                     )
                 }
+                return null
             }}
         />
     )

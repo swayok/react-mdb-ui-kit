@@ -1,15 +1,14 @@
 import React from 'react'
 import {AnyObject, FormSelectOption} from '../../../types/Common'
 import {SelectInputProps} from './SelectInput'
-import DropdownItem from '../../../components/Dropdown/DropdownItem'
-import DropdownLink from '../../../components/Dropdown/DropdownLink'
+import {DropdownItem} from '../../../components/Dropdown2/DropdownItem'
 import clsx from 'clsx'
 import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'
 
-export type SelectInputOptionProps<
+export interface SelectInputOptionProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject
-> = {
+> {
     visible?: boolean;
     option: FormSelectOption<OptionValueType, OptionExtrasType>;
     index: number;
@@ -57,30 +56,27 @@ export default function SelectInputOption<
     return (
         <DropdownItem
             {...attributes}
-            highlightable={false}
+            href={undefined}
             active={false}
             data-value={String(value)}
+            tag="div"
+            onClick={(e: React.MouseEvent) => {
+                e.preventDefault()
+                onSelect(option, index, groupIndex)
+            }}
+            className={clsx(
+                'cursor',
+                isEmptyOption ? 'empty-option' : null,
+                isActive ? 'active' : null,
+                disabled ? 'disabled' : null,
+                attributes?.className
+            )}
         >
-            <DropdownLink
-                tag="div"
-                onClick={(e: React.MouseEvent) => {
-                    e.preventDefault()
-                    onSelect(option, index, groupIndex)
-                }}
-                className={clsx(
-                    'cursor',
-                    isEmptyOption ? 'empty-option' : null,
-                    isActive ? 'active' : null,
-                    disabled ? 'disabled' : null,
-                    attributes?.className
-                )}
-            >
-                <SelectInputOptionLabel
-                    option={option}
-                    labelContainsHtml={labelContainsHtml}
-                    renderOptionLabel={renderOptionLabel}
-                />
-            </DropdownLink>
+            <SelectInputOptionLabel
+                option={option}
+                labelContainsHtml={labelContainsHtml}
+                renderOptionLabel={renderOptionLabel}
+            />
         </DropdownItem>
     )
 }

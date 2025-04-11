@@ -1,4 +1,4 @@
-import {DropdownDropDirection} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownTypes'
+import {DropdownDropDirection} from './DropdownTypes'
 import {Placement} from '@popperjs/core'
 
 export function getDropdownMenuPlacement(
@@ -6,14 +6,14 @@ export function getDropdownMenuPlacement(
     dropDirection?: DropdownDropDirection,
     isRTL?: boolean
 ): Placement {
-    const topStart = isRTL ? 'top-end' : 'top-start'
-    const topEnd = isRTL ? 'top-start' : 'top-end'
-    const bottomStart = isRTL ? 'bottom-end' : 'bottom-start'
-    const bottomEnd = isRTL ? 'bottom-start' : 'bottom-end'
-    const leftStart = isRTL ? 'right-start' : 'left-start'
-    const leftEnd = isRTL ? 'right-end' : 'left-end'
-    const rightStart = isRTL ? 'left-start' : 'right-start'
-    const rightEnd = isRTL ? 'left-end' : 'right-end'
+    const topStart: Placement = isRTL ? 'top-end' : 'top-start'
+    const topEnd: Placement = isRTL ? 'top-start' : 'top-end'
+    const bottomStart: Placement = isRTL ? 'bottom-end' : 'bottom-start'
+    const bottomEnd: Placement = isRTL ? 'bottom-start' : 'bottom-end'
+    const leftStart: Placement = isRTL ? 'right-start' : 'left-start'
+    const leftEnd: Placement = isRTL ? 'right-end' : 'left-end'
+    const rightStart: Placement = isRTL ? 'left-start' : 'right-start'
+    const rightEnd: Placement = isRTL ? 'left-end' : 'right-end'
 
     let placement: Placement = alignEnd ? bottomEnd : bottomStart
     if (dropDirection === 'up') {

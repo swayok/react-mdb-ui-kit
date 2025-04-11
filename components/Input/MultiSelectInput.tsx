@@ -1,5 +1,6 @@
 import React, {HTMLProps} from 'react'
 import clsx from 'clsx'
+import {DropdownItemProps} from '../Dropdown2/DropdownTypes'
 import Icon from '../Icon'
 import {
     mdiCheckboxBlankCircleOutline,
@@ -14,10 +15,9 @@ import {
     FormSelectOptionsList,
 } from '../../types/Common'
 import SelectInputBasic, {SelectInputBasicProps} from './SelectInput/SelectInputBasic'
-import DropdownItem, {DropdownItemProps} from '../Dropdown/DropdownItem'
-import DropdownHeader from '../Dropdown/DropdownHeader'
+import {DropdownItem} from '../Dropdown2/DropdownItem'
+import {DropdownHeader} from '../Dropdown2/DropdownHeader'
 import withStable from '../../helpers/withStable'
-import DropdownButton from '../Dropdown/DropdownButton'
 
 export interface MultiSelectInputProps<OptionValueType = string> extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
     options: FormSelectOptionsAndGroupsList<OptionValueType>;
@@ -41,23 +41,15 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
 
     render() {
         const {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             className,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             options,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             disableOptions,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             selectedOptionsToString,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             values,
             dropdownFluidWidth = true,
             dropdownMenuClassName,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             onChange,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             required,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             nothingSelectedPlaceholder,
             ...attributes
         } = this.props
@@ -76,6 +68,7 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
                     'form-multiselect-dropdown',
                     dropdownMenuClassName
                 )}
+                closeDropdownOnSelect={false}
             >
                 {this.renderOptions(this.props.options)}
             </SelectInputBasic>
@@ -99,22 +92,17 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
                     continue
                 }
 
-                const groupHeaderAttributes: DropdownItemProps = option.groupHeaderAttributes || {}
-                const optionsContainerAttributes: HTMLProps<HTMLDivElement> = option.optionsContainerAttributes || {}
+                const groupHeaderAttributes: DropdownItemProps = option.groupHeaderAttributes ?? {}
+                const optionsContainerAttributes: HTMLProps<HTMLDivElement> = option.optionsContainerAttributes ?? {}
 
                 ret.push(
-                    <DropdownItem
+                    <DropdownHeader
                         key={'group-' + i}
                         {...groupHeaderAttributes}
                         className={clsx('form-dropdown-select-group-header', groupHeaderAttributes?.className)}
-                        highlightable={false}
-                        active={false}
-                        closeDropdownOnClick={false}
                     >
-                        <DropdownHeader>
-                            {option.label}
-                        </DropdownHeader>
-                    </DropdownItem>
+                        {option.label}
+                    </DropdownHeader>
                 )
 
 
@@ -152,8 +140,8 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
                     iconColor = 'text-gray'
                 }
                 const disabled: boolean = (
-                    option.disabled
-                    || !!(this.props.disableOptions && this.props.disableOptions.includes(value))
+                    !!option.disabled
+                    || !!this.props.disableOptions?.includes(value)
                 )
                 if (disabled) {
                     iconColor = 'text-muted'
@@ -162,33 +150,27 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
                     <DropdownItem
                         key={'option-' + i}
                         {...attributes}
-                        highlightable={false}
                         active={false}
-                        closeDropdownOnClick={false}
-                    >
-                        <DropdownButton
-                            closeDropdownOnClick={false}
-                            onClick={(e: React.MouseEvent) => {
-                                e.preventDefault()
-                                if (!disabled) {
-                                    if (radiosGroup) {
-                                        this.onRadioClick(option, radiosGroup)
-                                    } else {
-                                        this.onCheckboxClick(option)
-                                    }
+                        onClick={(e: React.MouseEvent) => {
+                            e.preventDefault()
+                            if (!disabled) {
+                                if (radiosGroup) {
+                                    this.onRadioClick(option, radiosGroup)
+                                } else {
+                                    this.onCheckboxClick(option)
                                 }
-                            }}
-                            className={clsx(
-                                'form-multiselect-dropdown-option with-icon-flex',
-                                disabled ? 'disabled ' : null
-                            )}
-                        >
-                            <Icon
-                                path={icon}
-                                className={clsx('me-1', iconColor)}
-                            />
-                            <span>{label}</span>
-                        </DropdownButton>
+                            }
+                        }}
+                        className={clsx(
+                            'form-multiselect-dropdown-option with-icon-flex',
+                            disabled ? 'disabled' : null
+                        )}
+                    >
+                        <Icon
+                            path={icon}
+                            className={clsx('me-1', iconColor)}
+                        />
+                        <span>{label}</span>
                     </DropdownItem>
                 )
             }
@@ -200,7 +182,7 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
     private getSelectedValuesForTextInput(): string {
         const selectedOptions: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
         if (selectedOptions.length === 0) {
-            return this.props.nothingSelectedPlaceholder || ''
+            return this.props.nothingSelectedPlaceholder ?? ''
         }
 
         if (this.props.selectedOptionsToString) {
@@ -215,8 +197,8 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
     private getSelectedValues(): OptionValueType[] {
         const options: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
         const values: OptionValueType[] = []
-        for (let i = 0; i < options.length; i++) {
-            values.push(options[i].value)
+        for (const option of options) {
+            values.push(option.value)
         }
         return values
     }
@@ -226,25 +208,24 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
         const ret: FormSelectOptionsList<OptionValueType> = []
         if (Array.isArray(this.props.values) && this.props.values.length > 0) {
             // Значения заданы: ищем опции для них.
-            for (let i = 0; i < this.props.options.length; i++) {
-                if ('options' in this.props.options[i]) {
-                    const option: FormSelectOptionGroup<OptionValueType>
-                        = this.props.options[i] as FormSelectOptionGroup<OptionValueType>
+            for (const optionOrGroup of this.props.options) {
+                if ('options' in optionOrGroup) {
                     // Группа опций.
-                    if (!Array.isArray(option.options) || option.options.length === 0) {
+                    const group: FormSelectOptionGroup<OptionValueType>
+                        = optionOrGroup as FormSelectOptionGroup<OptionValueType>
+                    // Группа опций.
+                    if (!Array.isArray(group.options) || group.options.length === 0) {
                         // Не массив или пустой массив: игнорируем.
                         continue
                     }
-                    for (let j = 0; j < option.options.length; j++) {
-                        if (this.props.values.includes(option.options[j].value)) {
-                            ret.push(option.options[j])
+                    for (const option of group.options) {
+                        if (this.props.values.includes(option.value)) {
+                            ret.push(option)
                         }
                     }
                 } else {
-                    const option: FormSelectOption<OptionValueType>
-                        = this.props.options[i] as FormSelectOption<OptionValueType>
-                    if (this.props.values.includes(option.value)) {
-                        ret.push(option)
+                    if (this.props.values.includes(optionOrGroup.value)) {
+                        ret.push(optionOrGroup)
                     }
                 }
             }
@@ -255,21 +236,20 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
         // Значения не заданы или не найдены.
         if (this.props.required) {
             // Требуется выбрать хотя бы одно значение: используем первую опцию в списке.
-            for (let i = 0; i < this.props.options.length; i++) {
-                if ('options' in this.props.options[i]) {
-                    const option: FormSelectOptionGroup<OptionValueType>
-                        = this.props.options[i] as FormSelectOptionGroup<OptionValueType>
+            for (const optionOrGroup of this.props.options) {
+                if ('options' in optionOrGroup) {
+                    const group: FormSelectOptionGroup<OptionValueType>
+                        = optionOrGroup as FormSelectOptionGroup<OptionValueType>
                     // Группа опций.
-                    if (!Array.isArray(option.options) || option.options.length === 0) {
+                    if (!Array.isArray(group.options) || group.options.length === 0) {
                         // Не массив или пустой массив: игнорируем.
                         continue
                     }
-                    if (option.options[0].value && option.options[0].value) {
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                        return [option.options[0]]
+                    if (group.options[0].value && group.options[0].value) {
+                        return [group.options[0]]
                     }
                 } else {
-                    return [this.props.options[i] as FormSelectOption<OptionValueType>]
+                    return [optionOrGroup]
                 }
             }
         }
@@ -282,12 +262,12 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
         const values: OptionValueType[] = []
         const newSelectedOptions: FormSelectOptionsList<OptionValueType> = []
         let unselected: boolean = false
-        for (let j = 0; j < selectedOptions.length; j++) {
-            if (option.value === selectedOptions[j].value) {
+        for (const selectedOption of selectedOptions) {
+            if (selectedOption.value === option.value) {
                 unselected = true
             } else {
-                values.push(selectedOptions[j].value)
-                newSelectedOptions.push(selectedOptions[j])
+                values.push(selectedOption.value)
+                newSelectedOptions.push(selectedOption)
             }
         }
         if (!unselected) {
@@ -303,22 +283,22 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
         radiosGroup?: FormSelectOptionGroup<OptionValueType>
     ): void {
         const selectedOptions: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
-        const unselectedValues = (radiosGroup?.options || [])
+        const unselectedValues = (radiosGroup?.options ?? [])
             .filter(groupOption => option.value !== groupOption.value)
             .map(groupOption => groupOption.value)
         const newSelectedOptions: FormSelectOptionsList<OptionValueType> = []
         const values: OptionValueType[] = []
         let unselected: boolean = false
-        for (let j = 0; j < selectedOptions.length; j++) {
-            if (unselectedValues.includes(selectedOptions[j].value)) {
+        for (const selectedOption of selectedOptions) {
+            if (unselectedValues.includes(selectedOption.value)) {
                 // Опция из группы, которую не выбрана.
                 continue
             }
-            if (option.value === selectedOptions[j].value) {
+            if (selectedOption.value === option.value) {
                 unselected = true
                 continue
             }
-            values.push(selectedOptions[j].value)
+            values.push(selectedOption.value)
         }
 
         if (!unselected) {

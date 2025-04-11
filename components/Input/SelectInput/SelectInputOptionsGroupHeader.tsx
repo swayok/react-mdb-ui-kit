@@ -1,15 +1,14 @@
 import React from 'react'
 import {AnyObject, FormSelectOptionGroup} from '../../../types/Common'
 import {SelectInputProps} from './SelectInput'
-import DropdownItem from '../../../components/Dropdown/DropdownItem'
 import clsx from 'clsx'
 import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'
-import DropdownHeader from '../../../components/Dropdown/DropdownHeader'
+import {DropdownHeader} from '../../../components/Dropdown2/DropdownHeader'
 
-export type SelectInputOptionProps<
+export interface SelectInputOptionProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject
-> = {
+> {
     visible?: boolean;
     group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>;
     index: number;
@@ -35,26 +34,23 @@ export default function SelectInputOptionsGroupHeader<
     const {
         className,
         ...groupHeaderAttributes
-    } = (group.groupHeaderAttributes || {})
+    } = (group.groupHeaderAttributes ?? {})
 
     if (!visible) {
         return null
     }
 
     return (
-        <DropdownItem
+        <DropdownHeader
             key={'group-' + index}
             {...groupHeaderAttributes}
             className={clsx('form-dropdown-select-group-header', className)}
-            highlightable={false}
         >
-            <DropdownHeader>
-                <SelectInputOptionLabel
-                    option={group}
-                    renderOptionLabel={renderOptionLabel}
-                    labelContainsHtml={labelContainsHtml}
-                />
-            </DropdownHeader>
-        </DropdownItem>
+            <SelectInputOptionLabel
+                option={group}
+                renderOptionLabel={renderOptionLabel}
+                labelContainsHtml={labelContainsHtml}
+            />
+        </DropdownHeader>
     )
 }

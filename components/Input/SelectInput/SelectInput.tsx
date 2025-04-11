@@ -78,7 +78,7 @@ export interface SelectInputProps<
     trackBehaviorAs?: string;
 }
 
-type KeywordsState = {
+interface KeywordsState {
     value: string,
     regexp: null | RegExp,
 }
@@ -210,26 +210,25 @@ function SelectInput<
             value={selectedValueForTextInput}
             dropdownProps={{
                 ...dropdownProps,
-                animation: false, // Required to avoid flickering.
-                onOpen() {
-                    if (trackBehaviorAs && inputRef.current) {
+                onToggle(nextShow: boolean, meta) {
+                    if (nextShow && trackBehaviorAs && inputRef.current) {
                         UserBehaviorService.onFocus(
                             inputRef.current,
                             trackBehaviorAs,
                             (value as string) || null
                         )
                     }
-                },
-                onOpened() {
-                    keywordsInputRef.current?.focus()
-                    dropdownProps?.onOpened?.()
-                },
-                onClosed() {
-                    setKeywords({
-                        value: '',
-                        regexp: null,
-                    })
-                    dropdownProps?.onClosed?.()
+                    if (nextShow) {
+                        setTimeout(() => {
+                            keywordsInputRef.current?.focus()
+                        }, 100)
+                    } else {
+                        setKeywords({
+                            value: '',
+                            regexp: null,
+                        })
+                    }
+                    dropdownProps?.onToggle?.(nextShow, meta)
                 },
             }}
             maxHeight={null}
@@ -274,8 +273,8 @@ function SelectInput<
                     keywordsRegexp={keywordsRegexp}
                     search={search}
                     height={Math.min(
-                        virtualizationConfig.dropdownHeight || maxHeight || 500,
-                        maxHeight || 500
+                        virtualizationConfig.dropdownHeight ?? maxHeight ?? 500,
+                        maxHeight ?? 500
                     )}
                     disableOptions={disableOptions}
                     onChange={onChange}

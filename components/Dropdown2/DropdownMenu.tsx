@@ -1,34 +1,161 @@
-import React, {RefObject, useContext} from 'react'
-import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import useIsomorphicEffect from '@restart/hooks/useIsomorphicEffect'
 import useMergedRefs from '@restart/hooks/useMergedRefs'
-import warning from 'warning'
-import {DropdownAlignDirection, DropdownMenuProps, DropdownResponsiveAlign} from './DropdownTypes'
+import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import clsx from 'clsx'
+import React, {CSSProperties, RefObject, useContext, useEffect, useRef} from 'react'
+import {DropdownAlign, DropdownDropDirection} from './DropdownTypes'
+import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
+import {AnyObject} from '../../types/Common'
+import warning from 'warning'
 import {DropdownContext} from './DropdownContext'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {getDropdownMenuPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown2/getDropdownMenuPlacement'
+import {DropdownAlignDirection, DropdownMenuProps, DropdownResponsiveAlign} from './DropdownTypes'
 
 export function DropdownMenu(props: DropdownMenuProps) {
 
-    const {align: contextAlign, drop, isRTL} = useContext(DropdownContext)
+    const {
+        align: contextAlign,
+        drop,
+        isRTL,
+        offset: contextOffset,
+    } = useContext(DropdownContext)
 
     const {
         className,
         align = contextAlign,
         rootCloseEvent,
         flip = true,
-        show: showProps,
+        show: showFromProps,
         renderOnMount,
         tag: Component = 'div',
         popperConfig,
         variant,
         isNavbar,
         ref,
-        offset = [0, 2],
+        offset = contextOffset ?? [0, 2],
+        closeOnScrollOutside = false,
+        maxHeight,
+        style = {},
         ...otherProps
     } = props
 
+    const {
+        placement,
+        alignClasses,
+        alignEnd,
+    } = getPlacementAndAlignClasses(align, drop, isRTL)
+
+    // noinspection SuspiciousTypeOfGuard
+    const [menuProps, {hasShown, popper, show, toggle}] = useDropdownMenu({
+        flip,
+        rootCloseEvent,
+        show: showFromProps,
+        usePopper: !isNavbar && alignClasses.length === 0,
+        offset: typeof offset === 'number' ? [0, offset] : offset,
+        popperConfig,
+        placement,
+    })
+
+    menuProps.ref = useMergedRefs(
+        ref as RefObject<HTMLElement>,
+        menuProps.ref
+    )
+
+    const menuRef = useRef<HTMLElement>(null)
+    menuProps.ref = useMergedRefs(
+        element => {
+            menuRef.current = element
+        },
+        menuProps.ref
+    )
+
+    // Обработка глобального события скроллинга для закрытия меню при
+    // срабатывании события вне меню.
+    useEffect(() => {
+        if (closeOnScrollOutside && show) {
+            const abortController = new AbortController()
+            document.addEventListener(
+                'scroll',
+                event => {
+                    if (!menuRef.current?.contains(event.target as Node)) {
+                        abortController.abort()
+                        toggle?.(false)
+                    }
+                },
+                {
+                    passive: true,
+                    signal: abortController.signal,
+                    capture: true,
+                }
+            )
+            return () => {
+                abortController.abort()
+            }
+        }
+        return () => {
+        }
+    }, [closeOnScrollOutside, toggle, show])
+
+    // Popper's initial position for the menu is incorrect when
+    // renderOnMount=true. Need to call update() to correct it.
+    useIsomorphicEffect(() => {
+        if (show) {
+            popper?.update()
+        }
+    }, [show])
+
+    if (!hasShown && !renderOnMount) {
+        return null
+    }
+
+    // For custom components provide additional, non-DOM, props;
+    // noinspection SuspiciousTypeOfGuard
+    if (typeof Component !== 'string') {
+        menuProps.show = show
+        menuProps.close = () => toggle?.(false)
+        menuProps.align = align
+    }
+
+    const additionalStyles: CSSProperties = {}
+    if (maxHeight !== undefined) {
+        additionalStyles.maxHeight = maxHeight
+    }
+
+    const bsProps: AnyObject = {
+        'x-placement': popper?.placement,
+    }
+    if (alignClasses.length || isNavbar) {
+        // Bootstrap css requires this data attrib to style responsive menus.
+        bsProps['data-bs-popper'] = 'static'
+    }
+
+    return (
+        <Component
+            {...otherProps}
+            {...menuProps}
+            {...bsProps}
+            style={{
+                ...additionalStyles,
+                ...style,
+                // Так надо.
+                ...(popper?.placement ? menuProps.style : {}),
+            }}
+            className={clsx(
+                className,
+                'dropdown-menu',
+                show && 'show',
+                alignEnd && 'dropdown-menu-end',
+                variant && `dropdown-menu-${variant}`,
+                ...alignClasses
+            )}
+        />
+    )
+}
+
+function getPlacementAndAlignClasses(
+    align?: DropdownAlign,
+    drop?: DropdownDropDirection,
+    isRTL?: boolean
+) {
     let alignEnd = false
 
     const alignClasses: string[] = []
@@ -55,73 +182,9 @@ export function DropdownMenu(props: DropdownMenuProps) {
         }
     }
 
-    const placement = getDropdownMenuPlacement(alignEnd, drop, isRTL)
-
-    // noinspection SuspiciousTypeOfGuard
-    const [menuProps, {hasShown, popper, show, toggle}] = useDropdownMenu({
-        flip,
-        rootCloseEvent,
-        show: showProps,
-        usePopper: !isNavbar && alignClasses.length === 0,
-        offset: typeof offset === 'number' ? [0, offset] : offset,
-        popperConfig,
-        placement,
-    })
-
-    menuProps.ref = useMergedRefs(
-        ref as RefObject<HTMLElement>,
-        menuProps.ref
-    )
-
-    useIsomorphicEffect(() => {
-        // Popper's initial position for the menu is incorrect when
-        // renderOnMount=true. Need to call update() to correct it.
-        if (show) {
-            popper?.update()
-        }
-    }, [show])
-
-    if (!hasShown && !renderOnMount) {
-        return null
+    return {
+        placement: getDropdownMenuPlacement(alignEnd, drop, isRTL),
+        alignClasses,
+        alignEnd,
     }
-
-    // For custom components provide additional, non-DOM, props;
-    // noinspection SuspiciousTypeOfGuard
-    if (typeof Component !== 'string') {
-        menuProps.show = show
-        menuProps.close = () => toggle?.(false)
-        menuProps.align = align
-    }
-
-    let style = otherProps.style
-    if (popper?.placement) {
-        // we don't need the default popper style,
-        // menus are display: none when not shown.
-        style = {...otherProps.style, ...menuProps.style}
-    }
-
-    const bsProps: AnyObject = {
-        'x-placement': popper?.placement,
-    }
-    if (alignClasses.length || isNavbar) {
-        // Bootstrap css requires this data attrib to style responsive menus.
-        bsProps['data-bs-popper'] = 'static'
-    }
-
-    return (
-        <Component
-            {...otherProps}
-            {...menuProps}
-            {...bsProps}
-            style={style}
-            className={clsx(
-                className,
-                'dropdown-menu',
-                show && 'show',
-                alignEnd && 'dropdown-menu-end',
-                variant && `dropdown-menu-${variant}`,
-                ...alignClasses
-            )}
-        />
-    )
 }

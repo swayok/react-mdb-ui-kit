@@ -1,16 +1,16 @@
 import React, {useCallback, useMemo} from 'react'
 import clsx from 'clsx'
+import {DropdownProps} from '../Dropdown2/DropdownTypes'
 import {FormSelectOption} from '../../types/Common'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridItemsCountProps} from '../../types/DataGrid'
 import withStable from '../../helpers/withStable'
-import {DropdownProps} from '../Dropdown/Dropdown'
 
-const dorpdownProps: Partial<DropdownProps> = {
+const dropdownProps: Partial<DropdownProps> = {
     offset: 6,
-    positioningContainer: 'wrapper',
-    placement: 'top',
+    // positioningContainer: 'wrapper',
+    drop: 'up',
 }
 
 // Количество строк в таблице, диапазон отображаемых строк и выбор лимита строк на странице.
@@ -30,15 +30,15 @@ function DataGridItemsCount(props: DataGridItemsCountProps) {
         ...otherProps
     } = props
 
-    const limitsOptions: Array<FormSelectOption<number>> = useMemo(() => {
+    const limitsOptions: FormSelectOption<number>[] = useMemo(() => {
         if (!limits || limits.length === 0) {
             return []
         }
-        const options: Array<FormSelectOption<number>> = []
-        for (let i = 0; i < limits.length; i++) {
+        const options: FormSelectOption<number>[] = []
+        for (const item of limits) {
             options.push({
-                label: String(limits[i]),
-                value: limits[i],
+                label: String(item),
+                value: item,
             })
         }
         return options
@@ -89,8 +89,9 @@ function DataGridItemsCount(props: DataGridItemsCountProps) {
                         options={limitsOptions}
                         value={limit}
                         small
-                        dropdownProps={dorpdownProps}
+                        dropdownProps={dropdownProps}
                         mode="inline"
+                        drop="up"
                         wrapperClass="m-0 data-grid-footer-items-limit-select"
                         valueToString={valueToString}
                         onChange={handleLimitChange}

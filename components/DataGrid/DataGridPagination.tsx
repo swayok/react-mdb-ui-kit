@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import Icon from '../Icon'
 import {mdiChevronLeft, mdiChevronRight, mdiPageFirst, mdiPageLast} from '@mdi/js'
-import DataGridPaginationHiddenPages from './DataGridPaginationHiddenPages'
+import DataGridPaginationPagesList from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridPaginationPagesList'
 import {DataGridPaginationProps} from '../../types/DataGrid'
 import withStable from '../../helpers/withStable'
 
@@ -79,7 +79,7 @@ function DataGridPagination(props: DataGridPaginationProps) {
                 </div>
             )}
             {numbers && (
-                <DataGridPaginationHiddenPages
+                <DataGridPaginationPagesList
                     totalCount={totalCount}
                     offset={offset}
                     limit={limit}

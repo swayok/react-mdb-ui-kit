@@ -16,7 +16,7 @@ import {AsyncDataGridFooterProps} from '../../types/AsyncDataGrid'
 // Справа:
 // - пагинация;
 // - кнопка перезагрузки данных.
-function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
+export const AsyncDataGridFooter = React.memo(function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
 
     const {
         disabled,
@@ -41,7 +41,7 @@ function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
         reload,
     } = useAsyncDataGridContext()
 
-    const isDisabled: boolean = disabled || loading
+    const isDisabled: boolean = !!disabled || loading
 
     return (
         <DataGridFooterWrapper
@@ -50,7 +50,7 @@ function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
             border={border}
         >
             <DataGridItemsCount
-                totalCount={totalCount || 0}
+                totalCount={totalCount ?? 0}
                 offset={offset}
                 limit={limit}
                 limits={limitChanger ? limits : undefined}
@@ -60,7 +60,7 @@ function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
             <div className="d-flex flex-row align-items-center justify-content-end">
                 <DataGridPagination
                     {...paginationProps}
-                    totalCount={totalCount || 0}
+                    totalCount={totalCount ?? 0}
                     offset={offset}
                     limit={limit}
                     disabled={isDisabled}
@@ -91,6 +91,4 @@ function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
             </div>
         </DataGridFooterWrapper>
     )
-}
-
-export default React.memo(AsyncDataGridFooter)
+})

@@ -6,7 +6,7 @@ import {
 } from '../../types/AsyncDataGrid'
 import {AnyObject} from '../../types/Common'
 import AsyncDataGridTable from './AsyncDataGridTable'
-import AsyncDataGridFooter from './AsyncDataGridFooter'
+import {AsyncDataGridFooter} from './AsyncDataGridFooter'
 import clsx from 'clsx'
 import AsyncDataGridEvents from './AsyncDataGridEvents'
 import withStable from '../../helpers/withStable'
