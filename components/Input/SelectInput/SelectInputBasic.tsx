@@ -1,18 +1,14 @@
-import React, {CSSProperties} from 'react'
-import {
-    DropdownDropDirection,
-    DropdownProps,
-    DropdownToggleProps,
-} from '../../Dropdown2/DropdownTypes'
-import Icon from '../../Icon'
+import {mdiChevronDown} from '@mdi/js'
 import clsx from 'clsx'
+import React, {CSSProperties} from 'react'
+import withStable from '../../../helpers/withStable'
 import {Dropdown} from '../../Dropdown2/Dropdown'
-import {DropdownToggle} from '../../Dropdown2/DropdownToggle'
 import {DropdownMenu} from '../../Dropdown2/DropdownMenu'
+import {DropdownToggle} from '../../Dropdown2/DropdownToggle'
+import {DropdownDropDirection, DropdownProps,} from '../../Dropdown2/DropdownTypes'
+import Icon from '../../Icon'
 import Input, {InputProps} from '../Input'
 import InputValidationError from '../InputValidationError'
-import {mdiChevronDown} from '@mdi/js'
-import withStable from '../../../helpers/withStable'
 
 export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
     children: React.ReactNode | React.ReactNode[]
@@ -111,7 +107,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
                     wrapperTag={DropdownToggle}
                     wrapperProps={{
                         tag: 'div',
-                    } as DropdownToggleProps}
+                    }}
                     active={inputProps.value !== null && inputProps.value !== ''}
                     readOnly
                     withoutValidationMessage

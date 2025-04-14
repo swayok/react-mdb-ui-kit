@@ -1,5 +1,5 @@
 import React, {AllHTMLAttributes, HTMLProps} from 'react'
-import {DropdownItemProps} from '../components/Dropdown/DropdownItem'
+import {DropdownItemProps} from '../components/Dropdown2/DropdownItem'
 import {NumeralJSLocale} from 'numeral'
 
 // Объект, который может содержать любые ключи.
@@ -19,9 +19,9 @@ export type NumericKeysObject<ValuesType = any> = Record<number, ValuesType>;
 
 // Ref любого вида.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyRefObject<Value = any> = React.RefObject<Value>
-    | React.MutableRefObject<Value>
-    | React.ForwardedRef<Value>
+export type AnyRefObject<RefType = any, ApiType = any> = React.RefObject<RefType & ApiType>
+    | React.MutableRefObject<RefType & ApiType>
+    | React.ForwardedRef<RefType & ApiType>
 
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {

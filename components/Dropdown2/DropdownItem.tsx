@@ -3,9 +3,11 @@ import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
+import {useDropdownContext} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownContext'
 import {AnyObject, ReactComponentOrTagName} from '../../types/Common'
 import {DropdownItemProps} from './DropdownTypes'
 
+// Элемент выпадающего меню.
 export function DropdownItem(props: DropdownItemProps) {
 
     const {
@@ -22,18 +24,24 @@ export function DropdownItem(props: DropdownItemProps) {
         ...otherProps
     } = props
 
+    const {
+        disableAllItems,
+    } = useDropdownContext()
+
     const [dropdownItemProps, meta] = useDropdownItem({
         key: eventKey,
         href,
         disabled,
-        onClick,
+        onClick: disableAllItems
+            ? e => e.preventDefault()
+            : onClick,
         active,
     })
 
     const {
         Component,
         componentProps,
-    } = getComponentAndProps(tag, href, target, external)
+    } = getComponentAndProps(tag, href, target, external, disableAllItems)
 
     return (
         <Component
@@ -57,7 +65,8 @@ function getComponentAndProps(
     tag: DropdownItemProps['tag'],
     href: DropdownItemProps['href'],
     target: DropdownItemProps['target'],
-    external: DropdownItemProps['external']
+    external: DropdownItemProps['external'],
+    disableAllItems: boolean
 ): {
     Component: ReactComponentOrTagName
     componentProps: AnyObject
@@ -89,6 +98,9 @@ function getComponentAndProps(
             componentProps.href = href
             Component = Anchor
         }
+    }
+    if (disableAllItems) {
+        componentProps.disabled = true
     }
     return {
         Component,

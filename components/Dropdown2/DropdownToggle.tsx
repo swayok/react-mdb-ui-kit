@@ -18,10 +18,12 @@ export function DropdownToggle<
         className,
         tag: Component = Button,
         ref,
+        render,
+        children,
         ...otherProps
     } = props
 
-    const [toggleProps] = useDropdownToggle()
+    const [toggleProps, toggleMetadata] = useDropdownToggle()
 
     toggleProps.ref = useMergedRefs(
         toggleProps.ref,
@@ -40,6 +42,8 @@ export function DropdownToggle<
             )}
             {...toggleProps}
             {...otherProps}
-        />
+        >
+            {typeof render === 'function' ? render(toggleMetadata) : children}
+        </Component>
     )
 }

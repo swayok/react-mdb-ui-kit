@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react'
 import Input, {InputProps} from './Input'
 import {FormSelectOptionsList} from '../../types/Common'
 import withStable from '../../helpers/withStable'
-import Dropdown from '../Dropdown/Dropdown'
-import DropdownMenu from '../Dropdown/DropdownMenu'
-import DropdownItem from '../Dropdown/DropdownItem'
-import DropdownButton from '../Dropdown/DropdownButton'
+import {Dropdown} from '../Dropdown2/Dropdown'
+import {DropdownMenu} from '../Dropdown2/DropdownMenu'
+import {DropdownItem} from '../Dropdown2/DropdownItem'
 import filterOptions from '../../helpers/filterOptions'
 
 interface Props extends Omit<InputProps, 'onChange'> {
@@ -68,7 +67,7 @@ function ComboboxInput(props: Props) {
             if (!ignoredKeysForMenuOpener.includes(event.key)) {
                 setShowDropdown(true)
                 if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-                    // Предотвращаем изменение позиции курсора в меню если меню было закрыто.
+                    // Предотвращаем изменение позиции курсора в меню, если меню было закрыто.
                     event.preventDefault()
                 }
                 return
@@ -120,30 +119,24 @@ function ComboboxInput(props: Props) {
         >
             {hasOptions && (
                 <Dropdown
-                    isOpen={showDropdown}
-                    closeOnClickOutside={false}
-                    animation={false}
-                    selectFirstOnOpen={false}
-                    positioningContainer="wrapper"
+                    show={showDropdown}
+                    autoClose={false}
+                    focusFirstItemOnShow={false}
                 >
                     <DropdownMenu
                         fillContainer
-                        className="shadow-2"
+                        className="shadow-2-strong"
                     >
                         {filteredOptions.map((option, index) => (
                             <DropdownItem
                                 key={option.value}
                                 active={index === dropdownSelectedItem}
-                                highlightable={false}
+                                onClick={event => props.onChange(
+                                    option.value ? String(option.value) : '',
+                                    event
+                                )}
                             >
-                                <DropdownButton
-                                    onClick={event => props.onChange(
-                                        option.value ? String(option.value) : '',
-                                        event
-                                    )}
-                                >
-                                    {option.label}
-                                </DropdownButton>
+                                {option.label}
                             </DropdownItem>
                         ))}
                     </DropdownMenu>

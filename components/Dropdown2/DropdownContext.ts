@@ -1,12 +1,14 @@
 import React from 'react'
-import {DropdownMenuOffset} from './DropdownTypes'
-import {DropdownAlign, DropdownDropDirection} from './DropdownTypes'
+import {DropdownContextProps} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownTypes'
 
-export interface DropdownContextValue {
-    align?: DropdownAlign
-    drop?: DropdownDropDirection
-    isRTL?: boolean
-    offset?: DropdownMenuOffset
+// Контекст для компонентов Dropdown.
+export const DropdownContext = React.createContext<DropdownContextProps>({
+    disableAllItems: false,
+    setDisableAllItems() {
+    },
+})
+
+// Контекст выпадающего меню.
+export function useDropdownContext(): DropdownContextProps {
+    return React.useContext(DropdownContext)
 }
-
-export const DropdownContext = React.createContext<DropdownContextValue>({})

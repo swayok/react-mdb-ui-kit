@@ -1,36 +1,87 @@
-import {DropdownProps as BaseDropdownProps} from '@restart/ui/Dropdown'
 import {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
+import {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
 import {Offset, UsePopperOptions} from '@restart/ui/usePopper'
-import {HTMLAttributeAnchorTarget} from 'react'
-import {
-    AnyRefObject,
-    ComponentPropsWithModifiableTag,
-    ReactComponentOrTagName,
-} from '../../types/Common'
+import {HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
+import {AnyRefObject, ComponentPropsWithModifiableTag, ReactComponentOrTagName} from '../../types/Common'
 
-export interface DropdownProps
-    extends Omit<
-        ComponentPropsWithModifiableTag,
-        'onSelect' | 'children' | 'onToggle'
-    >, Omit<
-        BaseDropdownProps,
-        'itemSelector' | 'placement'
-    > {
-    drop?: DropdownDropDirection
+export interface DropdownContextProps {
     align?: DropdownAlign
+    drop?: DropdownDropDirection
+    isRTL?: boolean
+    offset?: DropdownMenuOffset
+    // Индикатор того, что все DropdownItem внутри этого Dropdown должны быть disabled.
+    disableAllItems: boolean,
+    setDisableAllItems: (disabled: boolean) => void
+}
+
+export interface DropdownProps extends Omit<
+    ComponentPropsWithModifiableTag,
+    'onSelect' | 'onToggle'
+> {
+    // Начальное состояние выпадающего меню.
+    defaultShow?: boolean
+    /**
+     * Состояние выпадающего меню.
+     * Если задано, то компонент будет работать в режиме внешнего управления видимостью.
+     * Если не задано, то компонент будет работать в режиме самоуправления видимостью.
+     *
+     * @controllable onToggle
+     */
+    show?: boolean
+    // Позиция выпадающего меню (вертикальная).
+    drop?: DropdownDropDirection
+    // Позиция выпадающего меню (горизонтальная).
+    align?: DropdownAlign
+    // Нужно ли подсветить первый DropdownItem элемент при открытии меню?
+    // Если 'keyboard', то подсветка будет работать только при открытии меню с клавиатуры.
     focusFirstItemOnShow?: boolean | 'keyboard'
     // По умолчанию: true.
     autoClose?: boolean | 'outside' | 'inside'
-    ref?: AnyRefObject
+    // Ссылка на обертку и API выпадающего меню.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ref?: AnyRefObject<any, DropdownApi>
+    // Режим Right-To-Left.
     isRTL?: boolean
+    // Смещение выпадающего меню относительно DropdownToggle.
     offset?: DropdownMenuOffset | number
+    /**
+     * Функция вызывается при изменении видимости выпадающего меню.
+     * nextShow - новое состояние выпадающего меню.
+     * meta - информация о событии, которое вызвало изменение состояния выпадающего меню.
+     *
+     * @controllable show
+     */
+    onToggle?: (nextShow: boolean, meta: DropdownToggleEventMetadata) => void
+    /**
+     * A callback fired when a DropdownItem has been selected.
+     */
+    onSelect?: SelectCallback
+}
+
+// API выпадающего меню.
+interface DropdownApi {
+    toggle: (nextShow: boolean, meta?: DropdownToggleEventMetadata) => void
+}
+
+// Метаданные события изменения видимости выпадающего меню.
+export interface DropdownToggleEventMetadata {
+    source?: 'click' | 'mousedown' | 'keydown' | 'rootClose'
+        | 'select' | 'outside' | 'navigation' | string
+    originalEvent?: SyntheticEvent | KeyboardEvent | MouseEvent
 }
 
 export interface DropdownToggleProps extends ComponentPropsWithModifiableTag {
     ref?: AnyRefObject
-    tag?: ReactComponentOrTagName
     split?: boolean
+    /**
+     * A render prop that returns a Toggle element. The `props`
+     * argument should spread through to **a component that can accept a ref**. Use
+     * the `onToggle` argument to toggle the menu open or closed
+     */
+    render?: (meta: DropdownToggleMetadata) => ReactNode
 }
+
+export type DropdownToggleMetadata = UseDropdownToggleMetadata
 
 export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
     ref?: AnyRefObject
@@ -45,6 +96,7 @@ export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
     isNavbar?: boolean
     closeOnScrollOutside?: boolean
     maxHeight?: number
+    fillContainer?: boolean
 }
 
 export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {

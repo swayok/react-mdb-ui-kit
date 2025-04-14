@@ -2,14 +2,20 @@ import useIsomorphicEffect from '@restart/hooks/useIsomorphicEffect'
 import useMergedRefs from '@restart/hooks/useMergedRefs'
 import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import clsx from 'clsx'
-import React, {CSSProperties, RefObject, useContext, useEffect, useRef} from 'react'
-import {DropdownAlign, DropdownDropDirection} from './DropdownTypes'
-import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
-import {AnyObject} from '../../types/Common'
+import React, {CSSProperties, RefObject, useEffect, useRef} from 'react'
 import warning from 'warning'
-import {DropdownContext} from './DropdownContext'
-import {DropdownAlignDirection, DropdownMenuProps, DropdownResponsiveAlign} from './DropdownTypes'
+import {AnyObject} from '../../types/Common'
+import {useDropdownContext} from './DropdownContext'
+import {
+    DropdownAlign,
+    DropdownAlignDirection,
+    DropdownDropDirection,
+    DropdownMenuProps,
+    DropdownResponsiveAlign,
+} from './DropdownTypes'
+import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
+// Выпадающее меню (отображение).
 export function DropdownMenu(props: DropdownMenuProps) {
 
     const {
@@ -17,7 +23,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
         drop,
         isRTL,
         offset: contextOffset,
-    } = useContext(DropdownContext)
+    } = useDropdownContext()
 
     const {
         className,
@@ -35,6 +41,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
         closeOnScrollOutside = false,
         maxHeight,
         style = {},
+        fillContainer,
         ...otherProps
     } = props
 
@@ -145,6 +152,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
                 show && 'show',
                 alignEnd && 'dropdown-menu-end',
                 variant && `dropdown-menu-${variant}`,
+                fillContainer ? 'full-width' : null,
                 ...alignClasses
             )}
         />

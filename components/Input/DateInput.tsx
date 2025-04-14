@@ -1,9 +1,14 @@
 import React, {Suspense, useMemo, useRef} from 'react'
+import {
+    DropdownAlign, DropdownApi,
+    DropdownDropDirection,
+    DropdownProps,
+} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownTypes'
 import Icon from '../Icon'
 import clsx from 'clsx'
-import Dropdown, {DropdownProps} from '../Dropdown/Dropdown'
-import DropdownToggle from '../Dropdown/DropdownToggle'
-import DropdownMenu from '../Dropdown/DropdownMenu'
+import {Dropdown} from '../Dropdown2/Dropdown'
+import {DropdownToggle} from '../Dropdown2/DropdownToggle'
+import {DropdownMenu} from '../Dropdown2/DropdownMenu'
 import Input, {InputProps} from './Input'
 import InputValidationError from './InputValidationError'
 import {mdiCalendarMonthOutline, mdiClose} from '@mdi/js'
@@ -14,32 +19,29 @@ import {CalendarProps} from 'react-calendar'
 import InputAddonText from './InputAddonText'
 import UserBehaviorService from '../../services/UserBehaviorService'
 
-const Calendar = React.lazy(() => import('react-calendar'))
+const Calendar = React.lazy<React.ComponentType<CalendarProps>>(() => import('react-calendar'))
 
 export type DateInputSingleDateValue = Date | null;
 export type DateInputDateRangeValue = [Date | null, Date | null];
 export type DateInputValue = DateInputSingleDateValue | DateInputDateRangeValue;
 
 export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value'> {
-    value: DateInputValue;
+    value: DateInputValue
     // Конвертация даты или периода для отображения в поле ввода.
-    valueToString?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => string;
+    valueToString?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => string
     // Формат даты (DateTimeService) для стандартного valueToString.
-    dateFormat?: string;
-    allowEmptyValue?: boolean;
+    dateFormat?: string
+    allowEmptyValue?: boolean
     // Настройки выпадающего меню.
-    dropdownMenuClassName?: string;
-    dropdownToggleClassName?: string;
-    dropdownProps?: Omit<DropdownProps, 'dropup' | 'className' | 'disabled'>;
-    dropup?: boolean;
-    onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void;
-    calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>;
+    dropdownMenuClassName?: string
+    dropdownToggleClassName?: string
+    dropdownProps?: Omit<DropdownProps, 'drop' | 'align' | 'className' | 'disabled'>
+    drop?: DropdownDropDirection
+    align?: DropdownAlign
+    onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
+    calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
     // Показать иконку календаря? По умолчанию: true.
-    showCalendarIcon?: boolean;
-}
-
-type DropdownControls = {
-    close: () => void
+    showCalendarIcon?: boolean
 }
 
 // Выбор даты или периода.
@@ -55,7 +57,8 @@ function DateInput(props: DateInputProps) {
         dropdownMenuClassName,
         wrapperClass = 'mb-4',
         dropdownProps,
-        dropup,
+        drop,
+        align,
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
@@ -73,10 +76,7 @@ function DateInput(props: DateInputProps) {
     } = props
 
     // Управление выпадающим меню.
-    const dropdownControlsRef = useRef<DropdownControls>({
-        close() {
-        },
-    })
+    const dropdownApiRef = useRef<DropdownApi | null>(null)
 
     // Обработка выбора новой даты или периода.
     const handleChange = (value: DateInputValue): void => {
@@ -94,7 +94,7 @@ function DateInput(props: DateInputProps) {
             || !calendarProps.allowPartialRange
             || (from && to)
         ) {
-            dropdownControlsRef.current.close()
+            dropdownApiRef.current?.toggle(false)
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur(convertDateInputValueToString(value, dateFormat, valueToString))
             }
@@ -141,7 +141,7 @@ function DateInput(props: DateInputProps) {
             {...inputProps}
             tabIndex={-1}
         >
-            {(showCleanValueButton || showCalendarIcon) && (
+            {(!!showCleanValueButton || showCalendarIcon) && (
                 <InputAddonText>
                     {showCleanValueButton && (
                         <IconButton
@@ -197,17 +197,18 @@ function DateInput(props: DateInputProps) {
                 inputProps.large && !inputProps.small ? 'form-dropdown-date-picker-lg' : null,
                 wrapperClass
             )} //< form-outline here needed to apply .input-group styles
-            dropup={dropup}
+            drop={drop}
+            align={align}
             disabled={props.disabled}
-            onOpen={close => {
-                dropdownControlsRef.current = {close}
-            }}
+            focusFirstItemOnShow={false}
+            autoClose="outside"
+            ref={dropdownApiRef}
         >
             {dropdownToggle}
             <DropdownMenu
                 className={clsx(
                     'shadow-2-strong',
-                    dropup && props.label ? 'form-dropdown-date-picker-menu-dropup-offset' : null,
+                    drop && ([] as DropdownDropDirection[]).includes(drop) && props.label ? 'form-dropdown-date-picker-menu-dropup-offset' : null,
                     dropdownMenuClassName
                 )}
             >
