@@ -56,11 +56,13 @@ export interface AsyncDataGridContextProps<
         updates: Partial<RowDataType>,
         // Функция для поиска данных обновляемой строки или имя ключа в RowDataType,
         // по которому сопоставляются данные.
-        matcher: string | ((row: RowDataType, updates: Partial<RowDataType>) => boolean) = 'id',
+        // По умолчанию: 'id'.
+        matcher?: string | ((row: RowDataType, updates: Partial<RowDataType>) => boolean),
         // Если true, то updates полностью заменят row (newRow = updates).
         // Если false или не задано, то updates будут объединены с row
         // (newRow = {...row, ...updates}).
-        replace: boolean = false
+        // По умолчанию: false.
+        replace?: boolean
     ) => void
     setTotalCount: (totalCount: number) => void
     // Разрешения для доступа к функционалу.
