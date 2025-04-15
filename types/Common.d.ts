@@ -23,6 +23,11 @@ export type AnyRefObject<RefType = any, ApiType = any> = React.RefObject<RefType
     | React.MutableRefObject<RefType & ApiType>
     | React.ForwardedRef<RefType & ApiType>
 
+/**
+ * Базовый тип URL параметров для хука useParams<UrlParams>().
+ */
+export type AnyUrlParams = Record<string, string | undefined>
+
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {
     deviceType: 'desktop' | 'tablet' | 'mobile',

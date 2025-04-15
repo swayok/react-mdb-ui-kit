@@ -15,16 +15,11 @@ interface Props extends Omit<ComponentPropsWithModifiableTag, 'children' | 'dang
  */
 function HtmlContent(props: Props) {
     const {
-        tag,
         html,
         block,
+        tag: Tag = block ? 'div' : 'span',
         ...otherProps
     } = props
-
-    let Tag = tag
-    if (!Tag) {
-        Tag = block ? 'div' : 'span'
-    }
 
     return (
         <Tag
