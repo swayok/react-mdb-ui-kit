@@ -1,0 +1,23 @@
+// Badges
+
+// scss-docs-start badge-variables
+$badge-font-size: 0.75em !default;
+$badge-font-weight: $font-weight-bold !default;
+$badge-color: $white !default;
+$badge-padding-y: 0.35em !default;
+$badge-padding-x: 0.65em !default;
+$badge-border-radius: 0.27rem !default;
+// scss-docs-end badge-variables
+
+// MDB
+
+$badge-dot-border-radius: 4.5px !default;
+$badge-dot-height: 9px !default;
+$badge-dot-width: $badge-dot-height !default;
+$badge-dot-margin-left: -0.3125rem !default;
+
+$badge-notification-font-size: 0.6rem !default;
+$badge-notification-margin-top: -0.1rem !default;
+$badge-notification-margin-left: -0.5rem !default;
+$badge-notification-padding-y: 0.2em !default;
+$badge-notification-padding-x: 0.45em !default;

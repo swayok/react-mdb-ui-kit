@@ -1,5 +1,7 @@
 // List Groups
 
+@import "../../../functions/color_utils";
+
 // scss-docs-start list-group-mixin
 @mixin list-group-item-variant($state, $background, $color) {
   .list-group-item-#{$state} {

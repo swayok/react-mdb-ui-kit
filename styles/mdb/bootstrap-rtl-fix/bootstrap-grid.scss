@@ -7,7 +7,7 @@
 
 $include-column-box-sizing: true !default;
 
-@import 'functions';
+@import '../../functions/map_utils';
 @import 'variables';
 
 @import 'mixins/lists';

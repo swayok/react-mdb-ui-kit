@@ -5,6 +5,7 @@
 // active states on prefixed selectors.
 
 @use 'sass:math';
+@import "../../../functions/calc_utils";
 
 .form-range {
   width: 100%;

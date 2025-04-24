@@ -1,3 +1,8 @@
+@import "../../../variables/color_lists";
+@import "../../../variables/color_contrast";
+@import "../../../variables/links";
+@import "../../../functions/color_utils";
+
 @each $color, $value in $theme-colors {
   .link-#{$color} {
     color: $value;

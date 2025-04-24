@@ -3,6 +3,7 @@
 //
 
 @use 'sass:math';
+@import "../../../functions/string_utils";
 
 .form-check {
   display: block;

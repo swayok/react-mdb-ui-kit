@@ -1,3 +1,6 @@
+@import "../../../functions/color_utils";
+@import "../../../variables/css_variables";
+
 // scss-docs-start table-variant
 @mixin table-variant($state, $background) {
   .table-#{$state} {
@@ -18,4 +21,13 @@
     border-color: mix($color, $background, percentage($table-border-factor));
   }
 }
+// scss-docs-end table-variant
+
+// scss-docs-start table-variant
+// Todo: check if it actually affects anything
+//@mixin table-variant-mdb($state, $background) {
+//    .table-#{$state} {
+//        background-color: $background;
+//    }
+//}
 // scss-docs-end table-variant

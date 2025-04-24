@@ -1,7 +1,8 @@
-@import '../mdb/bootstrap-rtl-fix/functions';
 @import '../mdb/free/functions';
 @import '../mdb/bootstrap-rtl-fix/mixins';
 @import 'mixins';
+
+@import "css_variables";
 
 @import "animations";
 @import "css_grid";

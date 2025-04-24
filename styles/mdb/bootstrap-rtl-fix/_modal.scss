@@ -4,6 +4,7 @@
 // .modal-content   - actual modal w/ bg and corners and stuff
 
 @use 'sass:math';
+@import "../../functions/calc_utils";
 
 // Container that the modal scrolls within
 .modal {
