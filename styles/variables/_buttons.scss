@@ -1,11 +1,13 @@
 // Buttons
-//
-// For each of Bootstrap's buttons, define text, background, and border color.
 
 @import "form-input-button";
 @import "link";
 
+// Bootstrap Variables
+// For each of Bootstrap's buttons, define text, background, and border color.
+
 // scss-docs-start btn-variables
+// Todo: get rid of $btn-padding-x/y
 $btn-padding-y: $input-btn-padding-y !default;
 $btn-padding-x: $input-btn-padding-x !default;
 $btn-font-family: $input-btn-font-family !default;
@@ -13,25 +15,31 @@ $btn-font-size: $input-btn-font-size !default;
 $btn-line-height: $input-btn-line-height !default;
 $btn-white-space: null !default; // Set to `nowrap` to prevent text wrapping
 
+// Todo: get rid of $btn-padding-x/y-sm
 $btn-padding-y-sm: $input-btn-padding-y-sm !default;
 $btn-padding-x-sm: $input-btn-padding-x-sm !default;
 $btn-font-size-sm: $input-btn-font-size-sm !default;
 
+// Todo: get rid of $btn-padding-x/y-lg
 $btn-padding-y-lg: $input-btn-padding-y-lg !default;
 $btn-padding-x-lg: $input-btn-padding-x-lg !default;
 $btn-font-size-lg: $input-btn-font-size-lg !default;
 
 $btn-border-width: $input-btn-border-width !default;
 
-$btn-font-weight: $font-weight-normal !default;
-$btn-box-shadow: inset 0 1px 0 rgba($white, 0.15), 0 1px 1px rgba($black, 0.075) !default;
+$btn-font-weight: 500 !default;
+$btn-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.1) !default;
+$btn-hover-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.1) !default;
 $btn-focus-width: $input-btn-focus-width !default;
-$btn-focus-box-shadow: $input-btn-focus-box-shadow !default;
+$btn-focus-box-shadow: $btn-hover-box-shadow !default;
 $btn-disabled-opacity: 0.65 !default;
-$btn-active-box-shadow: inset 0 3px 5px rgba($black, 0.125) !default;
+$btn-active-box-shadow: $btn-hover-box-shadow !default;
 
 $btn-link-color: $link-color !default;
+$btn-link-decoration: none !default;
 $btn-link-hover-color: $link-hover-color !default;
+$btn-link-hover-bg: #f5f5f5 !default;
+$btn-link-hover-decoration: none !default;
 $btn-link-disabled-color: $gray-600 !default;
 
 // Allows for customizing button radius independently from global border radius
@@ -51,3 +59,48 @@ $btn-active-bg-tint-amount: 20% !default;
 $btn-active-border-shade-amount: 25% !default;
 $btn-active-border-tint-amount: 10% !default;
 // scss-docs-end btn-variables
+
+// MDB Variables
+// For each of MDB's buttons, define text, background, and border color.
+
+$btn-padding-top: 0.625rem !default;
+$btn-padding-bottom: 0.5rem !default;
+$btn-padding-left: 1.5rem !default;
+$btn-padding-right: 1.5rem !default;
+
+$btn-outline-hover-bg: rgba(0, 0, 0, 0.02) !default;
+$btn-outline-active-bg: transparent !default;
+
+$btn-outline-padding-top: 0.5rem !default;
+$btn-outline-padding-bottom: 0.375rem !default;
+$btn-outline-padding-left: 1.375rem !default;
+$btn-outline-padding-right: 1.375rem !default;
+
+$btn-outline-padding-top-sm: 0.25rem !default;
+$btn-outline-padding-bottom-sm: 0.1875rem !default;
+$btn-outline-padding-right-sm: 0.875rem !default;
+$btn-outline-padding-left-sm: 0.875rem !default;
+
+$btn-outline-padding-top-lg: 0.625rem !default;
+$btn-outline-padding-bottom-lg: 0.5625rem !default;
+$btn-outline-padding-right-lg: 1.5625rem !default;
+$btn-outline-padding-left-lg: 1.5625rem !default;
+
+$btn-line-height-lg: 1.6 !default;
+$btn-padding-top-lg: 0.75rem !default;
+$btn-padding-bottom-lg: 0.6875rem !default;
+$btn-padding-right-lg: 1.6875rem !default;
+$btn-padding-left-lg: 1.6875rem !default;
+
+$btn-line-height-sm: $btn-line-height !default;
+$btn-padding-top-sm: 0.375rem !default;
+$btn-padding-bottom-sm: 0.3125rem !default;
+$btn-padding-right-sm: 1rem !default;
+$btn-padding-left-sm: 1rem !default;
+
+$btn-rounded-border-radius: 10rem !default;
+
+$btn-block-spacing-y: 0.5rem !default;
+
+$btn-group-border-radius: calc(4px - 1px) !default;
+$btn-group-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;

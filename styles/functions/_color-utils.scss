@@ -7,13 +7,24 @@
 // Color contrast
 // See https://github.com/twbs/bootstrap/pull/30168
 
+// Note: This function works too bad for buttons unless
+// $min-contrast-ratio is 2, which is not recommended value.
+// In MDB the used another function for this:
+// @function set-text-color-for-bg($background) {
+//  @if (lightness($background) > 70) {
+//    @return $gray-800;
+//  } @else {
+//    @return $white;
+//  }
+//}
+
 @function color-contrast(
     $background,
     $color-contrast-dark: $color-contrast-dark,
     $color-contrast-light: $color-contrast-light,
     $min-contrast-ratio: $min-contrast-ratio
 ) {
-    $foregrounds: $color-contrast-light, $color-contrast-dark, $white, $black;
+    $foregrounds: $color-contrast-light, $color-contrast-dark, $color-contrast-white, $color-contrast-black;
     $max-ratio: 0;
     $max-ratio-color: null;
 

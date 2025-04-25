@@ -1,0 +1,23 @@
+@import "body";
+@import "colors";
+@import "borders";
+@import "shadows";
+@import "typography";
+
+// Image thumbnails
+
+// scss-docs-start thumbnail-variables
+$thumbnail-padding: 0.25rem !default;
+$thumbnail-bg: $body-bg !default;
+$thumbnail-border-width: $border-width !default;
+$thumbnail-border-color: $gray-300 !default;
+$thumbnail-border-radius: $border-radius !default;
+$thumbnail-box-shadow: $box-shadow-sm !default;
+// scss-docs-end thumbnail-variables
+
+// Figures
+
+// scss-docs-start figure-variables
+$figure-caption-font-size: $small-font-size !default;
+$figure-caption-color: $gray-600 !default;
+// scss-docs-end figure-variables

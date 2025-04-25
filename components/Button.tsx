@@ -17,7 +17,6 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
     outline?: boolean,
     rounded?: boolean,
     labelFor?: string,
-    floating?: boolean,
     block?: boolean,
     active?: boolean,
     hasIcon?: boolean,
@@ -39,9 +38,7 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
         noRipple,
         ripple,
         children,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         hidden,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         visible,
         type = 'button',
         role = 'button',
@@ -53,7 +50,6 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
         color = 'primary',
         outline,
         rounded,
-        floating,
         block,
         labelFor,
         active,
@@ -95,7 +91,6 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
         color === 'link' || color === 'icon' ? 'clickable' : null, // Требуется для активации стилей "ссылки"
         btnColor,
         rounded ? 'btn-rounded' : null,
-        floating ? 'btn-floating' : null,
         large && !small ? 'btn-lg' : null,
         small && !large ? 'btn-sm' : null,
         Tag !== 'button' && disabled ? 'disabled' : null,
@@ -168,7 +163,7 @@ function normalizeRippleProps(
     let rippleProps: RippleProps = {}
     if (typeof ripple !== 'object') {
         if (ripple === undefined) {
-            rippleProps.rippleColor = isOutline ? (buttonColor || 'dark') : 'light'
+            rippleProps.rippleColor = isOutline ? (buttonColor ?? 'dark') : 'light'
         } else {
             rippleProps.rippleColor = ripple
         }

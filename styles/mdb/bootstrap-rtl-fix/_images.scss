@@ -7,22 +7,27 @@
 // See also https://github.com/twbs/bootstrap/issues/18178
 
 @use 'sass:math';
+@import "mixins/rfs";
+@import "mixins/border-radius";
+@import "mixins/box-shadow";
+@import "mixins/image";
 @import "../../variables/spacers";
+@import "../../variables/images";
 
 .img-fluid {
-  @include img-fluid();
+    @include img-fluid();
 }
 
 // Image thumbnails
 .img-thumbnail {
-  padding: $thumbnail-padding;
-  background-color: $thumbnail-bg;
-  border: $thumbnail-border-width solid $thumbnail-border-color;
-  @include border-radius($thumbnail-border-radius);
-  @include box-shadow($thumbnail-box-shadow);
+    padding: $thumbnail-padding;
+    background-color: $thumbnail-bg;
+    border: $thumbnail-border-width solid $thumbnail-border-color;
+    @include border-radius($thumbnail-border-radius);
+    @include box-shadow($thumbnail-box-shadow);
 
-  // Keep them at most 100% wide
-  @include img-fluid();
+    // Keep them at most 100% wide
+    @include img-fluid();
 }
 
 //
@@ -30,16 +35,16 @@
 //
 
 .figure {
-  // Ensures the caption's text aligns with the image.
-  display: inline-block;
+    // Ensures the caption's text aligns with the image.
+    display: inline-block;
 }
 
 .figure-img {
-  margin-bottom: math.div($spacer, 2);
-  line-height: 1;
+    margin-bottom: math.div($spacer, 2);
+    line-height: 1;
 }
 
 .figure-caption {
-  @include font-size($figure-caption-font-size);
-  color: $figure-caption-color;
+    @include font-size($figure-caption-font-size);
+    color: $figure-caption-color;
 }

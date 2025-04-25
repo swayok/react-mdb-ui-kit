@@ -31,12 +31,8 @@
     &:focus {
         border-color: $form-select-focus-border-color;
         outline: 0;
-        @if $enable-shadows {
-            @include box-shadow($form-select-box-shadow, $form-select-focus-box-shadow);
-        } @else {
-            // Avoid using mixin so we can pass custom focus shadow properly
-            box-shadow: $form-select-focus-box-shadow;
-        }
+        // DO NOT USE box-shadow() MIXIN HERE!
+        box-shadow: $form-select-focus-box-shadow;
     }
 
     &[multiple],

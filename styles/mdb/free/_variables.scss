@@ -9,98 +9,6 @@
 // Shadows offset, blur, spread and color
 @import "../../variables/shadows";
 
-// Buttons
-//
-// For each of MDB's buttons, define text, background, and border color.
-
-$btn-line-height: 1.5 !default;
-$btn-padding-top: 0.625rem !default;
-$btn-padding-bottom: 0.5rem !default;
-$btn-font-size: 0.75rem !default;
-$btn-padding-left: 1.5rem !default;
-$btn-padding-right: 1.5rem !default;
-$btn-font-weight: 500 !default;
-$btn-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.1) !default;
-$btn-hover-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.1) !default;
-$btn-focus-box-shadow: $btn-hover-box-shadow !default;
-$btn-active-box-shadow: $btn-hover-box-shadow !default;
-$btn-border-width: 0.125rem !default;
-
-$btn-outline-padding-top: 0.5rem !default;
-$btn-outline-padding-bottom: 0.375rem !default;
-$btn-outline-padding-left: 1.375rem !default;
-$btn-outline-padding-right: 1.375rem !default;
-
-$btn-outline-padding-top-sm: 0.25rem !default;
-$btn-outline-padding-bottom-sm: 0.1875rem !default;
-$btn-outline-padding-right-sm: 0.875rem !default;
-$btn-outline-padding-left-sm: 0.875rem !default;
-
-$btn-outline-padding-top-lg: 0.625rem !default;
-$btn-outline-padding-bottom-lg: 0.5625rem !default;
-$btn-outline-padding-right-lg: 1.5625rem !default;
-$btn-outline-padding-left-lg: 1.5625rem !default;
-
-$btn-line-height-lg: 1.6 !default;
-$btn-font-size-lg: 0.875rem !default;
-$btn-padding-top-lg: 0.75rem !default;
-$btn-padding-bottom-lg: 0.6875rem !default;
-$btn-padding-right-lg: 1.6875rem !default;
-$btn-padding-left-lg: 1.6875rem !default;
-
-$btn-line-height-sm: $btn-line-height !default;
-$btn-font-size-sm: 0.75rem !default;
-$btn-padding-top-sm: 0.375rem !default;
-$btn-padding-bottom-sm: 0.3125rem !default;
-$btn-padding-right-sm: 1rem !default;
-$btn-padding-left-sm: 1rem !default;
-
-$btn-link-bgc: #f5f5f5 !default;
-$btn-rounded-border-radius: 10rem !default;
-
-$btn-floating-border-radius: 50% !default;
-
-$btn-floating-width: 2.3125rem !default;
-$btn-floating-height: 2.3125rem !default;
-$btn-floating-icon-width: 2.3125rem !default;
-$btn-floating-icon-line-height: 2.3125rem !default;
-
-$btn-floating-width-lg: 2.8125rem !default;
-$btn-floating-height-lg: 2.8125rem !default;
-$btn-floating-icon-width-lg: 2.8125rem !default;
-$btn-floating-icon-line-height-lg: 2.8125rem !default;
-
-$btn-floating-width-sm: 1.8125rem !default;
-$btn-floating-height-sm: 1.8125rem !default;
-$btn-floating-icon-width-sm: 1.8125rem !default;
-$btn-floating-icon-line-height-sm: 1.8125rem !default;
-
-$btn-outline-floating-icon-width: 2.0625rem !default;
-$btn-outline-floating-icon-line-height: 2.0625rem !default;
-
-$btn-outline-floating-icon-width-lg: 2.5625rem !default;
-$btn-outline-floating-icon-line-height-lg: 2.5625rem !default;
-
-$btn-outline-floating-icon-width-sm: 1.5625rem !default;
-$btn-outline-floating-icon-line-height-sm: 1.5625rem !default;
-
-$btn-floating-border-radius: 50% !default;
-
-$btn-block-spacing-y: 0.5rem !default;
-
-$fixed-action-btn-right: 2.1875rem !default;
-$fixed-action-btn-bottom: 2.1875rem !default;
-$fixed-action-btn-padding-top: 0.9375rem !default;
-$fixed-action-btn-li-margin-bottom: 1.5rem !default;
-
-// Button group
-//
-// Material styling for group of buttons
-
-$btn-group-border-radius: calc(4px - 1px) !default;
-$btn-group-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-  box-shadow 0.15s ease-in-out !default;
-
 // Forms
 //
 // Material styling for outline forms border, label, size
@@ -424,15 +332,6 @@ $card-footer-background-color: rgba(255, 255, 255, 0) !default;
 $card-border-radius: 0.5rem !default;
 $card-img-overlay-padding: 1.5rem !default;
 
-// Accordion
-
-$accordion-padding-y: 1.15rem !default;
-$accordion-padding-x: 1.5rem !default;
-$accordion-button-active-bg: $white !default;
-$accordion-button-active-color: $primary !default;
-$accordion-button-focus-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125) !default;
-$accordion-border-radius: $border-radius-xl;
-
 // Tooltips
 
 $tooltip-inner-color: #fff !default;
@@ -441,19 +340,6 @@ $tooltip-inner-padding-x: 16px !default;
 $tooltip-inner-font-size: 14px !default;
 $tooltip-inner-background-color: #6d6d6d !default;
 $tooltip-inner-border-radius: 0.25rem !default;
-
-// Popovers
-
-$popover-box-shadow: $box-shadow-4 !default;
-$popover-background-color: #fff !default;
-$popover-border-radius: $border-radius-xl !default;
-
-// Toasts
-
-$toast-background-color: #fff !default;
-$toast-box-shadow: $box-shadow-4 !default;
-$toast-header-background-color: #fff !default;
-$toast-border-radius: $border-radius-xl !default;
 
 // Modals
 
@@ -464,22 +350,10 @@ $modal-content-border-radius: $border-radius-xl !default;
 
 $progress-height: 4px !default;
 
-// List group
-
-$list-group-border-radius: $border-radius-xl !default;
-$list-group-item-padding-x: 1.5rem !default;
-
 // Carousel
 
 $carousel-control-prev-icon-bg: none;
 $carousel-control-next-icon-bg: none;
-
-// Breadcrumbs
-
-$breadcrumb-item-color: rgba(0, 0, 0, 0.55) !default;
-$breadcrumb-item-transition: color 0.15s ease-in-out !default;
-$breadcrumb-item-hover-color: rgba(0, 0, 0, 0.7) !default;
-$breadcrumb-item-before-color: $breadcrumb-item-color !default;
 
 // Images
 

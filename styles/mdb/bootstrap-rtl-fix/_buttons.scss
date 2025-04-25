@@ -2,37 +2,51 @@
 // Base styles
 //
 
-@import "../../variables/colors";
-@import "../../variables/buttons";
-@import "../../variables/body";
 @import "mixins/buttons";
 @import "../../mixins/transition";
+@import "../../variables/colors";
+@import "../../variables/color-lists";
+@import "../../variables/body";
+@import "../../variables/buttons";
 
 .btn {
     display: inline-block;
     font-family: $btn-font-family;
     font-weight: $btn-font-weight;
-    line-height: $btn-line-height;
     color: $body-color;
     text-align: center;
     text-decoration: if($link-decoration == none, null, none);
+    text-transform: uppercase;
     white-space: $btn-white-space;
-    vertical-align: middle;
+    vertical-align: bottom;
     cursor: if($enable-button-pointers, pointer, null);
     user-select: none;
     background-color: transparent;
     border: $btn-border-width solid transparent;
-    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-border-radius);
+    @include box-shadow($btn-box-shadow);
+    @include button-size(
+            $btn-padding-top,
+            $btn-padding-right,
+            $btn-padding-bottom,
+            $btn-padding-left,
+            $btn-font-size,
+            $btn-border-radius,
+            $btn-line-height
+    );
     @include transition($btn-transition);
 
     &:hover {
         color: $body-color;
         text-decoration: if($link-hover-decoration == underline, none, null);
+        // DO NOT USE box-shadow() MIXIN HERE!
+        box-shadow: $btn-hover-box-shadow;
     }
 
     .btn-check:focus + &,
-    &:focus {
+    &:focus,
+    &.focus {
         outline: 0;
+        // DO NOT USE box-shadow() MIXIN HERE!
         box-shadow: $btn-focus-box-shadow;
     }
 
@@ -40,10 +54,12 @@
     .btn-check:active + &,
     &:active,
     &.active {
-        @include box-shadow($btn-active-box-shadow);
+        // DO NOT USE box-shadow() MIXIN HERE!
+        box-shadow: $btn-active-box-shadow;
 
         &:focus {
-            @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+            // DO NOT USE box-shadow() MIXIN HERE!
+            box-shadow: $btn-active-box-shadow;
         }
     }
 
@@ -52,7 +68,66 @@
     fieldset:disabled & {
         pointer-events: none;
         opacity: $btn-disabled-opacity;
-        @include box-shadow(none);
+        // THIS IS CORRECT!
+        @include box-shadow($btn-box-shadow);
+    }
+}
+
+//
+// Outline variations
+//
+
+[class*='btn-outline-'] {
+    box-shadow: none;
+    @include button-outline-size(
+            $btn-outline-padding-top,
+            $btn-outline-padding-right,
+            $btn-outline-padding-bottom,
+            $btn-outline-padding-left
+    );
+
+    &:hover {
+        box-shadow: none;
+        text-decoration: none;
+    }
+
+    &:focus,
+    &.focus {
+        box-shadow: none;
+        text-decoration: none;
+    }
+
+    &:active,
+    &.active {
+        box-shadow: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    &:disabled,
+    &.disabled,
+    fieldset:disabled & {
+        box-shadow: none;
+    }
+
+    &.btn-lg {
+        @include button-outline-size(
+                $btn-outline-padding-top-lg,
+                $btn-outline-padding-right-lg,
+                $btn-outline-padding-bottom-lg,
+                $btn-outline-padding-left-lg
+        );
+    }
+
+    &.btn-sm {
+        @include button-outline-size(
+                $btn-outline-padding-top-sm,
+                $btn-outline-padding-right-sm,
+                $btn-outline-padding-bottom-sm,
+                $btn-outline-padding-left-sm
+        );
     }
 }
 
@@ -76,30 +151,59 @@
 // scss-docs-end btn-variant-loops
 
 //
+// Button block
+//
+
+.btn-block {
+    display: block;
+    width: 100%;
+
+    // Vertically space out multiple block buttons
+    + .btn-block {
+        margin-top: $btn-block-spacing-y;
+    }
+}
+
+//
 // Link buttons
 //
 
 // Make a button look and behave like a link
 .btn-link {
+    box-shadow: none;
     font-weight: $font-weight-normal;
     color: $btn-link-color;
-    text-decoration: $link-decoration;
+    text-decoration: $btn-link-decoration;
+
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &:active:focus,
+    &.active,
+    &.active:focus {
+        box-shadow: none;
+        text-decoration: $btn-link-hover-decoration;
+        background-color: $btn-link-hover-bg;
+    }
 
     &:hover {
         color: $btn-link-hover-color;
-        text-decoration: $link-hover-decoration;
-    }
-
-    &:focus {
-        text-decoration: $link-hover-decoration;
     }
 
     &:disabled,
     &.disabled {
+        box-shadow: none;
         color: $btn-link-disabled-color;
     }
+}
 
-    // No need for an active state here
+//
+// Rounded button
+//
+
+.btn-rounded {
+    border-radius: $btn-rounded-border-radius;
 }
 
 //
@@ -107,9 +211,25 @@
 //
 
 .btn-lg {
-    @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+    @include button-size(
+            $btn-padding-top-lg,
+            $btn-padding-right-lg,
+            $btn-padding-bottom-lg,
+            $btn-padding-left-lg,
+            $btn-font-size-lg,
+            $btn-border-radius-lg,
+            $btn-line-height-lg
+    );
 }
 
 .btn-sm {
-    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+    @include button-size(
+            $btn-padding-top-sm,
+            $btn-padding-right-sm,
+            $btn-padding-bottom-sm,
+            $btn-padding-left-sm,
+            $btn-font-size-sm,
+            $btn-border-radius-sm,
+            $btn-line-height-sm
+    );
 }

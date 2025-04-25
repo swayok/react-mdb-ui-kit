@@ -84,92 +84,8 @@
 // Cards
 @import "../../variables/card";
 
-// Accordion
-
-// scss-docs-start accordion-variables
-$accordion-padding-y: 1rem !default;
-$accordion-padding-x: 1.25rem !default;
-$accordion-color: $body-color !default;
-$accordion-bg: $body-bg !default;
-$accordion-border-width: $border-width !default;
-$accordion-border-color: rgba($black, 0.125) !default;
-$accordion-border-radius: $border-radius !default;
-$accordion-inner-border-radius: subtract($accordion-border-radius, $accordion-border-width) !default;
-
-$accordion-body-padding-y: $accordion-padding-y !default;
-$accordion-body-padding-x: $accordion-padding-x !default;
-
-$accordion-button-padding-y: $accordion-padding-y !default;
-$accordion-button-padding-x: $accordion-padding-x !default;
-$accordion-button-color: $accordion-color !default;
-$accordion-button-bg: $accordion-bg !default;
-$accordion-transition: $btn-transition, border-radius 0.15s ease !default;
-$accordion-button-active-bg: tint-color($component-active-bg, 90%) !default;
-$accordion-button-active-color: shade-color($primary, 10%) !default;
-
-$accordion-button-focus-border-color: $input-focus-border-color !default;
-$accordion-button-focus-box-shadow: $btn-focus-box-shadow !default;
-
-$accordion-icon-width: 1.25rem !default;
-$accordion-icon-color: $accordion-color !default;
-$accordion-icon-active-color: $accordion-button-active-color !default;
-$accordion-icon-transition: transform 0.2s ease-in-out !default;
-$accordion-icon-transform: rotate(-180deg) !default;
-
-$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
-$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
-// scss-docs-end accordion-variables
-
 // Tooltips
 @import "../../variables/tooltip";
-
-// Popovers
-
-// scss-docs-start popover-variables
-$popover-font-size: $font-size-sm !default;
-$popover-bg: $white !default;
-$popover-max-width: 276px !default;
-$popover-border-width: $border-width !default;
-$popover-border-color: rgba($black, 0.2) !default;
-$popover-border-radius: $border-radius-lg !default;
-$popover-inner-border-radius: subtract($popover-border-radius, $popover-border-width) !default;
-$popover-box-shadow: $box-shadow !default;
-
-$popover-header-bg: shade-color($popover-bg, 6%) !default;
-$popover-header-color: $headings-color !default;
-$popover-header-padding-y: 0.5rem !default;
-$popover-header-padding-x: $spacer !default;
-
-$popover-body-color: $body-color !default;
-$popover-body-padding-y: $spacer !default;
-$popover-body-padding-x: $spacer !default;
-
-$popover-arrow-width: 1rem !default;
-$popover-arrow-height: 0.5rem !default;
-$popover-arrow-color: $popover-bg !default;
-
-$popover-arrow-outer-color: fade-in($popover-border-color, 0.05) !default;
-// scss-docs-end popover-variables
-
-// Toasts
-
-// scss-docs-start toast-variables
-$toast-max-width: 350px !default;
-$toast-padding-x: 0.75rem !default;
-$toast-padding-y: 0.5rem !default;
-$toast-font-size: 0.875rem !default;
-$toast-color: null !default;
-$toast-background-color: rgba($white, 0.85) !default;
-$toast-border-width: 1px !default;
-$toast-border-color: rgba(0, 0, 0, 0.1) !default;
-$toast-border-radius: $border-radius !default;
-$toast-box-shadow: $box-shadow !default;
-$toast-spacing: $container-padding-x !default;
-
-$toast-header-color: $gray-600 !default;
-$toast-header-background-color: rgba($white, 0.85) !default;
-$toast-header-border-color: rgba(0, 0, 0, 0.05) !default;
-// scss-docs-end toast-variables
 
 // Badges
 @import '../../variables/badge';
@@ -183,105 +99,14 @@ $toast-header-border-color: rgba(0, 0, 0, 0.05) !default;
 // Progress bars
 @import "../../variables/progress-bar";
 
-// List group
-
-// scss-docs-start list-group-variables
-$list-group-color: $gray-900 !default;
-$list-group-bg: $white !default;
-$list-group-border-color: rgba($black, 0.125) !default;
-$list-group-border-width: $border-width !default;
-$list-group-border-radius: $border-radius !default;
-
-$list-group-item-padding-y: math.div($spacer, 2) !default;
-$list-group-item-padding-x: $spacer !default;
-$list-group-item-bg-scale: -80% !default;
-$list-group-item-color-scale: 40% !default;
-
-$list-group-hover-bg: $gray-100 !default;
-$list-group-active-color: $component-active-color !default;
-$list-group-active-bg: $component-active-bg !default;
-$list-group-active-border-color: $list-group-active-bg !default;
-
-$list-group-disabled-color: $gray-600 !default;
-$list-group-disabled-bg: $list-group-bg !default;
-
-$list-group-action-color: $gray-700 !default;
-$list-group-action-hover-color: $list-group-action-color !default;
-
-$list-group-action-active-color: $body-color !default;
-$list-group-action-active-bg: $gray-200 !default;
-// scss-docs-end list-group-variables
-
-// Image thumbnails
-
-// scss-docs-start thumbnail-variables
-$thumbnail-padding: 0.25rem !default;
-$thumbnail-bg: $body-bg !default;
-$thumbnail-border-width: $border-width !default;
-$thumbnail-border-color: $gray-300 !default;
-$thumbnail-border-radius: $border-radius !default;
-$thumbnail-box-shadow: $box-shadow-sm !default;
-// scss-docs-end thumbnail-variables
-
-// Figures
-
-// scss-docs-start figure-variables
-$figure-caption-font-size: $small-font-size !default;
-$figure-caption-color: $gray-600 !default;
-// scss-docs-end figure-variables
-
-// Breadcrumbs
-
-// scss-docs-start breadcrumb-variables
-$breadcrumb-font-size: null !default;
-$breadcrumb-padding-y: 0 !default;
-$breadcrumb-padding-x: 0 !default;
-$breadcrumb-item-padding-x: 0.5rem !default;
-$breadcrumb-margin-bottom: 1rem !default;
-$breadcrumb-bg: null !default;
-$breadcrumb-divider-color: $gray-600 !default;
-$breadcrumb-active-color: $gray-600 !default;
-$breadcrumb-divider: quote('/') !default;
-$breadcrumb-divider-flipped: $breadcrumb-divider !default;
-$breadcrumb-border-radius: null !default;
-// scss-docs-end breadcrumb-variables
+// Images
+@import "../../variables/images";
 
 // Carousel
 @import "../../variables/carousel";
 
-// Spinners
-
-// scss-docs-start spinner-variables
-$spinner-width: 2rem !default;
-$spinner-height: $spinner-width !default;
-$spinner-vertical-align: -0.125em !default;
-$spinner-border-width: 0.25em !default;
-$spinner-animation-speed: 0.75s !default;
-
-$spinner-width-sm: 1rem !default;
-$spinner-height-sm: $spinner-width-sm !default;
-$spinner-border-width-sm: 0.2em !default;
-// scss-docs-end spinner-variables
-
-// Close
-
+// Close Button
 @import "../../variables/button-close";
-
-// Offcanvas
-
-// scss-docs-start offcanvas-variables
-$offcanvas-padding-y: $modal-inner-padding !default;
-$offcanvas-padding-x: $modal-inner-padding !default;
-$offcanvas-horizontal-width: 400px !default;
-$offcanvas-vertical-height: 30vh !default;
-$offcanvas-transition-duration: 0.3s !default;
-$offcanvas-border-color: $modal-content-border-color !default;
-$offcanvas-border-width: $modal-content-border-width !default;
-$offcanvas-title-line-height: $modal-title-line-height !default;
-$offcanvas-bg-color: $modal-content-bg !default;
-$offcanvas-color: $modal-content-color !default;
-$offcanvas-box-shadow: $modal-content-box-shadow-xs !default;
-// scss-docs-end offcanvas-variables
 
 // Code
 @import "../../variables/pre-kbd-code";

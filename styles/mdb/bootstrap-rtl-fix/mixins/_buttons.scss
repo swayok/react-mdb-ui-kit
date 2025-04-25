@@ -4,11 +4,11 @@
 // and disabled options for all buttons
 
 @import "../../../functions/color-utils";
-@import "../../../variables/buttons";
 @import "gradients";
 @import "box-shadow";
 @import "border-radius";
 @import "rfs";
+@import "../../../variables/buttons";
 
 // scss-docs-start btn-variant-mixin
 @mixin button-variant(
@@ -61,12 +61,6 @@
         color: $hover-color;
         @include gradient-bg($hover-background);
         border-color: $hover-border;
-        @if $enable-shadows {
-            @include box-shadow($btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5));
-        } @else {
-            // Avoid using mixin so we can pass custom focus shadow properly
-            box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5);
-        }
     }
 
     .btn-check:checked + &,
@@ -81,12 +75,7 @@
         border-color: $active-border;
 
         &:focus {
-            @if $enable-shadows {
-                @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5));
-            } @else {
-                // Avoid using mixin so we can pass custom focus shadow properly
-                box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $border, 15%), 0.5);
-            }
+            box-shadow: $btn-focus-box-shadow;
         }
     }
 
@@ -105,8 +94,9 @@
 // scss-docs-start btn-outline-variant-mixin
 @mixin button-outline-variant(
     $color,
-    $color-hover: color-contrast($color),
-    $active-background: $color,
+    $hover-background: $btn-outline-hover-bg,
+    $hover-color: color-contrast($hover-background),
+    $active-background: $btn-outline-active-bg,
     $active-border: $color,
     $active-color: color-contrast($active-background)
 ) {
@@ -114,14 +104,14 @@
     border-color: $color;
 
     &:hover {
-        color: $color-hover;
+        color: $hover-color;
         background-color: $active-background;
-        border-color: $active-border;
     }
 
     .btn-check:focus + &,
     &:focus {
-        box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+        color: $color;
+        background-color: transparent;
     }
 
     .btn-check:checked + &,
@@ -134,12 +124,7 @@
         border-color: $active-border;
 
         &:focus {
-            @if $enable-shadows {
-                @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($color, 0.5));
-            } @else {
-                // Avoid using mixin so we can pass custom focus shadow properly
-                box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
-            }
+            box-shadow: none;
         }
     }
 
@@ -153,11 +138,30 @@
 // scss-docs-end btn-outline-variant-mixin
 
 // scss-docs-start btn-size-mixin
-@mixin button-size($padding-y, $padding-x, $font-size, $border-radius) {
-    padding: $padding-y $padding-x;
+@mixin button-size(
+    $padding-top,
+    $padding-right,
+    $padding-bottom,
+    $padding-left,
+    $font-size,
+    $border-radius,
+    $line-height
+) {
+    padding: $padding-top $padding-right $padding-bottom $padding-left;
+    line-height: $line-height;
     @include font-size($font-size);
     // Manually declare to provide an override to the browser default
     @include border-radius($border-radius, 0);
+}
+
+// Button size variant outline
+@mixin button-outline-size(
+    $padding-top,
+    $padding-right,
+    $padding-bottom,
+    $padding-left
+) {
+    padding: $padding-top $padding-right $padding-bottom $padding-left;
 }
 
 // scss-docs-end btn-size-mixin
