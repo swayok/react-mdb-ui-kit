@@ -2,9 +2,10 @@
 // Basic Bootstrap table
 //
 
-@import "../../variables/css_variables";
-@import "../../variables/color_lists";
-@import "../../variables/tables";
+@import "../../variables/css-variables";
+@import "../../variables/color-lists";
+@import "../../variables/table";
+@import "../../variables/spacers";
 @import "mixins/table-variants";
 
 .table {

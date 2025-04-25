@@ -1,0 +1,47 @@
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+@import "colors";
+@import "borders";
+@import "typography";
+
+// scss-docs-start table-variables
+$table-bg: transparent !default;
+$table-color: #212529 !default;
+// Base background color for hover/active/striped.
+$table-alt-bg-base: $black !default;
+
+$table-cell-padding-y: 1rem !default;
+$table-cell-padding-x: 1.4rem !default;
+$table-cell-padding-y-sm: 0.5rem !default;
+$table-cell-padding-x-sm: $table-cell-padding-x !default;
+
+$table-cell-vertical-align: top !default;
+
+$table-font-size: 0.9rem !default;
+$table-th-font-weight: 500 !default;
+$table-tbody-font-weight: 300 !default;
+
+$table-striped-color: $table-color !default;
+$table-striped-bg-factor: 0.05 !default;
+$table-striped-bg: rgba($table-alt-bg-base, $table-striped-bg-factor) !default;
+
+$table-active-color: $table-color !default;
+$table-active-bg-factor: 0.1 !default;
+$table-active-bg: rgba($table-alt-bg-base, $table-active-bg-factor) !default;
+
+$table-hover-color: $table-color !default;
+$table-hover-bg-factor: 0.075 !default;
+$table-hover-bg: rgba($table-alt-bg-base, $table-hover-bg-factor) !default;
+$table-hover-transition: 0.5s !default;
+
+$table-border-factor: 0.1 !default;
+$table-border-width: $border-width !default;
+$table-border-color: $border-color !default;
+
+$table-striped-order: odd !default;
+
+$table-group-separator-color: inherit !default;
+
+$table-caption-color: $text-muted !default;

@@ -1,0 +1,9 @@
+// Body
+//
+// Settings for the `<body>` element.
+
+@import "colors";
+
+$body-bg: $white !default;
+$body-color: $gray-800 !default;
+$body-text-align: null !default;

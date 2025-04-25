@@ -2,7 +2,7 @@
 // Material styles for form validation
 //
 
-@import "../../../functions/color_utils";
+@import "../../../functions/color-utils";
 
 @mixin form-validation-state-selector($state) {
   @if ($state == 'valid' or $state == 'invalid') {

@@ -1,5 +1,5 @@
 @import "colors";
-@import "../functions/color_utils";
+@import "../functions/color-utils";
 
 // scss-docs-start colors-map
 $colors: (
@@ -33,6 +33,18 @@ $theme-colors: (
     'black': $black,
 ) !default;
 // scss-docs-end theme-colors-map
+
+// scss-docs-start link-colors-map
+$link-colors: $theme-colors;
+// scss-docs-end link-colors-map
+
+// scss-docs-start button-colors-map
+$button-colors: $theme-colors;
+// scss-docs-end button-colors-map
+
+// scss-docs-start border-colors-map
+$border-colors: $theme-colors;
+// scss-docs-end border-colors-map
 
 // scss-docs-start note-colors-map
 $note: () !default;

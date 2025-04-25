@@ -5,6 +5,9 @@
 // pseudo-classes but also includes `.is-invalid` and `.is-valid` classes for
 // server-side validation.
 
+@import "../mixins/forms";
+@import "../../../variables/form-validation";
+
 // scss-docs-start form-validation-states-loop
 @each $state, $data in $form-validation-states {
   @include form-validation-state($state, $data...);

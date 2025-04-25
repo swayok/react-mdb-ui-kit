@@ -2,7 +2,7 @@
 
 @import "../../variables/colors";
 @import "../../variables/borders";
-@import "../../variables/color_lists";
+@import "../../variables/color-lists";
 
 // Components
 //
@@ -514,15 +514,3 @@ $note-border-width: 6px !default;
 $note-border-radius: 5px !default;
 $note-strong-font-weight: 600 !default;
 $note-paragraph-font-weight: 500 !default;
-
-// Table
-
-$table-color: #212529 !default;
-$table-font-size: 0.9rem !default;
-$table-hover-transition: 0.5s !default;
-$table-group-separator-color: inherit !default;
-$table-cell-padding-y: 1rem !default;
-$table-cell-padding-x: 1.4rem !default;
-$table-cell-padding-y-sm: 0.5rem !default;
-$table-cell-padding-x-sm: $table-cell-padding-x !default;
-$table-hover-bg: rgba(0, 0, 0, 0.075) !default;

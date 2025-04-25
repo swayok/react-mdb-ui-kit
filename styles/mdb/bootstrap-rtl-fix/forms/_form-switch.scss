@@ -1,0 +1,36 @@
+//
+// Switch
+//
+
+@use 'sass:math';
+@import "../../../functions/string-utils";
+@import "../mixins/border-radius";
+@import "../../../mixins/transition";
+@import "../../../variables/form-switch";
+
+.form-switch {
+    padding-left: $form-switch-padding-start;
+
+    .form-check-input {
+        width: $form-switch-width;
+        margin-left: $form-switch-padding-start * -1;
+        background-image: escape-svg($form-switch-bg-image);
+        background-position: left center;
+        @include border-radius($form-switch-border-radius);
+        @include transition($form-switch-transition);
+
+        &:focus {
+            background-image: escape-svg($form-switch-focus-bg-image);
+        }
+
+        &:checked {
+            background-position: $form-switch-checked-bg-position;
+
+            @if $enable-gradients {
+                background-image: escape-svg($form-switch-checked-bg-image), var(--#{$variable-prefix}gradient);
+            } @else {
+                background-image: escape-svg($form-switch-checked-bg-image);
+            }
+        }
+    }
+}

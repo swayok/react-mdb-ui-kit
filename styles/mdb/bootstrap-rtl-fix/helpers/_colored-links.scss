@@ -1,21 +1,21 @@
-@import "../../../variables/color_lists";
-@import "../../../variables/color_contrast";
-@import "../../../variables/links";
-@import "../../../functions/color_utils";
+@import "../../../variables/color-lists";
+@import "../../../variables/color-contrast";
+@import "../../../variables/link";
+@import "../../../functions/color-utils";
 
-@each $color, $value in $theme-colors {
-  .link-#{$color} {
-    color: $value;
+@each $color, $value in $link-colors {
+    .link-#{$color} {
+        color: $value;
 
-    @if $link-shade-percentage != 0 {
-      &:hover,
-      &:focus {
-        color: if(
-          color-contrast($value) == $color-contrast-light,
-          shade-color($value, $link-shade-percentage),
-          tint-color($value, $link-shade-percentage)
-        );
-      }
+        @if $link-shade-percentage != 0 {
+            &:hover,
+            &:focus {
+                color: if(
+                        color-contrast($value) == $color-contrast-light,
+                        shade-color($value, $link-shade-percentage),
+                        tint-color($value, $link-shade-percentage)
+                );
+            }
+        }
     }
-  }
 }

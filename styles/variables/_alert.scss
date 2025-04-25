@@ -1,4 +1,8 @@
+// Alerts
 // Define alert colors, border radius, and padding.
+
+@import "borders";
+@import "typography";
 
 // scss-docs-start alert-variables
 $alert-padding-y: 1.25rem !default;

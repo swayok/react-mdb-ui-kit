@@ -1,0 +1,8 @@
+@import "form-input-base";
+@import "form-input-group";
+
+// scss-docs-start form-file-variables
+$form-file-button-color: $input-color !default;
+$form-file-button-bg: $input-group-addon-bg !default;
+$form-file-button-hover-bg: shade-color($form-file-button-bg, 5%) !default;
+// scss-docs-end form-file-variables

@@ -1,0 +1,12 @@
+@import "form-input-base";
+
+// scss-docs-start form-floating-variables
+$form-floating-height: add(3.5rem, $input-height-border) !default;
+$form-floating-padding-x: $input-padding-x !default;
+$form-floating-padding-y: 1rem !default;
+$form-floating-input-padding-t: 1.625rem !default;
+$form-floating-input-padding-b: 0.625rem !default;
+$form-floating-label-opacity: 0.65 !default;
+$form-floating-label-transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !default;
+$form-floating-transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out !default;
+// scss-docs-end form-floating-variables

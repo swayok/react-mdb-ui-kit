@@ -303,6 +303,15 @@ $light: $gray-50 !default;
 $dark: $gray-900 !default;
 // scss-docs-end theme-color-variables
 
-// Body
-$body-bg: $white !default;
-$body-color: $gray-800 !default;
+// Gradient
+//
+// The gradient which is added to components if `$enable-gradients` is `true`
+// This gradient is also added to elements with `.bg-gradient`
+// scss-docs-start variable-gradient
+$gradient: linear-gradient(180deg, rgba($white, 0.15), rgba($white, 0)) !default;
+// scss-docs-end variable-gradient
+
+// Components
+
+$component-active-bg: $primary !default;
+$component-active-color: $white !default;

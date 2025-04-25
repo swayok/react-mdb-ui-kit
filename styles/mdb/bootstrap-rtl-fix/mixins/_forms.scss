@@ -1,8 +1,14 @@
 // This mixin uses an `if()` technique to be compatible with Dart Sass
 // See https://github.com/sass/sass/issues/1873#issuecomment-152293725 for more details
 
-@import "../../../functions/color_utils";
-@import "../../../functions/string_utils";
+@import "../../../functions/color-utils";
+@import "../../../functions/string-utils";
+@import "rfs";
+@import "border-radius";
+@import "../../../variables/form-validation";
+@import "../../../variables/tooltip";
+@import "../../../variables/form-input-base";
+@import "../../../variables/form-select";
 
 // scss-docs-start form-validation-mixins
 @mixin form-validation-state-selector($state) {
