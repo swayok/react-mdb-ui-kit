@@ -60,6 +60,14 @@ export default function FilePickerInput(props: FilePickerInputProps) {
         [value]
     )
 
+    // Вызов onChange при изменении списка файлов.
+    // Это требуется для нормализации внешнего состояния.
+    useEffect(() => {
+        if (JSON.stringify(files) !== JSON.stringify(value)) {
+            onChange(files)
+        }
+    }, [files])
+
     // Вычислить позицию для нового прикрепленного файла.
     const getNextFilePosition = useCallback((): number => {
         const fileWithMaxPosition: FilePickerFileInfo | null = files.reduce(
@@ -96,8 +104,7 @@ export default function FilePickerInput(props: FilePickerInputProps) {
         (): FilePickerContextProps['previews'] => {
             if (allowedMimeTypes) {
                 const ret: FilePickerContextProps['previews'] = {}
-                for (let i = 0; i < allowedMimeTypes.length; i++) {
-                    const mimeType: string = allowedMimeTypes[i]
+                for (const mimeType of allowedMimeTypes) {
                     if (mimeType in FilePickerContextPropsDefaults.previews) {
                         ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
                     }
@@ -130,14 +137,14 @@ export default function FilePickerInput(props: FilePickerInputProps) {
         if (!canAttachMoreFiles(pendingFilesToBeAdded)) {
             // Контроль количества прикрепленных файлов.
             ToastService.error(
-                translations.error.too_many_files(maxFiles as number)
+                translations.error.too_many_files(maxFiles!)
             )
             throw new Error('too_many_files')
         }
         const fileUID: string = FilePickerHelpers.makeFileID(file)
         // Проверка на прикрепление уже прикрепленного файла.
-        for (let i = 0; i < files.length; i++) {
-            if (files[i].UID === fileUID) {
+        for (const item of files) {
+            if (item.UID === fileUID) {
                 ToastService.error(
                     translations.error.already_attached(file.name)
                 )
@@ -219,8 +226,8 @@ export default function FilePickerInput(props: FilePickerInputProps) {
         if (disabled) {
             return Promise.resolve()
         }
-        const selectedFiles: Array<FileAPISelectedFileInfo> = FileAPI.getFiles(event.target, true)
-        const newFilesList: Array<FilePickerFileInfo> = []
+        const selectedFiles: FileAPISelectedFileInfo[] = FileAPI.getFiles(event.target, true)
+        const newFilesList: FilePickerFileInfo[] = []
         let newMaxPosition: number = getNextFilePosition()
         for (let i = 0; i < selectedFiles.length; i++) {
             try {
@@ -292,7 +299,7 @@ export default function FilePickerInput(props: FilePickerInputProps) {
     const onExistingFileRestore = useCallback(
         (file: FilePickerFileInfo) => {
             if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
-                ToastService.error(translations.error.too_many_files(maxFiles as number))
+                ToastService.error(translations.error.too_many_files(maxFiles!))
                 return
             }
             for (let i = 0; i < files.length; i++) {
@@ -332,20 +339,20 @@ export default function FilePickerInput(props: FilePickerInputProps) {
         // Задаем позицию перетаскиваемого файла = позиции файла, на который перетащили.
         const updates: FilePickerFileInfo[] = []
         // Смещаем все файлы с позицией >= той, что у файла, на который перетащили другой файл на 1.
-        for (let i = 0; i < files.length; i++) {
+        for (const file of files) {
             // console.log(files[i].file.name, files[i].position)
-            if (files[i].UID === draggedElementPayload.UID) {
+            if (file.UID === draggedElementPayload.UID) {
                 updates.push({
-                    ...files[i],
+                    ...(file),
                     position: newPosition,
                 })
-            } else if (files[i].position >= newPosition) {
+            } else if (file.position >= newPosition) {
                 updates.push({
-                    ...files[i],
-                    position: files[i].position + 1,
+                    ...(file),
+                    position: file.position + 1,
                 })
             } else {
-                updates.push(files[i])
+                updates.push(file)
             }
         }
         draggedElementPayload.position = newPosition
@@ -355,7 +362,7 @@ export default function FilePickerInput(props: FilePickerInputProps) {
     // Можно ли менять позиции файлов?
     const reorderable: boolean = (
         !!props.reorderable
-        && (props?.maxFiles || 2) > 1
+        && (props?.maxFiles ?? 2) > 1
     )
 
     // Данные контекста.

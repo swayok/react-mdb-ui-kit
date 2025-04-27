@@ -3,8 +3,9 @@ import {
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFileInfoFromDB,
+    FilePickerUploadInfo,
+    FilePickerWithUploaderFileInfo,
     ManagedFilePickerProps,
-    FilePickerUploadInfo, FilePickerWithUploaderFileInfo,
 } from '../../types/FilePicker'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {MinMax} from '../../types/Common'
@@ -15,37 +16,36 @@ export default {
 
     // Преобразование FilePickerFileInfoFromDB в FilePickerFileInfo.
     normalizeValueFromDB(
-        value: Array<FilePickerFileInfoFromDB | FilePickerFileInfo>
+        value: (FilePickerFileInfoFromDB | FilePickerFileInfo)[]
     ): FilePickerFileInfo[] {
         const normalized: FilePickerFileInfo[] = []
-        for (let i = 0; i < value.length; i++) {
+        for (const item of value) {
             if (
-                !value[i]
-                || typeof value[i] !== 'object'
-                || (!('UID' in value[i]) && !('id' in value[i]))
+                !item
+                || typeof item !== 'object'
+                || (!('UID' in item) && !('id' in item))
             ) {
                 // Значение не является объектом с UID или id, пропускаем его.
                 continue
             }
-            if ('id' in value[i]) {
-                const file = value[i] as FilePickerFileInfoFromDB
+            if ('id' in item) {
                 normalized.push({
-                    UID: String(file.id),
+                    UID: String(item.id),
                     file: {
-                        type: file.mimeType,
-                        name: file.uploadName,
+                        type: item.mimeType,
+                        name: item.uploadName,
                         size: 0,
-                        isImage: file.mimeType.startsWith('image/'),
-                        previewDataUrl: file.url,
+                        isImage: item.mimeType.startsWith('image/'),
+                        previewDataUrl: item.url,
                     } as FileAPISelectedFileInfo,
                     error: null,
                     info: null,
-                    position: file.position || 0,
+                    position: item.position ?? 0,
                     isNew: false,
                     isDeleted: false,
                 })
             } else {
-                normalized.push(value[i] as FilePickerFileInfo)
+                normalized.push(item)
             }
         }
         return normalized
@@ -59,18 +59,18 @@ export default {
         let min: number | null = null
         let max: number | null = null
         const files = oldFiles.concat(newFiles)
-        for (let i = 0; i < files.length; i++) {
-            if (max === null || files[i].position > max) {
-                max = files[i].position
+        for (const file of files) {
+            if (max === null || file.position > max) {
+                max = file.position
             }
-            if (min === null || files[i].position < min) {
-                min = files[i].position
+            if (min === null || file.position < min) {
+                min = file.position
             }
         }
 
         return {
-            min: min || 0,
-            max: max || 0,
+            min: min ?? 0,
+            max: max ?? 0,
         }
     },
 
