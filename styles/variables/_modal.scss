@@ -17,13 +17,13 @@ $modal-title-line-height: $line-height-base !default;
 $modal-content-color: null !default;
 $modal-content-bg: $white !default;
 $modal-content-border-color: rgba($black, 0.2) !default;
-$modal-content-border-width: $border-width !default;
-$modal-content-border-radius: $border-radius-lg !default;
+$modal-content-border-width: 0 !default;
+$modal-content-border-radius: $border-radius-xl !default;
 $modal-content-inner-border-radius: subtract($modal-content-border-radius, $modal-content-border-width) !default;
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
-$modal-content-box-shadow-sm-up: $box-shadow !default;
+$modal-content-box-shadow-sm-up: $box-shadow-4 !default;
 
-$modal-backdrop-bg: $black !default;
+$modal-backdrop-bg: #515151 !default;
 $modal-backdrop-opacity: 0.5 !default;
 $modal-header-border-color: $border-color !default;
 $modal-footer-border-color: $modal-header-border-color !default;

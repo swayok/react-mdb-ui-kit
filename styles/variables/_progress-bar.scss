@@ -5,10 +5,10 @@
 @import "shadows";
 
 // scss-docs-start progress-variables
-$progress-height: 1rem !default;
+$progress-height: 0.25rem !default;
 $progress-font-size: $font-size-base * 0.75 !default;
 $progress-bg: $gray-200 !default;
-$progress-border-radius: $border-radius !default;
+$progress-border-radius: 0 !default;
 $progress-box-shadow: $box-shadow-inset !default;
 $progress-bar-color: $white !default;
 $progress-bar-bg: $primary !default;

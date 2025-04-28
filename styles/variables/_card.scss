@@ -5,22 +5,33 @@
 @import "spacers";
 @import "borders";
 @import "grid";
+@import "shadows";
 
 // scss-docs-start card-variables
-$card-spacer-y: $spacer !default;
-$card-spacer-x: $spacer !default;
+$card-spacer-base: 1.5rem !default;
+$card-spacer-y: $card-spacer-base !default;
+$card-spacer-x: $card-spacer-base !default;
+$card-box-shadow: $box-shadow-4 !default;
 $card-title-spacer-y: math.div($spacer, 2) !default;
-$card-border-width: $border-width !default;
-$card-border-radius: $border-radius !default;
+$card-border-width: 0 !default;
+$card-border-radius: $border-radius-xl !default;
 $card-border-color: rgba($black, 0.125) !default;
 $card-inner-border-radius: subtract($card-border-radius, $card-border-width) !default;
-$card-cap-padding-y: math.div($card-spacer-y, 2) !default;
-$card-cap-padding-x: $card-spacer-x !default;
-$card-cap-bg: rgba($black, 0.03) !default;
-$card-cap-color: null !default;
+
+$card-header-border-width: $border-width !default;
+$card-header-padding-y: math.div($card-spacer-y, 2) !default;
+$card-header-padding-x: $card-spacer-x !default;
+$card-header-bg: rgba(255, 255, 255, 0) !default;
+$card-header-color: null !default;
+
 $card-height: null !default;
 $card-color: null !default;
 $card-bg: $white !default;
-$card-img-overlay-padding: $spacer !default;
+
+$card-footer-bg: $card-header-bg !default;
+$card-footer-border-width: $border-width !default;
+
+$card-img-overlay-padding: $card-spacer-base !default;
 $card-group-margin: math.div($grid-gutter-width, 2) !default;
 // scss-docs-end card-variables
+

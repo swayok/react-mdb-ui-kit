@@ -12,6 +12,7 @@
 .page-link {
     position: relative;
     display: block;
+    outline: 0;
     color: $pagination-color;
     text-decoration: if($link-decoration == none, null, none);
     background-color: $pagination-bg;
@@ -45,6 +46,8 @@
         color: $pagination-active-color;
         @include gradient-bg($pagination-active-bg);
         border-color: $pagination-active-border-color;
+        box-shadow: $pagination-active-box-shadow;
+        @include transition($pagination-active-transition);
     }
 
     &.disabled .page-link {
@@ -55,16 +58,57 @@
     }
 }
 
+.pagination-circle {
+    .page-item {
+        &:first-child {
+            .page-link {
+                @include border-radius($pagination-circle-border-radius);
+            }
+        }
+
+        &:last-child {
+            .page-link {
+                @include border-radius($pagination-circle-border-radius);
+            }
+        }
+    }
+
+    .page-link {
+        @include border-radius($pagination-circle-border-radius);
+        padding-left: $pagination-circle-padding-x;
+        padding-right: $pagination-circle-padding-x;
+    }
+
+    &.pagination-lg {
+        .page-link {
+            padding-left: $pagination-circle-lg-padding-left;
+            padding-right: $pagination-circle-lg-padding-right;
+        }
+    }
+
+    &.pagination-sm {
+        .page-link {
+            padding-left: $pagination-circle-sm-padding-left;
+            padding-right: $pagination-circle-sm-padding-right;
+        }
+    }
+}
+
 //
 // Sizing
 //
-@include pagination-size($pagination-padding-y, $pagination-padding-x, null, $pagination-border-radius);
+@include pagination-size(
+        $pagination-padding-y,
+        $pagination-padding-x,
+        $pagination-font-size,
+        $pagination-border-radius
+);
 
 .pagination-lg {
     @include pagination-size(
             $pagination-padding-y-lg,
             $pagination-padding-x-lg,
-            $font-size-lg,
+            $pagination-font-size-lg,
             $pagination-border-radius-lg
     );
 }
@@ -73,7 +117,7 @@
     @include pagination-size(
             $pagination-padding-y-sm,
             $pagination-padding-x-sm,
-            $font-size-sm,
+            $pagination-font-size-sm,
             $pagination-border-radius-sm
     );
 }

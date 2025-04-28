@@ -8,7 +8,7 @@
 
 // scss-docs-start table-variables
 $table-bg: transparent !default;
-$table-color: #212529 !default;
+$table-color: $component-color !default;
 // Base background color for hover/active/striped.
 $table-alt-bg-base: $black !default;
 

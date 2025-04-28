@@ -1,10 +1,6 @@
 // Выпадающее меню
 .dropdown-menu {
     overflow-y: auto;
-
-    li.active > .dropdown-item {
-        background-color: $dropdown-active-background-color;
-    }
 }
 
 .dropdown-item {
@@ -14,10 +10,6 @@
     &:hover,
     &:focus {
         color: $textColorSecondary;
-    }
-
-    &.active {
-        background-color: $dropdown-active-background-color;
     }
 
     &.disabled,

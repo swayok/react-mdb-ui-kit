@@ -35,52 +35,54 @@ $theme-colors: (
 // scss-docs-end theme-colors-map
 
 // scss-docs-start link-colors-map
-$link-colors: $theme-colors;
+$link-colors: $theme-colors !default;
 // scss-docs-end link-colors-map
 
 // scss-docs-start button-colors-map
-$button-colors: $theme-colors;
+$button-colors: $theme-colors !default;
 // scss-docs-end button-colors-map
 
 // scss-docs-start border-colors-map
-$border-colors: $theme-colors;
+$border-colors: $theme-colors !default;
 // scss-docs-end border-colors-map
 
+// scss-docs-start bg-colors-map
+$bg-colors: map-merge((
+    'super-light': $gray-50
+), $theme-colors) !default;
+// scss-docs-end bg-colors-map
+
 // scss-docs-start note-colors-map
-$note: () !default;
-$note: map-merge(
-        (
-            'primary': (
-                'bgc': lighten($primary, 43%),
-                'border-color': $primary,
-            ),
-            'secondary': (
-                'bgc': lighten($secondary, 33%),
-                'border-color': $secondary,
-            ),
-            'success': (
-                'bgc': lighten($success, 53%),
-                'border-color': $success,
-            ),
-            'danger': (
-                'bgc': lighten($danger, 36%),
-                'border-color': $danger,
-            ),
-            'warning': (
-                'bgc': lighten($warning, 42%),
-                'border-color': $warning,
-            ),
-            'info': (
-                'bgc': lighten($info, 36%),
-                'border-color': $info,
-            ),
-            'light': (
-                'bgc': $light,
-                'border-color': $dark,
-            ),
-        ),
-        $note
-);
+$note: (
+    'primary': (
+        'bgc': lighten($primary, 43%),
+        'border-color': $primary,
+    ),
+    'secondary': (
+        'bgc': lighten($secondary, 33%),
+        'border-color': $secondary,
+    ),
+    'success': (
+        'bgc': lighten($success, 53%),
+        'border-color': $success,
+    ),
+    'danger': (
+        'bgc': lighten($danger, 36%),
+        'border-color': $danger,
+    ),
+    'warning': (
+        'bgc': lighten($warning, 42%),
+        'border-color': $warning,
+    ),
+    'info': (
+        'bgc': lighten($info, 36%),
+        'border-color': $info,
+    ),
+    'light': (
+        'bgc': $light,
+        'border-color': $dark,
+    ),
+) !default;
 // scss-docs-end note-colors-map
 
 $table-bg-scale: -80% !default;

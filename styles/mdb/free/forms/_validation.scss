@@ -42,7 +42,7 @@
     max-width: 100%; // Contain to parent when possible
     padding: $form-feedback-tooltip-padding-y $form-feedback-tooltip-padding-x;
     margin-top: 0.1rem;
-    font-size: 0.875rem;
+    font-size: $form-feedback-tooltip-font-size;
     line-height: $form-feedback-tooltip-line-height;
     background-color: $tooltip-bg-color;
     border-radius: 0.25rem !important;

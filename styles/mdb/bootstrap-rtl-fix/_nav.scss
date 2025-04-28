@@ -6,6 +6,7 @@
 @import "mixins/rfs";
 @import "mixins/border-radius";
 @import "mixins/gradients";
+@import "mixins/box-shadow";
 @import "../../mixins/transition";
 @import "../../variables/nav";
 
@@ -48,14 +49,23 @@
     border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
 
     .nav-link {
-        margin-bottom: -$nav-tabs-border-width;
-        background: none;
-        border: $nav-tabs-border-width solid transparent;
         @include border-top-radius($nav-tabs-border-radius);
+        margin-bottom: -$nav-tabs-link-border-width;
+        background: none;
+        border-width: $nav-tabs-link-border-width;
+        border-style: solid;
+        border-color: transparent;
+        text-transform: $nav-tabs-link-text-transform;
+        line-height: $nav-tabs-link-line-height;
+        font-weight: $nav-tabs-link-font-weight;
+        @include font-size($nav-tabs-link-font-size);
+        color: $nav-tabs-link-color;
+        padding: $nav-tabs-link-padding-top $nav-tabs-link-padding-x $nav-tabs-link-padding-bottom $nav-tabs-link-padding-x;
 
         &:hover,
         &:focus {
             border-color: $nav-tabs-link-hover-border-color;
+            background-color: $nav-tabs-link-hover-bg;
             // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
             isolation: isolate;
         }
@@ -87,16 +97,26 @@
 //
 
 .nav-pills {
+    margin-left: -$nav-pills-margin;
+
     .nav-link {
-        background: none;
         border: 0;
         @include border-radius($nav-pills-border-radius);
+        @include font-size($nav-pills-link-font-size);
+        text-transform: uppercase;
+        padding: $nav-pills-link-padding-top $nav-pills-link-padding-x $nav-pills-link-padding-bottom $nav-pills-link-padding-x;
+        line-height: $nav-pills-link-line-height;
+        background-color: $nav-pills-link-bg;
+        font-weight: $nav-pills-link-font-weight;
+        color: $nav-pills-link-color;
+        margin: $nav-pills-margin;
     }
 
     .nav-link.active,
     .show > .nav-link {
         color: $nav-pills-link-active-color;
         @include gradient-bg($nav-pills-link-active-bg);
+        @include box-shadow($btn-box-shadow);
     }
 }
 
@@ -124,7 +144,7 @@
 .nav-fill,
 .nav-justified {
     .nav-item .nav-link {
-        width: 100%; // Make sure button will grow
+        width: auto;
     }
 }
 

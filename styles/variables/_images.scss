@@ -4,6 +4,16 @@
 @import "shadows";
 @import "typography";
 
+// Images
+$image-hover-overlay-transition: all 0.3s ease-in-out !default;
+
+$image-hover-zoom-transition: all 0.3s linear !default;
+$image-hover-zoom-transform: scale(1.1) !default;
+
+$image-hover-shadow-transition: $image-hover-overlay-transition !default;
+$image-hover-shadow-box-shadow: $box-shadow-4-strong !default;
+$image-hover-shadow-box-shadow-soft: $box-shadow-5 !default;
+
 // Image thumbnails
 
 // scss-docs-start thumbnail-variables

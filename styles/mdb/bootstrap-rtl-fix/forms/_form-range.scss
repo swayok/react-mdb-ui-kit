@@ -11,8 +11,62 @@
 @import "../../../mixins/transition";
 @import "../../../functions/calc-utils";
 @import "../../../variables/form-range";
+@import "../../../variables/form-label";
 
 .form-range {
+    padding-top: $form-range-padding-top;
+    padding-bottom: $form-range-padding-bottom;
+
+    .range-thumb {
+        position: absolute;
+        display: block;
+        top: math.div(-$form-range-thumb-height, 2);
+        color: $primary;
+        margin-left: math.div(-$form-range-thumb-width, 2);
+        width: $form-range-thumb-width;
+        height: $form-range-thumb-height;
+        text-align: center;
+    }
+
+    .form-range-label {
+        color: $form-label-color;
+
+        .selected-value {
+            font-weight: $form-range-selected-value-font-weight;
+            color: $input-color;
+        }
+    }
+
+    &.min-max-value-label-below {
+        padding-bottom: $form-range-min-max-value-label-below-padding-bottom;
+
+        .form-range-input-container {
+            position: relative;
+        }
+
+        .form-range-min,
+        .form-range-max {
+            position: absolute;
+            bottom: -($form-range-min-max-value-label-below-padding-bottom + 0.1);
+        }
+
+        .form-range-min {
+            left: 0;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .form-range-max {
+            right: 0;
+            text-align: right;
+            white-space: nowrap;
+        }
+    }
+}
+
+
+input.form-range-input {
+    margin-top: 1px;
     width: 100%;
     height: add($form-range-thumb-height, $form-range-thumb-focus-box-shadow-width * 2);
     padding: 0; // Need to reset padding
@@ -21,6 +75,7 @@
 
     &:focus {
         outline: 0;
+        box-shadow: none;
 
         // Pseudo-elements must be split across multiple rulesets to have an effect.
         // No box-shadow() mixin for focus accessibility.
@@ -29,6 +84,10 @@
         }
 
         &::-moz-range-thumb {
+            box-shadow: $form-range-thumb-focus-box-shadow;
+        }
+
+        &::-ms-thumb {
             box-shadow: $form-range-thumb-focus-box-shadow;
         }
     }

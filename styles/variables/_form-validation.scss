@@ -5,7 +5,7 @@
 
 // scss-docs-start form-feedback-variables
 $form-feedback-margin-top: -0.75rem !default;
-$form-feedback-font-size: 0.875rem !default;
+$form-feedback-font-size: $font-size-sm !default;
 $form-feedback-font-style: $form-text-font-style !default;
 $form-feedback-valid-color: $success !default;
 $form-feedback-invalid-color: $danger !default;

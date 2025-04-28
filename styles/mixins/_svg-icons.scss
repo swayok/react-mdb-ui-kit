@@ -1,3 +1,5 @@
+@import '../functions/color-utils';
+
 @mixin mdi-icon-color($color) {
     path {
         fill: $color;
@@ -86,6 +88,6 @@
     &:focus,
     &.disabled,
     &[disabled] {
-        @include contained-mdi-icon-color(set-notification-text-color($background));
+        @include contained-mdi-icon-color(color-contrast($background));
     }
 }

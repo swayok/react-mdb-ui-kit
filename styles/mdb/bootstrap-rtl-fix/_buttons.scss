@@ -199,14 +199,6 @@
 }
 
 //
-// Rounded button
-//
-
-.btn-rounded {
-    border-radius: $btn-rounded-border-radius;
-}
-
-//
 // Button Sizes
 //
 
@@ -232,4 +224,13 @@
             $btn-border-radius-sm,
             $btn-line-height-sm
     );
+}
+
+//
+// Rounded button
+// Must be after all other variations.
+//
+
+.btn-rounded {
+    border-radius: $btn-rounded-border-radius;
 }

@@ -9,7 +9,6 @@
 @import "../../variables/zindex";
 @import "../../variables/modal";
 @import "mixins/border-radius";
-@import "mixins/box-shadow";
 @import "mixins/breakpoints";
 
 // Container that the modal scrolls within
@@ -87,7 +86,7 @@
     background-clip: padding-box;
     border: $modal-content-border-width solid $modal-content-border-color;
     @include border-radius($modal-content-border-radius);
-    @include box-shadow($modal-content-box-shadow-xs);
+    box-shadow: $modal-content-box-shadow-xs;
     // Remove focus outline from opened modal
     outline: 0;
 }
@@ -181,7 +180,7 @@
     }
 
     .modal-content {
-        @include box-shadow($modal-content-box-shadow-sm-up);
+        box-shadow: $modal-content-box-shadow-sm-up;
     }
 
     .modal-sm {

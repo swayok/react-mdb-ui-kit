@@ -50,7 +50,12 @@ function OptionsSliderInput<
 
     const min: number = 0
     const max: number = options.length - 1
-    const selectedOptionIndex: number = findSelectedOption(options, value, undefined, true)?.index || 0
+    const selectedOptionIndex: number = findSelectedOption(
+        options,
+        value,
+        undefined,
+        true
+    )?.index ?? 0
     const thumbPosition = value === Number(min)
         ? 0
         : (((selectedOptionIndex ? selectedOptionIndex : 0 - min) * 100) / (max - min))
@@ -58,7 +63,7 @@ function OptionsSliderInput<
     return (
         <div
             className={clsx(
-                'range',
+                'form-range',
                 showValueInLabel ? 'value-in-label' : 'value-in-thumb',
                 'min-max-value-label-' + minMaxLabelPlacement,
                 wrapperClass
@@ -77,7 +82,7 @@ function OptionsSliderInput<
                     )}
                 </label>
             )}
-            <div className="range-input-container d-flex flex-row align-items-center justify-content-between fs-7">
+            <div className="form-range-input-container d-flex flex-row align-items-center justify-content-between fs-7">
                 <div className={clsx(
                     'me-1 text-muted form-range-min',
                     optionLabelClass
@@ -88,7 +93,7 @@ function OptionsSliderInput<
                     <input
                         {...inputProps}
                         id={id}
-                        className={clsx('form-range', className)}
+                        className={clsx('form-range-input', className)}
                         value={selectedOptionIndex}
                         type="range"
                         min={min}

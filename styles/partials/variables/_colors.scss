@@ -82,9 +82,8 @@ $theme-colors: (
 );
 $text-muted: $textColorMuted;
 
-$dropdown-color: $textColor;
-$dropdown-state-color: $textColorSecondary;
-$dropdown-state-background-color: $bodyBgColor;
-$dropdown-active-background-color: darken($bodyBgColor, 5%);
+$component-color: $textColor;
+$component-active-color: $textColor;
+$component-active-bg: darken($bodyBgColor, 5%);
 
 $border-color: darken($bodyBgColor, 15%);

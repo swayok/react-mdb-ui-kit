@@ -46,7 +46,7 @@ $input-focus-active-label-transform-sm: translateY(-0.85rem) translateY(0.1rem) 
 
 $form-notch-div-border-color: #bdbdbd !default;
 $form-notch-leading-width: 0.5rem !default;
-$form-notch-leading-border-radius: 0.25rem !default;
+$form-notch-leading-border-radius: $border-radius !default;
 $form-notch-middle-max-width: 1rem !default;
 $form-notch-trailing-border-radius: $form-notch-leading-border-radius !default;
 
@@ -190,7 +190,7 @@ $form-file-label-focus-button-border-width: 2px 2px 2px 1px !default;
 $form-file-label-disabled-background-color: #e9ecef !default;
 $form-file-label-height: $form-file-height !default;
 $form-file-label-border-color: #bdbdbd !default;
-$form-file-label-border-radius: 0.2rem !default;
+$form-file-label-border-radius: $border-radius-sm !default;
 
 $form-file-text-padding-y: 0.33rem !default;
 $form-file-text-border-color: #bdbdbd !default;
@@ -209,8 +209,7 @@ $form-file-lg-font-size: 1rem !default;
 $form-file-lg-line-height: 2.15 !default;
 $form-file-lg-padding-y: $form-file-text-padding-y !default;
 
-$form-range-webkit-slider-thumb-margin-top: -6px !default;
-$form-range-webkit-slider-runnable-track-height: 4px !default;
+
 
 $input-group-height: calc(1.75rem + 0.33rem + 2px) !default;
 $input-group-min-height: $input-group-height !default;
@@ -254,137 +253,3 @@ $form-validation-states-mdb: (
   ),
 ) !default;
 // scss-docs-end form-validation-states
-
-// Navs
-
-$nav-tabs-link-border-width: 0 0 2px 0 !default;
-$nav-tabs-link-font-weight: 500 !default;
-$nav-tabs-link-font-size: 12px !default;
-$nav-tabs-link-color: rgba(0, 0, 0, 0.6) !default;
-$nav-tabs-link-padding-top: 17px !default;
-$nav-tabs-link-padding-bottom: 16px !default;
-$nav-tabs-link-padding-x: 29px !default;
-$nav-tabs-link-hover-background-color: #f5f5f5 !default;
-
-$nav-pills-margin: 0.5rem !default;
-$nav-pills-link-border-radius: 0.25rem !default;
-$nav-pills-link-font-size: $nav-tabs-link-font-size !default;
-$nav-pills-link-padding-top: $nav-tabs-link-padding-top !default;
-$nav-pills-link-padding-bottom: $nav-tabs-link-padding-bottom !default;
-$nav-pills-link-padding-x: $nav-tabs-link-padding-x !default;
-$nav-pills-link-line-height: 1 !default;
-$nav-pills-link-background-color: $nav-tabs-link-hover-background-color !default;
-$nav-pills-link-font-weight: $nav-tabs-link-font-weight !default;
-$nav-pills-link-color: $nav-tabs-link-color !default;
-
-// Navbar
-
-$navbar-box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05) !default;
-$navbar-padding-top: 0.5625rem !default;
-$navbar-brand-img-margin-right: 0.25rem !default;
-
-// Dropdowns
-//
-// Dropdown menu container and content !default;
-
-$dropdown-color: #212529 !default;
-$dropdown-margin-top: 0.125rem !default;
-$dropdown-box-shadow: $box-shadow-4 !default;
-$dropdown-font-size: 0.875rem !default;
-$dropdown-item-border-radius: 0.5rem !default;
-$dropdown-item-padding-y: 0.5rem !default;
-$dropdown-item-padding-x: 1rem !default;
-$dropdown-border-radius: 0.5rem !default;
-
-$dropdown-state-color: #16181b !default;
-$dropdown-state-background-color: #eee !default;
-
-$dropdown-menu-animated-animation-duration: 0.55s !default;
-$dropdown-menu-animated-animation-timing-function: ease !default;
-
-// Pagination
-
-$pagination-font-size: 0.9rem !default;
-$pagination-color: #212529 !default;
-$pagination-transition: all 0.3s linear !default;
-$pagination-border-radius: 0.25rem !default;
-
-$pagination-hover-color: $pagination-color !default;
-$pagination-active-box-shadow: $btn-box-shadow !default;
-$pagination-active-transition: all 0.2s linear !default;
-
-$pagination-circle-border-radius: 50% !default;
-$pagination-circle-padding-x: 0.841rem !default;
-
-$pagination-circle-lg-padding-left: 1.399414rem !default;
-$pagination-circle-lg-padding-right: 1.399415rem !default;
-
-$pagination-circle-sm-padding-left: 0.696rem !default;
-$pagination-circle-sm-padding-right: 0.688rem !default;
-
-// Cards
-
-$card-spacer-y: 1.5rem !default;
-$card-spacer-x: 1.5rem !default;
-$card-box-shadow: $box-shadow-4 !default;
-$card-header-background-color: rgba(255, 255, 255, 0) !default;
-$card-footer-background-color: rgba(255, 255, 255, 0) !default;
-$card-border-radius: 0.5rem !default;
-$card-img-overlay-padding: 1.5rem !default;
-
-// Tooltips
-
-$tooltip-inner-color: #fff !default;
-$tooltip-inner-padding-y: 6px !default;
-$tooltip-inner-padding-x: 16px !default;
-$tooltip-inner-font-size: 14px !default;
-$tooltip-inner-background-color: #6d6d6d !default;
-$tooltip-inner-border-radius: 0.25rem !default;
-
-// Modals
-
-$modal-box-shadow: $box-shadow-4 !default;
-$modal-content-border-radius: $border-radius-xl !default;
-
-// Progress bars
-
-$progress-height: 4px !default;
-
-// Carousel
-
-$carousel-control-prev-icon-bg: none;
-$carousel-control-next-icon-bg: none;
-
-// Images
-
-$image-hover-overlay-transition: all 0.3s ease-in-out !default;
-
-$image-hover-zoom-transition: all 0.3s linear !default;
-$image-hover-zoom-transform: scale(1.1) !default;
-
-$image-hover-shadow-transition: $image-hover-overlay-transition !default;
-$image-hover-shadow-box-shadow: $box-shadow-4-strong !default;
-$image-hover-shadow-box-shadow-soft: $box-shadow-5 !default;
-
-// Scrollspy
-
-$scrollspy-menu-sidebar-font-size: 0.8rem !default;
-$scrollspy-menu-sidebar-color: #262626 !default;
-$scrollspy-menu-sidebar-line-height: 1.1rem !default;
-$scrollspy-menu-sidebar-padding-x: 5px !default;
-$scrollspy-menu-sidebar-font-weight: 400 !default;
-$scrollspy-menu-sidebar-transition: all 0.2s ease-in-out !default;
-$scrollspy-menu-sidebar-margin-y: 3px !default;
-
-$scrollspy-menu-sidebar-active-color: $primary !default;
-$scrollspy-menu-sidebar-active-font-weight: 600 !default;
-$scrollspy-menu-sidebar-active-border-width: 0.125rem !default;
-$scrollspy-menu-sidebar-active-border-color: $primary !default;
-
-// Type
-
-$note-padding: 10px !default;
-$note-border-width: 6px !default;
-$note-border-radius: 5px !default;
-$note-strong-font-weight: 600 !default;
-$note-paragraph-font-weight: 500 !default;

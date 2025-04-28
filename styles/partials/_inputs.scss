@@ -400,61 +400,6 @@ input.autofill-restyle {
     }
 }
 
-// Слайдер.
-.range {
-    padding-top: 0.5rem;
-    padding-bottom: 0.25rem;
-
-    .range-thumb {
-        position: absolute;
-        display: block;
-        top: -15px;
-        color: $themeColor;
-        margin-left: -15px;
-        width: 30px;
-        text-align: center;
-    }
-
-    .form-range-label {
-        color: $form-label-color;
-
-        .selected-value {
-            font-weight: 500;
-            color: $input-color;
-        }
-    }
-
-    input.form-range {
-        margin-top: 1px;
-    }
-
-    &.min-max-value-label-below {
-        padding-bottom: 1.25rem;
-
-        .range-input-container {
-            position: relative;
-        }
-
-        .form-range-min,
-        .form-range-max {
-            position: absolute;
-            bottom: -1.15rem;
-        }
-
-        .form-range-min {
-            left: 0;
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        .form-range-max {
-            right: 0;
-            text-align: right;
-            white-space: nowrap;
-        }
-    }
-}
-
 // Имитация поля ввода.
 .form-outline.readonly-pseudoinput {
     position: relative;
@@ -607,7 +552,7 @@ input.autofill-restyle {
         }
 
         &.active {
-            background-color: $dropdown-state-background-color;
+            background-color: $dropdown-link-active-bg;
         }
 
         &.disabled {
@@ -627,7 +572,7 @@ input.autofill-restyle {
             color: $themeColor;
             font-weight: 500;
             padding: 0.5rem 1rem 0.5rem 1rem;
-            font-size: 0.875rem;
+            font-size: $font-size-sm;
             line-height: 1.2;
         }
 

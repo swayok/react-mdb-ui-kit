@@ -107,20 +107,6 @@
     z-index: 5;
 }
 
-.shadow-bottom {
-    &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 20px;
-        pointer-events: none;
-        user-select: none;
-        background: url("/resources/img/ui/shadow-inner-bottom.png") no-repeat top center;
-    }
-}
-
 .shadow-card {
     box-shadow: $card-box-shadow;
 }
