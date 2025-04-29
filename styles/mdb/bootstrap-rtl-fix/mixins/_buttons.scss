@@ -56,15 +56,12 @@
         border-color: $hover-border;
     }
 
-    .btn-check:focus + &,
     &:focus {
         color: $hover-color;
         @include gradient-bg($hover-background);
         border-color: $hover-border;
     }
 
-    .btn-check:checked + &,
-    .btn-check:active + &,
     &:active,
     &.active,
     .show > &.dropdown-toggle {
@@ -108,14 +105,11 @@
         background-color: $active-background;
     }
 
-    .btn-check:focus + &,
     &:focus {
         color: $color;
         background-color: transparent;
     }
 
-    .btn-check:checked + &,
-    .btn-check:active + &,
     &:active,
     &.active,
     &.dropdown-toggle.show {

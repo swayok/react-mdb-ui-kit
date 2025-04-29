@@ -42,7 +42,6 @@
         box-shadow: $btn-hover-box-shadow;
     }
 
-    .btn-check:focus + &,
     &:focus,
     &.focus {
         outline: 0;
@@ -50,8 +49,6 @@
         box-shadow: $btn-focus-box-shadow;
     }
 
-    .btn-check:checked + &,
-    .btn-check:active + &,
     &:active,
     &.active {
         // DO NOT USE box-shadow() MIXIN HERE!

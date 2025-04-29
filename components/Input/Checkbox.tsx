@@ -27,10 +27,6 @@ export interface CheckboxProps extends AllHTMLAttributes<HTMLInputElement> {
     defaultChecked?: boolean;
     // Размер иконки чекбокса: уменьшенный. Не работает для btn.
     small?: boolean;
-    // Отобразить в виде кнопки.
-    btn?: boolean;
-    // Цвет кнопки
-    btnColor?: string;
     // Отобразить в виде переключателя.
     toggleSwitch?: boolean;
     // Настройки валидности введенных данных.
@@ -47,6 +43,7 @@ export interface CheckboxProps extends AllHTMLAttributes<HTMLInputElement> {
 // Аналог <input type="radio"/> или <input type="checkbox"/>.
 function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>) {
     const {
+        type = 'checkbox',
         label,
         labelIsHtml,
         labelId,
@@ -59,7 +56,6 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         wrapperProps,
         wrapperStyle,
         inline,
-        btn,
         small,
         id,
         defaultChecked,
@@ -68,7 +64,6 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
-        btnColor,
         disableWrapper,
         toggleSwitch,
         forwardedRef,
@@ -77,26 +72,8 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         ...otherProps
     } = props
 
-    let baseClassName = 'form-check-input'
-    let baseLabelClassName = 'form-check-label'
-
     const fallbackId: string = useId()
-    const inputId: string = id || fallbackId
-
-    if (btn) {
-        baseClassName = 'btn-check'
-
-        if (btnColor) {
-            baseLabelClassName = `btn btn-${btnColor}`
-        } else {
-            baseLabelClassName = 'btn btn-success'
-        }
-    }
-
-    const inputClasses: string = clsx(
-        baseClassName,
-        className
-    )
+    const inputId: string = id ?? fallbackId
 
     const wrapperIsValidationMessageContainer: boolean = (
         !withoutValidationMessage
@@ -104,13 +81,13 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
     )
 
     const wrapperClasses = clsx(
-        label && !btn ? 'form-check' : null,
-        small && !btn && !toggleSwitch ? 'form-check-sm' : null,
-        inline && !btn ? 'form-check-inline' : null,
+        label ? 'form-check' : null,
+        type === 'radio' ? 'form-radio' : 'form-checkbox',
+        small && !toggleSwitch ? 'form-check-sm' : null,
+        inline ? 'form-check-inline' : null,
         toggleSwitch ? 'form-switch' : null,
         small && toggleSwitch ? 'form-switch-sm' : null,
         label ? (labelBeforeInput ? 'label-before-input' : 'label-after-input') : null,
-        !btn && btnColor ? 'theme-' + btnColor : null,
         invalid ? 'is-invalid' : null,
         wrapperIsValidationMessageContainer ? null : wrapperClass
     )
@@ -132,7 +109,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
     if (label) {
         labelEl = (
             <label
-                className={clsx(baseLabelClassName, labelClass)}
+                className={clsx('form-check-label', labelClass)}
                 id={labelId}
                 style={labelStyle}
                 htmlFor={inputId}
@@ -150,8 +127,11 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         <>
             {labelBeforeInput ? labelEl : null}
             <input
-                className={inputClasses}
-                type="checkbox"
+                className={clsx(
+                    'form-check-input',
+                    className
+                )}
+                type={type === 'radio' ? 'radio' : 'checkbox'}
                 defaultChecked={defaultChecked}
                 checked={checked}
                 id={inputId}
@@ -167,7 +147,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         return contents
     } else {
         const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> = {}
-        let WrapperTag: ReactComponentOrTagName = wrapperTag || 'div'
+        let WrapperTag: ReactComponentOrTagName = wrapperTag
         if (wrapperIsValidationMessageContainer) {
             if (WrapperTag !== 'div') {
                 console.warn(
@@ -176,7 +156,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
                 )
             }
             WrapperTag = InputValidationError;
-            (additionalWrapperProps as InputValidationErrorProps).invalid = invalid === undefined ? false : invalid;
+            (additionalWrapperProps as InputValidationErrorProps).invalid = invalid ?? false;
             (additionalWrapperProps as InputValidationErrorProps).error = validationMessage
             if (validationMessageClassName) {
                 (additionalWrapperProps as InputValidationErrorProps).errorClassName = validationMessageClassName

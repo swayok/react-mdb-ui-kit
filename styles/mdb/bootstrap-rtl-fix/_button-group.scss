@@ -16,8 +16,6 @@
 
     // Bring the hover, focused, and "active" buttons to the front to overlay
     // the borders properly
-    > .btn-check:checked + .btn,
-    > .btn-check:focus + .btn,
     > .btn:hover,
     > .btn:focus,
     > .btn:active,
