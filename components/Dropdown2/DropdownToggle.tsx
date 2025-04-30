@@ -31,7 +31,7 @@ export function DropdownToggle<
     )
 
     // This intentionally forwards size and variant (if set) to the
-    // underlying component, to allow it to render size and style variants.
+    // underlying component to allow it to render size and style variants.
     return (
         <Component
             className={clsx(

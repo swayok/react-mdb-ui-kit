@@ -50,17 +50,3 @@ $input-focus-active-label-transform-lg: translateY(-1.5rem) translateY(0.1rem) s
 $input-error-padding-x: $input-padding-left;
 $input-error-padding-top: 0.25rem;
 $input-info-padding-x: $input-padding-left;
-
-// Переключатель значений.
-$form-switch-form-check-input-after-transition: background-color 0.3s, transform 0.3s, margin-left 0.3s;
-$form-switch-form-check-input-focus-before-transition: box-shadow 0.3s, transform 0.3s, margin-left 0.3s;
-// Переключатель выключен (checked === false)
-$form-switch-form-check-input-focus-before-box-shadow: none;
-// Переключатель включен (checked === true)
-$form-switch-form-check-input-checked-focus-before-transition: $form-switch-form-check-input-focus-before-transition;
-$form-switch-form-check-input-checked-checkbox-after-transition: $form-switch-form-check-input-after-transition;
-$form-switch-form-check-input-checked-focus-before-box-shadow: none;
-
-// Form check.
-$form-check-input-focus-before-box-shadow: none;
-$form-check-input-checked-focus-before-box-shadow: none;

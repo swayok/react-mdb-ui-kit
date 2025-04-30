@@ -1,5 +1,5 @@
 import React, {AllHTMLAttributes, CSSProperties, useId} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../../types/Common'
+import {AnyObject, CheckboxColors, FormSelectOption, FormSelectOptionsList} from '../../types/Common'
 import withStable from '../../helpers/withStable'
 import Radio from './Radio'
 import InputValidationError from './InputValidationError'
@@ -21,6 +21,8 @@ export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
     columns?: number | null;
     // Размер иконки чекбокса: уменьшенный.
     small?: boolean,
+    // Цвет переключателя.
+    color?: CheckboxColors
     // CSS класс внешней обертки.
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
@@ -39,7 +41,7 @@ export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
     // Свойства одного чекбокса.
     radioProps?: Omit<
         AllHTMLAttributes<HTMLInputElement>,
-        'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly'
+        'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly' | 'type'
     >
     // CSS класс для подписи чекбокса (<input><label className>).
     radioLabelClassName?: string;
@@ -80,8 +82,9 @@ function RadiosGroup(props: RadiosGroupProps) {
         name = defaultName,
         value,
         options,
-        columns,
+        columns = 1,
         small,
+        color,
 
         wrapperClassName = 'mb-4',
         wrapperStyle,
@@ -125,6 +128,7 @@ function RadiosGroup(props: RadiosGroupProps) {
                 || String(option.value) === value
             }
             small={small}
+            color={color}
             wrapperClass={radioWrapperClassName}
             wrapperStyle={radioWrapperStyle}
             className={radioClassName}
@@ -169,7 +173,7 @@ function RadiosGroup(props: RadiosGroupProps) {
             <div
                 className={clsx(
                     radiosContainerClassName,
-                    `d-grid grid-columns-${columns || 1} grid-columns-gap-3 grid-rows-gap-3`
+                    `d-grid grid-columns-${columns} grid-columns-gap-3 grid-rows-gap-3`
                 )}
                 style={radiosContainerStyle}
             >

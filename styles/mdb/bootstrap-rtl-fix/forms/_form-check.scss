@@ -5,8 +5,10 @@
 @use 'sass:math';
 @import "../../../functions/string-utils";
 @import "../mixins/border-radius";
+@import "../mixins/form-check-and-switch";
 @import "../../../mixins/transition";
 @import "../../../variables/form-check";
+@import "../../../variables/color-lists";
 
 .form-check {
     display: flex;
@@ -30,8 +32,6 @@
     }
 
     &.label-before-input {
-        padding-left: 0;
-
         .form-check-label {
             margin-left: 0;
             margin-right: $form-check-label-margin;
@@ -52,13 +52,10 @@
 
 .form-check-input {
     position: relative;
+    vertical-align: top;
     width: $form-check-input-width;
     height: $form-check-input-width;
-    vertical-align: top;
-    background-color: $form-check-input-bg;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    background-color: $form-check-input-bg-color;
     border: $form-check-input-border-width solid $form-check-input-border-color;
     appearance: none;
     print-color-adjust: exact; // Keep themed appearance for print
@@ -145,39 +142,52 @@
     &[type='checkbox'] {
         @include border-radius($form-check-checkbox-border-radius);
 
-        &:focus {
-            &:after {
-                content: '';
-                position: absolute;
-                width: $form-check-checkbox-focus-after-width;
-                height: $form-check-checkbox-focus-after-width;
-                z-index: 1;
-                display: block;
-                border-radius: 0;
-                background-color: $form-check-checkbox-focus-after-background-color;
-            }
+        &:focus:after {
+            content: '';
+            position: absolute;
+            width: $form-check-checkbox-focus-after-width;
+            height: $form-check-checkbox-focus-after-width;
+            z-index: 1;
+            display: block;
+            border-radius: 0;
+            background-color: $form-check-checkbox-focus-after-bg-color;
         }
 
         &:checked {
-            background-color: $form-check-checkbox-checked-background-color;
+            background-color: $form-check-checkbox-checked-bg-color;
 
             &:after {
                 display: block;
                 transform: $form-check-checkbox-checked-after-transform #{'/*!rtl:ignore*/'};
-                border-width: $form-check-checkbox-checked-after-border-width;
-                border-color: $form-check-checkbox-checked-after-border-color;
+                transform-origin: center;
+                border-width: $form-check-checkbox-checked-check-width;
+                border-color: $form-check-checkbox-checked-check-color;
                 width: $form-check-checkbox-checked-after-width;
                 height: $form-check-checkbox-checked-after-height;
                 border-style: solid;
                 border-top: 0;
                 border-left: 0 #{'/*!rtl:ignore*/'};
+                top: 50%;
+                left: 50%;
                 margin-left: $form-check-checkbox-checked-after-margin-left;
                 margin-top: $form-check-checkbox-checked-after-margin-top;
                 background-color: transparent;
             }
 
             &:focus {
-                background-color: $form-check-checkbox-checked-focus-background-color;
+                background-color: $form-check-checkbox-checked-focus-bg-color;
+            }
+        }
+
+        &.form-check-solid:checked {
+            background-color: $form-check-checkbox-solid-checked-bg-color;
+
+            &:after {
+                border-color: $form-check-checkbox-solid-checked-check-color;
+            }
+
+            &:focus {
+                background-color: $form-check-checkbox-solid-checked-focus-bg-color;
             }
         }
 
@@ -220,7 +230,7 @@
             height: $form-check-radio-before-width;
         }
 
-        &:after {
+        &:focus:after {
             content: '';
             position: absolute;
             width: $form-check-radio-after-width;
@@ -228,19 +238,18 @@
             z-index: 1;
             display: block;
             border-radius: $form-check-radio-after-border-radius;
-            background-color: $form-check-radio-after-background-color;
+            background-color: $form-check-radio-after-bg-color;
         }
 
         &:checked {
-            background-image: none;
-            background-color: $form-check-radio-checked-background-color;
+            background-color: $form-check-radio-checked-bg-color;
 
             &:after {
                 border-radius: $form-check-radio-checked-after-border-radius;
                 width: $form-check-radio-checked-after-width;
                 height: $form-check-radio-checked-after-width;
                 border-color: $form-check-radio-checked-after-border-color;
-                background-color: $form-check-radio-checked-after-background-color;
+                background-color: $form-check-radio-checked-after-bg-color;
                 transition: $form-check-radio-checked-after-transition;
                 transform: translate(-50%, -50%);
                 position: absolute;
@@ -249,9 +258,16 @@
             }
 
             &:focus {
-                background-color: $form-check-radio-checked-focus-background-color;
+                background-color: $form-check-radio-checked-focus-bg-color;
             }
         }
+    }
+}
+
+@each $color, $value in $form-checkbox-colors {
+    .form-check-#{$color} {
+        @include form-checkbox-color($value, $form-check-checkbox-solid-checked-check-color);
+        @include form-radio-color($value);
     }
 }
 
@@ -262,8 +278,8 @@
 
         &[type='checkbox'] {
             &:before {
-                width: $form-check-input-before-width-sm;
-                height: $form-check-input-before-width-sm;
+                width: $form-check-checkbox-before-width-sm;
+                height: $form-check-checkbox-before-width-sm;
             }
 
             &:focus:after {
@@ -281,13 +297,13 @@
 
         &[type='radio'] {
             &:before {
-                width: $form-check-input-before-width-sm;
-                height: $form-check-input-before-width-sm;
+                width: $form-check-radio-before-width-sm;
+                height: $form-check-radio-before-width-sm;
             }
 
-            &:after {
-                width: $form-check-input-before-width-sm;
-                height: $form-check-input-before-width-sm;
+            &:focus:after {
+                width: $form-check-radio-after-width-sm;
+                height: $form-check-radio-after-width-sm;
             }
 
             &:checked:after {

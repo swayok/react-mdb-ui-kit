@@ -30,8 +30,8 @@ $form-notch-div-border-color: $input-border-color;
 
 // Переключатель значений.
 // Переключатель выключен (checked === false)
-$form-switch-form-check-input-background-color: lighten($textColorMuted, 25%);
-$form-switch-form-check-input-after-background-color: $textColorMuted;
-// Переключатель включен (checked === true)
-$form-switch-form-check-input-checked-track-background-color: lighten($backgroundGreen, 30%);
-$form-switch-form-check-input-checked-checkbox-after-background-color: darken($backgroundGreen, 7%);
+//$form-switch-input-bg-color: lighten($textColorMuted, 25%);
+//$form-switch-input-after-background-color: $textColorMuted;
+//// Переключатель включен (checked === true)
+//$form-switch-input-checked-track-background-color: lighten($backgroundGreen, 30%);
+//$form-switch-input-checked-checkbox-after-background-color: darken($backgroundGreen, 7%);

@@ -1,0 +1,67 @@
+// Switch mixins.
+
+@import "../../../functions/color-utils";
+
+@mixin form-switch-color(
+    $checkedTogglerColor,
+    $checkedTrackColor: tint-color($checkedTogglerColor, 70%),
+    $checkedFocusTogglerColor: $checkedTogglerColor
+) {
+    .form-switch-input {
+        &:checked {
+            background-color: $checkedTrackColor;
+
+            &:after {
+                background-color: $checkedTogglerColor;
+            }
+
+            &:active:after,
+            &:focus:after {
+                background-color: $checkedFocusTogglerColor;
+            }
+        }
+    }
+}
+
+
+@mixin form-checkbox-color($color, $solid-checked-check-color) {
+    .form-check-input[type="checkbox"] {
+        &:focus {
+            border-color: tint-color($color, 50%);
+        }
+
+        &:checked {
+            border-color: $color;
+
+            &:after {
+                border-color: $color;
+            }
+        }
+
+        &.form-check-solid {
+            &:checked {
+                background-color: $color;
+
+                &:after {
+                    border-color: $solid-checked-check-color;
+                }
+            }
+        }
+    }
+}
+
+@mixin form-radio-color($color) {
+    .form-check-input[type="radio"] {
+        &:focus {
+            border-color: tint-color($color, 50%);
+        }
+
+        &:checked {
+            border-color: $color;
+
+            &:after {
+                background-color: $color;
+            }
+        }
+    }
+}

@@ -46,6 +46,7 @@ export type BorderColors = 'gray' | 'green' | 'red' | 'orange' | 'blue' | 'prima
     | 'light' | 'dark' | 'secondary' | 'white' | string
 export type NoteColors = 'primary' | 'secondary' | 'light'
     | 'success' | 'danger' | 'warning' | 'info' | string
+export type CheckboxColors = 'green' | 'blue' | 'red' | 'orange' | string
 
 // Минимальное и максимальное значение.
 export interface MinMax {

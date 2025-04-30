@@ -1,4 +1,5 @@
 import React, {AllHTMLAttributes, CSSProperties, useMemo} from 'react'
+import {CheckboxColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../../helpers/withStable'
 import Checkbox from './Checkbox'
 import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from '../../types/Common'
@@ -8,70 +9,74 @@ import InputValidationError from './InputValidationError'
 
 export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {
     // Основная подпись.
-    label?: string | null;
+    label?: string | null
     // Выбранные значения (опции).
-    values: Value[];
+    values: Value[]
     // Набор опций или групп опций.
-    options: FormSelectOptionsAndGroupsList<Value, Extras>;
+    options: FormSelectOptionsAndGroupsList<Value, Extras>
     // Распределить поля ввода на несколько колонок.
     // По умолчанию: null (не разделять на колонки).
     // Для более тонкой настройки под разные размеры экрана используйте inputsContainerClassName.
-    columns?: number | null;
+    columns?: number | null
     // Размер иконки чекбокса: уменьшенный.
-    small?: boolean,
-    // Отобразить чекбоксы в виде переключателей (<Switch>).
-    toggleSwitch?: boolean,
+    small?: boolean
+    // Если 'checkbox' - отображать в виде чекбокса (<Checkbox type="checkbox">).
+    // Если 'switch' - отображать в виде переключателя (<Switch>).
+    // По умолчанию: 'checkbox'.
+    type?: 'checkbox' |'switch'
+    // Цвет переключателя.
+    color?: CheckboxColors
     // CSS класс внешней обертки.
-    wrapperClassName?: string;
-    wrapperStyle?: CSSProperties;
+    wrapperClassName?: string
+    wrapperStyle?: CSSProperties
     // CSS класс обертки подписи и полей ввода содержимого.
-    className?: string;
-    style?: CSSProperties;
+    className?: string
+    style?: CSSProperties
     // CSS класс для основной подписи (CheckboxesProps.label).
-    labelClassName?: string;
-    labelStyle?: CSSProperties;
+    labelClassName?: string
+    labelStyle?: CSSProperties
     // CSS класс контейнера одного чекбокса (<div className><input></div>).
-    checkboxWrapperClassName?: string;
-    checkboxWrapperStyle?: CSSProperties;
+    checkboxWrapperClassName?: string
+    checkboxWrapperStyle?: CSSProperties
     // CSS класс для чекбокса (<input className>).
-    checkboxClassName?: string;
-    checkboxStyle?: CSSProperties;
+    checkboxClassName?: string
+    checkboxStyle?: CSSProperties
     // Свойства одного чекбокса.
     checkboxProps?: Omit<
         AllHTMLAttributes<HTMLInputElement>,
-        'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly'
+        'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly' | 'type' | 'color'
     >
     // CSS класс для подписи чекбокса (<input><label className>).
-    checkboxLabelClassName?: string;
-    checkboxLabelStyle?: CSSProperties;
+    checkboxLabelClassName?: string
+    checkboxLabelStyle?: CSSProperties
     // CSS класс для обертки группы опций (<GroupLabel><Items>).
-    groupClassName?: string;
-    groupStyle?: CSSProperties;
+    groupClassName?: string
+    groupStyle?: CSSProperties
     // CSS класс для подписи к группе опций (<GroupLabel>).
-    groupLabelClassName?: string;
-    groupLabelStyle?: CSSProperties;
+    groupLabelClassName?: string
+    groupLabelStyle?: CSSProperties
     // CSS класс для контейнера полей ввода (<Items>).
     // Пример inputsContainerClassName для 2х колонок:
     // 'd-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3'.
-    groupItemsContainerClassName?: string;
-    groupItemsContainerStyle?: CSSProperties;
+    groupItemsContainerClassName?: string
+    groupItemsContainerStyle?: CSSProperties
     // Настройки валидности введенных данных.
-    invalid?: boolean,
-    validationMessage?: string | null,
-    validationMessageClassName?: string,
+    invalid?: boolean
+    validationMessage?: string | null
+    validationMessageClassName?: string
     // Обработчик изменения значения одного из чекбоксов.
     onChange?: (
         value: Value,
         checked: boolean,
         option: FormSelectOption<Value, Extras>
-    ) => void;
+    ) => void
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string,
+    trackBehaviorAs?: string
     // Запрет изменения значений.
-    disabled?: boolean,
+    disabled?: boolean
     // Запрет изменения значений.
-    readOnly?: boolean,
+    readOnly?: boolean
 }
 
 /**
@@ -87,10 +92,11 @@ function CheckboxesGroup<
         label,
         values,
         options,
-        columns,
+        columns = 1,
         small,
-        toggleSwitch,
+        type = 'checkbox',
 
+        color,
         wrapperClassName = 'mb-4',
         wrapperStyle,
         className,
@@ -128,11 +134,11 @@ function CheckboxesGroup<
             const groups: FormSelectOptionGroup<Value, OptionExtras>[] = []
             const optionsWithoutGroup: FormSelectOption<Value, OptionExtras>[] = []
             if (options && Array.isArray(options) && options.length > 0) {
-                for (let i = 0; i < options.length; i++) {
-                    if ('options' in options[i]) {
-                        groups.push(options[i] as FormSelectOptionGroup<Value, OptionExtras>)
+                for (const item of options) {
+                    if ('options' in item) {
+                        groups.push(item as FormSelectOptionGroup<Value, OptionExtras>)
                     } else {
-                        optionsWithoutGroup.push(options[i] as FormSelectOption<Value, OptionExtras>)
+                        optionsWithoutGroup.push(item)
                     }
                 }
             }
@@ -158,6 +164,8 @@ function CheckboxesGroup<
             options.push(
                 <Checkbox
                     {...checkboxProps}
+                    type={type}
+                    color={color}
                     key={'checkbox-' + index + '-' + i}
                     label={option.label}
                     checked={
@@ -165,7 +173,6 @@ function CheckboxesGroup<
                         || values.includes(String(option.value) as Value)
                     }
                     small={small}
-                    toggleSwitch={toggleSwitch}
                     wrapperClass={checkboxWrapperClassName}
                     wrapperStyle={checkboxWrapperStyle}
                     className={checkboxClassName}
@@ -211,7 +218,7 @@ function CheckboxesGroup<
                 <div
                     className={clsx(
                         'options-group-items',
-                        `d-grid grid-columns-${columns || 1} grid-columns-gap-3 grid-rows-gap-3`,
+                        `d-grid grid-columns-${columns} grid-columns-gap-3 grid-rows-gap-3`,
                         groupItemsContainerClassName
                     )}
                     style={groupItemsContainerStyle}

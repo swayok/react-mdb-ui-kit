@@ -1,16 +1,12 @@
 import React from 'react'
-import Checkbox, {CheckboxProps} from './Checkbox'
+import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
 
 // Чекбокс в виде переключателя.
-function Switch(props: CheckboxProps, ref: React.ForwardedRef<HTMLInputElement>) {
+export default function Switch(props: Omit<CheckboxProps, 'type'>) {
     return (
         <Checkbox
-            toggleSwitch
-            type="checkbox"
-            ref={ref}
+            type="switch"
             {...props}
         />
     )
 }
-
-export default React.memo(React.forwardRef<HTMLInputElement, CheckboxProps>(Switch))

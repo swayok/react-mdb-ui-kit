@@ -85,6 +85,7 @@ $note: (
 ) !default;
 // scss-docs-end note-colors-map
 
+// scss-docs-start table-variables
 $table-bg-scale: -80% !default;
 // scss-docs-end table-variables
 
@@ -100,3 +101,12 @@ $table-variants: (
     'dark': $dark,
 ) !default;
 // scss-docs-end table-loop
+
+// scss-docs-start form-switch-loop
+$form-checkbox-colors: (
+    'red': $danger,
+    'green': $success,
+    'blue': $info,
+    'orange': $warning
+) !default;
+// scss-docs-end form-switch-loop

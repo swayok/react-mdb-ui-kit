@@ -5,7 +5,7 @@ import Collapse from '../Collapse'
 
 export interface InputValidationErrorProps extends AllHTMLAttributes<HTMLDivElement> {
     invalid: boolean,
-    error?: string | Array<string> | AnyObject<string> | NumericKeysObject<string> | null,
+    error?: string | string[] | AnyObject<string> | NumericKeysObject<string> | null,
     errorClassName?: string,
     inputContainerClassName?: string,
     inputContainerStyle?: CSSProperties,

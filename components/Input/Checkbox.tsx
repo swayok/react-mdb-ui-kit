@@ -1,47 +1,57 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, CSSProperties, useCallback, useEffect, useId} from 'react'
-import {ReactComponentOrTagName} from '../../types/Common'
-import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
-import {PropsWithForwardedRef, withStableAndRef} from '../../helpers/withStable'
-import HtmlContent from '../HtmlContent'
+import {CheckboxColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import withStable from '../../helpers/withStable'
 import UserBehaviorService from '../../services/UserBehaviorService'
+import {ReactComponentOrTagName} from '../../types/Common'
+import HtmlContent from '../HtmlContent'
+import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 
-export interface CheckboxProps extends AllHTMLAttributes<HTMLInputElement> {
-    // Обертка
-    wrapperTag?: ReactComponentOrTagName;
-    wrapperClass?: string;
-    wrapperProps?: AllHTMLAttributes<HTMLElement>;
-    wrapperStyle?: CSSProperties;
+export interface CheckboxProps extends Omit<AllHTMLAttributes<HTMLInputElement>, 'type'> {
+    type?: 'checkbox' | 'radio' | 'switch'
+    // Обертка.
+    wrapperTag?: ReactComponentOrTagName
+    wrapperClass?: string
+    wrapperProps?: AllHTMLAttributes<HTMLElement>
+    wrapperStyle?: CSSProperties
     // Не оборачивать в props.wrapperTag.
-    disableWrapper?: boolean;
+    disableWrapper?: boolean
     // Добавить стиль .form-check-inline.
-    inline?: boolean;
-    // Подпись
-    label?: string;
-    labelId?: string;
-    labelClass?: string;
-    labelStyle?: CSSProperties;
-    labelBeforeInput?: boolean;
-    labelIsHtml?: boolean;
+    inline?: boolean
+    // Подпись.
+    label?: string
+    labelId?: string
+    labelClass?: string
+    labelStyle?: CSSProperties
+    labelBeforeInput?: boolean
+    labelIsHtml?: boolean
     // Отмечен по умолчанию.
-    defaultChecked?: boolean;
-    // Размер иконки чекбокса: уменьшенный. Не работает для btn.
-    small?: boolean;
-    // Отобразить в виде переключателя.
-    toggleSwitch?: boolean;
+    defaultChecked?: boolean
+    // Размер иконки чекбокса: уменьшенный.
+    small?: boolean
+    // Цвет переключателя.
+    color?: CheckboxColors
+    // Если solid = false, то в состоянии "checked"
+    // галочка цветная на белом фоне внутри цветного квадрата.
+    // Если solid = true, то в состоянии "checked"
+    // галочка белая на цветном фоне внутри цветного квадрата.
+    // Применимо только к type = 'checkbox'.
+    // По умолчанию: false.
+    solid?: boolean
     // Настройки валидности введенных данных.
-    invalid?: boolean;
-    validationMessage?: string | null;
-    validationMessageClassName?: string;
+    invalid?: boolean
+    validationMessage?: string | null
+    validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean;
+    withoutValidationMessage?: boolean
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string;
+    trackBehaviorAs?: string
+    inputRef?: React.Ref<HTMLInputElement>
 }
 
 // Аналог <input type="radio"/> или <input type="checkbox"/>.
-function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>) {
+function Checkbox(props: CheckboxProps) {
     const {
         type = 'checkbox',
         label,
@@ -57,6 +67,8 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         wrapperStyle,
         inline,
         small,
+        color,
+        solid,
         id,
         defaultChecked,
         checked,
@@ -65,8 +77,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         validationMessageClassName,
         withoutValidationMessage,
         disableWrapper,
-        toggleSwitch,
-        forwardedRef,
+        inputRef,
         onChange,
         trackBehaviorAs,
         ...otherProps
@@ -80,19 +91,33 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         && (invalid !== undefined || !!validationMessage)
     )
 
+    let typeClasses
+    if (type === 'switch') {
+        typeClasses = clsx(
+            'form-switch',
+            small ? 'form-switch-sm' : null,
+            color ? 'form-switch-' + color : null
+        )
+    } else {
+        typeClasses = clsx(
+            label ? 'form-check' : null,
+            type === 'radio' ? 'form-radio' : 'form-checkbox',
+            small ? 'form-check-sm' : null,
+            color ? 'form-check-' + color : null
+        )
+    }
+
     const wrapperClasses = clsx(
-        label ? 'form-check' : null,
-        type === 'radio' ? 'form-radio' : 'form-checkbox',
-        small && !toggleSwitch ? 'form-check-sm' : null,
+        typeClasses,
         inline ? 'form-check-inline' : null,
-        toggleSwitch ? 'form-switch' : null,
-        small && toggleSwitch ? 'form-switch-sm' : null,
         label ? (labelBeforeInput ? 'label-before-input' : 'label-after-input') : null,
         invalid ? 'is-invalid' : null,
         wrapperIsValidationMessageContainer ? null : wrapperClass
     )
 
-    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnChange = useCallback((
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         onChange?.(e)
         if (trackBehaviorAs) {
             UserBehaviorService.onCheckboxOrRadioChange(e.currentTarget, trackBehaviorAs)
@@ -128,14 +153,15 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
             {labelBeforeInput ? labelEl : null}
             <input
                 className={clsx(
-                    'form-check-input',
+                    type === 'switch' ? 'form-switch-input' : 'form-check-input',
+                    solid && type === 'checkbox' ? 'form-check-solid' : null,
                     className
                 )}
                 type={type === 'radio' ? 'radio' : 'checkbox'}
                 defaultChecked={defaultChecked}
                 checked={checked}
                 id={inputId}
-                ref={forwardedRef}
+                ref={inputRef}
                 onChange={handleOnChange}
                 {...otherProps}
             />
@@ -151,7 +177,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
         if (wrapperIsValidationMessageContainer) {
             if (WrapperTag !== 'div') {
                 console.warn(
-                    'Input component with validationMessage prop or defined invalid prop uses InputValidationError wrapper and ignores wrapperTag prop',
+                    'Input component with "validationMessage" prop or defined "invalid" prop ignores "wrapperTag" prop and uses <InputValidationError> component as "wrapperTag.',
                     {props}
                 )
             }
@@ -178,8 +204,7 @@ function Checkbox(props: PropsWithForwardedRef<CheckboxProps, HTMLInputElement>)
     }
 }
 
-export default withStableAndRef<CheckboxProps, HTMLInputElement>(
+export default withStable<CheckboxProps>(
     ['onChange'],
-    Checkbox,
-    'Checkbox'
+    Checkbox
 )
