@@ -1,44 +1,92 @@
 import React from 'react'
+import Button from 'swayok-react-mdb-ui-kit/components/Button'
 import Card from 'swayok-react-mdb-ui-kit/components/Card/Card'
 import CardBody from 'swayok-react-mdb-ui-kit/components/Card/CardBody'
 import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
+import Input from 'swayok-react-mdb-ui-kit/components/Input/Input'
+import InputGroup from 'swayok-react-mdb-ui-kit/components/Input/InputGroup'
 import Radio from 'swayok-react-mdb-ui-kit/components/Input/Radio'
 import Switch from 'swayok-react-mdb-ui-kit/components/Input/Switch'
 import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import TabSheet from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheet'
+import TabSheetBody from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetBody'
+import TabSheetHeader from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetHeader'
+import TabSheetTabButton from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabButton'
+import TabSheetTabContent from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabContent'
 
 // Демонстрация полей ввода.
 export default function InputsDemo() {
-
-    const inputs = (
-        <>
-            <SectionDivider label="Checkbox & Radio (normal size)"/>
-            {renderCheckboxesAndRadios()}
-
-            <SectionDivider label="Checkbox & Radio (small size)"/>
-            {renderCheckboxesAndRadios({small: true})}
-
-            <SectionDivider label="Switch (normal size)"/>
-            {renderSwitches()}
-        </>
-    )
 
     return (
         <div className="container">
             <h2 className="text-center text-theme mb-4">Inputs</h2>
 
+            <TabSheet
+                defaultTab="tab1"
+                tag="div"
+                savesStateToUrlQuery
+            >
+                <TabSheetHeader>
+                    <TabSheetTabButton name="checkboxes">
+                        Checkbox & Radio
+                    </TabSheetTabButton>
+                    <TabSheetTabButton name="switches">
+                        Switch
+                    </TabSheetTabButton>
+                    <TabSheetTabButton name="text">
+                        Text
+                    </TabSheetTabButton>
+                </TabSheetHeader>
+                <TabSheetBody>
+                    <TabContent name="checkboxes">
+                        <SectionDivider label="Checkbox & Radio (normal size)"/>
+                        {renderCheckboxesAndRadios()}
+
+                        <SectionDivider label="Checkbox & Radio (small size)"/>
+                        {renderCheckboxesAndRadios({small: true})}
+                    </TabContent>
+
+                    <TabContent name="switches">
+                        {renderSwitches()}
+                    </TabContent>
+                </TabSheetBody>
+                <TabSheetBody>
+                    <TabContent name="text">
+                        <SectionDivider label="Text inputs (simple)"/>
+                        {renderSimpleTextInputs()}
+                        <SectionDivider label="Text inputs (material design)"/>
+                        {renderTextInputs()}
+                    </TabContent>
+                </TabSheetBody>
+            </TabSheet>
+        </div>
+    )
+}
+
+function TabContent(
+    props: {
+        name: string,
+        children: React.ReactNode | React.ReactNode[]
+    }
+) {
+    return (
+        <TabSheetTabContent
+            name={props.name}
+            lazy
+        >
             <div className="row">
                 <div className="col-6">
                     <Card>
                         <CardBody>
-                            {inputs}
+                            {props.children}
                         </CardBody>
                     </Card>
                 </div>
                 <div className="col-6 pt-4">
-                    {inputs}
+                    {props.children}
                 </div>
             </div>
-        </div>
+        </TabSheetTabContent>
     )
 }
 
@@ -353,6 +401,154 @@ function renderSwitches() {
                 checked
                 color="orange"
             />
+        </>
+    )
+}
+
+function renderSimpleTextInputs() {
+    return (
+        <>
+            <div>
+                <label className="form-label">Input normal</label>
+                <input
+                    className="form-control mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input readonly</label>
+                <input
+                    className="form-control mb-4"
+                    readOnly
+                    value="Read only"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input disabled</label>
+                <input
+                    className="form-control mb-4"
+                    disabled
+                    value="Disabled"
+                />
+            </div>
+
+            <div>
+                <label className="form-label">Input small</label>
+                <input
+                    className="form-control form-control-sm mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input large</label>
+                <input
+                    className="form-control form-control-lg mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+        </>
+    )
+}
+
+function renderTextInputs() {
+    return (
+        <>
+            <Input
+                label="Input normal"
+            />
+
+            <Input
+                label="Input active label"
+                active
+            />
+
+            <Input
+                placeholder="Input no label"
+                active
+            />
+
+            <Input
+                label="Input with placeholder"
+                active
+                placeholder="Placeholder"
+            />
+
+            <Input
+                label="Input with value"
+                value="Value"
+            />
+
+            <Input
+                label="Input readonly"
+                value="Value"
+                readOnly
+            />
+
+            <Input
+                label="Input disabled"
+                value="Value"
+                disabled
+            />
+
+            <Input
+                label="Input invalid"
+                value="Value"
+                invalid
+            />
+
+            <Input
+                label="Input invalid with message"
+                value="Value"
+                invalid
+                validationMessage="Validation error"
+            />
+
+            <Input
+                label="Input small"
+                small
+            />
+            <Input
+                label="Input small"
+                value="Value"
+                small
+            />
+            <Input
+                label="Input large"
+                large
+            />
+            <Input
+                label="Input large"
+                value="Value"
+                large
+            />
+            <InputGroup>
+                <Input
+                    label="Input normal"
+                />
+                <Button color="blue">Action</Button>
+            </InputGroup>
+            <InputGroup>
+                <Input
+                    label="Input small"
+                    small
+                />
+                <Button color="blue" small>Action</Button>
+            </InputGroup>
+            <div className="d-flex flex-row align-items-center justify-content-start gap-3 mb-4">
+                <Input
+                    label="Input normal"
+                    wrapperClass="m-0"
+                />
+                <Button color="blue">Action</Button>
+            </div>
+            <div className="d-flex flex-row align-items-center justify-content-start gap-3 mb-4">
+                <Input
+                    label="Input small"
+                    small
+                    wrapperClass="m-0"
+                />
+                <Button color="blue" small>Action</Button>
+            </div>
         </>
     )
 }

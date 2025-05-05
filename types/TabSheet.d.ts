@@ -3,7 +3,7 @@ import {ButtonColors, ComponentPropsWithModifiableTag} from './Common'
 import {RippleProps} from '../components/Ripple/Ripple'
 
 // Свойства контекста.
-export type TabSheetContextProps<TabName extends string = string> = {
+export interface TabSheetContextProps<TabName extends string = string> {
     defaultTab: TabName,
     currentTab: TabName,
     setCurrentTab: (tab: TabName) => void,
@@ -19,7 +19,7 @@ export interface TabSheetProps<
     urlQueryArgName?: string;
 }
 
-// Свойства обработчика контролирующего сохранение и восстановление
+// Свойства обработчика, контролирующего сохранение и восстановление
 // текущей вкладки из URL Query.
 export interface TabSheetStateToUrlQueryHandlerProps {
     // Имя параметра в URL Query.

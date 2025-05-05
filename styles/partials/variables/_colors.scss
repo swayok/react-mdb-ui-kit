@@ -3,7 +3,7 @@ $textColor: #000000;
 $textColorDark: #313131;
 $textColorGray: #5e5e5e;
 $textColorSecondary: $textColor;
-$textColorSecondarySemitransparent: rgba(66, 66, 66, 0.6);
+//$textColorSecondarySemitransparent: rgba(66, 66, 66, 0.6); // rgba($gray-800, 0.6)
 $textColorMuted: #909090;
 $textColorMutedOnDark: #d6d6d6;
 $textColorLightGray: #b5b5b5;
@@ -18,7 +18,7 @@ $textColorOrangeOnDark: #f0c286;
 $textColorDarkBg: #FFFFFF;
 
 // Цвета границ.
-$borderColorInput: #d3d3d3;
+//$borderColorInput: #d3d3d3;
 $borderColorGray: #d9d9d9;
 $borderColorRed: #de5745;
 $borderColorOrange: #ffa90b;

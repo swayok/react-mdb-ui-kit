@@ -1,0 +1,202 @@
+//
+// Material styles for form control - form outline
+//
+
+@import "../../../variables/form-outline-input";
+
+.form-outline {
+    position: relative;
+
+    .form-control {
+        min-height: auto;
+        padding: $from-outline-input-padding-top $form-outline-input-padding-x $form-outline-input-padding-bottom;
+        border: 0;
+        background: transparent;
+        transition: $form-outline-input-transition;
+        font-size: $form-outline-input-font-size;
+        line-height: $form-outline-input-line-height;
+
+        ~ .form-label {
+            position: absolute;
+            top: 0;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            left: $form-outline-label-left;
+            padding-top: $form-outline-label-padding-top;
+            pointer-events: none;
+            transform-origin: 0 0;
+            transition: $form-outline-label-transition;
+            color: $form-outline-label-color;
+            margin-bottom: 0;
+        }
+
+        ~ .form-notch {
+            display: flex;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            text-align: left;
+            pointer-events: none;
+
+            div {
+                pointer-events: none;
+                border: $border-width solid;
+                border-color: $form-notch-div-border-color;
+                box-sizing: border-box;
+                background: transparent;
+            }
+
+            .form-notch-leading {
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: $form-notch-leading-width;
+                border-right: none;
+                border-radius: $form-notch-border-radius 0 0 $form-notch-border-radius;
+            }
+
+            .form-notch-middle {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: calc(100% - #{$form-notch-middle-max-width});
+                height: 100%;
+                border-right: none;
+                border-left: none;
+            }
+
+            .form-notch-trailing {
+                flex-grow: 1;
+                height: 100%;
+                border-left: none;
+                border-radius: 0 $form-notch-border-radius $form-notch-border-radius 0;
+            }
+        }
+
+        &:not(.placeholder-active)::placeholder {
+            opacity: 0;
+        }
+
+        &:focus,
+        &.active {
+            &::placeholder {
+                opacity: 1;
+            }
+        }
+
+        &:focus {
+            box-shadow: none !important;
+        }
+
+        &:focus ~ .form-label,
+        &.active ~ .form-label {
+            transform: $form-outline-active-label-transform;
+        }
+
+        &:focus ~ .form-label {
+            color: $form-outline-active-label-color;
+        }
+
+        &:focus ~ .form-notch .form-notch-middle,
+        &.active ~ .form-notch .form-notch-middle {
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            transition: $input-transition;
+        }
+
+        &:focus ~ .form-notch .form-notch-middle {
+            border-bottom: $form-outline-focus-border-width solid;
+            border-color: $input-focus-border-color;
+        }
+
+        &:focus ~ .form-notch .form-notch-leading,
+        &.active ~ .form-notch .form-notch-leading {
+            border-right: none;
+            transition: $input-transition;
+        }
+
+        &:focus ~ .form-notch .form-notch-leading {
+            border-top: $form-outline-focus-border-width solid $input-focus-border-color;
+            border-bottom: $form-outline-focus-border-width solid $input-focus-border-color;
+            border-left: $form-outline-focus-border-width solid $input-focus-border-color;
+        }
+
+        &:focus ~ .form-notch .form-notch-trailing,
+        &.active ~ .form-notch .form-notch-trailing {
+            border-left: none;
+            transition: $input-transition;
+        }
+
+        &:focus ~ .form-notch .form-notch-trailing {
+            border-top: $form-outline-focus-border-width solid $input-focus-border-color;
+            border-bottom: $form-outline-focus-border-width solid $input-focus-border-color;
+            border-right: $form-outline-focus-border-width solid $input-focus-border-color;
+        }
+
+        &:disabled,
+        &.disabled,
+        &[readonly] {
+            background-color: $input-disabled-bg;
+        }
+
+        &.form-control-lg {
+            font-size: $input-font-size;
+            line-height: $input-line-height;
+        }
+
+        &.form-control-sm {
+            padding: $form-outline-input-padding-top-sm $form-outline-input-padding-x-sm $form-outline-input-padding-bottom-sm;
+            font-size: $form-outline-input-font-size-sm;
+            line-height: $form-outline-input-line-height-sm;
+
+            ~ .form-label {
+                padding-top: $form-outline-label-padding-top-sm;
+                font-size: $form-outline-label-font-size-sm;
+            }
+
+            &:focus ~ .form-label,
+            &.active ~ .form-label {
+                transform: $form-outline-active-label-transform-sm;
+            }
+        }
+    }
+
+    &.form-white {
+        .form-control {
+            color: $form-white-input-color;
+
+            ~ .form-label {
+                color: $form-white-label-color;
+            }
+
+            ~ .form-notch {
+                div {
+                    border-color: $form-white-notch-div-border-color;
+                }
+            }
+
+            &:focus ~ .form-label {
+                color: $form-white-input-focus-label-color;
+            }
+
+            &:focus ~ .form-notch .form-notch-middle {
+                border-color: $form-white-input-focus-border-color;
+            }
+
+            &:focus ~ .form-notch .form-notch-leading {
+                border-top: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
+                border-bottom: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
+                border-left: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
+            }
+
+            &:focus ~ .form-notch .form-notch-trailing {
+                border-color: $form-white-input-focus-border-color;
+            }
+        }
+    }
+}

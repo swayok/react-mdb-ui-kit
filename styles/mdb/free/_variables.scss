@@ -13,47 +13,6 @@
 //
 // Material styling for outline forms border, label, size
 
-$input-padding-top: 0.33em !default;
-$input-padding-bottom: $input-padding-top !default;
-$input-padding-left: 0.75em !default;
-$input-padding-right: $input-padding-left !default;
-$input-transition: all 0.2s linear !default;
-
-$form-label-left: 0.75rem !default;
-$form-label-padding-top: 0.37rem !default;
-$form-label-transition: all 0.2s ease-out !default;
-$form-label-color: rgba(0, 0, 0, 0.6) !default;
-
-$input-focus-active-label-transform: translateY(-1rem) translateY(0.1rem) scale(0.8) !default;
-$input-focus-label-color: $primary !default;
-$input-focus-border-width: 0.125rem !default;
-$input-focus-border-color: $primary !default;
-$input-disabled-background-color: #e9ecef !default;
-
-$input-padding-left-lg: 0.75em !default;
-$input-padding-right-lg: $input-padding-left-lg !default;
-$input-font-size-lg: 1rem !default;
-$input-line-height-lg: 2.15 !default;
-$input-focus-active-label-transform-lg: translateY(-1.25rem) translateY(0.1rem) scale(0.8) !default;
-
-$input-padding-left-sm: 0.99em !default;
-$input-padding-right-sm: $input-padding-left-sm !default;
-$input-padding-top-sm: 0.43em !default;
-$input-padding-bottom-sm: 0.35em !default;
-$input-font-size-sm: 0.775rem !default;
-$input-line-height-sm: 1.6 !default;
-$input-focus-active-label-transform-sm: translateY(-0.85rem) translateY(0.1rem) scale(0.8) !default;
-
-$form-notch-div-border-color: #bdbdbd !default;
-$form-notch-leading-width: 0.5rem !default;
-$form-notch-leading-border-radius: $border-radius !default;
-$form-notch-middle-max-width: 1rem !default;
-$form-notch-trailing-border-radius: $form-notch-leading-border-radius !default;
-
-$form-label-padding-top-lg: 0.7rem !default;
-$form-label-padding-top-sm: 0.33rem !default;
-$form-label-font-size-sm: 0.775rem !default;
-
 $form-white-input-color: $white !default;
 $form-white-label-color: $gray-50 !default;
 $form-white-notch-div-border-color: $gray-50 !default;

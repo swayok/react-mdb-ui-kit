@@ -12,6 +12,7 @@
 .form-control {
     display: block;
     width: 100%;
+    min-height: auto;
     padding: $input-padding-y $input-padding-x;
     font-family: $input-font-family;
     @include font-size($input-font-size);
@@ -44,7 +45,8 @@
         border-color: $input-focus-border-color;
         outline: 0;
         // DO NOT USE box-shadow() MIXIN HERE!
-        box-shadow: $input-focus-box-shadow;
+        box-shadow: inset 0 0 0 1px $input-focus-border-color;
+        @include transition($input-focus-transition);
     }
 
     // Add some height to date inputs on iOS
@@ -67,12 +69,28 @@
     // HTML5 says that controls under a fieldset > legend:first-child won't be
     // disabled if the fieldset is disabled. Due to implementation difficulty, we
     // don't honor that edge case; we style them as disabled anyway.
+
     &:disabled,
+    &.disabled,
     &[readonly] {
-        background-color: $input-disabled-bg;
-        border-color: $input-disabled-border-color;
         // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
         opacity: 1;
+        cursor: not-allowed;
+        resize: none;
+        outline: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: $input-disabled-color;
+        background-color: $input-disabled-bg;
+        border-color: $input-disabled-border-color;
+    }
+
+    &[readonly] {
+        color: $input-readonly-color;
+        background-color: $input-readonly-bg;
+        border-color: $input-readonly-border-color;
     }
 }
 

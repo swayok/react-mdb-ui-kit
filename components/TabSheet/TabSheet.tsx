@@ -22,32 +22,28 @@ function TabSheet<TabName extends string = string>(
 ) {
 
     const {
-        tag,
+        tag: Tag = Card,
         defaultTab,
         savesStateToUrlQuery,
-        urlQueryArgName,
+        urlQueryArgName = 'tab',
         children,
         ...otherProps
     } = props
-
-    const argName: string = urlQueryArgName || 'tab'
 
     // Аргументы в сроке адреса.
     const [urlQueryParams] = useUrlQueryParams()
 
     // Открытая вкладка.
     const [currentTab, setCurrentTab] = useState<TabName>(() => {
-        if (savesStateToUrlQuery && urlQueryParams.has(argName)) {
+        if (savesStateToUrlQuery && urlQueryParams.has(urlQueryArgName)) {
             // Достаем текущую вкладку из URL Query.
-            return urlQueryParams.get(argName) as TabName
+            return urlQueryParams.get(urlQueryArgName) as TabName
         }
         return defaultTab
     })
 
     // Контекст.
     const Context  = TabSheetContext<TabName>()
-
-    const Tag = tag || Card
 
     return (
         <Tag {...otherProps}>
@@ -59,7 +55,7 @@ function TabSheet<TabName extends string = string>(
                 }}
             >
                 {savesStateToUrlQuery && (
-                    <TabSheetStateToUrlQueryHandler name={argName}/>
+                    <TabSheetStateToUrlQueryHandler name={urlQueryArgName}/>
                 )}
                 {children}
             </Context.Provider>

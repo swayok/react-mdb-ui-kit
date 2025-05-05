@@ -14,7 +14,7 @@ function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllColle
         className,
         children,
         noWrap,
-        tag,
+        tag: Tag = 'div',
         small,
         large,
         ...otherProps
@@ -27,8 +27,6 @@ function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllColle
         large && !small ? 'input-group-sm' : null,
         className
     )
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

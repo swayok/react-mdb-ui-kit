@@ -48,13 +48,6 @@ form {
             color: $input-placeholder-color;
             opacity: 1;
         }
-
-        &[readonly] {
-            background-color: $input-readonly-background-color;
-            cursor: not-allowed;
-            resize: none;
-            outline: none;
-        }
     }
 
     .form-outline-textarea-wrapper {
@@ -62,16 +55,12 @@ form {
         overflow: hidden;
 
         &.focus ~ .form-label {
-            color: $input-focus-label-color;
-            transform: $input-focus-active-label-transform
-        }
-
-        &.form-control-lg.focus ~ .form-label {
-            transform: $input-focus-active-label-transform-lg
+            color: $form-outline-active-label-color;
+            transform: $form-outline-active-label-transform
         }
 
         &.form-control-sm.focus ~ .form-label {
-            transform: $input-focus-active-label-transform-sm
+            transform: $form-outline-active-label-transform-sm
         }
     }
 
@@ -238,7 +227,7 @@ input.autofill-restyle {
 
         &.disabled {
             cursor: not-allowed;
-            background-color: $input-disabled-background-color;
+            background-color: $input-disabled-bg;
         }
 
         &.with-chevron {
@@ -275,7 +264,7 @@ input.autofill-restyle {
 
         input[disabled] {
             cursor: not-allowed;
-            background-color: $input-disabled-background-color;
+            background-color: $input-disabled-bg;
         }
     }
 
@@ -340,7 +329,7 @@ input.autofill-restyle {
 
         input[disabled] {
             cursor: not-allowed;
-            background-color: $input-disabled-background-color;
+            background-color: $input-disabled-bg;
         }
 
     }
@@ -424,7 +413,7 @@ input.autofill-restyle {
 
         input[disabled] {
             cursor: not-allowed;
-            background-color: $input-disabled-background-color;
+            background-color: $input-disabled-bg;
         }
     }
 
@@ -481,45 +470,6 @@ textarea.autogrow {
     }
 }
 
-// Простое поле ввода без украшательств.
-@mixin form-input {
-    background-color: $input-bg;
-    padding: 4px 4px 4px 8px;
-    border: 1px solid $form-notch-div-border-color;
-    border-radius: 8px;
-    font-size: 14px;
-    color: $input-color;
-    width: 100%;
-    line-height: 1.5;
-    background-clip: padding-box;
-
-    &:focus {
-        outline: 0;
-    }
-
-    &:disabled,
-    &.disabled,
-    &[readonly] {
-        background-color: $input-disabled-background-color;
-        color: $input-disabled-text-color;
-        opacity: 1;
-    }
-
-    &::placeholder {
-        color: $input-placeholder-color;
-        opacity: 1;
-    }
-}
-
-input.form-input {
-    @include form-input;
-    height: 32px;
-}
-
-textarea.form-input {
-
-}
-
 .buttons-switch-input {
     .btn-group {
         > .btn {
@@ -533,7 +483,7 @@ textarea.form-input {
 .ckeditor-container {
     label.form-label {
         position: absolute;
-        transform: $input-focus-active-label-transform;
+        transform: $form-outline-active-label-transform;
         background-color: #FFF;
         line-height: 14px;
         padding: 0 2px 0 2px;
