@@ -1,0 +1,55 @@
+@mixin fade($prefix, $transitionDuration) {
+    .#{$prefix}-init,
+    .#{$prefix}-enter,
+    .#{$prefix}-appear, {
+        opacity: 0;
+
+        &.animated-content-container {
+            > * {
+                opacity: 0;
+            }
+        }
+    }
+
+    .#{$prefix}-enter-active,
+    .#{$prefix}-appear-active,
+    .#{$prefix}-enter-done,
+    .#{$prefix}-appear-done {
+        transition: opacity $transitionDuration linear;
+        opacity: 1;
+
+        &.animated-content-container {
+            > * {
+                transition: opacity $transitionDuration linear;
+                opacity: 1;
+            }
+        }
+    }
+
+    .#{$prefix}-exit {
+        opacity: 1;
+
+        &.animated-content-container {
+            > * {
+                opacity: 1;
+            }
+        }
+    }
+
+    .#{$prefix}-exit-active,
+    .#{$prefix}-exit-done {
+        transition: opacity $transitionDuration linear;
+        opacity: 0;
+
+        &.animated-content-container {
+            > * {
+                transition: opacity $transitionDuration linear;
+                opacity: 0;
+            }
+        }
+    }
+
+    .#{$prefix}-exit-done {
+        display: none;
+    }
+}

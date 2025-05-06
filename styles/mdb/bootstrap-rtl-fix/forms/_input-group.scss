@@ -21,12 +21,22 @@
         flex: 1 1 auto;
         width: 1%;
         min-width: 0; // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
+
+        min-height: $input-group-min-height;
+        height: $input-group-height;
+        padding-top: $input-group-padding-y;
+        padding-bottom: $input-group-padding-y;
+        transition: $input-group-transition;
     }
 
     // Bring the "active" form control to the top of surrounding elements
     > .form-control:focus,
     > .form-select:focus {
         z-index: 3;
+        transition: $input-group-focus-transition;
+        border-color: $input-group-focus-border-color;
+        outline: 0;
+        box-shadow: $input-group-focus-box-shadow;
     }
 
     // Ensure buttons are always above inputs for more visually pleasing borders.
@@ -40,6 +50,35 @@
             z-index: 3;
         }
     }
+
+    &.form-outline {
+        .input-group-text {
+            border-left: 0;
+        }
+
+        input + .input-group-text {
+            border: 0;
+            border-left: $input-group-form-outline-border-left-width solid $input-group-form-outline-border-left-color;
+        }
+    }
+
+    > .form-outline:not(:first-child),
+    > .form-outline:not(:first-child) .form-notch-leading,
+    > .form-outline:not(:first-child) .form-control {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+
+    > .form-outline:not(:last-child),
+    > .form-outline:not(:last-child) .form-notch-trailing,
+    > .form-outline:not(:last-child) .form-control {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+}
+
+.input-group > [class*='btn-outline-'] + [class*='btn-outline-'] {
+    border-left: 0;
 }
 
 // Textual addons
@@ -59,6 +98,8 @@
     white-space: nowrap;
     background-color: $input-group-addon-bg;
     border: $input-border-width solid $input-group-addon-border-color;
+    height: $input-group-height;
+    min-height: $input-group-min-height;
     @include border-radius($input-border-radius);
 }
 
@@ -115,12 +156,8 @@
     $validation-messages: '';
     @each $state in map-keys($form-validation-states) {
         $validation-messages: $validation-messages +
-      ':not(.' +
-      unquote($state) +
-      '-tooltip)' +
-      ':not(.' +
-      unquote($state) +
-      '-feedback)';
+      ':not(.' + unquote($state) + '-tooltip)' +
+      ':not(.' + unquote($state) + '-feedback)';
     }
 
     > :not(:first-child):not(.dropdown-menu)#{$validation-messages} {

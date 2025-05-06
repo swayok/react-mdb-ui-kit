@@ -1,3 +1,7 @@
+@import 'mixins/breakpoints';
+@import '../../variables/css_grid';
+@import '../../variables/grid';
+
 .d-grid {
     display: grid;
     justify-content: stretch;

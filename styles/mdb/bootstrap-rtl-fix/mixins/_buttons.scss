@@ -91,18 +91,18 @@
 // scss-docs-start btn-outline-variant-mixin
 @mixin button-outline-variant(
     $color,
-    $hover-background: $btn-outline-hover-bg,
-    $hover-color: color-contrast($hover-background),
-    $active-background: $btn-outline-active-bg,
+    $hover-background: rgba($color, 0.05),
+    $hover-color: $color,
+    $active-background: rgba($color, 0.05),
     $active-border: $color,
-    $active-color: color-contrast($active-background)
+    $active-color: $color
 ) {
     color: $color;
     border-color: $color;
 
     &:hover {
         color: $hover-color;
-        background-color: $active-background;
+        background-color: $hover-background;
     }
 
     &:focus {
@@ -125,6 +125,7 @@
     &:disabled,
     &.disabled {
         color: $color;
+        border-color: $color;
         background-color: transparent;
     }
 }

@@ -1,4 +1,8 @@
-@import "variables/data_grid";
+@import "../../mixins/svg-icons";
+@import "../../variables/table";
+@import "../../variables/data_grid";
+@import "../../variables/zindex";
+@import "../../variables/buttons";
 
 .data-grid-table-container {
     position: relative;
@@ -361,8 +365,8 @@
         }
 
         @include contained-mdi-icon-color-in-link-for-states(
-            $link-hover-color,
-            $link-disabled-color
+            $btn-link-hover-color,
+            $btn-link-disabled-color
         );
 
         &.active.disabled {

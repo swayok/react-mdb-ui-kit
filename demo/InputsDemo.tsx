@@ -1,7 +1,9 @@
+import {mdiAccount} from '@mdi/js'
 import React from 'react'
 import Button from 'swayok-react-mdb-ui-kit/components/Button'
 import Card from 'swayok-react-mdb-ui-kit/components/Card/Card'
 import CardBody from 'swayok-react-mdb-ui-kit/components/Card/CardBody'
+import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
 import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
 import Input from 'swayok-react-mdb-ui-kit/components/Input/Input'
 import InputGroup from 'swayok-react-mdb-ui-kit/components/Input/InputGroup'
@@ -13,6 +15,7 @@ import TabSheetBody from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetBo
 import TabSheetHeader from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabButton'
 import TabSheetTabContent from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabContent'
+import {ButtonColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Демонстрация полей ввода.
 export default function InputsDemo() {
@@ -22,7 +25,7 @@ export default function InputsDemo() {
             <h2 className="text-center text-theme mb-4">Inputs</h2>
 
             <TabSheet
-                defaultTab="tab1"
+                defaultTab="checkboxes"
                 tag="div"
                 savesStateToUrlQuery
             >
@@ -35,6 +38,9 @@ export default function InputsDemo() {
                     </TabSheetTabButton>
                     <TabSheetTabButton name="text">
                         Text
+                    </TabSheetTabButton>
+                    <TabSheetTabButton name="buttons">
+                        Buttons
                     </TabSheetTabButton>
                 </TabSheetHeader>
                 <TabSheetBody>
@@ -56,6 +62,11 @@ export default function InputsDemo() {
                         {renderSimpleTextInputs()}
                         <SectionDivider label="Text inputs (material design)"/>
                         {renderTextInputs()}
+                    </TabContent>
+                </TabSheetBody>
+                <TabSheetBody>
+                    <TabContent name="buttons">
+                        {renderButtons()}
                     </TabContent>
                 </TabSheetBody>
             </TabSheet>
@@ -548,6 +559,116 @@ function renderTextInputs() {
                     wrapperClass="m-0"
                 />
                 <Button color="blue" small>Action</Button>
+            </div>
+        </>
+    )
+}
+
+function renderButtons() {
+    const colors: ButtonColors[] = [
+        'gray',
+        'green',
+        'red',
+        'orange',
+        'blue',
+        'secondary',
+        'light',
+        'dark',
+        'link',
+    ]
+    return (
+        <>
+            <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3">
+                <div>
+                    <div className="mb-3">
+                        <Button>
+                            Button default
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button small>
+                            Button default small
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button large>
+                            Button default large
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button disabled>
+                            Button default disabled
+                        </Button>
+                    </div>
+                </div>
+                <div>
+                    <div className="mb-3">
+                        <Button outline>
+                            Button outline
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button small outline>
+                            Button outline small
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button large outline>
+                            Button outline large
+                        </Button>
+                    </div>
+                    <div className="mb-3">
+                        <Button disabled outline>
+                            Button outline disabled
+                        </Button>
+                    </div>
+                </div>
+            </div>
+            {colors.map(color => (
+                <div
+                    key={color}
+                    className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3 mb-3"
+                >
+                    <div>
+                        <Button color={color}>
+                            Color: {color}
+                        </Button>
+                    </div>
+                    <div>
+                        <Button color={color} disabled>
+                            Color: {color} disabled
+                        </Button>
+                    </div>
+                    <div>
+                        <Button color={color} outline>
+                            Outline color: {color}
+                        </Button>
+                    </div>
+                    <div>
+                        <Button color={color} outline disabled>
+                            Outline color: {color} disabled
+                        </Button>
+                    </div>
+                </div>
+            ))}
+            <div className="mb-3">
+                <Button color="icon">
+                    <Icon path={mdiAccount} />
+                    <span className="ms-1">Button color: icon</span>
+                </Button>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group">
+                    <Button color="green">
+                        Button 1
+                    </Button>
+                    <Button color="blue">
+                        Button 2
+                    </Button>
+                    <Button color="gray">
+                        Button 3
+                    </Button>
+                </div>
             </div>
         </>
     )

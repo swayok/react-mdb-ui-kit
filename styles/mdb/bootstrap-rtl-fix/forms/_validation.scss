@@ -13,3 +13,14 @@
   @include form-validation-state($state, $data...);
 }
 // scss-docs-end form-validation-states-loop
+
+
+.was-validated .input-group .invalid-feedback,
+.was-validated .input-group .valid-feedback {
+    margin-top: 2.5rem;
+}
+
+.input-group .invalid-feedback,
+.input-group .valid-feedback {
+    margin-top: 2.5rem;
+}

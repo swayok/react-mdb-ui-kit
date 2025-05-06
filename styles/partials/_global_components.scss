@@ -1,25 +1,22 @@
 @import '../mdb/bootstrap-rtl-fix/mixins/index';
 @import 'mixins';
 
-@import "css_variables";
-
-@import "animations";
-@import "css_grid";
+@import "../mdb/bootstrap-rtl-fix/animations";
+@import "../mdb/bootstrap-rtl-fix/css_grid";
 @import "helpers";
-@import "icons";
+@import "../mdb/bootstrap-rtl-fix/icons";
 @import "links_and_buttons";
-@import "loading_indicator";
-@import "collapse";
-@import "card";
+@import "../mdb/bootstrap-rtl-fix/loading_indicator";
+@import "../mdb/bootstrap-rtl-fix/collapse";
 @import "dropdown";
 @import "inputs";
-@import "modal";
 @import "react_calendar";
 @import "images_previewer";
 @import "images_carousel_modal";
 @import "rating_stars";
 @import "drag_and_drop";
-@import "data_grid";
+@import "../mdb/bootstrap-rtl-fix/data_grid";
+@import "../mdb/bootstrap-rtl-fix/section-divider";
 
 .smooth-scroll {
     scroll-behavior: smooth;
@@ -91,37 +88,6 @@
         width: 100%;
         height: 100%;
         border: 0;
-    }
-}
-
-.section-divider {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    color: $textColorGray;
-
-    span {
-        white-space: nowrap;
-        display: block;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-    }
-
-    &:before,
-    &:after {
-        content: "";
-        display: block;
-        flex: 1;
-        height: 0;
-        border-top: 1px solid $section-divider-color;
-    }
-
-    &.darker {
-        &:before,
-        &:after {
-            border-top-color: $section-divider-color-darker;
-        }
     }
 }
 

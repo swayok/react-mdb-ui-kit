@@ -1,4 +1,8 @@
 // Компонент <Collapse>.
+
+@import "../../mixins/transition";
+@import "../../variables/transition";
+
 .collapsible {
     overflow: hidden;
 

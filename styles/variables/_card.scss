@@ -12,7 +12,7 @@ $card-spacer-base: 1.5rem !default;
 $card-spacer-y: $card-spacer-base !default;
 $card-spacer-x: $card-spacer-base !default;
 $card-box-shadow: $box-shadow-4 !default;
-$card-title-spacer-y: math.div($spacer, 2) !default;
+$card-title-spacer-y: 0 !default;
 $card-border-width: 0 !default;
 $card-border-radius: $border-radius-xl !default;
 $card-border-color: rgba($black, 0.125) !default;

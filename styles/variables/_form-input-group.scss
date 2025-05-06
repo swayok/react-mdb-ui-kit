@@ -2,10 +2,34 @@
 @import "form-input-base";
 
 // scss-docs-start input-group-variables
+$input-group-height: calc(1.75rem + 0.33rem + 2px) !default;
+$input-group-min-height: $input-group-height !default;
+$input-group-padding-y: 0.27rem !default;
+$input-group-transition: all 0.2s linear !default;
+
+$input-group-focus-transition: $input-group-transition !default;
+$input-group-focus-border-color: $primary !default;
+$input-group-focus-box-shadow: inset 0 0 0 1px $primary !default;
+
+$input-group-lg-height: calc(2.315rem + 0.33rem + 2px) !default;
+$input-group-lg-font-size: 1rem !default;
+$input-group-lg-padding-y: 0.33rem !default;
+$input-group-lg-text-font-size: $input-group-lg-font-size !default;
+
+$input-group-sm-height: calc(1.33rem + 0.33rem + 2px) !default;
+$input-group-sm-min-height: $input-group-sm-height !default;
+$input-group-sm-font-size: 0.775rem !default;
+$input-group-sm-padding-y: $input-group-lg-padding-y !default;
+$input-group-sm-text-font-size: $input-group-sm-font-size !default;
+$input-group-sm-text-line-height: 1.5 !default;
+
+$input-group-form-outline-border-left-width: 1px !default;
+$input-group-form-outline-border-left-color: #bdbdbd !default;
+
 $input-group-addon-padding-y: $input-padding-y !default;
 $input-group-addon-padding-x: $input-padding-x !default;
 $input-group-addon-font-weight: $input-font-weight !default;
 $input-group-addon-color: $input-color !default;
-$input-group-addon-bg: $gray-200 !default;
+$input-group-addon-bg: transparent !default;
 $input-group-addon-border-color: $input-border-color !default;
 // scss-docs-end input-group-variables

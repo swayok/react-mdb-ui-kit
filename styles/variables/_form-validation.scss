@@ -2,6 +2,7 @@
 
 @import "colors";
 @import "form-text";
+@import "form-outline-input";
 
 // scss-docs-start form-feedback-variables
 $form-feedback-margin-top: -0.75rem !default;
@@ -28,3 +29,6 @@ $form-validation-states: (
     ),
 ) !default;
 // scss-docs-end form-validation-states
+
+$input-error-padding-x: $form-outline-input-padding-x;
+$input-error-padding-top: 0.25rem;

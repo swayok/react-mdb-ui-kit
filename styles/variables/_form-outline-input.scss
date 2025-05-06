@@ -36,3 +36,6 @@ $form-outline-label-font-size-sm: $input-font-size-sm !default;
 $form-outline-active-label-transform-sm: translateY(-1rem) translateX(0.1rem) scale(0.9) !default;
 $form-outline-input-font-size-sm: $input-font-size-sm !default;
 $form-outline-input-line-height-sm: $btn-line-height-sm !default;
+
+// Input info:
+$input-info-padding-x: $form-outline-input-padding-x;

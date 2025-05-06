@@ -30,7 +30,7 @@
     $icon,
     $tooltip-color: color-contrast($color),
     $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
-    $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($color, $input-btn-focus-color-opacity)
+    $focus-box-shadow: 0 0 0 $input-focus-width rgba($color, $input-btn-focus-color-opacity)
 ) {
     .#{$state}-feedback {
         position: absolute;
@@ -66,6 +66,8 @@
 
     .form-control {
         @include form-validation-state-selector($state) {
+            margin-bottom: 1rem;
+            background-image: none;
             border-color: $color;
 
             @if $enable-validation-icons {
@@ -79,6 +81,22 @@
             &:focus {
                 border-color: $color;
                 box-shadow: $focus-box-shadow;
+            }
+        }
+    }
+
+    .form-outline {
+        .form-control {
+            @include form-validation-state-selector($state) {
+                ~ .form-label {
+                    color: $color;
+                }
+
+                ~ .form-notch .form-notch-leading,
+                ~ .form-notch .form-notch-middle,
+                ~ .form-notch .form-notch-trailing {
+                    border-color: $color;
+                }
             }
         }
     }
@@ -111,6 +129,10 @@
                 border-color: $color;
                 box-shadow: $focus-box-shadow;
             }
+
+            ~ .#{$state}-feedback {
+                margin-top: 0;
+            }
         }
     }
 
@@ -140,6 +162,7 @@
     .input-group .form-control,
     .input-group .form-select {
         @include form-validation-state-selector($state) {
+            margin-bottom: 0;
             @if $state == 'valid' {
                 z-index: 1;
             } @else if $state == 'invalid' {
@@ -148,6 +171,96 @@
             &:focus {
                 z-index: 3;
             }
+        }
+    }
+
+    input[type='file'].form-control {
+        @include form-validation-state-selector($state) {
+            .#{$state}-feedback {
+                margin-top: 0;
+            }
+
+            &:focus {
+                box-shadow: inset 0 0 0 1px $color;
+                border-color: $color;
+
+                ~ .form-file-label {
+                    box-shadow: none;
+                }
+            }
+
+            &:focus-within {
+                ~ .form-file-label {
+                    .form-file-text,
+                    .form-file-button {
+                        border-color: $color;
+                    }
+                }
+            }
+        }
+    }
+
+    .form-check-input {
+        @include form-validation-state-selector($state) {
+            border-color: $color;
+
+            &:checked {
+                background-color: $color;
+            }
+
+            &:checked {
+                &:focus {
+                    &:before {
+                        box-shadow: 0 0 0 13px $color;
+                    }
+                }
+            }
+
+            &:focus {
+                box-shadow: none;
+
+                &:before {
+                    box-shadow: 0 0 0 13px $color;
+                }
+            }
+
+            ~ .form-check-label {
+                color: $color;
+                margin-bottom: 1rem;
+            }
+
+            &[type='checkbox'] {
+                &:checked {
+                    &:focus {
+                        background-color: $color;
+                        border-color: $color;
+                    }
+                }
+            }
+
+            &[type='radio'] {
+                &:checked {
+                    border-color: $color;
+                    background-color: $white;
+
+                    &:focus {
+                        &:before {
+                            box-shadow: 0 0 0 13px $color;
+                        }
+                    }
+
+                    &:after {
+                        border-color: $color;
+                        background-color: $color;
+                    }
+                }
+            }
+        }
+    }
+
+    .form-check-inline .form-check-input {
+        ~ .#{$state}-feedback {
+            margin-left: 0.5em;
         }
     }
 }

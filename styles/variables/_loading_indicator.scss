@@ -1,0 +1,13 @@
+@import "colors";
+@import "body";
+
+// Индикатор загрузки.
+$loading-indicator-color: $primary;
+$loading-indicator-text-color: $gray-700;
+$loading-indicator-with-logo-color: $primary;
+$loading-indicator-with-logo-text-color: $gray-700;
+
+$loading-indicator-overlay-default-bg: $body-bg;
+$loading-indicator-overlay-default-bg-semitransparent: fade-out($loading-indicator-overlay-default-bg, opacity($loading-indicator-overlay-default-bg) * 0.6);
+$loading-indicator-overlay-white-bg: $white;
+$loading-indicator-overlay-white-bg-semitransparent: fade-out($loading-indicator-overlay-white-bg, opacity($loading-indicator-overlay-white-bg) * 0.6);

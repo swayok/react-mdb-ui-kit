@@ -66,3 +66,9 @@ $input-height-lg: add($input-line-height * 1em, add($input-padding-y-lg * 2, $in
 
 $input-transition: all 0.2s linear, border-color 0.3s linear !default;
 // scss-docs-end form-input-variables
+
+$form-white-input-color: $white !default;
+$form-white-label-color: $gray-50 !default;
+$form-white-notch-div-border-color: $gray-50 !default;
+$form-white-input-focus-label-color: $white !default;
+$form-white-input-focus-border-color: $white !default;

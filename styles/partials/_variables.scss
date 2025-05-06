@@ -8,16 +8,10 @@ $font-family-base: 'Open Sans', Helvetica, Arial, sans-serif !default;
 @import "variables/theme";
 @import "variables/colors";
 @import "variables/inputs_colors";
-@import "variables/spacers";
-@import "variables/collapse";
 
-@import '../mdb/free/variables';
 @import '../mdb/bootstrap-rtl-fix/variables';
 
-@import "variables/css_grid";
-@import "variables/preloader";
+@import "../variables/css_grid";
+@import "../variables/loading_indicator";
 @import "variables/links";
-@import "variables/buttons";
-@import "variables/inputs";
-@import "variables/modal";
-@import "variables/section_divider";
+@import "../variables/section_divider";

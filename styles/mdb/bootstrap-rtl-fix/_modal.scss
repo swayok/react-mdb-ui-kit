@@ -28,6 +28,25 @@
     // We deliberately don't use `-webkit-overflow-scrolling: touch;` due to a
     // gnarly iOS Safari bug: https://bugs.webkit.org/show_bug.cgi?id=158342
     // See also https://github.com/twbs/bootstrap/issues/17695
+
+    .btn-close.floating {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        // Чтобы не просвечивать сквозь окно поверх окна.
+        z-index: $zindex-modal-backdrop - 10;
+    }
+
+    // Depth 2 z-index: +1 - backdrop, +2 - modal.
+    // Depth 3 z-index: +3 - backdrop, +4 - modal.
+
+    &.depth-2 {
+        z-index: $zindex-modal + 2;
+    }
+
+    &.depth-3 {
+        z-index: $zindex-modal + 4;
+    }
 }
 
 // Shell div to position the modal with bottom padding
@@ -60,6 +79,13 @@
     .modal-content {
         max-height: 100%;
         overflow: hidden;
+
+        > .async-data-loading-container {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
     }
 
     .modal-body {
@@ -109,6 +135,14 @@
     &.show {
         opacity: $modal-backdrop-opacity;
     }
+
+    &.depth-2 {
+        z-index: $zindex-modal + 1;
+    }
+
+    &.depth-3 {
+        z-index: $zindex-modal + 3;
+    }
 }
 
 // Modal header
@@ -116,7 +150,7 @@
 .modal-header {
     display: flex;
     flex-shrink: 0;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
     padding: $modal-header-padding;
     border-bottom: $modal-header-border-width solid $modal-header-border-color;
@@ -125,6 +159,14 @@
     .btn-close {
         padding: (math.div($modal-header-padding-y, 2)) (math.div($modal-header-padding-x, 2));
         margin: (math.div($modal-header-padding-y, -2)) (math.div($modal-header-padding-x, -2)) (math.div($modal-header-padding-y, -2)) auto;
+    }
+
+    .layout-mobile & {
+        .modal-title {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            align-self: center;
+        }
     }
 }
 

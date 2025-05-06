@@ -110,3 +110,7 @@ $form-checkbox-colors: (
     'orange': $warning
 ) !default;
 // scss-docs-end form-switch-loop
+
+// scss-docs-start icon-colors-loop
+$icon-colors: map_merge($colors, $theme-colors) !default;
+// scss-docs-end icon-colors-loop

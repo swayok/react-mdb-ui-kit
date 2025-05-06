@@ -1,5 +1,7 @@
 // overlay animation
 
+@import "../../variables/loading_indicator";
+
 .loading-indicator-enter,
 .loading-indicator-appear {
     opacity: 0;
@@ -105,19 +107,19 @@
 
         &,
         &.solid-default {
-            background-color: $preloader-overlay-default-bg;
+            background-color: $loading-indicator-overlay-default-bg;
         }
 
         &.semitransparent-default {
-            background-color: $preloader-overlay-default-bg-semitransparent;
+            background-color: $loading-indicator-overlay-default-bg-semitransparent;
         }
 
         &.solid-white {
-            background-color: $preloader-overlay-white-bg;
+            background-color: $loading-indicator-overlay-white-bg;
         }
 
         &.semitransparent-white {
-            background-color: $preloader-overlay-white-bg-semitransparent;
+            background-color: $loading-indicator-overlay-white-bg-semitransparent;
         }
     }
 
@@ -146,7 +148,7 @@
                         width: 60px;
                         height: 60px;
                         border-width: 2px;
-                        border-color: $preloader-with-logo-color;
+                        border-color: $loading-indicator-with-logo-color;
                     }
 
                     &:after {
@@ -155,7 +157,7 @@
                         margin-top: -20px;
                         margin-left: -20px;
                         border-width: 2px;
-                        border-color: $preloader-with-logo-color;
+                        border-color: $loading-indicator-with-logo-color;
                     }
                 }
             }
@@ -176,7 +178,7 @@
                     left: 50%;
                     margin-top: -25px;
                     margin-left: -25px;
-                    border: 2px solid $preloader-сolor;
+                    border: 2px solid $loading-indicator-color;
                     border-radius: 50%;
                     border-left-color: transparent !important;
                     border-right-color: transparent !important;
@@ -192,7 +194,7 @@
                     left: 50%;
                     margin-top: -18px;
                     margin-left: -18px;
-                    border: 2px solid $preloader-сolor;
+                    border: 2px solid $loading-indicator-color;
                     border-radius: 50%;
                     border-left-color: transparent !important;
                     border-right-color: transparent !important;
@@ -215,12 +217,12 @@
         .loading-indicator-label {
             margin-top: 0.5em;
             font-size: 1.25em;
-            color: $preloader-text-color;
+            color: $loading-indicator-text-color;
         }
 
         &.with-logo {
             .loading-indicator-label {
-                color: $preloader-with-logo-text-color;
+                color: $loading-indicator-with-logo-text-color;
             }
         }
     }
