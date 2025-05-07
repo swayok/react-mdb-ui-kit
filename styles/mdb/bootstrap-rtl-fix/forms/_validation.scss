@@ -14,6 +14,16 @@
 }
 // scss-docs-end form-validation-states-loop
 
+.form-control {
+    &.is-invalid,
+    &.is-valid {
+        margin-bottom: $form-input-with-feedback-margin-bottom;
+
+        &.no-message {
+            margin-bottom: 0;
+        }
+    }
+}
 
 .was-validated .input-group .invalid-feedback,
 .was-validated .input-group .valid-feedback {
@@ -23,4 +33,43 @@
 .input-group .invalid-feedback,
 .input-group .valid-feedback {
     margin-top: 2.5rem;
+}
+
+// Ошибка формы (не путать с ошибкой поля ввода!).
+.form-error {
+    color: $danger;
+    text-align: center;
+}
+
+// Контейнер поля ввода с возможностью отображения ошибки.
+.form-validation-container {
+
+    transition: padding 0.3s;
+    text-align: left;
+
+    .form-validation-error-container {
+        .invalid-feedback,
+        .valid-feedback {
+            display: block !important;
+            position: relative !important;
+            margin-top: 0 !important;
+            margin-left: 0 !important;
+            padding: $input-error-padding-top $input-error-padding-x 0 $input-error-padding-x;
+        }
+    }
+
+    .form-validation-input {
+        &.form-outline,
+        > .input-group {
+            .form-control.is-invalid {
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+
+    .form-dropdown-select & {
+        .form-validation-input .form-control.is-invalid {
+            margin-bottom: 0 !important;
+        }
+    }
 }

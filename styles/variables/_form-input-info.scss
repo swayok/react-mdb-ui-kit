@@ -1,0 +1,9 @@
+@import "form-outline-input";
+@import "typography";
+@import "colors";
+
+// Input info:
+$form-input-info-color: $gray-700 !default;
+$form-input-info-font-size: $font-size-sm !default;
+$form-input-info-padding-x: $form-outline-input-padding-x !default;
+$form-input-info-margin-top: -1rem !default;

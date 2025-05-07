@@ -5,7 +5,9 @@
 @import "form-outline-input";
 
 // scss-docs-start form-feedback-variables
-$form-feedback-margin-top: -0.75rem !default;
+$form-input-with-feedback-margin-bottom: $spacer * 1.75 !default;
+$form-feedback-margin-top: -$spacer * 1.5 !default;
+$form-feedback-margin-left: $input-padding-x !default;
 $form-feedback-font-size: $font-size-sm !default;
 $form-feedback-font-style: $form-text-font-style !default;
 $form-feedback-valid-color: $success !default;

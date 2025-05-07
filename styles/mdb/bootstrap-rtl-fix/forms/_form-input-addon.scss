@@ -1,0 +1,25 @@
+@import "../../../variables/form-input-addon";
+
+.form-outline {
+    .form-input-addon-text {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $form-outline-addon-bg;
+        padding: $form-outline-addon-padding-y $form-outline-addon-padding-x;
+        color: $form-outline-addon-color;
+
+        .form-input-addon-text-content {
+            min-width: $form-outline-addon-min-width;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+}

@@ -12,11 +12,10 @@
 .btn {
     display: inline-block;
     font-family: $btn-font-family;
-    font-weight: $btn-font-weight;
     color: $body-color;
     text-align: center;
     text-decoration: if($link-decoration == none, null, none);
-    text-transform: uppercase;
+    text-transform: $btn-text-transform;
     white-space: $btn-white-space;
     vertical-align: bottom;
     cursor: if($enable-button-pointers, pointer, null);
@@ -30,6 +29,7 @@
             $btn-padding-bottom,
             $btn-padding-x,
             $btn-font-size,
+            $btn-font-weight,
             $btn-border-radius,
             $btn-line-height
     );
@@ -80,7 +80,8 @@
             $btn-outline-padding-top,
             $btn-outline-padding-x,
             $btn-outline-padding-bottom,
-            $btn-outline-padding-x
+            $btn-outline-padding-x,
+            $btn-font-size
     );
 
     &:hover {
@@ -114,7 +115,8 @@
                 $btn-outline-padding-top-lg,
                 $btn-outline-padding-x-lg,
                 $btn-outline-padding-bottom-lg,
-                $btn-outline-padding-x-lg
+                $btn-outline-padding-x-lg,
+                $btn-font-size-lg
         );
     }
 
@@ -123,7 +125,8 @@
                 $btn-outline-padding-top-sm,
                 $btn-outline-padding-x-sm,
                 $btn-outline-padding-bottom-sm,
-                $btn-outline-padding-x-sm
+                $btn-outline-padding-x-sm,
+                $btn-font-size-sm
         );
     }
 }
@@ -206,6 +209,7 @@
             $btn-padding-bottom-lg,
             $btn-padding-x-lg,
             $btn-font-size-lg,
+            $btn-font-weight-lg,
             $btn-border-radius-lg,
             $btn-line-height-lg
     );
@@ -218,6 +222,7 @@
             $btn-padding-bottom-sm,
             $btn-padding-x-sm,
             $btn-font-size-sm,
+            $btn-font-weight-sm,
             $btn-border-radius-sm,
             $btn-line-height-sm
     );

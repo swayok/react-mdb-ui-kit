@@ -1,0 +1,16 @@
+@function btn-padding-bottom(
+    $padding-top,
+    $padding-bottom,
+    $text-transform,
+    $font-size
+) {
+    @if ($padding-bottom) {
+        @return $padding-bottom
+    }
+    @if $text-transform == uppercase {
+        // Из-за uppercase текст визуально смещается вверх и нужно это компенсировать.
+        @return $padding-top - ($font-size * 0.1)
+    } @else {
+        @return $padding-top
+    }
+}

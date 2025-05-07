@@ -34,12 +34,12 @@ function Collapse(props: CollapseProps) {
         wrapperRef,
         onTransitionEnd,
         alwaysMounted,
-        tag,
+        tag: Tag = 'div',
         ...otherProps
     } = props
 
     const localRef = useRef<HTMLElement>(null)
-    const containerRef: React.RefObject<HTMLElement | null> = wrapperRef || localRef
+    const containerRef: React.RefObject<HTMLElement | null> = wrapperRef ?? localRef
     const isRenderedOnce = useRef<boolean>(false)
     const cssProperty: 'width' | 'height' = horizontal ? 'width' : 'height'
 
@@ -53,8 +53,7 @@ function Collapse(props: CollapseProps) {
         if (containerRef.current) {
             const resizeObserver = new ResizeObserver(() => {
                 if (
-                    containerRef.current
-                    && containerRef.current.classList.contains('opened')
+                    containerRef.current?.classList.contains('opened')
                 ) {
                     updateContentSize(containerRef.current)
                 }
@@ -161,8 +160,6 @@ function Collapse(props: CollapseProps) {
         alwaysMounted ? 'd-block' : null,
         className
     ), [className, horizontal, navbar, alwaysMounted])
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

@@ -1,4 +1,4 @@
-import {mdiAccount} from '@mdi/js'
+import {mdiAccount, mdiTranslate} from '@mdi/js'
 import React from 'react'
 import Button from 'swayok-react-mdb-ui-kit/components/Button'
 import Card from 'swayok-react-mdb-ui-kit/components/Card/Card'
@@ -6,7 +6,11 @@ import CardBody from 'swayok-react-mdb-ui-kit/components/Card/CardBody'
 import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
 import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
 import Input from 'swayok-react-mdb-ui-kit/components/Input/Input'
+import InputAddonIcon from 'swayok-react-mdb-ui-kit/components/Input/InputAddonIcon'
+import InputAddonText from 'swayok-react-mdb-ui-kit/components/Input/InputAddonText'
 import InputGroup from 'swayok-react-mdb-ui-kit/components/Input/InputGroup'
+import InputGroupText from 'swayok-react-mdb-ui-kit/components/Input/InputGroupText'
+import InputInfo from 'swayok-react-mdb-ui-kit/components/Input/InputInfo'
 import Radio from 'swayok-react-mdb-ui-kit/components/Input/Radio'
 import Switch from 'swayok-react-mdb-ui-kit/components/Input/Switch'
 import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
@@ -39,6 +43,9 @@ export default function InputsDemo() {
                     <TabSheetTabButton name="text">
                         Text
                     </TabSheetTabButton>
+                    <TabSheetTabButton name="text-area">
+                        Text Area
+                    </TabSheetTabButton>
                     <TabSheetTabButton name="buttons">
                         Buttons
                     </TabSheetTabButton>
@@ -62,6 +69,14 @@ export default function InputsDemo() {
                         {renderSimpleTextInputs()}
                         <SectionDivider label="Text inputs (material design)"/>
                         {renderTextInputs()}
+                    </TabContent>
+                </TabSheetBody>
+                <TabSheetBody>
+                    <TabContent name="text-area">
+                        <SectionDivider label="Text areas (simple)"/>
+                        {renderSimpleTextAreaInputs()}
+                        <SectionDivider label="Text areas (material design)"/>
+                        {renderTextAreaInputs()}
                     </TabContent>
                 </TabSheetBody>
                 <TabSheetBody>
@@ -431,7 +446,7 @@ function renderSimpleTextInputs() {
                 <input
                     className="form-control mb-4"
                     readOnly
-                    value="Read only"
+                    defaultValue="Read only"
                 />
             </div>
             <div>
@@ -439,7 +454,7 @@ function renderSimpleTextInputs() {
                 <input
                     className="form-control mb-4"
                     disabled
-                    value="Disabled"
+                    defaultValue="Disabled"
                 />
             </div>
 
@@ -456,6 +471,23 @@ function renderSimpleTextInputs() {
                     className="form-control form-control-lg mb-4"
                     placeholder="Placeholder"
                 />
+            </div>
+            <div className="mb-4">
+                <label className="form-label">Input normal invalid</label>
+                <input
+                    className="form-control is-invalid"
+                    defaultValue="value"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="form-label">Input normal invalid with message</label>
+                <input
+                    className="form-control is-invalid"
+                    defaultValue="value"
+                />
+                <div className="invalid-feedback">
+                    Validation error
+                </div>
             </div>
         </>
     )
@@ -532,6 +564,16 @@ function renderTextInputs() {
                 value="Value"
                 large
             />
+            <Input
+                label="Input with addon"
+            >
+                <InputAddonText>Addon</InputAddonText>
+            </Input>
+            <Input
+                label="Input with addon"
+            >
+                <InputAddonIcon path={mdiAccount}/>
+            </Input>
             <InputGroup>
                 <Input
                     label="Input normal"
@@ -540,10 +582,84 @@ function renderTextInputs() {
             </InputGroup>
             <InputGroup>
                 <Input
+                    label="Input normal"
+                />
+                <InputGroupText>Text</InputGroupText>
+            </InputGroup>
+            <InputGroup>
+                <Input
+                    label="Input normal in group alone"
+                />
+            </InputGroup>
+            <InputGroup>
+                <Input
+                    label="Input normal"
+                />
+                <Button color="blue">Action</Button>
+            </InputGroup>
+            <InputGroup>
+                <InputGroupText>Text</InputGroupText>
+                <Input
+                    label="Input normal"
+                />
+                <Button color="blue" small>Action</Button>
+            </InputGroup>
+            <InputGroup>
+                <Button color="blue" small>Action</Button>
+                <Input
+                    label="Input small"
+                    small
+                />
+                <InputGroupText>Text</InputGroupText>
+            </InputGroup>
+            <InputGroup>
+                <Input
+                    label="Input small"
+                    small
+                />
+                <InputGroupText small>Text</InputGroupText>
+            </InputGroup>
+            <InputGroup>
+                <Button color="blue" small>Action</Button>
+                <Input
+                    label="Input small"
+                    small
+                />
+                <InputGroupText small>Text</InputGroupText>
+            </InputGroup>
+            <InputGroup>
+                <InputGroupText small>Text</InputGroupText>
+                <Input
                     label="Input small"
                     small
                 />
                 <Button color="blue" small>Action</Button>
+            </InputGroup>
+            <InputGroup className="with-input-label mb-4">
+                <Input
+                    label="In group With Loooooooooooooooooooooooooooooooooooooooooooooooooooong label"
+                    value="Value"
+                />
+                <InputGroupText className="px-3">
+                    <Icon
+                        path={mdiTranslate}
+                        className="text-muted"
+                    />
+                </InputGroupText>
+            </InputGroup>
+            <InputGroup>
+                <Input
+                    label="Input 1"
+                    grouped="first"
+                />
+                <Input
+                    label="Input 2"
+                    grouped="center"
+                />
+                <Input
+                    label="Input 3"
+                    grouped="last"
+                />
             </InputGroup>
             <div className="d-flex flex-row align-items-center justify-content-start gap-3 mb-4">
                 <Input
@@ -560,6 +676,192 @@ function renderTextInputs() {
                 />
                 <Button color="blue" small>Action</Button>
             </div>
+            <Input
+                label="Input with info"
+                value="Value"
+            />
+            <InputInfo>
+                Additional information
+            </InputInfo>
+
+            <Input
+                label="Input invalid with info"
+                value="Value"
+                invalid
+                validationMessage="Validation error"
+            />
+            <InputInfo>
+                Additional information
+            </InputInfo>
+        </>
+    )
+}
+
+function renderSimpleTextAreaInputs() {
+    return (
+        <>
+            <div>
+                <label className="form-label">Input normal</label>
+                <textarea
+                    className="form-control mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input readonly</label>
+                <textarea
+                    className="form-control mb-4"
+                    readOnly
+                    defaultValue="Read only"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input disabled</label>
+                <textarea
+                    className="form-control mb-4"
+                    disabled
+                    defaultValue="Disabled"
+                />
+            </div>
+
+            <div>
+                <label className="form-label">Input small</label>
+                <textarea
+                    className="form-control form-control-sm mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+            <div>
+                <label className="form-label">Input large</label>
+                <textarea
+                    className="form-control form-control-lg mb-4"
+                    placeholder="Placeholder"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="form-label">Input normal invalid</label>
+                <textarea
+                    className="form-control is-invalid"
+                    defaultValue="value"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="form-label">Input normal invalid with message</label>
+                <textarea
+                    className="form-control is-invalid"
+                    defaultValue="value"
+                />
+                <div className="invalid-feedback">
+                    Validation error
+                </div>
+            </div>
+        </>
+    )
+}
+
+function renderTextAreaInputs() {
+    return (
+        <>
+            <Input
+                textarea
+                label="Input normal"
+            />
+
+            <Input
+                textarea
+                label="Input active label"
+                active
+            />
+
+            <Input
+                textarea
+                placeholder="Input no label"
+                active
+            />
+
+            <Input
+                textarea
+                label="Input with placeholder"
+                active
+                placeholder="Placeholder"
+            />
+
+            <Input
+                textarea
+                label="Input with value"
+                value="Value"
+            />
+
+            <Input
+                textarea
+                label="Input readonly"
+                value="Value"
+                readOnly
+            />
+
+            <Input
+                textarea
+                label="Input disabled"
+                value="Value"
+                disabled
+            />
+
+            <Input
+                textarea
+                label="Input invalid"
+                value="Value"
+                invalid
+            />
+
+            <Input
+                textarea
+                label="Input invalid with message"
+                value="Value"
+                invalid
+                validationMessage="Validation error"
+            />
+
+            <Input
+                textarea
+                label="Input small"
+                small
+            />
+            <Input
+                textarea
+                label="Input small"
+                value="Value"
+                small
+            />
+            <Input
+                textarea
+                label="Input large"
+                large
+            />
+            <Input
+                textarea
+                label="Input large"
+                value="Value"
+                large
+            />
+            <Input
+                textarea
+                label="Input with info"
+                value="Value"
+            />
+            <InputInfo>
+                Additional information
+            </InputInfo>
+
+            <Input
+                textarea
+                label="Input invalid with info"
+                value="Value"
+                invalid
+                validationMessage="Validation error"
+            />
+            <InputInfo>
+                Additional information
+            </InputInfo>
         </>
     )
 }

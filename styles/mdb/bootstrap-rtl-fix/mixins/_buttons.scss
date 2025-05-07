@@ -4,6 +4,7 @@
 // and disabled options for all buttons
 
 @import "../../../functions/color-utils";
+@import "../../../functions/button_utils";
 @import "gradients";
 @import "box-shadow";
 @import "border-radius";
@@ -139,12 +140,20 @@
     $padding-bottom,
     $padding-left,
     $font-size,
+    $font-weight,
     $border-radius,
     $line-height
 ) {
-    padding: $padding-top $padding-right $padding-bottom $padding-left;
+    $padding-bottom-modified: btn-padding-bottom(
+            $padding-top,
+            $padding-bottom,
+            $btn-text-transform,
+            $font-size,
+    );
+    padding: $padding-top $padding-right $padding-bottom-modified $padding-left;
     line-height: $line-height;
     @include font-size($font-size);
+    font-weight: $font-weight;
     // Manually declare to provide an override to the browser default
     @include border-radius($border-radius, 0);
 }
@@ -154,9 +163,16 @@
     $padding-top,
     $padding-right,
     $padding-bottom,
-    $padding-left
+    $padding-left,
+    $font-size,
 ) {
-    padding: $padding-top $padding-right $padding-bottom $padding-left;
+    $padding-bottom-modified: btn-padding-bottom(
+            $padding-top,
+            $padding-bottom,
+            $btn-text-transform,
+            $font-size,
+    );
+    padding: $padding-top $padding-right $padding-bottom-modified $padding-left;
 }
 
 // scss-docs-end btn-size-mixin

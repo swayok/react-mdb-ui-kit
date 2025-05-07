@@ -3,15 +3,16 @@
 //
 
 @import "../../../variables/form-outline-input";
+@import "../../../mixins/svg-icons";
 
 .form-outline {
     position: relative;
 
     .form-control {
-        min-height: auto;
-        padding: $from-outline-input-padding-top $form-outline-input-padding-x $form-outline-input-padding-bottom;
+        min-height: $form-outline-input-min-height;
+        padding: $form-outline-input-padding-top $form-outline-input-padding-x $form-outline-input-padding-bottom;
         border: 0;
-        background: transparent;
+        background: $form-outline-input-bg;
         transition: $form-outline-input-transition;
         font-size: $form-outline-input-font-size;
         line-height: $form-outline-input-line-height;
@@ -45,8 +46,7 @@
 
             div {
                 pointer-events: none;
-                border: $border-width solid;
-                border-color: $form-notch-div-border-color;
+                border: $border-width solid $form-notch-div-border-color;
                 box-sizing: border-box;
                 background: transparent;
             }
@@ -138,10 +138,21 @@
             border-right: $form-outline-focus-border-width solid $input-focus-border-color;
         }
 
+        &.active ~ .form-label.unlimited-width {
+            width: auto !important;
+            max-width: none !important;
+            z-index: 2;
+        }
+
         &:disabled,
         &.disabled,
         &[readonly] {
             background-color: $input-disabled-bg;
+        }
+
+        &.no-label::placeholder {
+            color: $input-placeholder-color;
+            opacity: 1;
         }
 
         &.form-control-lg {
@@ -150,6 +161,7 @@
         }
 
         &.form-control-sm {
+            min-height: $form-outline-input-min-height-sm;
             padding: $form-outline-input-padding-top-sm $form-outline-input-padding-x-sm $form-outline-input-padding-bottom-sm;
             font-size: $form-outline-input-font-size-sm;
             line-height: $form-outline-input-line-height-sm;
@@ -163,6 +175,52 @@
             &.active ~ .form-label {
                 transform: $form-outline-active-label-transform-sm;
             }
+        }
+    }
+
+    // Имитация поля ввода.
+    &.readonly-pseudoinput {
+        position: relative;
+
+        div.form-control {
+            background-color: $input-bg;
+            cursor: pointer;
+            line-height: 1.3; //< needed to fix 40.5 height instead of 40.0
+
+            &.disabled {
+                cursor: not-allowed;
+                background-color: $input-disabled-bg;
+            }
+
+            &.with-chevron {
+                padding-right: 30px;
+            }
+
+            > span {
+                vertical-align: middle;
+            }
+        }
+
+        .chevron {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            margin-top: -10px;
+            @include mdi-icon-color($text-muted);
+        }
+    }
+
+    .form-outline-textarea-wrapper {
+        border-radius: $form-notch-border-radius;
+        overflow: hidden;
+
+        &.focus ~ .form-label {
+            color: $form-outline-active-label-color;
+            transform: $form-outline-active-label-transform
+        }
+
+        &.form-control-sm.focus ~ .form-label {
+            transform: $form-outline-active-label-transform-sm
         }
     }
 

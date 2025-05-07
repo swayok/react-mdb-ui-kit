@@ -2,15 +2,20 @@
 // Base styles
 //
 
+@use "sass:math";
 @import "../mixins/rfs";
 @import "../mixins/border-radius";
+@import "../../../functions/calc-utils";
+@import "../../../functions/button_utils";
 @import "../../../variables/form-input-group";
 @import "../../../variables/form-select";
 @import "../../../variables/form-validation";
+@import "../../../variables/buttons";
 
 .input-group {
     position: relative;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap; // For form validation feedback
     align-items: stretch;
     width: 100%;
@@ -43,8 +48,37 @@
     // This isn't needed for `.input-group-text` since it shares the same border-color
     // as our inputs.
     .btn {
+        $input-group-btn-padding-top: math.div($form-outline-input-padding-top + $form-outline-input-padding-bottom, 2);
         position: relative;
         z-index: 2;
+        padding-top: $input-group-btn-padding-top;
+        padding-bottom: btn-padding-bottom(
+                $input-group-btn-padding-top,
+                null,
+                $btn-text-transform,
+                $btn-font-size
+        );
+
+        &.btn-sm {
+            $input-group-btn-padding-top-sm: math.div($form-outline-input-padding-top-sm + $form-outline-input-padding-bottom-sm, 2);
+            padding-top: $input-group-btn-padding-top-sm;
+            padding-bottom: btn-padding-bottom(
+                    $input-group-btn-padding-top-sm,
+                    null,
+                    $btn-text-transform,
+                    $btn-font-size-sm
+            );
+        }
+
+        &.btn-lg {
+            padding-top: $input-group-btn-padding-top;
+            padding-bottom: btn-padding-bottom(
+                    $input-group-btn-padding-top,
+                    null,
+                    $btn-text-transform,
+                    $btn-font-size-sm
+            );
+        }
 
         &:focus {
             z-index: 3;
@@ -52,6 +86,7 @@
     }
 
     &.form-outline {
+
         .input-group-text {
             border-left: 0;
         }
@@ -60,6 +95,10 @@
             border: 0;
             border-left: $input-group-form-outline-border-left-width solid $input-group-form-outline-border-left-color;
         }
+    }
+
+    .form-outline {
+        margin-bottom: 0 !important;
     }
 
     > .form-outline:not(:first-child),
@@ -75,6 +114,12 @@
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
     }
+
+    &.with-input-label {
+        .form-outline {
+            flex: 1;
+        }
+    }
 }
 
 .input-group > [class*='btn-outline-'] + [class*='btn-outline-'] {
@@ -89,8 +134,9 @@
 .input-group-text {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     padding: $input-group-addon-padding-y $input-group-addon-padding-x;
-    @include font-size($input-font-size); // Match inputs
+    @include font-size($input-group-addon-font-size); // Match inputs
     font-weight: $input-group-addon-font-weight;
     line-height: $input-line-height;
     color: $input-group-addon-color;
@@ -101,34 +147,59 @@
     height: $input-group-height;
     min-height: $input-group-min-height;
     @include border-radius($input-border-radius);
+
+    &.input-group-text-sm {
+        padding: $input-group-addon-padding-y-sm $input-group-addon-padding-x-sm;
+        @include font-size($input-group-addon-font-size-sm);
+    }
+
+    &.input-group-text-lg {
+        padding: $input-group-addon-padding-y-lg $input-group-addon-padding-x-lg;
+        @include font-size($input-group-addon-font-size-lg);
+    }
 }
 
-// Sizing
-//
-// Remix the default form control sizing classes into new ones for easier
-// manipulation.
+// Несколько .form-outline полей ввода в группе.
+.input-group-item {
+    &.first {
+        &.form-outline,
+        > .form-outline {
+            &,
+            input,
+            .form-notch-trailing {
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+            }
+        }
+    }
 
-.input-group-lg > .form-control,
-.input-group-lg > .form-select,
-.input-group-lg > .input-group-text,
-.input-group-lg > .btn {
-    padding: $input-padding-y-lg $input-padding-x-lg;
-    @include font-size($input-font-size-lg);
-    @include border-radius($input-border-radius-lg);
-}
+    &.center {
+        margin-left: -0.6px !important;
 
-.input-group-sm > .form-control,
-.input-group-sm > .form-select,
-.input-group-sm > .input-group-text,
-.input-group-sm > .btn {
-    padding: $input-padding-y-sm $input-padding-x-sm;
-    @include font-size($input-font-size-sm);
-    @include border-radius($input-border-radius-sm);
-}
+        &.form-outline,
+        > .form-outline {
+            &,
+            input,
+            .form-notch-leading,
+            .form-notch-trailing {
+                border-radius: 0 !important;
+            }
+        }
+    }
 
-.input-group-lg > .form-select,
-.input-group-sm > .form-select {
-    padding-right: $form-select-padding-x + $form-select-indicator-padding;
+    &.last {
+        margin-left: -0.6px !important;
+
+        &.form-outline,
+        > .form-outline {
+            &,
+            input,
+            .form-notch-leading {
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+            }
+        }
+    }
 }
 
 // Rounded corners

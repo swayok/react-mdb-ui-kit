@@ -3,28 +3,22 @@ import clsx from 'clsx'
 import {ComponentPropsWithModifiableTag} from '../../types/Common'
 
 export interface InputGroupProps extends ComponentPropsWithModifiableTag {
-    noWrap?: boolean,
-    small?: boolean,
-    large?: boolean,
+    noWrap?: boolean
 }
 
 // Группа для объединения поля ввода и дополнений к нему (кнопки, подписи, иконки).
 function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllCollection>) {
     const {
-        className,
+        className = 'mb-4',
         children,
         noWrap,
         tag: Tag = 'div',
-        small,
-        large,
         ...otherProps
     } = props
 
     const classes = clsx(
         'input-group',
         noWrap ? 'flex-nowrap' : null,
-        small && !large ? 'input-group-sm' : null,
-        large && !small ? 'input-group-sm' : null,
         className
     )
 

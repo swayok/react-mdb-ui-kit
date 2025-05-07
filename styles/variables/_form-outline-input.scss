@@ -2,14 +2,15 @@
 
 @import "colors";
 @import "borders";
-@import "buttons";
 @import "form-input-base";
 
-$from-outline-input-padding-top: $btn-padding-top !default;
-$form-outline-input-padding-bottom: $btn-padding-bottom !default;
+$form-outline-input-min-height: 2.875rem !default;
+$form-outline-input-padding-top: 0.625rem !default;
+$form-outline-input-padding-bottom: 0.625rem !default;
 $form-outline-input-padding-x: 1rem !default;
 $form-outline-input-font-size: $input-font-size !default;
-$form-outline-input-line-height: $btn-line-height !default;
+$form-outline-input-bg: $input-bg !default;
+$form-outline-input-line-height: 1.5 !default;
 $form-outline-input-transition: all 0.2s linear !default;
 
 $form-notch-div-border-color: $input-border-color !default;
@@ -18,7 +19,7 @@ $form-notch-border-radius: $input-border-radius !default;
 $form-notch-middle-max-width: 1rem !default;
 
 $form-outline-label-left: $form-outline-input-padding-x !default;
-$form-outline-label-padding-top: $from-outline-input-padding-top * 1.075 !default;
+$form-outline-label-padding-top: $form-outline-input-padding-top * 1.075 !default;
 $form-outline-label-transition: all 0.25s linear !default;
 $form-outline-label-color: $input-placeholder-color !default;
 
@@ -28,14 +29,12 @@ $form-outline-active-label-color: $primary !default;
 $form-outline-focus-border-width: 0.125rem !default;
 
 // Small size:
+$form-outline-input-min-height-sm: auto !default;
 $form-outline-input-padding-x-sm: $form-outline-input-padding-x !default;
-$form-outline-input-padding-top-sm: $btn-padding-top-sm !default;
-$form-outline-input-padding-bottom-sm: $btn-padding-bottom-sm !default;
+$form-outline-input-padding-top-sm: 0.375rem !default;
+$form-outline-input-padding-bottom-sm: 0.375rem !default;
 $form-outline-label-padding-top-sm: $form-outline-input-padding-top-sm !default;
 $form-outline-label-font-size-sm: $input-font-size-sm !default;
 $form-outline-active-label-transform-sm: translateY(-1rem) translateX(0.1rem) scale(0.9) !default;
 $form-outline-input-font-size-sm: $input-font-size-sm !default;
-$form-outline-input-line-height-sm: $btn-line-height-sm !default;
-
-// Input info:
-$input-info-padding-x: $form-outline-input-padding-x;
+$form-outline-input-line-height-sm: $form-outline-input-line-height !default;

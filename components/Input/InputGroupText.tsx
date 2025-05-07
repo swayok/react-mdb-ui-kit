@@ -3,7 +3,9 @@ import clsx from 'clsx'
 import {ComponentPropsWithModifiableTag} from '../../types/Common'
 
 export interface InputGroupTextProps extends ComponentPropsWithModifiableTag {
-    noBorder?: boolean,
+    noBorder?: boolean
+    small?: boolean
+    large?: boolean
 }
 
 // Текст для вставки в <InputGroup>.
@@ -12,17 +14,19 @@ function InputGroupText(props: InputGroupTextProps, ref: React.ForwardedRef<HTML
         className,
         children,
         noBorder,
-        tag,
+        small,
+        large,
+        tag: Tag = 'div',
         ...otherProps
     } = props
 
     const classes = clsx(
         'input-group-text',
         noBorder ? 'border-0' : null,
+        small && !large ? 'input-group-text-sm' : null,
+        !small && large ? 'input-group-text-lg' : null,
         className
     )
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

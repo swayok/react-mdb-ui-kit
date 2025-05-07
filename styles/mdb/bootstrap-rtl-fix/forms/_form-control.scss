@@ -200,3 +200,14 @@ textarea {
         @include border-radius($input-border-radius);
     }
 }
+
+// Корректировка стилизации при срабатывании автозаполнения в Chrome Browser и аналогичных.
+// Не применять глобально!
+input.autofill-restyle {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:active,
+    &:-webkit-autofill:focus {
+        box-shadow: 0 0 0 1000px #FFF inset !important;
+    }
+}

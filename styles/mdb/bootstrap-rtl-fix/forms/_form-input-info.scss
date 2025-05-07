@@ -1,0 +1,10 @@
+@import "../../../variables/form-input-info";
+
+// Разъяснение к полю ввода (см <InputInfo>).
+.form-input-info {
+    color: $form-input-info-color;
+    font-size: $form-input-info-font-size;
+    margin-top: $form-input-info-margin-top;
+    padding-left: $form-input-info-padding-x;
+    padding-right: $form-input-info-padding-x;
+}
