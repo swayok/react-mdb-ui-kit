@@ -48,7 +48,7 @@ function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>)
                 {...buttonsProps}
                 {...option.attributes as unknown as typeof buttonsProps}
                 color={isSelected ? activeColor : inactiveColor}
-                disabled={disabled || option.disabled}
+                disabled={disabled ?? option.disabled}
                 onClick={() => {
                     onChange(option.value)
                 }}

@@ -1,3 +1,4 @@
+@import "../../mixins/transition";
 @import "mixins/caret";
 @import "mixins/rfs";
 @import "mixins/border-radius";
@@ -40,6 +41,7 @@
     border: $dropdown-border-width solid $dropdown-border-color;
     @include border-radius($dropdown-border-radius);
     box-shadow: $dropdown-box-shadow;
+    overflow-y: auto;
 
     &[data-mdb-popper] {
         top: 100%;
@@ -157,12 +159,14 @@
     padding: $dropdown-item-padding-y $dropdown-item-padding-x;
     clear: both;
     font-weight: $font-weight-normal;
-    color: $dropdown-link-color;
+    color: $dropdown-item-color;
     text-align: inherit; // For `<button>`s
     text-decoration: if($link-decoration == none, null, none);
     white-space: nowrap; // prevent links from randomly breaking onto new lines
     background-color: transparent; // For `<button>`s
     border: 0; // For `<button>`s
+    cursor: pointer;
+    @include transition($dropdown-item-transition);
 
     // Prevent dropdown overflow if there's no padding
     // See https://github.com/twbs/bootstrap/pull/27703
@@ -178,22 +182,23 @@
 
     &:hover,
     &:focus {
-        color: $dropdown-link-hover-color;
+        color: $dropdown-item-hover-color;
         text-decoration: if($link-hover-decoration == underline, none, null);
-        @include gradient-bg($dropdown-link-hover-bg);
+        @include gradient-bg($dropdown-item-hover-bg);
     }
 
     &.active,
     &:active {
-        color: $dropdown-link-active-color;
+        color: $dropdown-item-active-color;
         text-decoration: none;
-        @include gradient-bg($dropdown-link-active-bg);
+        @include gradient-bg($dropdown-item-active-bg);
     }
 
     &.disabled,
     &:disabled {
-        color: $dropdown-link-disabled-color;
+        color: $dropdown-item-disabled-color;
         pointer-events: none;
+        cursor: not-allowed;
         background-color: transparent;
         // Remove CSS gradients if they're enabled
         background-image: if($enable-gradients, none, null);
@@ -209,7 +214,8 @@
     display: block;
     padding: $dropdown-header-padding;
     margin-bottom: 0; // for use with heading elements
-    @include font-size($font-size-sm);
+    @include font-size($dropdown-header-font-size);
+    font-weight: $dropdown-header-font-weight;
     color: $dropdown-header-color;
     white-space: nowrap; // as with > li > a
 }
@@ -218,7 +224,7 @@
 .dropdown-item-text {
     display: block;
     padding: $dropdown-item-padding-y $dropdown-item-padding-x;
-    color: $dropdown-link-color;
+    color: $dropdown-item-color;
 }
 
 // Dark dropdowns

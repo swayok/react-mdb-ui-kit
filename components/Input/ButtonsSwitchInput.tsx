@@ -1,9 +1,10 @@
-import React, {AllHTMLAttributes} from 'react'
-import {ButtonColors, FormSelectOption} from '../../types/Common'
-import Button, {ButtonProps} from '../Button'
 import clsx from 'clsx'
-import InputValidationError from './InputValidationError'
+import React, {AllHTMLAttributes} from 'react'
+import ButtonsSwitch from 'swayok-react-mdb-ui-kit/components/ButtonsSwitch'
 import withStable from '../../helpers/withStable'
+import {ButtonColors, FormSelectOption} from '../../types/Common'
+import {ButtonProps} from '../Button'
+import InputValidationError from './InputValidationError'
 
 export interface ButtonsSwitchInputProps<ValueType = string> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
     label?: string | React.ReactNode,
@@ -22,7 +23,7 @@ export interface ButtonsSwitchInputProps<ValueType = string> extends Omit<AllHTM
     invalid?: boolean,
     validationMessage?: string | null,
     validationMessageClassName?: string,
-    // Указать true если не нужно оборачивать поле ввода в <InputValidationError>.
+    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean,
 }
 
@@ -42,7 +43,7 @@ function ButtonsSwitchInput<ValueType = string>(props: ButtonsSwitchInputProps<V
         inactiveColor = 'gray',
         activeColor = 'blue',
         onChange,
-        invalid,
+        invalid = false,
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
@@ -68,33 +69,18 @@ function ButtonsSwitchInput<ValueType = string>(props: ButtonsSwitchInputProps<V
     }
 
     // Кнопки.
-    const buttons: React.ReactNode[] = []
-    const values: ValueType[] = Array.isArray(value) ? value : [value as ValueType]
-    for (let i = 0; i < options.length; i++) {
-        const option: FormSelectOption<ValueType> = options[i]
-        const isSelected: boolean = values.includes(option.value)
-        buttons.push(
-            <Button
-                key={'button-' + i}
-                small={small}
-                large={large}
-                outline={!isSelected}
-                {...buttonsProps}
-                {...option.attributes as unknown as typeof buttonsProps}
-                color={isSelected ? activeColor : inactiveColor}
-                disabled={disabled || option.disabled}
-                onClick={() => {
-                    onChange(option.value)
-                }}
-            >
-                {option.label}
-            </Button>
-        )
-    }
     const buttonsWrapped: React.ReactNode = (
-        <div className="btn-group">
-            {buttons}
-        </div>
+        <ButtonsSwitch
+            options={options}
+            value={value}
+            onChange={onChange}
+            small={small}
+            large={large}
+            inactiveColor={inactiveColor}
+            activeColor={activeColor}
+            disabled={disabled}
+            buttonsProps={buttonsProps}
+        />
     )
 
     const innerWrapperClass: string = 'd-flex flex-row align-items-center justify-content-start'
@@ -117,7 +103,7 @@ function ButtonsSwitchInput<ValueType = string>(props: ButtonsSwitchInputProps<V
 
     return (
         <InputValidationError
-            invalid={invalid || false}
+            invalid={invalid}
             error={validationMessage}
             errorClassName={clsx('ps-0', validationMessageClassName)}
             inputContainerClassName={innerWrapperClass}

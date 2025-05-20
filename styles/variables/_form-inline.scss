@@ -1,0 +1,8 @@
+@import "spacers";
+@import "form-outline-input";
+
+$inline-form-items-gap: map_get($spacers, 3) !default;
+
+$inline-form-item-min-height: $form-outline-input-min-height !default;
+$inline-form-item-min-height-sm: $form-outline-input-min-height-sm !default;
+$inline-form-item-min-height-lg: $form-outline-input-min-height !default;

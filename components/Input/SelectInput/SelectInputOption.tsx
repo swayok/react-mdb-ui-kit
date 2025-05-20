@@ -69,7 +69,7 @@ export default function SelectInputOption<
                 isEmptyOption ? 'empty-option' : null,
                 isActive ? 'active' : null,
                 disabled ? 'disabled' : null,
-                attributes?.className
+                attributes?.className as string
             )}
         >
             <SelectInputOptionLabel

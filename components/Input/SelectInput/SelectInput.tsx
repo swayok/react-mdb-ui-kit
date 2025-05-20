@@ -235,7 +235,10 @@ function SelectInput<
         >
             {search && (
                 <div
-                    className="pt-3 pb-2 ps-2 pe-2 border-bottom"
+                    className={clsx(
+                        'pb-2 px-2 border-bottom',
+                        searchPlaceholder ? 'pt-3' : 'pt-2'
+                    )}
                 >
                     <Input
                         inputRef={keywordsInputRef}

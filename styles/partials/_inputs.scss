@@ -1,73 +1,5 @@
 @import "../mdb/bootstrap-rtl-fix/forms/file_picker";
 
-// <FormSelect> и <FormSelectBasic> - выбор значения из выпадающего списка.
-.form-dropdown-select {
-
-    .dropdown-toggle {
-        position: relative;
-
-        input,
-        input[readonly] {
-            background-color: $input-bg;
-            cursor: pointer;
-            padding-right: 30px;
-            user-select: none;
-        }
-
-        input[disabled] {
-            cursor: not-allowed;
-            background-color: $input-disabled-bg;
-        }
-    }
-
-    &:not(.mode-inline) {
-        .chevron {
-            position: absolute;
-            right: 6px; // 30px (input padding) - 24px (icon width)
-            top: 50%;
-            margin-top: -12px;
-            @include mdi-icon-color($textColorMuted);
-        }
-    }
-
-    .dropdown-menu {
-        &.fade-out {
-            animation-duration: 0s;
-        }
-
-        &.fade-in {
-            animation-duration: 0.4s;
-        }
-
-        &.form-dropdown-select-menu-dropup-offset {
-            inset: auto auto 10px 0 !important;
-        }
-
-        .form-dropdown-select-search {
-            font-size: 1rem !important;
-            height: 64px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .dropdown-item {
-            &.empty-option {
-                color: $textColorMuted;
-            }
-        }
-
-        .dropdown-item.active {
-            background-color: $backgroundLightGray;
-        }
-    }
-
-    input.empty-option-selected {
-        color: $form-label-color;
-    }
-}
-
 .form-select-with-modal {
     position: relative;
 
@@ -115,12 +47,12 @@
         &:focus,
         &.focus,
         &.focus.active {
-            background-color: $dropdown-link-hover-bg;
+            background-color: $dropdown-item-hover-bg;
             text-decoration: none;
         }
 
         &.active {
-            background-color: $dropdown-link-active-bg;
+            background-color: $dropdown-item-active-bg;
         }
 
         &.disabled {
@@ -189,47 +121,6 @@
     }
 }
 
-// Переключатель видимости введенного пароля.
-.password-input-wrapper {
-    padding-right: 40px;
-
-    .password-input-type-switch {
-        display: block;
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        margin-top: -20px;
-
-    }
-}
-
-// Поле ввода с автоматическим ростом высоты по мере ввода текста.
-textarea.autogrow {
-    overflow-y: auto !important;
-    height: 65px; //< required for animation to work
-    min-height: 65px; //< required for animation to work
-    transition: height 0.1s linear, $input-transition !important;
-    resize: none;
-
-    &.minimal {
-        min-height: 2.5rem;
-        height: 2.5rem;
-        line-height: 1.6rem;
-        padding-top: 0.45rem;
-        padding-bottom: 0.45rem;
-    }
-}
-
-.buttons-switch-input {
-    .btn-group {
-        > .btn {
-            min-width: 80px;
-        }
-    }
-}
-
 // CKEditor:
 
 .ckeditor-container {
@@ -283,15 +174,5 @@ textarea.autogrow {
             border: 1px solid  $input-border-color !important;
             border-top-width: 0 !important;
         }
-    }
-}
-
-// <Checkboxes>
-
-.checkboxes-input {
-    .checkboxes-input-label {
-        font-weight: 500;
-        text-align: center;
-        color: $form-label-color;
     }
 }

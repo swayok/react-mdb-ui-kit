@@ -181,7 +181,7 @@ function CheckboxesGroup<
                     labelStyle={checkboxLabelStyle}
                     withoutValidationMessage
                     trackBehaviorAs={trackBehaviorAs}
-                    disabled={disabled}
+                    disabled={disabled ?? option.disabled}
                     readOnly={readOnly}
                     onChange={event => {
                         if (readOnly || disabled) {
@@ -233,7 +233,7 @@ function CheckboxesGroup<
         <InputValidationError
             invalid={!!invalid}
             className={clsx(
-                'checkboxes-input',
+                'checkboxes-group',
                 wrapperClassName
             )}
             style={wrapperStyle}
@@ -245,7 +245,7 @@ function CheckboxesGroup<
             {label && (
                 <div
                     className={clsx(
-                        'checkboxes-input-label',
+                        'checkboxes-group-label',
                         labelClassName
                     )}
                     style={labelStyle}

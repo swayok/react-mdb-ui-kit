@@ -52,7 +52,7 @@ export function DropdownItem(props: DropdownItemProps) {
             className={clsx(
                 'dropdown-item',
                 meta.isActive ? 'active' : null,
-                disabled ? 'disabled' : 'clickable',
+                disabled ? 'disabled' : null,
                 componentProps.className as string,
                 className
             )}

@@ -211,3 +211,20 @@ input.autofill-restyle {
         box-shadow: 0 0 0 1000px #FFF inset !important;
     }
 }
+
+// Поле ввода с автоматическим ростом высоты по мере ввода текста.
+textarea.autogrow {
+    overflow-y: auto !important;
+    height: $input-textarea-autogrow-min-height; //< required for animation to work
+    min-height: $input-textarea-autogrow-min-height; //< required for animation to work
+    transition: height 0.1s linear, $input-transition !important;
+    resize: none;
+
+    &.minimal {
+        min-height: $input-textarea-autogrow-minimal-min-height;
+        height: $input-textarea-autogrow-minimal-min-height;
+        line-height: $input-textarea-autogrow-minimal-line-height;
+        padding-top: $input-textarea-autogrow-minimal-padding-y;
+        padding-bottom: $input-textarea-autogrow-minimal-padding-y;
+    }
+}
