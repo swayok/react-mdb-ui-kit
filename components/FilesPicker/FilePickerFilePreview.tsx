@@ -12,8 +12,10 @@ import {mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline, mdiImageBroken,
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerFilePreviewProps,
+    FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
-    FilePickerFilePreviewProps, FilePickerFileInfo,
 } from '../../types/FilePicker'
 import withStable from '../../helpers/withStable'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
@@ -54,14 +56,26 @@ function FilePickerFilePreview(
         ...containerProps
     } = props
 
+    // noinspection SuspiciousTypeOfGuard
+    const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
+        ? {width: previewSize, height: previewSize}
+        : previewSize
+    const iconSize: number = Math.max(
+        50,
+        Math.round(
+            (previewSizes.width < previewSizes.height ? previewSizes.width : previewSizes.height) / 2
+        )
+    )
+
     // Создание предпросмотра картинки.
     useEffect(() => {
         if (!imagePreviewContainer.current) {
             return
         }
         if (!canvas) {
+            const longestSide = previewSizes.width > previewSizes.height ? previewSizes.width : previewSizes.height
             new FileApiImageManipulation(file.file)
-                .setMaxSize(previewSize)
+                .setMaxSize(longestSide * 1.5)
                 .getCanvas()
                 .then((img: HTMLCanvasElement) => {
                     if (imagePreviewContainer.current) {
@@ -87,13 +101,16 @@ function FilePickerFilePreview(
 
     // Заполнитель предпросмотра файла.
     const getPreviewPlaceholder = (
-        previewSize: number,
+        previewSizes: FilePickerPreviewSizes,
         isError: boolean,
         style?: CSSProperties
     ) => (
         <div
             className="file-picker-preview-image-placeholder d-flex align-items-center justify-content-center"
-            style={Object.assign({width: previewSize, height: previewSize}, style || {})}
+            style={{
+                ...previewSizes,
+                ...style,
+            }}
         >
             <Icon
                 path={isError ? mdiImageBroken : mdiImageFrame}
@@ -135,17 +152,20 @@ function FilePickerFilePreview(
     if (previewInfo.preview === 'image') {
         preview = (
             <div className="file-picker-preview-image d-flex flex-row align-items-stretch" ref={imagePreviewContainer}>
-                {getPreviewPlaceholder(props.previewSize, isImagePreviewError, style)}
+                {getPreviewPlaceholder(previewSizes, isImagePreviewError, style)}
             </div>
         )
     } else {
         preview = (
             <div
                 className={clsx('file-picker-preview-file d-flex align-items-center justify-content-center', className)}
-                style={Object.assign({width: previewSize, height: previewSize}, style || {})}
+                style={{
+                    ...previewSizes,
+                    ...style,
+                }}
                 {...containerProps}
             >
-                {previewInfo.preview(previewSize, file.file.name)}
+                {previewInfo.preview(previewSizes.width, file.file.name)}
             </div>
         )
     }
@@ -185,19 +205,19 @@ function FilePickerFilePreview(
         >
             <CardBody
                 className={clsx('position-relative p-3 pe-4 full-height', className)}
-                style={Object.assign(
-                    {
-                        minHeight: previewSize,
-                    },
-                    style || {}
-                )}
+                style={{
+                    minHeight: previewSizes.height,
+                    ...style,
+                }}
                 {...containerProps}
             >
-                <div className={clsx(
-                    'file-picker-preview-container position-relative z-index-1',
-                    'd-flex flex-row align-items-start justify-content-start',
-                    (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
-                )}>
+                <div
+                    className={clsx(
+                        'file-picker-preview-container position-relative z-index-1',
+                        'd-flex flex-row align-items-start justify-content-start',
+                        (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
+                    )}
+                >
                     <div className="file-picker-preview me-4">
                         {preview}
                     </div>
@@ -213,8 +233,7 @@ function FilePickerFilePreview(
                                         left: 0,
                                         minHeight: 'auto',
                                         minWidth: 'auto',
-                                        height: previewSize,
-                                        width: previewSize,
+                                        ...previewSizes,
                                     }}
                                 />
                             )}
@@ -226,15 +245,14 @@ function FilePickerFilePreview(
                                     position: 'absolute',
                                     top: 0,
                                     left: 0,
-                                    height: previewSize,
-                                    width: previewSize,
                                     zIndex: 101,
+                                    ...previewSizes,
                                 }}
-                                onClick={() => ToastService.error(file.error as string)}
+                                onClick={() => ToastService.error(file.error!)}
                             >
                                 <Icon
                                     path={mdiAlertCircle}
-                                    size={Math.max(40, Math.round(previewSize / 3))}
+                                    size={iconSize}
                                     className="bg-white text-red"
                                     style={{borderRadius: '50%'}}
                                 />

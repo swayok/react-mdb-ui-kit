@@ -1,7 +1,11 @@
 import React, {useContext} from 'react'
 import clsx from 'clsx'
 import FilePickerContext from './FilePickerContext'
-import {FilePickerContextProps, FilePickerPreviewsWithoutInfoProps} from '../../types/FilePicker'
+import {
+    FilePickerContextProps,
+    FilePickerPreviewSizes,
+    FilePickerPreviewsWithoutInfoProps,
+} from '../../types/FilePicker'
 import Collapse from '../Collapse'
 import Icon from '../Icon'
 import {mdiFolderOpenOutline, mdiPlus} from '@mdi/js'
@@ -43,11 +47,11 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
     } = props
 
     const previews = []
-    for (let i = 0; i < existingFiles.length; i++) {
+    for (const item of existingFiles) {
         previews.push(
             <FilePickerFilePreviewWithoutInfo
-                key={'existing-file-preview-' + existingFiles[i].UID}
-                file={existingFiles[i]}
+                key={'existing-file-preview-' + item.UID}
+                file={item}
                 animate={animatePreviews}
                 className={itemClassName}
                 imageClassName={imagePreviewClassName}
@@ -59,15 +63,15 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                     }
                 }}
                 showIfDeleted={showDeletedFiles}
-                onRestore={onExistingFileRestore || undefined}
+                onRestore={onExistingFileRestore ?? undefined}
             />
         )
     }
-    for (let i = 0; i < files.length; i++) {
+    for (const item of files) {
         previews.push(
             <FilePickerFilePreviewWithoutInfo
-                key={'file-preview-' + files[i].UID}
-                file={files[i]}
+                key={'file-preview-' + item.UID}
+                file={item}
                 animate={animatePreviews}
                 className={itemClassName}
                 previewSize={previewSize}
@@ -83,9 +87,20 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
 
     const adderPosition: number = getNextFilePosition() + 100000
 
+    // noinspection SuspiciousTypeOfGuard
+    const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
+        ? {width: previewSize, height: previewSize}
+        : previewSize
+    const iconSize: number = Math.max(
+        50,
+        Math.round(
+            (previewSizes.width < previewSizes.height ? previewSizes.width : previewSizes.height) / 2
+        )
+    )
+
     return (
         <Collapse
-            show={alwaysVisible || files.length > 0 || existingFiles.length > 0}
+            show={!!alwaysVisible || files.length > 0 || existingFiles.length > 0}
             showImmediately={alwaysVisible}
         >
             <div
@@ -109,8 +124,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                         pickerButtonClassName
                     )}
                     style={{
-                        height: previewSize,
-                        width: previewSize,
+                        ...previewSizes,
                         order: adderPosition,
                     }}
                     href="#"
@@ -120,14 +134,14 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                             pickFile()
                         } else {
                             ToastService.error(
-                                translations.error.too_many_files(maxFiles as number)
+                                translations.error.too_many_files(maxFiles!)
                             )
                         }
                     }}
                 >
                     <Icon
-                        path={adderIcon || (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
-                        size={Math.round(previewSize / 2)}
+                        path={adderIcon ?? (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
+                        size={iconSize}
                     />
                 </a>
                 {/* Заполнитель пустого пространства в конце */}

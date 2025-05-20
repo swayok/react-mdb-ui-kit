@@ -239,12 +239,20 @@ export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElemen
 }
 
 /**
+ * Размер элемента предпросмотра файла.
+ */
+export interface FilePickerPreviewSizes{
+    width: number
+    height: number
+}
+
+/**
  * Свойства компонента, который отображает список прикрепленных файлов в виде
  * небольших preview-блоков.
  */
 export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.
-    previewSize?: number;
+    previewSize?: number | FilePickerPreviewSizes;
     // Размер предпросмотра картинки.
     // По умолчанию: previewSize.
     imagePreviewSize?: number;
@@ -358,10 +366,10 @@ export interface FilePickerFilePreviewProps<
     key: string;
     file: T;
     // Размер контейнера предпросмотра прикрепленного файла.
-    previewSize: number;
+    previewSize: number | FilePickerPreviewSizes;
     // Размер предпросмотра картинки.
     // По умолчанию: previewSize.
-    imagePreviewSize?: number;
+    imagePreviewSize?: number | FilePickerPreviewSizes;
     imageClassName?: string;
     fileClassName?: string;
     showIfDeleted?: boolean;

@@ -8,18 +8,13 @@ import Card from '../Card/Card'
 import CardBody from '../Card/CardBody'
 import Loading from '../Loading'
 import Icon from '../Icon'
-import {
-    mdiAlertCircle,
-    mdiBackupRestore,
-    mdiCloseCircleOutline,
-    mdiImageBroken,
-    mdiImageFrame,
-} from '@mdi/js'
+import {mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} from '@mdi/js'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFilePreviewProps,
+    FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
 } from '../../types/FilePicker'
 import withStable from '../../helpers/withStable'
@@ -64,15 +59,30 @@ function FilePickerFilePreviewWithoutInfo(
         ...containerProps
     } = props
 
+    // noinspection SuspiciousTypeOfGuard
+    const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
+        ? {width: previewSize, height: previewSize}
+        : previewSize
+    const imagePreviewSizes: FilePickerPreviewSizes = typeof imagePreviewSize === 'number'
+        ? {width: imagePreviewSize, height: imagePreviewSize}
+        : imagePreviewSize
+    const iconSize: number = Math.max(
+        50,
+        Math.round(
+            (previewSizes.width < previewSizes.height ? previewSizes.width : previewSizes.height) / 2
+        )
+    )
+
     // Создание предпросмотра картинки.
     useEffect(() => {
         if (!imagePreviewContainer.current) {
             return
         }
         if (!file.file.previewDataUrl) {
+            const longestSide = previewSizes.width > previewSizes.height ? previewSizes.width : previewSizes.height
             new FileApiImageManipulation(file.file)
                 // *1.5 для нормального качества широких или высоких картинок
-                .setMaxSize(previewSize * 1.5)
+                .setMaxSize(Math.round(longestSide * 1.5))
                 .getCanvas()
                 .then((img: HTMLCanvasElement) => {
                     if (imagePreviewContainer.current) {
@@ -98,13 +108,16 @@ function FilePickerFilePreviewWithoutInfo(
 
     // Заполнитель предпросмотра файла.
     const getPreviewPlaceholder = (
-        previewSize: number,
+        previewSizes: FilePickerPreviewSizes,
         isError: boolean,
-        style?: CSSProperties
+        style: CSSProperties = {}
     ) => (
         <div
             className="file-picker-preview-image-placeholder d-flex align-items-center justify-content-center"
-            style={Object.assign({width: previewSize, height: previewSize}, style || {})}
+            style={{
+                ...previewSizes,
+                ...style,
+            }}
         >
             <Icon
                 path={isError ? mdiImageBroken : mdiImageFrame}
@@ -120,23 +133,15 @@ function FilePickerFilePreviewWithoutInfo(
         preview: fallbackPreview,
     } as FilePickerContextMimeTypeInfo
 
-    const previewSizes: CSSProperties = {
-        width: previewSize,
-        height: previewSize,
-    }
-
     let preview
     if (previewInfo.preview === 'image') {
         preview = (
             <div
                 className="file-picker-preview-image rounded-6 d-flex flex-row align-items-stretch"
                 ref={imagePreviewContainer}
-                style={{
-                    width: imagePreviewSize,
-                    height: imagePreviewSize,
-                }}
+                style={imagePreviewSizes}
             >
-                {getPreviewPlaceholder(imagePreviewSize, isImagePreviewError, style)}
+                {getPreviewPlaceholder(imagePreviewSizes, isImagePreviewError, style)}
             </div>
         )
     } else {
@@ -148,7 +153,7 @@ function FilePickerFilePreviewWithoutInfo(
                 )}
                 style={previewSizes}
             >
-                {previewInfo.preview(previewSize, file.file.name)}
+                {previewInfo.preview(previewSizes.width, file.file.name)}
             </div>
         )
     }
@@ -233,8 +238,7 @@ function FilePickerFilePreviewWithoutInfo(
                                         left: 0,
                                         minHeight: 'auto',
                                         minWidth: 'auto',
-                                        height: previewSize,
-                                        width: previewSize,
+                                        ...previewSizes,
                                     }}
                                 />
                             </div>
@@ -246,15 +250,14 @@ function FilePickerFilePreviewWithoutInfo(
                                     position: 'absolute',
                                     top: 0,
                                     left: 0,
-                                    height: previewSize,
-                                    width: previewSize,
                                     zIndex: 101,
+                                    ...previewSizes,
                                 }}
-                                onClick={() => ToastService.error(file.error as string)}
+                                onClick={() => ToastService.error(file.error!)}
                             >
                                 <Icon
                                     path={mdiAlertCircle}
-                                    size={Math.max(50, Math.round(previewSize / 3))}
+                                    size={iconSize}
                                     className="bg-white text-red"
                                     style={{borderRadius: '50%'}}
                                 />
