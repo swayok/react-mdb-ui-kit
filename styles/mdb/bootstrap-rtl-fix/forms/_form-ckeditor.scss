@@ -1,0 +1,66 @@
+@import "../../../variables/form-input-base";
+@import "../../../variables/form-outline-input";
+@import "../../../variables/ckeditor";
+
+// Стили интерфейса CKEditor.
+.ckeditor-container {
+    label.form-label {
+        position: absolute;
+        transform: $form-outline-active-label-transform;
+        background-color: $ckeditor-label-bg-color;
+        line-height: $ckeditor-label-line-height;
+        padding: $ckeditor-label-padding;
+        top: $ckeditor-label-top;
+        left: $ckeditor-label-left;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        transform-origin: 0 0;
+        margin-bottom: 0;
+    }
+
+    .cke {
+        border-radius: $ckeditor-border-radius;
+        border-width: 0 !important;
+
+        .cke_toolbar {
+            a.cke_button {
+                padding: $ckeditor-toolbar-button-padding !important;
+
+                &:hover {
+                    border: 0 none !important;
+                    padding: $ckeditor-toolbar-button-padding !important;
+                }
+            }
+        }
+
+        .cke_top {
+            border-top-left-radius: $ckeditor-border-radius;
+            border-top-right-radius: $ckeditor-border-radius;
+            border: 1px solid $input-border-color !important;
+            border-bottom-width: 0 !important;
+            background-color: $ckeditor-toolbar-bg-color;
+        }
+
+        .cke_contents {
+            border: 1px solid  $input-border-color !important;
+        }
+
+        .cke_bottom {
+            border-bottom-left-radius: $ckeditor-border-radius;
+            border-bottom-right-radius: $ckeditor-border-radius;
+            border: 1px solid  $input-border-color !important;
+            border-top-width: 0 !important;
+        }
+
+        .cke_button_disabled {
+            cursor: not-allowed;
+        }
+
+        &.cke_combopanel {
+            width: $ckeditor-combo-panel-width;
+        }
+    }
+}

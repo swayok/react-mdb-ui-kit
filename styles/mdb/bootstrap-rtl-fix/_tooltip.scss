@@ -6,6 +6,7 @@
 @import "mixins/gradients";
 @import "../../variables/zindex";
 @import "../../variables/tooltip";
+@import "../../variables/color-lists";
 
 // Base class
 .tooltip {
@@ -35,3 +36,15 @@
     @include gradient-bg($tooltip-inner-bg);
     @include border-radius($tooltip-inner-border-radius);
 }
+
+//
+// Alternate tooltip text colors
+//
+
+// scss-docs-start tooltip-text-variant-loops
+@each $color, $value in $tooltip-text-colors {
+    .tooltip-text-#{$color} {
+        color: $value;
+    }
+}
+// scss-docs-end tooltip-text-variant-loops

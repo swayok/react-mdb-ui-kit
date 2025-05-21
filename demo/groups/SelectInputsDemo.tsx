@@ -7,6 +7,7 @@ export default function SelectInputsDemo() {
 
     return (
         <>
+            <SectionDivider label="Select with dropdown"/>
             <SelectInput
                 label="Select normal"
                 options={[
@@ -95,6 +96,19 @@ export default function SelectInputsDemo() {
                 }}
                 disabled
             />
+            <SelectInput
+                label="Select normal inavlid"
+                options={[
+                    {value: 'option1', label: 'Option 1'},
+                    {value: 'option2', label: 'Option 2'},
+                    {value: 'option3', label: 'Option 3'},
+                ]}
+                value=""
+                onChange={() => {
+                }}
+                invalid
+                validationMessage="This field is required"
+            />
             <MultiSelectInput
                 label="Multi-select normal"
                 options={[
@@ -108,12 +122,28 @@ export default function SelectInputsDemo() {
                 values={['option2', 'option4']}
                 onChange={() => {
                 }}
+            />
+            <MultiSelectInput
+                label="Multi-select normal invalid"
+                options={[
+                    {value: 'option1', label: 'Option 1'},
+                    {value: 'option2', label: 'Option 2'},
+                    {value: 'option3', label: 'Option 3'},
+                    {value: 'option4', label: 'Option 4'},
+                    {value: 'option5', label: 'Option 5'},
+                    {value: 'option6', label: 'Option 6'},
+                ]}
+                values={['option2', 'option4']}
+                onChange={() => {
+                }}
+                invalid
+                validationMessage="This field is required"
             />
 
             <SectionDivider label="Small"/>
 
             <SelectInput
-                label="Select normal"
+                label="Select small"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -143,7 +173,7 @@ export default function SelectInputsDemo() {
             />
 
             <SelectInput
-                label="Select normal, option selected"
+                label="Select small, option selected"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -159,7 +189,7 @@ export default function SelectInputsDemo() {
                 small
             />
             <SelectInput
-                label="Select normal, no empty, no value, drop up"
+                label="Select small, no empty, no value, drop up"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -172,7 +202,7 @@ export default function SelectInputsDemo() {
                 small
             />
             <SelectInput
-                label="Select normal, search"
+                label="Select small, search"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -193,7 +223,7 @@ export default function SelectInputsDemo() {
                 small
             />
             <SelectInput
-                label="Select disabled"
+                label="Select small disabled"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -205,8 +235,22 @@ export default function SelectInputsDemo() {
                 disabled
                 small
             />
+            <SelectInput
+                label="Select small invalid"
+                options={[
+                    {value: 'option1', label: 'Option 1'},
+                    {value: 'option2', label: 'Option 2'},
+                    {value: 'option3', label: 'Option 3'},
+                ]}
+                value=""
+                onChange={() => {
+                }}
+                small
+                invalid
+                validationMessage="This field is required"
+            />
             <MultiSelectInput
-                label="Multi-select normal"
+                label="Multi-select small"
                 options={[
                     {value: 'option1', label: 'Option 1'},
                     {value: 'option2', label: 'Option 2'},
@@ -219,6 +263,23 @@ export default function SelectInputsDemo() {
                 onChange={() => {
                 }}
                 small
+            />
+            <MultiSelectInput
+                label="Multi-select small invalid"
+                options={[
+                    {value: 'option1', label: 'Option 1'},
+                    {value: 'option2', label: 'Option 2'},
+                    {value: 'option3', label: 'Option 3'},
+                    {value: 'option4', label: 'Option 4'},
+                    {value: 'option5', label: 'Option 5'},
+                    {value: 'option6', label: 'Option 6'},
+                ]}
+                values={['option2', 'option4']}
+                onChange={() => {
+                }}
+                small
+                invalid
+                validationMessage="This field is required"
             />
         </>
     )

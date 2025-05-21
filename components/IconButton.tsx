@@ -38,7 +38,7 @@ function IconButton(props: IconButtonProps) {
     const wrapperClass: string = clsx(
         'clickable',
         inline ? 'd-inline-block with-icon' : 'with-icon-flex',
-        color ? 'text-' + props.color : null,
+        color ? 'link-' + props.color : null,
         disabled ? 'disabled' : null,
         className
     )

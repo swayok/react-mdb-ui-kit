@@ -97,7 +97,6 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
         block ? 'btn-block' : null,
         active ? 'active' : null,
         hasIcon ? 'btn-with-icon' : null,
-        hasIcon ? (outline ? 'btn-with-icon-outline' : 'btn-with-icon-solid') : null,
         className
     )
 

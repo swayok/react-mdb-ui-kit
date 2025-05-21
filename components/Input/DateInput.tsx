@@ -192,9 +192,9 @@ function DateInput(props: DateInputProps) {
         <Dropdown
             {...dropdownProps}
             className={clsx(
-                'form-dropdown-date-picker form-outline',
-                inputProps.small && !inputProps.large ? 'form-dropdown-date-picker-sm' : null,
-                inputProps.large && !inputProps.small ? 'form-dropdown-date-picker-lg' : null,
+                'form-date-input form-outline',
+                inputProps.small && !inputProps.large ? 'form-date-input-sm' : null,
+                inputProps.large && !inputProps.small ? 'form-date-input-lg' : null,
                 wrapperClass
             )} //< form-outline here needed to apply .input-group styles
             drop={drop}
@@ -208,7 +208,9 @@ function DateInput(props: DateInputProps) {
             <DropdownMenu
                 className={clsx(
                     'shadow-2-strong',
-                    drop && ([] as DropdownDropDirection[]).includes(drop) && props.label ? 'form-dropdown-date-picker-menu-dropup-offset' : null,
+                    drop && ([] as DropdownDropDirection[]).includes(drop) && props.label
+                        ? 'form-date-input-dropdown-menu-dropup-offset'
+                        : null,
                     dropdownMenuClassName
                 )}
             >

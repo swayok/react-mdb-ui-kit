@@ -1,5 +1,6 @@
-@import "colors";
 @import "../functions/color-utils";
+@import "colors";
+@import "typography";
 
 // scss-docs-start colors-map
 $colors: (
@@ -35,7 +36,7 @@ $theme-colors: (
 // scss-docs-end theme-colors-map
 
 // scss-docs-start link-colors-map
-$link-colors: $theme-colors !default;
+$link-colors: $colors !default;
 // scss-docs-end link-colors-map
 
 // scss-docs-start button-colors-map
@@ -114,3 +115,13 @@ $form-checkbox-colors: (
 // scss-docs-start icon-colors-loop
 $icon-colors: map_merge($colors, $theme-colors) !default;
 // scss-docs-end icon-colors-loop
+
+// scss-docs-start tooltip-text-colors-loop
+$tooltip-text-colors: (
+    'red': $red,
+    'blue': $blue,
+    'green': $green,
+    'orange': $orange,
+    'muted': $text-muted,
+) !default;
+// scss-docs-end tooltip-text-colors-loop

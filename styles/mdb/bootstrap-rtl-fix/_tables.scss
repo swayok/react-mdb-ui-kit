@@ -40,6 +40,13 @@
     > tbody {
         vertical-align: inherit;
         font-weight: $table-tbody-font-weight;
+
+        > tr.odd {
+            > td,
+            > th {
+                background-color: $table-striped-bg;
+            }
+        }
     }
 
     > thead {
@@ -53,6 +60,12 @@
     // Highlight border color between thead, tbody and tfoot.
     > :not(:last-child) > :last-child > * {
         border-bottom-color: $table-group-separator-color;
+    }
+
+    &.table-no-border-for-last-row {
+        tbody > tr:last-child td {
+            border-bottom-width: 0 !important;
+        }
     }
 }
 

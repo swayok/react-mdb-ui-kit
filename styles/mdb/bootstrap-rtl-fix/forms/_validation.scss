@@ -60,16 +60,12 @@
 
     .form-validation-input {
         &.form-outline,
+        > .form-outline,
+        > .dropdown-toggle,
         > .input-group {
             .form-control.is-invalid {
                 margin-bottom: 0 !important;
             }
-        }
-    }
-
-    .form-dropdown-select & {
-        .form-validation-input .form-control.is-invalid {
-            margin-bottom: 0 !important;
         }
     }
 }

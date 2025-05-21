@@ -13,6 +13,10 @@
     flex-direction: column;
 }
 
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
 .text-medium {
     font-weight: 500;
 }

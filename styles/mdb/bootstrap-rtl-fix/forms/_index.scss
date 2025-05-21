@@ -1,9 +1,16 @@
 // TODO: replace @import by @forward
 
 @import 'labels';
+@import 'floating-labels';
 @import 'form-text';
 @import 'form-control';
 @import 'form-outline';
+@import 'validation';
+@import 'input-group';
+@import 'form-input-info';
+@import 'form-input-addon';
+@import 'form-inline';
+
 @import 'form-select';
 @import 'form-dropdown-select';
 @import 'form-check';
@@ -11,9 +18,7 @@
 @import 'form-switch';
 @import 'form-range';
 @import 'form-file-upload-button';
-@import 'floating-labels';
-@import 'input-group';
-@import 'validation';
-@import 'form-input-info';
-@import 'form-input-addon';
-@import 'form-inline';
+@import 'file-picker';
+@import 'form-buttons-switch';
+@import 'form-date-input';
+@import 'form-ckeditor';

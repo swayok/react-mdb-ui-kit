@@ -35,6 +35,18 @@
     );
     @include transition($btn-transition);
 
+    &.btn-with-icon {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .mdi-icon,
+        .custom-icon {
+            margin-right: 0.5em;
+        }
+    }
+
     &:hover {
         color: $body-color;
         text-decoration: if($link-hover-decoration == underline, none, null);
@@ -63,7 +75,8 @@
     &:disabled,
     &.disabled,
     fieldset:disabled & {
-        pointer-events: none;
+        pointer-events: auto;
+        cursor: not-allowed;
         opacity: $btn-disabled-opacity;
         // THIS IS CORRECT!
         @include box-shadow($btn-box-shadow);
@@ -148,7 +161,7 @@
     }
 }
 
-// scss-docs-end btn-variant-loops
+// scss-docs-start btn-variant-loops
 
 //
 // Button block
@@ -170,10 +183,13 @@
 
 // Make a button look and behave like a link
 .btn-link {
+    padding: $btn-link-padding;
     box-shadow: none;
-    font-weight: $font-weight-normal;
+    @include font-size($btn-link-font-size);
+    font-weight: $btn-link-font-weight;
     color: $btn-link-color;
     text-decoration: $btn-link-decoration;
+    text-transform: $btn-link-text-transform;
 
     &:hover,
     &:focus,

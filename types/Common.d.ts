@@ -39,7 +39,7 @@ export interface UILayout {
 export type TextColors = 'default' | 'white' | 'muted' | 'secondary'
     | 'theme' | 'dark' | 'gray' | 'primary' | 'blue' | 'red' | 'green' | 'orange' | string
 export type ButtonColors = 'none' | 'gray' | 'green' | 'red' | 'orange' | 'blue' | 'primary'
-    | 'secondary' | 'link' | 'icon' | 'light' | 'dark' | string
+    | 'secondary' | 'link' | 'light' | 'dark' | string
 export type BackgroundColors = 'transparent' | 'white' | 'gray' | 'green' | 'red' | 'orange'
     | 'blue' | 'primary' | 'light' | 'super-light' | 'dark' | 'body' | string
 export type BorderColors = 'gray' | 'green' | 'red' | 'orange' | 'blue' | 'primary'

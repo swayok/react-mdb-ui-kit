@@ -2,6 +2,7 @@
 @import "../../variables/body";
 @import "../../variables/icons";
 @import "../../variables/color-lists";
+@import "../../variables/links";
 
 svg.mdi-icon {
     @include mdi-icon-color($icon-text-color);
@@ -62,5 +63,72 @@ svg.custom-icon {
         a:hover &.text-#{$color} {
             @include custom-icon-color(lighten($value, 10%) !important);
         }
+    }
+}
+
+a,
+.clickable {
+    @include contained-mdi-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+
+    @include contained-custom-svg-icon-color-in-link(
+            $link-color,
+            $link-hover-color,
+            $link-disabled-color
+    );
+}
+
+@each $color, $value in $link-colors {
+    .link-#{$color} {
+        @include contained-mdi-icon-color-in-link(
+                $value !important,
+                link-hover-color($value, $link-shade-percentage) !important,
+                $link-disabled-color !important
+        );
+    }
+}
+
+@each $color, $value in $button-colors {
+    .btn.btn-with-icon {
+        &.btn-#{$color} {
+            @include contained-mdi-icon-color-in-button($value)
+        }
+
+        &.btn-outline-#{$color} {
+            @include contained-mdi-icon-color($value);
+        }
+    }
+}
+
+.with-icon:not(.btn) {
+    svg.mdi-icon,
+    svg.custom-icon {
+        display: inline-block;
+        margin-top: -2px;
+    }
+}
+
+.btn.with-icon {
+    display: inline-block;
+    vertical-align: top;
+
+    svg.mdi-icon,
+    svg.custom-icon {
+        vertical-align: text-top;
+    }
+}
+
+.with-icon-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    svg.mdi-icon,
+    svg.custom-icon {
+        vertical-align: top;
     }
 }

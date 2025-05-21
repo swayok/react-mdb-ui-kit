@@ -67,7 +67,7 @@ function WysiwygInput(props: WysiwygInputProps) {
         id,
         labelId,
         labelClass,
-        wrapperTag,
+        wrapperTag = 'div',
         wrapperClass = 'mb-4',
         wrapperStyle,
         wrapperProps,
@@ -85,6 +85,7 @@ function WysiwygInput(props: WysiwygInputProps) {
         grouped,
         active,
         activeInputLabelSizeMultiplier,
+        disabled,
         ...otherProps
     } = props
 
@@ -92,13 +93,19 @@ function WysiwygInput(props: WysiwygInputProps) {
     const editorEl = useRef<HTMLDivElement>(null)
     const textareaEl = useRef<HTMLTextAreaElement>(null)
 
-    const labelReference = labelRef ? labelRef : labelEl
-    const editorReference = editorRef ? editorRef : editorEl
-    const textareaReference = textareaRef ? textareaRef : textareaEl
+    const labelReference = labelRef ?? labelEl
+    const editorReference = editorRef ?? editorEl
+    const textareaReference = textareaRef ?? textareaEl
 
-    const [labelNotchWidth, setLabelNotchWidth] = useState<number | string>(0)
+    const [
+        labelNotchWidth,
+        setLabelNotchWidth,
+    ] = useState<number | string>(0)
 
-    const [ckeditorInstance, setCkEditorInstance] = useState<CKEditorInstance | null>(null)
+    const [
+        ckeditorInstance,
+        setCkEditorInstance,
+    ] = useState<CKEditorInstance | null>(null)
 
     const wrapperIsValidationMessageContainer = !withoutValidationMessage && (invalid !== undefined || validationMessage)
 
@@ -126,11 +133,11 @@ function WysiwygInput(props: WysiwygInputProps) {
 
     const updateLabelWidth = useCallback(
         () => {
-            if (label && label.length) {
+            if (label?.length) {
                 if (labelReference.current && labelReference.current.clientWidth !== 0) {
                     let multiplier: number = activeInputLabelSizeMultipliers[size]
                     if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
-                        multiplier = activeInputLabelSizeMultiplier[size] as number
+                        multiplier = activeInputLabelSizeMultiplier[size]!
                     }
                     setLabelNotchWidth(labelReference.current.clientWidth * multiplier + 8)
                 } else if (labelNotchWidth === 0) {
@@ -160,8 +167,8 @@ function WysiwygInput(props: WysiwygInputProps) {
     }, [value, ckeditorInstance])
 
     useEffect(() => {
-        ckeditorInstance?.setReadOnly(!!props.disabled)
-    }, [props.disabled, ckeditorInstance])
+        ckeditorInstance?.setReadOnly(!!disabled)
+    }, [disabled, ckeditorInstance])
 
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -171,7 +178,7 @@ function WysiwygInput(props: WysiwygInputProps) {
     )
 
     const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> = {}
-    let WrapperTag: ReactComponentOrTagName = wrapperTag || 'div'
+    let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {
             console.warn(
@@ -180,7 +187,7 @@ function WysiwygInput(props: WysiwygInputProps) {
             )
         }
         WrapperTag = InputValidationError;
-        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid === undefined ? false : invalid;
+        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid ?? false;
         (additionalWrapperProps as InputValidationErrorProps).error = validationMessage
         if (validationMessageClassName) {
             (additionalWrapperProps as InputValidationErrorProps).errorClassName = validationMessageClassName
@@ -194,6 +201,7 @@ function WysiwygInput(props: WysiwygInputProps) {
     additionalWrapperProps.className = clsx(
         additionalWrapperProps.className,
         'ckeditor-container',
+        disabled ? 'disabled' : null,
         invalid ? 'is-invalid' : null
     )
 
@@ -254,8 +262,8 @@ function WysiwygInput(props: WysiwygInputProps) {
                     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                     {...otherProps as any}
                     config={config || {}}
-                    readOnly={props.disabled}
-                    disabled={props.disabled}
+                    readOnly={disabled}
+                    disabled={disabled}
                     type="classic"
                     editorUrl="/vendor/ckeditor4/ckeditor.js"
                 />

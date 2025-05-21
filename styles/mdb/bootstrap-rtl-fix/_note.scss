@@ -12,6 +12,11 @@
 
     p {
         font-weight: $note-paragraph-font-weight;
+
+        b,
+        strong {
+            font-weight: $note-paragraph-strong-font-weight;
+        }
     }
 }
 

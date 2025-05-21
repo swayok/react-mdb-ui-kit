@@ -1,25 +1,12 @@
-import {mdiAccount} from '@mdi/js'
+import {mdiPencilBoxOutline} from '@mdi/js'
 import React from 'react'
 import Button from 'swayok-react-mdb-ui-kit/components/Button'
-import ButtonsSwitch from 'swayok-react-mdb-ui-kit/components/ButtonsSwitch'
 import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import ButtonsSwitchInput from 'swayok-react-mdb-ui-kit/components/Input/ButtonsSwitchInput'
 import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
 import {ButtonColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export default function ButtonsDemo() {
 
-    const colors: ButtonColors[] = [
-        'gray',
-        'green',
-        'red',
-        'orange',
-        'blue',
-        'secondary',
-        'light',
-        'dark',
-        'link',
-    ]
     return (
         <>
             <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3">
@@ -68,41 +55,57 @@ export default function ButtonsDemo() {
                     </div>
                 </div>
             </div>
-            {colors.map(color => (
-                <div
-                    key={color}
-                    className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3 mb-3"
-                >
-                    <div>
-                        <Button color={color}>
-                            Color: {color}
-                        </Button>
-                    </div>
-                    <div>
-                        <Button color={color} disabled>
-                            Color: {color} disabled
-                        </Button>
-                    </div>
-                    <div>
-                        <Button color={color} outline>
-                            Outline color: {color}
-                        </Button>
-                    </div>
-                    <div>
-                        <Button color={color} outline disabled>
-                            Outline color: {color} disabled
-                        </Button>
+            {buttonColors.map(color => (
+                <div key={color}>
+                    <SectionDivider label={'Color: ' + color}/>
+                    <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3 mb-3">
+                        <div>
+                            <Button color={color}>
+                                Solid: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} disabled>
+                                Disabled: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} hasIcon>
+                                <Icon path={mdiPencilBoxOutline}/> Solid: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} hasIcon disabled>
+                                <Icon path={mdiPencilBoxOutline}/> Disabled: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} outline>
+                                Outline: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} outline disabled>
+                                Disabled: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} outline hasIcon>
+                                <Icon path={mdiPencilBoxOutline}/> Outline: {color}
+                            </Button>
+                        </div>
+                        <div>
+                            <Button color={color} outline disabled hasIcon>
+                                <Icon path={mdiPencilBoxOutline}/> Disabled: {color}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             ))}
+
+            <SectionDivider label="Buttons Group"/>
             <div className="mb-3">
-                <Button color="icon">
-                    <Icon path={mdiAccount}/>
-                    <span className="ms-1">Button color: icon</span>
-                </Button>
-            </div>
-            <div className="mb-3">
-                <div className="btn-group">
+                <div className="btn-group ms-2">
                     <Button color="green">
                         Button 1
                     </Button>
@@ -114,93 +117,135 @@ export default function ButtonsDemo() {
                     </Button>
                 </div>
             </div>
-            <SectionDivider label="Buttons Switch"/>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" small>
+                        Button 1
+                    </Button>
+                    <Button color="blue" small>
+                        Button 2
+                    </Button>
+                    <Button color="gray" small>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" large>
+                        Button 1
+                    </Button>
+                    <Button color="blue" large>
+                        Button 2
+                    </Button>
+                    <Button color="gray" large>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
 
-            <ButtonsSwitch
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                value="Option 2"
-                className="d-block mb-4"
-                small={false}
-                onChange={() => {
-                }}
-            />
-            <ButtonsSwitch
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                activeColor="primary"
-                value="Option 2"
-                className="d-block mb-4"
-                onChange={() => {
-                }}
-            />
-            <ButtonsSwitch
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                activeColor="green"
-                value="Option 2"
-                className="d-block mb-4"
-                small={false}
-                large={true}
-                onChange={() => {
-                }}
-            />
+            <SectionDivider label="Outline Buttons Group"/>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" outline>
+                        Button 1
+                    </Button>
+                    <Button color="blue" outline>
+                        Button 2
+                    </Button>
+                    <Button color="red" outline>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" small outline>
+                        Button 1
+                    </Button>
+                    <Button color="blue" small outline>
+                        Button 2
+                    </Button>
+                    <Button color="red" small outline>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" large outline>
+                        Button 1
+                    </Button>
+                    <Button color="blue" large outline>
+                        Button 2
+                    </Button>
+                    <Button color="red" large outline>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
 
-            <SectionDivider label="Buttons Switch Input"/>
-
-            <ButtonsSwitchInput
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                value="Option 2"
-                className="d-block mb-4"
-                small={false}
-                invalid
-                validationMessage="This field is required"
-                onChange={() => {
-                }}
-            />
-            <ButtonsSwitchInput
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                activeColor="primary"
-                value="Option 2"
-                className="d-block mb-4"
-                invalid
-                validationMessage="This field is required"
-                onChange={() => {
-                }}
-            />
-            <ButtonsSwitchInput
-                options={[
-                    {value: 'Option 1', label: 'Option 1'},
-                    {value: 'Option 2', label: 'Option 2'},
-                    {value: 'Option 3', label: 'Option 3'},
-                ]}
-                activeColor="green"
-                value="Option 2"
-                className="d-block mb-4"
-                small={false}
-                large={true}
-                invalid
-                validationMessage="This field is required"
-                onChange={() => {
-                }}
-            />
+            <SectionDivider label="Mixed Buttons Group"/>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" outline>
+                        Button 1
+                    </Button>
+                    <Button color="blue" outline>
+                        Button 2
+                    </Button>
+                    <Button color="gray">
+                        Button 3
+                    </Button>
+                </div>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" small outline>
+                        Button 1
+                    </Button>
+                    <Button color="blue" small>
+                        Button 2
+                    </Button>
+                    <Button color="red" small outline>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
+            <div className="mb-3">
+                <div className="btn-group ms-2">
+                    <Button color="green" large>
+                        Button 1
+                    </Button>
+                    <Button color="blue" large outline>
+                        Button 2
+                    </Button>
+                    <Button color="red" large outline>
+                        Button 3
+                    </Button>
+                </div>
+            </div>
         </>
     )
 }
+
+export const buttonColors: ButtonColors[] = [
+    'gray',
+    'green',
+    'red',
+    'orange',
+    'blue',
+    'light',
+    'dark',
+    'link',
+
+    'primary',
+    'secondary',
+    'success',
+    'info',
+    'warning',
+    'danger',
+    'dark',
+    'white',
+    'black',
+]
