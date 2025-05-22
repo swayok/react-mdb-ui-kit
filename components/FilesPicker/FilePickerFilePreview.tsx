@@ -172,7 +172,7 @@ function FilePickerFilePreview(
 
     const renderFileInfo = () => (
         <div className="text-start">
-            <div className="fw600 mb-1 text-break">{file.file.name}</div>
+            <div className="fw-600 mb-1 text-break">{file.file.name}</div>
             <div>{translations.file_size}: {FilePickerHelpers.getFileSizeMb(file)}Mb</div>
             {'uploading' in file && renderUploadingStatus(file)}
             {!!file.error && (

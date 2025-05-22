@@ -1,0 +1,37 @@
+@import "colors";
+@import "borders";
+@import "typography";
+@import "body";
+
+$react-calendar-border-color: $border-color !default;
+$react-calendar-font-family: $font-family-base !default;
+$react-calendar-width: 330px !default;
+$react-calendar-width-mobile: 90vw !default;
+
+$react-calendar-nav-button-height: 40px !default;
+$react-calendar-nav-button-font-size: 2rem !default;
+$react-calendar-nav-button-line-height: 20px !default;
+$react-calendar-nav-button-padding-y: 5px !default;
+
+$react-calendar-nav-label-font-size: 1.1rem !default;
+$react-calendar-nav-label-line-height: 1.2 !default;
+
+$react-calendar-tile-font-size: 1rem !default;
+$react-calendar-tile-transition: background-color 0.2s linear, color 0.2s linear !default;
+$react-calendar-tile-disabled-bg: $gray-200 !default;
+$react-calendar-tile-hover-bg: $gray-300 !default;
+$react-calendar-tile-today-bg: $gray-200 !default;
+$react-calendar-tile-today-hover-bg: $gray-300 !default;
+
+$react-calendar-tile-selected-color: $white !default;
+$react-calendar-tile-selected-bg: $blue-600 !default;
+$react-calendar-tile-selected-hover-bg: $blue-400 !default;
+
+$react-calendar-tile-selected-in-range-color: $body-color !default;
+$react-calendar-tile-selected-in-range-bg: $blue-100 !default;
+$react-calendar-tile-selected-in-range-hover-bg: $blue-200 !default;
+$react-calendar-tile-in-range-bg: $react-calendar-tile-hover-bg !default;
+
+$react-calendar-tile-neighboring-month-day-color: $text-muted !default;
+$react-calendar-tile-weekend-color: $red !default;
+$react-calendar-century-tile-padding: 1.25rem 0.5rem !default;

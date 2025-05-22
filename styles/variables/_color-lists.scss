@@ -1,9 +1,10 @@
 @import "../functions/color-utils";
 @import "colors";
 @import "typography";
+@import "body";
 
 // scss-docs-start colors-map
-$colors: (
+$text-colors: (
     'blue': $blue,
     'indigo': $indigo,
     'purple': $purple,
@@ -14,10 +15,15 @@ $colors: (
     'green': $green,
     'teal': $teal,
     'cyan': $cyan,
-    'white': $white,
     'gray': $gray-600,
     'gray-dark': $gray-800,
 ) !default;
+
+$text-colors: map-merge((
+    'white': $white,
+    'body': $body-color,
+    'muted': $text-muted,
+), $text-colors);
 // scss-docs-end colors-map
 
 // scss-docs-start theme-colors-map
@@ -32,11 +38,15 @@ $theme-colors: (
     'dark': $dark,
     'white': $white,
     'black': $black,
+    'blue': $blue,
+    'red': $red,
+    'orange': $orange,
+    'green': $green,
 ) !default;
 // scss-docs-end theme-colors-map
 
 // scss-docs-start link-colors-map
-$link-colors: $colors !default;
+$link-colors: $text-colors !default;
 // scss-docs-end link-colors-map
 
 // scss-docs-start button-colors-map
@@ -51,7 +61,17 @@ $border-colors: $theme-colors !default;
 $bg-colors: map-merge((
     'super-light': $gray-50
 ), $theme-colors) !default;
+
+$bg-colors: map-merge((
+    'body': $body-bg,
+    'white': $white,
+    'transparent': transparent,
+), $bg-colors);
 // scss-docs-end bg-colors-map
+
+// scss-docs-start alert-colors-map
+$alert-colors: $theme-colors !default;
+// scss-docs-end alert-colors-map
 
 // scss-docs-start note-colors-map
 $note: (
@@ -113,7 +133,7 @@ $form-checkbox-colors: (
 // scss-docs-end form-switch-loop
 
 // scss-docs-start icon-colors-loop
-$icon-colors: map_merge($colors, $theme-colors) !default;
+$icon-colors: map_merge($text-colors, $theme-colors) !default;
 // scss-docs-end icon-colors-loop
 
 // scss-docs-start tooltip-text-colors-loop

@@ -1,0 +1,21 @@
+@use "sass:math";
+@import "../functions/calc-utils";
+@import "z-index";
+@import "shadows";
+@import "colors";
+
+$file-picker-preview-transition: opacity 0.1s linear !default;
+$file-picker-preview-border-radius: 0.75rem !default;
+$file-picker-preview-bg: $gray-300 !default;
+$file-picker-preview-box-shadow: $box-shadow-2-strong !default;
+
+$file-picker-preview-hover-z-index: $z-index-dropdown - 1 !default;
+$file-picker-preview-hover-transition: transform 0.1s linear !default;
+$file-picker-preview-hover-transform: scale(2) !default;
+$file-picker-preview-hover-transform-origin: center center !default;
+
+$file-picker-preview-button-width: 2.25rem !default;
+$file-picker-preview-button-offset: -0.375rem !default;
+$file-picker-preview-button-underlay-width: math.div($file-picker-preview-button-width, 2) !default;
+$file-picker-preview-button-underlay-bg: $white !default;
+$file-picker-preview-button-underlay-offset: subtract(math.div(-$file-picker-preview-button-underlay-width, 2), 1px) !default;

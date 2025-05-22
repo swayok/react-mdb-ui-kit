@@ -8,17 +8,17 @@ function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {
     const {translations} = useDataGridContext()
 
     const {
-        label,
-        className,
+        label = translations.ordering.header,
+        className = 'me-2 my-1 fs-6 text-muted fw-600',
         ...otherProps
     } = props
 
     return (
         <div
             {...otherProps}
-            className={className || 'me-2 my-1 fs-6 text-muted fw600'}
+            className={className}
         >
-            {label || translations.ordering.header}:
+            {label}:
         </div>
     )
 }

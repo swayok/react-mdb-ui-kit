@@ -47,7 +47,7 @@
 // scss-docs-start alert-modifiers
 // Generate contextual modifier classes for colorizing the alert.
 
-@each $state, $value in $theme-colors {
+@each $state, $value in $alert-colors {
     $alert-background: shift-color($value, $alert-bg-scale);
     $alert-border: shift-color($value, $alert-border-scale);
     $alert-color: shift-color($value, $alert-color-scale);
@@ -69,7 +69,7 @@
 
 .alert-fixed {
     position: fixed;
-    z-index: $zindex-alert;
+    z-index: $z-index-alert;
 }
 
 .parent-alert-relative {

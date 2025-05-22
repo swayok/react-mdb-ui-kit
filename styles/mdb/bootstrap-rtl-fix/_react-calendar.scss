@@ -1,0 +1,109 @@
+@import "mixins/rfs";
+@import "../../mixins/transition";
+@import "../../variables/react-calendar";
+
+.react-calendar {
+    border-color: $border-color;
+    font-family: $font-family-base;
+    width: $react-calendar-width;
+
+    body.layout-mobile.layout-xxs & {
+        width: $react-calendar-width-mobile;
+        max-width: $react-calendar-width;
+    }
+
+    .react-calendar__navigation {
+        margin-bottom: 0;
+
+        button {
+            @include font-size($react-calendar-nav-button-font-size);
+            line-height: $react-calendar-nav-button-line-height;
+            padding-bottom: $react-calendar-nav-button-padding-y;
+            height: $react-calendar-nav-button-height;
+
+            &.react-calendar__navigation__label {
+                font-size: $react-calendar-nav-label-font-size;
+                line-height: $react-calendar-nav-label-line-height;
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    // Ячейка дня.
+    .react-calendar__tile {
+        font-size: $react-calendar-tile-font-size;
+        @include transition($react-calendar-tile-transition)
+    }
+
+    // Ячейка выходного дня.
+    .react-calendar__month-view__days__day--weekend {
+        color: $react-calendar-tile-weekend-color;
+    }
+
+    // Ячейка дня соседнего месяца.
+    .react-calendar__month-view__days__day--neighboringMonth {
+        color: $react-calendar-tile-neighboring-month-day-color;
+    }
+
+    // Ячейка дня (деактивированная).
+    .react-calendar__tile:disabled {
+        background: $react-calendar-tile-disabled-bg;
+    }
+
+    // Ячейка дня (наведение курсора).
+    .react-calendar__tile:enabled:hover,
+    .react-calendar__tile:enabled:focus {
+        background: $react-calendar-tile-hover-bg;
+    }
+
+    // Ячейка текущей даты.
+    .react-calendar__tile--now {
+        background: $react-calendar-tile-today-bg;
+    }
+
+    // Ячейка текущей даты (наведение курсора).
+    .react-calendar__tile--now:enabled:hover,
+    .react-calendar__tile--now:enabled:focus {
+        background: $react-calendar-tile-today-hover-bg;
+    }
+
+    // Ячейка на краю выбранного периода (начало / конец периода).
+    .react-calendar__tile--hasActive {
+        background: $react-calendar-tile-selected-bg;
+        color: $react-calendar-tile-selected-color;
+    }
+
+    // Ячейка по краям выбранного периода (наведение курсора).
+    .react-calendar__tile--hasActive:enabled:hover,
+    .react-calendar__tile--hasActive:enabled:focus {
+        background: $react-calendar-tile-selected-hover-bg;
+    }
+
+    // Ячейка внутри выбранного периода.
+    .react-calendar__tile--active {
+        background: $react-calendar-tile-selected-in-range-bg;
+        color: $react-calendar-tile-selected-in-range-color;
+    }
+
+    // Ячейка внутри выбранного периода (наведение курсора).
+    .react-calendar__tile--active:enabled:hover,
+    .react-calendar__tile--active:enabled:focus {
+        background: $react-calendar-tile-selected-in-range-hover-bg;
+    }
+
+    // Ячейка внутри выбираемого периода.
+    .react-calendar--selectRange .react-calendar__tile--hover {
+        background: $react-calendar-tile-in-range-bg;
+    }
+
+    // Ячейка панели выбора месяца / года / десятилетия / века.
+    .react-calendar__year-view .react-calendar__tile,
+    .react-calendar__decade-view .react-calendar__tile,
+    .react-calendar__century-view .react-calendar__tile {
+        padding: $react-calendar-century-tile-padding;
+    }
+}
+
+.react-calendar--doubleView {
+    width: $react-calendar-width * 2;
+}

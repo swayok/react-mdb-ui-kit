@@ -10,6 +10,8 @@
 @import "typography";
 @import "spacers";
 @import "body";
+@import "z-index";
+@import "card";
 
 $utilities: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -38,7 +40,20 @@ $utilities: map-merge(
             // scss-docs-start utils-overflow
             'overflow':
             (
+                responsive: true,
                 property: overflow,
+                values: auto hidden visible scroll,
+            ),
+            'overflow-x':
+            (
+                responsive: true,
+                property: overflow-x,
+                values: auto hidden visible scroll,
+            ),
+            'overflow-y':
+            (
+                responsive: true,
+                property: overflow-y,
                 values: auto hidden visible scroll,
             ),
             // scss-docs-end utils-overflow
@@ -62,9 +77,26 @@ $utilities: map-merge(
                     sm: $box-shadow-sm,
                     lg: $box-shadow-lg,
                     none: none,
+                    card: $card-box-shadow
                 ),
             ),
             // scss-docs-end utils-shadow
+            // scss-docs-start utils-z-index
+            'z-index':
+            (
+                property: z-index,
+                class: z-index,
+                values: $z-indexes,
+            ),
+            // scss-docs-end utils-z-index
+            // scss-docs-start utils-cursor
+            'cursor':
+            (
+                property: cursor,
+                class: cursor,
+                values: $cursors,
+            ),
+            // scss-docs-end utils-cursor
             // scss-docs-start utils-position
             'position':
             (
@@ -141,13 +173,7 @@ $utilities: map-merge(
             'border-color': (
                 property: border-color,
                 class: border,
-                values:
-                map-merge(
-                        $border-colors,
-                        (
-                            'white': $white,
-                        )
-                ),
+                values: $border-colors,
             ),
             'border-width': (
                 property: border-width,
@@ -531,13 +557,7 @@ $utilities: map-merge(
             'font-weight': (
                 property: font-weight,
                 class: fw,
-                values: (
-                    light: $font-weight-light,
-                    lighter: $font-weight-lighter,
-                    normal: $font-weight-normal,
-                    bold: $font-weight-bold,
-                    bolder: $font-weight-bolder,
-                ),
+                values: $font-weights,
             ),
             'line-height': (
                 property: line-height,
@@ -590,18 +610,9 @@ $utilities: map-merge(
             (
                 property: color,
                 class: text,
-                values:
-                map-merge(
-                        $border-colors,
-                        (
-                            'white': $white,
-                            'body': $body-color,
-                            'muted': $text-muted,
-                            'black-50': rgba($black, 0.5),
-                            'white-50': rgba($white, 0.5),
-                            'reset': inherit,
-                        )
-                ),
+                values: map_merge((
+                    'reset': inherit
+                ), $text-colors),
             ),
             // scss-docs-end utils-color
             // scss-docs-start utils-bg-color
@@ -609,15 +620,7 @@ $utilities: map-merge(
             (
                 property: background-color,
                 class: bg,
-                values:
-                map-merge(
-                        $border-colors,
-                        (
-                            'body': $body-bg,
-                            'white': $white,
-                            'transparent': transparent,
-                        )
-                ),
+                values: $bg-colors,
             ),
             // scss-docs-end utils-bg-color
             'gradient':

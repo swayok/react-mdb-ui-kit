@@ -8,17 +8,17 @@ function DataGridFiltersPanelLabel(props: DataGridFiltersPanelLabelProps) {
     const {translations} = useDataGridContext()
 
     const {
-        label,
-        className,
+        label = translations.filters.header,
+        className = 'mt-2 mb-2 me-2 ms-2 fs-6 text-muted fw-600',
         ...otherProps
     } = props
 
     return (
         <div
-            className={className || 'mt-2 mb-2 me-2 ms-2 fs-6 text-muted fw600'}
+            className={className}
             {...otherProps}
         >
-            {label || translations.filters.header}:
+            {label}:
         </div>
     )
 }

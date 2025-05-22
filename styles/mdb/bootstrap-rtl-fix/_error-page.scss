@@ -1,0 +1,8 @@
+#error-page {
+    .logo {
+        .layout-mobile & img {
+            width: 290px;
+            height: auto !important;
+        }
+    }
+}

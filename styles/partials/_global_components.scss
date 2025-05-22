@@ -1,91 +1,19 @@
 @import '../mdb/bootstrap-rtl-fix/mixins/index';
 
 @import "../mdb/bootstrap-rtl-fix/animations";
-@import "../mdb/bootstrap-rtl-fix/css_grid";
-@import "helpers";
+@import "../mdb/bootstrap-rtl-fix/css-grid";
+@import "../mdb/bootstrap-rtl-fix/utilities";
 @import "../mdb/bootstrap-rtl-fix/icons";
-@import "../mdb/bootstrap-rtl-fix/loading_indicator";
+@import "../mdb/bootstrap-rtl-fix/loading-indicator";
 @import "../mdb/bootstrap-rtl-fix/collapse";
-@import "react_calendar";
-@import "images_previewer";
-@import "images_carousel_modal";
-@import "rating_stars";
-@import "drag_and_drop";
-@import "../mdb/bootstrap-rtl-fix/data_grid";
+@import "../mdb/bootstrap-rtl-fix/react-calendar";
+@import "../mdb/bootstrap-rtl-fix/images-previewer";
+@import "../mdb/bootstrap-rtl-fix/rating-stars";
+@import "../mdb/bootstrap-rtl-fix/drag-and-drop";
+@import "../mdb/bootstrap-rtl-fix/data-grid";
 @import "../mdb/bootstrap-rtl-fix/section-divider";
-
-.async-data-loading-container {
-    min-height: 150px;
-    transition: height 0.2s linear;
-    position: relative;
-    z-index: 100;
-}
-
-// Todo: maybe not used, check <Collapse>
-.collapse {
-    &.show {
-        height: auto !important;
-    }
-}
-
-.youtube-iframe-container {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; // 16:9
-
-    iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-    }
-}
-
-#error-page {
-    .logo {
-        .layout-mobile & img {
-            width: 290px;
-            height: auto !important;
-        }
-    }
-}
-
-// Всплывающие подсказки (очень странная у них верстка, еще и кривая если текста много)
-.notyf {
-
-    .notyf__toast {
-        background-color: $backgroundBlue;
-
-        &.notyf__toast--success {
-            background-color: darken($backgroundGreen, 5%);
-        }
-
-        &.notyf__toast--error {
-            background-color: $backgroundRed;
-        }
-    }
-
-    .notyf__ripple {
-        display: none;
-    }
-}
-
-.recaptcha > div > div {
-    display: flex;
-    place-content: center;
-}
-
-body[data-recaptcha-badge='1'] {
-    .grecaptcha-badge {
-        transform: translateX(0) !important;
-    }
-}
-
-.grecaptcha-badge {
-    z-index: $zindex-modal + 50 !important;
-    transform: translateX(100%) !important;
-    @include transition(all 0.3s ease 0s !important);
-}
+@import "../mdb/bootstrap-rtl-fix/toasts";
+@import "../mdb/bootstrap-rtl-fix/recaptcha";
+@import "../mdb/bootstrap-rtl-fix/youtube";
+@import "../mdb/bootstrap-rtl-fix/error-page";
 

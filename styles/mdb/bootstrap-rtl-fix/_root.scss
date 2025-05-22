@@ -4,12 +4,12 @@
 
 :root {
     // Custom variable values only support SassScript inside `#{}`.
-    @each $color, $value in $colors {
-        --#{$variable-prefix}#{$color}: #{$value};
+    @each $color, $value in $text-colors {
+        --#{$variable-prefix}-text-#{$color}: #{$value};
     }
 
     @each $color, $value in $theme-colors {
-        --#{$variable-prefix}#{$color}: #{$value};
+        --#{$variable-prefix}-theme-#{$color}: #{$value};
     }
 
     // Use `inspect` for lists so that quoted items keep the quotes.

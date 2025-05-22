@@ -4,6 +4,11 @@ import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
 
 export default function DateInputsDemo() {
 
+    const today = new Date()
+    const range: [Date, Date] = [new Date(),  new Date()]
+    range[0].setDate(1)
+    range[1].setDate(12)
+
     return (
         <>
             <DateInput
@@ -14,7 +19,13 @@ export default function DateInputsDemo() {
             />
             <DateInput
                 label="Date input normal with value"
-                value={new Date()}
+                value={today}
+                onChange={() => {
+                }}
+            />
+            <DateInput
+                label="Date input normal with range"
+                value={range}
                 onChange={() => {
                 }}
             />
@@ -27,14 +38,14 @@ export default function DateInputsDemo() {
             />
             <DateInput
                 label="Date input disabled"
-                value={new Date()}
+                value={today}
                 onChange={() => {
                 }}
                 disabled
             />
             <DateInput
                 label="Date input invalid"
-                value={new Date()}
+                value={today}
                 onChange={() => {
                 }}
                 invalid
@@ -52,14 +63,14 @@ export default function DateInputsDemo() {
             />
             <DateInput
                 label="Date input small with value"
-                value={new Date()}
+                value={today}
                 onChange={() => {
                 }}
                 small
             />
             <DateInput
                 label="Date input small disabled"
-                value={new Date()}
+                value={today}
                 onChange={() => {
                 }}
                 disabled
@@ -67,7 +78,7 @@ export default function DateInputsDemo() {
             />
             <DateInput
                 label="Date input small invalid"
-                value={new Date()}
+                value={today}
                 onChange={() => {
                 }}
                 invalid

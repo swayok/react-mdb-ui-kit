@@ -1,0 +1,22 @@
+// Всплывающие подсказки (очень странная у них верстка, еще и кривая если текста много)
+
+@import "../../variables/toasts";
+
+.notyf {
+
+    .notyf__toast {
+        background-color: $toast-default-bg;
+
+        &.notyf__toast--success {
+            background-color: $toast-success-bg;
+        }
+
+        &.notyf__toast--error {
+            background-color: $toast-error-bg;
+        }
+    }
+
+    .notyf__ripple {
+        display: none;
+    }
+}

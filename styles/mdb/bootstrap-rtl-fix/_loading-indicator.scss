@@ -226,7 +226,12 @@
             }
         }
     }
-
-
 }
 
+// Обертка компонента <AsyncDataLoading/>.
+.async-data-loading-container {
+    min-height: 150px;
+    transition: height 0.2s linear;
+    position: relative;
+    z-index: 100;
+}

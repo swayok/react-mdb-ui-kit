@@ -1,0 +1,20 @@
+@import "colors";
+
+// .drag-and-drop-item.drag-and-drop-styled
+$drag-and-drop-over-bg: $blue-50 !default;
+$drag-and-drop-over-border-top: true !default;
+$drag-and-drop-over-border-left: false !default;
+$drag-and-drop-over-border-color: $blue-500 !default;
+$drag-and-drop-over-border-width: 0.25rem !default;
+$drag-and-drop-over-transition: background-color 0.2s linear !default;
+
+// .drag-and-drop-toggler
+$drag-and-drop-toggler-cursor: ns-resize !default;
+
+// .drag-and-drop-item.drag-and-drop-styled > .editable
+$drag-and-drop-editable-hover-bg: rgba(0, 0, 0, 0.03) !default;
+$drag-and-drop-editable-transition: background-color 0.2s linear !default;
+
+// .drag-and-drop-item.drag-and-drop-current
+$drag-and-drop-current-transition: opacity 0.2s linear !default;
+$drag-and-drop-current-opacity: 0.5 !default;

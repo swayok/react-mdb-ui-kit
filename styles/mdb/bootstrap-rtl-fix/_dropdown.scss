@@ -5,7 +5,7 @@
 @import "mixins/box-shadow";
 @import "mixins/breakpoints";
 @import "mixins/gradients";
-@import "../../variables/zindex";
+@import "../../variables/z-index";
 @import "../../variables/links";
 @import "../../variables/dropdown";
 
@@ -27,7 +27,7 @@
 // The dropdown menu
 .dropdown-menu {
     position: absolute;
-    z-index: $zindex-dropdown;
+    z-index: $z-index-dropdown;
     display: none; // none by default, but block on "open" of the menu
     min-width: $dropdown-min-width;
     padding: $dropdown-padding-y $dropdown-padding-x;

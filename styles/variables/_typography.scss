@@ -24,6 +24,7 @@ $font-family-code: var(--#{$variable-prefix}font-monospace) !default;
 $font-size-root: null !default;
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
 $font-size-sm: $font-size-base * 0.875 !default;
+$font-size-xs: $font-size-base * 0.75 !default;
 $font-size-lg: $font-size-base * 1.25 !default;
 
 $font-weight-lighter: lighter !default;
@@ -54,8 +55,27 @@ $font-sizes: (
     4: $h4-font-size,
     5: $h5-font-size,
     6: $h6-font-size,
+    7: $font-size-sm,
+    8: $font-size-xs,
 ) !default;
 // scss-docs-end font-sizes
+
+// scss-docs-start font-weights
+$font-weights: (
+    light: $font-weight-light,
+    lighter: $font-weight-lighter,
+    normal: $font-weight-normal,
+    bold: $font-weight-bold,
+    bolder: $font-weight-bolder,
+    200: 200,
+    300: 300,
+    400: 400,
+    500: 500,
+    600: 600,
+    700: 700,
+    800: 800,
+) !default;
+// scss-docs-end font-weights
 
 // scss-docs-start headings-variables
 $headings-margin-bottom: math.div($spacer, 2) !default;
@@ -115,4 +135,12 @@ $nested-kbd-font-weight: $font-weight-bold !default;
 $list-inline-padding: 0.5rem !default;
 
 $mark-bg: #fcf8e3 !default;
+
+$limited-text-block-width: 600px !default;
+
+$cursors: (
+    null: pointer,
+    not-allowed: not-allowed,
+    default: default,
+) !default;
 // scss-docs-end type-variables

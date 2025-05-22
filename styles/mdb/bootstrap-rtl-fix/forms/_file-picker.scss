@@ -1,3 +1,8 @@
+@import "../../../mixins/transition";
+@import "../../../variables/colors";
+@import "../../../variables/shadows";
+@import "../../../variables/form-file-picker";
+
 // Прикрепление файлов: отображение прикрепленных файлов
 .file-picker-previews-container {
 
@@ -11,7 +16,7 @@
 
             a.file-picker-preview-container {
                 outline: none !important;
-                @include transition(opacity 0.1s linear);
+                @include transition($file-picker-preview-transition);
 
                 &:hover,
                 &.active {
@@ -22,7 +27,7 @@
 
             .file-picker-preview-delete,
             .file-picker-preview-restore {
-                @include transition(opacity 0.1s linear);
+                @include transition($file-picker-preview-transition);
 
                 &:hover {
                     opacity: 1 !important;
@@ -31,7 +36,7 @@
 
             &:hover,
             &.active {
-                z-index: 999;
+                z-index: $file-picker-preview-hover-z-index;
 
                 .file-picker-preview-delete,
                 .file-picker-preview-restore {
@@ -40,29 +45,25 @@
             }
 
             .file-picker-preview {
-                @include transition(transform 0.1s linear);
-
-                &:hover {
-                    transform: scale(2);
-                    transform-origin: center center;
-                }
+                @include transition($file-picker-preview-hover-transition);
             }
 
+            .file-picker-preview:hover,
             &.active .file-picker-preview {
-                transform: scale(2);
-                transform-origin: center center;
+                transform: $file-picker-preview-hover-transform;
+                transform-origin: $file-picker-preview-hover-transform-origin;
             }
         }
     }
 
     .file-picker-preview {
         display: block;
-        border-radius: 12px;
-        background-color: $backgroundLightGray;
+        border-radius: $file-picker-preview-border-radius;
+        background: $file-picker-preview-bg;
         box-shadow: $box-shadow-2-strong;
 
         canvas {
-            border-radius: 12px;
+            border-radius: $file-picker-preview-border-radius;
         }
 
         .file-picker-preview-image {
@@ -76,10 +77,10 @@
     .file-picker-preview-delete,
     .file-picker-preview-restore {
         position: absolute;
-        width: 36px;
-        height: 36px;
-        top: -6px;
-        right: -6px;
+        width: $file-picker-preview-button-width;
+        height: $file-picker-preview-button-width;
+        top: $file-picker-preview-button-offset;
+        right: $file-picker-preview-button-offset;
         z-index: 2;
 
         // Фон под иконку для лучшей видимости
@@ -88,13 +89,13 @@
             z-index: 1;
             position: absolute;
             display: block;
-            width: 18px;
-            height: 18px;
+            width: $file-picker-preview-button-underlay-width;
+            height: $file-picker-preview-button-underlay-width;
             top: 50%;
             left: 50%;
-            margin-top: -9px;
-            margin-left: -9px;
-            background-color: #FFF;
+            margin-top: $file-picker-preview-button-underlay-offset;
+            margin-left: $file-picker-preview-button-underlay-offset;
+            background: $file-picker-preview-button-underlay-bg;
             border-radius: 50%;
         }
 
@@ -105,7 +106,7 @@
 
     .file-picker-previews-adder {
         border-radius: 12px;
-        border: 2px dashed $textColorBlue;
+        border: 2px dashed $blue;
         @include transition(border-color 200ms linear);
 
         &:hover {
