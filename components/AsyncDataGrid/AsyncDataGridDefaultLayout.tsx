@@ -20,45 +20,63 @@ function AsyncDataGridDefaultLayout<
     RowDataType extends object = AnyObject
 >(props: AsyncDataGridDefaultLayoutProps<RowDataType>) {
 
+    const {
+        id,
+        events,
+        striped = true,
+        hover = true,
+        bordered,
+        small,
+        inline,
+        tableWrapperClassName = inline ? 'border' : '',
+        className,
+        prepend,
+        append,
+        filtersPanel,
+        renderHeaders,
+        renderRow,
+        hideFooter,
+    } = props
+
     const tableProps: Partial<AsyncDataGridTableProps<RowDataType>> = Object.assign({
-        striped: props.striped === undefined ? true : props.striped,
-        hover: props.hover === undefined ? true : props.hover,
-        bordered: props.bordered,
-        small: props.small,
+        striped,
+        hover,
+        bordered,
+        small,
         verticalAlign: 'top',
-        wrapperClass: props.tableWrapperClassName || (props.inline ? 'border' : ''),
-        fillHeight: !props.inline,
-    }, props.tableProps || {})
+        wrapperClass: tableWrapperClassName,
+        fillHeight: !inline,
+    }, props.tableProps ?? {})
 
     const footerProps: Partial<AsyncDataGridFooterProps> = Object.assign({
-        shadow: !props.inline,
-        border: !!props.inline,
-    } as Partial<AsyncDataGridFooterProps>, props.footerProps || {})
+        shadow: !inline,
+        border: !!inline,
+    } as Partial<AsyncDataGridFooterProps>, props.footerProps ?? {})
 
     return (
         <div
             className={clsx(
-                'data-grid-container d-flex flex-column align-items-stretch justify-content-start',
+                'data-grid-wrapper d-flex flex-column align-items-stretch justify-content-start',
                 tableProps.fillHeight ? 'full-height overflow-hidden' : null,
-                props.className
+                className
             )}
-            id={props.id}
+            id={id}
         >
             {/* Отслеживание событий. */}
-            {props.events && (
-                <AsyncDataGridEvents {...props.events}/>
+            {events && (
+                <AsyncDataGridEvents {...events}/>
             )}
-            {typeof props.prepend === 'function' ? props.prepend() : props.prepend}
-            {typeof props.filtersPanel === 'function' ? props.filtersPanel() : props.filtersPanel}
+            {typeof prepend === 'function' ? prepend() : prepend}
+            {typeof filtersPanel === 'function' ? filtersPanel() : filtersPanel}
             <AsyncDataGridTable<RowDataType>
                 {...tableProps}
-                renderHeaders={props.renderHeaders}
-                renderRow={props.renderRow}
+                renderHeaders={renderHeaders}
+                renderRow={renderRow}
             />
-            {!props.hideFooter &&
+            {!hideFooter &&
                 <AsyncDataGridFooter {...footerProps}/>
             }
-            {typeof props.append === 'function' ? props.append() : props.append}
+            {typeof append === 'function' ? append() : append}
         </div>
     )
 }

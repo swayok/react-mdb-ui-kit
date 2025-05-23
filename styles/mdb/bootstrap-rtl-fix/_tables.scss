@@ -6,6 +6,7 @@
 @import "../../variables/color-lists";
 @import "../../variables/table";
 @import "../../variables/spacers";
+@import "mixins/breakpoints";
 @import "mixins/table-variants";
 
 .table {
@@ -167,6 +168,15 @@
     @include table-variant($color, $value);
 }
 
+// Table cell highlights.
+
+@each $color, $value in $table-cell-highlights {
+    .table-highlight-#{$color},
+    tr.table-highlight-#{$color} > td {
+        background-color: $value !important;
+    }
+}
+
 // Responsive tables
 //
 // Generate series of `.table-responsive-*` classes for configuring the screen
@@ -182,3 +192,4 @@
         }
     }
 }
+

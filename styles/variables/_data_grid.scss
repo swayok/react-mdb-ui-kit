@@ -1,43 +1,45 @@
+@import "table";
+@import "shadows";
+@import "colors";
+@import "typography";
+
 // Таблицы данных (data grids).
-$table-striped-bg-factor: 0.02;
-$table-th-font-weight: 500;
-$table-font-size: 0.9em;
-$table-color: #000000;
+//$table-striped-bg: #f9f9f9 !default;
+//$table-hover-bg: #f0f0f0 !default;
 
-$table-striped-bg: #f9f9f9;
-$table-hover-bg: #f0f0f0;
+$table-filters-bg: $white !default;
 
-$table-filters-bg: #FFF !default;
+$table-container-bg: $white !default;
 
-$table-container-bg: #FFF !default;
+$data-grid-header-bg: $table-container-bg !default;
+$data-grid-header-color: $text-muted !default;
+$data-grid-header-borders: darken($data-grid-header-bg, 10%) !default;
+$data-grid-header-shadow: $box-shadow-2 !default;
 
-$table-header-bg: #FFF;
-$table-header-text-color: $text-muted;
-$table-header-borders: darken($table-header-bg, 10%);
-$table-header-shadow: $box-shadow-2;
+$data-grid-footer-bg: $table-container-bg !default;
+$data-grid-footer-color: $data-grid-header-color !default;
+$data-grid-vertical-separator-color: $border-color !default;
 
-$table-footer-bg: #FFF;
-$table-footer-text-color: $table-header-text-color;
-$table-vertical-separator-color: $border-color;
+$data-grid-error-bg: rgba($table-container-bg, 0.6) !default;
 
-$table-error-bg: rgba(255, 255, 255, 0.6);
+$data-grid-selected-row-bg: $blue-50 !default;
 
-$data-grid-cell-padding-font-weight: 400 !default;
+$data-grid-cell-font-weight: 400 !default;
 $data-grid-cell-padding-x: 1rem !default;
 $data-grid-cell-padding-y: 1rem !default;
 $data-grid-cell-padding-x-sm: $data-grid-cell-padding-x !default;
 $data-grid-cell-padding-y-sm: $table-cell-padding-y-sm !default;
 
 // Пагинация.
-$pagination-active-bg: $themeColor;
-$pagination-active-transition: background-color 0.2s linear;
-$pagination-active-disabled-color: $textColorMutedOnDark;
-$pagination-active-disabled-bg: $backgroundLightGray;
-$pagination-active-disabled-color: $textColorMuted;
-$pagination-active-box-shadow: none;
+$data-grid-pagination-active-bg: $primary !default;
+$data-grid-pagination-active-transition: background-color 0.2s linear !default;
+$data-grid-pagination-active-disabled-color: $gray-350 !default;
+$data-grid-pagination-active-disabled-bg: $gray-200 !default;
+$data-grid-pagination-active-disabled-color: $text-muted !default;
+$data-grid-pagination-active-box-shadow: none !default;
 
 // Подсветка строк таблицы.
-$table-highlight-bg-blue: #ebfbff;
-$table-highlight-bg-red: #fff5f5;
-$table-highlight-bg-green: #f3fff2;
-$table-highlight-bg-gray: #f8f8f8;
+$data-grid-highlight-bg-blue: $blue-50 !default;
+$data-grid-highlight-bg-red: $red-50 !default;
+$data-grid-highlight-bg-green: $green-50 !default;
+$data-grid-highlight-bg-gray: $gray-100 !default;

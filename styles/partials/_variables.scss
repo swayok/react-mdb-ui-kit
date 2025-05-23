@@ -1,9 +1,6 @@
 // Эти переменные должны быть объявлены до переменных CSS фреймворка чтобы они
 // правильно были применены ко всем зависящим от них переменным без необходимости
 // переопределять все зависящие переменные явно.
-@import "variables/theme";
-@import "variables/colors";
-
 @import '../mdb/bootstrap-rtl-fix/variables';
 
 @import "../variables/css_grid";

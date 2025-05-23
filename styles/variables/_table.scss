@@ -5,6 +5,7 @@
 @import "colors";
 @import "borders";
 @import "typography";
+@import "components";
 
 // scss-docs-start table-variables
 $table-bg: transparent !default;
@@ -24,7 +25,7 @@ $table-th-font-weight: 500 !default;
 $table-tbody-font-weight: 400 !default;
 
 $table-striped-color: $table-color !default;
-$table-striped-bg-factor: 0.05 !default;
+$table-striped-bg-factor: 0.02 !default;
 $table-striped-bg: rgba($table-alt-bg-base, $table-striped-bg-factor) !default;
 
 $table-active-color: $table-color !default;
@@ -32,7 +33,7 @@ $table-active-bg-factor: 0.1 !default;
 $table-active-bg: rgba($table-alt-bg-base, $table-active-bg-factor) !default;
 
 $table-hover-color: $table-color !default;
-$table-hover-bg-factor: 0.075 !default;
+$table-hover-bg-factor: 0.04 !default;
 $table-hover-bg: rgba($table-alt-bg-base, $table-hover-bg-factor) !default;
 $table-hover-transition: 0.5s !default;
 

@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import clsx from 'clsx'
+import {getResponsiveCssGridClassNames} from 'swayok-react-mdb-ui-kit/helpers/getResponsiveCssGridClassNames'
 import FilePickerContext from './FilePickerContext'
 import FilePickerFilePreview from './FilePickerFilePreview'
 import ToastService from '../../services/ToastService'
@@ -33,22 +34,32 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
         alwaysVisible,
         showDeletedFiles,
         animatePreviews,
+        scaleImageOnHover = true,
+        columns = {
+            xs: 1,
+            lg: 2,
+        },
         children,
         ...otherProps
     } = props
 
+
     const cssClasses = clsx(
-        'file-picker-previews-container d-grid grid-columns-1 grid-columns-lg-2 grid-columns-gap-3 grid-rows-gap-3',
+        'file-picker-previews-container with-info',
+        // Настройка количества колонок в списке миниатюр для каждого размера экрана.
+        getResponsiveCssGridClassNames(columns ?? {}, 3, 3),
+        scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
         className
     )
 
     const previews = []
-    for (let i = 0; i < existingFiles.length; i++) {
+    for (const existingFile of existingFiles) {
         previews.push(
             <FilePickerFilePreview
-                key={'existing-file-preview-' + existingFiles[i].UID}
-                file={existingFiles[i]}
+                key={'existing-file-preview-' + existingFile.UID}
+                file={existingFile}
                 animate={animatePreviews}
+                scaleImageOnHover={scaleImageOnHover}
                 previewSize={previewSize}
                 onDelete={file => {
                     if (!isDisabled) {
@@ -56,16 +67,17 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
                     }
                 }}
                 showIfDeleted={showDeletedFiles}
-                onRestore={onExistingFileRestore || undefined}
+                onRestore={onExistingFileRestore ?? undefined}
             />
         )
     }
-    for (let i = 0; i < files.length; i++) {
+    for (const file of files) {
         previews.push(
             <FilePickerFilePreview
-                key={'file-preview-' + files[i].UID}
-                file={files[i]}
+                key={'file-preview-' + file.UID}
+                file={file}
                 animate={animatePreviews}
+                scaleImageOnHover={scaleImageOnHover}
                 className={itemClassName}
                 previewSize={previewSize}
                 onDelete={(file: FilePickerFileInfo) => {
@@ -81,7 +93,7 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
 
     return (
         <Collapse
-            show={alwaysVisible || files.length > 0 || existingFiles.length > 0}
+            show={!!alwaysVisible || files.length > 0 || existingFiles.length > 0}
             showImmediately={alwaysVisible}
         >
             <div
@@ -107,7 +119,7 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
                             pickFile()
                         } else {
                             ToastService.error(
-                                translations.error.too_many_files(maxFiles as number)
+                                translations.error.too_many_files(maxFiles!)
                             )
                         }
                     }}

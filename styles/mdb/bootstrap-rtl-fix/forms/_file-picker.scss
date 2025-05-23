@@ -1,4 +1,5 @@
 @import "../../../mixins/transition";
+@import "../../../mixins/svg-icons";
 @import "../../../variables/colors";
 @import "../../../variables/shadows";
 @import "../../../variables/form-file-picker";
@@ -12,47 +13,51 @@
     }
 
     &.file-picker-previews-scale-on-hover {
-        .file-picker-preview-wrapper.file-picker-preview-for-image {
-
-            a.file-picker-preview-container {
-                outline: none !important;
-                @include transition($file-picker-preview-transition);
-
-                &:hover,
-                &.active {
-                    // При наведении на удалённую картинку нужно убрать изменение opacity.
-                    opacity: 1 !important;
-                }
-            }
-
-            .file-picker-preview-delete,
-            .file-picker-preview-restore {
-                @include transition($file-picker-preview-transition);
-
-                &:hover {
-                    opacity: 1 !important;
-                }
-            }
-
+        .file-picker-preview-wrapper {
             &:hover,
             &.active {
                 z-index: $file-picker-preview-hover-z-index;
+            }
+        }
 
+        a.file-picker-preview-scaler {
+            outline: none !important;
+            @include transition($file-picker-preview-transition);
+
+            &:hover,
+            &.active {
+                // При наведении на удалённую картинку нужно убрать изменение opacity.
+                opacity: 1 !important;
+            }
+        }
+
+        .file-picker-preview-delete,
+        .file-picker-preview-restore {
+            @include transition($file-picker-preview-transition);
+
+            &:hover {
+                opacity: 1 !important;
+            }
+        }
+
+        &.without-info .file-picker-preview-wrapper {
+            &:hover,
+            &.active {
                 .file-picker-preview-delete,
                 .file-picker-preview-restore {
                     opacity: 0;
                 }
             }
+        }
 
-            .file-picker-preview {
-                @include transition($file-picker-preview-hover-transition);
-            }
+        .file-picker-preview {
+            @include transition($file-picker-preview-hover-transition);
+        }
 
-            .file-picker-preview:hover,
-            &.active .file-picker-preview {
-                transform: $file-picker-preview-hover-transform;
-                transform-origin: $file-picker-preview-hover-transform-origin;
-            }
+        .file-picker-preview:hover,
+        &.active .file-picker-preview {
+            transform: $file-picker-preview-hover-transform;
+            transform-origin: $file-picker-preview-hover-transform-origin;
         }
     }
 
@@ -105,28 +110,33 @@
     }
 
     .file-picker-previews-adder {
-        border-radius: 12px;
-        border: 2px dashed $blue;
-        @include transition(border-color 200ms linear);
+        border-radius: $file-picker-preview-border-radius;
+        border: $file-picker-previews-adder-border;
+        color: $file-picker-previews-adder-color;
+        text-decoration: none;
+        @include transition($file-picker-previews-adder-transition);
 
         &:hover {
-            border-color: lighten($textColorBlue, 10%);
+            color: $file-picker-previews-adder-hover-color;
+            border-color: $file-picker-previews-adder-hover-border-color;
+            text-decoration: none;
         }
 
         &.disabled {
-            border-color: $textColorMuted;
+            color: $file-picker-previews-adder-disabled-color;
+            border-color: $file-picker-previews-adder-disabled-border-color;
         }
 
         @include contained-mdi-icon-color-in-link(
-                $textColorBlue,
-                lighten($textColorBlue, 10%),
-                $textColorMuted
+                $file-picker-previews-adder-color,
+                $file-picker-previews-adder-hover-color,
+                $file-picker-previews-adder-disabled-color
         )
     }
 
     &.file-picker-previews-white-bg {
         .file-picker-preview {
-            background-color: $backgroundWhite;
+            background-color: $file-picker-previews-with-white-bg;
             box-shadow: $box-shadow-3;
         }
     }
@@ -151,18 +161,10 @@
                 content: '';
                 position: absolute;
                 top: 0;
-                left: -12px;
+                left: $file-picker-previews-drag-and-drop-item-over-indicator-left;
                 height: 100%;
-                width: 4px;
-                background-color: $borderColorBlue;
-            }
-        }
-
-        > .editable {
-            @include transition(background-color 0.2s linear);
-
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.03);
+                width: $file-picker-previews-drag-and-drop-item-over-indicator-width;
+                background-color: $file-picker-previews-drag-and-drop-item-over-indicator-color;
             }
         }
     }

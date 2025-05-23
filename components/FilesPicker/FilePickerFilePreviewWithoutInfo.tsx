@@ -1,24 +1,24 @@
-import React, {CSSProperties, useContext, useEffect, useRef, useState} from 'react'
-import FilePickerContext from './FilePickerContext'
+import {mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline} from '@mdi/js'
 import clsx from 'clsx'
-import FileApiImageManipulation from '../../helpers/FileAPI/FileApiImageManipulation'
-import ToastService from '../../services/ToastService'
+import React, {useContext, useRef} from 'react'
 import {CSSTransition} from 'react-transition-group'
-import Card from '../Card/Card'
-import CardBody from '../Card/CardBody'
-import Loading from '../Loading'
-import Icon from '../Icon'
-import {mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline, mdiImageBroken, mdiImageFrame} from '@mdi/js'
+import withStable from '../../helpers/withStable'
+import ToastService from '../../services/ToastService'
 import {
-    FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFilePreviewProps,
     FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
 } from '../../types/FilePicker'
-import withStable from '../../helpers/withStable'
+import Card from '../Card/Card'
+import CardBody from '../Card/CardBody'
+import Icon from '../Icon'
+import Loading from '../Loading'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
+import FilePickerContext from './FilePickerContext'
+import {FilePickerFilePreviewContent} from './FilePickerFilePreviewContent'
+import {FilePickerFilePreviewContentScaler} from './FilePickerFilePreviewContentScaler'
 import FilePickerHelpers from './FilePickerHelpers'
 
 // Компонент предпросмотра прикрепленного файла (только картинка или иконка).
@@ -26,17 +26,10 @@ function FilePickerFilePreviewWithoutInfo(
     props: FilePickerFilePreviewProps<FilePickerFileInfo | FilePickerWithUploaderFileInfo>
 ) {
 
-    const imagePreviewContainer = useRef<HTMLDivElement>(null)
     const {
-        previews,
         translations,
-        fallbackPreview,
         isDisabled,
     } = useContext<FilePickerContextProps>(FilePickerContext)
-    const [
-        isImagePreviewError,
-        setImagePreviewError,
-    ] = useState<boolean>(false)
 
     const transitionRef = useRef<HTMLElement>(null)
 
@@ -44,14 +37,15 @@ function FilePickerFilePreviewWithoutInfo(
         className,
         imageClassName,
         fileClassName,
-        previewSize,
+        previewSize = 100,
         imagePreviewSize = previewSize,
         animate = true,
+        scaleImageOnHover = true,
         file,
         style,
+        showIfDeleted = false,
         onDelete,
         onRestore,
-        showIfDeleted = false,
         onClick,
         onFocus,
         onBlur,
@@ -63,9 +57,7 @@ function FilePickerFilePreviewWithoutInfo(
     const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
         ? {width: previewSize, height: previewSize}
         : previewSize
-    const imagePreviewSizes: FilePickerPreviewSizes = typeof imagePreviewSize === 'number'
-        ? {width: imagePreviewSize, height: imagePreviewSize}
-        : imagePreviewSize
+
     const iconSize: number = Math.max(
         50,
         Math.round(
@@ -73,89 +65,9 @@ function FilePickerFilePreviewWithoutInfo(
         )
     )
 
-    // Создание предпросмотра картинки.
-    useEffect(() => {
-        if (!imagePreviewContainer.current) {
-            return
-        }
-        if (!file.file.previewDataUrl) {
-            const longestSide = previewSizes.width > previewSizes.height ? previewSizes.width : previewSizes.height
-            new FileApiImageManipulation(file.file)
-                // *1.5 для нормального качества широких или высоких картинок
-                .setMaxSize(Math.round(longestSide * 1.5))
-                .getCanvas()
-                .then((img: HTMLCanvasElement) => {
-                    if (imagePreviewContainer.current) {
-                        file.file.previewDataUrl = img.toDataURL()
-                        imagePreviewContainer.current.innerHTML = ''
-                        imagePreviewContainer.current.style.backgroundImage = `url("${file.file.previewDataUrl}")`
-                    }
-                })
-                .catch((error: unknown) => {
-                    console.log('[FilePickerFilePreview] preview error: ', error)
-                    setImagePreviewError(true)
-                })
-        } else {
-            imagePreviewContainer.current.innerHTML = ''
-            imagePreviewContainer.current.style.backgroundImage = `url("${file.file.previewDataUrl}")`
-        }
-    }, [imagePreviewContainer.current, file.file.previewDataUrl])
-
     // Не продолжаем, если файл удалён при определенном наборе значений других свойств.
     if (!animate && !showIfDeleted && file.isDeleted) {
         return null
-    }
-
-    // Заполнитель предпросмотра файла.
-    const getPreviewPlaceholder = (
-        previewSizes: FilePickerPreviewSizes,
-        isError: boolean,
-        style: CSSProperties = {}
-    ) => (
-        <div
-            className="file-picker-preview-image-placeholder d-flex align-items-center justify-content-center"
-            style={{
-                ...previewSizes,
-                ...style,
-            }}
-        >
-            <Icon
-                path={isError ? mdiImageBroken : mdiImageFrame}
-                size={32}
-                className={isError ? 'text-error' : 'text-muted'}
-            />
-        </div>
-    )
-
-    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.type] || {
-        type: 'file',
-        extensions: [],
-        preview: fallbackPreview,
-    } as FilePickerContextMimeTypeInfo
-
-    let preview
-    if (previewInfo.preview === 'image') {
-        preview = (
-            <div
-                className="file-picker-preview-image rounded-6 d-flex flex-row align-items-stretch"
-                ref={imagePreviewContainer}
-                style={imagePreviewSizes}
-            >
-                {getPreviewPlaceholder(imagePreviewSizes, isImagePreviewError, style)}
-            </div>
-        )
-    } else {
-        preview = (
-            <div
-                className={clsx(
-                    'file-picker-preview-file rounded-6 d-flex align-items-center justify-content-center',
-                    fileClassName
-                )}
-                style={previewSizes}
-            >
-                {previewInfo.preview(previewSizes.width, file.file.name)}
-            </div>
-        )
     }
 
     const content = (
@@ -165,9 +77,6 @@ function FilePickerFilePreviewWithoutInfo(
             payload={file}
             className={clsx(
                 'file-picker-preview-wrapper rounded-6 shadow-0',
-                previewInfo.preview === 'image'
-                    ? 'file-picker-preview-for-image'
-                    : 'file-picker-preview-for-file',
                 className
             )}
             style={{
@@ -184,49 +93,21 @@ function FilePickerFilePreviewWithoutInfo(
                 }}
                 {...containerProps}
             >
-                <a
+                <FilePickerFilePreviewContentScaler
                     className={clsx(
-                        'file-picker-preview-container position-relative z-index-1',
-                        'd-flex flex-row align-items-start justify-content-start',
+                        'file-picker-preview-container',
                         (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
                     )}
-                    href="#"
-                    onClick={e => {
-                        e.preventDefault()
-                        // Scale toggle картинки для touch-устройств.
-                        if (e.currentTarget.parentElement?.parentElement?.classList.contains('active')) {
-                            e.currentTarget.blur()
-                        } else {
-                            e.currentTarget.focus()
-                        }
-
-                        onClick?.(e)
-                    }}
-                    onFocus={e => {
-                        // Scale up картинки для touch-устройств.
-                        e.currentTarget.parentElement?.parentElement?.classList.add('active')
-                        onFocus?.(e)
-                    }}
-                    onBlur={e => {
-                        // Scale down картинки для touch-устройств.
-                        e.currentTarget.parentElement?.parentElement?.classList.remove('active')
-                        onBlur?.(e)
-                    }}
-                    onMouseLeave={e => {
-                        // Scale down картинки для touch-устройств.
-                        e.currentTarget.parentElement?.parentElement?.classList.remove('active')
-                        onMouseLeave?.(e)
-                    }}
+                    scaleImageOnHover={scaleImageOnHover}
                 >
-                    <div
-                        className={clsx(
-                            'file-picker-preview d-flex align-items-center justify-content-center',
-                            previewInfo.preview === 'image' ? imageClassName : null
-                        )}
-                        style={previewSizes}
-                    >
-                        {preview}
-                    </div>
+                    <FilePickerFilePreviewContent
+                        file={file}
+                        previewSizes={previewSizes}
+                        imagePreviewSize={imagePreviewSize}
+                        imageClassName={imageClassName}
+                        fileClassName={fileClassName}
+                        style={style}
+                    />
                     <div className="pt-2">
                         {'uploading' in file && (
                             <div className="file-picker-preview-uploading-indicator">
@@ -264,7 +145,7 @@ function FilePickerFilePreviewWithoutInfo(
                             </div>
                         )}
                     </div>
-                </a>
+                </FilePickerFilePreviewContentScaler>
                 {!file.isDeleted && (
                     <a
                         className={clsx(

@@ -1,4 +1,4 @@
-import {AnyObject, FormSelectOption} from './Common'
+import {AnyObject, FormSelectOption, TableHighlightColors} from './Common'
 import React, {CSSProperties, HTMLAttributes, TableHTMLAttributes} from 'react'
 
 // Строки локализации.
@@ -330,6 +330,11 @@ export interface DataGridRowProps extends HTMLAttributes<HTMLTableRowElement> {
     key: string | number
     index: number
     selected?: boolean
+    highlight?: TableHighlightColors
+}
+
+export interface DataGridCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
+    highlight?: TableHighlightColors
 }
 
 // Свойства таблицы (<table>).

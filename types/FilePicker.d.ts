@@ -1,6 +1,6 @@
 import React, {AllHTMLAttributes} from 'react'
 import {ApiRequestMethod} from '../services/ApiRequestService'
-import {AnyObject} from './Common'
+import {AnyObject, CssGridColumnsConfig} from './Common'
 import {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../helpers/FileAPI/FileAPI'
 
 // Рендерер предпросмотра файла.
@@ -10,9 +10,9 @@ export type FilePickerContextMimeTypePreviewRenderer =
 // Настройки предпросмотра для типа файлов.
 export interface FilePickerContextMimeTypeInfo {
     // Расширения файлов, например: ['jpeg', 'jpg'].
-    extensions: string[],
+    extensions: string[]
     // Рендерер.
-    preview: FilePickerContextMimeTypePreviewRenderer | 'image',
+    preview: FilePickerContextMimeTypePreviewRenderer | 'image'
     // Тип файла.
     type: 'image' | 'file' | 'video' | 'document'
 }
@@ -20,39 +20,39 @@ export interface FilePickerContextMimeTypeInfo {
 // Состояние компонентов выбора файлов для загрузки на сервер.
 export interface FilePickerContextProps<T extends FilePickerFileInfo = FilePickerFileInfo> {
     // Максимальное кол-во файлов.
-    maxFiles: number | null,
+    maxFiles: number | null
     // Набор собственных компонентов для отображения предпросмотра прикрепленного файла.
     // По умолчанию есть настройки для PDF/Word/Excel и картинок.
-    previews: AnyObject<FilePickerContextMimeTypeInfo>,
+    previews: AnyObject<FilePickerContextMimeTypeInfo>
     // Стандартный компонент для отображения предпросмотра прикрепленного файла
     // на случай если нет специального.
-    fallbackPreview: FilePickerContextMimeTypePreviewRenderer,
+    fallbackPreview: FilePickerContextMimeTypePreviewRenderer
     // Список ранее прикрепленных файлов.
-    existingFiles: T[],
+    existingFiles: T[]
     // Удаление файла из БД.
-    onExistingFileDelete: (file: T, delay?: number) => void,
+    onExistingFileDelete: (file: T, delay?: number) => void
     // Восстановление удаленного файла, полученного из БД.
-    onExistingFileRestore?: ((file: T) => void) | null,
+    onExistingFileRestore?: ((file: T) => void) | null
     // Список новых прикрепленных файлов.
-    files: T[],
+    files: T[]
     // Запуск прикрепления файла (программное нажатие на <input type="file">).
-    pickFile: () => void,
+    pickFile: () => void
     // Можно ли прикрепить еще файлы?
-    canAttachMoreFiles: () => boolean,
+    canAttachMoreFiles: () => boolean
     // Обработчик нажатия на кнопку удаления прикрепленного файла.
-    onFileDelete: (file: T, delay?: number) => void,
+    onFileDelete: (file: T, delay?: number) => void
     // Запуск отправки файлов на сервер.
     startUploading: () => Promise<void>
     // Разрешить изменение позиций картинок?
-    reorderable: boolean,
+    reorderable: boolean
     // Получить позицию для нового прикрепленного файла (используется для изменения позиции файлов).
-    getNextFilePosition: () => number,
+    getNextFilePosition: () => number
     // Состояние отправки файлов на сервер.
-    isUploading: boolean,
+    isUploading: boolean
     // Заблокировано ли взаимодействие с компонентом?
-    isDisabled: boolean,
+    isDisabled: boolean
     // Локализация.
-    translations: FilePickerTranslations,
+    translations: FilePickerTranslations
 }
 
 // Публичное API компонента выбора файлов для загрузки на сервер.
@@ -74,13 +74,13 @@ export interface FilePickerApi<T extends FilePickerFileInfo = FilePickerFileInfo
         detachInvalidFiles: boolean,
         rejectIfNotAllFilesAreValid: boolean = false,
         useUidAsFileName: boolean = false
-    ): Promise<FilePickerUploadInfo<T>[]>,
+    ): Promise<FilePickerUploadInfo<T>[]>
 
     // Получить список корректных файлов.
-    getValidFiles(): T[],
+    getValidFiles(): T[]
 
     // Сброс поля выбора файлов и отмена отправки файлов на сервер.
-    reset(): void,
+    reset(): void
 }
 
 /**
@@ -95,54 +95,54 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
      * @see FilePickerPreviews
      * @see FilePickerPreviewsWithoutInfo
      */
-    children: React.ReactNode | React.ReactNode[];
+    children: React.ReactNode | React.ReactNode[]
     // Ссылка на API компонента.
     apiRef?: React.RefObject<FilePickerApi<T> | null>
     // Список ранее прикрепленных файлов.
-    existingFiles?: T[];
+    existingFiles?: T[]
     // Удаление ранее прикрепленного файла.
-    onExistingFileDelete?: (file: T, delay?: number) => void;
+    onExistingFileDelete?: (file: T, delay?: number) => void
     // Разрешить картинки?
-    allowImages?: boolean;
+    allowImages?: boolean
     // Разрешить не картинки?
-    allowFiles?: boolean;
+    allowFiles?: boolean
     // Максимальное количество файлов для загрузки.
-    maxFiles: FilePickerContextProps<T>['maxFiles'];
+    maxFiles: FilePickerContextProps<T>['maxFiles']
     // Максимальный размер файлов на диске (не действует на картинки).
-    maxFileSizeKb?: number;
+    maxFileSizeKb?: number
     // Имя поля ввода.
-    inputName?: string;
+    inputName?: string
     // Прикреплен новый файл.
     onFileAttached?: (
         file: T,
         isValid: boolean,
-    ) => void;
+    ) => void
     // Файл удалён (откреплён).
-    onFileRemoved?: (file: T) => void;
+    onFileRemoved?: (file: T) => void
     // Удаленный файл восстановлен.
-    onFileRestored?: (file: T) => void;
+    onFileRestored?: (file: T) => void
     // Вкл/Выкл доступности интерактивных элементов компонента.
-    disabled?: boolean;
+    disabled?: boolean
     // Максимальный размер стороны картинки в пикселях.
-    maxImageSize?: number;
+    maxImageSize?: number
     // Конвертирование картинок в jpeg.
-    convertImagesToJpeg?: boolean;
+    convertImagesToJpeg?: boolean
     // Качество картинки при конвертации (от 0 до 1, по умолчанию: 0,92).
-    imagesCompression?: number;
+    imagesCompression?: number
     // Локализация.
-    translations: FilePickerTranslations;
+    translations: FilePickerTranslations
     // Разрешенные mime-типы файлов.
-    allowedMimeTypes?: string[];
+    allowedMimeTypes?: string[]
     // При прикреплении некорректного файла - не добавлять его в список файлов, а игнорировать.
     // В этом случае не будет отображаться блок предпросмотра.
-    dropInvalidFiles?: boolean;
+    dropInvalidFiles?: boolean
     // Разрешить изменение позиций картинок?
-    reorderable?: boolean;
+    reorderable?: boolean
     // Изменены позиции файлов в списке.
     onReorder?: (
         existingFiles: T[],
         newFiles: T[]
-    ) => void;
+    ) => void
 }
 
 /**
@@ -157,63 +157,63 @@ export interface FilePickerInputProps {
      * @see FilePickerPreviews
      * @see FilePickerPreviewsWithoutInfo
      */
-    children: React.ReactNode | React.ReactNode[];
+    children: React.ReactNode | React.ReactNode[]
     // Список ранее прикрепленных файлов.
-    value?: (FilePickerFileInfoFromDB | FilePickerFileInfo)[];
+    value?: (FilePickerFileInfoFromDB | FilePickerFileInfo)[]
     // Разрешить картинки?
-    allowImages?: boolean;
+    allowImages?: boolean
     // Разрешить не картинки?
-    allowFiles?: boolean;
+    allowFiles?: boolean
     // Максимальное количество файлов для загрузки.
-    maxFiles?: FilePickerContextProps<FilePickerFileInfo>['maxFiles'];
+    maxFiles?: FilePickerContextProps<FilePickerFileInfo>['maxFiles']
     // Максимальный размер файлов на диске (не действует на картинки).
-    maxFileSizeKb?: number;
+    maxFileSizeKb?: number
     // Использовать UID вместо оригинального имени прикрепляемого файла.
-    useUidAsFileName?: boolean;
+    useUidAsFileName?: boolean
     // Имя поля ввода.
-    inputName?: string;
+    inputName?: string
     // Вкл/Выкл доступности интерактивных элементов компонента.
-    disabled?: boolean;
+    disabled?: boolean
     // Максимальный размер стороны картинки в пикселях.
-    maxImageSize?: number;
+    maxImageSize?: number
     // Конвертирование картинок в jpeg.
-    convertImagesToJpeg?: boolean;
+    convertImagesToJpeg?: boolean
     // Качество картинки при конвертации (от 0 до 1, по умолчанию: 0,92).
-    imagesCompression?: number;
+    imagesCompression?: number
     // Локализация.
-    translations: FilePickerTranslations;
+    translations: FilePickerTranslations
     // Разрешенные mime-типы файлов.
-    allowedMimeTypes?: string[];
+    allowedMimeTypes?: string[]
     // При прикреплении некорректного файла - не добавлять его в список файлов, а игнорировать.
     // В этом случае не будет отображаться блок предпросмотра.
-    dropInvalidFiles?: boolean;
+    dropInvalidFiles?: boolean
     // Разрешить изменение позиций картинок?
-    reorderable?: boolean;
+    reorderable?: boolean
     // Изменения в списке файлов.
-    onChange: (files: FilePickerFileInfo[]) => void;
+    onChange: (files: FilePickerFileInfo[]) => void
     // Дополнительный обработчик ошибки при прикреплении файла.
-    onAttachmentError?: (error: string, file: FilePickerFileInfo) => void;
+    onAttachmentError?: (error: string, file: FilePickerFileInfo) => void
 }
 
 // Свойства компонента выбора файлов для загрузки на сервер,
 // с модулем автоматической загрузки.
 export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps<FilePickerWithUploaderFileInfo>, 'apiRef'> {
     // Вкл/выкл автозагрузки файлов на сервер сразу после прикрепления.
-    autoUpload: boolean;
+    autoUpload: boolean
     // URL для отправки файлов на сервер.
-    uploadUrl?: string | null;
+    uploadUrl?: string | null
     // HTTP метод отправки файлов на сервер, по умолчанию: post.
-    uploadMethod: ApiRequestMethod;
+    uploadMethod: ApiRequestMethod
     // Длительность ожидания ответа на отправку файла.
-    fileUploadingRequestTimeout?: number;
+    fileUploadingRequestTimeout?: number
     // Началась загрузка файлов на сервер.
-    onUploadingStarted?: () => void;
+    onUploadingStarted?: () => void
     // Завершилась загрузка файлов на сервер.
-    onUploadingEnded?: () => void;
+    onUploadingEnded?: () => void
     // URL для удаления файлов с сервера.
-    deleteUrl?: string | null;
+    deleteUrl?: string | null
     // HTTP метод удаления файлов с сервера, по умолчанию: delete.
-    deleteMethod: ApiRequestMethod;
+    deleteMethod: ApiRequestMethod
 }
 
 /**
@@ -222,20 +222,24 @@ export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps
  */
 export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElement> {
     // Размер предпросмотра.
-    previewSize?: number;
+    previewSize?: number
     // Показывать этот блок всегда или только когда есть прикрепленные файлы?
     // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
     // поэтому его можно скрывать до прикрепления первого файла.
-    alwaysVisible?: boolean;
+    alwaysVisible?: boolean
     // CSS классы для предпросмотров.
-    itemClassName?: string;
+    itemClassName?: string
     // CSS классы для кнопки добавления файла.
-    pickerButtonClassName?: string;
+    pickerButtonClassName?: string
     // Показывать удаленные файлы, полученные из БД.
     // Также добавляется возможность восстановить файл.
-    showDeletedFiles?: boolean;
+    showDeletedFiles?: boolean
     // Анимировать добавление и удаление файла.
-    animatePreviews?: boolean;
+    animatePreviews?: boolean
+    // Увеличивать картинку при наведении курсора?
+    scaleImageOnHover?: boolean,
+    // Количество элементов в строке.
+    columns?: CssGridColumnsConfig
 }
 
 /**
@@ -252,129 +256,131 @@ export interface FilePickerPreviewSizes{
  */
 export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.
-    previewSize?: number | FilePickerPreviewSizes;
+    previewSize?: number | FilePickerPreviewSizes
     // Размер предпросмотра картинки.
     // По умолчанию: previewSize.
-    imagePreviewSize?: number;
+    imagePreviewSize?: number
     // Показывать этот блок всегда или только когда есть прикрепленные файлы?
     // Дополнительная кнопка добавления первого файла может быть размещена вне этого блока,
     // поэтому его можно скрывать до прикрепления первого файла.
-    alwaysVisible?: boolean;
+    alwaysVisible?: boolean
     // CSS классы для контейнера предпросмотра файла или картинки.
-    itemClassName?: string;
+    itemClassName?: string
     // CSS классы для предпросмотра картинки.
-    imagePreviewClassName?: string;
+    imagePreviewClassName?: string
     // CSS классы для кнопки добавления файла.
-    pickerButtonClassName?: string;
+    pickerButtonClassName?: string
     // Иконка для кнопки добавления картинки.
-    adderIcon?: string;
+    adderIcon?: string
     // Увеличивать картинку при наведении курсора?
-    scaleImageOnHover?: boolean;
+    scaleImageOnHover?: boolean
     // Показывать удаленные файлы, полученные из БД.
     // Также добавляется возможность восстановить файл.
-    showDeletedFiles?: boolean;
+    showDeletedFiles?: boolean
     // Анимировать добавление и удаление файла.
-    animatePreviews?: boolean;
+    animatePreviews?: boolean
 }
 
 // Тексты для компонентов выбора файлов для загрузки на сервер.
 export interface FilePickerTranslations {
-    file_size: string,
-    error_label: string,
+    file_size: string
+    error_label: string
     error: {
-        mime_type_forbidden: (extension: string) => string,
-        mime_type_and_extension_mismatch: (extension: string, type: string) => string,
-        already_attached: (name: string) => string,
-        too_many_files: (limit: number) => string,
-        file_too_large: (maxSizeMb: number) => string,
-        server_error: string,
-        unexpected_error: string,
-        non_json_validation_error: string,
-        invalid_response: string,
-        invalid_file: (fileName: string, error: string) => string,
-        internal_error_during_upload: string,
-        internal_error_in_xhr: string,
-        timed_out: string,
-        failed_to_get_file_blob: string,
-        failed_to_resize_image: string,
-        http401: string,
-    },
+        mime_type_forbidden: (extension: string) => string
+        mime_type_and_extension_mismatch: (extension: string, type: string) => string
+        already_attached: (name: string) => string
+        too_many_files: (limit: number) => string
+        file_too_large: (maxSizeMb: number) => string
+        server_error: string
+        unexpected_error: string
+        non_json_validation_error: string
+        invalid_response: string
+        invalid_file: (fileName: string, error: string) => string
+        internal_error_during_upload: string
+        internal_error_in_xhr: string
+        timed_out: string
+        failed_to_get_file_blob: string
+        failed_to_resize_image: string
+        http401: string
+    }
     status: {
-        uploaded: string,
-        not_uploaded: string,
-        uploading: (uploadedPercent: number) => string,
+        uploaded: string
+        not_uploaded: string
+        uploading: (uploadedPercent: number) => string
     },
-    attach_file: string,
-    not_all_valid_files_uploaded: string,
-    internal_error_during_files_uploading: string,
-    file_will_be_deleted: string,
-    restore: string,
+    attach_file: string
+    not_all_valid_files_uploaded: string
+    internal_error_during_files_uploading: string
+    file_will_be_deleted: string
+    restore: string
 }
 
 // Информация о прикрепленном файле для отправки на сервер.
 export interface FilePickerUploadInfo<T extends FilePickerFileInfo = FilePickerFileInfo> {
-    file: T;
-    data: Blob;
-    fileName: string;
+    file: T
+    data: Blob
+    fileName: string
 }
 
 // Информация о прикрепленном файле.
 export interface FilePickerFileInfo {
-    UID: string;
-    file: FileAPISelectedFileInfo;
-    resizedCanvas?: HTMLCanvasElement;
-    error: null | string;
-    info: FileAPIImageFileInfo | null;
-    position: number;
-    isNew?: boolean;
-    isDeleted?: boolean;
+    UID: string
+    file: FileAPISelectedFileInfo
+    resizedCanvas?: HTMLCanvasElement
+    error: null | string
+    info: FileAPIImageFileInfo | null
+    position: number
+    isNew?: boolean
+    isDeleted?: boolean
 }
 
 // Информация о файле, полученная с сервера.
 export interface FilePickerFileInfoFromDB {
     // ID файла в БД.
-    id: string | number;
+    id: string | number
     // MIME-тип файла.
-    mimeType: string;
+    mimeType: string
     // Оригинальное имя файла.
-    uploadName: string;
+    uploadName: string
     // URL к файлу.
-    url: string;
+    url: string
     // Позиция в списке.
-    position?: number | null;
+    position?: number | null
 }
 
 // Информация о прикрепленном файле и состоянии его загрузки на сервер.
 export interface FilePickerWithUploaderFileInfo extends FilePickerFileInfo {
     uploading: {
         // null means that there was no attempt to upload a file.
-        isUploading: boolean | null;
-        isUploaded: boolean;
-        canRetry: boolean;
-        alreadyRetried: boolean;
-        uploadedPercent: number;
-        uploadedFileInfo?: string | AnyObject;
-        uploadingXhr: null | XMLHttpRequest;
-    };
-    uploadingCancelled: boolean;
+        isUploading: boolean | null
+        isUploaded: boolean
+        canRetry: boolean
+        alreadyRetried: boolean
+        uploadedPercent: number
+        uploadedFileInfo?: string | AnyObject
+        uploadingXhr: null | XMLHttpRequest
+    }
+    uploadingCancelled: boolean
 }
 
 // Свойства компонента, показывающего предпросмотр файла.
 export interface FilePickerFilePreviewProps<
     T extends FilePickerFileInfo = FilePickerFileInfo
 > extends AllHTMLAttributes<HTMLElement> {
-    key: string;
-    file: T;
+    key: string
+    file: T
     // Размер контейнера предпросмотра прикрепленного файла.
-    previewSize: number | FilePickerPreviewSizes;
+    previewSize: number | FilePickerPreviewSizes
     // Размер предпросмотра картинки.
     // По умолчанию: previewSize.
-    imagePreviewSize?: number | FilePickerPreviewSizes;
-    imageClassName?: string;
-    fileClassName?: string;
-    showIfDeleted?: boolean;
-    onDelete: (file: T) => void;
-    onRestore?: (file: T) => void;
+    imagePreviewSize?: number | FilePickerPreviewSizes
+    imageClassName?: string
+    fileClassName?: string
+    showIfDeleted?: boolean
+    onDelete: (file: T) => void
+    onRestore?: (file: T) => void
     // Анимировать появление и удаление файла.
-    animate?: boolean;
+    animate?: boolean
+    // Увеличивать картинку при наведении курсора?
+    scaleImageOnHover?: boolean
 }

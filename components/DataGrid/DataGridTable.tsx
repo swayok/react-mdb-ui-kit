@@ -42,7 +42,7 @@ function DataGridTable<
         if (!noItemsMessage || typeof noItemsMessage === 'string') {
             return (
                 <DataGridNoItems flexFill={flexFill}>
-                    {noItemsMessage || translations.no_items}
+                    {noItemsMessage ?? translations.no_items}
                 </DataGridNoItems>
             )
         } else {
@@ -80,7 +80,7 @@ function DataGridTable<
                                 {visibleRows.map((
                                     rowData: Readonly<RowDataType>,
                                     index: number,
-                                    rows: ReadonlyArray<RowDataType>
+                                    rows: readonly RowDataType[]
                                 ) => renderRow(rowData, index, rows, context))}
                             </tbody>
                         )}

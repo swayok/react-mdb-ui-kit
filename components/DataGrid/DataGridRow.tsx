@@ -10,6 +10,7 @@ function DataGridRow(props: DataGridRowProps) {
         index,
         selected,
         className,
+        highlight,
         ...rowProps
     } = props
 
@@ -19,7 +20,8 @@ function DataGridRow(props: DataGridRowProps) {
             className={clsx(
                 className,
                 index % 2 === 0 ? 'even' : 'odd',
-                selected ? 'data-grid-row-selected' : null
+                selected ? 'data-grid-row-selected' : null,
+                highlight ? 'table-highlight-' + highlight : null
             )}
         >
             {children}

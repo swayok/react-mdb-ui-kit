@@ -47,6 +47,7 @@ export type BorderColors = 'gray' | 'green' | 'red' | 'orange' | 'blue' | 'prima
 export type NoteColors = 'primary' | 'secondary' | 'light'
     | 'success' | 'danger' | 'warning' | 'info' | string
 export type CheckboxColors = 'green' | 'blue' | 'red' | 'orange' | string
+export type TableHighlightColors = 'green' | 'blue' | 'red' | 'orange' | 'gray' | string
 
 // Минимальное и максимальное значение.
 export interface MinMax {
@@ -266,4 +267,14 @@ export interface CKEditorInstance {
     container: {
         $: HTMLDivElement,
     },
+}
+
+// Настройка количества колонок CSS Grid.
+export interface CssGridColumnsConfig {
+    xs?: number,
+    sm?: number,
+    md?: number,
+    lg?: number,
+    xl?: number,
+    xxl?: number,
 }

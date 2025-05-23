@@ -39,7 +39,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         previewSize = 100,
         imagePreviewSize = previewSize,
         alwaysVisible,
-        scaleImageOnHover = false,
+        scaleImageOnHover = true,
         adderIcon,
         showDeletedFiles = false,
         animatePreviews,
@@ -53,6 +53,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                 key={'existing-file-preview-' + item.UID}
                 file={item}
                 animate={animatePreviews}
+                scaleImageOnHover={scaleImageOnHover}
                 className={itemClassName}
                 imageClassName={imagePreviewClassName}
                 previewSize={previewSize}
@@ -73,6 +74,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                 key={'file-preview-' + item.UID}
                 file={item}
                 animate={animatePreviews}
+                scaleImageOnHover={scaleImageOnHover}
                 className={itemClassName}
                 previewSize={previewSize}
                 imagePreviewSize={imagePreviewSize}
@@ -105,8 +107,8 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         >
             <div
                 className={clsx(
-                    'file-picker-previews-container d-flex flex-row flex-wrap',
-                    'align-items-stretch justify-content-around',
+                    'file-picker-previews-container without-info',
+                    ' d-flex flex-row flex-wrap align-items-stretch justify-content-around',
                     'justify-content-sm-start',
                     scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
                     className

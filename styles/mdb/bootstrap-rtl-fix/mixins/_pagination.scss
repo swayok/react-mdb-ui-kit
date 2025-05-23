@@ -36,6 +36,10 @@
                 @include border-radius($border-radius);
             }
         }
+
+        .page-link.dropdown-item {
+            @include border-radius($border-radius);
+        }
     }
 }
 

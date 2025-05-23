@@ -48,10 +48,9 @@ export default class FileApiImageManipulation<FileType extends File = File> {
 
     // Максимальный размер стороны картинки.
     setMaxSize(maxSize?: number): FileApiImageManipulation {
-        if (!maxSize) {
-            maxSize = 30720
+        if (maxSize && maxSize > 0) {
+            this.maxSize = maxSize
         }
-        this.maxSize = maxSize
         return this
     }
 

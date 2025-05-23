@@ -15,38 +15,54 @@ function DataGridDefaultLayout<
     RowDataType extends object = AnyObject
 >(props: DataGridDefaultLayoutProps<RowDataType>) {
 
+    const {
+        id,
+        tableProps: tablePropsCustom = {},
+        footerProps: footerPropsCustom = {},
+        filtersPanel,
+        renderHeaders,
+        renderTotalsRow,
+        renderRow,
+        className,
+        tableClassName,
+        style,
+        border,
+        prepend,
+        append,
+    } = props
+
     const tableProps: Partial<DataGridTableProps<RowDataType>> = Object.assign({
         striped: true,
         hover: true,
         verticalAlign: 'top',
-    }, props.tableProps || {})
+    }, tablePropsCustom)
 
     const footerProps: Partial<DataGridFooterProps> = Object.assign({
         shadow: false,
         border: true,
-    } as Partial<DataGridFooterProps>, props.footerProps || {})
+    } as Partial<DataGridFooterProps>, footerPropsCustom)
 
     return (
         <div
-            className={clsx('data-grid-container', props.className)}
-            style={props.style}
-            id={props.id}
+            className={clsx('data-grid-wrapper', className)}
+            style={style}
+            id={id}
         >
-            {typeof props.prepend === 'function' ? props.prepend() : props.prepend}
-            {typeof props.filtersPanel === 'function' ? props.filtersPanel() : props.filtersPanel}
+            {typeof prepend === 'function' ? prepend() : prepend}
+            {typeof filtersPanel === 'function' ? filtersPanel() : filtersPanel}
             <DataGridTable<RowDataType>
                 {...tableProps}
-                renderHeaders={props.renderHeaders}
-                renderRow={props.renderRow}
-                renderTotalsRow={props.renderTotalsRow}
+                renderHeaders={renderHeaders}
+                renderRow={renderRow}
+                renderTotalsRow={renderTotalsRow}
                 wrapperClass={clsx(
-                    props.border || props.border === undefined ? 'border' : null,
+                    border || border === undefined ? 'border' : null,
                     footerProps.border ? 'border-bottom-0' : null,
-                    props.tableClassName
+                    tableClassName
                 )}
             />
             <DataGridFooter {...footerProps}/>
-            {typeof props.append === 'function' ? props.append() : props.append}
+            {typeof append === 'function' ? append() : append}
         </div>
     )
 }

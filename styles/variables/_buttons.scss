@@ -105,7 +105,7 @@ $btn-rounded-border-radius: 10rem !default;
 $btn-block-spacing-y: 0.5rem !default;
 
 // .btn-group
-$btn-group-border-radius: 3px !default;
+$btn-group-border-radius: $btn-border-radius !default;
 // Прикол с 0.6 в том, что границы для .btn-outline- не накладываются
 // друг на друга, в отличие от множителей меньше 0.53 или больше 0.7.
 $btn-group-margin-left: -$btn-border-width * 0.6 !default;

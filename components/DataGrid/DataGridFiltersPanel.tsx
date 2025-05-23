@@ -29,7 +29,7 @@ function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
         <form
             {...otherProps}
             className={clsx(
-                'data-grid-filters m-0',
+                'data-grid-filters m-0 form-inline',
                 borderBottom ? 'border-bottom' : null,
                 flex ? 'd-flex flex-row flex-wrap align-items-center justify-content-start' : null,
                 paddings ? 'pt-1 pb-1 ps-2 pe-2' : null,

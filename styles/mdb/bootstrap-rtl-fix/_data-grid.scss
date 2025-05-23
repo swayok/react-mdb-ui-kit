@@ -10,28 +10,17 @@
     background-color: $table-container-bg;
     min-height: 150px;
 
-    > table.data-grid {
+    > table.data-grid,
+    > .animated-content-container > table.data-grid {
         position: relative;
         z-index: 1;
 
         > tbody {
             font-weight: 400;
-        }
 
-        .data-grid-highlight-blue {
-            background-color: $table-highlight-bg-blue;
-        }
-
-        .data-grid-highlight-red {
-            background-color: $table-highlight-bg-red;
-        }
-
-        .data-grid-highlight-green {
-            background-color: $table-highlight-bg-green;
-        }
-
-        .data-grid-highlight-gray {
-            background-color: $table-highlight-bg-gray;
+            > tr.data-grid-row-selected > td {
+                background-color: $data-grid-selected-row-bg;
+            }
         }
 
         > tbody,
@@ -42,7 +31,7 @@
                 > th,
                 .data-grid-column-header {
                     padding: $data-grid-cell-padding-y $data-grid-cell-padding-x;
-                    font-weight: $data-grid-cell-padding-font-weight;
+                    font-weight: $data-grid-cell-font-weight;
                 }
             }
         }
@@ -63,9 +52,9 @@
 
         > thead > tr {
             th {
-                background-color: $table-header-bg;
-                border-color: $table-header-borders;
-                color: $table-header-text-color;
+                background-color: $data-grid-header-bg;
+                border-color: $data-grid-header-borders;
+                color: $data-grid-header-color;
                 vertical-align: middle;
                 position: relative;
 
@@ -108,9 +97,9 @@
         > tfoot > tr {
             > th,
             > td {
-                background-color: $table-header-bg;
-                border-color: $table-header-borders;
-                color: $table-header-text-color;
+                background-color: $data-grid-header-bg;
+                border-color: $data-grid-header-borders;
+                color: $data-grid-header-color;
                 font-weight: 600;
             }
         }
@@ -204,6 +193,7 @@
     }
 
     &.data-grid-flex {
+        > .animated-content-container > table.data-grid,
         > table.data-grid {
             border-top-width: 0;
 
@@ -224,7 +214,7 @@
                     right: 0;
                     bottom: -1px;
                     top: 0;
-                    border-bottom: 1px solid $table-header-borders;
+                    border-bottom: 1px solid $data-grid-header-borders;
                     //box-shadow: $table-header-shadow;
                 }
 
@@ -246,13 +236,13 @@
                         top: 0;
                         bottom: 0;
                         width: 1px;
-                        background-color: $table-header-borders;
+                        background-color: $data-grid-header-borders;
                     }
                 }
 
                 > td.data-grid-column-sticky-left,
                 > td.data-grid-column-sticky-right {
-                    background-color: $table-header-bg;
+                    background-color: $data-grid-header-bg;
                 }
 
                 > .data-grid-column-sticky-left {
@@ -287,7 +277,7 @@
                         left: 0;
                         top: 0;
                         bottom: 0;
-                        border-left: 1px solid $table-header-borders;
+                        border-left: 1px solid $data-grid-header-borders;
                     }
 
                     &:first-child::after {
@@ -319,7 +309,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: $table-error-bg;
+        background-color: $data-grid-error-bg;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -356,8 +346,8 @@
 .data-grid-footer {
     position: relative;
     z-index: 9;
-    background-color: $table-footer-bg;
-    color: $table-footer-text-color;
+    background-color: $data-grid-footer-bg;
+    color: $data-grid-footer-color;
 
     .page-item {
         &.dropdown-item {
@@ -371,8 +361,8 @@
 
         &.active.disabled {
             .page-link {
-                background-color: $pagination-active-disabled-bg;
-                color: $pagination-active-disabled-color;
+                background-color: $data-grid-pagination-active-disabled-bg;
+                color: $data-grid-pagination-active-disabled-color;
             }
         }
     }
@@ -396,5 +386,5 @@
     width: 0;
     height: 26px;
     margin: 0 0.5rem;
-    border-right: 1px solid $table-vertical-separator-color;
+    border-right: 1px solid $data-grid-vertical-separator-color;
 }

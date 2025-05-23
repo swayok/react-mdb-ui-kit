@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import clsx from 'clsx'
 import ImagesCarouselModal from 'swayok-react-mdb-ui-kit/components/Images/ImagesCarouselModal'
 import FadeSwitch from 'swayok-react-mdb-ui-kit/components/FadeSwitch'
+import {getResponsiveCssGridClassNames} from 'swayok-react-mdb-ui-kit/helpers/getResponsiveCssGridClassNames'
 import {ImagesPreviewerProps} from 'swayok-react-mdb-ui-kit/types/ImagesPreviewer'
 
 // Отображение фотографий с просмотром "на весь экран" по клику.
@@ -11,7 +12,7 @@ function ImagesPreviewer(props: ImagesPreviewerProps) {
         className,
         images,
         alt = '',
-        previewsColumns: gridColumnsConfig = {
+        previewsColumns = {
             xs: 3,
             sm: 4,
             md: 3,
@@ -32,8 +33,7 @@ function ImagesPreviewer(props: ImagesPreviewerProps) {
         setIsModalVisible,
     ] = useState<boolean | null>(null)
 
-    // Настройка количества колонок в списке миниатюр для каждого размера экрана.
-    const previewsColumns: NonNullable<ImagesPreviewerProps['previewsColumns']> = gridColumnsConfig ?? {}
+
 
     return (
         <div
@@ -68,13 +68,8 @@ function ImagesPreviewer(props: ImagesPreviewerProps) {
                 <div
                     className={clsx(
                         'images-previewer-previews-list mt-3',
-                        'd-grid grid-columns-gap-3 grid-rows-gap-3',
-                        previewsColumns.xs ? 'grid-columns-' + previewsColumns.xs : null,
-                        previewsColumns.sm ? 'grid-columns-sm-' + previewsColumns.sm : null,
-                        previewsColumns.md ? 'grid-columns-md-' + previewsColumns.md : null,
-                        previewsColumns.lg ? 'grid-columns-lg-' + previewsColumns.lg : null,
-                        previewsColumns.xl ? 'grid-columns-xl-' + previewsColumns.xl : null,
-                        previewsColumns.xxl ? 'grid-columns-xxl-' + previewsColumns.xxl : null
+                        // Настройка количества колонок в списке миниатюр для каждого размера экрана.
+                        getResponsiveCssGridClassNames(previewsColumns ?? {}, 3, 3)
                     )}
                 >
                     {images.map((photo: string, index: number) => (
