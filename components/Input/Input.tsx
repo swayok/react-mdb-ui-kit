@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, useCallback, useEffect, useRef, useState} from 'react'
-import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
-import {ReactComponentOrTagName} from '../../types/Common'
 import withStable from '../../helpers/withStable'
-import {TooltipProps} from '../Tooltip'
 import UserBehaviorService from '../../services/UserBehaviorService'
+import {ReactComponentOrTagName} from '../../types/Common'
+import {TooltipProps} from '../Tooltip'
+import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 
 const activeInputLabelSizeMultipliers = {
     normal: 0.9,
@@ -222,9 +222,9 @@ function Input(props: InputProps) {
     )
 
     const handleOnBeforeInput = useCallback(
-        (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: React.InputEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (allowedChars) {
-                const char = (e as React.CompositionEvent<HTMLInputElement>).data
+                const char: string = e.data
                 // Отменяем введенный символ, если он не разрешен
                 if (!allowedChars.test(char)) {
                     e.preventDefault()
