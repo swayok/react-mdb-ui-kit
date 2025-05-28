@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AnyObject} from '../../types/Common'
 import {DataGridOrderingDirection} from '../../types/DataGrid'
-import useUrlQueryParams from '../../helpers/useUrlQueryParams'
+import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {AsyncDataGridStateForUrlQuery, AsyncDataGridUrlQueryManagerProps} from '../../types/AsyncDataGrid'
 
 // Хранение и восстановление состояния таблицы из URL query.
@@ -43,7 +43,7 @@ function AsyncDataGridUrlQueryManager<
     // Проверяем есть ли в URL Query параметры для таблицы.
     useEffect(() => {
         if (urlQueryParams.has(urlQueryParamName)) {
-            const hash: string = urlQueryParams.get(urlQueryParamName) as string
+            const hash: string = urlQueryParams.get(urlQueryParamName)!
             if (prevHash === hash) {
                 // Ничего не изменилось.
                 return
@@ -145,7 +145,7 @@ export function encodeAsyncDataGridState(
     }
     if (orderBy) {
         data.sb = orderBy
-        data.sd = orderDirection || 'asc'
+        data.sd = orderDirection ?? 'asc'
     }
     if (filters && Object.keys(filters).length > 0) {
         data.f = filters

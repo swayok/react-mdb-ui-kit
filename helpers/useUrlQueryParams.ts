@@ -3,7 +3,7 @@ import {AnyObject} from '../types/Common'
 import {useMemo} from 'react'
 
 // Подмена useSearchParams с добавлением типизации (набора ключей)
-export default function useUrlQueryParams<KeysOrObject extends string | object>(
+export function useUrlQueryParams<KeysOrObject extends string | object>(
     defaultInit?: TypedURLSearchParamsInit<KeysOrObject>
 ): [TypedUrlQueryParams<KeysOrObject>, SetTypedUrlQueryParams<KeysOrObject>] {
     const [

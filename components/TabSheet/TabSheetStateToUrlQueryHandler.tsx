@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react'
 import {TabSheetStateToUrlQueryHandlerProps} from '../../types/TabSheet'
 import {useTabSheetContext} from './TabSheetContext'
-import useUrlQueryParams from '../../helpers/useUrlQueryParams'
+import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {AnyObject} from '../../types/Common'
 
 // Контроль сохранения и восстановления текущей вкладки из URL Query.
@@ -33,7 +33,7 @@ function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerPro
 
     // Смена вкладки при изменении аргумента в строке адреса.
     useEffect(() => {
-        const newTab = urlQueryParams.get(props.name) || defaultTab
+        const newTab = urlQueryParams.get(props.name) ?? defaultTab
         if (newTab !== currentTab) {
             setCurrentTab(newTab)
         }

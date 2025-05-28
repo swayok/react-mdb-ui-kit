@@ -4,29 +4,29 @@ import {ApiError} from '../services/ApiRequestService'
 export interface UseApiGetRequestHookConfig<DataType> {
     // Запустить загрузку сразу же при монтировании компонента?
     // По умолчанию: true.
-    autoStart?: boolean,
+    autoStart?: boolean
     // Начальное значение состояния isLoading.
     // По умолчанию: true.
-    defaultIsLoadingState?: boolean,
-    // Очищать сбрасывать данные в initialData перед запуском перезагрузи?
+    defaultIsLoadingState?: boolean
+    // Сбрасывать данные в initialData перед запуском перезагрузи?
     // По умолчанию: true.
-    resetDataBeforeReload?: boolean,
+    resetDataBeforeReload?: boolean
     // Начальные данные.
     initialData?: DataType
 }
 
 export interface UseApiGetRequestHookReturn<DataType> {
-    data?: DataType,
-    loading: boolean,
-    error: ApiError | null,
-    setError: React.Dispatch<React.SetStateAction<ApiError | null>>,
-    reload: (silent?: boolean) => Promise<DataType>,
-    setData: React.Dispatch<React.SetStateAction<DataType | undefined>>,
+    data?: DataType
+    loading: boolean
+    error: ApiError | null
+    setError: React.Dispatch<React.SetStateAction<ApiError | null>>
+    reload: (silent?: boolean) => Promise<DataType>
+    setData: React.Dispatch<React.SetStateAction<DataType | undefined>>
 }
 
 // Хук для отправки GET запроса в API.
 // Реализует стандартный вариант запроса данных с индикатором загрузки и обработкой ошибок.
-export default function useApiGetRequest<DataType>(
+export function useApiGetRequest<DataType>(
     sendRequest: () => Promise<DataType>,
     options?: UseApiGetRequestHookConfig<DataType>,
     // Отвечает за пересоздание функции запроса данных из API.
