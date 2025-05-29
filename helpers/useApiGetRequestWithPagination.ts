@@ -14,7 +14,7 @@ export interface UseApiGetRequestWithPaginationHookConfig<RecordType> {
     autoStart?: boolean
     // Начальное значение состояния isLoading.
     // По умолчанию: true.
-    defaultIsLoadingState?: boolean
+    isLoading?: boolean
     // Сбрасывать список элементов перед запуском запроса к API через loadPage()?
     // Если false - данные не сбрасываются перед запросом, а перезаписываются
     // после получения списка из API.
@@ -101,7 +101,7 @@ export function useApiGetRequestWithPagination<RecordType>(
         limit: initialLimit = 20,
         page: initialPage = 1,
         autoStart = true,
-        defaultIsLoadingState = true,
+        isLoading: initialIsLoading = true,
         resetDataBeforeLoadPageRequest = false,
         initialRecords = [],
     } = options
@@ -110,12 +110,12 @@ export function useApiGetRequestWithPagination<RecordType>(
     const [
         limit,
         setLimit,
-    ] = useState<number>(initialLimit)
+    ] = useState<number>(Math.max(1, initialLimit))
     // Смещение списка.
     const [
         offset,
         setOffset,
-    ] = useState<number>(Math.max(1, initialPage) * limit)
+    ] = useState<number>(calculateOffset(initialPage, limit))
     // Список элементов.
     const [
         records,
@@ -135,7 +135,7 @@ export function useApiGetRequestWithPagination<RecordType>(
     const [
         isLoading,
         setIsLoading,
-    ] = useState(defaultIsLoadingState)
+    ] = useState(initialIsLoading)
     const [
         isLoadingNextPage,
         setIsLoadingNextPage,
@@ -147,7 +147,7 @@ export function useApiGetRequestWithPagination<RecordType>(
 
     // Запуск запроса и обработка ответа.
     const executeRequest = useCallback((
-        page: number | 'prev' | 'next',
+        page: number | 'prev' | 'next' | 'same',
         limit: number,
         modificationMode: 'replace' | 'append' | 'prepend',
         silent?: boolean
@@ -157,17 +157,21 @@ export function useApiGetRequestWithPagination<RecordType>(
         setOffset(stateOffset => {
             oldOffset = stateOffset
             switch (page) {
+                case 'same':
+                    offset = stateOffset
+                    break
                 case 'prev':
-                    offset = Math.max(0, offset - limit)
+                    offset = Math.max(0, stateOffset - limit)
                     break
                 case 'next':
-                    offset += limit
+                    offset = stateOffset + limit
                     break
                 default:
-                    offset = (Math.max(1, page) - 1) * limit
+                    offset = calculateOffset(page, limit)
             }
             return offset
         })
+        console.log({page, offset})
         if (!silent) {
             setIsLoading(true)
             setError(null)
@@ -181,7 +185,7 @@ export function useApiGetRequestWithPagination<RecordType>(
                 setRecords([])
             }
         }
-        return sendRequest(limit, offset)
+        return sendRequest(offset, limit)
             .then((data: PaginationResponseData<RecordType>) => {
                 setRecords(records => {
                     switch (modificationMode) {
@@ -194,6 +198,7 @@ export function useApiGetRequestWithPagination<RecordType>(
                     }
                 })
                 setIsLoading(false)
+                setError(null)
                 setIsLoadingNextPage(false)
                 setIsAllRecordsLoaded(data.records.length < limit)
                 if (data.count) {
@@ -214,7 +219,7 @@ export function useApiGetRequestWithPagination<RecordType>(
     // Запуск запроса при монтировании или изменении key (через executeRequest).
     useEffect(() => {
         if (autoStart) {
-            void executeRequest(offset, limit, 'replace')
+            void executeRequest('same', limit, 'replace')
         }
     }, [executeRequest])
 
@@ -288,4 +293,9 @@ export function useApiGetRequestWithPagination<RecordType>(
         loadPrevPage,
         loadNextPage,
     }
+}
+
+// Вычисление смещения.
+function calculateOffset(page: number, limit: number): number {
+    return Math.max(0, page - 1) * limit
 }

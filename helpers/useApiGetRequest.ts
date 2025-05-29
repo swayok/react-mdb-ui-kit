@@ -69,6 +69,7 @@ export function useApiGetRequest<DataType>(
             .then((data: DataType) => {
                 setData(data)
                 setIsLoading(false)
+                setError(null)
                 return data
             })
             .catch((error: ApiError) => {
