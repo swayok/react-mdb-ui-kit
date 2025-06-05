@@ -24,7 +24,7 @@ export interface SelectInputProps<
     'value' | 'onChange' | 'children'
 > {
     // Набор опций.
-    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>;
+    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
     // Обработчик выбора опции.
     onChange: (
         value: OptionValueType,
@@ -32,55 +32,58 @@ export interface SelectInputProps<
         index: number,
         groupIndex: number | null,
         extra?: OptionExtrasType,
-    ) => void;
+    ) => void
     // Текущее значение.
-    value?: OptionValueType;
+    value?: OptionValueType
     // Если value не найдено в options, то использовать первую активную опцию из options
     // и выполнить onChange(firstOption.value).
     // По умолчанию: true.
-    selectFirstIfNotFound?: boolean;
+    selectFirstIfNotFound?: boolean
     // Конвертация опции для отображения в поле ввода (по умолчанию отображается FormSelectOption['label']).
-    valueToString?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string;
+    valueToString?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string
     // Отрисовка подписи для опции или группы опций в выпадающем меню.
     renderOptionLabel?: (
         option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
         isGroup: boolean
-    ) => string | React.ReactNode;
+    ) => string | React.ReactNode
     // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
-    labelsContainHtml?: boolean;
+    labelsContainHtml?: boolean
     // Вкл/Выкл поиска по опциям.
-    search?: boolean;
+    search?: boolean
     // Пояснение для поля ввода ключевых слов поиска по опциям.
-    searchPlaceholder?: string;
+    searchPlaceholder?: string
     // Спрятать опцию с пустым value.
-    hideEmptyOptionInDropdown?: boolean;
+    hideEmptyOptionInDropdown?: boolean
     // Добавить опцию с пустым значением в список опций.
-    withEmptyOption?: FormSelectOption<OptionValueType, OptionExtrasType>;
+    withEmptyOption?: FormSelectOption<OptionValueType, OptionExtrasType>
+    // Добавить в конец списка опцию, которая будет видна,
+    // даже при фильтрации списка опций.
+    withPermanentOption?: FormSelectOption<OptionValueType, OptionExtrasType>
     // Отключить возможность выбрать указанные опции.
-    disableOptions?: OptionValueType[];
+    disableOptions?: OptionValueType[]
     // Виртуализация списка опций для экономии памяти.
     // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
     // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
     virtualizationConfig?: {
         // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
         // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
-        enabled: boolean | 'auto',
+        enabled: boolean | 'auto'
         // Обязательное, если не указан SelectInputProps.maxHeight,
         // т.к. автоматически высота выпадающего меню не вычисляется.
         // По умолчанию: 500.
         // Если также указано значение SelectInputProps.maxHeight,
         // то будет выбрано меньшее из значений:
         // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
-        dropdownHeight?: number,
+        dropdownHeight?: number
     }
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string;
+    trackBehaviorAs?: string
 }
 
 interface KeywordsState {
-    value: string,
-    regexp: null | RegExp,
+    value: string
+    regexp: null | RegExp
 }
 
 /**
@@ -108,6 +111,7 @@ function SelectInput<
         labelsContainHtml,
         hideEmptyOptionInDropdown,
         withEmptyOption,
+        withPermanentOption,
         disableOptions = [],
         renderOptionLabel,
         trackBehaviorAs,
@@ -138,9 +142,16 @@ function SelectInput<
             options,
             value,
             withEmptyOption,
+            withPermanentOption,
             selectFirstIfNotFound
         ),
-        [options, value, withEmptyOption, selectFirstIfNotFound]
+        [
+            options,
+            value,
+            withEmptyOption?.value,
+            withPermanentOption?.value,
+            selectFirstIfNotFound,
+        ]
     )
 
     // Подпись выбранной опции для отображения в поле ввода.
@@ -269,6 +280,7 @@ function SelectInput<
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
                     withEmptyOption={withEmptyOption}
+                    withPermanentOption={withPermanentOption}
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
@@ -287,6 +299,7 @@ function SelectInput<
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
                     withEmptyOption={withEmptyOption}
+                    withPermanentOption={withPermanentOption}
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}

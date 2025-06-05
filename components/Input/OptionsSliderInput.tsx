@@ -50,7 +50,13 @@ function OptionsSliderInput<
 
     const min: number = 0
     const max: number = options.length - 1
-    const selectedOptionIndex: number = findSelectedOption(options, value, undefined, true)?.index || 0
+    const selectedOptionIndex: number = findSelectedOption(
+        options,
+        value,
+        undefined,
+        undefined,
+        true
+    )?.index ?? 0
     const thumbPosition = value === Number(min)
         ? 0
         : (((selectedOptionIndex ? selectedOptionIndex : 0 - min) * 100) / (max - min))

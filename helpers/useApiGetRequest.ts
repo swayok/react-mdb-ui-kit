@@ -13,6 +13,10 @@ export interface UseApiGetRequestHookConfig<DataType> {
     resetDataBeforeReload?: boolean
     // Начальные данные.
     initialData?: DataType
+    // Модификация загруженных данных.
+    modifyLoadedData?: (data: DataType) => DataType
+    // Обработка ошибки загрузки данных.
+    onError?: (error: ApiError, silent: boolean) => void
 }
 
 export interface UseApiGetRequestHookReturn<DataType> {
@@ -30,7 +34,7 @@ export function useApiGetRequest<DataType>(
     sendRequest: () => Promise<DataType>,
     options?: UseApiGetRequestHookConfig<DataType>,
     // Отвечает за пересоздание функции запроса данных из API.
-    key?: string | number
+    key?: string | number | null
 ): UseApiGetRequestHookReturn<DataType> {
 
     const {
@@ -38,6 +42,8 @@ export function useApiGetRequest<DataType>(
         defaultIsLoadingState = true,
         resetDataBeforeReload = true,
         initialData,
+        modifyLoadedData,
+        onError,
     } = (options ?? {})
 
     // Данные.
@@ -67,6 +73,9 @@ export function useApiGetRequest<DataType>(
         }
         return sendRequest()
             .then((data: DataType) => {
+                if (modifyLoadedData) {
+                    data = modifyLoadedData(data)
+                }
                 setData(data)
                 setIsLoading(false)
                 setError(null)
@@ -77,6 +86,7 @@ export function useApiGetRequest<DataType>(
                     setError(error)
                 }
                 setIsLoading(false)
+                onError?.(error, !!silent)
             }) as Promise<DataType>
     }, [key])
 

@@ -13,9 +13,9 @@ export interface SelectInputOptionsProps<
     OptionExtrasType = AnyObject
 > extends Pick<
     SelectInputProps<OptionValueType, OptionExtrasType>,
-    'options' | 'withEmptyOption' | 'maxHeight' | 'hideEmptyOptionInDropdown' | 'search'
-    | 'renderOptionLabel' | 'labelsContainHtml' | 'disableOptions'
-    | 'onChange' | 'trackBehaviorAs'
+    'options' | 'withEmptyOption' | 'withPermanentOption' | 'hideEmptyOptionInDropdown'
+    | 'maxHeight'  | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
+    | 'disableOptions' | 'onChange' | 'trackBehaviorAs'
 > {
     selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>,
     keywordsRegexp: RegExp | null,
@@ -31,6 +31,7 @@ function SelectInputOptions<
         options,
         selectedOption,
         withEmptyOption,
+        withPermanentOption,
         maxHeight,
         hideEmptyOptionInDropdown,
         search,
@@ -79,6 +80,11 @@ function SelectInputOptions<
                     continue
                 }
 
+                const groupChildren = renderOptions(group.options, i, depth + 1)
+                if (groupChildren.length === 0) {
+                    continue
+                }
+
                 ret.push(
                     <SelectInputOptionsGroupHeader
                         key={'group-' + i}
@@ -96,22 +102,24 @@ function SelectInputOptions<
                             containerClassName
                         )}
                     >
-                        {renderOptions(group.options, i, depth + 1)}
+                        {groupChildren}
                     </div>
                 )
             } else {
                 const option: FormSelectOption<OptionValueType, OptionExtrasType> = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
+                if (!shouldDisplaySelectInputOption(
+                    option.label,
+                    option.value,
+                    hideEmptyOptionInDropdown,
+                    search,
+                    keywordsRegexp,
+                    labelsContainHtml
+                )) {
+                    continue
+                }
                 ret.push(
                     <SelectInputOption
                         key={'option-' + i}
-                        visible={shouldDisplaySelectInputOption(
-                            option.label,
-                            option.value,
-                            hideEmptyOptionInDropdown,
-                            search,
-                            keywordsRegexp,
-                            labelsContainHtml
-                        )}
                         option={option}
                         index={i}
                         groupIndex={groupIndex}
@@ -142,6 +150,18 @@ function SelectInputOptions<
                 />
             )}
             {renderOptions(options)}
+            {withPermanentOption && (
+                <SelectInputOption
+                    key="option-permanent"
+                    option={withPermanentOption}
+                    index={-1}
+                    groupIndex={null}
+                    isActive={selectedOption?.value === withPermanentOption.value}
+                    renderOptionLabel={renderOptionLabel}
+                    labelContainsHtml={labelsContainHtml}
+                    onSelect={onSelect}
+                />
+            )}
         </>
     )
 

@@ -171,7 +171,6 @@ export function useApiGetRequestWithPagination<RecordType>(
             }
             return offset
         })
-        console.log({page, offset})
         if (!silent) {
             setIsLoading(true)
             setError(null)

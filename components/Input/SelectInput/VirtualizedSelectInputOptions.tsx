@@ -13,7 +13,7 @@ export interface VirtualizedSelectInputOptionsProps<
     OptionExtrasType = AnyObject
 > extends Pick<
     SelectInputProps<OptionValueType, OptionExtrasType>,
-    'options' | 'withEmptyOption' | 'hideEmptyOptionInDropdown' | 'search'
+    'options' | 'withEmptyOption'  | 'withPermanentOption' | 'hideEmptyOptionInDropdown' | 'search'
     | 'renderOptionLabel' | 'labelsContainHtml' | 'disableOptions'
     | 'onChange' | 'trackBehaviorAs'
 > {
@@ -54,6 +54,7 @@ function VirtualizedSelectInputOptions<
         options,
         selectedOption,
         withEmptyOption,
+        withPermanentOption,
         height,
         hideEmptyOptionInDropdown,
         search,
@@ -78,9 +79,23 @@ function VirtualizedSelectInputOptions<
                     groupIndex: null,
                 })
             }
-            return flattenOptions<OptionValueType, OptionExtrasType>(options, initial)
+            const ret = flattenOptions<OptionValueType, OptionExtrasType>(options, initial)
+            if (withPermanentOption) {
+                ret.push({
+                    isGroup: false,
+                    data: withPermanentOption,
+                    groupIndex: null,
+                })
+            }
+            return ret
         },
-        [options, withEmptyOption?.label, withEmptyOption?.value]
+        [
+            options,
+            withEmptyOption?.label,
+            withEmptyOption?.value,
+            withPermanentOption?.label,
+            withPermanentOption?.value,
+        ]
     )
 
     // Обработчик выбора опции.
