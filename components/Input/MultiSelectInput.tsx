@@ -1,5 +1,6 @@
 import React, {HTMLProps} from 'react'
 import clsx from 'clsx'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DropdownItemProps} from '../Dropdown2/DropdownTypes'
 import Icon from '../Icon'
 import {
@@ -19,25 +20,35 @@ import {DropdownItem} from '../Dropdown2/DropdownItem'
 import {DropdownHeader} from '../Dropdown2/DropdownHeader'
 import withStable from '../../helpers/withStable'
 
-export interface MultiSelectInputProps<OptionValueType = string> extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
-    options: FormSelectOptionsAndGroupsList<OptionValueType>;
-    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType>) => void;
+export interface MultiSelectInputProps<
+    OptionValueType = string,
+    OptionExtrasType extends AnyObject = AnyObject
+> extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
+    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>;
+    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void;
     values?: OptionValueType[];
     // Требуется ли выбрать хотя бы одно значение?
     required?: boolean;
     // Конвертация выбранных опций для отображения в поле ввода.
     // По умолчанию отображается список из FormSelectOption['label'].
-    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType>) => string;
+    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string;
     // Текст для отображения в случае, если ни одной опции не выбрано.
     nothingSelectedPlaceholder?: string;
     // Отключить возможность выбрать указанные опции.
     disableOptions?: OptionValueType[];
 }
 
+export interface MultiSelectInputOptionExtras extends AnyObject {
+    radios?: boolean
+}
+
 // Выбор одного или нескольких из вариантов.
 // Список опций автоматически генерируется на основе props.options.
 // Todo: добавить поиск по опциям.
-class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSelectInputProps<OptionValueType>> {
+class MultiSelectInput<
+    OptionValueType = string,
+    OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras
+> extends React.Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
 
     render() {
         const {
@@ -77,16 +88,16 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
 
     // Рекурсивная отрисовка опций.
     private renderOptions(
-        options: MultiSelectInputProps<OptionValueType>['options'],
-        radiosGroup?: FormSelectOptionGroup<OptionValueType>
+        options: MultiSelectInputProps<OptionValueType, OptionExtrasType>['options'],
+        radiosGroup?: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
     ) {
         const ret = []
         const selectedValues: OptionValueType[] = this.getSelectedValues()
         for (let i = 0; i < options.length; i++) {
             if ('options' in options[i]) {
                 // Группа опций.
-                const option: FormSelectOptionGroup<OptionValueType>
-                    = options[i] as FormSelectOptionGroup<OptionValueType>
+                const option: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
+                    = options[i] as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
                 if (!Array.isArray(option.options) || option.options.length === 0) {
                     // Не массив или пустой массив: игнорируем.
                     continue
@@ -123,7 +134,7 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
                 )
             } else {
                 // Обычная опция.
-                const option: FormSelectOption<OptionValueType> = options[i] as FormSelectOption<OptionValueType>
+                const option: FormSelectOption<OptionValueType, OptionExtrasType> = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
                 const {
                     label,
                     value,
@@ -180,7 +191,7 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
 
     // Получить текстовое представление списка выбранных значений.
     private getSelectedValuesForTextInput(): string {
-        const selectedOptions: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
+        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
         if (selectedOptions.length === 0) {
             return this.props.nothingSelectedPlaceholder ?? ''
         }
@@ -195,7 +206,7 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
 
     // Получить список выбранных значений.
     private getSelectedValues(): OptionValueType[] {
-        const options: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
+        const options: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
         const values: OptionValueType[] = []
         for (const option of options) {
             values.push(option.value)
@@ -204,15 +215,15 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
     }
 
     // Получить список выбранных опций.
-    private getSelectedOptions(): FormSelectOptionsList<OptionValueType> {
-        const ret: FormSelectOptionsList<OptionValueType> = []
+    private getSelectedOptions(): FormSelectOptionsList<OptionValueType, OptionExtrasType> {
+        const ret: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
         if (Array.isArray(this.props.values) && this.props.values.length > 0) {
             // Значения заданы: ищем опции для них.
             for (const optionOrGroup of this.props.options) {
                 if ('options' in optionOrGroup) {
                     // Группа опций.
-                    const group: FormSelectOptionGroup<OptionValueType>
-                        = optionOrGroup as FormSelectOptionGroup<OptionValueType>
+                    const group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
+                        = optionOrGroup as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
                     // Группа опций.
                     if (!Array.isArray(group.options) || group.options.length === 0) {
                         // Не массив или пустой массив: игнорируем.
@@ -238,8 +249,8 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
             // Требуется выбрать хотя бы одно значение: используем первую опцию в списке.
             for (const optionOrGroup of this.props.options) {
                 if ('options' in optionOrGroup) {
-                    const group: FormSelectOptionGroup<OptionValueType>
-                        = optionOrGroup as FormSelectOptionGroup<OptionValueType>
+                    const group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
+                        = optionOrGroup as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
                     // Группа опций.
                     if (!Array.isArray(group.options) || group.options.length === 0) {
                         // Не массив или пустой массив: игнорируем.
@@ -257,10 +268,10 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
     }
 
     // Добавление/удаление опции из списка выбранных.
-    private onCheckboxClick(option: FormSelectOption<OptionValueType>): void {
-        const selectedOptions: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
+    private onCheckboxClick(option: FormSelectOption<OptionValueType, OptionExtrasType>): void {
+        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
         const values: OptionValueType[] = []
-        const newSelectedOptions: FormSelectOptionsList<OptionValueType> = []
+        const newSelectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
         let unselected: boolean = false
         for (const selectedOption of selectedOptions) {
             if (selectedOption.value === option.value) {
@@ -279,14 +290,14 @@ class MultiSelectInput<OptionValueType = string> extends React.Component<MultiSe
 
     // Добавление/удаление опции из списка выбранных (режим: разрешена только одна опция из группы).
     private onRadioClick(
-        option: FormSelectOption<OptionValueType>,
-        radiosGroup?: FormSelectOptionGroup<OptionValueType>
+        option: FormSelectOption<OptionValueType, OptionExtrasType>,
+        radiosGroup?: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
     ): void {
-        const selectedOptions: FormSelectOptionsList<OptionValueType> = this.getSelectedOptions()
+        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
         const unselectedValues = (radiosGroup?.options ?? [])
             .filter(groupOption => option.value !== groupOption.value)
             .map(groupOption => groupOption.value)
-        const newSelectedOptions: FormSelectOptionsList<OptionValueType> = []
+        const newSelectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
         const values: OptionValueType[] = []
         let unselected: boolean = false
         for (const selectedOption of selectedOptions) {
