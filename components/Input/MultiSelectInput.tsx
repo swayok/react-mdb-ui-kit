@@ -1,6 +1,6 @@
 import React, {HTMLProps} from 'react'
 import clsx from 'clsx'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DropdownItemProps} from '../Dropdown2/DropdownTypes'
 import Icon from '../Icon'
 import {
@@ -36,6 +36,11 @@ export interface MultiSelectInputProps<
     nothingSelectedPlaceholder?: string;
     // Отключить возможность выбрать указанные опции.
     disableOptions?: OptionValueType[];
+    // Отрисовка подписи для опции или группы опций в выпадающем меню.
+    renderOptionLabel?: (
+        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
+        isGroup: boolean
+    ) => string | React.ReactNode
 }
 
 export interface MultiSelectInputOptionExtras extends AnyObject {
@@ -62,6 +67,7 @@ class MultiSelectInput<
             onChange,
             required,
             nothingSelectedPlaceholder,
+            renderOptionLabel,
             ...attributes
         } = this.props
 
@@ -110,12 +116,18 @@ class MultiSelectInput<
                     <DropdownHeader
                         key={'group-' + i}
                         {...groupHeaderAttributes}
-                        className={clsx('form-dropdown-select-group-header', groupHeaderAttributes?.className)}
+                        className={clsx(
+                            'form-dropdown-select-group-header',
+                            groupHeaderAttributes?.className
+                        )}
                     >
-                        {option.label}
+                        {
+                            this.props.renderOptionLabel
+                                ? this.props.renderOptionLabel(option, true)
+                                : option.label
+                        }
                     </DropdownHeader>
                 )
-
 
                 ret.push(
                     <div
@@ -181,7 +193,13 @@ class MultiSelectInput<
                             path={icon}
                             className={clsx('me-1', iconColor)}
                         />
-                        <span>{label}</span>
+                        {
+                            this.props.renderOptionLabel
+                                ? this.props.renderOptionLabel(option, false)
+                                : (
+                                    <span>{label}</span>
+                                )
+                        }
                     </DropdownItem>
                 )
             }
