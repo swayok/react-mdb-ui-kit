@@ -7,7 +7,7 @@ export interface MaskedNumericInputProps extends Omit<InputProps, 'onChange' | '
     // Например, "+7 (___) ___-__-__".
     // Подчеркивание - это цифра, которую может ввести пользователь,
     // всё остальное - это неизменные символы (включая пробелы).
-    template: string,
+    template: string
     // Функция для очистки значения для onChange().
     // По умолчанию: value => value.replace(/[^+0-9]+/g, '')
     // Пример: template = '0___ ___ ___'.
@@ -17,12 +17,12 @@ export interface MaskedNumericInputProps extends Omit<InputProps, 'onChange' | '
     // Введено: value = '+7 (999) 888-77-66'.
     // Чистое значение: '+79998887766'.
     // Если нужно другое поведение, то можно задать свою функцию очистки значения.
-    valueCleaner?: (value: string) => string,
+    valueCleaner?: (value: string) => string
     // Минимальная позиция курсора в поле ввода,
     // если ввод значения начинается не с нулевой позиции.
     // Пример: для template = "+7 (___) ___-__-__"
     // minCursorPosition = 3 (индекс первого подчеркивания).
-    minCursorPosition: number,
+    minCursorPosition: number
     onChange: (
         event: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
         // Результат выполнения функции из свойства valueCleaner.
@@ -63,7 +63,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
     ] = useState<boolean>(false)
     const cursorPositionRef = useRef<number | null>(null)
 
-    const inputReference = inputRef || fallbackInputRef
+    const inputReference = inputRef ?? fallbackInputRef
 
     useEffect(() => {
         if (inputReference.current && focused) {
@@ -102,7 +102,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                     switch (e.key) {
                         case 'Delete':
                             if (input.selectionStart === input.selectionEnd) {
-                                const cursorPosition: number = input.selectionStart || 0
+                                const cursorPosition: number = input.selectionStart ?? 0
                                 cursorPositionRef.current = cursorPosition
                                 if (isHardcodedCharacter(input.value[cursorPosition])) {
                                     let endPosition: number = cursorPosition + 1
@@ -124,7 +124,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                             break
                         case 'Backspace':
                             if (input.selectionStart === input.selectionEnd) {
-                                const endPosition: number = (input.selectionStart || 0) - 1
+                                const endPosition: number = (input.selectionStart ?? 0) - 1
                                 let cursorPosition: number = endPosition
                                 if (cursorPosition < minCursorPosition) {
                                     e.preventDefault()
@@ -203,7 +203,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                 let nextCursorPosition = findCursorPosition(
                     value,
                     template,
-                    e.currentTarget.selectionStart || minCursorPosition,
+                    e.currentTarget.selectionStart ?? minCursorPosition,
                     minCursorPosition
                 )
                 if (
@@ -278,12 +278,12 @@ export function formatValueForMask(value: string, template: string, focused: boo
     value = removeTemplateCharacters(value, template)
     let formattedValue: string = ''
     let digitIndex: number = 0
-    for (let i = 0; i < template.length; i++) {
-        if (template[i] === '_' && digitIndex < value.length) {
+    for (const char of template) {
+        if (char === '_' && digitIndex < value.length) {
             formattedValue += value[digitIndex]
             digitIndex++
         } else {
-            formattedValue += template[i]
+            formattedValue += char
         }
     }
     // console.log('formattedValue', {value, normalizedValue})
@@ -391,7 +391,7 @@ function updateCursorPositionOnFocus(
         const position: number = findCursorPosition(
             input.value,
             template,
-            input.selectionStart || template.length - 1,
+            input.selectionStart ?? template.length - 1,
             minCursorPosition
         )
         input.setSelectionRange(position, position)
@@ -411,7 +411,10 @@ function handleKeyboardArrow(
     action: 'ArrowLeft' | 'ArrowRight'
 ): void {
     const shift: number = action === 'ArrowLeft' ? -1 : 1
-    let cursorPosition: number = ((action === 'ArrowLeft' ? input.selectionStart : input.selectionEnd) || 0) + shift
+    let cursorPosition: number = (
+        (action === 'ArrowLeft' ? input.selectionStart : input.selectionEnd)
+        ?? 0
+    ) + shift
     while (cursorPosition < template.length && cursorPosition > 0 && isHardcodedCharacter(input.value[cursorPosition])) {
         cursorPosition += shift
     }

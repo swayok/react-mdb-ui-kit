@@ -1,10 +1,10 @@
 import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from '../types/Common'
 import {isSameOptionValue} from './isSameOptionValue'
 
-export type SelectedOption<
+export interface SelectedOption<
     OptionValueType = string,
     OptionExtrasType = AnyObject
-> = {
+> {
     expectedValue?: OptionValueType | null,
     option: FormSelectOption<OptionValueType, OptionExtrasType>,
     index: number,
@@ -25,6 +25,7 @@ export function findSelectedOption<
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>,
     value?: OptionValueType | null,
     emptyOption?: FormSelectOption<OptionValueType, OptionExtrasType>,
+    permanentOption?: FormSelectOption<OptionValueType, OptionExtrasType>,
     returnFirstIfNotFound: boolean = false
 ): SelectedOption<OptionValueType, OptionExtrasType> | undefined {
     if (value !== undefined) {
@@ -32,6 +33,14 @@ export function findSelectedOption<
             return {
                 expectedValue: value,
                 option: emptyOption,
+                index: -1,
+                groupIndex: null,
+            }
+        }
+        if (permanentOption && value === permanentOption.value) {
+            return {
+                expectedValue: value,
+                option: permanentOption,
                 index: -1,
                 groupIndex: null,
             }

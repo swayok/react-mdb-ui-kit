@@ -54,6 +54,7 @@ function OptionsSliderInput<
         options,
         value,
         undefined,
+        undefined,
         true
     )?.index ?? 0
     const thumbPosition = value === Number(min)

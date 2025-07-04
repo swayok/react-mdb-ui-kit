@@ -12,7 +12,7 @@ export interface AsyncDataLoadingProps<DataType = undefined> {
     loadingShowDelay?: number | null;
     error?: boolean | number;
     errorMessage: string;
-    onReload?: () => void;
+    onReload?: () => unknown;
     retryButtonTitle: string;
     showContent?: boolean;
     className?: string;

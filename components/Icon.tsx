@@ -2,11 +2,12 @@ import React from 'react'
 import clsx from 'clsx'
 import Tooltip, {TooltipProps} from './Tooltip'
 import MDIIcon, {IconProps} from './MDIIcon'
-import {SvgIconInfo} from '../types/Common'
+import {SvgIconInfo, TextColors} from '../types/Common'
 import SvgIcon, {SvgIconProps} from './SvgIcon'
 
-export interface AppIconProps extends Omit<IconProps, 'path'> {
+export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
     path: IconProps['path'] | SvgIconInfo
+    color?: TextColors
     label?: string | number
     tooltip?: string
     tooltipProps?: Omit<TooltipProps, 'title'>
@@ -20,17 +21,20 @@ function Icon(props: AppIconProps) {
         className,
         label,
         tooltip,
-        tooltipProps,
+        tooltipProps = {},
         centerIconInTooltip,
         tooltipMaxWidth,
         path,
+        color,
         ...otherProps
     } = props
     let icon
+    const colorClassName = color ? 'text-' + color : null
     if (typeof path == 'string') {
         const modifiedClassName = clsx(
             'mdi-icon',
             props.rotate !== undefined ? 'mdi-rotatable' : null,
+            colorClassName,
             className
         )
         icon = (
@@ -42,18 +46,18 @@ function Icon(props: AppIconProps) {
         )
     } else {
         const {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             title,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             description,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             spin,
             ...customIconProps
         } = otherProps
         icon = (
             <SvgIcon
                 iconInfo={path}
-                className={className}
+                className={clsx(
+                    className,
+                    colorClassName
+                )}
                 {...customIconProps as Partial<SvgIconProps>}
             />
         )
@@ -61,16 +65,14 @@ function Icon(props: AppIconProps) {
     if (tooltip) {
         const {
             className: tooltipWrapperClassName,
-            tag: tooltipTag,
+            tag: tooltipTag = 'span',
             disableClickHandler: tooltipDisableClickHandler,
             tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
             ...otherTooltipProps
-        } = tooltipProps || {}
+        } = tooltipProps
         const commonTooltipProps: Partial<TooltipProps> = {
             title: tooltip,
-            disableClickHandler: tooltipDisableClickHandler === undefined
-                ? true
-                : tooltipDisableClickHandler,
+            disableClickHandler: tooltipDisableClickHandler ?? true,
             tooltipMaxWidth: tooltipMaxWidthFromProps,
         }
         if (label !== undefined) {
@@ -89,7 +91,7 @@ function Icon(props: AppIconProps) {
             return (
                 <Tooltip
                     {...tooltipProps}
-                    tag={tooltipTag || 'span'}
+                    tag={tooltipTag}
                     className={clsx(centerIconInTooltip ? 'd-flex flex-row align-items-center' : null, tooltipWrapperClassName)}
                     {...commonTooltipProps}
                 >

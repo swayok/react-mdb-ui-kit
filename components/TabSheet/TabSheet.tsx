@@ -3,7 +3,7 @@ import {TabSheetProps} from '../../types/TabSheet'
 import Card from '../Card/Card'
 import TabSheetContext from './TabSheetContext'
 import TabSheetStateToUrlQueryHandler from './TabSheetStateToUrlQueryHandler'
-import useUrlQueryParams from '../../helpers/useUrlQueryParams'
+import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 
 // Обертка вкладок и их содержимого.
 // Обычная структура:
@@ -29,6 +29,8 @@ function TabSheet<TabName extends string = string>(
         children,
         ...otherProps
     } = props
+
+    const argName: string = urlQueryArgName ?? 'tab'
 
     // Аргументы в сроке адреса.
     const [urlQueryParams] = useUrlQueryParams()

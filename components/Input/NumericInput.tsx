@@ -18,7 +18,7 @@ export interface NumericInputProps extends Omit<InputProps, 'onChange'> {
     onChange: (
         e: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
         formattedValue: string,
-        cleanValue: number|null
+        cleanValue: number | null
     ) => void;
 }
 
@@ -45,11 +45,14 @@ function NumericInput(props: NumericInputProps) {
     } = props
 
     const fallbackInputRef = useRef<HTMLInputElement>(null)
-    const [focused, setFocused] = useState<boolean>(false)
+    const [
+        focused,
+        setFocused,
+    ] = useState<boolean>(false)
 
-    const cursorPosition = useRef<number|null>(null)
+    const cursorPosition = useRef<number | null>(null)
 
-    const inputReference = inputRef || fallbackInputRef
+    const inputReference = inputRef ?? fallbackInputRef
 
     useEffect(() => {
         if (inputReference.current && focused) {
@@ -99,7 +102,7 @@ function NumericInput(props: NumericInputProps) {
     }, [numeralFormat, min, max])
 
     // Очистка значения.
-    const cleanValue = useCallback((value: string): number|null => {
+    const cleanValue = useCallback((value: string): number | null => {
         if (value.length === 0) {
             return null
         }
@@ -150,7 +153,7 @@ function NumericInput(props: NumericInputProps) {
                 // Первый символ, введенный в поле ввода, не цифра.
                 if (allowNegative && char === '-') {
                     // Введен минус, и негативные значения разрешены.
-                    if (inputEl.value.length > 0 && inputEl.value[0] === '-') {
+                    if (inputEl.value.length > 0 && inputEl.value.startsWith('-')) {
                         // Минус уже есть в значении: игнорируем ввод.
                         return 'invalid'
                     }
@@ -187,8 +190,8 @@ function NumericInput(props: NumericInputProps) {
 
         // Вычисление нового числа (строка).
         const prevValue: string = event.currentTarget.value
-        let newValue = prevValue.substring(0, event.currentTarget.selectionStart as number)
-            + char + prevValue.substring(event.currentTarget.selectionEnd as number, prevValue.length)
+        const newValue: string = prevValue.substring(0, event.currentTarget.selectionStart!)
+            + char + prevValue.substring(event.currentTarget.selectionEnd!, prevValue.length)
 
         if (newValue === '.' || newValue === ',') {
             // Замена всего значения поля ввода на '.' или ','.
@@ -225,7 +228,7 @@ function NumericInput(props: NumericInputProps) {
                 const nextCursorPosition = findCursorPosition(
                     value,
                     event.currentTarget.value,
-                    event.currentTarget.selectionStart || 0
+                    event.currentTarget.selectionStart ?? 0
                 )
                 cursorPosition.current = nextCursorPosition
                 event.currentTarget.setSelectionRange(nextCursorPosition, nextCursorPosition)
@@ -260,7 +263,7 @@ function NumericInput(props: NumericInputProps) {
                         const position = findCursorPosition(
                             input.value,
                             input.value,
-                            input.selectionStart || 0
+                            input.selectionStart ?? 0
                         )
                         input.setSelectionRange(position, position)
                     }

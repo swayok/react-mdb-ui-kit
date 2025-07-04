@@ -4,33 +4,37 @@ import {ApiError} from '../services/ApiRequestService'
 export interface UseApiGetRequestHookConfig<DataType> {
     // Запустить загрузку сразу же при монтировании компонента?
     // По умолчанию: true.
-    autoStart?: boolean,
+    autoStart?: boolean
     // Начальное значение состояния isLoading.
     // По умолчанию: true.
-    defaultIsLoadingState?: boolean,
-    // Очищать сбрасывать данные в initialData перед запуском перезагрузи?
+    defaultIsLoadingState?: boolean
+    // Сбрасывать данные в initialData перед запуском перезагрузи?
     // По умолчанию: true.
-    resetDataBeforeReload?: boolean,
+    resetDataBeforeReload?: boolean
     // Начальные данные.
     initialData?: DataType
+    // Модификация загруженных данных.
+    modifyLoadedData?: (data: DataType) => DataType
+    // Обработка ошибки загрузки данных.
+    onError?: (error: ApiError, silent: boolean) => void
 }
 
 export interface UseApiGetRequestHookReturn<DataType> {
-    data?: DataType,
-    loading: boolean,
-    error: ApiError | null,
-    setError: React.Dispatch<React.SetStateAction<ApiError | null>>,
-    reload: (silent?: boolean) => Promise<DataType>,
-    setData: React.Dispatch<React.SetStateAction<DataType | undefined>>,
+    data?: DataType
+    loading: boolean
+    error: ApiError | null
+    setError: React.Dispatch<React.SetStateAction<ApiError | null>>
+    reload: (silent?: boolean) => Promise<DataType>
+    setData: React.Dispatch<React.SetStateAction<DataType | undefined>>
 }
 
 // Хук для отправки GET запроса в API.
 // Реализует стандартный вариант запроса данных с индикатором загрузки и обработкой ошибок.
-export default function useApiGetRequest<DataType>(
+export function useApiGetRequest<DataType>(
     sendRequest: () => Promise<DataType>,
     options?: UseApiGetRequestHookConfig<DataType>,
     // Отвечает за пересоздание функции запроса данных из API.
-    key?: string | number
+    key?: string | number | null
 ): UseApiGetRequestHookReturn<DataType> {
 
     const {
@@ -38,6 +42,8 @@ export default function useApiGetRequest<DataType>(
         defaultIsLoadingState = true,
         resetDataBeforeReload = true,
         initialData,
+        modifyLoadedData,
+        onError,
     } = (options ?? {})
 
     // Данные.
@@ -67,8 +73,12 @@ export default function useApiGetRequest<DataType>(
         }
         return sendRequest()
             .then((data: DataType) => {
+                if (modifyLoadedData) {
+                    data = modifyLoadedData(data)
+                }
                 setData(data)
                 setIsLoading(false)
+                setError(null)
                 return data
             })
             .catch((error: ApiError) => {
@@ -76,6 +86,7 @@ export default function useApiGetRequest<DataType>(
                     setError(error)
                 }
                 setIsLoading(false)
+                onError?.(error, !!silent)
             }) as Promise<DataType>
     }, [key])
 
