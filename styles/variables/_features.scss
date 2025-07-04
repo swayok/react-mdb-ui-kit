@@ -18,3 +18,94 @@ $enable-deprecation-messages: true !default;
 $enable-important-utilities: true !default;
 $include-column-box-sizing: true !default;
 $include-print-styles: false !default;
+
+// Global styles flags.
+// Here you can enable/disable :root{} vars and CSS reboot styles .
+$include-reboot: true !default;
+$include-root: true !default;
+
+// Component flags.
+// Here you can enable/disable individual components.
+$include-alert: true !default;
+$include-badge: true !default;
+$include-button-close: true !default;
+$include-button-group: true !default;
+$include-buttons: true !default;
+$include-card: true !default;
+$include-carousel: true !default;
+$include-chevron: true !default;
+$include-ckeditor-iframe-content: true !default;
+$include-collapse: true !default;
+$include-data-grid: true !default;
+$include-drag-and-drop: true !default;
+$include-dropdown: true !default;
+$include-error-page: true !default;
+$include-icon: true !default;
+$include-image: true !default;
+$include-images-previewer: true !default;
+$include-link: true !default;
+$include-loading-indicator: true !default;
+$include-modal: true !default;
+$include-modal-fullscreen: true !default;
+$include-nav: true !default;
+$include-navbar: true !default;
+$include-note: true !default;
+$include-pagination: true !default;
+$include-progress: true !default;
+$include-rating-stars: true !default;
+$include-react-calendar: true !default;
+$include-recaptcha: true !default;
+$include-ripple: true !default;
+$include-section-divider: true !default;
+$include-table: true !default;
+$include-toast: true !default;
+$include-tooltip: true !default;
+$include-youtube: true !default;
+
+// Form/input component flags.
+// Here you can enable/disable individual form/input components.
+$include-forms-and-inputs: true !default;
+$include-file-picker-input: true !default;
+$include-form-floating-labels: true !default;
+$include-buttons-switch-input: true !default;
+$include-check-input: true !default;
+$include-checkboxes-group-input: true !default;
+$include-ckeditor-input: true !default;
+$include-form-control: true !default;
+$include-date-input: true !default;
+$include-dropdown-select-input: true !default;
+$include-file-upload-button-input: true !default;
+$include-form-inline: true !default;
+$include-form-input-addon: true !default;
+$include-form-input-info: true !default;
+$include-form-outline: true !default;
+$include-form-range: true !default;
+$include-form-select: true !default;
+$include-form-switch: true !default;
+$include-form-text: true !default;
+$include-input-group: true !default;
+$include-form-labels: true !default;
+$include-form-validation: true !default;
+
+// Helpers flags.
+// Here you can enable/disable individual helpers.
+$include-helpers: true !default; // If false - no helpers will be included.
+$include-animations-helpers: true !default;
+$include-backgrounds-helpers: true !default;
+$include-blockquote-helpers: true !default;
+$include-clearfix-helpers: true !default;
+$include-container-helpers: true !default;
+$include-css-grid-helpers: true !default;
+$include-flex-grid-helpers: true !default;
+$include-flexbox-helpers: true !default;
+$include-heading-helpers: true !default;
+$include-list-helpers: true !default;
+$include-misc-helpers: true !default;
+$include-position-helpers: true !default;
+$include-ratio-helpers: true !default;
+$include-shadow-helpers: true !default;
+$include-text-helpers: true !default;
+$include-transition-helpers: true !default;
+$include-utilities: true !default;
+$include-visually-hidden-helpers: true !default;
+$include-width-and-height-helpers: true !default;

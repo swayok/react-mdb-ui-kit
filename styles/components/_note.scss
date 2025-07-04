@@ -1,0 +1,31 @@
+@import "../variables/color-lists";
+@import "../variables/note";
+@import "../variables/features";
+
+@if ($include-note) {
+    .note {
+        padding: $note-padding;
+        border-left: $note-border-width solid;
+        border-radius: $note-border-radius;
+
+        strong {
+            font-weight: $note-strong-font-weight;
+        }
+
+        p {
+            font-weight: $note-paragraph-font-weight;
+
+            b,
+            strong {
+                font-weight: $note-paragraph-strong-font-weight;
+            }
+        }
+    }
+
+    @each $name, $color in $note {
+        .note-#{$name} {
+            background-color: map-get($color, bgc);
+            border-color: map-get($color, border-color);
+        }
+    }
+}

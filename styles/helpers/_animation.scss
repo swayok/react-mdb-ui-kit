@@ -1,0 +1,83 @@
+// Animations.
+@import "../mixins/animations";
+@import "../variables/features";
+
+@if ($include-helpers and $include-animations-helpers) {
+    // Контейнер, содержимое которого нужно анимировать.
+    .animated-content-container {
+        // Делаем вид что этого элемента не существует, чтобы не ломать разметку его наличием.
+        display: contents;
+    }
+
+    // Анимация прозрачности (fade).
+
+    @include fade('fade', 0.3s);
+
+    // Анимация прозрачности для быстрой смены содержимого (fade).
+
+    @include fade('fade-switch', 0.1s);
+
+    // Анимация смены страниц (fade, но быстрее).
+
+    @include fade('page-switch', 0.2s);
+
+    // Анимация изменения размера (scale) и прозрачности (fade).
+
+    .scale-and-fade-init,
+    .scale-and-fade-enter,
+    .scale-and-fade-appear {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .scale-and-fade-enter-active,
+    .scale-and-fade-appear-active,
+    .scale-and-fade-enter-done,
+    .scale-and-fade-appear-done {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        opacity: 1;
+        transform: scale(1);
+        transform-origin: 50% 50%;
+    }
+
+    .scale-and-fade-exit {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .scale-and-fade-exit-active,
+    .scale-and-fade-exit-done {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        opacity: 0;
+        transform: scale(0);
+        transform-origin: 50% 50%;
+    }
+
+    .scale-and-fade-exit-done {
+        display: none;
+    }
+
+    // Анимация кручения.
+
+    @keyframes spin-animation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(359deg);
+        }
+    }
+
+    .spin-animation {
+        animation: spin-animation 2s infinite linear;
+
+        &.mdi-icon,
+        &.custom-icon {
+            animation: none;
+
+            svg {
+                animation: spin-animation 2s infinite linear;
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+// Lists
+@import "../mixins/list";
+@import "../variables/typography";
+@import "../variables/features";
+
+@if ($include-helpers and $include-list-helpers) {
+    .list-unstyled {
+        @include list-unstyled();
+    }
+
+    // Inline turns list items into inline-block
+    .list-inline {
+        @include list-unstyled();
+    }
+
+    .list-inline-item {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: $list-inline-padding;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+// Lists
+@import "../functions/color-utils";
+
+// Unstyled keeps list items block level, just removes default browser padding and list-style
+@mixin list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+
+// scss-docs-start list-group-mixin
+@mixin list-group-item-variant($state, $background, $color) {
+    .list-group-item-#{$state} {
+        color: $color;
+        background-color: $background;
+
+        &.list-group-item-action {
+            &:hover,
+            &:focus {
+                color: $color;
+                background-color: shade-color($background, 10%);
+            }
+
+            &.active {
+                color: $white;
+                background-color: $color;
+                border-color: $color;
+            }
+        }
+    }
+}
+
+// scss-docs-end list-group-mixin

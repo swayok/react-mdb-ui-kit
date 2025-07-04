@@ -1,0 +1,12 @@
+@import "../variables/features";
+
+@if ($include-error-page) {
+    #error-page {
+        .logo {
+            .layout-mobile & img {
+                width: 290px;
+                height: auto !important;
+            }
+        }
+    }
+}

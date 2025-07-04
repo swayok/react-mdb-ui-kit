@@ -1,0 +1,35 @@
+@import "../variables/grid";
+@import "../mixins/breakpoints";
+@import "../variables/features";
+
+@if ($include-helpers and $include-width-and-height-helpers) {
+    .w-responsive {
+        @media (min-width: 1199px) {
+            width: 75%;
+        }
+    }
+
+    @each $breakpoint in map-keys($grid-breakpoints) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        @include media-breakpoint-down($breakpoint) {
+            .full-width#{$infix} {
+                width: 100% !important;
+            }
+
+            .auto-height#{$infix} {
+                height: auto !important;
+            }
+        }
+
+        @include media-breakpoint-up($breakpoint) {
+            .auto-width#{$infix} {
+                width: auto !important;
+            }
+
+            .full-height#{$infix} {
+                height: 100% !important;
+            }
+        }
+    }
+}

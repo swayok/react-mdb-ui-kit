@@ -1,0 +1,38 @@
+@import "../variables/typography";
+@import "../mixins/rfs";
+@import "../variables/features";
+
+@if ($include-helpers and $include-heading-helpers) {
+    //
+    // Headings
+    //
+    .h1 {
+        @extend h1;
+    }
+
+    .h2 {
+        @extend h2;
+    }
+
+    .h3 {
+        @extend h3;
+    }
+
+    .h4 {
+        @extend h4;
+    }
+
+    .h5 {
+        @extend h5;
+    }
+
+    .h6 {
+        @extend h6;
+    }
+
+    .lead {
+        font-weight: $lead-font-weight;
+
+        @include font-size($lead-font-size);
+    }
+}

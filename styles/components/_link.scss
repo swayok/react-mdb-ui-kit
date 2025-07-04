@@ -1,0 +1,97 @@
+// Links
+@import "../variables/color-lists";
+@import "../variables/links";
+@import "../variables/features";
+
+@if ($include-link) {
+    a,
+    .clickable {
+        color: $link-color;
+        text-decoration: $link-decoration;
+        transition: $link-transition;
+
+        &:hover {
+            color: $link-hover-color;
+            text-decoration: $link-hover-decoration;
+        }
+
+        &.disabled:not(.btn),
+        &:disabled:not(.btn) {
+            color: $link-disabled-color !important;
+            cursor: not-allowed;
+        }
+
+        &[class*=text-]:not(.btn) {
+            text-decoration: $link-variant-decoration;
+
+            &:hover {
+                text-decoration: $link-variant-hover-decoration;
+            }
+
+            &.active {
+                color: $link-color !important;
+            }
+        }
+
+        &.with-icon,
+        &.with-icon-flex,
+        &.with-icon[class*=text-]:not(.btn),
+        &.with-icon-flex[class*=text-]:not(.btn) {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .clickable {
+        display: inline;
+        position: static;
+        cursor: pointer;
+    }
+
+    .stretched-link {
+        &::#{$stretched-link-pseudo-element} {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: $stretched-link-z-index;
+            content: '';
+        }
+    }
+
+    //
+    // Alternate colors
+    //
+
+    // scss-docs-start link-variant-loops
+    @each $color, $value in $link-colors {
+        .link-#{$color} {
+            color: $value;
+
+            @if $link-shade-percentage != 0 {
+                &:hover,
+                &:focus {
+                    color: link-hover-color($value, $link-shade-percentage);
+                }
+            }
+        }
+    }
+    // scss-docs-start link-variant-loops
+
+    // And undo these styles for placeholder links/named anchors (without href).
+    // It would be more straightforward to just use a[href] in previous block, but that
+    // causes specificity issues in many other styles that are too complex to fix.
+    // See https://github.com/twbs/bootstrap/issues/19402
+
+    a:not([href]):not([class]) {
+        &,
+        &:hover {
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+}

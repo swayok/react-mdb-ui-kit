@@ -1,0 +1,139 @@
+@import "../mixins/svg-icons";
+@import "../variables/body";
+@import "../variables/icons";
+@import "../variables/color-lists";
+@import "../variables/links";
+@import "../variables/features";
+
+@if ($include-icon) {
+    svg.mdi-icon {
+        @include mdi-icon-color($icon-text-color);
+        pointer-events: none;
+        flex-shrink: 0;
+
+        path {
+            transition: fill 0.2s linear;
+        }
+
+        &.mdi-rotatable {
+            transition: transform 0.1s linear;
+            transform: rotate(0deg);
+            transform-origin: 50% 50%;
+        }
+
+        @each $color, $value in $icon-colors {
+            &.text-#{$color} {
+                @include mdi-icon-color($value !important);
+            }
+        ;
+
+            .clickable:hover &.text-#{$color},
+            a:hover &.text-#{$color} {
+                @include mdi-icon-color(lighten($value, 10%) !important);
+            }
+        }
+    }
+
+    svg.custom-icon {
+        pointer-events: none;
+        flex-shrink: 0;
+
+        g, path, rect, circle, ellipse {
+            transition: fill 0.2s linear, stroke 0.2s linear;
+        }
+
+        &.colored-by-fill {
+            fill: $icon-text-color;
+            stroke: none;
+        }
+
+        &.colored-by-stroke {
+            fill: none;
+            stroke: $icon-text-color;
+        }
+
+        &.custom-icon-rotatable {
+            transition: transform 0.1s linear;
+            transform: rotate(0deg);
+            transform-origin: 50% 50%;
+        }
+
+        @each $color, $value in $icon-colors {
+            &.text-#{$color} {
+                @include custom-icon-color($value !important);
+            }
+        ;
+
+            a:hover &.text-#{$color} {
+                @include custom-icon-color(lighten($value, 10%) !important);
+            }
+        }
+    }
+
+    a,
+    .clickable {
+        @include contained-mdi-icon-color-in-link(
+                $link-color,
+                $link-hover-color,
+                $link-disabled-color
+        );
+
+        @include contained-custom-svg-icon-color-in-link(
+                $link-color,
+                $link-hover-color,
+                $link-disabled-color
+        );
+    }
+
+    @each $color, $value in $link-colors {
+        .link-#{$color} {
+            @include contained-mdi-icon-color-in-link(
+                    $value !important,
+                    link-hover-color($value, $link-shade-percentage) !important,
+                    $link-disabled-color !important
+            );
+        }
+    }
+
+    @each $color, $value in $button-colors {
+        .btn.btn-with-icon {
+            &.btn-#{$color} {
+                @include contained-mdi-icon-color-in-button($value)
+            }
+
+            &.btn-outline-#{$color} {
+                @include contained-mdi-icon-color($value);
+            }
+        }
+    }
+
+    .with-icon:not(.btn) {
+        svg.mdi-icon,
+        svg.custom-icon {
+            display: inline-block;
+            margin-top: -2px;
+        }
+    }
+
+    .btn.with-icon {
+        display: inline-block;
+        vertical-align: top;
+
+        svg.mdi-icon,
+        svg.custom-icon {
+            vertical-align: text-top;
+        }
+    }
+
+    .with-icon-flex {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        svg.mdi-icon,
+        svg.custom-icon {
+            vertical-align: top;
+        }
+    }
+}

@@ -30,8 +30,6 @@ function TabSheet<TabName extends string = string>(
         ...otherProps
     } = props
 
-    const argName: string = urlQueryArgName ?? 'tab'
-
     // Аргументы в сроке адреса.
     const [urlQueryParams] = useUrlQueryParams()
 

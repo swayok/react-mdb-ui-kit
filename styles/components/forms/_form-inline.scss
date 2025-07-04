@@ -1,0 +1,30 @@
+@use "sass:math";
+@import "../../mixins/buttons";
+@import "../../variables/form-inline";
+@import "../../variables/features";
+
+@if ($include-forms-and-inputs and $include-form-inline) {
+    .form-inline {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: start;
+        gap: $inline-form-items-gap;
+
+        .form-outline {
+            margin-bottom: 0 !important;
+        }
+
+        .btn {
+            min-height: $inline-form-item-min-height;
+
+            &.btn-sm {
+                min-height: $inline-form-item-min-height-sm;
+            }
+
+            &.btn-lg {
+                min-height: $inline-form-item-min-height-lg;
+            }
+        }
+    }
+}

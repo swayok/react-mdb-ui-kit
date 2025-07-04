@@ -1,0 +1,35 @@
+// Positioning
+@import "../variables/z-index";
+@import "../mixins/breakpoints";
+@import "../variables/features";
+
+@if ($include-helpers and $include-position-helpers) {
+    .fixed-top {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: $z-index-fixed;
+    }
+
+    .fixed-bottom {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: $z-index-fixed;
+    }
+
+    // Responsive sticky top
+    @each $breakpoint in map-keys($grid-breakpoints) {
+        @include media-breakpoint-up($breakpoint) {
+            $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+            .sticky#{$infix}-top {
+                position: sticky;
+                top: 0;
+                z-index: $z-index-sticky;
+            }
+        }
+    }
+}

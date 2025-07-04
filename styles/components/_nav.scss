@@ -1,0 +1,166 @@
+// Base class
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+@import "../mixins/rfs";
+@import "../mixins/border-radius";
+@import "../mixins/gradients";
+@import "../mixins/box-shadow";
+@import "../mixins/transition";
+@import "../variables/nav";
+@import "../variables/features";
+
+@if ($include-nav) {
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .nav-link {
+        display: block;
+        padding: $nav-link-padding-y $nav-link-padding-x;
+        @include font-size($nav-link-font-size);
+        font-weight: $nav-link-font-weight;
+        color: $nav-link-color;
+        text-decoration: if($link-decoration == none, null, none);
+        @include transition($nav-link-transition);
+
+        &:hover,
+        &:focus {
+            color: $nav-link-hover-color;
+            text-decoration: if($link-hover-decoration == underline, none, null);
+        }
+
+        // Disabled state lightens text
+        &.disabled {
+            color: $nav-link-disabled-color;
+            pointer-events: none;
+            cursor: default;
+        }
+    }
+
+    //
+    // Tabs
+    //
+
+    .nav-tabs {
+        border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+
+        .nav-link {
+            @include border-top-radius($nav-tabs-border-radius);
+            margin-bottom: -$nav-tabs-link-border-width;
+            background: none;
+            border-width: $nav-tabs-link-border-width;
+            border-style: solid;
+            border-color: transparent;
+            text-transform: $nav-tabs-link-text-transform;
+            line-height: $nav-tabs-link-line-height;
+            font-weight: $nav-tabs-link-font-weight;
+            @include font-size($nav-tabs-link-font-size);
+            color: $nav-tabs-link-color;
+            padding: $nav-tabs-link-padding-top $nav-tabs-link-padding-x $nav-tabs-link-padding-bottom $nav-tabs-link-padding-x;
+
+            &:hover,
+            &:focus {
+                border-color: $nav-tabs-link-hover-border-color;
+                background-color: $nav-tabs-link-hover-bg;
+                // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+                isolation: isolate;
+            }
+
+            &.disabled {
+                color: $nav-link-disabled-color;
+                background-color: transparent;
+                border-color: transparent;
+            }
+        }
+
+        .nav-link.active,
+        .nav-item.show .nav-link {
+            color: $nav-tabs-link-active-color;
+            background-color: $nav-tabs-link-active-bg;
+            border-color: $nav-tabs-link-active-border-color;
+        }
+
+        .dropdown-menu {
+            // Make dropdown border overlap tab border
+            margin-top: -$nav-tabs-border-width;
+            // Remove the top rounded corners here since there is a hard edge above the menu
+            @include border-top-radius(0);
+        }
+    }
+
+    //
+    // Pills
+    //
+
+    .nav-pills {
+        margin-left: -$nav-pills-margin;
+
+        .nav-link {
+            border: 0;
+            @include border-radius($nav-pills-border-radius);
+            @include font-size($nav-pills-link-font-size);
+            text-transform: uppercase;
+            padding: $nav-pills-link-padding-top $nav-pills-link-padding-x $nav-pills-link-padding-bottom $nav-pills-link-padding-x;
+            line-height: $nav-pills-link-line-height;
+            background-color: $nav-pills-link-bg;
+            font-weight: $nav-pills-link-font-weight;
+            color: $nav-pills-link-color;
+            margin: $nav-pills-margin;
+        }
+
+        .nav-link.active,
+        .show > .nav-link {
+            color: $nav-pills-link-active-color;
+            @include gradient-bg($nav-pills-link-active-bg);
+            @include box-shadow($btn-box-shadow);
+        }
+    }
+
+    //
+    // Justified variants
+    //
+
+    .nav-fill {
+        > .nav-link,
+        .nav-item {
+            flex: 1 1 auto;
+            text-align: center;
+        }
+    }
+
+    .nav-justified {
+        > .nav-link,
+        .nav-item {
+            flex-basis: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+    }
+
+    .nav-fill,
+    .nav-justified {
+        .nav-item .nav-link {
+            width: auto;
+        }
+    }
+
+    // Tabbable tabs
+    //
+    // Hide tabbable panes to start, show them when `.active`
+
+    .tab-content {
+        > .tab-pane {
+            display: none;
+        }
+
+        > .active {
+            display: block;
+        }
+    }
+}

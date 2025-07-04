@@ -1,0 +1,63 @@
+// Text-related helpers.
+@import "../variables/typography";
+@import "../mixins/rfs";
+@import "../mixins/text-truncate";
+@import "../variables/features";
+
+@if ($include-helpers and $include-text-helpers) {
+    //
+    // Emphasis
+    //
+    .small {
+        @extend small;
+    }
+
+    .mark {
+        @extend mark;
+    }
+
+    //
+    // Display font sizes classes
+    //
+
+    @each $display, $font-size in $display-font-sizes {
+        .display-#{$display} {
+            font-weight: $display-font-weight;
+            line-height: $display-line-height;
+
+            @include font-size($font-size);
+        }
+    }
+
+    //
+    // Misc
+    //
+
+    .text-break-all {
+        white-space: normal;
+        word-break: break-all;
+    }
+
+    .text-multiline {
+        white-space: pre-wrap;
+        word-break: normal;
+    }
+
+    .text-transform-none {
+        text-transform: none !important;
+    }
+
+    .limited-text-block-width {
+        max-width: $limited-text-block-width;
+    }
+
+    // Builds on `abbr`
+    .initialism {
+        @include font-size($initialism-font-size);
+        text-transform: uppercase;
+    }
+
+    .text-truncate {
+        @include text-truncate();
+    }
+}

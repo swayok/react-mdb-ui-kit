@@ -1,0 +1,24 @@
+@import "../variables/z-index";
+@import "../mixins/transition";
+@import "../variables/features";
+
+@if ($include-recaptcha) {
+    // Recaptcha v2.
+    .recaptcha > div > div {
+        display: flex;
+        place-content: center;
+    }
+
+    // Recaptcha v3.
+    body[data-recaptcha-badge='1'] {
+        .grecaptcha-badge {
+            transform: translateX(0) !important;
+        }
+    }
+
+    .grecaptcha-badge {
+        z-index: $z-index-modal + 50 !important;
+        transform: translateX(100%) !important;
+        @include transition(all 0.3s ease 0s !important);
+    }
+}

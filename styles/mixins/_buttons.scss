@@ -1,0 +1,178 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+@import "../functions/color-utils";
+@import "../functions/button-utils";
+@import "gradients";
+@import "box-shadow";
+@import "border-radius";
+@import "rfs";
+@import "../variables/buttons";
+
+// scss-docs-start btn-variant-mixin
+@mixin button-variant(
+    $background,
+    $border,
+    $color: color-contrast($background),
+    $hover-background:
+      if(
+        $color == $color-contrast-light,
+        shade-color($background, $btn-hover-bg-shade-amount),
+        tint-color($background, $btn-hover-bg-tint-amount)
+      ),
+    $hover-border:
+      if(
+        $color == $color-contrast-light,
+        shade-color($border, $btn-hover-border-shade-amount),
+        tint-color($border, $btn-hover-border-tint-amount)
+      ),
+    $hover-color: color-contrast($hover-background),
+    $active-background:
+      if(
+        $color == $color-contrast-light,
+        shade-color($background, $btn-active-bg-shade-amount),
+        tint-color($background, $btn-active-bg-tint-amount)
+      ),
+    $active-border:
+      if(
+        $color == $color-contrast-light,
+        shade-color($border, $btn-active-border-shade-amount),
+        tint-color($border, $btn-active-border-tint-amount)
+      ),
+    $active-color: color-contrast($active-background),
+    $disabled-background: $background,
+    $disabled-border: $border,
+    $disabled-color: color-contrast($disabled-background)
+) {
+    color: $color;
+    @include gradient-bg($background);
+    border-color: $border;
+    @include box-shadow($btn-box-shadow);
+
+    &:hover {
+        color: $hover-color;
+        @include gradient-bg($hover-background);
+        border-color: $hover-border;
+    }
+
+    &:focus {
+        color: $hover-color;
+        @include gradient-bg($hover-background);
+        border-color: $hover-border;
+    }
+
+    &:active,
+    &.active,
+    .show > &.dropdown-toggle {
+        color: $active-color;
+        background-color: $active-background;
+        // Remove CSS gradients if they're enabled
+        background-image: if($enable-gradients, none, null);
+        border-color: $active-border;
+
+        &:focus {
+            box-shadow: $btn-focus-box-shadow;
+        }
+    }
+
+    &:disabled,
+    &.disabled {
+        color: $disabled-color;
+        background-color: $disabled-background;
+        // Remove CSS gradients if they're enabled
+        background-image: if($enable-gradients, none, null);
+        border-color: $disabled-border;
+    }
+}
+
+// scss-docs-end btn-variant-mixin
+
+// scss-docs-start btn-outline-variant-mixin
+@mixin button-outline-variant(
+    $color,
+    $hover-background: rgba($color, 0.05),
+    $hover-color: $color,
+    $active-background: rgba($color, 0.05),
+    $active-border: $color,
+    $active-color: $color
+) {
+    color: $color;
+    border-color: $color;
+
+    &:hover {
+        color: $hover-color;
+        background-color: $hover-background;
+    }
+
+    &:focus {
+        color: $color;
+        background-color: transparent;
+    }
+
+    &:active,
+    &.active,
+    &.dropdown-toggle.show {
+        color: $active-color;
+        background-color: $active-background;
+        border-color: $active-border;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    &:disabled,
+    &.disabled {
+        color: $color;
+        border-color: $color;
+        background-color: transparent;
+    }
+}
+
+// scss-docs-end btn-outline-variant-mixin
+
+// scss-docs-start btn-size-mixin
+@mixin button-size(
+    $padding-top,
+    $padding-right,
+    $padding-bottom,
+    $padding-left,
+    $font-size,
+    $font-weight,
+    $border-radius,
+    $line-height
+) {
+    $padding-bottom-modified: btn-padding-bottom(
+            $padding-top,
+            $padding-bottom,
+            $btn-text-transform,
+            $font-size,
+    );
+    padding: $padding-top $padding-right $padding-bottom-modified $padding-left;
+    line-height: $line-height;
+    @include font-size($font-size);
+    font-weight: $font-weight;
+    // Manually declare to provide an override to the browser default
+    @include border-radius($border-radius, 0);
+}
+
+// Button size variant outline
+@mixin button-outline-size(
+    $padding-top,
+    $padding-right,
+    $padding-bottom,
+    $padding-left,
+    $font-size,
+) {
+    $padding-bottom-modified: btn-padding-bottom(
+            $padding-top,
+            $padding-bottom,
+            $btn-text-transform,
+            $font-size,
+    );
+    padding: $padding-top $padding-right $padding-bottom-modified $padding-left;
+}
+
+// scss-docs-end btn-size-mixin

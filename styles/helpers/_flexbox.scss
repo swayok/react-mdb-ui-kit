@@ -1,0 +1,61 @@
+@import "../variables/grid";
+@import "../mixins/breakpoints";
+@import "../variables/features";
+
+@if ($include-helpers and $include-flexbox-helpers) {
+    @each $breakpoint in map-keys($grid-breakpoints) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        @include media-breakpoint-up($breakpoint) {
+
+            .flex#{$infix}-1 {
+                flex: 1 !important;
+            }
+
+            .flex#{$infix}-0 {
+                flex: none !important;
+            }
+
+            .flex#{$infix}-center {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .flex#{$infix}-container-column {
+                display: flex !important;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+            }
+
+            .flex#{$infix}-container-row {
+                display: flex !important;
+                flex-direction: row;
+                align-items: stretch;
+                justify-content: flex-start;
+            }
+
+            .flex#{$infix}-row-between {
+                display: flex !important;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .flex#{$infix}-row-center {
+                display: flex !important;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .flex#{$infix}-row-center-vertical {
+                display: flex !important;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+    }
+}

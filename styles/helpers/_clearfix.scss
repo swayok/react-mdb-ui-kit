@@ -1,0 +1,8 @@
+@import "../mixins/clearfix";
+@import "../variables/features";
+
+@if ($include-helpers and $include-clearfix-helpers) {
+    .clearfix {
+        @include clearfix();
+    }
+}

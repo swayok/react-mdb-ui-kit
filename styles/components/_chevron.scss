@@ -1,0 +1,10 @@
+@import "../variables/form-dropdown-select";
+@import "../mixins";
+@import "../variables/features";
+
+@if ($include-chevron) {
+    svg.mdi-icon.chevron,
+    .chevron {
+        @include mdi-icon-color($form-dropdown-select-chevron-color);
+    }
+}
