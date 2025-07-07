@@ -1,8 +1,8 @@
 // Animations.
-@import "../mixins/animations";
-@import "../variables/features";
+@use "../mixins/animations";
+@use "../variables/features";
 
-@if ($include-helpers and $include-animations-helpers) {
+@if (features.$include-helpers and features.$include-animations-helpers) {
     // Контейнер, содержимое которого нужно анимировать.
     .animated-content-container {
         // Делаем вид что этого элемента не существует, чтобы не ломать разметку его наличием.
@@ -11,15 +11,15 @@
 
     // Анимация прозрачности (fade).
 
-    @include fade('fade', 0.3s);
+    @include animations.fade('fade', 0.3s);
 
     // Анимация прозрачности для быстрой смены содержимого (fade).
 
-    @include fade('fade-switch', 0.1s);
+    @include animations.fade('fade-switch', 0.1s);
 
     // Анимация смены страниц (fade, но быстрее).
 
-    @include fade('page-switch', 0.2s);
+    @include animations.fade('page-switch', 0.2s);
 
     // Анимация изменения размера (scale) и прозрачности (fade).
 

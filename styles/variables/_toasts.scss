@@ -1,5 +1,6 @@
-@import "colors";
+// Toast messages.
+@use "colors";
 
-$toast-default-bg: $blue !default;
-$toast-success-bg: $green !default;
-$toast-error-bg: $red !default;
+$toast-default-bg: colors.$blue !default;
+$toast-success-bg: colors.$green !default;
+$toast-error-bg: colors.$red !default;

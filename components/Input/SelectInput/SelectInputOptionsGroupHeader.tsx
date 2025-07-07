@@ -3,7 +3,7 @@ import {AnyObject, FormSelectOptionGroup} from '../../../types/Common'
 import {SelectInputProps} from './SelectInput'
 import clsx from 'clsx'
 import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'
-import {DropdownHeader} from '../../../components/Dropdown2/DropdownHeader'
+import {DropdownHeader} from '../../../components/Dropdown/DropdownHeader'
 
 export interface SelectInputOptionProps<
     OptionValueType = string,
@@ -44,7 +44,7 @@ export default function SelectInputOptionsGroupHeader<
         <DropdownHeader
             key={'group-' + index}
             {...groupHeaderAttributes}
-            className={clsx('form-dropdown-select-group-header', className)}
+            className={clsx('form-dropdown-select-group-header', className as string)}
         >
             <SelectInputOptionLabel
                 option={group}

@@ -1,12 +1,13 @@
-@import "../variables/grid";
-@import "../mixins/breakpoints";
-@import "../variables/features";
+// Flexbox helpers.
+@use "../mixins/breakpoints";
+@use "../variables/features";
+@use "../variables/grid";
 
-@if ($include-helpers and $include-flexbox-helpers) {
-    @each $breakpoint in map-keys($grid-breakpoints) {
-        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+@if (features.$include-helpers and features.$include-flexbox-helpers) {
+    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+        $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
-        @include media-breakpoint-up($breakpoint) {
+        @include breakpoints.media-breakpoint-up($breakpoint) {
 
             .flex#{$infix}-1 {
                 flex: 1 !important;

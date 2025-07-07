@@ -1,15 +1,15 @@
 import React from 'react'
 import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import {Dropdown} from 'swayok-react-mdb-ui-kit/components/Dropdown2/Dropdown'
+import {Dropdown} from 'swayok-react-mdb-ui-kit/components/Dropdown/Dropdown'
 import {BasicLanguageConfig, FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import {mdiChevronUp, mdiTranslate} from '@mdi/js'
 import clsx from 'clsx'
 import withStable from 'swayok-react-mdb-ui-kit/helpers/withStable'
 import LanguagesManager from 'swayok-react-mdb-ui-kit/helpers/LanguagesManager'
-import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownTypes'
-import { DropdownToggle } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownToggle'
-import { DropdownMenu } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownMenu'
-import { DropdownItem } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownItem'
+import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import { DropdownToggle } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownToggle'
+import { DropdownMenu } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownMenu'
+import { DropdownItem } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownItem'
 
 interface Props {
     currentLanguage: BasicLanguageConfig

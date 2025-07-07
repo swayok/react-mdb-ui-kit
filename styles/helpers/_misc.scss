@@ -1,7 +1,7 @@
 // Miscellaneous helper css classes.
-@import "../variables/features";
+@use "../variables/features";
 
-@if ($include-helpers and $include-misc-helpers) {
+@if (features.$include-helpers and features.$include-misc-helpers) {
     .smooth-scroll {
         scroll-behavior: smooth;
     }

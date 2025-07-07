@@ -1,17 +1,14 @@
-// Dropdowns
-//
 // Dropdown menu container and contents.
-
 @use "sass:math";
-@import "../functions/calc-utils";
-@import "../functions/color-utils";
-@import "colors";
-@import "spacers";
-@import "borders";
-@import "shadows";
-@import "typography";
-@import "body";
-@import "components";
+@use "../functions";
+@use "colors";
+@use "spacers";
+@use "borders";
+@use "shadows";
+@use "typography";
+@use "body";
+@use "components";
+@use "links";
 
 // scss-docs-start dropdown-variables
 $dropdown-margin-top: 0.125rem !default;
@@ -19,33 +16,36 @@ $dropdown-min-width: 10rem !default;
 $dropdown-padding-x: 0 !default;
 $dropdown-padding-y: 0 !default;
 $dropdown-spacer: 0.125rem !default;
-$dropdown-font-size: $font-size-sm !default;
-$dropdown-color: $component-color !default;
-$dropdown-bg: $white !default;
-$dropdown-border-color: rgba($black, 0.15) !default;
-$dropdown-border-radius: $border-radius-xl !default;
+$dropdown-font-size: typography.$font-size-sm !default;
+$dropdown-color: components.$component-color !default;
+$dropdown-bg: colors.$white !default;
+$dropdown-border-color: rgba(colors.$black, 0.15) !default;
+$dropdown-border-radius: borders.$border-radius-xl !default;
 $dropdown-border-width: 0 !default;
-$dropdown-inner-border-radius: subtract($dropdown-border-radius, $dropdown-border-width) !default;
+$dropdown-inner-border-radius: functions.subtract($dropdown-border-radius, $dropdown-border-width) !default;
 $dropdown-divider-bg: $dropdown-border-color !default;
-$dropdown-divider-margin-y: math.div($spacer, 2) !default;
-$dropdown-box-shadow: $box-shadow-4 !default;
+$dropdown-divider-margin-y: math.div(spacers.$spacer, 2) !default;
+$dropdown-box-shadow: shadows.$box-shadow-4 !default;
 
 $dropdown-item-color: $dropdown-color !default;
-$dropdown-item-hover-color: shade-color($dropdown-item-color, 10%) !default;
-$dropdown-item-hover-bg: $gray-200 !default;
+$dropdown-item-hover-color: functions.shade-color($dropdown-item-color, 10%) !default;
+$dropdown-item-hover-bg: colors.$gray-200 !default;
 
-$dropdown-item-active-color: $component-active-color !default;
-$dropdown-item-active-bg: $component-active-bg !default;
+$dropdown-item-active-color: components.$component-active-color !default;
+$dropdown-item-active-bg: components.$component-active-bg !default;
 
-$dropdown-item-disabled-color: $gray-500 !default;
+$dropdown-item-disabled-color: colors.$gray-500 !default;
 
+$dropdown-item-font-weight: typography.$font-weight-normal !default;
+$dropdown-item-text-decoration: if(links.$link-decoration == none, null, none) !default;
 $dropdown-item-padding-y: 0.5rem !default;
 $dropdown-item-padding-x: 1rem !default;
 $dropdown-item-transition: background-color 0.2s linear !default;
+$dropdown-item-hover-text-decoration: if(links.$link-hover-decoration == underline, none, null) !default;
 
-$dropdown-header-color: $primary !default;
+$dropdown-header-color: colors.$primary !default;
 $dropdown-header-font-weight: 500 !default;
-$dropdown-header-font-size: $font-size-sm !default;
+$dropdown-header-font-size: typography.$font-size-sm !default;
 $dropdown-header-padding: $dropdown-item-padding-y $dropdown-item-padding-x !default;
 
 $dropdown-menu-animation-duration: 0.55s !default;
@@ -53,16 +53,16 @@ $dropdown-menu-animation-timing-function: ease !default;
 // scss-docs-end dropdown-variables
 
 // scss-docs-start dropdown-dark-variables
-$dropdown-dark-color: $gray-300 !default;
-$dropdown-dark-bg: $gray-800 !default;
+$dropdown-dark-color: colors.$gray-300 !default;
+$dropdown-dark-bg: colors.$gray-800 !default;
 $dropdown-dark-border-color: $dropdown-border-color !default;
 $dropdown-dark-divider-bg: $dropdown-divider-bg !default;
 $dropdown-dark-box-shadow: null !default;
 $dropdown-dark-link-color: $dropdown-dark-color !default;
-$dropdown-dark-link-hover-color: $white !default;
-$dropdown-dark-link-hover-bg: rgba($white, 0.15) !default;
+$dropdown-dark-link-hover-color: colors.$white !default;
+$dropdown-dark-link-hover-bg: rgba(colors.$white, 0.15) !default;
 $dropdown-dark-link-active-color: $dropdown-item-active-color !default;
 $dropdown-dark-link-active-bg: $dropdown-item-active-bg !default;
-$dropdown-dark-link-disabled-color: $gray-500 !default;
-$dropdown-dark-header-color: $gray-500 !default;
+$dropdown-dark-link-disabled-color: colors.$gray-500 !default;
+$dropdown-dark-header-color: colors.$gray-500 !default;
 // scss-docs-end dropdown-dark-variables

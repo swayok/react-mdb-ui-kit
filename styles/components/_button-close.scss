@@ -2,47 +2,45 @@
 // iOS requires the button element instead of an anchor tag.
 // If you want the anchor version, it requires `href="#"`.
 // See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+@use "../functions/string-utils";
+@use "../mixins/border-radius";
+@use "../variables/button-close";
+@use "../variables/features";
 
-@import "../functions/string-utils";
-@import "../variables/button-close";
-@import "../mixins/border-radius";
-
-@import "../variables/features";
-
-@if ($include-button-close) {
+@if (features.$include-button-close) {
     .btn-close {
         box-sizing: content-box;
-        width: $btn-close-width;
-        height: $btn-close-height;
-        padding: $btn-close-padding-y $btn-close-padding-x;
-        color: $btn-close-color;
-        background: transparent escape-svg($btn-close-bg) center / $btn-close-width auto no-repeat; // include transparent for button elements
+        width: button-close.$btn-close-width;
+        height: button-close.$btn-close-height;
+        padding: button-close.$btn-close-padding-y button-close.$btn-close-padding-x;
+        color: button-close.$btn-close-color;
+        background: transparent string-utils.escape-svg(button-close.$btn-close-bg) center / button-close.$btn-close-width auto no-repeat; // include transparent for button elements
         border: 0; // for button elements
-        @include border-radius();
-        opacity: $btn-close-opacity;
+        @include border-radius.border-radius();
+        opacity: button-close.$btn-close-opacity;
 
         // Override <a>'s hover style
         &:hover {
-            color: $btn-close-color;
+            color: button-close.$btn-close-color;
             text-decoration: none;
-            opacity: $btn-close-hover-opacity;
+            opacity: button-close.$btn-close-hover-opacity;
         }
 
         &:focus {
             outline: 0;
-            box-shadow: $btn-close-focus-shadow;
-            opacity: $btn-close-focus-opacity;
+            box-shadow: button-close.$btn-close-focus-shadow;
+            opacity: button-close.$btn-close-focus-opacity;
         }
 
         &:disabled,
         &.disabled {
             pointer-events: none;
             user-select: none;
-            opacity: $btn-close-disabled-opacity;
+            opacity: button-close.$btn-close-disabled-opacity;
         }
     }
 
     .btn-close-white {
-        filter: $btn-close-white-filter;
+        filter: button-close.$btn-close-white-filter;
     }
 }

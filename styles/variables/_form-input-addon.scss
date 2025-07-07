@@ -1,7 +1,7 @@
-@import "form-outline-input";
+// Form input addon for Form Outline styled inputs.
+@use "form-outline-input";
 
-// Input info:
-$form-outline-addon-color: $form-outline-label-color !default;
+$form-outline-addon-color: form-outline-input.$form-outline-label-color !default;
 $form-outline-addon-bg: null !default;
 $form-outline-addon-padding-x: 0.85rem !default;
 $form-outline-addon-padding-y: 0 !default;

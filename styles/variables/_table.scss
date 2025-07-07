@@ -1,17 +1,17 @@
 // Tables
-//
 // Customizes the `.table` component with basic values, each used across all table variations.
-
-@import "colors";
-@import "borders";
-@import "typography";
-@import "components";
+@use "colors";
+@use "borders";
+@use "typography";
+@use "components";
+@use "spacers";
 
 // scss-docs-start table-variables
 $table-bg: transparent !default;
-$table-color: $component-color !default;
+$table-color: components.$component-color !default;
+$table-margin-bottom: spacers.$spacer !default;
 // Base background color for hover/active/striped.
-$table-alt-bg-base: $black !default;
+$table-alt-bg-base: colors.$black !default;
 
 $table-cell-padding-y: 1rem !default;
 $table-cell-padding-x: 1.4rem !default;
@@ -38,11 +38,11 @@ $table-hover-bg: rgba($table-alt-bg-base, $table-hover-bg-factor) !default;
 $table-hover-transition: 0.5s !default;
 
 $table-border-factor: 0.1 !default;
-$table-border-width: $border-width !default;
-$table-border-color: $border-color !default;
+$table-border-width: borders.$border-width !default;
+$table-border-color: borders.$border-color !default;
 
 $table-striped-order: odd !default;
 
 $table-group-separator-color: inherit !default;
 
-$table-caption-color: $text-muted !default;
+$table-caption-color: typography.$text-muted !default;

@@ -1,4 +1,4 @@
-@import "colors";
+@use "colors";
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
@@ -6,7 +6,7 @@
 $min-contrast-ratio: 2 !default;
 
 // Customize the light and dark text colors for use in our color contrast function.
-$color-contrast-black: $gray-900 !default;
-$color-contrast-dark: $gray-800 !default;
-$color-contrast-light: $white !default;
-$color-contrast-white: $white !default;
+$color-contrast-black: colors.$gray-900 !default;
+$color-contrast-dark: colors.$gray-800 !default;
+$color-contrast-light: colors.$white !default;
+$color-contrast-white: colors.$white !default;

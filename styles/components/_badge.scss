@@ -1,27 +1,25 @@
-// Base class
-//
-// Requires one of the contextual, color modifier classes for `color` and
-// `background-color`.
+// Badge.
+@use "../mixins/gradients";
+@use "../mixins/border-radius";
+@use "../mixins/rfs";
+@use "../variables/features";
+@use "../variables/badge";
 
-@import "../variables";
-@import "../mixins/gradients";
-@import "../mixins/border-radius";
-@import "../mixins/rfs";
-@import "../variables/features";
-
-@if ($include-badge) {
+@if (features.$include-badge) {
+    // Requires one of the contextual, color modifier classes for `color` and
+    // `background-color`.
     .badge {
         display: inline-block;
-        padding: $badge-padding-y $badge-padding-x;
-        @include font-size($badge-font-size);
-        font-weight: $badge-font-weight;
+        padding: badge.$badge-padding-y badge.$badge-padding-x;
+        @include rfs.font-size(badge.$badge-font-size);
+        font-weight: badge.$badge-font-weight;
         line-height: 1;
-        color: $badge-color;
+        color: badge.$badge-color;
         text-align: center;
         white-space: nowrap;
         vertical-align: baseline;
-        @include border-radius($badge-border-radius);
-        @include gradient-bg();
+        @include border-radius.border-radius(badge.$badge-border-radius);
+        @include gradients.gradient-bg();
 
         // Empty badges collapse automatically
         &:empty {
@@ -39,12 +37,12 @@
 
     .badge-dot {
         position: absolute;
-        border-radius: $badge-dot-border-radius;
-        height: $badge-dot-height;
+        border-radius: badge.$badge-dot-border-radius;
+        height: badge.$badge-dot-height;
         min-width: 0;
         padding: 0;
-        width: $badge-dot-width;
-        margin-left: $badge-dot-margin-left;
+        width: badge.$badge-dot-width;
+        margin-left: badge.$badge-dot-margin-left;
 
         &:empty {
             display: inline-block;
@@ -53,10 +51,10 @@
 
     .badge-notification {
         position: absolute;
-        font-size: $badge-notification-font-size;
-        margin-top: $badge-notification-margin-top;
-        margin-left: $badge-notification-margin-left;
-        padding: $badge-notification-padding-y $badge-notification-padding-x;
+        font-size: badge.$badge-notification-font-size;
+        margin-top: badge.$badge-notification-margin-top;
+        margin-left: badge.$badge-notification-margin-left;
+        padding: badge.$badge-notification-padding-y badge.$badge-notification-padding-x;
     }
 }
 

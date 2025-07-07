@@ -1,4 +1,5 @@
-@import '../functions/color-utils';
+// SVG Icons mixins.
+@use "../functions/color-utils";
 
 @mixin mdi-icon-color($color) {
     path {
@@ -88,6 +89,6 @@
     &:focus,
     &.disabled,
     &[disabled] {
-        @include contained-mdi-icon-color(color-contrast($background));
+        @include contained-mdi-icon-color(color-utils.color-contrast($background));
     }
 }

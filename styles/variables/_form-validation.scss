@@ -1,17 +1,19 @@
-// Form validation
-
-@import "colors";
-@import "form-text";
-@import "form-outline-input";
+// Form validation.
+@use "colors";
+@use "spacers";
+@use "typography";
+@use "form-outline-input";
+@use "form-input-base";
+@use "form-text";
 
 // scss-docs-start form-feedback-variables
-$form-input-with-feedback-margin-bottom: $spacer * 1.75 !default;
-$form-feedback-margin-top: -$spacer * 1.5 !default;
-$form-feedback-margin-left: $input-padding-x !default;
-$form-feedback-font-size: $font-size-sm !default;
-$form-feedback-font-style: $form-text-font-style !default;
-$form-feedback-valid-color: $success !default;
-$form-feedback-invalid-color: $danger !default;
+$form-input-with-feedback-margin-bottom: spacers.$spacer * 1.75 !default;
+$form-feedback-margin-top: spacers.$spacer * -1.5 !default;
+$form-feedback-margin-left: form-input-base.$input-padding-x !default;
+$form-feedback-font-size: typography.$font-size-sm !default;
+$form-feedback-font-style: form-text.$form-text-font-style !default;
+$form-feedback-valid-color: colors.$success !default;
+$form-feedback-invalid-color: colors.$danger !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
 $form-feedback-icon-valid: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{$form-feedback-icon-valid-color}' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>") !default;
@@ -32,5 +34,5 @@ $form-validation-states: (
 ) !default;
 // scss-docs-end form-validation-states
 
-$input-error-padding-x: $form-outline-input-padding-x;
+$input-error-padding-x: form-outline-input.$form-outline-input-padding-x;
 $input-error-padding-top: 0.25rem;

@@ -91,7 +91,7 @@ $include-form-validation: true !default;
 // Here you can enable/disable individual helpers.
 $include-helpers: true !default; // If false - no helpers will be included.
 $include-animations-helpers: true !default;
-$include-backgrounds-helpers: true !default;
+$include-background-attachment-helpers: true !default;
 $include-blockquote-helpers: true !default;
 $include-clearfix-helpers: true !default;
 $include-container-helpers: true !default;
@@ -103,9 +103,16 @@ $include-list-helpers: true !default;
 $include-misc-helpers: true !default;
 $include-position-helpers: true !default;
 $include-ratio-helpers: true !default;
-$include-shadow-helpers: true !default;
 $include-text-helpers: true !default;
 $include-transition-helpers: true !default;
 $include-utilities: true !default;
 $include-visually-hidden-helpers: true !default;
 $include-width-and-height-helpers: true !default;
+
+// Utilities flags.
+// Here you can enable/disable individual utilities.
+$include-rfs-scaling-for-utilities: true !default;
+$include-print-styles: true !default;
+$include-shadow-utilities: true !default;
+$include-letter-spacing-utilities: true !default;
+$include-opacity-utilities: true !default;

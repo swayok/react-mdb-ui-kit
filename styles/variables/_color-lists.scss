@@ -1,47 +1,47 @@
-@import "../functions/color-utils";
-@import "colors";
-@import "typography";
-@import "body";
+@use "../functions";
+@use "colors";
+@use "typography";
+@use "body";
 
 // scss-docs-start colors-map
 $text-colors: (
-    'blue': $blue,
-    'indigo': $indigo,
-    'purple': $purple,
-    'pink': $pink,
-    'red': $red,
-    'orange': $orange,
-    'yellow': $yellow,
-    'green': $green,
-    'teal': $teal,
-    'cyan': $cyan,
-    'gray': $gray-600,
-    'gray-dark': $gray-800,
+    'blue': colors.$blue,
+    'indigo': colors.$indigo,
+    'purple': colors.$purple,
+    'pink': colors.$pink,
+    'red': colors.$red,
+    'orange': colors.$orange,
+    'yellow': colors.$yellow,
+    'green': colors.$green,
+    'teal': colors.$teal,
+    'cyan': colors.$cyan,
+    'gray': colors.$gray-600,
+    'gray-dark': colors.$gray-800,
 ) !default;
 
 $text-colors: map-merge((
-    'white': $white,
-    'body': $body-color,
-    'muted': $text-muted,
+    'white': colors.$white,
+    'body': body.$body-color,
+    'muted': typography.$text-muted,
 ), $text-colors);
 // scss-docs-end colors-map
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
-    'primary': $primary,
-    'secondary': $secondary,
-    'success': $success,
-    'info': $info,
-    'warning': $warning,
-    'danger': $danger,
-    'light': $light,
-    'dark': $dark,
-    'white': $white,
-    'black': $black,
-    'blue': $blue,
-    'red': $red,
-    'orange': $orange,
-    'green': $green,
+    'primary': colors.$primary,
+    'secondary': colors.$secondary,
+    'success': colors.$success,
+    'info': colors.$info,
+    'warning': colors.$warning,
+    'danger': colors.$danger,
+    'light': colors.$light,
+    'dark': colors.$dark,
+    'white': colors.$white,
+    'black': colors.$black,
+    'blue': colors.$blue,
+    'red': colors.$red,
+    'orange': colors.$orange,
+    'green': colors.$green,
 ) !default;
 // scss-docs-end theme-colors-map
 
@@ -53,18 +53,22 @@ $link-colors: $text-colors !default;
 $button-colors: $theme-colors !default;
 // scss-docs-end button-colors-map
 
+// scss-docs-start button-outline-colors-map
+$button-outline-colors: $button-colors !default;
+// scss-docs-end button-outline-colors-map
+
 // scss-docs-start border-colors-map
 $border-colors: $theme-colors !default;
 // scss-docs-end border-colors-map
 
 // scss-docs-start bg-colors-map
 $bg-colors: map-merge((
-    'super-light': $gray-50
+    'super-light': colors.$gray-50
 ), $theme-colors) !default;
 
 $bg-colors: map-merge((
-    'body': $body-bg,
-    'white': $white,
+    'body': body.$body-bg,
+    'white': colors.$white,
     'transparent': transparent,
 ), $bg-colors);
 // scss-docs-end bg-colors-map
@@ -74,34 +78,34 @@ $alert-colors: $theme-colors !default;
 // scss-docs-end alert-colors-map
 
 // scss-docs-start note-colors-map
-$note: (
+$note-colors: (
     'primary': (
-        'bgc': lighten($primary, 43%),
-        'border-color': $primary,
+        'bgc': lighten(colors.$primary, 43%),
+        'border-color': colors.$primary,
     ),
     'secondary': (
-        'bgc': lighten($secondary, 33%),
-        'border-color': $secondary,
+        'bgc': lighten(colors.$secondary, 33%),
+        'border-color': colors.$secondary,
     ),
     'success': (
-        'bgc': lighten($success, 53%),
-        'border-color': $success,
+        'bgc': lighten(colors.$success, 53%),
+        'border-color': colors.$success,
     ),
     'danger': (
-        'bgc': lighten($danger, 36%),
-        'border-color': $danger,
+        'bgc': lighten(colors.$danger, 36%),
+        'border-color': colors.$danger,
     ),
     'warning': (
-        'bgc': lighten($warning, 42%),
-        'border-color': $warning,
+        'bgc': lighten(colors.$warning, 42%),
+        'border-color': colors.$warning,
     ),
     'info': (
-        'bgc': lighten($info, 36%),
-        'border-color': $info,
+        'bgc': lighten(colors.$info, 36%),
+        'border-color': colors.$info,
     ),
     'light': (
-        'bgc': $light,
-        'border-color': $dark,
+        'bgc': colors.$light,
+        'border-color': colors.$dark,
     ),
 ) !default;
 // scss-docs-end note-colors-map
@@ -112,33 +116,33 @@ $table-bg-scale: -80% !default;
 
 // scss-docs-start table-loop
 $table-variants: (
-    'primary': shift-color($primary, $table-bg-scale),
-    'secondary': shift-color($secondary, $table-bg-scale),
-    'success': shift-color($success, $table-bg-scale),
-    'info': shift-color($info, $table-bg-scale),
-    'warning': shift-color($warning, $table-bg-scale),
-    'danger': shift-color($danger, $table-bg-scale),
-    'light': $light,
-    'dark': $dark,
+    'primary': functions.shift-color(colors.$primary, $table-bg-scale),
+    'secondary': functions.shift-color(colors.$secondary, $table-bg-scale),
+    'success': functions.shift-color(colors.$success, $table-bg-scale),
+    'info': functions.shift-color(colors.$info, $table-bg-scale),
+    'warning': functions.shift-color(colors.$warning, $table-bg-scale),
+    'danger': functions.shift-color(colors.$danger, $table-bg-scale),
+    'light': colors.$light,
+    'dark': colors.$dark,
 ) !default;
 // scss-docs-end table-loop
 
 // scss-docs-start table-cell-highlight-loop
 $table-cell-highlights: (
-    'blue': $blue-50,
-    'red': $red-50,
-    'green': $green-50,
-    'orange': $orange-50,
-    'gray': $gray-100,
+    'blue': colors.$blue-50,
+    'red': colors.$red-50,
+    'green': colors.$green-50,
+    'orange': colors.$orange-50,
+    'gray': colors.$gray-100,
 ) !default;
 // scss-docs-end table-cell-highlight-loop
 
 // scss-docs-start form-switch-loop
 $form-checkbox-colors: (
-    'red': $danger,
-    'green': $success,
-    'blue': $info,
-    'orange': $warning
+    'red': colors.$danger,
+    'green': colors.$success,
+    'blue': colors.$info,
+    'orange': colors.$warning
 ) !default;
 // scss-docs-end form-switch-loop
 
@@ -148,10 +152,10 @@ $icon-colors: map_merge($text-colors, $theme-colors) !default;
 
 // scss-docs-start tooltip-text-colors-loop
 $tooltip-text-colors: (
-    'red': $red,
-    'blue': $blue,
-    'green': $green,
-    'orange': $orange,
-    'muted': $text-muted,
+    'red': colors.$red,
+    'blue': colors.$blue,
+    'green': colors.$green,
+    'orange': colors.$orange,
+    'muted': typography.$text-muted,
 ) !default;
 // scss-docs-end tooltip-text-colors-loop

@@ -1,17 +1,17 @@
 // Content Ratio.
 // Credit: Nicolas Gallagher and SUIT CSS.
-@import "../variables/css-variables";
-@import "../variables/aspect-ratios";
-@import "../variables/features";
+@use "../variables/css-variables";
+@use "../variables/aspect-ratios";
+@use "../variables/features";
 
-@if ($include-helpers and $include-ratio-helpers) {
+@if (features.$include-helpers and features.$include-ratio-helpers) {
     .ratio {
         position: relative;
         width: 100%;
 
         &::before {
             display: block;
-            padding-top: var(--#{$variable-prefix}aspect-ratio);
+            padding-top: var(--#{css-variables.$variable-prefix}aspect-ratio);
             content: '';
         }
 
@@ -24,9 +24,9 @@
         }
     }
 
-    @each $key, $ratio in $aspect-ratios {
+    @each $key, $ratio in aspect-ratios.$aspect-ratios {
         .ratio-#{$key} {
-            --#{$variable-prefix}aspect-ratio: #{$ratio};
+            --#{css-variables.$variable-prefix}aspect-ratio: #{$ratio};
         }
     }
 }

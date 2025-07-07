@@ -1,14 +1,14 @@
-@import "gradients";
-@import "../functions/color-utils";
+@use "../functions/color-utils";
+@use "gradients";
 
 // scss-docs-start alert-variant-mixin
 @mixin alert-variant($background, $border, $color) {
     color: $color;
-    @include gradient-bg($background);
+    @include gradients.gradient-bg($background);
     border-color: $border;
 
     .alert-link {
-        color: shade-color($color, 20%);
+        color: color-utils.shade-color($color, 20%);
     }
 }
 

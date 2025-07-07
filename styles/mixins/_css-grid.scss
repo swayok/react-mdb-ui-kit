@@ -1,23 +1,26 @@
+// CSS Grid mixins.
+@use '../variables/css-grid';
+
 @mixin css-grid-classes($infix: '') {
-    @for $i from 1 through $css-grid-max-columns {
+    @for $i from 1 through css-grid.$css-grid-max-columns {
         .grid-columns#{$infix}-#{$i} {
             grid-template-columns: repeat($i, 1fr);
         }
     }
 
-    @for $i from 1 through $css-grid-max-rows {
+    @for $i from 1 through css-grid.$css-grid-max-rows {
         .grid-rows#{$infix}-#{$i} {
             grid-template-rows: repeat($i, 1fr);
         }
     }
 
-    @each $step, $value in $css-grid-columns-gaps {
+    @each $step, $value in css-grid.$css-grid-columns-gaps {
         .grid-columns-gap#{$infix}-#{$step} {
             grid-column-gap: $value;
         }
     }
 
-    @each $step, $value in $css-grid-rows-gaps {
+    @each $step, $value in css-grid.$css-grid-rows-gaps {
         .grid-rows-gap#{$infix}-#{$step} {
             grid-row-gap: $value;
         }

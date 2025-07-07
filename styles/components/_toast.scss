@@ -1,19 +1,19 @@
-// Всплывающие подсказки (очень странная у них верстка, еще и кривая если текста много)
-@import "../variables/toasts";
-@import "../variables/features";
+// Toast messages.
+@use "../variables/toasts";
+@use "../variables/features";
 
-@if ($include-toast) {
+@if (features.$include-toast) {
     .notyf {
 
         .notyf__toast {
-            background-color: $toast-default-bg;
+            background-color: toasts.$toast-default-bg;
 
             &.notyf__toast--success {
-                background-color: $toast-success-bg;
+                background-color: toasts.$toast-success-bg;
             }
 
             &.notyf__toast--error {
-                background-color: $toast-error-bg;
+                background-color: toasts.$toast-error-bg;
             }
         }
 

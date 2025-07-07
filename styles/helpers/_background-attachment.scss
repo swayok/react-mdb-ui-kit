@@ -1,0 +1,17 @@
+// Background attachment.
+@use "../variables/features";
+
+@if (features.$include-helpers and features.$include-background-attachment-helpers) {
+
+    .bg-fixed {
+        background-attachment: fixed;
+    }
+
+    .bg-local {
+        background-attachment: local;
+    }
+
+    .bg-scroll {
+        background-attachment: scroll;
+    }
+}

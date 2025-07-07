@@ -1,0 +1,61 @@
+@use 'shadows';
+@use 'card';
+
+// scss-docs-start opacity-values
+$opacity-values: (
+    0: 0,
+    5: 0.05,
+    10: 0.1,
+    20: 0.2,
+    30: 0.3,
+    40: 0.4,
+    50: 0.5,
+    60: 0.6,
+    70: 0.7,
+    80: 0.8,
+    90: 0.9,
+    95: 0.95,
+    100: 1,
+) !default;
+// scss-docs-end opacity-values
+
+// scss-docs-start shadow-values
+$shadow-values: (
+    null: shadows.$box-shadow,
+    sm: shadows.$box-shadow-sm,
+    lg: shadows.$box-shadow-lg,
+    none: none,
+    card: card.$card-box-shadow,
+    0: shadows.$box-shadow-0,
+    1: shadows.$box-shadow-1,
+    2: shadows.$box-shadow-2,
+    3: shadows.$box-shadow-3,
+    4: shadows.$box-shadow-4,
+    5: shadows.$box-shadow-5,
+    6: shadows.$box-shadow-6,
+    1-soft: shadows.$box-shadow-1-soft,
+    2-soft: shadows.$box-shadow-2-soft,
+    3-soft: shadows.$box-shadow-3-soft,
+    4-soft: shadows.$box-shadow-4-soft,
+    5-soft: shadows.$box-shadow-5-soft,
+    6-soft: shadows.$box-shadow-6-soft,
+    1-strong: shadows.$box-shadow-1-strong,
+    2-strong: shadows.$box-shadow-2-strong,
+    3-strong: shadows.$box-shadow-3-strong,
+    4-strong: shadows.$box-shadow-4-strong,
+    5-strong: shadows.$box-shadow-5-strong,
+    6-strong: shadows.$box-shadow-6-strong,
+    inner: shadows.$box-shadow-inner,
+) !default;
+// scss-docs-end shadow-values
+
+// scss-docs-start letter-spacing-values
+$letter-spacing-values: (
+    tighter: -0.05em,
+    tight: -0.025em,
+    normal: 0em,
+    wide: 0.025em,
+    wider: 0.05em,
+    widest: 0.1em,
+) !default;
+// scss-docs-end letter-spacing-values

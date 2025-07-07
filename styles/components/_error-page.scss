@@ -1,11 +1,13 @@
-@import "../variables/features";
+// Error pages.
+@use "../variables/features";
+@use "../variables/error-page";
 
-@if ($include-error-page) {
+@if (features.$include-error-page) {
     #error-page {
         .logo {
             .layout-mobile & img {
-                width: 290px;
-                height: auto !important;
+                width: error-page.$error-page-mobile-logo-width;
+                height: error-page.$error-page-mobile-logo-height;
             }
         }
     }

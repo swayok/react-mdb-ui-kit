@@ -1,45 +1,47 @@
-@import "table";
-@import "shadows";
-@import "colors";
-@import "typography";
+// Table designed as Data Grid with filters, pagination and so on.
+@use "table";
+@use "shadows";
+@use "colors";
+@use "typography";
+@use "borders";
 
 // Таблицы данных (data grids).
 //$table-striped-bg: #f9f9f9 !default;
 //$table-hover-bg: #f0f0f0 !default;
 
-$table-filters-bg: $white !default;
+$table-filters-bg: colors.$white !default;
 
-$table-container-bg: $white !default;
+$table-container-bg: colors.$white !default;
 
 $data-grid-header-bg: $table-container-bg !default;
-$data-grid-header-color: $text-muted !default;
+$data-grid-header-color: typography.$text-muted !default;
 $data-grid-header-borders: darken($data-grid-header-bg, 10%) !default;
-$data-grid-header-shadow: $box-shadow-2 !default;
+$data-grid-header-shadow: shadows.$box-shadow-2 !default;
 
 $data-grid-footer-bg: $table-container-bg !default;
 $data-grid-footer-color: $data-grid-header-color !default;
-$data-grid-vertical-separator-color: $border-color !default;
+$data-grid-vertical-separator-color: borders.$border-color !default;
 
 $data-grid-error-bg: rgba($table-container-bg, 0.6) !default;
 
-$data-grid-selected-row-bg: $blue-50 !default;
+$data-grid-selected-row-bg: colors.$blue-50 !default;
 
 $data-grid-cell-font-weight: 400 !default;
 $data-grid-cell-padding-x: 1rem !default;
 $data-grid-cell-padding-y: 1rem !default;
 $data-grid-cell-padding-x-sm: $data-grid-cell-padding-x !default;
-$data-grid-cell-padding-y-sm: $table-cell-padding-y-sm !default;
+$data-grid-cell-padding-y-sm: table.$table-cell-padding-y-sm !default;
 
 // Пагинация.
-$data-grid-pagination-active-bg: $primary !default;
+$data-grid-pagination-active-bg: colors.$primary !default;
 $data-grid-pagination-active-transition: background-color 0.2s linear !default;
-$data-grid-pagination-active-disabled-color: $gray-350 !default;
-$data-grid-pagination-active-disabled-bg: $gray-200 !default;
-$data-grid-pagination-active-disabled-color: $text-muted !default;
+$data-grid-pagination-active-disabled-color: colors.$gray-350 !default;
+$data-grid-pagination-active-disabled-bg: colors.$gray-200 !default;
+$data-grid-pagination-active-disabled-color: typography.$text-muted !default;
 $data-grid-pagination-active-box-shadow: none !default;
 
 // Подсветка строк таблицы.
-$data-grid-highlight-bg-blue: $blue-50 !default;
-$data-grid-highlight-bg-red: $red-50 !default;
-$data-grid-highlight-bg-green: $green-50 !default;
-$data-grid-highlight-bg-gray: $gray-100 !default;
+$data-grid-highlight-bg-blue: colors.$blue-50 !default;
+$data-grid-highlight-bg-red: colors.$red-50 !default;
+$data-grid-highlight-bg-green: colors.$green-50 !default;
+$data-grid-highlight-bg-gray: colors.$gray-100 !default;

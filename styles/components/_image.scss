@@ -1,21 +1,20 @@
 // Images & Responsive images (ensure images don't scale beyond their parents)
 @use 'sass:math';
-@import "../mixins/rfs";
-@import "../mixins/border-radius";
-@import "../mixins/box-shadow";
-@import "../mixins/image";
-@import "../variables/spacers";
-@import "../variables/images";
-@import "../variables/features";
+@use "../mixins/rfs";
+@use "../mixins/border-radius";
+@use "../mixins/box-shadow";
+@use "../mixins/image";
+@use "../variables/images";
+@use "../variables/features";
 
-@if ($include-image) {
+@if (features.$include-image) {
     // This is purposefully opt-in via an explicit class rather than being the default for all `<img>`s.
     // We previously tried the "images are responsive by default" approach in Bootstrap v2,
     // and abandoned it in Bootstrap v3 because it breaks lots of third-party widgets (including Google Maps)
     // which weren't expecting the images within themselves to be involuntarily resized.
     // See also https://github.com/twbs/bootstrap/issues/18178
     .img-fluid {
-        @include img-fluid();
+        @include image.img-fluid();
     }
 
     .bg-image {
@@ -41,7 +40,7 @@
     .hover-overlay {
         .mask {
             opacity: 0;
-            transition: $image-hover-overlay-transition;
+            transition: images.$image-hover-overlay-transition;
 
             &:hover {
                 opacity: 1;
@@ -52,13 +51,13 @@
     .hover-zoom {
         img,
         video {
-            transition: $image-hover-zoom-transition;
+            transition: images.$image-hover-zoom-transition;
         }
 
         &:hover {
             img,
             video {
-                transform: $image-hover-zoom-transform;
+                transform: images.$image-hover-zoom-transform;
             }
         }
     }
@@ -66,22 +65,22 @@
     .hover-shadow,
     .card.hover-shadow {
         box-shadow: none;
-        transition: $image-hover-shadow-transition;
+        transition: images.$image-hover-shadow-transition;
 
         &:hover {
-            box-shadow: $image-hover-shadow-box-shadow;
-            transition: $image-hover-shadow-transition;
+            box-shadow: images.$image-hover-shadow-box-shadow;
+            transition: images.$image-hover-shadow-transition;
         }
     }
 
     .hover-shadow-soft,
     .card.hover-shadow-soft {
         box-shadow: none;
-        transition: $image-hover-shadow-transition;
+        transition: images.$image-hover-shadow-transition;
 
         &:hover {
-            box-shadow: $image-hover-shadow-box-shadow-soft;
-            transition: $image-hover-shadow-transition;
+            box-shadow: images.$image-hover-shadow-box-shadow-soft;
+            transition: images.$image-hover-shadow-transition;
         }
     }
 
@@ -90,14 +89,14 @@
     //
 
     .img-thumbnail {
-        padding: $thumbnail-padding;
-        background-color: $thumbnail-bg;
-        border: $thumbnail-border-width solid $thumbnail-border-color;
-        @include border-radius($thumbnail-border-radius);
-        @include box-shadow($thumbnail-box-shadow);
+        padding: images.$thumbnail-padding;
+        background-color: images.$thumbnail-bg;
+        border: images.$thumbnail-border-width solid images.$thumbnail-border-color;
+        @include border-radius.border-radius(images.$thumbnail-border-radius);
+        @include box-shadow.box-shadow(images.$thumbnail-box-shadow);
 
         // Keep them at most 100% wide
-        @include img-fluid();
+        @include image.img-fluid();
     }
 
     //
@@ -110,12 +109,12 @@
     }
 
     .figure-img {
-        margin-bottom: math.div($spacer, 2);
+        margin-bottom: images.$figure-image-margin-bottom;
         line-height: 1;
     }
 
     .figure-caption {
-        @include font-size($figure-caption-font-size);
-        color: $figure-caption-color;
+        @include rfs.font-size(images.$figure-caption-font-size);
+        color: images.$figure-caption-color;
     }
 }

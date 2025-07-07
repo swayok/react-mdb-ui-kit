@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react'
 import clsx from 'clsx'
-import {DropdownProps} from '../Dropdown2/DropdownTypes'
+import {DropdownProps} from '../Dropdown/DropdownTypes'
 import {FormSelectOption} from '../../types/Common'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'

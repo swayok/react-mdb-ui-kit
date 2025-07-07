@@ -1,7 +1,7 @@
 // Components
-@import "colors";
-@import "body";
+@use "colors";
+@use "body";
 
-$component-active-bg: $primary !default;
-$component-active-color: $white !default;
-$component-color: $body-color !default;
+$component-active-bg: colors.$primary !default;
+$component-active-color: colors.$white !default;
+$component-color: body.$body-color !default;

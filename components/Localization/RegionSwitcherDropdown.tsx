@@ -1,16 +1,16 @@
 import React from 'react'
 import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import {Dropdown} from 'swayok-react-mdb-ui-kit/components/Dropdown2/Dropdown'
+import {Dropdown} from 'swayok-react-mdb-ui-kit/components/Dropdown/Dropdown'
 import {BasicRegionConfig, FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import {mdiChevronUp, mdiEarth} from '@mdi/js'
 import clsx from 'clsx'
 import withStable from 'swayok-react-mdb-ui-kit/helpers/withStable'
 import RegionsManager from 'swayok-react-mdb-ui-kit/helpers/RegionsManager'
 import LanguagesManager from 'swayok-react-mdb-ui-kit/helpers/LanguagesManager'
-import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownTypes'
-import { DropdownItem } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownItem'
-import { DropdownToggle } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownToggle'
-import { DropdownMenu } from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownMenu'
+import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import { DropdownItem } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownItem'
+import { DropdownToggle } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownToggle'
+import { DropdownMenu } from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownMenu'
 
 interface Props {
     currentRegion: BasicRegionConfig

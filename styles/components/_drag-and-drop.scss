@@ -1,53 +1,54 @@
-@import "../variables/drag-and-drop";
-@import "../variables/features";
+// Drag and drop container and items.
+@use "../variables/drag-and-drop";
+@use "../variables/features";
 
-@if ($include-drag-and-drop) {
+@if (features.$include-drag-and-drop) {
     .drag-and-drop-item {
         &.drag-and-drop-styled {
             &.drag-and-drop-over {
-                transition: $drag-and-drop-over-transition;
-                background-color: $drag-and-drop-over-bg;
+                transition: drag-and-drop.$drag-and-drop-over-transition;
+                background-color: drag-and-drop.$drag-and-drop-over-bg;
                 position: relative;
 
-                @if ($drag-and-drop-over-border-top) {
+                @if (drag-and-drop.$drag-and-drop-over-border-top) {
                     &:before {
                         content: '';
                         position: absolute;
                         top: 0;
                         left: 0;
                         width: 100%;
-                        height: $drag-and-drop-over-border-width;
-                        background-color: $drag-and-drop-over-border-color;
+                        height: drag-and-drop.$drag-and-drop-over-border-width;
+                        background-color: drag-and-drop.$drag-and-drop-over-border-color;
                     }
-                } @else if ($drag-and-drop-over-border-left) {
+                } @else if (drag-and-drop.$drag-and-drop-over-border-left) {
                     &:before {
                         content: '';
                         position: absolute;
                         top: 0;
                         left: 0;
                         height: 100%;
-                        width: $drag-and-drop-over-border-width;
-                        background-color: $drag-and-drop-over-border-color;
+                        width: drag-and-drop.$drag-and-drop-over-border-width;
+                        background-color: drag-and-drop.$drag-and-drop-over-border-color;
                     }
                 }
             }
 
             > .editable {
-                transition: $drag-and-drop-editable-transition;
+                transition: drag-and-drop.$drag-and-drop-editable-transition;
 
                 &:hover {
-                    background-color: $drag-and-drop-editable-hover-bg;
+                    background-color: drag-and-drop.$drag-and-drop-editable-hover-bg;
                 }
             }
         }
 
         &.drag-and-drop-current {
-            transition: $drag-and-drop-current-transition;
-            opacity: $drag-and-drop-current-opacity;
+            transition: drag-and-drop.$drag-and-drop-current-transition;
+            opacity: drag-and-drop.$drag-and-drop-current-opacity;
         }
     }
 
     .drag-and-drop-toggler {
-        cursor: $drag-and-drop-toggler-cursor;
+        cursor: drag-and-drop.$drag-and-drop-toggler-cursor;
     }
 }

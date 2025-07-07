@@ -1,18 +1,19 @@
 // Alerts
 // Define alert colors, border radius, and padding.
 
-@import "borders";
-@import "typography";
+@use "borders";
+@use "typography";
 
 // scss-docs-start alert-variables
 $alert-padding-y: 1.25rem !default;
 $alert-padding-x: 1.5rem !default;
 $alert-margin-bottom: 1rem !default;
-$alert-border-radius: $border-radius-xl !default;
-$alert-link-font-weight: $font-weight-bold !default;
+$alert-border-radius: borders.$border-radius-xl !default;
+$alert-link-font-weight: typography.$font-weight-bold !default;
 $alert-border-width: 0 !default;
 $alert-bg-scale: -80% !default;
 $alert-border-scale: -70% !default;
 $alert-color-scale: 40% !default;
 $alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width of x plus default padding on either side
+$alert-dismissible-close-button-z-index: 2 !default; // 3x covers width of x plus default padding on either side
 // scss-docs-end alert-variables

@@ -1,15 +1,16 @@
-@import "../mixins/svg-icons";
-@import "../variables/table";
-@import "../variables/data-grid";
-@import "../variables/z-index";
-@import "../variables/buttons";
-@import "../variables/features";
+// Table styled as Data Grid with filtering, pagination, sorting, etc.
+@use "../mixins/svg-icons";
+@use "../variables/table";
+@use "../variables/data-grid";
+@use "../variables/z-index";
+@use "../variables/buttons";
+@use "../variables/features";
 
-@if ($include-data-grid) {
+@if (features.$include-data-grid) {
     .data-grid-table-container {
         position: relative;
         z-index: 1;
-        background-color: $table-container-bg;
+        background-color: data-grid.$table-container-bg;
         min-height: 150px;
 
         > table.data-grid,
@@ -21,7 +22,7 @@
                 font-weight: 400;
 
                 > tr.data-grid-row-selected > td {
-                    background-color: $data-grid-selected-row-bg;
+                    background-color: data-grid.$data-grid-selected-row-bg;
                 }
             }
 
@@ -32,8 +33,8 @@
                     > td,
                     > th,
                     .data-grid-column-header {
-                        padding: $data-grid-cell-padding-y $data-grid-cell-padding-x;
-                        font-weight: $data-grid-cell-font-weight;
+                        padding: data-grid.$data-grid-cell-padding-y data-grid.$data-grid-cell-padding-x;
+                        font-weight: data-grid.$data-grid-cell-font-weight;
                     }
                 }
             }
@@ -46,7 +47,7 @@
                         > td,
                         > th,
                         .data-grid-column-header {
-                            padding: $data-grid-cell-padding-y-sm $data-grid-cell-padding-x-sm;
+                            padding: data-grid.$data-grid-cell-padding-y-sm data-grid.$data-grid-cell-padding-x-sm;
                         }
                     }
                 }
@@ -54,9 +55,9 @@
 
             > thead > tr {
                 th {
-                    background-color: $data-grid-header-bg;
-                    border-color: $data-grid-header-borders;
-                    color: $data-grid-header-color;
+                    background-color: data-grid.$data-grid-header-bg;
+                    border-color: data-grid.$data-grid-header-borders;
+                    color: data-grid.$data-grid-header-color;
                     vertical-align: middle;
                     position: relative;
 
@@ -99,9 +100,9 @@
             > tfoot > tr {
                 > th,
                 > td {
-                    background-color: $data-grid-header-bg;
-                    border-color: $data-grid-header-borders;
-                    color: $data-grid-header-color;
+                    background-color: data-grid.$data-grid-header-bg;
+                    border-color: data-grid.$data-grid-header-borders;
+                    color: data-grid.$data-grid-header-color;
                     font-weight: 600;
                 }
             }
@@ -111,13 +112,13 @@
                     > tr.odd {
                         > td,
                         > th {
-                            background-color: $table-striped-bg;
+                            background-color: table.$table-striped-bg;
                         }
 
                         &:hover {
                             > td,
                             > th {
-                                background-color: $table-hover-bg;
+                                background-color: table.$table-hover-bg;
                             }
                         }
                     }
@@ -125,7 +126,7 @@
                     > tr.even:hover {
                         > td.data-grid-column-sticky-left,
                         > td.data-grid-column-sticky-right {
-                            background-color: $table-hover-bg;
+                            background-color: table.$table-hover-bg;
                         }
                     }
                 }
@@ -135,7 +136,7 @@
                 > tbody > tr {
                     > td,
                     > th {
-                        transition: $table-hover-transition;
+                        transition: table.$table-hover-transition;
                     }
                 }
             }
@@ -204,7 +205,7 @@
                     top: 0;
                     position: sticky;
                     z-index: 10;
-                    font-weight: $table-th-font-weight;
+                    font-weight: table.$table-th-font-weight;
 
                     // Required to fix styling artifacts for position: sticky;
                     overflow: visible;
@@ -217,7 +218,7 @@
                         right: 0;
                         bottom: -1px;
                         top: 0;
-                        border-bottom: 1px solid $data-grid-header-borders;
+                        border-bottom: 1px solid data-grid.$data-grid-header-borders;
                         //box-shadow: $table-header-shadow;
                     }
 
@@ -239,13 +240,13 @@
                             top: 0;
                             bottom: 0;
                             width: 1px;
-                            background-color: $data-grid-header-borders;
+                            background-color: data-grid.$data-grid-header-borders;
                         }
                     }
 
                     > td.data-grid-column-sticky-left,
                     > td.data-grid-column-sticky-right {
-                        background-color: $data-grid-header-bg;
+                        background-color: data-grid.$data-grid-header-bg;
                     }
 
                     > .data-grid-column-sticky-left {
@@ -280,7 +281,7 @@
                             left: 0;
                             top: 0;
                             bottom: 0;
-                            border-left: 1px solid $data-grid-header-borders;
+                            border-left: 1px solid data-grid.$data-grid-header-borders;
                         }
 
                         &:first-child::after {
@@ -298,7 +299,7 @@
 
         > .data-grid-loading {
             position: absolute;
-            z-index: $z-index-tooltip + 1;
+            z-index: z-index.$z-index-tooltip + 1;
             top: 0;
             left: 0;
             right: 0;
@@ -307,12 +308,12 @@
 
         > .data-grid-error {
             position: absolute;
-            z-index: $z-index-tooltip + 1;
+            z-index: z-index.$z-index-tooltip + 1;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: $data-grid-error-bg;
+            background-color: data-grid.$data-grid-error-bg;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -343,29 +344,29 @@
     .data-grid-filters {
         position: relative;
         z-index: 10;
-        background-color: $table-filters-bg;
+        background-color: data-grid.$table-filters-bg;
     }
 
     .data-grid-footer {
         position: relative;
         z-index: 9;
-        background-color: $data-grid-footer-bg;
-        color: $data-grid-footer-color;
+        background-color: data-grid.$data-grid-footer-bg;
+        color: data-grid.$data-grid-footer-color;
 
         .page-item {
             &.dropdown-item {
                 padding: 0;
             }
 
-            @include contained-mdi-icon-color-in-link-for-states(
-                    $btn-link-hover-color,
-                    $btn-link-disabled-color
+            @include svg-icons.contained-mdi-icon-color-in-link-for-states(
+                    buttons.$btn-link-hover-color,
+                    buttons.$btn-link-disabled-color
             );
 
             &.active.disabled {
                 .page-link {
-                    background-color: $data-grid-pagination-active-disabled-bg;
-                    color: $data-grid-pagination-active-disabled-color;
+                    background-color: data-grid.$data-grid-pagination-active-disabled-bg;
+                    color: data-grid.$data-grid-pagination-active-disabled-color;
                 }
             }
         }
@@ -389,6 +390,6 @@
         width: 0;
         height: 26px;
         margin: 0 0.5rem;
-        border-right: 1px solid $data-grid-vertical-separator-color;
+        border-right: 1px solid data-grid.$data-grid-vertical-separator-color;
     }
 }

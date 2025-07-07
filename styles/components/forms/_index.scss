@@ -1,24 +1,22 @@
-// TODO: replace @import by @forward
+@use 'labels';
+@use 'floating-labels';
+@use 'form-text';
+@use 'form-control';
+@use 'form-outline';
+@use 'validation';
+@use 'input-group';
+@use 'form-input-info';
+@use 'form-input-addon';
+@use 'form-inline';
 
-@import 'labels';
-@import 'floating-labels';
-@import 'form-text';
-@import 'form-control';
-@import 'form-outline';
-@import 'validation';
-@import 'input-group';
-@import 'form-input-info';
-@import 'form-input-addon';
-@import 'form-inline';
-
-@import 'form-select';
-@import 'form-dropdown-select';
-@import 'form-check';
-@import 'form-checkboxes-group';
-@import 'form-switch';
-@import 'form-range';
-@import 'form-file-upload-button';
-@import 'file-picker';
-@import 'form-buttons-switch';
-@import 'form-date-input';
-@import 'form-ckeditor';
+@use 'form-select';
+@use 'form-dropdown-select';
+@use 'form-check';
+@use 'form-checkboxes-group';
+@use 'form-switch';
+@use 'form-range';
+@use 'form-file-upload-button';
+@use 'file-picker';
+@use 'form-buttons-switch';
+@use 'form-date-input';
+@use 'form-ckeditor';

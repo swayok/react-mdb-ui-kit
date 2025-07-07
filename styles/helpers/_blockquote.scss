@@ -1,12 +1,12 @@
-// Blockquotes
-@import "../variables/typography";
-@import "../mixins/rfs";
-@import "../variables/features";
+// Blockquotes.
+@use "../mixins/rfs";
+@use "../variables/typography";
+@use "../variables/features";
 
-@if ($include-helpers and $include-blockquote-helpers) {
+@if (features.$include-helpers and features.$include-blockquote-helpers) {
     .blockquote {
-        margin-bottom: $blockquote-margin-y;
-        @include font-size($blockquote-font-size);
+        margin-bottom: typography.$blockquote-margin-y;
+        @include rfs.font-size(typography.$blockquote-font-size);
 
         > :last-child {
             margin-bottom: 0;
@@ -14,10 +14,10 @@
     }
 
     .blockquote-footer {
-        margin-top: -$blockquote-margin-y;
-        margin-bottom: $blockquote-margin-y;
-        @include font-size($blockquote-footer-font-size);
-        color: $blockquote-footer-color;
+        margin-top: typography.$blockquote-margin-y * -1;
+        margin-bottom: typography.$blockquote-margin-y;
+        @include rfs.font-size(typography.$blockquote-footer-font-size);
+        color: typography.$blockquote-footer-color;
 
         &::before {
             content: '\2014\00A0'; // em dash, nbsp

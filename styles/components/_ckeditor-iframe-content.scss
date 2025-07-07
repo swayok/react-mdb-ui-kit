@@ -1,15 +1,16 @@
-// Стили для <iframe>, в котором отображается редактируемый текст.
-@import "../variables/features";
+// Styles for <iframe> that contains editable text for CKEditor.
+@use "../variables/features";
+@use "../variables/ckeditor";
 
-@if ($include-ckeditor-iframe-content) {
+@if (features.$include-ckeditor-iframe-content) {
     body.cke_editable {
-        padding: 1rem;
+        padding: ckeditor.$ckeditor-iframe-content-padding;
 
         &.container-md,
         &.container-lg,
         &.container-xl,
         &.container-xxl {
-            max-width: 800px !important;
+            max-width: ckeditor.$ckeditor-iframe-content-max-width !important;
         }
     }
 

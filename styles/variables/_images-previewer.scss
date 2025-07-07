@@ -1,12 +1,14 @@
-@import "borders";
+// Images previewer.
+@use "borders";
+@use "colors";
 
 $images-previewer-current-image-min-height: 400px !default;
 $images-previewer-image-preview-height: 100px !default;
 $images-previewer-image-preview-min-width: 100px !default;
-$images-previewer-image-preview-border-radius: $border-radius-xl !default;
+$images-previewer-image-preview-border-radius: borders.$border-radius-xl !default;
 $images-previewer-image-preview-active-border-width: 2px !default;
 $images-previewer-image-preview-active-transition: border 0.2s linear !default;
-$images-previewer-image-preview-active-border-color: $primary !default;
+$images-previewer-image-preview-active-border-color: colors.$primary !default;
 
 $images-carousel-modal-close-button-bg: rgba(255, 255, 255, 0.9) !default;
 $images-carousel-modal-close-button-padding: 1rem !default;

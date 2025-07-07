@@ -2,42 +2,44 @@
 //
 // Set the container width, and override it for fixed navbars in media queries.
 
-@import "../variables/features";
-@import "../mixins/container";
-@import "../mixins/breakpoints";
-@import "../variables/features";
+@use "../mixins/container";
+@use "../mixins/breakpoints";
+@use "../variables/features";
+@use "../variables/grid";
 
-@if ($include-helpers and $include-container-helpers and $enable-grid-classes) {
+@if (features.$include-helpers and features.$include-container-helpers) {
     // Single container class with breakpoint max-widths
     .container,
         // 100% wide container at all breakpoints
     .container-fluid {
-        @include make-container();
+        @include container.make-container();
     }
 
-    // Responsive containers that are 100% wide until a breakpoint
-    @each $breakpoint, $container-max-width in $container-max-widths {
-        .container-#{$breakpoint} {
-            @extend .container-fluid;
-        }
-
-        @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
-            %responsive-container-#{$breakpoint} {
-                max-width: $container-max-width;
+    @if (features.$enable-grid-classes) {
+        // Responsive containers that are 100% wide until a breakpoint
+        @each $breakpoint, $container-max-width in grid.$container-max-widths {
+            .container-#{$breakpoint} {
+                @extend .container-fluid;
             }
 
-            // Extend each breakpoint which is smaller or equal to the current breakpoint
-            $extend-breakpoint: true;
+            @include breakpoints.media-breakpoint-up($breakpoint, grid.$grid-breakpoints) {
+                %responsive-container-#{$breakpoint} {
+                    max-width: $container-max-width;
+                }
 
-            @each $name, $width in $grid-breakpoints {
-                @if ($extend-breakpoint) {
-                    .container#{breakpoint-infix($name, $grid-breakpoints)} {
-                        @extend %responsive-container-#{$breakpoint};
-                    }
+                // Extend each breakpoint which is smaller or equal to the current breakpoint
+                $extend-breakpoint: true;
 
-                    // Once the current breakpoint is reached, stop extending
-                    @if ($breakpoint == $name) {
-                        $extend-breakpoint: false;
+                @each $name, $width in grid.$grid-breakpoints {
+                    @if ($extend-breakpoint) {
+                        .container#{breakpoints.breakpoint-infix($name, grid.$grid-breakpoints)} {
+                            @extend %responsive-container-#{$breakpoint};
+                        }
+
+                        // Once the current breakpoint is reached, stop extending
+                        @if ($breakpoint == $name) {
+                            $extend-breakpoint: false;
+                        }
                     }
                 }
             }

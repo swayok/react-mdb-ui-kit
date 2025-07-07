@@ -1,14 +1,14 @@
 // Компонент <Collapse>.
-@import "../mixins/transition";
-@import "../variables/transition";
-@import "../variables/features";
+@use "../mixins/transition" as transition-mixins;
+@use "../variables/transition";
+@use "../variables/features";
 
-@if ($include-collapse) {
+@if (features.$include-collapse) {
     .collapsible {
         overflow: hidden;
 
         &.vertical {
-            @include transition($transition-collapse);
+            @include transition-mixins.transition(transition.$transition-collapse);
 
             &.opened:not(.transition) {
                 height: auto !important;
@@ -16,7 +16,7 @@
         }
 
         &.horizontal {
-            @include transition($transition-collapse-horizontal);
+            @include transition-mixins.transition(transition.$transition-collapse-horizontal);
 
             &.opened:not(.transition) {
                 width: auto !important;

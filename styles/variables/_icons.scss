@@ -1,3 +1,4 @@
-@import "body";
+// Icons.
+@use "body";
 
-$icon-text-color: $body-color !default;
+$icon-text-color: body.$body-color !default;

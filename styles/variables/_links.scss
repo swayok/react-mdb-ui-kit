@@ -1,17 +1,15 @@
-// Links
-//
-// Style anchor elements.
+// Links.
+@use "../functions";
+@use "typography";
+@use "colors";
 
-@import "../functions/color-utils";
-@import "typography";
-
-$link-color: $primary !default;
+$link-color: colors.$primary !default;
 $link-decoration: underline !default;
 $link-shade-percentage: 20% !default;
-$link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
+$link-hover-color: functions.shift-color($link-color, $link-shade-percentage) !default;
 $link-hover-decoration: none !default;
 $link-transition: color 0.2s linear !default;
-$link-disabled-color: $text-muted !default;
+$link-disabled-color: typography.$text-muted !default;
 
 $link-variant-decoration: $link-decoration !default;
 $link-variant-hover-decoration: $link-hover-decoration !default;

@@ -1,8 +1,9 @@
-@import "../variables/z-index";
-@import "../mixins/transition";
-@import "../variables/features";
+// Recaptcha v2 and v3.
+@use "../mixins/transition";
+@use "../variables/features";
+@use "../variables/z-index";
 
-@if ($include-recaptcha) {
+@if (features.$include-recaptcha) {
     // Recaptcha v2.
     .recaptcha > div > div {
         display: flex;
@@ -17,8 +18,8 @@
     }
 
     .grecaptcha-badge {
-        z-index: $z-index-modal + 50 !important;
+        z-index: z-index.$z-index-modal + 50 !important;
         transform: translateX(100%) !important;
-        @include transition(all 0.3s ease 0s !important);
+        @include transition.transition(all 0.3s ease 0s !important);
     }
 }

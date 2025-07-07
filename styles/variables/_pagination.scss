@@ -1,10 +1,10 @@
-// Pagination
-
-@import "links";
-@import "borders";
-@import "form-input-base";
-@import "buttons";
-@import "components";
+// Pagination.
+@use "links";
+@use "colors";
+@use "borders";
+@use "buttons";
+@use "components";
+@use "typography";
 
 // scss-docs-start pagination-variables
 $pagination-font-size: 0.9rem !default;
@@ -16,39 +16,41 @@ $pagination-padding-x-sm: 0.5rem !default;
 $pagination-padding-y-lg: 0.75rem !default;
 $pagination-padding-x-lg: 1.5rem !default;
 
-$pagination-color: $component-color !default;
+$pagination-color: components.$component-color !default;
+$pagination-text-decoration: if(links.$link-decoration == none, null, none) !default;
 $pagination-bg: transparent !default;
 $pagination-border-width: 0 !default;
-$pagination-border-radius: $border-radius !default;
+$pagination-border-radius: borders.$border-radius !default;
 $pagination-margin-start: -$pagination-border-width !default;
-$pagination-border-color: $gray-300 !default;
+$pagination-border-color: colors.$gray-300 !default;
 
-$pagination-focus-color: $link-hover-color !default;
-$pagination-focus-bg: $gray-200 !default;
+$pagination-focus-color: links.$link-hover-color !default;
+$pagination-focus-bg: colors.$gray-200 !default;
 $pagination-focus-box-shadow: none !default;
 $pagination-focus-outline: 0 !default;
 
 $pagination-hover-color: $pagination-color !default;
-$pagination-hover-bg: $gray-200 !default;
-$pagination-hover-border-color: $gray-300 !default;
+$pagination-hover-text-decoration: if(links.$link-hover-decoration == underline, none, null) !default;
+$pagination-hover-bg: colors.$gray-200 !default;
+$pagination-hover-border-color: colors.$gray-300 !default;
 
-$pagination-active-color: $component-active-color !default;
-$pagination-active-bg: $component-active-bg !default;
+$pagination-active-color: components.$component-active-color !default;
+$pagination-active-bg: components.$component-active-bg !default;
 $pagination-active-border-color: $pagination-active-bg !default;
-$pagination-active-box-shadow: $btn-box-shadow !default;
+$pagination-active-box-shadow: buttons.$btn-box-shadow !default;
 $pagination-active-transition: all 0.2s linear !default;
 
-$pagination-disabled-color: $gray-600 !default;
-$pagination-disabled-bg: $white !default;
-$pagination-disabled-border-color: $gray-300 !default;
+$pagination-disabled-color: colors.$gray-600 !default;
+$pagination-disabled-bg: colors.$white !default;
+$pagination-disabled-border-color: colors.$gray-300 !default;
 
 $pagination-transition: all 0.3s linear !default;
 
-$pagination-font-size-sm: $font-size-sm !default;
-$pagination-border-radius-sm: $border-radius-sm !default;
+$pagination-font-size-sm: typography.$font-size-sm !default;
+$pagination-border-radius-sm: borders.$border-radius-sm !default;
 
-$pagination-font-size-lg: $font-size-lg !default;
-$pagination-border-radius-lg: $border-radius-lg !default;
+$pagination-font-size-lg: typography.$font-size-lg !default;
+$pagination-border-radius-lg: borders.$border-radius-lg !default;
 
 $pagination-circle-border-radius: 50% !default;
 $pagination-circle-padding-x: 0.841rem !default;

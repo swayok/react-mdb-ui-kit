@@ -1,8 +1,7 @@
-// Pagination
-
-@import "rfs";
-@import "border-radius";
-@import "../variables/pagination";
+// Pagination.
+@use "rfs";
+@use "border-radius";
+@use "../variables/pagination";
 
 // scss-docs-start pagination-mixin
 @mixin pagination-size(
@@ -13,32 +12,32 @@
 ) {
     .page-link {
         padding: $padding-y $padding-x;
-        @include font-size($font-size);
-        @include border-radius($border-radius);
+        @include rfs.font-size($font-size);
+        @include border-radius.border-radius($border-radius);
     }
 
     .page-item {
-        @if $pagination-margin-start == (-$pagination-border-width) {
+        @if pagination.$pagination-margin-start == (pagination.$pagination-border-width * -1) {
             &:first-child {
                 .page-link {
-                    @include border-start-radius($border-radius);
+                    @include border-radius.border-start-radius($border-radius);
                 }
             }
 
             &:last-child {
                 .page-link {
-                    @include border-end-radius($border-radius);
+                    @include border-radius.border-end-radius($border-radius);
                 }
             }
         } @else {
             //Add border-radius to all pageLinks in case they have left margin
             .page-link {
-                @include border-radius($border-radius);
+                @include border-radius.border-radius($border-radius);
             }
         }
 
         .page-link.dropdown-item {
-            @include border-radius($border-radius);
+            @include border-radius.border-radius($border-radius);
         }
     }
 }

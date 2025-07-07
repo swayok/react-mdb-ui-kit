@@ -1,23 +1,23 @@
-// Lists
-@import "../mixins/list";
-@import "../variables/typography";
-@import "../variables/features";
+// Lists.
+@use "../mixins/list";
+@use "../variables/typography";
+@use "../variables/features";
 
-@if ($include-helpers and $include-list-helpers) {
+@if (features.$include-helpers and features.$include-list-helpers) {
     .list-unstyled {
-        @include list-unstyled();
+        @include list.list-unstyled();
     }
 
     // Inline turns list items into inline-block
     .list-inline {
-        @include list-unstyled();
+        @include list.list-unstyled();
     }
 
     .list-inline-item {
         display: inline-block;
 
         &:not(:last-child) {
-            margin-right: $list-inline-padding;
+            margin-right: typography.$list-inline-padding;
         }
     }
 }

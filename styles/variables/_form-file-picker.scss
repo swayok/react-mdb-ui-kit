@@ -1,16 +1,17 @@
+// File picker with previews.
 @use "sass:math";
-@import "../functions/calc-utils";
-@import "z-index";
-@import "shadows";
-@import "colors";
-@import "typography";
+@use "../functions";
+@use "z-index";
+@use "shadows";
+@use "colors";
+@use "typography";
 
 $file-picker-preview-transition: opacity 0.1s linear !default;
 $file-picker-preview-border-radius: 0.75rem !default;
-$file-picker-preview-bg: $gray-300 !default;
-$file-picker-preview-box-shadow: $box-shadow-2-strong !default;
+$file-picker-preview-bg: colors.$gray-300 !default;
+$file-picker-preview-box-shadow: shadows.$box-shadow-2-strong !default;
 
-$file-picker-preview-hover-z-index: $z-index-dropdown - 1 !default;
+$file-picker-preview-hover-z-index: z-index.$z-index-dropdown - 1 !default;
 $file-picker-preview-hover-transition: transform 0.1s linear !default;
 $file-picker-preview-hover-transform: scale(2) !default;
 $file-picker-preview-hover-transform-origin: center center !default;
@@ -18,22 +19,22 @@ $file-picker-preview-hover-transform-origin: center center !default;
 $file-picker-preview-button-width: 2.25rem !default;
 $file-picker-preview-button-offset: -0.375rem !default;
 $file-picker-preview-button-underlay-width: math.div($file-picker-preview-button-width - 0.125rem, 2) !default;
-$file-picker-preview-button-underlay-bg: $white !default;
+$file-picker-preview-button-underlay-bg: colors.$white !default;
 $file-picker-preview-button-underlay-offset: math.div(-$file-picker-preview-button-underlay-width, 2) !default;
 
-$file-picker-previews-adder-color: $blue !default;
+$file-picker-previews-adder-color: colors.$blue !default;
 $file-picker-previews-adder-border-color: $file-picker-previews-adder-color !default;
 $file-picker-previews-adder-border: 2px dashed $file-picker-previews-adder-border-color !default;
 $file-picker-previews-adder-transition: border-color 200ms linear !default;
 
-$file-picker-previews-adder-hover-color: $blue-400 !default;
+$file-picker-previews-adder-hover-color: colors.$blue-400 !default;
 $file-picker-previews-adder-hover-border-color: $file-picker-previews-adder-hover-color !default;
 
-$file-picker-previews-adder-disabled-color: $text-muted !default;
-$file-picker-previews-adder-disabled-border-color: $text-muted !default;
+$file-picker-previews-adder-disabled-color: typography.$text-muted !default;
+$file-picker-previews-adder-disabled-border-color: typography.$text-muted !default;
 
 // .file-picker-previews-white-bg
-$file-picker-previews-with-white-bg: $white !default;
+$file-picker-previews-with-white-bg: colors.$white !default;
 
 $file-picker-previews-drag-and-drop-item-over-indicator-width: 0.25rem !default;
 $file-picker-previews-drag-and-drop-item-over-indicator-color: $file-picker-previews-adder-border-color !default;

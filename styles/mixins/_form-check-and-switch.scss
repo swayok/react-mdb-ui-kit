@@ -1,10 +1,9 @@
 // Switch mixins.
-
-@import "../functions/color-utils";
+@use "../functions/color-utils";
 
 @mixin form-switch-color(
     $checkedTogglerColor,
-    $checkedTrackColor: tint-color($checkedTogglerColor, 70%),
+    $checkedTrackColor: color-utils.tint-color($checkedTogglerColor, 70%),
     $checkedFocusTogglerColor: $checkedTogglerColor
 ) {
     .form-switch-input {
@@ -27,7 +26,7 @@
 @mixin form-checkbox-color($color, $solid-checked-check-color) {
     .form-check-input[type="checkbox"] {
         &:focus {
-            border-color: tint-color($color, 50%);
+            border-color: color-utils.tint-color($color, 50%);
         }
 
         &:checked {
@@ -53,7 +52,7 @@
 @mixin form-radio-color($color) {
     .form-check-input[type="radio"] {
         &:focus {
-            border-color: tint-color($color, 50%);
+            border-color: color-utils.tint-color($color, 50%);
         }
 
         &:checked {

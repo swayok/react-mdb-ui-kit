@@ -1,12 +1,11 @@
-// Spacing
-//
+// Spacing.
 // Control the default styling of most Bootstrap elements by modifying these
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
 
 @use 'sass:math';
-@import "features";
-@import "../functions/map-utils";
+@use "../functions";
+@use "features";
 
 // scss-docs-start spacer-variables-maps
 $spacer: 1rem !default;
@@ -23,5 +22,5 @@ $spacers: (
     9: $spacer * 5,
 ) !default;
 
-$negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
+$negative-spacers: if(features.$enable-negative-margins, functions.negativify-map($spacers), null) !default;
 // scss-docs-end spacer-variables-maps

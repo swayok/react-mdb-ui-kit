@@ -1,8 +1,11 @@
-@import "body";
-@import "colors";
-@import "borders";
-@import "shadows";
-@import "typography";
+// Images.
+@use "sass:math";
+@use "body";
+@use "colors";
+@use "borders";
+@use "shadows";
+@use "typography";
+@use "spacers";
 
 // Images
 $image-hover-overlay-transition: all 0.3s ease-in-out !default;
@@ -11,23 +14,24 @@ $image-hover-zoom-transition: all 0.3s linear !default;
 $image-hover-zoom-transform: scale(1.1) !default;
 
 $image-hover-shadow-transition: $image-hover-overlay-transition !default;
-$image-hover-shadow-box-shadow: $box-shadow-4-strong !default;
-$image-hover-shadow-box-shadow-soft: $box-shadow-5 !default;
+$image-hover-shadow-box-shadow: shadows.$box-shadow-4-strong !default;
+$image-hover-shadow-box-shadow-soft: shadows.$box-shadow-5 !default;
 
 // Image thumbnails
 
 // scss-docs-start thumbnail-variables
 $thumbnail-padding: 0.25rem !default;
-$thumbnail-bg: $body-bg !default;
-$thumbnail-border-width: $border-width !default;
-$thumbnail-border-color: $gray-300 !default;
-$thumbnail-border-radius: $border-radius !default;
-$thumbnail-box-shadow: $box-shadow-sm !default;
+$thumbnail-bg: body.$body-bg !default;
+$thumbnail-border-width: borders.$border-width !default;
+$thumbnail-border-color: colors.$gray-300 !default;
+$thumbnail-border-radius: borders.$border-radius !default;
+$thumbnail-box-shadow: shadows.$box-shadow-sm !default;
 // scss-docs-end thumbnail-variables
 
 // Figures
 
 // scss-docs-start figure-variables
-$figure-caption-font-size: $small-font-size !default;
-$figure-caption-color: $gray-600 !default;
+$figure-image-margin-bottom: math.div(spacers.$spacer, 2) !default;
+$figure-caption-font-size: typography.$small-font-size !default;
+$figure-caption-color: colors.$gray-600 !default;
 // scss-docs-end figure-variables

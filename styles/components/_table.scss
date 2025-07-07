@@ -1,32 +1,31 @@
 //
 // Basic Bootstrap table
 //
+@use "../mixins/breakpoints";
+@use "../mixins/table-variants";
+@use "../variables/css-variables";
+@use "../variables/color-lists";
+@use "../variables/table";
+@use "../variables/features";
+@use "../variables/grid";
 
-@import "../variables/css-variables";
-@import "../variables/color-lists";
-@import "../variables/table";
-@import "../variables/spacers";
-@import "../mixins/breakpoints";
-@import "../mixins/table-variants";
-@import "../variables/features";
-
-@if ($include-table) {
+@if (features.$include-table) {
     .table {
-        --#{$variable-prefix}table-bg: #{$table-bg};
-        --#{$variable-prefix}table-accent-bg: #{$table-bg};
-        --#{$variable-prefix}table-striped-color: #{$table-striped-color};
-        --#{$variable-prefix}table-striped-bg: #{$table-striped-bg};
-        --#{$variable-prefix}table-active-color: #{$table-active-color};
-        --#{$variable-prefix}table-active-bg: #{$table-active-bg};
-        --#{$variable-prefix}table-hover-color: #{$table-hover-color};
-        --#{$variable-prefix}table-hover-bg: #{$table-hover-bg};
+        --#{css-variables.$variable-prefix}table-bg: #{table.$table-bg};
+        --#{css-variables.$variable-prefix}table-accent-bg: #{table.$table-bg};
+        --#{css-variables.$variable-prefix}table-striped-color: #{table.$table-striped-color};
+        --#{css-variables.$variable-prefix}table-striped-bg: #{table.$table-striped-bg};
+        --#{css-variables.$variable-prefix}table-active-color: #{table.$table-active-color};
+        --#{css-variables.$variable-prefix}table-active-bg: #{table.$table-active-bg};
+        --#{css-variables.$variable-prefix}table-hover-color: #{table.$table-hover-color};
+        --#{css-variables.$variable-prefix}table-hover-bg: #{table.$table-hover-bg};
 
         width: 100%;
-        margin-bottom: $spacer;
-        color: $table-color;
-        vertical-align: $table-cell-vertical-align;
-        border-color: $table-border-color;
-        font-size: $table-font-size;
+        margin-bottom: table.$table-margin-bottom;
+        color: table.$table-color;
+        vertical-align: table.$table-cell-vertical-align;
+        border-color: table.$table-border-color;
+        font-size: table.$table-font-size;
 
         // Target th & td
         // We need the child combinator to prevent styles leaking to nested tables which doesn't have a `.table` class.
@@ -34,20 +33,20 @@
         // Another advantage is that this generates less code and makes the selector less specific making it easier to override.
         // stylelint-disable-next-line selector-max-universal
         > :not(caption) > * > * {
-            padding: $table-cell-padding-y $table-cell-padding-x;
-            background-color: var(--#{$variable-prefix}table-bg);
-            border-bottom-width: $table-border-width;
-            box-shadow: inset 0 0 0 9999px var(--#{$variable-prefix}table-accent-bg);
+            padding: table.$table-cell-padding-y table.$table-cell-padding-x;
+            background-color: var(--#{css-variables.$variable-prefix}table-bg);
+            border-bottom-width: table.$table-border-width;
+            box-shadow: inset 0 0 0 9999px var(--#{css-variables.$variable-prefix}table-accent-bg);
         }
 
         > tbody {
             vertical-align: inherit;
-            font-weight: $table-tbody-font-weight;
+            font-weight: table.$table-tbody-font-weight;
 
             > tr.odd {
                 > td,
                 > th {
-                    background-color: $table-striped-bg;
+                    background-color: table.$table-striped-bg;
                 }
             }
         }
@@ -57,12 +56,12 @@
         }
 
         th {
-            font-weight: $table-th-font-weight;
+            font-weight: table.$table-th-font-weight;
         }
 
         // Highlight border color between thead, tbody and tfoot.
         > :not(:last-child) > :last-child > * {
-            border-bottom-color: $table-group-separator-color;
+            border-bottom-color: table.$table-group-separator-color;
         }
 
         &.table-no-border-for-last-row {
@@ -87,7 +86,7 @@
     .table-sm {
         // stylelint-disable-next-line selector-max-universal
         > :not(caption) > * > * {
-            padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
+            padding: table.$table-cell-padding-y-sm table.$table-cell-padding-x-sm;
         }
     }
 
@@ -102,11 +101,11 @@
 
     .table-bordered {
         > :not(caption) > * {
-            border-width: $table-border-width 0;
+            border-width: table.$table-border-width 0;
 
             // stylelint-disable-next-line selector-max-universal
             > * {
-                border-width: 0 $table-border-width;
+                border-width: 0 table.$table-border-width;
             }
         }
     }
@@ -123,9 +122,9 @@
     // Default zebra-stripe styles (alternating gray and transparent backgrounds)
 
     .table-striped {
-        > tbody > tr:nth-of-type(#{$table-striped-order}) {
-            --#{$variable-prefix}table-accent-bg: var(--#{$variable-prefix}table-striped-bg);
-            color: var(--#{$variable-prefix}table-striped-color);
+        > tbody > tr:nth-of-type(#{table.$table-striped-order}) {
+            --#{css-variables.$variable-prefix}table-accent-bg: var(--#{css-variables.$variable-prefix}table-striped-bg);
+            color: var(--#{css-variables.$variable-prefix}table-striped-color);
         }
     }
 
@@ -134,8 +133,8 @@
     // The `.table-active` class can be added to highlight rows or cells
 
     .table-active {
-        --#{$variable-prefix}table-accent-bg: var(--#{$variable-prefix}table-active-bg);
-        color: var(--#{$variable-prefix}table-active-color);
+        --#{css-variables.$variable-prefix}table-accent-bg: var(--#{css-variables.$variable-prefix}table-active-bg);
+        color: var(--#{css-variables.$variable-prefix}table-active-color);
     }
 
     // Hover effect
@@ -144,13 +143,13 @@
 
     .table-hover {
         > tbody > tr {
-            transition: $table-hover-transition;
+            transition: table.$table-hover-transition;
         }
 
         > tbody > tr:hover {
-            --#{$variable-prefix}table-accent-bg: transparent;
-            color: var(--#{$variable-prefix}table-hover-color);
-            background-color: var(--#{$variable-prefix}table-hover-bg);
+            --#{css-variables.$variable-prefix}table-accent-bg: transparent;
+            color: var(--#{css-variables.$variable-prefix}table-hover-color);
+            background-color: var(--#{css-variables.$variable-prefix}table-hover-bg);
         }
     }
 
@@ -167,13 +166,13 @@
     // Table variants set the table cell backgrounds, border colors
     // and the colors of the striped, hovered & active tables
 
-    @each $color, $value in $table-variants {
-        @include table-variant($color, $value);
+    @each $color, $value in color-lists.$table-variants {
+        @include table-variants.table-variant($color, $value);
     }
 
     // Table cell highlights.
 
-    @each $color, $value in $table-cell-highlights {
+    @each $color, $value in color-lists.$table-cell-highlights {
         .table-highlight-#{$color},
         tr.table-highlight-#{$color} > td {
             background-color: $value !important;
@@ -185,10 +184,10 @@
     // Generate series of `.table-responsive-*` classes for configuring the screen
     // size of where your table will overflow.
 
-    @each $breakpoint in map-keys($grid-breakpoints) {
-        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+        $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
-        @include media-breakpoint-down($breakpoint) {
+        @include breakpoints.media-breakpoint-down($breakpoint) {
             .table-responsive#{$infix} {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;

@@ -1,7 +1,7 @@
-@import "../variables/features";
+@use "../variables/features";
 
 @mixin box-shadow($shadow...) {
-    @if $enable-shadows {
+    @if features.$enable-shadows {
         $result: ();
 
         @each $value in $shadow {

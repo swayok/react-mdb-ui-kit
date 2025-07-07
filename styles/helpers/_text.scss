@@ -1,31 +1,20 @@
 // Text-related helpers.
-@import "../variables/typography";
-@import "../mixins/rfs";
-@import "../mixins/text-truncate";
-@import "../variables/features";
+@use "../mixins/rfs";
+@use "../mixins/text-truncate";
+@use "../global/reboot";
+@use "../variables/features";
+@use "../variables/typography";
 
-@if ($include-helpers and $include-text-helpers) {
-    //
-    // Emphasis
-    //
-    .small {
-        @extend small;
-    }
-
-    .mark {
-        @extend mark;
-    }
-
+@if (features.$include-helpers and features.$include-text-helpers) {
     //
     // Display font sizes classes
     //
-
-    @each $display, $font-size in $display-font-sizes {
+    @each $display, $font-size in typography.$display-font-sizes {
         .display-#{$display} {
-            font-weight: $display-font-weight;
-            line-height: $display-line-height;
+            font-weight: typography.$display-font-weight;
+            line-height: typography.$display-line-height;
 
-            @include font-size($font-size);
+            @include rfs.font-size($font-size);
         }
     }
 
@@ -48,16 +37,23 @@
     }
 
     .limited-text-block-width {
-        max-width: $limited-text-block-width;
+        max-width: typography.$limited-text-block-width;
     }
 
     // Builds on `abbr`
     .initialism {
-        @include font-size($initialism-font-size);
+        @include rfs.font-size(typography.$initialism-font-size);
         text-transform: uppercase;
     }
 
     .text-truncate {
-        @include text-truncate();
+        @include text-truncate.text-truncate();
+    }
+
+    // Heading.
+    .lead {
+        font-weight: typography.$lead-font-weight;
+
+        @include rfs.font-size(typography.$lead-font-size);
     }
 }

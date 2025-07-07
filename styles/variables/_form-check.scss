@@ -1,7 +1,7 @@
+// Checkboxes and Radios.
 @use "sass:math";
-@import "typography";
-@import "form-input-base";
-@import "buttons";
+@use "colors";
+@use "form-input-base";
 
 // scss-docs-start form-check-variables
 $form-check-input-width: 1.25rem !default;
@@ -17,7 +17,7 @@ $form-check-input-active-filter: brightness(90%) !default;
 
 $form-check-input-bg-color: transparent !default;
 $form-check-input-border-width: 0.125rem !default;
-$form-check-input-border-color: $gray-600 !default;
+$form-check-input-border-color: colors.$gray-600 !default;
 
 $form-check-input-before-box-shadow: none !default;
 $form-check-input-before-border-radius: 50% !default;
@@ -26,7 +26,7 @@ $form-check-input-before-transform: scale(0) !default;
 $form-check-input-hover-before-opacity: 0.04 !default;
 $form-check-input-hover-before-box-shadow: none !default;
 
-$form-check-input-focus-border: $input-focus-border-color !default;
+$form-check-input-focus-border: form-input-base.$input-focus-border-color !default;
 $form-check-input-focus-box-shadow: none !default;
 $form-check-input-focus-transition: border-color 0.2s !default;
 $form-check-input-focus-before-opacity: 0.12 !default;
@@ -34,11 +34,11 @@ $form-check-input-focus-before-box-shadow: $form-check-input-hover-before-box-sh
 $form-check-input-focus-before-transform: scale(1) !default;
 $form-check-input-focus-before-transition: box-shadow 0.2s, transform 0.2s !default;
 
-$form-check-input-checked-color: $primary !default;
+$form-check-input-checked-color: colors.$primary !default;
 $form-check-input-checked-bg-color: $form-check-input-bg-color !default;
-$form-check-input-checked-border-color: $primary !default;
+$form-check-input-checked-border-color: colors.$primary !default;
 $form-check-input-checked-before-opacity: 0.16 !default;
-$form-check-input-checked-focus-border-color: $primary !default;
+$form-check-input-checked-focus-border-color: colors.$primary !default;
 $form-check-input-checked-focus-before-box-shadow: none !default;
 $form-check-input-checked-focus-before-transform: $form-check-input-focus-before-transform !default;
 $form-check-input-checked-focus-before-transition: $form-check-input-focus-before-transition !default;
@@ -57,13 +57,13 @@ $form-check-label-margin-sm: 0.6rem !default;
 $form-check-checkbox-border-radius: 0.125rem !default;
 
 $form-check-checkbox-focus-after-width: $form-check-input-width - ($form-check-input-border-width * 2) !default;
-$form-check-checkbox-focus-after-bg-color: $white !default;
-$form-check-checkbox-checked-bg-color: $white !default;
+$form-check-checkbox-focus-after-bg-color: colors.$white !default;
+$form-check-checkbox-checked-bg-color: colors.$white !default;
 $form-check-checkbox-checked-focus-bg-color: $form-check-checkbox-checked-bg-color !default;
 
 $form-check-checkbox-checked-after-transform: rotate(45deg) !default;
 $form-check-checkbox-checked-check-width: $form-check-input-border-width !default;
-$form-check-checkbox-checked-check-color: $primary !default;
+$form-check-checkbox-checked-check-color: colors.$primary !default;
 $form-check-checkbox-checked-after-height: $form-check-checkbox-focus-after-width - ($form-check-input-border-width * 2) !default;
 $form-check-checkbox-checked-after-width: math.div($form-check-checkbox-checked-after-height, 2) !default;
 $form-check-checkbox-checked-after-margin-left: -1 * math.div($form-check-checkbox-checked-after-width, 2);
@@ -100,14 +100,14 @@ $form-check-radio-border-radius: 50% !default;
 $form-check-radio-before-width: $form-check-input-before-width !default;
 $form-check-radio-after-width: $form-check-radio-before-width !default;
 $form-check-radio-after-border-radius: $form-check-radio-border-radius !default;
-$form-check-radio-after-bg-color: $white !default;
+$form-check-radio-after-bg-color: colors.$white !default;
 $form-check-radio-after-width-sm: $form-check-input-width-sm - ($form-check-input-border-width * 2) !default;
 
 $form-check-radio-checked-bg-color: transparent !default;
 $form-check-radio-checked-after-border-radius: $form-check-radio-border-radius !default;
 $form-check-radio-checked-after-width: math.div($form-check-input-width, 2) !default;
-$form-check-radio-checked-after-border-color: $primary !default;
-$form-check-radio-checked-after-bg-color: $primary !default;
+$form-check-radio-checked-after-border-color: colors.$primary !default;
+$form-check-radio-checked-after-bg-color: colors.$primary !default;
 $form-check-radio-checked-after-transition: border-color !default;
 $form-check-radio-checked-focus-bg-color: transparent !default;
 

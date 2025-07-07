@@ -1,13 +1,14 @@
-@import "../mixins/svg-icons";
-@import "../variables/rating-stars";
-@import "../variables/features";
+// Rating stars.
+@use "../mixins/svg-icons";
+@use "../variables/rating-stars";
+@use "../variables/features";
 
-@if ($include-rating-stars) {
+@if (features.$include-rating-stars) {
     .rating-stars {
 
         .rating-stars-star {
-            @include contained-mdi-icon-color($rating-stars-static-icon-color);
-            line-height: $rating-stars-line-height;
+            @include svg-icons.contained-mdi-icon-color(rating-stars.$rating-stars-static-icon-color);
+            line-height: rating-stars.$rating-stars-line-height;
 
             > svg {
                 vertical-align: top;
@@ -19,10 +20,10 @@
             .rating-stars-star {
                 cursor: pointer;
 
-                @include contained-mdi-icon-color-in-link(
-                        $rating-stars-interactive-inactive-icon-color,
-                        $rating-stars-interactive-active-icon-color,
-                        $rating-stars-interactive-disabled-icon-color
+                @include svg-icons.contained-mdi-icon-color-in-link(
+                        rating-stars.$rating-stars-interactive-inactive-icon-color,
+                        rating-stars.$rating-stars-interactive-active-icon-color,
+                        rating-stars.$rating-stars-interactive-disabled-icon-color
                 )
             }
         }

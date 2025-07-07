@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import "../variables/color-contrast";
+@use "../variables/color-contrast" as *;
 
 // scss-docs-start color-functions
 

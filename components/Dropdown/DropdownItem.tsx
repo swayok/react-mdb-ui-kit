@@ -3,7 +3,7 @@ import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
-import {useDropdownContext} from 'swayok-react-mdb-ui-kit/components/Dropdown2/DropdownContext'
+import {useDropdownContext} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownContext'
 import {AnyObject, ReactComponentOrTagName} from '../../types/Common'
 import {DropdownItemProps} from './DropdownTypes'
 

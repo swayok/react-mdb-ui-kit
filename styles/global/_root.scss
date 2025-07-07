@@ -1,23 +1,24 @@
-@import "../variables/css-variables";
-@import "../variables/typography";
-@import "../variables/color-lists";
-@import "../variables/features";
+@use "../variables/css-variables";
+@use "../variables/typography";
+@use "../variables/color-lists";
+@use "../variables/features";
+@use "../variables/colors";
 
-@if ($include-root) {
+@if (features.$include-root) {
     :root {
         // Custom variable values only support SassScript inside `#{}`.
-        @each $color, $value in $text-colors {
-            --#{$variable-prefix}-text-#{$color}: #{$value};
+        @each $color, $value in color-lists.$text-colors {
+            --#{css-variables.$variable-prefix}-text-#{$color}: #{$value};
         }
 
-        @each $color, $value in $theme-colors {
-            --#{$variable-prefix}-theme-#{$color}: #{$value};
+        @each $color, $value in color-lists.$theme-colors {
+            --#{css-variables.$variable-prefix}-theme-#{$color}: #{$value};
         }
 
         // Use `inspect` for lists so that quoted items keep the quotes.
         // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
-        --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
-        --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
-        --#{$variable-prefix}gradient: #{$gradient};
+        --#{css-variables.$variable-prefix}font-sans-serif: #{inspect(typography.$font-family-sans-serif)};
+        --#{css-variables.$variable-prefix}font-monospace: #{inspect(typography.$font-family-monospace)};
+        --#{css-variables.$variable-prefix}gradient: #{colors.$gradient};
     }
 }

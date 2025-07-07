@@ -1,6 +1,7 @@
-@import "../variables/features";
+// YouTube embed.
+@use "../variables/features";
 
-@if ($include-youtube) {
+@if (features.$include-youtube) {
     .youtube-iframe-container {
         position: relative;
         width: 100%;

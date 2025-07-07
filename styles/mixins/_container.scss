@@ -1,11 +1,11 @@
-// Container mixins
-@import "../variables/css-variables";
-@import "../variables/grid";
+// Container mixins.
+@use "../variables/css-variables";
+@use "../variables/grid";
 
-@mixin make-container($gutter: $container-padding-x) {
+@mixin make-container($gutter: grid.$container-padding-x) {
     width: 100%;
-    padding-right: var(--#{$variable-prefix}gutter-x, #{$gutter});
-    padding-left: var(--#{$variable-prefix}gutter-x, #{$gutter});
+    padding-right: var(--#{css-variables.$variable-prefix}gutter-x, #{$gutter});
+    padding-left: var(--#{css-variables.$variable-prefix}gutter-x, #{$gutter});
     margin-right: auto;
     margin-left: auto;
 }

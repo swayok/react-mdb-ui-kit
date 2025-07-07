@@ -1,10 +1,10 @@
-// Visually hidden
-@import "../mixins/visually-hidden";
-@import "../variables/features";
+// Visually hidden.
+@use "../mixins/visually-hidden";
+@use "../variables/features";
 
-@if ($include-helpers and $include-visually-hidden-helpers) {
+@if (features.$include-helpers and features.$include-visually-hidden-helpers) {
     .visually-hidden,
     .visually-hidden-focusable:not(:focus):not(:focus-within) {
-        @include visually-hidden();
+        @include visually-hidden.visually-hidden();
     }
 }

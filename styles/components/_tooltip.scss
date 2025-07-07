@@ -1,42 +1,42 @@
+// Tooltip.
 @use 'sass:math';
+@use "../mixins/rfs";
+@use "../mixins/reset-text";
+@use "../mixins/border-radius";
+@use "../mixins/gradients";
+@use "../variables/z-index";
+@use "../variables/tooltip";
+@use "../variables/color-lists";
+@use "../variables/features";
 
-@import "../mixins/rfs";
-@import "../mixins/reset-text";
-@import "../mixins/border-radius";
-@import "../mixins/gradients";
-@import "../variables/z-index";
-@import "../variables/tooltip";
-@import "../variables/color-lists";
-@import "../variables/features";
-
-@if ($include-tooltip) {
+@if (features.$include-tooltip) {
     // Base class
     .tooltip {
         position: absolute;
-        z-index: $z-index-tooltip;
+        z-index: z-index.$z-index-tooltip;
         display: block;
-        margin: $tooltip-margin;
+        margin: tooltip.$tooltip-margin;
         // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
         // So reset our font and text properties to avoid inheriting weird values.
-        @include reset-text();
-        @include font-size($tooltip-font-size);
+        @include reset-text.reset-text();
+        @include rfs.font-size(tooltip.$tooltip-font-size);
         // Allow breaking very long words so they don't overflow the tooltip's bounds
         word-wrap: break-word;
         opacity: 0;
 
         &.show {
-            opacity: $tooltip-opacity;
+            opacity: tooltip.$tooltip-opacity;
         }
     }
 
     // Wrapper for the tooltip content
     .tooltip-inner {
-        max-width: $tooltip-max-width;
-        padding: $tooltip-inner-padding-y $tooltip-inner-padding-x;
-        color: $tooltip-inner-color;
+        max-width: tooltip.$tooltip-max-width;
+        padding: tooltip.$tooltip-inner-padding-y tooltip.$tooltip-inner-padding-x;
+        color: tooltip.$tooltip-inner-color;
         text-align: center;
-        @include gradient-bg($tooltip-inner-bg);
-        @include border-radius($tooltip-inner-border-radius);
+        @include gradients.gradient-bg(tooltip.$tooltip-inner-bg);
+        @include border-radius.border-radius(tooltip.$tooltip-inner-border-radius);
     }
 
     //
@@ -44,7 +44,7 @@
     //
 
     // scss-docs-start tooltip-text-variant-loops
-    @each $color, $value in $tooltip-text-colors {
+    @each $color, $value in color-lists.$tooltip-text-colors {
         .tooltip-text-#{$color} {
             color: $value;
         }

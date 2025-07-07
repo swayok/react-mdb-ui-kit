@@ -1,12 +1,11 @@
 // Shadows offset, blur, spread and color
-
-@import "colors";
+@use "colors";
 
 // scss-docs-start box-shadow-variables
-$box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
-$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075) !default;
-$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175) !default;
-$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075) !default;
+$box-shadow: 0 0.5rem 1rem rgba(colors.$black, 0.15) !default;
+$box-shadow-sm: 0 0.125rem 0.25rem rgba(colors.$black, 0.075) !default;
+$box-shadow-lg: 0 1rem 3rem rgba(colors.$black, 0.175) !default;
+$box-shadow-inset: inset 0 1px 2px rgba(colors.$black, 0.075) !default;
 // scss-docs-end box-shadow-variables
 
 $box-shadow-0: none !default;
@@ -34,37 +33,3 @@ $box-shadow-6-strong: 0 20px 40px 0 rgba(0, 0, 0, 0.21) !default;
 
 $box-shadow-3-top: 0 -10px 20px 0 rgba(0, 0, 0, 0.05) !default;
 $box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06) !default;
-
-// scss-docs-start light-shadows-values
-$shadows: (
-    '0': $box-shadow-0,
-    '1': $box-shadow-1,
-    '2': $box-shadow-2,
-    '3': $box-shadow-3,
-    '4': $box-shadow-4,
-    '5': $box-shadow-5,
-    '6': $box-shadow-6,
-) !default;
-// scss-docs-end light-shadows-values
-
-// scss-docs-start light-shadows-values
-$shadows-soft: (
-    '1': $box-shadow-1-soft,
-    '2': $box-shadow-2-soft,
-    '3': $box-shadow-3-soft,
-    '4': $box-shadow-4-soft,
-    '5': $box-shadow-5-soft,
-    '6': $box-shadow-6-soft,
-) !default;
-// scss-docs-end light-shadows-values
-
-// scss-docs-start strong-shadows-values
-$shadows-strong: (
-    '1': $box-shadow-1-strong,
-    '2': $box-shadow-2-strong,
-    '3': $box-shadow-3-strong,
-    '4': $box-shadow-4-strong,
-    '5': $box-shadow-5-strong,
-    '6': $box-shadow-6-strong,
-) !default;
-// scss-docs-end strong-shadows-values

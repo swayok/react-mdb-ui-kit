@@ -1,7 +1,9 @@
+// Form checkbox styled as on-off switch.
 @use 'sass:math';
-@import "form-input-base";
-@import "form-check";
-@import "../functions/color-utils";
+@use "../functions";
+@use "form-check";
+@use "colors";
+@use "shadows";
 
 // scss-docs-start form-switch-variables
 $form-switch-padding-y: 1px !default;
@@ -11,38 +13,38 @@ $form-switch-input-width: 2.25rem !default;
 $form-switch-input-height: 0.875rem !default;
 $form-switch-input-border-radius: $form-switch-input-width !default;
 
-$form-switch-track-bg-color: $gray-350 !default;
+$form-switch-track-bg-color: colors.$gray-350 !default;
 
 $form-switch-toggler-border-radius: 50% !default;
 $form-switch-toggler-width: $form-switch-input-height * 1.4 !default;
-$form-switch-toggler-bg-color: $gray-500 !default;
+$form-switch-toggler-bg-color: colors.$gray-500 !default;
 $form-switch-toggler-margin-top: -1 * math.div($form-switch-toggler-width - $form-switch-input-height, 2) !default;
-$form-switch-toggler-box-shadow: $box-shadow-2 !default;
+$form-switch-toggler-box-shadow: shadows.$box-shadow-2 !default;
 $form-switch-toggler-transition-duration: 0.3s !default;
 $form-switch-toggler-transition: background-color $form-switch-toggler-transition-duration,
 transform $form-switch-toggler-transition-duration,
 opacity $form-switch-toggler-transition-duration,
 margin-left $form-switch-toggler-transition-duration !default;
 
-$form-switch-toggler-focus-bg-color: $gray-600 !default;
+$form-switch-toggler-focus-bg-color: colors.$gray-600 !default;
 $form-switch-toggler-focus-border-radius: $form-switch-toggler-border-radius !default;
 $form-switch-toggler-focus-width: $form-switch-toggler-width !default;
 $form-switch-toggler-focus-opacity: 1 !default;
-$form-switch-toggler-focus-box-shadow: $box-shadow-6 !default;
+$form-switch-toggler-focus-box-shadow: shadows.$box-shadow-6 !default;
 
-$form-switch-toggler-checked-bg-color: $success !default;
+$form-switch-toggler-checked-bg-color: colors.$success !default;
 $form-switch-toggler-checked-margin-left: $form-switch-input-width - $form-switch-toggler-width !default;
 $form-switch-toggler-checked-focus-bg-color: $form-switch-toggler-checked-bg-color !default;
 $form-switch-toggler-checked-focus-opacity: 0.7 !default;
 $form-switch-toggler-checked-focus-box-shadow: none !default;
 
-$form-switch-track-checked-bg-color: tint-color($form-switch-toggler-checked-bg-color, 70%) !default;
+$form-switch-track-checked-bg-color: functions.tint-color($form-switch-toggler-checked-bg-color, 70%) !default;
 
-$form-switch-label-margin: $form-check-label-margin !default;
-$form-switch-label-margin-sm: $form-check-label-margin-sm !default;
+$form-switch-label-margin: form-check.$form-check-label-margin !default;
+$form-switch-label-margin-sm: form-check.$form-check-label-margin-sm !default;
 
-$form-switch-input-disabled-opacity: $form-check-input-disabled-opacity !default;
-$form-switch-label-disabled-opacity: $form-check-input-disabled-opacity !default;
+$form-switch-input-disabled-opacity: form-check.$form-check-input-disabled-opacity !default;
+$form-switch-label-disabled-opacity: form-check.$form-check-input-disabled-opacity !default;
 
 
 // scss-docs-end form-switch-variables

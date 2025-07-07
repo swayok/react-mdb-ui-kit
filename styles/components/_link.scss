@@ -1,35 +1,36 @@
 // Links
-@import "../variables/color-lists";
-@import "../variables/links";
-@import "../variables/features";
+@use "../functions/color-utils";
+@use "../variables/color-lists";
+@use "../variables/links";
+@use "../variables/features";
 
-@if ($include-link) {
+@if (features.$include-link) {
     a,
     .clickable {
-        color: $link-color;
-        text-decoration: $link-decoration;
-        transition: $link-transition;
+        color: links.$link-color;
+        text-decoration: links.$link-decoration;
+        transition: links.$link-transition;
 
         &:hover {
-            color: $link-hover-color;
-            text-decoration: $link-hover-decoration;
+            color: links.$link-hover-color;
+            text-decoration: links.$link-hover-decoration;
         }
 
         &.disabled:not(.btn),
         &:disabled:not(.btn) {
-            color: $link-disabled-color !important;
+            color: links.$link-disabled-color !important;
             cursor: not-allowed;
         }
 
         &[class*=text-]:not(.btn) {
-            text-decoration: $link-variant-decoration;
+            text-decoration: links.$link-variant-decoration;
 
             &:hover {
-                text-decoration: $link-variant-hover-decoration;
+                text-decoration: links.$link-variant-hover-decoration;
             }
 
             &.active {
-                color: $link-color !important;
+                color: links.$link-color !important;
             }
         }
 
@@ -52,13 +53,13 @@
     }
 
     .stretched-link {
-        &::#{$stretched-link-pseudo-element} {
+        &::#{links.$stretched-link-pseudo-element} {
             position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
             left: 0;
-            z-index: $stretched-link-z-index;
+            z-index: links.$stretched-link-z-index;
             content: '';
         }
     }
@@ -68,14 +69,14 @@
     //
 
     // scss-docs-start link-variant-loops
-    @each $color, $value in $link-colors {
+    @each $color, $value in color-lists.$link-colors {
         .link-#{$color} {
             color: $value;
 
-            @if $link-shade-percentage != 0 {
+            @if links.$link-shade-percentage != 0 {
                 &:hover,
                 &:focus {
-                    color: link-hover-color($value, $link-shade-percentage);
+                    color: color-utils.link-hover-color($value, links.$link-shade-percentage);
                 }
             }
         }

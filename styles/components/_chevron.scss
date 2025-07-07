@@ -1,10 +1,11 @@
-@import "../variables/form-dropdown-select";
-@import "../mixins";
-@import "../variables/features";
+// Chevron icon.
+@use "../mixins/svg-icons";
+@use "../variables/features";
+@use "../variables/form-dropdown-select";
 
-@if ($include-chevron) {
+@if (features.$include-chevron) {
     svg.mdi-icon.chevron,
     .chevron {
-        @include mdi-icon-color($form-dropdown-select-chevron-color);
+        @include svg-icons.mdi-icon-color(form-dropdown-select.$form-dropdown-select-chevron-color);
     }
 }

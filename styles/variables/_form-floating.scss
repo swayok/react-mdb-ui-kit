@@ -1,8 +1,10 @@
-@import "form-input-base";
+// Form inputs with floating labels.
+@use "../functions";
+@use "form-input-base";
 
 // scss-docs-start form-floating-variables
-$form-floating-height: add(3.5rem, $input-height-border) !default;
-$form-floating-padding-x: $input-padding-x !default;
+$form-floating-height: functions.add(3.5rem, form-input-base.$input-height-border) !default;
+$form-floating-padding-x: form-input-base.$input-padding-x !default;
 $form-floating-padding-y: 1rem !default;
 $form-floating-input-padding-t: 1.625rem !default;
 $form-floating-input-padding-b: 0.625rem !default;

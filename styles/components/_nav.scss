@@ -1,17 +1,18 @@
-// Base class
-//
-// Kickstart any navigation component with a set of style resets. Works with
-// `<nav>`s, `<ul>`s or `<ol>`s.
+// Navigation panels.
+// Kickstart any navigation component with a set of style resets.
+// Works with `<nav>`s, `<ul>`s or `<ol>`s.
+@use "../mixins/rfs";
+@use "../mixins/border-radius";
+@use "../mixins/gradients";
+@use "../mixins/box-shadow";
+@use "../mixins/transition";
+@use "../variables/nav";
+@use "../variables/features";
+@use "../variables/links";
+@use "../variables/buttons";
 
-@import "../mixins/rfs";
-@import "../mixins/border-radius";
-@import "../mixins/gradients";
-@import "../mixins/box-shadow";
-@import "../mixins/transition";
-@import "../variables/nav";
-@import "../variables/features";
+@if (features.$include-nav) {
 
-@if ($include-nav) {
     .nav {
         display: flex;
         flex-wrap: wrap;
@@ -22,22 +23,22 @@
 
     .nav-link {
         display: block;
-        padding: $nav-link-padding-y $nav-link-padding-x;
-        @include font-size($nav-link-font-size);
-        font-weight: $nav-link-font-weight;
-        color: $nav-link-color;
-        text-decoration: if($link-decoration == none, null, none);
-        @include transition($nav-link-transition);
+        padding: nav.$nav-link-padding-y nav.$nav-link-padding-x;
+        @include rfs.font-size(nav.$nav-link-font-size);
+        font-weight: nav.$nav-link-font-weight;
+        color: nav.$nav-link-color;
+        text-decoration: if(links.$link-decoration == none, null, none);
+        @include transition.transition(nav.$nav-link-transition);
 
         &:hover,
         &:focus {
-            color: $nav-link-hover-color;
-            text-decoration: if($link-hover-decoration == underline, none, null);
+            color: nav.$nav-link-hover-color;
+            text-decoration: if(links.$link-hover-decoration == underline, none, null);
         }
 
         // Disabled state lightens text
         &.disabled {
-            color: $nav-link-disabled-color;
+            color: nav.$nav-link-disabled-color;
             pointer-events: none;
             cursor: default;
         }
@@ -48,32 +49,32 @@
     //
 
     .nav-tabs {
-        border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+        border-bottom: nav.$nav-tabs-border-width solid nav.$nav-tabs-border-color;
 
         .nav-link {
-            @include border-top-radius($nav-tabs-border-radius);
-            margin-bottom: -$nav-tabs-link-border-width;
+            @include border-radius.border-top-radius(nav.$nav-tabs-border-radius);
             background: none;
-            border-width: $nav-tabs-link-border-width;
+            border-width: nav.$nav-tabs-link-border-width;
+            margin-bottom: nav.$nav-tabs-link-margin-bottom;
             border-style: solid;
             border-color: transparent;
-            text-transform: $nav-tabs-link-text-transform;
-            line-height: $nav-tabs-link-line-height;
-            font-weight: $nav-tabs-link-font-weight;
-            @include font-size($nav-tabs-link-font-size);
-            color: $nav-tabs-link-color;
-            padding: $nav-tabs-link-padding-top $nav-tabs-link-padding-x $nav-tabs-link-padding-bottom $nav-tabs-link-padding-x;
+            text-transform: nav.$nav-tabs-link-text-transform;
+            line-height: nav.$nav-tabs-link-line-height;
+            font-weight: nav.$nav-tabs-link-font-weight;
+            @include rfs.font-size(nav.$nav-tabs-link-font-size);
+            color: nav.$nav-tabs-link-color;
+            padding: nav.$nav-tabs-link-padding-top nav.$nav-tabs-link-padding-x nav.$nav-tabs-link-padding-bottom nav.$nav-tabs-link-padding-x;
 
             &:hover,
             &:focus {
-                border-color: $nav-tabs-link-hover-border-color;
-                background-color: $nav-tabs-link-hover-bg;
+                border-color: nav.$nav-tabs-link-hover-border-color;
+                background-color: nav.$nav-tabs-link-hover-bg;
                 // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
                 isolation: isolate;
             }
 
             &.disabled {
-                color: $nav-link-disabled-color;
+                color: nav.$nav-link-disabled-color;
                 background-color: transparent;
                 border-color: transparent;
             }
@@ -81,16 +82,16 @@
 
         .nav-link.active,
         .nav-item.show .nav-link {
-            color: $nav-tabs-link-active-color;
-            background-color: $nav-tabs-link-active-bg;
-            border-color: $nav-tabs-link-active-border-color;
+            color: nav.$nav-tabs-link-active-color;
+            background-color: nav.$nav-tabs-link-active-bg;
+            border-color: nav.$nav-tabs-link-active-border-color;
         }
 
         .dropdown-menu {
             // Make dropdown border overlap tab border
-            margin-top: -$nav-tabs-border-width;
+            margin-top: nav.$nav-tabs-border-width * -1;
             // Remove the top rounded corners here since there is a hard edge above the menu
-            @include border-top-radius(0);
+            @include border-radius.border-top-radius(0);
         }
     }
 
@@ -99,26 +100,26 @@
     //
 
     .nav-pills {
-        margin-left: -$nav-pills-margin;
+        margin-left: nav.$nav-pills-margin * -1;
 
         .nav-link {
             border: 0;
-            @include border-radius($nav-pills-border-radius);
-            @include font-size($nav-pills-link-font-size);
+            @include border-radius.border-radius(nav.$nav-pills-border-radius);
+            @include rfs.font-size(nav.$nav-pills-link-font-size);
             text-transform: uppercase;
-            padding: $nav-pills-link-padding-top $nav-pills-link-padding-x $nav-pills-link-padding-bottom $nav-pills-link-padding-x;
-            line-height: $nav-pills-link-line-height;
-            background-color: $nav-pills-link-bg;
-            font-weight: $nav-pills-link-font-weight;
-            color: $nav-pills-link-color;
-            margin: $nav-pills-margin;
+            padding: nav.$nav-pills-link-padding-top nav.$nav-pills-link-padding-x nav.$nav-pills-link-padding-bottom nav.$nav-pills-link-padding-x;
+            line-height: nav.$nav-pills-link-line-height;
+            background-color: nav.$nav-pills-link-bg;
+            font-weight: nav.$nav-pills-link-font-weight;
+            color: nav.$nav-pills-link-color;
+            margin: nav.$nav-pills-margin;
         }
 
         .nav-link.active,
         .show > .nav-link {
-            color: $nav-pills-link-active-color;
-            @include gradient-bg($nav-pills-link-active-bg);
-            @include box-shadow($btn-box-shadow);
+            color: nav.$nav-pills-link-active-color;
+            @include gradients.gradient-bg(nav.$nav-pills-link-active-bg);
+            @include box-shadow.box-shadow(buttons.$btn-box-shadow);
         }
     }
 

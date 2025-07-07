@@ -1,26 +1,20 @@
-// TODO: replace @import by @forward
+@use 'container';
+@use 'flex-grid';
+@use 'css-grid';
+@use 'transition';
+@use 'animation';
 
-@import '../global/root';
-@import '../global/reboot';
-@import 'container';
-@import 'flex-grid';
-@import 'css-grid';
-@import 'transition';
-@import 'animation';
+@use 'clearfix';
 
-@import 'clearfix';
+@use 'ratio';
+@use 'flexbox';
+@use 'position';
+@use 'visually-hidden';
+@use 'background-attachment';
+@use 'width-and-height';
+@use 'list';
+@use 'blockquote';
+@use 'text';
+@use 'misc';
 
-@import 'ratio';
-@import 'flexbox';
-@import 'position';
-@import 'visually-hidden';
-@import 'shadow';
-@import 'background';
-@import 'width-and-height';
-@import 'list';
-@import 'blockquote';
-@import 'heading';
-@import 'text';
-@import 'misc';
-
-@import 'utilities';
+@use 'utilities';

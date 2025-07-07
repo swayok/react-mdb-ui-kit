@@ -1,40 +1,40 @@
-@import "../variables/features";
-@import "../variables/caret";
+@use "../variables/features";
+@use "../variables/caret";
 
 // scss-docs-start caret-mixins
 @mixin caret-down {
-    border-top: $caret-width solid;
-    border-right: $caret-width solid transparent;
+    border-top: caret.$caret-width solid;
+    border-right: caret.$caret-width solid transparent;
     border-bottom: 0;
-    border-left: $caret-width solid transparent;
+    border-left: caret.$caret-width solid transparent;
 }
 
 @mixin caret-up {
     border-top: 0;
-    border-right: $caret-width solid transparent;
-    border-bottom: $caret-width solid;
-    border-left: $caret-width solid transparent;
+    border-right: caret.$caret-width solid transparent;
+    border-bottom: caret.$caret-width solid;
+    border-left: caret.$caret-width solid transparent;
 }
 
 @mixin caret-end {
-    border-top: $caret-width solid transparent;
+    border-top: caret.$caret-width solid transparent;
     border-right: 0;
-    border-bottom: $caret-width solid transparent;
-    border-left: $caret-width solid;
+    border-bottom: caret.$caret-width solid transparent;
+    border-left: caret.$caret-width solid;
 }
 
 @mixin caret-start {
-    border-top: $caret-width solid transparent;
-    border-right: $caret-width solid;
-    border-bottom: $caret-width solid transparent;
+    border-top: caret.$caret-width solid transparent;
+    border-right: caret.$caret-width solid;
+    border-bottom: caret.$caret-width solid transparent;
 }
 
 @mixin caret($direction: down) {
-    @if $enable-caret {
+    @if features.$enable-caret {
         &::after {
             display: inline-block;
-            margin-left: $caret-spacing;
-            vertical-align: $caret-vertical-align;
+            margin-left: caret.$caret-spacing;
+            vertical-align: caret.$caret-vertical-align;
             content: '';
             @if $direction == down {
                 @include caret-down();
@@ -52,8 +52,8 @@
 
             &::before {
                 display: inline-block;
-                margin-right: $caret-spacing;
-                vertical-align: $caret-vertical-align;
+                margin-right: caret.$caret-spacing;
+                vertical-align: caret.$caret-vertical-align;
                 content: '';
                 @include caret-start();
             }

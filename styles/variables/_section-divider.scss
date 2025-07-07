@@ -1,7 +1,7 @@
-// Разделитель секций (аналог <hr>).
+// Section divider with optional label (alternative for <hr>).
+@use "borders";
+@use "colors";
 
-@import "borders";
-
-$section-divider-color: $gray-700;
-$section-divider-border-color: $border-color;
+$section-divider-color: colors.$gray-700;
+$section-divider-border-color: borders.$border-color;
 $section-divider-border-color-darker: #BBB;

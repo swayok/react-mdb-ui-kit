@@ -1,14 +1,15 @@
 // This mixin uses an `if()` technique to be compatible with Dart Sass
 // See https://github.com/sass/sass/issues/1873#issuecomment-152293725 for more details
 
-@import "../functions/color-utils";
-@import "../functions/string-utils";
-@import "rfs";
-@import "border-radius";
-@import "../variables/form-validation";
-@import "../variables/tooltip";
-@import "../variables/form-input-base";
-@import "../variables/form-select";
+@use "../functions";
+@use "rfs";
+@use "border-radius";
+@use "../variables/tooltip";
+@use "../variables/form-input-base";
+@use "../variables/form-validation";
+@use "../variables/features";
+@use "../variables/colors";
+@use "../variables/form-select";
 
 // scss-docs-start form-validation-mixins
 @mixin form-validation-state-selector($state) {
@@ -28,18 +29,18 @@
     $state,
     $color,
     $icon,
-    $tooltip-color: color-contrast($color),
-    $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
-    $focus-box-shadow: 0 0 0 $input-focus-box-shadow-width rgba($color, $input-focus-box-shadow-color-opacity)
+    $tooltip-color: functions.color-contrast($color),
+    $tooltip-bg-color: rgba($color, tooltip.$form-feedback-tooltip-opacity),
+    $focus-box-shadow: 0 0 0 form-input-base.$input-focus-box-shadow-width rgba($color, form-input-base.$input-focus-box-shadow-color-opacity)
 ) {
     .#{$state}-feedback {
         position: absolute;
         display: none;
         width: auto;
-        margin-top: $form-feedback-margin-top;
-        margin-left: $form-feedback-margin-left;
-        @include font-size($form-feedback-font-size);
-        font-style: $form-feedback-font-style;
+        margin-top: form-validation.$form-feedback-margin-top;
+        margin-left: form-validation.$form-feedback-margin-left;
+        @include rfs.font-size(form-validation.$form-feedback-font-size);
+        font-style: form-validation.$form-feedback-font-style;
         color: $color;
     }
 
@@ -49,13 +50,13 @@
         z-index: 5;
         display: none;
         max-width: 100%; // Contain to parent when possible
-        padding: $form-feedback-tooltip-padding-y $form-feedback-tooltip-padding-x;
+        padding: tooltip.$form-feedback-tooltip-padding-y tooltip.$form-feedback-tooltip-padding-x;
         margin-top: 0.1rem;
-        @include font-size($form-feedback-tooltip-font-size);
-        line-height: $form-feedback-tooltip-line-height;
+        @include rfs.font-size(tooltip.$form-feedback-tooltip-font-size);
+        line-height: tooltip.$form-feedback-tooltip-line-height;
         color: $tooltip-color;
         background-color: $tooltip-bg-color;
-        @include border-radius($form-feedback-tooltip-border-radius);
+        @include border-radius.border-radius(tooltip.$form-feedback-tooltip-border-radius);
     }
 
     @include form-validation-state-selector($state) {
@@ -71,12 +72,12 @@
             background-image: none;
             border-color: $color;
 
-            @if $enable-validation-icons {
-                padding-right: $input-height-inner;
-                background-image: escape-svg($icon);
+            @if features.$enable-validation-icons {
+                padding-right: form-input-base.$input-height-inner;
+                background-image: functions.escape-svg($icon);
                 background-repeat: no-repeat;
-                background-position: right $input-height-inner-quarter center;
-                background-size: $input-height-inner-half $input-height-inner-half;
+                background-position: right form-input-base.$input-height-inner-quarter center;
+                background-size: form-input-base.$input-height-inner-half form-input-base.$input-height-inner-half;
             }
 
             &:focus {
@@ -105,9 +106,9 @@
     // stylelint-disable-next-line selector-no-qualifying-type
     textarea.form-control {
         @include form-validation-state-selector($state) {
-            @if $enable-validation-icons {
-                padding-right: $input-height-inner;
-                background-position: top $input-height-inner-quarter right $input-height-inner-quarter;
+            @if features.$enable-validation-icons {
+                padding-right: form-input-base.$input-height-inner;
+                background-position: top form-input-base.$input-height-inner-quarter right form-input-base.$input-height-inner-quarter;
             }
         }
     }
@@ -116,13 +117,13 @@
         @include form-validation-state-selector($state) {
             border-color: $color;
 
-            @if $enable-validation-icons {
+            @if features.$enable-validation-icons {
                 &:not([multiple]):not([size]),
                 &:not([multiple])[size='1'] {
-                    padding-right: $form-select-feedback-icon-padding-end;
-                    background-image: escape-svg($form-select-indicator), escape-svg($icon);
-                    background-position: $form-select-bg-position, $form-select-feedback-icon-position;
-                    background-size: $form-select-bg-size, $form-select-feedback-icon-size;
+                    padding-right: form-select.$form-select-feedback-icon-padding-end;
+                    background-image: functions.escape-svg(form-select.$form-select-indicator), functions.escape-svg($icon);
+                    background-position: form-select.$form-select-bg-position, form-select.$form-select-feedback-icon-position;
+                    background-size: form-select.$form-select-bg-size, form-select.$form-select-feedback-icon-size;
                 }
             }
 
@@ -242,7 +243,7 @@
             &[type='radio'] {
                 &:checked {
                     border-color: $color;
-                    background-color: $white;
+                    background-color: colors.$white;
 
                     &:focus {
                         &:before {

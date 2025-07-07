@@ -1,17 +1,15 @@
 // stylelint-disable indentation
-
 // Utilities
-
-@import "positioning";
-@import "shadows";
-@import "borders";
-@import "color-lists";
-@import "css-variables";
-@import "typography";
-@import "spacers";
-@import "body";
-@import "z-index";
-@import "card";
+@use "positioning";
+@use "utility-values";
+@use "borders";
+@use "color-lists";
+@use "css-variables";
+@use "typography";
+@use "spacers";
+@use "z-index";
+@use "card";
+@use "features";
 
 $utilities: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -67,26 +65,12 @@ $utilities: map-merge(
                 values: inline inline-block block grid table table-row table-cell flex inline-flex none,
             ),
             // scss-docs-end utils-display
-            // scss-docs-start utils-shadow
-            'shadow':
-            (
-                property: box-shadow,
-                class: shadow,
-                values: (
-                    null: $box-shadow,
-                    sm: $box-shadow-sm,
-                    lg: $box-shadow-lg,
-                    none: none,
-                    card: $card-box-shadow
-                ),
-            ),
-            // scss-docs-end utils-shadow
             // scss-docs-start utils-z-index
             'z-index':
             (
                 property: z-index,
                 class: z-index,
-                values: $z-indexes,
+                values: z-index.$z-indexes,
             ),
             // scss-docs-end utils-z-index
             // scss-docs-start utils-cursor
@@ -94,7 +78,7 @@ $utilities: map-merge(
             (
                 property: cursor,
                 class: cursor,
-                values: $cursors,
+                values: typography.$cursors,
             ),
             // scss-docs-end utils-cursor
             // scss-docs-start utils-position
@@ -105,21 +89,21 @@ $utilities: map-merge(
             ),
             'top': (
                 property: top,
-                values: $position-values,
+                values: positioning.$position-values,
             ),
             'bottom': (
                 property: bottom,
-                values: $position-values,
+                values: positioning.$position-values,
             ),
             'start': (
                 property: left,
                 class: start,
-                values: $position-values,
+                values: positioning.$position-values,
             ),
             'end': (
                 property: right,
                 class: end,
-                values: $position-values,
+                values: positioning.$position-values,
             ),
             'translate-middle': (
                 property: transform,
@@ -136,14 +120,14 @@ $utilities: map-merge(
             (
                 property: border,
                 values: (
-                    null: $border-width solid $border-color,
+                    null: borders.$border-width solid borders.$border-color,
                     0: 0,
                 ),
             ),
             'border-top': (
                 property: border-top,
                 values: (
-                    null: $border-width solid $border-color,
+                    null: borders.$border-width solid borders.$border-color,
                     0: 0,
                 ),
             ),
@@ -151,14 +135,14 @@ $utilities: map-merge(
                 property: border-right,
                 class: border-end,
                 values: (
-                    null: $border-width solid $border-color,
+                    null: borders.$border-width solid borders.$border-color,
                     0: 0,
                 ),
             ),
             'border-bottom': (
                 property: border-bottom,
                 values: (
-                    null: $border-width solid $border-color,
+                    null: borders.$border-width solid borders.$border-color,
                     0: 0,
                 ),
             ),
@@ -166,19 +150,19 @@ $utilities: map-merge(
                 property: border-left,
                 class: border-start,
                 values: (
-                    null: $border-width solid $border-color,
+                    null: borders.$border-width solid borders.$border-color,
                     0: 0,
                 ),
             ),
             'border-color': (
                 property: border-color,
                 class: border,
-                values: $border-colors,
+                values: color-lists.$border-colors,
             ),
             'border-width': (
                 property: border-width,
                 class: border,
-                values: $border-widths,
+                values: borders.$border-widths,
             ),
             // scss-docs-end utils-borders
             // Sizing utilities
@@ -293,7 +277,7 @@ $utilities: map-merge(
                 responsive: true,
                 property: gap,
                 class: gap,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'justify-content': (
                 responsive: true,
@@ -366,7 +350,7 @@ $utilities: map-merge(
                 class: m,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -378,7 +362,7 @@ $utilities: map-merge(
                 class: mx,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -390,7 +374,7 @@ $utilities: map-merge(
                 class: my,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -402,7 +386,7 @@ $utilities: map-merge(
                 class: mt,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -414,7 +398,7 @@ $utilities: map-merge(
                 class: me,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -426,7 +410,7 @@ $utilities: map-merge(
                 class: mb,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -438,7 +422,7 @@ $utilities: map-merge(
                 class: ms,
                 values:
                 map-merge(
-                        $spacers,
+                        spacers.$spacers,
                         (
                             auto: auto,
                         )
@@ -450,43 +434,43 @@ $utilities: map-merge(
                 responsive: true,
                 property: margin,
                 class: m,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-x': (
                 responsive: true,
                 property: margin-right margin-left,
                 class: mx,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-y': (
                 responsive: true,
                 property: margin-top margin-bottom,
                 class: my,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-top': (
                 responsive: true,
                 property: margin-top,
                 class: mt,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-end': (
                 responsive: true,
                 property: margin-right,
                 class: me,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-bottom': (
                 responsive: true,
                 property: margin-bottom,
                 class: mb,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             'negative-margin-start': (
                 responsive: true,
                 property: margin-left,
                 class: ms,
-                values: $negative-spacers,
+                values: spacers.$negative-spacers,
             ),
             // Padding utilities
             'padding':
@@ -494,43 +478,43 @@ $utilities: map-merge(
                 responsive: true,
                 property: padding,
                 class: p,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-x': (
                 responsive: true,
                 property: padding-right padding-left,
                 class: px,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-y': (
                 responsive: true,
                 property: padding-top padding-bottom,
                 class: py,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-top': (
                 responsive: true,
                 property: padding-top,
                 class: pt,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-end': (
                 responsive: true,
                 property: padding-right,
                 class: pe,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-bottom': (
                 responsive: true,
                 property: padding-bottom,
                 class: pb,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             'padding-start': (
                 responsive: true,
                 property: padding-left,
                 class: ps,
-                values: $spacers,
+                values: spacers.$spacers,
             ),
             // scss-docs-end utils-spacing
             // Text
@@ -540,14 +524,14 @@ $utilities: map-merge(
                 property: font-family,
                 class: font,
                 values: (
-                    monospace: var(--#{$variable-prefix}font-monospace),
+                    monospace: var(--#{css-variables.$variable-prefix}font-monospace),
                 ),
             ),
             'font-size': (
                 rfs: true,
                 property: font-size,
                 class: fs,
-                values: $font-sizes,
+                values: typography.$font-sizes,
             ),
             'font-style': (
                 property: font-style,
@@ -557,16 +541,16 @@ $utilities: map-merge(
             'font-weight': (
                 property: font-weight,
                 class: fw,
-                values: $font-weights,
+                values: typography.$font-weights,
             ),
             'line-height': (
                 property: line-height,
                 class: lh,
                 values: (
                     1: 1,
-                    sm: $line-height-sm,
-                    base: $line-height-base,
-                    lg: $line-height-lg,
+                    sm: typography.$line-height-sm,
+                    base: typography.$line-height-base,
+                    lg: typography.$line-height-lg,
                 ),
             ),
             'text-align': (
@@ -612,7 +596,7 @@ $utilities: map-merge(
                 class: text,
                 values: map_merge((
                     'reset': inherit
-                ), $text-colors),
+                ), color-lists.$text-colors),
             ),
             // scss-docs-end utils-color
             // scss-docs-start utils-bg-color
@@ -620,7 +604,7 @@ $utilities: map-merge(
             (
                 property: background-color,
                 class: bg,
-                values: $bg-colors,
+                values: color-lists.$bg-colors,
             ),
             // scss-docs-end utils-bg-color
             'gradient':
@@ -628,7 +612,7 @@ $utilities: map-merge(
                 property: background-image,
                 class: bg,
                 values: (
-                    gradient: var(--#{$variable-prefix}gradient),
+                    gradient: var(--#{css-variables.$variable-prefix}gradient),
                 ),
             ),
             // scss-docs-start utils-interaction
@@ -649,41 +633,41 @@ $utilities: map-merge(
                 property: border-radius,
                 class: rounded,
                 values: (
-                    null: $border-radius,
+                    null: borders.$border-radius,
                     0: 0,
-                    1: $border-radius-sm,
-                    2: $border-radius,
-                    3: $border-radius-lg,
+                    1: borders.$border-radius-sm,
+                    2: borders.$border-radius,
+                    3: borders.$border-radius-lg,
                     circle: 50%,
-                    pill: $border-radius-pill,
+                    pill: borders.$border-radius-pill,
                 ),
             ),
             'rounded-top': (
                 property: border-top-left-radius border-top-right-radius,
                 class: rounded-top,
                 values: (
-                    null: $border-radius,
+                    null: borders.$border-radius,
                 ),
             ),
             'rounded-end': (
                 property: border-top-right-radius border-bottom-right-radius,
                 class: rounded-end,
                 values: (
-                    null: $border-radius,
+                    null: borders.$border-radius,
                 ),
             ),
             'rounded-bottom': (
                 property: border-bottom-right-radius border-bottom-left-radius,
                 class: rounded-bottom,
                 values: (
-                    null: $border-radius,
+                    null: borders.$border-radius,
                 ),
             ),
             'rounded-start': (
                 property: border-bottom-left-radius border-top-left-radius,
                 class: rounded-start,
                 values: (
-                    null: $border-radius,
+                    null: borders.$border-radius,
                 ),
             ),
             // scss-docs-end utils-border-radius
@@ -755,82 +739,42 @@ $utilities: map-merge(
         )
 );
 
-$utilities: map-merge(
-        $utilities,
-        (
-            'opacity': (
-                property: opacity,
-                values: (
-                    0: 0,
-                    5: 0.05,
-                    10: 0.1,
-                    20: 0.2,
-                    30: 0.3,
-                    40: 0.4,
-                    50: 0.5,
-                    60: 0.6,
-                    70: 0.7,
-                    80: 0.8,
-                    90: 0.9,
-                    95: 0.95,
-                    100: 1,
+@if (features.$include-opacity-utilities) {
+    $utilities: map-merge(
+            $utilities,
+            (
+                'opacity': (
+                    property: opacity,
+                    values: utility-values.$opacity-values,
                 ),
-            ),
-        )
-);
+            )
+    );
+}
 
-$utilities: map-merge(
-        $utilities,
-        (
-            'shadow':
-            map-merge(
-                    map-get($utilities, 'shadow'),
-                    (
-                        values:
-                        map-merge(
-                                map-get(map-get($utilities, 'shadow'), 'values'),
-                                (
-                                    0: $box-shadow-0,
-                                    1: $box-shadow-1,
-                                    2: $box-shadow-2,
-                                    3: $box-shadow-3,
-                                    4: $box-shadow-4,
-                                    5: $box-shadow-5,
-                                    6: $box-shadow-6,
-                                    1-soft: $box-shadow-1-soft,
-                                    2-soft: $box-shadow-2-soft,
-                                    3-soft: $box-shadow-3-soft,
-                                    4-soft: $box-shadow-4-soft,
-                                    5-soft: $box-shadow-5-soft,
-                                    6-soft: $box-shadow-6-soft,
-                                    1-strong: $box-shadow-1-strong,
-                                    2-strong: $box-shadow-2-strong,
-                                    3-strong: $box-shadow-3-strong,
-                                    4-strong: $box-shadow-4-strong,
-                                    5-strong: $box-shadow-5-strong,
-                                    6-strong: $box-shadow-6-strong,
-                                    inner: $box-shadow-inner,
-                                )
-                        ),
-                    )
-            ),
-        )
-);
+@if (features.$include-shadow-utilities) {
+    // scss-docs-start utils-shadow
+    $utilities: map-merge(
+            $utilities,
+            (
+                'shadow': (
+                    property: box-shadow,
+                    class: shadow,
+                    values: utility-values.$shadow-values,
+                )
+            )
+    );
+    // scss-docs-end utils-shadow
+}
 
-$utilities: map-merge(
-        $utilities,
-        (
-            'letter-spacing': (
-                property: letter-spacing,
-                class: ls,
-                values: (
-                    tighter: -0.05em,
-                    tight: -0.025em,
-                    normal: 0em,
-                    wide: 0.025em,
-                    wider: 0.05em,
-                    widest: 0.1em,
+@if (features.$include-letter-spacing-utilities) {
+    $utilities: map-merge(
+            $utilities,
+            (
+                'letter-spacing': (
+                    property: letter-spacing,
+                    class: ls,
+                    values: utility-values.$letter-spacing-values,
                 ),
-            ),
-        )
-);
+            )
+    );
+}

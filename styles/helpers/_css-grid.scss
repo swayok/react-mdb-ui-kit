@@ -1,10 +1,9 @@
-@import '../mixins';
-@import '../variables/css-grid';
-@import '../variables/grid';
-@import "../variables/features";
+@use '../mixins/breakpoints';
+@use '../mixins/css-grid';
+@use '../variables/grid';
+@use "../variables/features";
 
-@if ($include-helpers and $include-css-grid-helpers) {
-
+@if (features.$include-helpers and features.$include-css-grid-helpers) {
     .d-grid {
         display: grid;
         justify-content: stretch;
@@ -48,11 +47,11 @@
         grid-auto-rows: max-content;
     }
 
-    @each $breakpoint in map-keys($grid-breakpoints) {
-        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+        $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
-        @include media-breakpoint-up($breakpoint) {
-            @include css-grid-classes($infix);
+        @include breakpoints.media-breakpoint-up($breakpoint) {
+            @include css-grid.css-grid-classes($infix);
         }
     }
 }

@@ -1,3 +1,4 @@
+// Carousel.
 // Notes on the classes:
 //
 // 1. .carousel.pointer-event should ideally be pan-y (to allow for users to scroll vertically)
@@ -11,16 +12,14 @@
 // 5. .carousel-item-next.carousel-item-start and .carousel-item-prev.carousel-item-end
 //    is the upcoming slide in transition.
 @use 'sass:math';
+@use "../functions/string-utils";
+@use "../variables/features";
+@use "../variables/colors";
+@use "../variables/carousel";
+@use "../mixins/transition";
+@use "../mixins/clearfix";
 
-@import "../functions/string-utils";
-@import "../variables/features";
-@import "../variables/colors";
-@import "../variables/carousel";
-@import "../mixins/transition";
-@import "../mixins/clearfix";
-@import "../variables/features";
-
-@if ($include-carousel) {
+@if (features.$include-carousel) {
     .carousel {
         position: relative;
     }
@@ -33,7 +32,7 @@
         position: relative;
         width: 100%;
         overflow: hidden;
-        @include clearfix();
+        @include clearfix.clearfix();
     }
 
     .carousel-item {
@@ -43,7 +42,7 @@
         width: 100%;
         margin-right: -100%;
         backface-visibility: hidden;
-        @include transition($carousel-transition);
+        @include transition.transition(carousel.$carousel-transition);
     }
 
     .carousel-item.active,
@@ -87,7 +86,7 @@
         .active.carousel-item-end {
             z-index: 0;
             opacity: 0;
-            @include transition(opacity 0s $carousel-transition-duration);
+            @include transition.transition(opacity 0s carousel.$carousel-transition-duration);
         }
     }
 
@@ -105,41 +104,41 @@
         display: flex; // 1. allow flex styles
         align-items: center; // 2. vertically center contents
         justify-content: center; // 3. horizontally center contents
-        width: $carousel-control-width;
+        width: carousel.$carousel-control-width;
         padding: 0;
-        color: $carousel-control-color;
+        color: carousel.$carousel-control-color;
         text-align: center;
         background: none;
         border: 0;
-        opacity: $carousel-control-opacity;
-        @include transition($carousel-control-transition);
+        opacity: carousel.$carousel-control-opacity;
+        @include transition.transition(carousel.$carousel-control-transition);
 
         // Hover/focus state
         &:hover,
         &:focus {
-            color: $carousel-control-color;
+            color: carousel.$carousel-control-color;
             text-decoration: none;
             outline: 0;
-            opacity: $carousel-control-hover-opacity;
+            opacity: carousel.$carousel-control-hover-opacity;
         }
     }
 
     .carousel-control-prev {
         left: 0;
-        background-image: if($enable-gradients, linear-gradient(90deg, rgba($black, 0.25), rgba($black, 0.001)), null);
+        background-image: if(features.$enable-gradients, linear-gradient(90deg, rgba(colors.$black, 0.25), rgba(colors.$black, 0.001)), null);
     }
 
     .carousel-control-next {
         right: 0;
-        background-image: if($enable-gradients, linear-gradient(270deg, rgba($black, 0.25), rgba($black, 0.001)), null);
+        background-image: if(features.$enable-gradients, linear-gradient(270deg, rgba(colors.$black, 0.25), rgba(colors.$black, 0.001)), null);
     }
 
     // Icons for within
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         display: inline-block;
-        width: $carousel-control-icon-width;
-        height: $carousel-control-icon-width;
+        width: carousel.$carousel-control-icon-width;
+        height: carousel.$carousel-control-icon-width;
         background-repeat: no-repeat;
         background-position: 50%;
         background-size: 100% 100%;
@@ -154,11 +153,11 @@
       } ]
     }*/
     .carousel-control-prev-icon {
-        background-image: escape-svg($carousel-control-prev-icon-bg);
+        background-image: string-utils.escape-svg(carousel.$carousel-control-prev-icon-bg);
     }
 
     .carousel-control-next-icon {
-        background-image: escape-svg($carousel-control-next-icon-bg);
+        background-image: string-utils.escape-svg(carousel.$carousel-control-next-icon-bg);
     }
 
     // Optional indicator pips/controls
@@ -177,33 +176,33 @@
         justify-content: center;
         padding: 0;
         // Use the .carousel-control's width as margin so we don't overlay those
-        margin-right: $carousel-control-width;
+        margin-right: carousel.$carousel-control-width;
         margin-bottom: 1rem;
-        margin-left: $carousel-control-width;
+        margin-left: carousel.$carousel-control-width;
         list-style: none;
 
         [data-mdb-target] {
             box-sizing: content-box;
             flex: 0 1 auto;
-            width: $carousel-indicator-width;
-            height: $carousel-indicator-height;
+            width: carousel.$carousel-indicator-width;
+            height: carousel.$carousel-indicator-height;
             padding: 0;
-            margin-right: $carousel-indicator-spacer;
-            margin-left: $carousel-indicator-spacer;
+            margin-right: carousel.$carousel-indicator-spacer;
+            margin-left: carousel.$carousel-indicator-spacer;
             text-indent: -999px;
             cursor: pointer;
-            background-color: $carousel-indicator-active-bg;
+            background-color: carousel.$carousel-indicator-active-bg;
             background-clip: padding-box;
             border: 0;
             // Use transparent borders to increase the hit area by 10px on top and bottom.
-            border-top: $carousel-indicator-hit-area-height solid transparent;
-            border-bottom: $carousel-indicator-hit-area-height solid transparent;
-            opacity: $carousel-indicator-opacity;
-            @include transition($carousel-indicator-transition);
+            border-top: carousel.$carousel-indicator-hit-area-height solid transparent;
+            border-bottom: carousel.$carousel-indicator-hit-area-height solid transparent;
+            opacity: carousel.$carousel-indicator-opacity;
+            @include transition.transition(carousel.$carousel-indicator-transition);
         }
 
         .active {
-            opacity: $carousel-indicator-active-opacity;
+            opacity: carousel.$carousel-indicator-active-opacity;
         }
     }
 
@@ -213,12 +212,12 @@
 
     .carousel-caption {
         position: absolute;
-        right: math.div((100% - $carousel-caption-width), 2);
-        bottom: $carousel-caption-spacer;
-        left: math.div((100% - $carousel-caption-width), 2);
-        padding-top: $carousel-caption-padding-y;
-        padding-bottom: $carousel-caption-padding-y;
-        color: $carousel-caption-color;
+        right: math.div((100% - carousel.$carousel-caption-width), 2);
+        bottom: carousel.$carousel-caption-spacer;
+        left: math.div((100% - carousel.$carousel-caption-width), 2);
+        padding-top: carousel.$carousel-caption-padding-y;
+        padding-bottom: carousel.$carousel-caption-padding-y;
+        color: carousel.$carousel-caption-color;
         text-align: center;
     }
 
@@ -227,15 +226,15 @@
     .carousel-dark {
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
-            filter: $carousel-dark-control-icon-filter;
+            filter: carousel.$carousel-dark-control-icon-filter;
         }
 
         .carousel-indicators [data-mdb-target] {
-            background-color: $carousel-dark-indicator-active-bg;
+            background-color: carousel.$carousel-dark-indicator-active-bg;
         }
 
         .carousel-caption {
-            color: $carousel-dark-caption-color;
+            color: carousel.$carousel-dark-caption-color;
         }
     }
 }

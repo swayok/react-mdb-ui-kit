@@ -1,8 +1,9 @@
-@import "colors";
-@import "typography";
+// Rating stars.
+@use "colors";
+@use "typography";
 
 $rating-stars-line-height: 1 !default;
-$rating-stars-static-icon-color: $orange !default;
-$rating-stars-interactive-inactive-icon-color: $text-muted !default;
+$rating-stars-static-icon-color: colors.$orange !default;
+$rating-stars-interactive-inactive-icon-color: typography.$text-muted !default;
 $rating-stars-interactive-active-icon-color: $rating-stars-static-icon-color !default;
-$rating-stars-interactive-disabled-icon-color: $text-muted !default;
+$rating-stars-interactive-disabled-icon-color: typography.$text-muted !default;

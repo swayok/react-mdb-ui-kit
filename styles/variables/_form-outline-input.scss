@@ -1,31 +1,29 @@
 // Material design form input.
-
-@import "colors";
-@import "borders";
-@import "form-input-base";
+@use "colors";
+@use "form-input-base";
 
 $form-outline-input-min-height: 2.875rem !default;
 $form-outline-input-padding-top: 0.625rem !default;
 $form-outline-input-padding-bottom: 0.625rem !default;
 $form-outline-input-padding-x: 1rem !default;
-$form-outline-input-font-size: $input-font-size !default;
-$form-outline-input-bg: $input-bg !default;
+$form-outline-input-font-size: form-input-base.$input-font-size !default;
+$form-outline-input-bg: form-input-base.$input-bg !default;
 $form-outline-input-line-height: 1.5 !default;
 $form-outline-input-transition: all 0.2s linear !default;
 
-$form-notch-div-border-color: $input-border-color !default;
+$form-notch-div-border-color: form-input-base.$input-border-color !default;
 $form-notch-leading-width: $form-outline-input-padding-x - 0.2rem !default;
-$form-notch-border-radius: $input-border-radius !default;
+$form-notch-border-radius: form-input-base.$input-border-radius !default;
 $form-notch-middle-max-width: 1rem !default;
 
 $form-outline-label-left: $form-outline-input-padding-x !default;
 $form-outline-label-padding-top: $form-outline-input-padding-top * 1.075 !default;
 $form-outline-label-transition: all 0.25s linear !default;
-$form-outline-label-color: $input-placeholder-color !default;
+$form-outline-label-color: form-input-base.$input-placeholder-color !default;
 
 // Focus & active:
 $form-outline-active-label-transform: translateY(-1.32rem) scale(0.9) !default;
-$form-outline-active-label-color: $primary !default;
+$form-outline-active-label-color: colors.$primary !default;
 $form-outline-focus-border-width: 0.125rem !default;
 
 // Small size:
@@ -34,7 +32,7 @@ $form-outline-input-padding-x-sm: $form-outline-input-padding-x !default;
 $form-outline-input-padding-top-sm: 0.344rem !default;
 $form-outline-input-padding-bottom-sm: 0.344rem !default;
 $form-outline-label-padding-top-sm: $form-outline-input-padding-top-sm !default;
-$form-outline-label-font-size-sm: $input-font-size-sm !default;
+$form-outline-label-font-size-sm: form-input-base.$input-font-size-sm !default;
 $form-outline-active-label-transform-sm: translateY(-1rem) translateX(0.1rem) scale(0.9) !default;
-$form-outline-input-font-size-sm: $input-font-size-sm !default;
+$form-outline-input-font-size-sm: form-input-base.$input-font-size-sm !default;
 $form-outline-input-line-height-sm: $form-outline-input-line-height !default;

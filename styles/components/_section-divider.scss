@@ -1,14 +1,15 @@
-@import "../variables/section-divider";
-@import "../variables/colors";
-@import "../variables/features";
+// Section divider with optional label (<hr> alternative).
+@use "../variables/section-divider";
+@use "../variables/colors";
+@use "../variables/features";
 
-@if ($include-section-divider) {
+@if (features.$include-section-divider) {
     .section-divider {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        color: $section-divider-color;
+        color: section-divider.$section-divider-color;
 
         span {
             white-space: nowrap;
@@ -23,13 +24,13 @@
             display: block;
             flex: 1;
             height: 0;
-            border-top: 1px solid $section-divider-border-color;
+            border-top: 1px solid section-divider.$section-divider-border-color;
         }
 
         &.darker {
             &:before,
             &:after {
-                border-top-color: $section-divider-border-color-darker;
+                border-top-color: section-divider.$section-divider-border-color-darker;
             }
         }
     }

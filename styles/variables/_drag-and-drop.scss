@@ -1,10 +1,11 @@
-@import "colors";
+// Drag and Drop container and items.
+@use "colors";
 
 // .drag-and-drop-item.drag-and-drop-styled
-$drag-and-drop-over-bg: $blue-50 !default;
+$drag-and-drop-over-bg: colors.$blue-50 !default;
 $drag-and-drop-over-border-top: true !default;
 $drag-and-drop-over-border-left: false !default;
-$drag-and-drop-over-border-color: $blue-500 !default;
+$drag-and-drop-over-border-color: colors.$blue-500 !default;
 $drag-and-drop-over-border-width: 0.25rem !default;
 $drag-and-drop-over-transition: background-color 0.2s linear !default;
 

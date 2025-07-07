@@ -1,0 +1,61 @@
+// Progress bar.
+@use "../mixins/rfs";
+@use "../mixins/border-radius";
+@use "../mixins/box-shadow";
+@use "../mixins/gradients";
+@use "../mixins/transition";
+@use "../variables/features";
+@use "../variables/progress-bar";
+
+@if (features.$include-progress) {
+    // Disable animation if transitions are disabled
+    // scss-docs-start progress-keyframes
+    @if features.$enable-transitions {
+        @keyframes progress-bar-stripes {
+            0% {
+                background-position-x: progress-bar.$progress-height;
+            }
+        }
+    }
+
+    // scss-docs-end progress-keyframes
+
+    .progress {
+        display: flex;
+        height: progress-bar.$progress-height;
+        overflow: hidden; // force rounded corners by cropping it
+        @include rfs.font-size(progress-bar.$progress-font-size);
+        background-color: progress-bar.$progress-bg;
+        @include border-radius.border-radius(progress-bar.$progress-border-radius);
+        @include box-shadow.box-shadow(progress-bar.$progress-box-shadow);
+    }
+
+    .progress-bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        color: progress-bar.$progress-bar-color;
+        text-align: center;
+        white-space: nowrap;
+        background-color: progress-bar.$progress-bar-bg;
+        @include transition.transition(progress-bar.$progress-bar-transition);
+    }
+
+    .progress-bar-striped {
+        @include gradients.gradient-striped();
+        background-size: progress-bar.$progress-height progress-bar.$progress-height;
+    }
+
+    @if features.$enable-transitions {
+        .progress-bar-animated {
+            animation: progress-bar.$progress-bar-animation-timing progress-bar-stripes;
+
+            @if features.$enable-reduced-motion {
+                @media (prefers-reduced-motion: reduce) {
+                    animation: none;
+                }
+            }
+        }
+    }
+}

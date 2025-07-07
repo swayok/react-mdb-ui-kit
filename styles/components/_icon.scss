@@ -1,13 +1,14 @@
-@import "../mixins/svg-icons";
-@import "../variables/body";
-@import "../variables/icons";
-@import "../variables/color-lists";
-@import "../variables/links";
-@import "../variables/features";
+@use "../functions/color-utils";
+@use "../mixins/svg-icons";
+@use "../variables/body";
+@use "../variables/icons";
+@use "../variables/color-lists";
+@use "../variables/links";
+@use "../variables/features";
 
-@if ($include-icon) {
+@if (features.$include-icon) {
     svg.mdi-icon {
-        @include mdi-icon-color($icon-text-color);
+        @include svg-icons.mdi-icon-color(icons.$icon-text-color);
         pointer-events: none;
         flex-shrink: 0;
 
@@ -21,15 +22,15 @@
             transform-origin: 50% 50%;
         }
 
-        @each $color, $value in $icon-colors {
+        @each $color, $value in color-lists.$icon-colors {
             &.text-#{$color} {
-                @include mdi-icon-color($value !important);
+                @include svg-icons.mdi-icon-color($value !important);
             }
         ;
 
             .clickable:hover &.text-#{$color},
             a:hover &.text-#{$color} {
-                @include mdi-icon-color(lighten($value, 10%) !important);
+                @include svg-icons.mdi-icon-color(lighten($value, 10%) !important);
             }
         }
     }
@@ -43,13 +44,13 @@
         }
 
         &.colored-by-fill {
-            fill: $icon-text-color;
+            fill: icons.$icon-text-color;
             stroke: none;
         }
 
         &.colored-by-stroke {
             fill: none;
-            stroke: $icon-text-color;
+            stroke: icons.$icon-text-color;
         }
 
         &.custom-icon-rotatable {
@@ -58,51 +59,51 @@
             transform-origin: 50% 50%;
         }
 
-        @each $color, $value in $icon-colors {
+        @each $color, $value in color-lists.$icon-colors {
             &.text-#{$color} {
-                @include custom-icon-color($value !important);
+                @include svg-icons.custom-icon-color($value !important);
             }
         ;
 
             a:hover &.text-#{$color} {
-                @include custom-icon-color(lighten($value, 10%) !important);
+                @include svg-icons.custom-icon-color(lighten($value, 10%) !important);
             }
         }
     }
 
     a,
     .clickable {
-        @include contained-mdi-icon-color-in-link(
-                $link-color,
-                $link-hover-color,
-                $link-disabled-color
+        @include svg-icons.contained-mdi-icon-color-in-link(
+                links.$link-color,
+                links.$link-hover-color,
+                links.$link-disabled-color
         );
 
-        @include contained-custom-svg-icon-color-in-link(
-                $link-color,
-                $link-hover-color,
-                $link-disabled-color
+        @include svg-icons.contained-custom-svg-icon-color-in-link(
+                links.$link-color,
+                links.$link-hover-color,
+                links.$link-disabled-color
         );
     }
 
-    @each $color, $value in $link-colors {
+    @each $color, $value in color-lists.$link-colors {
         .link-#{$color} {
-            @include contained-mdi-icon-color-in-link(
+            @include svg-icons.contained-mdi-icon-color-in-link(
                     $value !important,
-                    link-hover-color($value, $link-shade-percentage) !important,
-                    $link-disabled-color !important
+                    color-utils.link-hover-color($value, links.$link-shade-percentage) !important,
+                    links.$link-disabled-color !important
             );
         }
     }
 
-    @each $color, $value in $button-colors {
+    @each $color, $value in color-lists.$button-colors {
         .btn.btn-with-icon {
             &.btn-#{$color} {
-                @include contained-mdi-icon-color-in-button($value)
+                @include svg-icons.contained-mdi-icon-color-in-button($value)
             }
 
             &.btn-outline-#{$color} {
-                @include contained-mdi-icon-color($value);
+                @include svg-icons.contained-mdi-icon-color($value);
             }
         }
     }

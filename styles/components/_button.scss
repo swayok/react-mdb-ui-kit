@@ -1,42 +1,42 @@
-//
-// Base styles
-//
+// Buttons
+@use "../mixins/buttons" as buttons-mixins;
+@use "../mixins/box-shadow";
+@use "../mixins/border-radius";
+@use "../mixins/transition";
+@use "../mixins/rfs";
+@use "../variables/colors";
+@use "../variables/color-lists";
+@use "../variables/body";
+@use "../variables/buttons";
+@use "../variables/features";
+@use "../variables/links";
 
-@import "../mixins/buttons";
-@import "../mixins/transition";
-@import "../variables/colors";
-@import "../variables/color-lists";
-@import "../variables/body";
-@import "../variables/buttons";
-
-@import "../variables/features";
-
-@if ($include-buttons) {
+@if (features.$include-buttons) {
     .btn {
         display: inline-block;
-        font-family: $btn-font-family;
-        color: $body-color;
+        font-family: buttons.$btn-font-family;
+        color: body.$body-color;
         text-align: center;
-        text-decoration: if($link-decoration == none, null, none);
-        text-transform: $btn-text-transform;
-        white-space: $btn-white-space;
+        text-decoration: if(links.$link-decoration == none, null, none);
+        text-transform: buttons.$btn-text-transform;
+        white-space: buttons.$btn-white-space;
         vertical-align: bottom;
-        cursor: if($enable-button-pointers, pointer, null);
+        cursor: if(features.$enable-button-pointers, pointer, null);
         user-select: none;
         background-color: transparent;
-        border: $btn-border-width solid transparent;
-        @include box-shadow($btn-box-shadow);
-        @include button-size(
-                $btn-padding-top,
-                $btn-padding-x,
-                $btn-padding-bottom,
-                $btn-padding-x,
-                $btn-font-size,
-                $btn-font-weight,
-                $btn-border-radius,
-                $btn-line-height
+        border: buttons.$btn-border-width solid transparent;
+        @include box-shadow.box-shadow(buttons.$btn-box-shadow);
+        @include buttons-mixins.button-size(
+                buttons.$btn-padding-top,
+                buttons.$btn-padding-x,
+                buttons.$btn-padding-bottom,
+                buttons.$btn-padding-x,
+                buttons.$btn-font-size,
+                buttons.$btn-font-weight,
+                buttons.$btn-border-radius,
+                buttons.$btn-line-height
         );
-        @include transition($btn-transition);
+        @include transition.transition(buttons.$btn-transition);
 
         &.btn-with-icon {
             display: flex;
@@ -51,27 +51,27 @@
         }
 
         &:hover {
-            color: $body-color;
-            text-decoration: if($link-hover-decoration == underline, none, null);
+            color: body.$body-color;
+            text-decoration: if(links.$link-hover-decoration == underline, none, null);
             // DO NOT USE box-shadow() MIXIN HERE!
-            box-shadow: $btn-hover-box-shadow;
+            box-shadow: buttons.$btn-hover-box-shadow;
         }
 
         &:focus,
         &.focus {
             outline: 0;
             // DO NOT USE box-shadow() MIXIN HERE!
-            box-shadow: $btn-focus-box-shadow;
+            box-shadow: buttons.$btn-focus-box-shadow;
         }
 
         &:active,
         &.active {
             // DO NOT USE box-shadow() MIXIN HERE!
-            box-shadow: $btn-active-box-shadow;
+            box-shadow: buttons.$btn-active-box-shadow;
 
             &:focus {
                 // DO NOT USE box-shadow() MIXIN HERE!
-                box-shadow: $btn-active-box-shadow;
+                box-shadow: buttons.$btn-active-box-shadow;
             }
         }
 
@@ -80,9 +80,9 @@
         fieldset:disabled & {
             pointer-events: auto;
             cursor: not-allowed;
-            opacity: $btn-disabled-opacity;
+            opacity: buttons.$btn-disabled-opacity;
             // THIS IS CORRECT!
-            @include box-shadow($btn-box-shadow);
+            @include box-shadow.box-shadow(buttons.$btn-box-shadow);
         }
     }
 
@@ -92,12 +92,12 @@
 
     [class*='btn-outline-'] {
         box-shadow: none;
-        @include button-outline-size(
-                $btn-outline-padding-top,
-                $btn-outline-padding-x,
-                $btn-outline-padding-bottom,
-                $btn-outline-padding-x,
-                $btn-font-size
+        @include buttons-mixins.button-outline-size(
+                buttons.$btn-outline-padding-top,
+                buttons.$btn-outline-padding-x,
+                buttons.$btn-outline-padding-bottom,
+                buttons.$btn-outline-padding-x,
+                buttons.$btn-font-size
         );
 
         &:hover {
@@ -127,22 +127,22 @@
         }
 
         &.btn-lg {
-            @include button-outline-size(
-                    $btn-outline-padding-top-lg,
-                    $btn-outline-padding-x-lg,
-                    $btn-outline-padding-bottom-lg,
-                    $btn-outline-padding-x-lg,
-                    $btn-font-size-lg
+            @include buttons-mixins.button-outline-size(
+                    buttons.$btn-outline-padding-top-lg,
+                    buttons.$btn-outline-padding-x-lg,
+                    buttons.$btn-outline-padding-bottom-lg,
+                    buttons.$btn-outline-padding-x-lg,
+                    buttons.$btn-font-size-lg
             );
         }
 
         &.btn-sm {
-            @include button-outline-size(
-                    $btn-outline-padding-top-sm,
-                    $btn-outline-padding-x-sm,
-                    $btn-outline-padding-bottom-sm,
-                    $btn-outline-padding-x-sm,
-                    $btn-font-size-sm
+            @include buttons-mixins.button-outline-size(
+                    buttons.$btn-outline-padding-top-sm,
+                    buttons.$btn-outline-padding-x-sm,
+                    buttons.$btn-outline-padding-bottom-sm,
+                    buttons.$btn-outline-padding-x-sm,
+                    buttons.$btn-font-size-sm
             );
         }
     }
@@ -152,15 +152,15 @@
     //
 
     // scss-docs-start btn-variant-loops
-    @each $color, $value in $button-colors {
+    @each $color, $value in color-lists.$button-colors {
         .btn-#{$color} {
-            @include button-variant($value, $value);
+            @include buttons-mixins.button-variant($value, $value);
         }
     }
 
-    @each $color, $value in $button-colors {
+    @each $color, $value in color-lists.$button-outline-colors {
         .btn-outline-#{$color} {
-            @include button-outline-variant($value);
+            @include buttons-mixins.button-outline-variant($value);
         }
     }
 
@@ -176,7 +176,7 @@
 
         // Vertically space out multiple block buttons
         + .btn-block {
-            margin-top: $btn-block-spacing-y;
+            margin-top: buttons.$btn-block-spacing-y;
         }
     }
 
@@ -186,13 +186,13 @@
 
     // Make a button look and behave like a link
     .btn-link {
-        padding: $btn-link-padding;
+        padding: buttons.$btn-link-padding;
         box-shadow: none;
-        @include font-size($btn-link-font-size);
-        font-weight: $btn-link-font-weight;
-        color: $btn-link-color;
-        text-decoration: $btn-link-decoration;
-        text-transform: $btn-link-text-transform;
+        @include rfs.font-size(buttons.$btn-link-font-size);
+        font-weight: buttons.$btn-link-font-weight;
+        color: buttons.$btn-link-color;
+        text-decoration: buttons.$btn-link-decoration;
+        text-transform: buttons.$btn-link-text-transform;
 
         &:hover,
         &:focus,
@@ -202,18 +202,18 @@
         &.active,
         &.active:focus {
             box-shadow: none;
-            text-decoration: $btn-link-hover-decoration;
-            background-color: $btn-link-hover-bg;
+            text-decoration: buttons.$btn-link-hover-decoration;
+            background-color: buttons.$btn-link-hover-bg;
         }
 
         &:hover {
-            color: $btn-link-hover-color;
+            color: buttons.$btn-link-hover-color;
         }
 
         &:disabled,
         &.disabled {
             box-shadow: none;
-            color: $btn-link-disabled-color;
+            color: buttons.$btn-link-disabled-color;
         }
     }
 
@@ -222,28 +222,28 @@
     //
 
     .btn-lg {
-        @include button-size(
-                $btn-padding-top-lg,
-                $btn-padding-x-lg,
-                $btn-padding-bottom-lg,
-                $btn-padding-x-lg,
-                $btn-font-size-lg,
-                $btn-font-weight-lg,
-                $btn-border-radius-lg,
-                $btn-line-height-lg
+        @include buttons-mixins.button-size(
+                buttons.$btn-padding-top-lg,
+                buttons.$btn-padding-x-lg,
+                buttons.$btn-padding-bottom-lg,
+                buttons.$btn-padding-x-lg,
+                buttons.$btn-font-size-lg,
+                buttons.$btn-font-weight-lg,
+                buttons.$btn-border-radius-lg,
+                buttons.$btn-line-height-lg
         );
     }
 
     .btn-sm {
-        @include button-size(
-                $btn-padding-top-sm,
-                $btn-padding-x-sm,
-                $btn-padding-bottom-sm,
-                $btn-padding-x-sm,
-                $btn-font-size-sm,
-                $btn-font-weight-sm,
-                $btn-border-radius-sm,
-                $btn-line-height-sm
+        @include buttons-mixins.button-size(
+                buttons.$btn-padding-top-sm,
+                buttons.$btn-padding-x-sm,
+                buttons.$btn-padding-bottom-sm,
+                buttons.$btn-padding-x-sm,
+                buttons.$btn-font-size-sm,
+                buttons.$btn-font-weight-sm,
+                buttons.$btn-border-radius-sm,
+                buttons.$btn-line-height-sm
         );
     }
 
@@ -253,6 +253,6 @@
     //
 
     .btn-rounded {
-        border-radius: $btn-rounded-border-radius;
+        border-radius: buttons.$btn-rounded-border-radius;
     }
 }

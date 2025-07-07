@@ -1,17 +1,16 @@
-// Progress bars
-
-@import "typography";
-@import "borders";
-@import "shadows";
+// Progress bars.
+@use "typography";
+@use "colors";
+@use "shadows";
 
 // scss-docs-start progress-variables
 $progress-height: 0.25rem !default;
-$progress-font-size: $font-size-base * 0.75 !default;
-$progress-bg: $gray-200 !default;
+$progress-font-size: typography.$font-size-base * 0.75 !default;
+$progress-bg: colors.$gray-200 !default;
 $progress-border-radius: 0 !default;
-$progress-box-shadow: $box-shadow-inset !default;
-$progress-bar-color: $white !default;
-$progress-bar-bg: $primary !default;
+$progress-box-shadow: shadows.$box-shadow-inset !default;
+$progress-bar-color: colors.$white !default;
+$progress-bar-bg: colors.$primary !default;
 $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width 0.6s ease !default;
 // scss-docs-end progress-variables

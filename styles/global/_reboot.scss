@@ -1,24 +1,21 @@
 // stylelint-disable declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
-
 // Reboot
 //
 // Normalization of HTML elements, manually forked from Normalize.css to remove
 // styles targeting irrelevant browsers while applying new styles.
 //
 // Normalize is licensed MIT. https://github.com/necolas/normalize.css
+@use "../mixins";
+@use "../variables/features";
+@use "../variables/typography";
+@use "../variables/colors";
+@use "../variables/body";
+@use "../variables/paragraph";
+@use "../variables/pre-kbd-code";
+@use "../variables/borders";
+@use "../variables/table";
 
-@import "../mixins/rfs";
-@import "../mixins/border-radius";
-@import "../variables/features";
-@import "../variables/typography";
-@import "../variables/body";
-@import "../variables/paragraph";
-@import "../variables/links";
-@import "../variables/table";
-@import "../variables/pre-kbd-code";
-@import "../variables/features";
-
-@if ($include-reboot) {
+@if (features.$include-reboot) {
     // Document
     //
     // Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
@@ -35,9 +32,9 @@
     // null by default, thus nothing is generated.
 
     :root {
-        font-size: $font-size-root;
+        font-size: typography.$font-size-root;
 
-        @if $enable-smooth-scroll {
+        @if features.$enable-smooth-scroll {
             @media (prefers-reduced-motion: no-preference) {
                 scroll-behavior: smooth;
             }
@@ -53,15 +50,15 @@
 
     body {
         margin: 0; // 1
-        font-family: $font-family-base;
-        @include font-size($font-size-base);
-        font-weight: $font-weight-base;
-        line-height: $line-height-base;
-        color: $body-color;
-        text-align: $body-text-align;
-        background-color: $body-bg; // 2
+        font-family: typography.$font-family-base;
+        @include mixins.font-size(typography.$font-size-base);
+        font-weight: typography.$font-weight-base;
+        line-height: typography.$line-height-base;
+        color: body.$body-color;
+        text-align: body.$body-text-align;
+        background-color: body.$body-bg; // 2
         -webkit-text-size-adjust: 100%; // 3
-        -webkit-tap-highlight-color: rgba($black, 0); // 4
+        -webkit-tap-highlight-color: rgba(colors.$black, 0); // 4
     }
 
     // Content grouping
@@ -70,15 +67,15 @@
     // 2. Set correct height and prevent the `size` attribute to make the `hr` look like an input field
 
     hr {
-        margin: $hr-margin-y 0;
-        color: $hr-color; // 1
+        margin: typography.$hr-margin-y 0;
+        color: typography.$hr-color; // 1
         background-color: currentColor;
         border: 0;
-        opacity: $hr-opacity;
+        opacity: typography.$hr-opacity;
     }
 
     hr:not([size]) {
-        height: $hr-height; // 2
+        height: typography.$hr-height; // 2
     }
 
     // Typography
@@ -89,42 +86,48 @@
 
     %heading {
         margin-top: 0; // 1
-        margin-bottom: $headings-margin-bottom;
-        font-family: $headings-font-family;
-        font-style: $headings-font-style;
-        font-weight: $headings-font-weight;
-        line-height: $headings-line-height;
-        color: $headings-color;
+        margin-bottom: typography.$headings-margin-bottom;
+        font-family: typography.$headings-font-family;
+        font-style: typography.$headings-font-style;
+        font-weight: typography.$headings-font-weight;
+        line-height: typography.$headings-line-height;
+        color: typography.$headings-color;
     }
 
-    h1 {
+    h1,
+    .h1 {
         @extend %heading;
-        @include font-size($h1-font-size);
+        @include mixins.font-size(typography.$h1-font-size);
     }
 
-    h2 {
+    h2,
+    .h2 {
         @extend %heading;
-        @include font-size($h2-font-size);
+        @include mixins.font-size(typography.$h2-font-size);
     }
 
-    h3 {
+    h3,
+    .h3 {
         @extend %heading;
-        @include font-size($h3-font-size);
+        @include mixins.font-size(typography.$h3-font-size);
     }
 
-    h4 {
+    h4,
+    .h4 {
         @extend %heading;
-        @include font-size($h4-font-size);
+        @include mixins.font-size(typography.$h4-font-size);
     }
 
-    h5 {
+    h5,
+    .h5 {
         @extend %heading;
-        @include font-size($h5-font-size);
+        @include mixins.font-size(typography.$h5-font-size);
     }
 
-    h6 {
+    h6,
+    .h6 {
         @extend %heading;
-        @include font-size($h6-font-size);
+        @include mixins.font-size(typography.$h6-font-size);
     }
 
     // Reset margins on paragraphs
@@ -134,7 +137,7 @@
 
     p {
         margin-top: 0;
-        margin-bottom: $paragraph-margin-bottom;
+        margin-bottom: paragraph.$paragraph-margin-bottom;
     }
 
     // Abbreviations
@@ -182,7 +185,7 @@
     }
 
     dt {
-        font-weight: $dt-font-weight;
+        font-weight: typography.$dt-font-weight;
     }
 
     // 1. Undo browser default
@@ -204,7 +207,7 @@
 
     b,
     strong {
-        font-weight: $font-weight-bolder;
+        font-weight: typography.$font-weight-bolder;
     }
 
     // Small
@@ -212,14 +215,22 @@
     // Add the correct font size in all browsers
 
     small {
-        @include font-size($small-font-size);
+        @include mixins.font-size(typography.$small-font-size);
+    }
+
+    .small {
+        @extend small;
     }
 
     // Mark
 
     mark {
-        padding: $mark-padding;
-        background-color: $mark-bg;
+        padding: typography.$mark-padding;
+        background-color: typography.$mark-bg;
+    }
+
+    .mark {
+        @extend mark;
     }
 
     // Sub and Sup
@@ -230,7 +241,7 @@
     sub,
     sup {
         position: relative;
-        @include font-size($sub-sup-font-size);
+        @include mixins.font-size(typography.$sub-sup-font-size);
         line-height: 0;
         vertical-align: baseline;
     }
@@ -249,8 +260,8 @@
     code,
     kbd,
     samp {
-        font-family: $font-family-code;
-        @include font-size(1em); // Correct the odd `em` font sizing in all browsers.
+        font-family: typography.$font-family-code;
+        @include mixins.font-size(1em); // Correct the odd `em` font sizing in all browsers.
         /*!rtl:ignore*/
         direction: ltr;
         unicode-bidi: bidi-override;
@@ -265,20 +276,20 @@
         margin-top: 0; // 1
         margin-bottom: 1rem; // 2
         overflow: auto; // 3
-        @include font-size($code-font-size);
-        color: $pre-color;
+        @include mixins.font-size(pre-kbd-code.$code-font-size);
+        color: pre-kbd-code.$pre-color;
 
         // Account for some code outputs that place code tags in pre tags
         code {
-            @include font-size(inherit);
+            @include mixins.font-size(inherit);
             color: inherit;
             word-break: normal;
         }
     }
 
     code {
-        @include font-size($code-font-size);
-        color: $code-color;
+        @include mixins.font-size(pre-kbd-code.$code-font-size);
+        color: pre-kbd-code.$code-color;
         word-wrap: break-word;
 
         // Streamline the style when inside anchors to avoid broken underline and more
@@ -288,16 +299,16 @@
     }
 
     kbd {
-        padding: $kbd-padding-y $kbd-padding-x;
-        @include font-size($kbd-font-size);
-        color: $kbd-color;
-        background-color: $kbd-bg;
-        @include border-radius($border-radius-sm);
+        padding: pre-kbd-code.$kbd-padding-y pre-kbd-code.$kbd-padding-x;
+        @include mixins.font-size(pre-kbd-code.$kbd-font-size);
+        color: pre-kbd-code.$kbd-color;
+        background-color: pre-kbd-code.$kbd-bg;
+        @include mixins.border-radius(borders.$border-radius-sm);
 
         kbd {
             padding: 0;
-            @include font-size(1em);
-            font-weight: $nested-kbd-font-weight;
+            @include mixins.font-size(1em);
+            font-weight: pre-kbd-code.$nested-kbd-font-weight;
         }
     }
 
@@ -326,9 +337,9 @@
     }
 
     caption {
-        padding-top: $table-cell-padding-y;
-        padding-bottom: $table-cell-padding-y;
-        color: $table-caption-color;
+        padding-top: table.$table-cell-padding-y;
+        padding-bottom: table.$table-cell-padding-y;
+        color: table.$table-caption-color;
         text-align: left;
     }
 
@@ -337,7 +348,7 @@
     // 3. Fix alignment for Safari
 
     th {
-        font-weight: $table-th-font-weight; // 1
+        font-weight: table.$table-th-font-weight; // 1
         text-align: inherit; // 2
         text-align: -webkit-match-parent; // 3
     }
@@ -387,7 +398,7 @@
     textarea {
         margin: 0; // 1
         font-family: inherit;
-        @include font-size(inherit);
+        @include mixins.font-size(inherit);
         line-height: inherit;
     }
 
@@ -433,7 +444,7 @@
     [type="submit"] {
         -webkit-appearance: button; // 2
 
-        @if $enable-button-pointers {
+        @if features.$enable-button-pointers {
             &:not(:disabled) {
                 cursor: pointer; // 3
             }
@@ -476,10 +487,10 @@
         float: left; // 1
         width: 100%;
         padding: 0;
-        margin-bottom: $legend-margin-bottom;
-        font-weight: $legend-font-weight;
+        margin-bottom: typography.$legend-margin-bottom;
+        font-weight: typography.$legend-font-weight;
         line-height: inherit;
-        @include font-size($legend-font-size);
+        @include mixins.font-size(typography.$legend-font-size);
 
         + * {
             clear: left; // 2

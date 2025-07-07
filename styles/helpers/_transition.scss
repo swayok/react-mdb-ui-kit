@@ -1,8 +1,9 @@
-@import "../mixins/transition";
-@import "../variables/transition";
+// Transitions.
+@use "../mixins/transition" as mixins;
+@use "../variables/transition";
 
 .fade {
-    @include transition($transition-fade);
+    @include mixins.transition(transition.$transition-fade);
 
     &:not(.show) {
         opacity: 0;
@@ -19,7 +20,7 @@
 .collapsing {
     height: 0;
     overflow: hidden;
-    @include transition($transition-collapse);
+    @include mixins.transition(transition.$transition-collapse);
 }
 
 // scss-docs-end collapse-classes

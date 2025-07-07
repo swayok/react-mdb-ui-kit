@@ -1,11 +1,12 @@
-@import "typography";
-@import "form-outline-input";
+// Select input with dropdown.
+@use "../functions";
+@use "typography";
 
 $form-dropdown-select-padding-right: 2rem !default;
 $form-dropdown-select-dropup-offset: 0.625rem !default;
 
-$form-dropdown-select-chevron-color: $text-muted !default;
-$form-dropdown-select-chevron-offset-x: subtract($form-dropdown-select-padding-right, 24px) !default;
+$form-dropdown-select-chevron-color: typography.$text-muted !default;
+$form-dropdown-select-chevron-offset-x: functions.subtract($form-dropdown-select-padding-right, 24px) !default;
 
-$form-dropdown-select-empty-option-color: $text-muted !default;
-$form-dropdown-select-empty-option-selected-color: $text-muted !default;
+$form-dropdown-select-empty-option-color: typography.$text-muted !default;
+$form-dropdown-select-empty-option-selected-color: typography.$text-muted !default;

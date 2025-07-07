@@ -1,12 +1,12 @@
 // Badges
 
-@import "colors";
-@import "typography";
+@use "colors";
+@use "typography";
 
 // scss-docs-start badge-variables
 $badge-font-size: 0.75em !default;
-$badge-font-weight: $font-weight-bold !default;
-$badge-color: $white !default;
+$badge-font-weight: typography.$font-weight-bold !default;
+$badge-color: colors.$white !default;
 $badge-padding-y: 0.35em !default;
 $badge-padding-x: 0.65em !default;
 $badge-border-radius: 0.27rem !default;

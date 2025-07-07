@@ -1,8 +1,9 @@
-@import "../mixins/ripple";
-@import "../variables/color-lists";
-@import "../variables/features";
+// Ripple effect on buttons and other interactive elements.
+@use "../mixins/ripple";
+@use "../variables/color-lists";
+@use "../variables/features";
 
-@if ($include-ripple) {
+@if (features.$include-ripple) {
     .ripple-surface {
         position: relative;
         overflow: hidden;
@@ -30,7 +31,7 @@
     }
 
     .ripple-wave {
-        @include ripple-variant(black);
+        @include ripple.ripple-variant(black);
         $cubicBezier: cubic-bezier(0, 0, 0.15, 1);
         border-radius: 50%;
         opacity: 0.5;
@@ -49,13 +50,13 @@
     }
 
     .btn .ripple-wave {
-        @include ripple-variant(white);
+        @include ripple.ripple-variant(white);
     }
 
-    @each $color, $value in $button-colors {
+    @each $color, $value in color-lists.$button-colors {
         .ripple-surface-#{$color} {
             .ripple-wave {
-                @include ripple-variant($value);
+                @include ripple.ripple-variant($value);
             }
         }
     }
