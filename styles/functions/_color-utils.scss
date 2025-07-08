@@ -127,3 +127,47 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
         @return null;
     }
 }
+
+@function convert-color-to-hex($color) {
+    @return '##{str-slice(ie-hex-str($color), 4)}'
+}
+
+// Generate a color palette for specified base color.
+// Generates 9 variants: 50, 100, 200, 300, 400, 600, 700, 800, 900.
+// Base color is 500.
+// Returns map with keys: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900 and values = colors.
+// Example: $base-color-name = 'gray', $base-color: #9e9e9e
+// Palette:
+// $gray-50: #fbfbfb;
+// $gray-100: #f5f5f5;
+// $gray-200: #eeeeee;
+// $gray-300: #e0e0e0;
+// $gray-350: #cfcfcf;
+// $gray-400: #bdbdbd;
+// $gray-500: #9e9e9e; // $base-color
+// $gray-600: #757575;
+// $gray-700: #616161;
+// $gray-800: #4f4f4f;
+// $gray-900: #262626;
+@function generate-color-palette($base-color-name, $base-color) {
+    $map: (
+        '50': shift-color($base-color, -90%),
+        '100': shift-color($base-color, -80%),
+        '200': shift-color($base-color, -60%),
+        '300': shift-color($base-color, -40%),
+        '400': shift-color($base-color, -20%),
+        '500': $base-color,
+        '600': shift-color($base-color, 20%),
+        '700': shift-color($base-color, 40%),
+        '800': shift-color($base-color, 60%),
+        '900': shift-color($base-color, 80%),
+    );
+    @debug '=================================';
+    @debug 'Generated palette: #{$base-color}';
+    @debug '=================================';
+    @each $key, $value in $map {
+        @debug "#{$base-color-name}-#{$key}: #{convert-color-to-hex($value)}";
+    }
+    @debug '=================================';
+    @return $map;
+}

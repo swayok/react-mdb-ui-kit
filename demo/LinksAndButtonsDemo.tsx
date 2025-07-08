@@ -8,7 +8,7 @@ import IconButtonsDemo from 'swayok-react-mdb-ui-kit/demo/groups/IconButtonsDemo
 import LinksDemo from 'swayok-react-mdb-ui-kit/demo/groups/LinksDemo'
 import TabContentForDemoTabsheet from 'swayok-react-mdb-ui-kit/demo/TabContentForDemoTabsheet'
 
-// Демонстрация типографии.
+// Демонстрация ссылок и кнопок.
 export default function LinksAndButtonsDemo() {
 
     return (

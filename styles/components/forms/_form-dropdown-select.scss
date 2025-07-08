@@ -46,7 +46,7 @@
             .dropdown-item {
                 border-radius: 0;
 
-                &.empty-option {
+                &.empty-option:not(.active) {
                     color: form-dropdown-select.$form-dropdown-select-empty-option-color;
                 }
             }
