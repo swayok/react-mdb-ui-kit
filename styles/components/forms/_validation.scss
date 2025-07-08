@@ -1,26 +1,24 @@
 // Form validation
-//
 // Provide feedback to users when form field values are valid or invalid. Works
 // primarily for client-side validation via scoped `:invalid` and `:valid`
 // pseudo-classes but also includes `.is-invalid` and `.is-valid` classes for
 // server-side validation.
+@use "../../mixins/forms";
+@use "../../variables/form-validation";
+@use "../../variables/features";
 
-@import "../../mixins/forms";
-@import "../../variables/form-validation";
-@import "../../variables/features";
-
-@if ($include-forms-and-inputs and $include-form-validation) {
+@if (features.$include-forms-and-inputs and features.$include-form-validation) {
 
     // scss-docs-start form-validation-states-loop
-    @each $state, $data in $form-validation-states {
-        @include form-validation-state($state, $data...);
+    @each $state, $data in form-validation.$form-validation-states {
+        @include forms.form-validation-state($state, $data...);
     }
     // scss-docs-end form-validation-states-loop
 
     .form-control {
         &.is-invalid,
         &.is-valid {
-            margin-bottom: $form-input-with-feedback-margin-bottom;
+            margin-bottom: form-validation.$form-input-with-feedback-margin-bottom;
 
             &.no-message {
                 margin-bottom: 0;
@@ -40,7 +38,7 @@
 
     // Ошибка формы (не путать с ошибкой поля ввода!).
     .form-error {
-        color: $danger;
+        color: form-validation.$form-feedback-invalid-color;
         text-align: center;
     }
 
@@ -57,7 +55,7 @@
                 position: relative !important;
                 margin-top: 0 !important;
                 margin-left: 0 !important;
-                padding: $input-error-padding-top $input-error-padding-x 0 $input-error-padding-x;
+                padding: form-validation.$input-error-padding-top form-validation.$input-error-padding-x 0 form-validation.$input-error-padding-x;
             }
         }
 

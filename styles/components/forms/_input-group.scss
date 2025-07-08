@@ -1,20 +1,13 @@
-//
-// Base styles
-//
-
+// Inputs group
 @use "sass:math";
-@import "../../mixins/rfs";
-@import "../../mixins/border-radius";
-@import "../../functions/calc-utils";
-@import "../../functions/button-utils";
-@import "../../variables/form-input-group";
-@import "../../variables/form-select";
-@import "../../variables/form-validation";
-@import "../../variables/buttons";
+@use "../../mixins/rfs";
+@use "../../mixins/border-radius";
+@use "../../variables/form-input-base";
+@use "../../variables/form-input-group";
+@use "../../variables/form-validation";
+@use "../../variables/features";
 
-@import "../../variables/features";
-
-@if ($include-forms-and-inputs and $include-input-group) {
+@if (features.$include-forms-and-inputs and features.$include-input-group) {
     .input-group {
         position: relative;
         display: flex;
@@ -29,17 +22,17 @@
             flex: 1 1 auto;
             width: 1%;
             min-width: 0; // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
-            min-height: $input-group-addon-min-height;
-            padding-top: $input-group-padding-y;
-            padding-bottom: $input-group-padding-y;
-            transition: $input-group-transition;
+            min-height: form-input-group.$input-group-addon-min-height;
+            padding-top: form-input-group.$input-group-padding-y;
+            padding-bottom: form-input-group.$input-group-padding-y;
+            transition: form-input-group.$input-group-transition;
 
             &.form-control-sm {
-                min-height: $input-group-addon-min-height-sm;
+                min-height: form-input-group.$input-group-addon-min-height-sm;
             }
 
             &.form-control-lg {
-                min-height: $input-group-addon-min-height-lg;
+                min-height: form-input-group.$input-group-addon-min-height-lg;
             }
         }
 
@@ -47,10 +40,10 @@
         > .form-control:focus,
         > .form-select:focus, {
             z-index: 3;
-            transition: $input-group-focus-transition;
-            border-color: $input-group-focus-border-color;
+            transition: form-input-group.$input-group-focus-transition;
+            border-color: form-input-group.$input-group-focus-border-color;
             outline: 0;
-            box-shadow: $input-group-focus-box-shadow;
+            box-shadow: form-input-group.$input-group-focus-box-shadow;
         }
 
         > .form-control.is-invalid,
@@ -64,10 +57,10 @@
         .btn {
             position: relative;
             z-index: 2;
-            min-height: $input-group-addon-min-height;
+            min-height: form-input-group.$input-group-addon-min-height;
 
             &.btn-sm {
-                min-height: $input-group-addon-min-height-sm;
+                min-height: form-input-group.$input-group-addon-min-height-sm;
             }
 
             &:focus {
@@ -82,7 +75,7 @@
 
             input + .input-group-text {
                 border: 0;
-                border-left: $input-group-form-outline-border-left-width solid $input-group-form-outline-border-left-color;
+                border-left: form-input-group.$input-group-form-outline-border-left-width solid form-input-group.$input-group-form-outline-border-left-color;
             }
         }
 
@@ -132,34 +125,34 @@
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        padding: $input-group-addon-padding-y $input-group-addon-padding-x;
-        @include font-size($input-group-addon-font-size); // Match inputs
-        font-weight: $input-group-addon-font-weight;
-        line-height: $input-line-height;
-        color: $input-group-addon-color;
+        padding: form-input-group.$input-group-addon-padding-y form-input-group.$input-group-addon-padding-x;
+        @include rfs.font-size(form-input-group.$input-group-addon-font-size); // Match inputs
+        font-weight: form-input-group.$input-group-addon-font-weight;
+        line-height: form-input-base.$input-line-height;
+        color: form-input-group.$input-group-addon-color;
         text-align: center;
         white-space: nowrap;
-        background-color: $input-group-addon-bg;
-        border: $input-border-width solid $input-group-addon-border-color;
-        min-height: $input-group-addon-min-height;
-        @include border-radius($input-border-radius);
+        background-color: form-input-group.$input-group-addon-bg;
+        border: form-input-base.$input-border-width solid form-input-group.$input-group-addon-border-color;
+        min-height: form-input-group.$input-group-addon-min-height;
+        @include border-radius.border-radius(form-input-base.$input-border-radius);
 
         &.input-group-text-sm {
-            padding: $input-group-addon-padding-y-sm $input-group-addon-padding-x-sm;
-            @include font-size($input-group-addon-font-size-sm);
-            min-height: $input-group-addon-min-height-sm;
+            padding: form-input-group.$input-group-addon-padding-y-sm form-input-group.$input-group-addon-padding-x-sm;
+            @include rfs.font-size(form-input-group.$input-group-addon-font-size-sm);
+            min-height: form-input-group.$input-group-addon-min-height-sm;
         }
 
         &.input-group-text-lg {
-            padding: $input-group-addon-padding-y-lg $input-group-addon-padding-x-lg;
-            @include font-size($input-group-addon-font-size-lg);
-            min-height: $input-group-addon-min-height-lg;
+            padding: form-input-group.$input-group-addon-padding-y-lg form-input-group.$input-group-addon-padding-x-lg;
+            @include rfs.font-size(form-input-group.$input-group-addon-font-size-lg);
+            min-height: form-input-group.$input-group-addon-min-height-lg;
         }
     }
 
     // Несколько .form-outline полей ввода в группе.
     .input-group-item {
-        min-height: $input-group-addon-min-height;
+        min-height: form-input-group.$input-group-addon-min-height;
 
         &.first {
             &.form-outline,
@@ -213,25 +206,25 @@
         &:not(.has-validation) {
             > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
             > .dropdown-toggle:nth-last-child(n + 3) {
-                @include border-end-radius(0);
+                @include border-radius.border-end-radius(0);
             }
         }
 
         &.has-validation {
             > :nth-last-child(n + 3):not(.dropdown-toggle):not(.dropdown-menu),
             > .dropdown-toggle:nth-last-child(n + 4) {
-                @include border-end-radius(0);
+                @include border-radius.border-end-radius(0);
             }
         }
 
         $validation-messages: '';
-        @each $state in map-keys($form-validation-states) {
+        @each $state in map-keys(form-validation.$form-validation-states) {
             $validation-messages: $validation-messages + ':not(.' + unquote($state) + '-tooltip)' + ':not(.' + unquote($state) + '-feedback)';
         }
 
         > :not(:first-child):not(.dropdown-menu)#{$validation-messages} {
-            margin-left: -$input-border-width;
-            @include border-start-radius(0);
+            margin-left: form-input-base.$input-border-width * -1;
+            @include border-radius.border-start-radius(0);
         }
     }
 }

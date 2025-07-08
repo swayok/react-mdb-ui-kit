@@ -1,7 +1,8 @@
-@import "../../variables/form-input-addon";
-@import "../../variables/features";
+// Form input addon for Form Outline styled inputs.
+@use "../../variables/form-input-addon";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-form-input-addon) {
+@if (features.$include-forms-and-inputs and features.$include-form-input-addon) {
     .form-outline {
         .form-input-addon-text {
             position: absolute;
@@ -11,12 +12,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: $form-outline-addon-bg;
-            padding: $form-outline-addon-padding-y $form-outline-addon-padding-x;
-            color: $form-outline-addon-color;
+            background: form-input-addon.$form-outline-addon-bg;
+            padding: form-input-addon.$form-outline-addon-padding-y form-input-addon.$form-outline-addon-padding-x;
+            color: form-input-addon.$form-outline-addon-color;
 
             .form-input-addon-text-content {
-                min-width: $form-outline-addon-min-width;
+                min-width: form-input-addon.$form-outline-addon-min-width;
                 text-align: center;
                 display: flex;
                 flex-direction: row;

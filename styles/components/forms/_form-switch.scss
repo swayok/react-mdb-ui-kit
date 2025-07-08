@@ -1,43 +1,38 @@
-//
-// Switch
-//
-
+// Form checkbox styled as on-off switch.
 @use 'sass:math';
-@import "../../functions/string-utils";
-@import "../../mixins/border-radius";
-@import "../../mixins/transition";
-@import "../../mixins/form-check-and-switch";
-@import "../../variables/form-switch";
-@import "../../variables/color-lists";
-@import "../../variables/features";
+@use "../../mixins/transition";
+@use "../../mixins/form-check-and-switch";
+@use "../../variables/form-switch";
+@use "../../variables/color-lists";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-form-switch) {
+@if (features.$include-forms-and-inputs and features.$include-form-switch) {
     .form-switch {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        padding-top: $form-switch-padding-y;
-        padding-bottom: $form-switch-padding-y;
+        padding-top: form-switch.$form-switch-padding-y;
+        padding-bottom: form-switch.$form-switch-padding-y;
 
         .form-switch-input {
             flex-shrink: 0;
         }
 
         .form-check-label {
-            margin-left: $form-switch-label-margin;
+            margin-left: form-switch.$form-switch-label-margin;
         }
 
         .form-validation-container & {
             + .form-validation-error-container .invalid-feedback {
-                padding-left: $form-switch-input-width + $form-switch-label-margin;
+                padding-left: form-switch.$form-switch-input-width + form-switch.$form-switch-label-margin;
             }
         }
 
         &.label-before-input {
             .form-check-label {
                 margin-left: 0;
-                margin-right: $form-switch-label-margin;
+                margin-right: form-switch.$form-switch-label-margin;
             }
 
             .form-check-input {
@@ -56,18 +51,18 @@
     .form-switch-input {
         position: relative;
         vertical-align: top;
-        width: $form-switch-input-width;
-        height: $form-switch-input-height;
+        width: form-switch.$form-switch-input-width;
+        height: form-switch.$form-switch-input-height;
         border: 0 none;
-        background-color: $form-switch-track-bg-color;
+        background-color: form-switch.$form-switch-track-bg-color;
         // Требуется чтобы исправить отображение переключателя поверх
         // всплывающего меню и других компонентов отображаемых над переключателем.
         z-index: 0;
         appearance: none;
         print-color-adjust: exact; // Keep themed appearance for print
-        border-radius: $form-switch-input-border-radius;
+        border-radius: form-switch.$form-switch-input-border-radius;
         cursor: pointer;
-        @include transition($form-switch-transition);
+        @include transition.transition(form-switch.$form-switch-transition);
 
         &:after {
             // Переключатель (двигающийся круг).
@@ -75,44 +70,44 @@
             position: absolute;
             border: none;
             z-index: 2;
-            border-radius: $form-switch-toggler-border-radius;
-            width: $form-switch-toggler-width;
-            height: $form-switch-toggler-width;
-            background-color: $form-switch-toggler-bg-color;
-            margin-top: $form-switch-toggler-margin-top;
-            box-shadow: $form-switch-toggler-box-shadow;
-            @include transition($form-switch-toggler-transition);
+            border-radius: form-switch.$form-switch-toggler-border-radius;
+            width: form-switch.$form-switch-toggler-width;
+            height: form-switch.$form-switch-toggler-width;
+            background-color: form-switch.$form-switch-toggler-bg-color;
+            margin-top: form-switch.$form-switch-toggler-margin-top;
+            box-shadow: form-switch.$form-switch-toggler-box-shadow;
+            @include transition.transition(form-switch.$form-switch-toggler-transition);
         }
 
         &:focus:after,
         &:active:after {
-            background-color: $form-switch-toggler-focus-bg-color;
-            border-radius: $form-switch-toggler-focus-border-radius;
-            width: $form-switch-toggler-focus-width;
-            height: $form-switch-toggler-focus-width;
-            box-shadow: $form-switch-toggler-focus-box-shadow;
-            opacity: $form-switch-toggler-focus-opacity;
+            background-color: form-switch.$form-switch-toggler-focus-bg-color;
+            border-radius: form-switch.$form-switch-toggler-focus-border-radius;
+            width: form-switch.$form-switch-toggler-focus-width;
+            height: form-switch.$form-switch-toggler-focus-width;
+            box-shadow: form-switch.$form-switch-toggler-focus-box-shadow;
+            opacity: form-switch.$form-switch-toggler-focus-opacity;
         }
 
         &:checked {
-            background-color: $form-switch-track-checked-bg-color;
+            background-color: form-switch.$form-switch-track-checked-bg-color;
 
             &:after {
-                background-color: $form-switch-toggler-checked-bg-color;
-                margin-left: $form-switch-toggler-checked-margin-left;
+                background-color: form-switch.$form-switch-toggler-checked-bg-color;
+                margin-left: form-switch.$form-switch-toggler-checked-margin-left;
             }
 
             &:focus:after,
             &:active:after {
-                background-color: $form-switch-toggler-checked-focus-bg-color;
-                opacity: $form-switch-toggler-checked-focus-opacity;
+                background-color: form-switch.$form-switch-toggler-checked-focus-bg-color;
+                opacity: form-switch.$form-switch-toggler-checked-focus-opacity;
             }
         }
 
         &:disabled {
             pointer-events: none;
             filter: none;
-            opacity: $form-switch-input-disabled-opacity;
+            opacity: form-switch.$form-switch-input-disabled-opacity;
         }
 
         // Use disabled attribute in addition of :disabled pseudo-class
@@ -120,14 +115,14 @@
         &[disabled],
         &:disabled {
             ~ .form-check-label {
-                opacity: $form-switch-label-disabled-opacity;
+                opacity: form-switch.$form-switch-label-disabled-opacity;
             }
         }
     }
 
-    @each $color, $value in $form-checkbox-colors {
+    @each $color, $value in color-lists.$form-checkbox-colors {
         .form-switch-#{$color} {
-            @include form-switch-color($value);
+            @include form-check-and-switch.form-switch-color($value);
         }
     }
 }

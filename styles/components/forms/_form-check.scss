@@ -1,42 +1,38 @@
-//
-// Check/radio
-//
-
+// Checkboxes and Radios.
 @use 'sass:math';
-@import "../../functions/string-utils";
-@import "../../mixins/border-radius";
-@import "../../mixins/form-check-and-switch";
-@import "../../mixins/transition";
-@import "../../variables/form-check";
-@import "../../variables/color-lists";
-@import "../../variables/features";
+@use "../../mixins/border-radius";
+@use "../../mixins/form-check-and-switch";
+@use "../../mixins/transition";
+@use "../../variables/form-check";
+@use "../../variables/color-lists";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-check-input) {
+@if (features.$include-forms-and-inputs and features.$include-check-input) {
     .form-check {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        min-height: $form-check-min-height;
+        min-height: form-check.$form-check-min-height;
 
         .form-check-input {
             flex-shrink: 0;
         }
 
         .form-check-label {
-            margin-left: $form-check-label-margin;
+            margin-left: form-check.$form-check-label-margin;
         }
 
         .form-validation-container & {
             + .form-validation-error-container .invalid-feedback {
-                padding-left: $form-check-input-width + $form-check-label-margin;
+                padding-left: form-check.$form-check-input-width + form-check.$form-check-label-margin;
             }
         }
 
         &.label-before-input {
             .form-check-label {
                 margin-left: 0;
-                margin-right: $form-check-label-margin;
+                margin-right: form-check.$form-check-label-margin;
             }
 
             .form-check-input {
@@ -55,59 +51,59 @@
     .form-check-input {
         position: relative;
         vertical-align: top;
-        width: $form-check-input-width;
-        height: $form-check-input-width;
-        background-color: $form-check-input-bg-color;
-        border: $form-check-input-border-width solid $form-check-input-border-color;
+        width: form-check.$form-check-input-width;
+        height: form-check.$form-check-input-width;
+        background-color: form-check.$form-check-input-bg-color;
+        border: form-check.$form-check-input-border-width solid form-check.$form-check-input-border-color;
         appearance: none;
         print-color-adjust: exact; // Keep themed appearance for print
-        @include transition($form-check-transition);
+        @include transition.transition(form-check.$form-check-transition);
 
         &:before {
             content: '';
             position: absolute;
-            box-shadow: $form-check-input-before-box-shadow;
-            border-radius: $form-check-input-before-border-radius;
-            width: $form-check-input-before-width;
-            height: $form-check-input-before-width;
+            box-shadow: form-check.$form-check-input-before-box-shadow;
+            border-radius: form-check.$form-check-input-before-border-radius;
+            width: form-check.$form-check-input-before-width;
+            height: form-check.$form-check-input-before-width;
             background-color: transparent;
             opacity: 0;
             pointer-events: none;
-            transform: $form-check-input-before-transform;
+            transform: form-check.$form-check-input-before-transform;
         }
 
         &:hover {
             cursor: pointer;
 
             &:before {
-                opacity: $form-check-input-hover-before-opacity;
-                box-shadow: $form-check-input-hover-before-box-shadow;
+                opacity: form-check.$form-check-input-hover-before-opacity;
+                box-shadow: form-check.$form-check-input-hover-before-box-shadow;
             }
         }
 
         &:active {
-            filter: $form-check-input-active-filter;
+            filter: form-check.$form-check-input-active-filter;
         }
 
         &:focus {
-            border-color: $form-check-input-focus-border;
+            border-color: form-check.$form-check-input-focus-border;
             outline: 0;
-            box-shadow: $form-check-input-focus-box-shadow;
-            transition: $form-check-input-focus-transition;
+            box-shadow: form-check.$form-check-input-focus-box-shadow;
+            transition: form-check.$form-check-input-focus-transition;
 
             &:before {
-                opacity: $form-check-input-focus-before-opacity;
-                box-shadow: $form-check-input-focus-before-box-shadow;
-                transform: $form-check-input-focus-before-transform;
-                transition: $form-check-input-focus-before-transition;
+                opacity: form-check.$form-check-input-focus-before-opacity;
+                box-shadow: form-check.$form-check-input-focus-before-box-shadow;
+                transform: form-check.$form-check-input-focus-before-transform;
+                transition: form-check.$form-check-input-focus-before-transition;
             }
         }
 
         &:checked {
-            border-color: $form-check-input-checked-border-color;
+            border-color: form-check.$form-check-input-checked-border-color;
 
             &:before {
-                opacity: $form-check-input-checked-before-opacity;
+                opacity: form-check.$form-check-input-checked-before-opacity;
             }
 
             &:after {
@@ -116,12 +112,12 @@
             }
 
             &:focus {
-                border-color: $form-check-input-checked-focus-border-color;
+                border-color: form-check.$form-check-input-checked-focus-border-color;
 
                 &:before {
-                    box-shadow: $form-check-input-checked-focus-before-box-shadow;
-                    transform: $form-check-input-checked-focus-before-transform;
-                    transition: $form-check-input-checked-focus-before-transition;
+                    box-shadow: form-check.$form-check-input-checked-focus-before-box-shadow;
+                    transform: form-check.$form-check-input-checked-focus-before-transform;
+                    transition: form-check.$form-check-input-checked-focus-before-transition;
                 }
             }
         }
@@ -129,7 +125,7 @@
         &:disabled {
             pointer-events: none;
             filter: none;
-            opacity: $form-check-input-disabled-opacity;
+            opacity: form-check.$form-check-input-disabled-opacity;
         }
 
         // Use disabled attribute in addition of :disabled pseudo-class
@@ -137,122 +133,122 @@
         &[disabled],
         &:disabled {
             ~ .form-check-label {
-                opacity: $form-check-label-disabled-opacity;
+                opacity: form-check.$form-check-label-disabled-opacity;
             }
         }
 
         &[type='checkbox'] {
-            @include border-radius($form-check-checkbox-border-radius);
+            @include border-radius.border-radius(form-check.$form-check-checkbox-border-radius);
 
             &:focus:after {
                 content: '';
                 position: absolute;
-                width: $form-check-checkbox-focus-after-width;
-                height: $form-check-checkbox-focus-after-width;
+                width: form-check.$form-check-checkbox-focus-after-width;
+                height: form-check.$form-check-checkbox-focus-after-width;
                 z-index: 1;
                 display: block;
                 border-radius: 0;
-                background-color: $form-check-checkbox-focus-after-bg-color;
+                background-color: form-check.$form-check-checkbox-focus-after-bg-color;
             }
 
             &:checked {
-                background-color: $form-check-checkbox-checked-bg-color;
+                background-color: form-check.$form-check-checkbox-checked-bg-color;
 
                 &:after {
                     display: block;
-                    transform: $form-check-checkbox-checked-after-transform #{'/*!rtl:ignore*/'};
+                    transform: form-check.$form-check-checkbox-checked-after-transform #{'/*!rtl:ignore*/'};
                     transform-origin: center;
-                    border-width: $form-check-checkbox-checked-check-width;
-                    border-color: $form-check-checkbox-checked-check-color;
-                    width: $form-check-checkbox-checked-after-width;
-                    height: $form-check-checkbox-checked-after-height;
+                    border-width: form-check.$form-check-checkbox-checked-check-width;
+                    border-color: form-check.$form-check-checkbox-checked-check-color;
+                    width: form-check.$form-check-checkbox-checked-after-width;
+                    height: form-check.$form-check-checkbox-checked-after-height;
                     border-style: solid;
                     border-top: 0;
                     border-left: 0 #{'/*!rtl:ignore*/'};
                     top: 50%;
                     left: 50%;
-                    margin-left: $form-check-checkbox-checked-after-margin-left;
-                    margin-top: $form-check-checkbox-checked-after-margin-top;
+                    margin-left: form-check.$form-check-checkbox-checked-after-margin-left;
+                    margin-top: form-check.$form-check-checkbox-checked-after-margin-top;
                     background-color: transparent;
                 }
 
                 &:focus {
-                    background-color: $form-check-checkbox-checked-focus-bg-color;
+                    background-color: form-check.$form-check-checkbox-checked-focus-bg-color;
                 }
             }
 
             &.form-check-solid:checked {
-                background-color: $form-check-checkbox-solid-checked-bg-color;
+                background-color: form-check.$form-check-checkbox-solid-checked-bg-color;
 
                 &:after {
-                    border-color: $form-check-checkbox-solid-checked-check-color;
+                    border-color: form-check.$form-check-checkbox-solid-checked-check-color;
                 }
 
                 &:focus {
-                    background-color: $form-check-checkbox-solid-checked-focus-bg-color;
+                    background-color: form-check.$form-check-checkbox-solid-checked-focus-bg-color;
                 }
             }
 
             // It is impossible to set this state by any means except for inputRef.indeterminate = true.
             // So we just ignore this state because it is quite useless.
             //&:indeterminate {
-            //    background-color: $form-check-input-indeterminate-bg-color;
-            //    border-color: $form-check-input-indeterminate-border-color;
+            //    background-color: form-check.$form-check-input-indeterminate-bg-color;
+            //    border-color: form-check.$form-check-input-indeterminate-border-color;
             //
             //    &:after {
             //        display: block;
-            //        transform: $form-check-checkbox-indeterminate-checked-after-transform #{'/*!rtl:ignore*/'};
-            //        border-width: $form-check-checkbox-indeterminate-checked-after-border-width;
-            //        border-color: $form-check-checkbox-indeterminate-checked-after-border-color;
-            //        width: $form-check-checkbox-indeterminate-checked-after-width;
-            //        height: $form-check-checkbox-indeterminate-checked-after-height;
+            //        transform: form-check.$form-check-checkbox-indeterminate-checked-after-transform #{'/*!rtl:ignore*/'};
+            //        border-width: form-check.$form-check-checkbox-indeterminate-checked-after-border-width;
+            //        border-color: form-check.$form-check-checkbox-indeterminate-checked-after-border-color;
+            //        width: form-check.$form-check-checkbox-indeterminate-checked-after-width;
+            //        height: form-check.$form-check-checkbox-indeterminate-checked-after-height;
             //        border-style: solid;
             //        border-top: 0;
             //        border-left: 0 #{'/*!rtl:ignore*/'};
-            //        margin-left: $form-check-checkbox-indeterminate-checked-after-margin-left;
+            //        margin-left: form-check.$form-check-checkbox-indeterminate-checked-after-margin-left;
             //        margin-top: 0;
             //    }
             //
             //    &:focus {
-            //        background-color: $form-check-checkbox-indeterminate-focus-background-color;
-            //        border-color: $form-check-checkbox-indeterminate-focus-border-color;
+            //        background-color: form-check.$form-check-checkbox-indeterminate-focus-background-color;
+            //        border-color: form-check.$form-check-checkbox-indeterminate-focus-border-color;
             //
             //        &:before {
-            //            box-shadow: $form-check-input-indeterminate-focus-before-box-shadow;
+            //            box-shadow: form-check.$form-check-input-indeterminate-focus-before-box-shadow;
             //        }
             //    }
             //}
         }
 
         &[type='radio'] {
-            border-radius: $form-check-radio-border-radius;
+            border-radius: form-check.$form-check-radio-border-radius;
 
             &:before {
-                width: $form-check-radio-before-width;
-                height: $form-check-radio-before-width;
+                width: form-check.$form-check-radio-before-width;
+                height: form-check.$form-check-radio-before-width;
             }
 
             &:focus:after {
                 content: '';
                 position: absolute;
-                width: $form-check-radio-after-width;
-                height: $form-check-radio-after-width;
+                width: form-check.$form-check-radio-after-width;
+                height: form-check.$form-check-radio-after-width;
                 z-index: 1;
                 display: block;
-                border-radius: $form-check-radio-after-border-radius;
-                background-color: $form-check-radio-after-bg-color;
+                border-radius: form-check.$form-check-radio-after-border-radius;
+                background-color: form-check.$form-check-radio-after-bg-color;
             }
 
             &:checked {
-                background-color: $form-check-radio-checked-bg-color;
+                background-color: form-check.$form-check-radio-checked-bg-color;
 
                 &:after {
-                    border-radius: $form-check-radio-checked-after-border-radius;
-                    width: $form-check-radio-checked-after-width;
-                    height: $form-check-radio-checked-after-width;
-                    border-color: $form-check-radio-checked-after-border-color;
-                    background-color: $form-check-radio-checked-after-bg-color;
-                    transition: $form-check-radio-checked-after-transition;
+                    border-radius: form-check.$form-check-radio-checked-after-border-radius;
+                    width: form-check.$form-check-radio-checked-after-width;
+                    height: form-check.$form-check-radio-checked-after-width;
+                    border-color: form-check.$form-check-radio-checked-after-border-color;
+                    background-color: form-check.$form-check-radio-checked-after-bg-color;
+                    transition: form-check.$form-check-radio-checked-after-transition;
                     transform: translate(-50%, -50%);
                     position: absolute;
                     left: 50%;
@@ -260,83 +256,83 @@
                 }
 
                 &:focus {
-                    background-color: $form-check-radio-checked-focus-bg-color;
+                    background-color: form-check.$form-check-radio-checked-focus-bg-color;
                 }
             }
         }
     }
 
-    @each $color, $value in $form-checkbox-colors {
+    @each $color, $value in color-lists.$form-checkbox-colors {
         .form-check-#{$color} {
-            @include form-checkbox-color($value, $form-check-checkbox-solid-checked-check-color);
-            @include form-radio-color($value);
+            @include form-check-and-switch.form-checkbox-color($value, form-check.$form-check-checkbox-solid-checked-check-color);
+            @include form-check-and-switch.form-radio-color($value);
         }
     }
 
     .form-check-sm {
         .form-check-input {
-            width: $form-check-input-width-sm;
-            height: $form-check-input-width-sm;
+            width: form-check.$form-check-input-width-sm;
+            height: form-check.$form-check-input-width-sm;
 
             &[type='checkbox'] {
                 &:before {
-                    width: $form-check-checkbox-before-width-sm;
-                    height: $form-check-checkbox-before-width-sm;
+                    width: form-check.$form-check-checkbox-before-width-sm;
+                    height: form-check.$form-check-checkbox-before-width-sm;
                 }
 
                 &:focus:after {
-                    width: $form-check-checkbox-focus-after-width-sm;
-                    height: $form-check-checkbox-focus-after-width-sm;
+                    width: form-check.$form-check-checkbox-focus-after-width-sm;
+                    height: form-check.$form-check-checkbox-focus-after-width-sm;
                 }
 
                 &:checked:after {
-                    margin-left: $form-check-checkbox-checked-after-margin-left-sm;
-                    margin-top: $form-check-checkbox-checked-after-margin-top-sm;
-                    width: $form-check-checkbox-checked-after-width-sm;
-                    height: $form-check-checkbox-checked-after-height-sm;
+                    margin-left: form-check.$form-check-checkbox-checked-after-margin-left-sm;
+                    margin-top: form-check.$form-check-checkbox-checked-after-margin-top-sm;
+                    width: form-check.$form-check-checkbox-checked-after-width-sm;
+                    height: form-check.$form-check-checkbox-checked-after-height-sm;
                 }
             }
 
             &[type='radio'] {
                 &:before {
-                    width: $form-check-radio-before-width-sm;
-                    height: $form-check-radio-before-width-sm;
+                    width: form-check.$form-check-radio-before-width-sm;
+                    height: form-check.$form-check-radio-before-width-sm;
                 }
 
                 &:focus:after {
-                    width: $form-check-radio-after-width-sm;
-                    height: $form-check-radio-after-width-sm;
+                    width: form-check.$form-check-radio-after-width-sm;
+                    height: form-check.$form-check-radio-after-width-sm;
                 }
 
                 &:checked:after {
-                    width: $form-check-radio-checked-after-width-sm;
-                    height: $form-check-radio-checked-after-width-sm;
+                    width: form-check.$form-check-radio-checked-after-width-sm;
+                    height: form-check.$form-check-radio-checked-after-width-sm;
                 }
             }
         }
 
         .form-check-label {
-            margin-left: $form-check-label-margin-sm;
+            margin-left: form-check.$form-check-label-margin-sm;
             display: inline;
         }
 
         .form-validation-container & {
             + .form-validation-error-container .invalid-feedback {
-                padding-left: $form-check-input-width-sm + $form-check-label-margin-sm;
+                padding-left: form-check.$form-check-input-width-sm + form-check.$form-check-label-margin-sm;
             }
         }
     }
 
     .form-check-label {
-        color: $form-check-label-color;
-        cursor: $form-check-label-cursor;
-        min-height: $form-check-min-height;
-        line-height: $form-check-min-height;
+        color: form-check.$form-check-label-color;
+        cursor: form-check.$form-check-label-cursor;
+        min-height: form-check.$form-check-min-height;
+        line-height: form-check.$form-check-min-height;
         user-select: none;
     }
 
     .form-check-inline {
         display: inline-block;
-        margin-right: $form-check-inline-margin-end;
+        margin-right: form-check.$form-check-inline-margin-end;
     }
 }

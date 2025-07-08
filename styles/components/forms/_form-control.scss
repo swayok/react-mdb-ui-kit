@@ -1,37 +1,34 @@
-//
-// General form controls (plus a few specific high-level interventions)
-//
+// General form controls (plus a few specific high-level interventions).
+@use "../../mixins/rfs";
+@use "../../mixins/border-radius";
+@use "../../mixins/box-shadow";
+@use "../../mixins/gradients";
+@use "../../mixins/transition";
+@use "../../variables/form-input-base";
+@use "../../variables/features";
 
-@import "../../mixins/rfs";
-@import "../../mixins/border-radius";
-@import "../../mixins/box-shadow";
-@import "../../mixins/gradients";
-@import "../../mixins/transition";
-@import "../../variables/form-input-base";
-@import "../../variables/features";
-
-@if ($include-forms-and-inputs and $include-form-control) {
+@if (features.$include-forms-and-inputs and features.$include-form-control) {
 
     .form-control {
         display: block;
         width: 100%;
         min-height: auto;
-        padding: $input-padding-y $input-padding-x;
-        font-family: $input-font-family;
-        @include font-size($input-font-size);
-        font-weight: $input-font-weight;
-        line-height: $input-line-height;
-        color: $input-color;
-        background-color: $input-bg;
+        padding: form-input-base.$input-padding-y form-input-base.$input-padding-x;
+        font-family: form-input-base.$input-font-family;
+        @include rfs.font-size(form-input-base.$input-font-size);
+        font-weight: form-input-base.$input-font-weight;
+        line-height: form-input-base.$input-line-height;
+        color: form-input-base.$input-color;
+        background-color: form-input-base.$input-bg;
         background-clip: padding-box;
-        border: $input-border-width solid $input-border-color;
+        border: form-input-base.$input-border-width solid form-input-base.$input-border-color;
         appearance: none; // Fix appearance for date inputs in Safari
 
         // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
-        @include border-radius($input-border-radius, 0);
+        @include border-radius.border-radius(form-input-base.$input-border-radius, 0);
 
-        @include box-shadow($input-box-shadow);
-        @include transition($input-transition);
+        @include box-shadow.box-shadow(form-input-base.$input-box-shadow);
+        @include transition.transition(form-input-base.$input-transition);
 
         &[type='file'] {
             overflow: hidden; // prevent pseudo element button overlap
@@ -43,26 +40,18 @@
 
         // Customize the `:focus` state to imitate native WebKit styles.
         &:focus {
-            color: $input-focus-color;
-            background-color: $input-focus-bg;
-            border-color: $input-focus-border-color;
+            color: form-input-base.$input-focus-color;
+            background-color: form-input-base.$input-focus-bg;
+            border-color: form-input-base.$input-focus-border-color;
             outline: 0;
             // DO NOT USE box-shadow() MIXIN HERE!
-            box-shadow: inset 0 0 0 1px $input-focus-border-color;
-            @include transition($input-focus-transition);
-        }
-
-        // Add some height to date inputs on iOS
-        // https://github.com/twbs/bootstrap/issues/23307
-        // TODO: we can remove this workaround once https://bugs.webkit.org/show_bug.cgi?id=198959 is resolved
-        &::-webkit-date-and-time-value {
-            // Multiply line-height by 1em if it has no unit
-            height: if(unit($input-line-height) == '', $input-line-height * 1em, $input-line-height);
+            box-shadow: inset 0 0 0 1px form-input-base.$input-focus-border-color;
+            @include transition.transition(form-input-base.$input-focus-transition);
         }
 
         // Placeholder
         &::placeholder {
-            color: $input-placeholder-color;
+            color: form-input-base.$input-placeholder-color;
             // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
             opacity: 1;
         }
@@ -85,15 +74,15 @@
 
         &:disabled,
         &.disabled {
-            color: $input-disabled-color;
-            background-color: $input-disabled-bg;
-            border-color: $input-disabled-border-color;
+            color: form-input-base.$input-disabled-color;
+            background-color: form-input-base.$input-disabled-bg;
+            border-color: form-input-base.$input-disabled-border-color;
         }
 
         &[readonly] {
-            color: $input-readonly-color;
-            background-color: $input-readonly-bg;
-            border-color: $input-readonly-border-color;
+            color: form-input-base.$input-readonly-color;
+            background-color: form-input-base.$input-readonly-bg;
+            border-color: form-input-base.$input-readonly-border-color;
         }
     }
 
@@ -105,13 +94,13 @@
     .form-control-plaintext {
         display: block;
         width: 100%;
-        padding: $input-padding-y 0;
+        padding: form-input-base.$input-padding-y 0;
         margin-bottom: 0; // match inputs if this class comes on inputs with default margins
-        line-height: $input-line-height;
-        color: $input-plaintext-color;
+        line-height: form-input-base.$input-line-height;
+        color: form-input-base.$input-plaintext-color;
         background-color: transparent;
         border: solid transparent;
-        border-width: $input-border-width 0;
+        border-width: form-input-base.$input-border-width 0;
 
         &.form-control-sm,
         &.form-control-lg {
@@ -128,40 +117,40 @@
     // Repeated in `_input_group.scss` to avoid Sass extend issues.
 
     .form-control-sm {
-        min-height: $input-height-sm;
-        padding: $input-padding-y-sm $input-padding-x-sm;
-        @include font-size($input-font-size-sm);
-        @include border-radius($input-border-radius-sm);
+        min-height: form-input-base.$input-height-sm;
+        padding: form-input-base.$input-padding-y-sm form-input-base.$input-padding-x-sm;
+        @include rfs.font-size(form-input-base.$input-font-size-sm);
+        @include border-radius.border-radius(form-input-base.$input-border-radius-sm);
 
         &::file-selector-button {
-            padding: $input-padding-y-sm $input-padding-x-sm;
-            margin: (-$input-padding-y-sm) (-$input-padding-x-sm);
-            margin-inline-end: $input-padding-x-sm;
+            padding: form-input-base.$input-padding-y-sm form-input-base.$input-padding-x-sm;
+            margin: (form-input-base.$input-padding-y-sm * -1) (form-input-base.$input-padding-x-sm * -1);
+            margin-inline-end: form-input-base.$input-padding-x-sm;
         }
 
         &::-webkit-file-upload-button {
-            padding: $input-padding-y-sm $input-padding-x-sm;
-            margin: (-$input-padding-y-sm) (-$input-padding-x-sm);
-            margin-inline-end: $input-padding-x-sm;
+            padding: form-input-base.$input-padding-y-sm form-input-base.$input-padding-x-sm;
+            margin: (form-input-base.$input-padding-y-sm * -1) (form-input-base.$input-padding-x-sm * -1);
+            margin-inline-end: form-input-base.$input-padding-x-sm;
         }
     }
 
     .form-control-lg {
-        min-height: $input-height-lg;
-        padding: $input-padding-y-lg $input-padding-x-lg;
-        @include font-size($input-font-size-lg);
-        @include border-radius($input-border-radius-lg);
+        min-height: form-input-base.$input-height-lg;
+        padding: form-input-base.$input-padding-y-lg form-input-base.$input-padding-x-lg;
+        @include rfs.font-size(form-input-base.$input-font-size-lg);
+        @include border-radius.border-radius(form-input-base.$input-border-radius-lg);
 
         &::file-selector-button {
-            padding: $input-padding-y-lg $input-padding-x-lg;
-            margin: (-$input-padding-y-lg) (-$input-padding-x-lg);
-            margin-inline-end: $input-padding-x-lg;
+            padding: form-input-base.$input-padding-y-lg form-input-base.$input-padding-x-lg;
+            margin: (form-input-base.$input-padding-y-lg * -1) (form-input-base.$input-padding-x-lg * -1);
+            margin-inline-end: form-input-base.$input-padding-x-lg;
         }
 
         &::-webkit-file-upload-button {
-            padding: $input-padding-y-lg $input-padding-x-lg;
-            margin: (-$input-padding-y-lg) (-$input-padding-x-lg);
-            margin-inline-end: $input-padding-x-lg;
+            padding: form-input-base.$input-padding-y-lg form-input-base.$input-padding-x-lg;
+            margin: (form-input-base.$input-padding-y-lg * -1) (form-input-base.$input-padding-x-lg * -1);
+            margin-inline-end: form-input-base.$input-padding-x-lg;
         }
     }
 
@@ -170,15 +159,15 @@
     // stylelint-disable selector-no-qualifying-type
     textarea {
         &.form-control {
-            min-height: $input-height;
+            min-height: form-input-base.$input-height;
         }
 
         &.form-control-sm {
-            min-height: $input-height-sm;
+            min-height: form-input-base.$input-height-sm;
         }
 
         &.form-control-lg {
-            min-height: $input-height-lg;
+            min-height: form-input-base.$input-height-lg;
         }
     }
 
@@ -187,20 +176,20 @@
     .form-control-color {
         max-width: 3rem;
         height: auto; // Override fixed browser height
-        padding: $input-padding-y;
+        padding: form-input-base.$input-padding-y;
 
         &:not(:disabled):not([readonly]) {
             cursor: pointer;
         }
 
         &::-moz-color-swatch {
-            height: if(unit($input-line-height) == '', $input-line-height * 1em, $input-line-height);
-            @include border-radius($input-border-radius);
+            height: if(unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
+            @include border-radius.border-radius(form-input-base.$input-border-radius);
         }
 
         &::-webkit-color-swatch {
-            height: if(unit($input-line-height) == '', $input-line-height * 1em, $input-line-height);
-            @include border-radius($input-border-radius);
+            height: if(unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
+            @include border-radius.border-radius(form-input-base.$input-border-radius);
         }
     }
 
@@ -218,17 +207,17 @@
     // Поле ввода с автоматическим ростом высоты по мере ввода текста.
     textarea.autogrow {
         overflow-y: auto !important;
-        height: $input-textarea-autogrow-min-height; //< required for animation to work
-        min-height: $input-textarea-autogrow-min-height; //< required for animation to work
-        transition: height 0.1s linear, $input-transition !important;
+        height: form-input-base.$input-textarea-autogrow-min-height; //< required for animation to work
+        min-height: form-input-base.$input-textarea-autogrow-min-height; //< required for animation to work
+        transition: height 0.1s linear, form-input-base.$input-transition !important;
         resize: none;
 
         &.minimal {
-            min-height: $input-textarea-autogrow-minimal-min-height;
-            height: $input-textarea-autogrow-minimal-min-height;
-            line-height: $input-textarea-autogrow-minimal-line-height;
-            padding-top: $input-textarea-autogrow-minimal-padding-y;
-            padding-bottom: $input-textarea-autogrow-minimal-padding-y;
+            min-height: form-input-base.$input-textarea-autogrow-minimal-min-height;
+            height: form-input-base.$input-textarea-autogrow-minimal-min-height;
+            line-height: form-input-base.$input-textarea-autogrow-minimal-line-height;
+            padding-top: form-input-base.$input-textarea-autogrow-minimal-padding-y;
+            padding-bottom: form-input-base.$input-textarea-autogrow-minimal-padding-y;
         }
     }
 }

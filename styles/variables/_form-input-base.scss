@@ -31,6 +31,8 @@ $input-color: body.$body-color !default;
 $input-disabled-color: $input-color !default;
 $input-readonly-color: $input-disabled-color !default;
 
+$input-readonly-chevron-color: typography.$text-muted !default;
+
 $input-border-color: colors.$gray-350 !default;
 $input-disabled-border-color: null !default;
 $input-readonly-border-color: $input-disabled-border-color !default;

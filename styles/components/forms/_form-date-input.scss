@@ -1,7 +1,8 @@
-@import "../../variables/form-input-base";
-@import "../../variables/features";
+// Date input.
+@use "../../variables/form-input-base";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-date-input) {
+@if (features.$include-forms-and-inputs and features.$include-date-input) {
     // Поле выбора даты и времени.
     .form-date-input {
 
@@ -10,14 +11,14 @@
 
             input,
             input[readonly] {
-                background-color: $input-bg;
+                background-color: form-input-base.$input-bg;
                 cursor: pointer;
                 padding-right: 30px;
             }
 
             input[disabled] {
                 cursor: not-allowed;
-                background-color: $input-disabled-bg;
+                background-color: form-input-base.$input-disabled-bg;
             }
         }
 

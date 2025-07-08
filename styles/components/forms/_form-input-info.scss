@@ -1,13 +1,14 @@
-@import "../../variables/form-input-info";
-@import "../../variables/features";
+// Info block for form input.
+@use "../../variables/form-input-info";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-form-input-info) {
+@if (features.$include-forms-and-inputs and features.$include-form-input-info) {
     // Разъяснение к полю ввода (см <InputInfo>).
     .form-input-info {
-        color: $form-input-info-color;
-        font-size: $form-input-info-font-size;
-        margin-top: $form-input-info-margin-top;
-        padding-left: $form-input-info-padding-x;
-        padding-right: $form-input-info-padding-x;
+        color: form-input-info.$form-input-info-color;
+        font-size: form-input-info.$form-input-info-font-size;
+        margin-top: form-input-info.$form-input-info-margin-top;
+        padding-left: form-input-info.$form-input-info-padding-x;
+        padding-right: form-input-info.$form-input-info-padding-x;
     }
 }

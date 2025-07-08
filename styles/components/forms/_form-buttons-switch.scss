@@ -1,11 +1,12 @@
-@import "../../variables/form-buttons-switch";
-@import "../../variables/features";
+// Form buttons switch.
+@use "../../variables/form-buttons-switch";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-buttons-switch-input) {
+@if (features.$include-forms-and-inputs and features.$include-buttons-switch-input) {
     .buttons-switch-input {
         .btn-group {
             > .btn {
-                min-width: $form-buttons-switch-min-width;
+                min-width: form-buttons-switch.$form-buttons-switch-min-width;
             }
         }
     }

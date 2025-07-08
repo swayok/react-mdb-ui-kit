@@ -2,6 +2,8 @@
 @use "../functions";
 @use "colors";
 @use "shadows";
+@use "form-label";
+@use "form-input-base";
 
 // scss-docs-start form-range-variables
 $form-range-padding-top: 0.5rem !default;
@@ -15,6 +17,9 @@ $form-range-track-bg: colors.$gray-300 !default;
 $form-range-track-border-radius: 1rem !default;
 $form-range-track-box-shadow: shadows.$box-shadow-inset !default;
 
+$form-range-label-color: form-label.$form-label-color !default;
+
+$form-range-thumb-color: colors.$primary !default;
 $form-range-thumb-width: 1rem !default;
 $form-range-thumb-height: $form-range-thumb-width !default;
 $form-range-thumb-bg: colors.$primary !default;
@@ -33,4 +38,5 @@ border-color 0.15s ease-in-out,
 box-shadow 0.15s ease-in-out !default;
 
 $form-range-selected-value-font-weight: 500 !default;
+$form-range-selected-value-color: form-input-base.$input-color !default;
 // scss-docs-end form-range-variables

@@ -1,11 +1,12 @@
-@import "../../mixins/transition";
-@import "../../mixins/svg-icons";
-@import "../../variables/colors";
-@import "../../variables/shadows";
-@import "../../variables/form-file-picker";
-@import "../../variables/features";
+// File picker with previews.
+@use "../../mixins/transition";
+@use "../../mixins/svg-icons";
+@use "../../variables/colors";
+@use "../../variables/shadows";
+@use "../../variables/form-file-picker";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-file-picker-input) {
+@if (features.$include-forms-and-inputs and features.$include-file-picker-input) {
 
     // Прикрепление файлов: отображение прикрепленных файлов
     .file-picker-previews-container {
@@ -19,13 +20,13 @@
             .file-picker-preview-wrapper {
                 &:hover,
                 &.active {
-                    z-index: $file-picker-preview-hover-z-index;
+                    z-index: form-file-picker.$file-picker-preview-hover-z-index;
                 }
             }
 
             a.file-picker-preview-scaler {
                 outline: none !important;
-                @include transition($file-picker-preview-transition);
+                @include transition.transition(form-file-picker.$file-picker-preview-transition);
 
                 &:hover,
                 &.active {
@@ -36,7 +37,7 @@
 
             .file-picker-preview-delete,
             .file-picker-preview-restore {
-                @include transition($file-picker-preview-transition);
+                @include transition.transition(form-file-picker.$file-picker-preview-transition);
 
                 &:hover {
                     opacity: 1 !important;
@@ -54,24 +55,24 @@
             }
 
             .file-picker-preview {
-                @include transition($file-picker-preview-hover-transition);
+                @include transition.transition(form-file-picker.$file-picker-preview-hover-transition);
             }
 
             .file-picker-preview:hover,
             &.active .file-picker-preview {
-                transform: $file-picker-preview-hover-transform;
-                transform-origin: $file-picker-preview-hover-transform-origin;
+                transform: form-file-picker.$file-picker-preview-hover-transform;
+                transform-origin: form-file-picker.$file-picker-preview-hover-transform-origin;
             }
         }
 
         .file-picker-preview {
             display: block;
-            border-radius: $file-picker-preview-border-radius;
-            background: $file-picker-preview-bg;
-            box-shadow: $box-shadow-2-strong;
+            border-radius: form-file-picker.$file-picker-preview-border-radius;
+            background: form-file-picker.$file-picker-preview-bg;
+            box-shadow: shadows.$box-shadow-2-strong;
 
             canvas {
-                border-radius: $file-picker-preview-border-radius;
+                border-radius: form-file-picker.$file-picker-preview-border-radius;
             }
 
             .file-picker-preview-image {
@@ -85,10 +86,10 @@
         .file-picker-preview-delete,
         .file-picker-preview-restore {
             position: absolute;
-            width: $file-picker-preview-button-width;
-            height: $file-picker-preview-button-width;
-            top: $file-picker-preview-button-offset;
-            right: $file-picker-preview-button-offset;
+            width: form-file-picker.$file-picker-preview-button-width;
+            height: form-file-picker.$file-picker-preview-button-width;
+            top: form-file-picker.$file-picker-preview-button-offset;
+            right: form-file-picker.$file-picker-preview-button-offset;
             z-index: 2;
 
             // Фон под иконку для лучшей видимости
@@ -97,13 +98,13 @@
                 z-index: 1;
                 position: absolute;
                 display: block;
-                width: $file-picker-preview-button-underlay-width;
-                height: $file-picker-preview-button-underlay-width;
+                width: form-file-picker.$file-picker-preview-button-underlay-width;
+                height: form-file-picker.$file-picker-preview-button-underlay-width;
                 top: 50%;
                 left: 50%;
-                margin-top: $file-picker-preview-button-underlay-offset;
-                margin-left: $file-picker-preview-button-underlay-offset;
-                background: $file-picker-preview-button-underlay-bg;
+                margin-top: form-file-picker.$file-picker-preview-button-underlay-offset;
+                margin-left: form-file-picker.$file-picker-preview-button-underlay-offset;
+                background: form-file-picker.$file-picker-preview-button-underlay-bg;
                 border-radius: 50%;
             }
 
@@ -113,34 +114,34 @@
         }
 
         .file-picker-previews-adder {
-            border-radius: $file-picker-preview-border-radius;
-            border: $file-picker-previews-adder-border;
-            color: $file-picker-previews-adder-color;
+            border-radius: form-file-picker.$file-picker-preview-border-radius;
+            border: form-file-picker.$file-picker-previews-adder-border;
+            color: form-file-picker.$file-picker-previews-adder-color;
             text-decoration: none;
-            @include transition($file-picker-previews-adder-transition);
+            @include transition.transition(form-file-picker.$file-picker-previews-adder-transition);
 
             &:hover {
-                color: $file-picker-previews-adder-hover-color;
-                border-color: $file-picker-previews-adder-hover-border-color;
+                color: form-file-picker.$file-picker-previews-adder-hover-color;
+                border-color: form-file-picker.$file-picker-previews-adder-hover-border-color;
                 text-decoration: none;
             }
 
             &.disabled {
-                color: $file-picker-previews-adder-disabled-color;
-                border-color: $file-picker-previews-adder-disabled-border-color;
+                color: form-file-picker.$file-picker-previews-adder-disabled-color;
+                border-color: form-file-picker.$file-picker-previews-adder-disabled-border-color;
             }
 
-            @include contained-mdi-icon-color-in-link(
-                    $file-picker-previews-adder-color,
-                    $file-picker-previews-adder-hover-color,
-                    $file-picker-previews-adder-disabled-color
+            @include svg-icons.contained-mdi-icon-color-in-link(
+                    form-file-picker.$file-picker-previews-adder-color,
+                    form-file-picker.$file-picker-previews-adder-hover-color,
+                    form-file-picker.$file-picker-previews-adder-disabled-color
             )
         }
 
         &.file-picker-previews-white-bg {
             .file-picker-preview {
-                background-color: $file-picker-previews-with-white-bg;
-                box-shadow: $box-shadow-3;
+                background-color: form-file-picker.$file-picker-previews-with-white-bg;
+                box-shadow: shadows.$box-shadow-3;
             }
         }
 
@@ -153,7 +154,7 @@
             &.drag-and-drop-current {
                 .file-picker-preview {
                     transform: scale(1) !important;
-                    @include transition(none !important);
+                    @include transition.transition(none !important);
                 }
             }
 
@@ -164,10 +165,10 @@
                     content: '';
                     position: absolute;
                     top: 0;
-                    left: $file-picker-previews-drag-and-drop-item-over-indicator-left;
+                    left: form-file-picker.$file-picker-previews-drag-and-drop-item-over-indicator-left;
                     height: 100%;
-                    width: $file-picker-previews-drag-and-drop-item-over-indicator-width;
-                    background-color: $file-picker-previews-drag-and-drop-item-over-indicator-color;
+                    width: form-file-picker.$file-picker-previews-drag-and-drop-item-over-indicator-width;
+                    background-color: form-file-picker.$file-picker-previews-drag-and-drop-item-over-indicator-color;
                 }
             }
         }

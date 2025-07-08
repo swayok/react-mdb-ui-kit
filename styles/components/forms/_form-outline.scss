@@ -1,23 +1,21 @@
-//
-// Material styles for form control - form outline
-//
+// Material styles for form control - form outline.
+@use "../../mixins/svg-icons";
+@use "../../variables/features";
+@use "../../variables/form-outline-input";
+@use "../../variables/form-input-base";
 
-@import "../../variables/form-outline-input";
-@import "../../mixins/svg-icons";
-@import "../../variables/features";
-
-@if ($include-forms-and-inputs and $include-form-outline) {
+@if (features.$include-forms-and-inputs and features.$include-form-outline) {
     .form-outline {
         position: relative;
 
         .form-control {
-            min-height: $form-outline-input-min-height;
-            padding: $form-outline-input-padding-top $form-outline-input-padding-x $form-outline-input-padding-bottom;
+            min-height: form-outline-input.$form-outline-input-min-height;
+            padding: form-outline-input.$form-outline-input-padding-top form-outline-input.$form-outline-input-padding-x form-outline-input.$form-outline-input-padding-bottom;
             border: 0;
-            background: $form-outline-input-bg;
-            transition: $form-outline-input-transition;
-            font-size: $form-outline-input-font-size;
-            line-height: $form-outline-input-line-height;
+            background: form-outline-input.$form-outline-input-bg;
+            transition: form-outline-input.$form-outline-input-transition;
+            font-size: form-outline-input.$form-outline-input-font-size;
+            line-height: form-outline-input.$form-outline-input-line-height;
 
             ~ .form-label {
                 position: absolute;
@@ -26,12 +24,12 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                left: $form-outline-label-left;
-                padding-top: $form-outline-label-padding-top;
+                left: form-outline-input.$form-outline-label-left;
+                padding-top: form-outline-input.$form-outline-label-padding-top;
                 pointer-events: none;
                 transform-origin: 0 0;
-                transition: $form-outline-label-transition;
-                color: $form-outline-label-color;
+                transition: form-outline-input.$form-outline-label-transition;
+                color: form-outline-input.$form-outline-label-color;
                 margin-bottom: 0;
             }
 
@@ -48,7 +46,7 @@
 
                 div {
                     pointer-events: none;
-                    border: $border-width solid $form-notch-div-border-color;
+                    border: form-outline-input.$form-notch-div-border-width solid form-outline-input.$form-notch-div-border-color;
                     box-sizing: border-box;
                     background: transparent;
                 }
@@ -57,15 +55,15 @@
                     left: 0;
                     top: 0;
                     height: 100%;
-                    width: $form-notch-leading-width;
+                    width: form-outline-input.$form-notch-leading-width;
                     border-right: none;
-                    border-radius: $form-notch-border-radius 0 0 $form-notch-border-radius;
+                    border-radius: form-outline-input.$form-notch-border-radius 0 0 form-outline-input.$form-notch-border-radius;
                 }
 
                 .form-notch-middle {
                     flex: 0 0 auto;
                     width: auto;
-                    max-width: calc(100% - #{$form-notch-middle-max-width});
+                    max-width: calc(100% - #{form-outline-input.$form-notch-middle-max-width});
                     height: 100%;
                     border-right: none;
                     border-left: none;
@@ -75,7 +73,7 @@
                     flex-grow: 1;
                     height: 100%;
                     border-left: none;
-                    border-radius: 0 $form-notch-border-radius $form-notch-border-radius 0;
+                    border-radius: 0 form-outline-input.$form-notch-border-radius form-outline-input.$form-notch-border-radius 0;
                 }
             }
 
@@ -96,11 +94,11 @@
 
             &:focus ~ .form-label,
             &.active ~ .form-label {
-                transform: $form-outline-active-label-transform;
+                transform: form-outline-input.$form-outline-active-label-transform;
             }
 
             &:focus ~ .form-label {
-                color: $form-outline-active-label-color;
+                color: form-outline-input.$form-outline-active-label-color;
             }
 
             &:focus ~ .form-notch .form-notch-middle,
@@ -108,36 +106,36 @@
                 border-top: none;
                 border-right: none;
                 border-left: none;
-                transition: $input-transition;
+                transition: form-input-base.$input-transition;
             }
 
             &:focus ~ .form-notch .form-notch-middle {
-                border-bottom: $form-outline-focus-border-width solid;
-                border-color: $input-focus-border-color;
+                border-bottom: form-outline-input.$form-outline-focus-border-width solid;
+                border-color: form-input-base.$input-focus-border-color;
             }
 
             &:focus ~ .form-notch .form-notch-leading,
             &.active ~ .form-notch .form-notch-leading {
                 border-right: none;
-                transition: $input-transition;
+                transition: form-input-base.$input-transition;
             }
 
             &:focus ~ .form-notch .form-notch-leading {
-                border-top: $form-outline-focus-border-width solid $input-focus-border-color;
-                border-bottom: $form-outline-focus-border-width solid $input-focus-border-color;
-                border-left: $form-outline-focus-border-width solid $input-focus-border-color;
+                border-top: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
+                border-bottom: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
+                border-left: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
             }
 
             &:focus ~ .form-notch .form-notch-trailing,
             &.active ~ .form-notch .form-notch-trailing {
                 border-left: none;
-                transition: $input-transition;
+                transition: form-input-base.$input-transition;
             }
 
             &:focus ~ .form-notch .form-notch-trailing {
-                border-top: $form-outline-focus-border-width solid $input-focus-border-color;
-                border-bottom: $form-outline-focus-border-width solid $input-focus-border-color;
-                border-right: $form-outline-focus-border-width solid $input-focus-border-color;
+                border-top: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
+                border-bottom: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
+                border-right: form-outline-input.$form-outline-focus-border-width solid form-input-base.$input-focus-border-color;
             }
 
             &.active ~ .form-label.unlimited-width {
@@ -149,33 +147,33 @@
             &:disabled,
             &.disabled,
             &[readonly] {
-                background-color: $input-disabled-bg;
+                background-color: form-input-base.$input-disabled-bg;
             }
 
             &.no-label::placeholder {
-                color: $input-placeholder-color;
+                color: form-input-base.$input-placeholder-color;
                 opacity: 1;
             }
 
             &.form-control-lg {
-                font-size: $input-font-size;
-                line-height: $input-line-height;
+                font-size: form-input-base.$input-font-size;
+                line-height: form-input-base.$input-line-height;
             }
 
             &.form-control-sm {
-                min-height: $form-outline-input-min-height-sm;
-                padding: $form-outline-input-padding-top-sm $form-outline-input-padding-x-sm $form-outline-input-padding-bottom-sm;
-                font-size: $form-outline-input-font-size-sm;
-                line-height: $form-outline-input-line-height-sm;
+                min-height: form-outline-input.$form-outline-input-min-height-sm;
+                padding: form-outline-input.$form-outline-input-padding-top-sm form-outline-input.$form-outline-input-padding-x-sm form-outline-input.$form-outline-input-padding-bottom-sm;
+                font-size: form-outline-input.$form-outline-input-font-size-sm;
+                line-height: form-outline-input.$form-outline-input-line-height-sm;
 
                 ~ .form-label {
-                    padding-top: $form-outline-label-padding-top-sm;
-                    font-size: $form-outline-label-font-size-sm;
+                    padding-top: form-outline-input.$form-outline-label-padding-top-sm;
+                    font-size: form-outline-input.$form-outline-label-font-size-sm;
                 }
 
                 &:focus ~ .form-label,
                 &.active ~ .form-label {
-                    transform: $form-outline-active-label-transform-sm;
+                    transform: form-outline-input.$form-outline-active-label-transform-sm;
                 }
             }
         }
@@ -185,13 +183,13 @@
             position: relative;
 
             div.form-control {
-                background-color: $input-bg;
+                background-color: form-input-base.$input-bg;
                 cursor: pointer;
                 line-height: 1.3; //< needed to fix 40.5 height instead of 40.0
 
                 &.disabled {
                     cursor: not-allowed;
-                    background-color: $input-disabled-bg;
+                    background-color: form-input-base.$input-disabled-bg;
                 }
 
                 &.with-chevron {
@@ -208,54 +206,54 @@
                 right: 6px;
                 top: 50%;
                 margin-top: -10px;
-                @include mdi-icon-color($text-muted);
+                @include svg-icons.mdi-icon-color(form-input-base.$input-readonly-chevron-color);
             }
         }
 
         .form-outline-textarea-wrapper {
-            border-radius: $form-notch-border-radius;
+            border-radius: form-outline-input.$form-notch-border-radius;
             overflow: hidden;
 
             &.focus ~ .form-label {
-                color: $form-outline-active-label-color;
-                transform: $form-outline-active-label-transform
+                color: form-outline-input.$form-outline-active-label-color;
+                transform: form-outline-input.$form-outline-active-label-transform
             }
 
             &.form-control-sm.focus ~ .form-label {
-                transform: $form-outline-active-label-transform-sm
+                transform: form-outline-input.$form-outline-active-label-transform-sm
             }
         }
 
         &.form-white {
             .form-control {
-                color: $form-white-input-color;
+                color: form-input-base.$form-white-input-color;
 
                 ~ .form-label {
-                    color: $form-white-label-color;
+                    color: form-input-base.$form-white-label-color;
                 }
 
                 ~ .form-notch {
                     div {
-                        border-color: $form-white-notch-div-border-color;
+                        border-color: form-input-base.$form-white-notch-div-border-color;
                     }
                 }
 
                 &:focus ~ .form-label {
-                    color: $form-white-input-focus-label-color;
+                    color: form-input-base.$form-white-input-focus-label-color;
                 }
 
                 &:focus ~ .form-notch .form-notch-middle {
-                    border-color: $form-white-input-focus-border-color;
+                    border-color: form-input-base.$form-white-input-focus-border-color;
                 }
 
                 &:focus ~ .form-notch .form-notch-leading {
-                    border-top: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
-                    border-bottom: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
-                    border-left: $form-outline-focus-border-width solid $form-white-input-focus-border-color;
+                    border-top: form-outline-input.$form-outline-focus-border-width solid form-input-base.$form-white-input-focus-border-color;
+                    border-bottom: form-outline-input.$form-outline-focus-border-width solid form-input-base.$form-white-input-focus-border-color;
+                    border-left: form-outline-input.$form-outline-focus-border-width solid form-input-base.$form-white-input-focus-border-color;
                 }
 
                 &:focus ~ .form-notch .form-notch-trailing {
-                    border-color: $form-white-input-focus-border-color;
+                    border-color: form-input-base.$form-white-input-focus-border-color;
                 }
             }
         }

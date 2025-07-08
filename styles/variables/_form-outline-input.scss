@@ -11,6 +11,7 @@ $form-outline-input-bg: form-input-base.$input-bg !default;
 $form-outline-input-line-height: 1.5 !default;
 $form-outline-input-transition: all 0.2s linear !default;
 
+$form-notch-div-border-width: form-input-base.$input-border-width !default;
 $form-notch-div-border-color: form-input-base.$input-border-color !default;
 $form-notch-leading-width: $form-outline-input-padding-x - 0.2rem !default;
 $form-notch-border-radius: form-input-base.$input-border-radius !default;

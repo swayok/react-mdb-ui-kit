@@ -1,6 +1,7 @@
 // CKEditor Wysiwyg.
 @use "form-outline-input";
 
+$ckeditor-border-color: form-outline-input.$form-notch-div-border-color !default;
 $ckeditor-border-radius: form-outline-input.$form-notch-border-radius !default;
 
 $ckeditor-label-bg-color: #fff !default;

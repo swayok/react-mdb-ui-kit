@@ -16,6 +16,10 @@ $enable-validation-icons: false !default;
 $enable-negative-margins: true !default;
 $enable-deprecation-messages: true !default;
 $enable-important-utilities: true !default;
+// Allow styling of MDI icons.
+$enable-mdi-svg-icons: true !default;
+// Allow styling of not MDI icons.
+$enable-custom-svg-icons: true !default;
 $include-column-box-sizing: true !default;
 $include-print-styles: false !default;
 

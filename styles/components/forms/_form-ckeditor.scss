@@ -1,19 +1,19 @@
-@import "../../variables/form-input-base";
-@import "../../variables/form-outline-input";
-@import "../../variables/ckeditor";
-@import "../../variables/features";
+// CKEditor Wysiwyg.
+@use "../../variables/form-outline-input";
+@use "../../variables/ckeditor";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-ckeditor-input) {
+@if (features.$include-forms-and-inputs and features.$include-ckeditor-input) {
     // Стили интерфейса CKEditor.
     .ckeditor-container {
         label.form-label {
             position: absolute;
-            transform: $form-outline-active-label-transform;
-            background-color: $ckeditor-label-bg-color;
-            line-height: $ckeditor-label-line-height;
-            padding: $ckeditor-label-padding;
-            top: $ckeditor-label-top;
-            left: $ckeditor-label-left;
+            transform: form-outline-input.$form-outline-active-label-transform;
+            background-color: ckeditor.$ckeditor-label-bg-color;
+            line-height: ckeditor.$ckeditor-label-line-height;
+            padding: ckeditor.$ckeditor-label-padding;
+            top: ckeditor.$ckeditor-label-top;
+            left: ckeditor.$ckeditor-label-left;
             max-width: 90%;
             white-space: nowrap;
             overflow: hidden;
@@ -24,36 +24,36 @@
         }
 
         .cke {
-            border-radius: $ckeditor-border-radius;
+            border-radius: ckeditor.$ckeditor-border-radius;
             border-width: 0 !important;
 
             .cke_toolbar {
                 a.cke_button {
-                    padding: $ckeditor-toolbar-button-padding !important;
+                    padding: ckeditor.$ckeditor-toolbar-button-padding !important;
 
                     &:hover {
                         border: 0 none !important;
-                        padding: $ckeditor-toolbar-button-padding !important;
+                        padding: ckeditor.$ckeditor-toolbar-button-padding !important;
                     }
                 }
             }
 
             .cke_top {
-                border-top-left-radius: $ckeditor-border-radius;
-                border-top-right-radius: $ckeditor-border-radius;
-                border: 1px solid $input-border-color !important;
+                border-top-left-radius: ckeditor.$ckeditor-border-radius;
+                border-top-right-radius: ckeditor.$ckeditor-border-radius;
+                border: 1px solid ckeditor.$ckeditor-border-color !important;
                 border-bottom-width: 0 !important;
-                background-color: $ckeditor-toolbar-bg-color;
+                background-color: ckeditor.$ckeditor-toolbar-bg-color;
             }
 
             .cke_contents {
-                border: 1px solid  $input-border-color !important;
+                border: 1px solid ckeditor.$ckeditor-border-color !important;
             }
 
             .cke_bottom {
-                border-bottom-left-radius: $ckeditor-border-radius;
-                border-bottom-right-radius: $ckeditor-border-radius;
-                border: 1px solid  $input-border-color !important;
+                border-bottom-left-radius: ckeditor.$ckeditor-border-radius;
+                border-bottom-right-radius: ckeditor.$ckeditor-border-radius;
+                border: 1px solid ckeditor.$ckeditor-border-color !important;
                 border-top-width: 0 !important;
             }
 
@@ -62,7 +62,7 @@
             }
 
             &.cke_combopanel {
-                width: $ckeditor-combo-panel-width;
+                width: ckeditor.$ckeditor-combo-panel-width;
             }
         }
     }

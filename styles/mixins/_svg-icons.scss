@@ -1,41 +1,48 @@
 // SVG Icons mixins.
 @use "../functions/color-utils";
+@use "../variables/features";
 
 @mixin mdi-icon-color($color) {
-    path {
-        fill: $color;
+    @if (features.$enable-mdi-svg-icons) {
+        path {
+            fill: $color;
+        }
     }
 }
 
 @mixin custom-icon-color($color) {
-    &.colored-by-stroke g {
-        stroke: $color;
-    }
+    @if (features.$enable-custom-svg-icons) {
+        &.colored-by-stroke g {
+            stroke: $color;
+        }
 
-    &.colored-by-fill g {
-        fill: $color;
-    }
+        &.colored-by-fill g {
+            fill: $color;
+        }
 
-    // Изменить цвет только для fill='#000' и stroke='#000'
-    &.colored-by-various {
-        g,
-        path,
-        circle,
-        ellipse,
-        rect {
-            &[fill='#000'] {
-                fill: $color;
-            }
-            &[stroke='#000'] {
-                stroke: $color;
+        // Изменить цвет только для fill='#000' и stroke='#000'
+        &.colored-by-various {
+            g,
+            path,
+            circle,
+            ellipse,
+            rect {
+                &[fill='#000'] {
+                    fill: $color;
+                }
+                &[stroke='#000'] {
+                    stroke: $color;
+                }
             }
         }
     }
 }
 
 @mixin contained-mdi-icon-color($color) {
-    svg.mdi-icon {
-        @include mdi-icon-color($color);
+    @if (features.$enable-mdi-svg-icons) {
+        svg.mdi-icon {
+            @include mdi-icon-color($color);
+        }
     }
 }
 
@@ -59,8 +66,10 @@
 }
 
 @mixin contained-custom-svg-icon-color($color) {
-    svg.custom-icon {
-        @include custom-icon-color($color);
+    @if (features.$enable-custom-svg-icons) {
+        svg.custom-icon {
+            @include custom-icon-color($color);
+        }
     }
 }
 

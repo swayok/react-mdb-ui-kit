@@ -1,13 +1,14 @@
-@import "../../variables/form-label";
-@import "../../variables/features";
+// Group of checkboxes.
+@use "../../variables/form-label";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-checkboxes-group-input) {
+@if (features.$include-forms-and-inputs and features.$include-checkboxes-group-input) {
     // <CheckboxesGroup>
     .checkboxes-group {
         .checkboxes-group-label {
             font-weight: 500;
             text-align: center;
-            color: $form-label-color;
+            color: form-label.$form-label-color;
         }
     }
 }

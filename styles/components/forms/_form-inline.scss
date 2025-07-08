@@ -1,29 +1,30 @@
+// Inline form.
 @use "sass:math";
-@import "../../mixins/buttons";
-@import "../../variables/form-inline";
-@import "../../variables/features";
+@use "../../mixins/buttons";
+@use "../../variables/form-inline";
+@use "../../variables/features";
 
-@if ($include-forms-and-inputs and $include-form-inline) {
+@if (features.$include-forms-and-inputs and features.$include-form-inline) {
     .form-inline {
         display: flex;
         flex-direction: row;
         align-items: start;
         justify-content: start;
-        gap: $inline-form-items-gap;
+        gap: form-inline.$inline-form-items-gap;
 
         .form-outline {
             margin-bottom: 0 !important;
         }
 
         .btn {
-            min-height: $inline-form-item-min-height;
+            min-height: form-inline.$inline-form-item-min-height;
 
             &.btn-sm {
-                min-height: $inline-form-item-min-height-sm;
+                min-height: form-inline.$inline-form-item-min-height-sm;
             }
 
             &.btn-lg {
-                min-height: $inline-form-item-min-height-lg;
+                min-height: form-inline.$inline-form-item-min-height-lg;
             }
         }
     }

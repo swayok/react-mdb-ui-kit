@@ -31,7 +31,7 @@ $nav-tabs-link-active-border-color: colors.$primary !default;
 
 $nav-tabs-link-border-bottom-width: borders.$border-width * 2 !default;
 $nav-tabs-link-border-width: 0 0 $nav-tabs-link-border-bottom-width 0 !default;
-$nav-tabs-link-margin-bottom: $nav-tabs-link-border-bottom-width * -1 !default;
+$nav-tabs-link-margin-bottom: 0 !default;
 $nav-tabs-link-font-weight: 500 !default;
 $nav-tabs-link-font-size: 0.75rem !default;
 $nav-tabs-link-line-height: 1 !default;
