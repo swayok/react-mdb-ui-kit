@@ -19,9 +19,8 @@ $enable-important-utilities: true !default;
 // Allow styling of MDI icons.
 $enable-mdi-svg-icons: true !default;
 // Allow styling of not MDI icons.
-$enable-custom-svg-icons: true !default;
+$enable-custom-svg-icons: false !default;
 $include-column-box-sizing: true !default;
-$include-print-styles: false !default;
 
 // Global styles flags.
 // Here you can enable/disable :root{} vars and CSS reboot styles .
@@ -102,7 +101,6 @@ $include-container-helpers: true !default;
 $include-css-grid-helpers: true !default;
 $include-flex-grid-helpers: true !default;
 $include-flexbox-helpers: true !default;
-$include-heading-helpers: true !default;
 $include-list-helpers: true !default;
 $include-misc-helpers: true !default;
 $include-position-helpers: true !default;
@@ -116,7 +114,7 @@ $include-width-and-height-helpers: true !default;
 // Utilities flags.
 // Here you can enable/disable individual utilities.
 $include-rfs-scaling-for-utilities: true !default;
-$include-print-styles: true !default;
+$include-print-styles: false !default;
 $include-shadow-utilities: true !default;
 $include-letter-spacing-utilities: true !default;
 $include-opacity-utilities: true !default;

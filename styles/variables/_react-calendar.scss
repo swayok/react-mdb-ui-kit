@@ -1,10 +1,9 @@
 // React Calendar package styling.
 @use "colors";
-@use "borders";
 @use "typography";
 @use "body";
 
-$react-calendar-border-color: borders.$border-color !default;
+$react-calendar-border-color: colors.$border-color !default;
 $react-calendar-font-family: typography.$font-family-base !default;
 $react-calendar-width: 330px !default;
 $react-calendar-width-mobile: 90vw !default;
@@ -19,10 +18,10 @@ $react-calendar-nav-label-line-height: 1.2 !default;
 
 $react-calendar-tile-font-size: 1rem !default;
 $react-calendar-tile-transition: background-color 0.2s linear, color 0.2s linear !default;
-$react-calendar-tile-disabled-bg: colors.$gray-200 !default;
-$react-calendar-tile-hover-bg: colors.$gray-300 !default;
-$react-calendar-tile-today-bg: colors.$gray-200 !default;
-$react-calendar-tile-today-hover-bg: colors.$gray-300 !default;
+$react-calendar-tile-disabled-bg: colors.$gray-100 !default;
+$react-calendar-tile-hover-bg: colors.$gray-200 !default;
+$react-calendar-tile-today-bg: colors.$gray-100 !default;
+$react-calendar-tile-today-hover-bg: colors.$gray-200 !default;
 
 $react-calendar-tile-selected-color: colors.$white !default;
 $react-calendar-tile-selected-bg: colors.$blue-600 !default;
@@ -33,6 +32,6 @@ $react-calendar-tile-selected-in-range-bg: colors.$blue-100 !default;
 $react-calendar-tile-selected-in-range-hover-bg: colors.$blue-200 !default;
 $react-calendar-tile-in-range-bg: $react-calendar-tile-hover-bg !default;
 
-$react-calendar-tile-neighboring-month-day-color: typography.$text-muted !default;
+$react-calendar-tile-neighboring-month-day-color: colors.$text-muted !default;
 $react-calendar-tile-weekend-color: colors.$red !default;
 $react-calendar-century-tile-padding: 1.25rem 0.5rem !default;

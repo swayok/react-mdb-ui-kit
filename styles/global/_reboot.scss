@@ -61,6 +61,12 @@
         -webkit-tap-highlight-color: rgba(colors.$black, 0); // 4
     }
 
+    // Text selection colors.
+    ::selection {
+        color: colors.$text-selection-color;
+        background-color: colors.$text-selection-bg-color;
+    }
+
     // Content grouping
     //
     // 1. Reset Firefox's gray color
@@ -91,7 +97,7 @@
         font-style: typography.$headings-font-style;
         font-weight: typography.$headings-font-weight;
         line-height: typography.$headings-line-height;
-        color: typography.$headings-color;
+        color: colors.$headings-color;
     }
 
     h1,

@@ -2,7 +2,6 @@
 // Customizes the `.table` component with basic values, each used across all table variations.
 @use "colors";
 @use "borders";
-@use "typography";
 @use "components";
 @use "spacers";
 
@@ -39,10 +38,10 @@ $table-hover-transition: 0.5s !default;
 
 $table-border-factor: 0.1 !default;
 $table-border-width: borders.$border-width !default;
-$table-border-color: borders.$border-color !default;
+$table-border-color: colors.$border-color !default;
 
 $table-striped-order: odd !default;
 
 $table-group-separator-color: inherit !default;
 
-$table-caption-color: typography.$text-muted !default;
+$table-caption-color: colors.$text-muted !default;

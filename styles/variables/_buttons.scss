@@ -45,7 +45,7 @@ $btn-link-padding: 0 !default;
 $btn-link-hover-color: links.$link-hover-color !default;
 $btn-link-hover-bg: transparent !default;
 $btn-link-hover-decoration: links.$link-hover-decoration !default;
-$btn-link-disabled-color: colors.$gray-600 !default;
+$btn-link-disabled-color: links.$link-disabled-color !default;
 
 // Color modifiers for each state:
 $btn-hover-bg-shade-amount: 15% !default;

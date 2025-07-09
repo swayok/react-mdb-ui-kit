@@ -3,6 +3,7 @@
 @use "positioning";
 @use "utility-values";
 @use "borders";
+@use "colors";
 @use "color-lists";
 @use "css-variables";
 @use "typography";
@@ -120,14 +121,14 @@ $utilities: map-merge(
             (
                 property: border,
                 values: (
-                    null: borders.$border-width solid borders.$border-color,
+                    null: borders.$border-width solid colors.$border-color,
                     0: 0,
                 ),
             ),
             'border-top': (
                 property: border-top,
                 values: (
-                    null: borders.$border-width solid borders.$border-color,
+                    null: borders.$border-width solid colors.$border-color,
                     0: 0,
                 ),
             ),
@@ -135,14 +136,14 @@ $utilities: map-merge(
                 property: border-right,
                 class: border-end,
                 values: (
-                    null: borders.$border-width solid borders.$border-color,
+                    null: borders.$border-width solid colors.$border-color,
                     0: 0,
                 ),
             ),
             'border-bottom': (
                 property: border-bottom,
                 values: (
-                    null: borders.$border-width solid borders.$border-color,
+                    null: borders.$border-width solid colors.$border-color,
                     0: 0,
                 ),
             ),
@@ -150,7 +151,7 @@ $utilities: map-merge(
                 property: border-left,
                 class: border-start,
                 values: (
-                    null: borders.$border-width solid borders.$border-color,
+                    null: borders.$border-width solid colors.$border-color,
                     0: 0,
                 ),
             ),

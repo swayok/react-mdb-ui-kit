@@ -79,7 +79,6 @@ $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-font-weight: 500 !default;
 $headings-line-height: 1.2 !default;
-$headings-color: null !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
@@ -104,13 +103,11 @@ $small-font-size: 0.875em !default;
 
 $sub-sup-font-size: 0.75em !default;
 
-$text-muted: colors.$gray-600 !default;
-
 $initialism-font-size: $small-font-size !default;
 
 $blockquote-margin-y: spacers.$spacer !default;
 $blockquote-font-size: $font-size-base * 1.25 !default;
-$blockquote-footer-color: colors.$gray-600 !default;
+$blockquote-footer-color: colors.$text-muted !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
 $hr-margin-y: spacers.$spacer !default;

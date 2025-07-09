@@ -1,9 +1,8 @@
 // Rating stars.
 @use "colors";
-@use "typography";
 
 $rating-stars-line-height: 1 !default;
 $rating-stars-static-icon-color: colors.$orange !default;
-$rating-stars-interactive-inactive-icon-color: typography.$text-muted !default;
+$rating-stars-interactive-inactive-icon-color: colors.$text-muted !default;
 $rating-stars-interactive-active-icon-color: $rating-stars-static-icon-color !default;
-$rating-stars-interactive-disabled-icon-color: typography.$text-muted !default;
+$rating-stars-interactive-disabled-icon-color: colors.$text-muted !default;

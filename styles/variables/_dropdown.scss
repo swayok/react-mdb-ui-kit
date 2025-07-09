@@ -29,7 +29,7 @@ $dropdown-box-shadow: shadows.$box-shadow-4 !default;
 
 $dropdown-item-color: $dropdown-color !default;
 $dropdown-item-hover-color: functions.shade-color($dropdown-item-color, 10%) !default;
-$dropdown-item-hover-bg: colors.$gray-200 !default;
+$dropdown-item-hover-bg: colors.$gray-100 !default;
 
 $dropdown-item-active-color: components.$component-active-color !default;
 $dropdown-item-active-bg: components.$component-active-bg !default;

@@ -2,6 +2,6 @@
 @use "colors";
 @use "body";
 
-$component-active-bg: colors.$primary !default;
-$component-active-color: colors.$white !default;
 $component-color: body.$body-color !default;
+$component-active-color: colors.$white !default;
+$component-active-bg: colors.$primary !default;

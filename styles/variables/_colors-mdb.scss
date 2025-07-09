@@ -1,6 +1,5 @@
-// Material Design Color System (Customized colors).
+// Material Design Color System (Original MDB colors).
 
-// functions.generate-color-palette(#909090, 20%, 20%, #202020);
 // scss-docs-start gray-color-variables
 $white: #fff !default;
 $gray-50: #fbfbfb !default;
@@ -17,17 +16,16 @@ $gray-900: #262626 !default;
 $black: #000 !default;
 // scss-docs-end gray-color-variables
 
-// functions.generate-color-palette(#00aaff, 20%, 20%, functions.shade-color(#0055ff, 50%));
-$blue-50: #E6F7FF !default;
-$blue-100: #CCEEFF !default;
-$blue-200: #99DDFF !default;
-$blue-300: #66CCFF !default;
-$blue-400: #33BBFF !default;
-$blue-500: #00AAFF !default;
-$blue-600: #0091E6 !default;
-$blue-700: #0077CC !default;
-$blue-800: #005EB3 !default;
-$blue-900: #004499 !default;
+$blue-50: #e3f2fd !default;
+$blue-100: #bbdefb !default;
+$blue-200: #90caf9 !default;
+$blue-300: #64b5f6 !default;
+$blue-400: #42a5f5 !default;
+$blue-500: #2196f3 !default;
+$blue-600: #1e88e5 !default;
+$blue-700: #1976d2 !default;
+$blue-800: #1565c0 !default;
+$blue-900: #0d47a1 !default;
 $blue-accent-100: #82b1ff !default;
 $blue-accent-200: #448aff !default;
 $blue-accent-400: #2979ff !default;
@@ -78,33 +76,31 @@ $pink-accent-200: #ff4081 !default;
 $pink-accent-400: #f50057 !default;
 $pink-accent-700: #c51162 !default;
 
-// functions.generate-color-palette(#de2f28, 20%, 20%, functions.shade-color(#fb3029, 50%));
-$red-50: #FCEAEA !default;
-$red-100: #F8D5D4 !default;
-$red-200: #F2ACA9 !default;
-$red-300: #EB827E !default;
-$red-400: #E55953 !default;
-$red-500: #DE2F28 !default;
-$red-600: #CB2A24 !default;
-$red-700: #B72620 !default;
-$red-800: #A4211C !default;
-$red-900: #911D18 !default;
+$red-50: #ffebee !default;
+$red-100: #ffcdd2 !default;
+$red-200: #ef9a9a !default;
+$red-300: #e57373 !default;
+$red-400: #ef5350 !default;
+$red-500: #f44336 !default;
+$red-600: #e53935 !default;
+$red-700: #d32f2f !default;
+$red-800: #c62828 !default;
+$red-900: #b71c1c !default;
 $red-accent-100: #ff8a80 !default;
 $red-accent-200: #ff5252 !default;
 $red-accent-400: #ff1744 !default;
 $red-accent-700: #d50000 !default;
 
-// functions.generate-color-palette(#ffca67, 20%, 20%, #de5f04);
-$orange-50: #FFFAF0 !default;
-$orange-100: #FFF4E1 !default;
-$orange-200: #FFEAC2 !default;
-$orange-300: #FFDFA4 !default;
-$orange-400: #FFD585 !default;
-$orange-500: #FFCA67 !default;
-$orange-600: #F8B553 !default;
-$orange-700: #F29F3F !default;
-$orange-800: #EB8A2C !default;
-$orange-900: #E57418 !default;
+$orange-50: #fff3e0 !default;
+$orange-100: #ffe0b2 !default;
+$orange-200: #ffcc80 !default;
+$orange-300: #ffb74d !default;
+$orange-400: #ffa726 !default;
+$orange-500: #ff9800 !default;
+$orange-600: #fb8c00 !default;
+$orange-700: #f57c00 !default;
+$orange-800: #ef6c00 !default;
+$orange-900: #e65100 !default;
 $orange-accent-100: #ffd180 !default;
 $orange-accent-200: #ffab40 !default;
 $orange-accent-400: #ff9100 !default;
@@ -125,17 +121,16 @@ $yellow-accent-200: #ffff00 !default;
 $yellow-accent-400: #ffea00 !default;
 $yellow-accent-700: #ffd600 !default;
 
-// functions.generate-color-palette(#4ac125, 20%, 20%, functions.shade-color(#4ac125, 60));
-$green-50: #EDF9E9 !default;
-$green-100: #DBF3D3 !default;
-$green-200: #B7E6A8 !default;
-$green-300: #92DA7C !default;
-$green-400: #6ECD51 !default;
-$green-500: #4AC125 !default;
-$green-600: #41AA21 !default;
-$green-700: #38931C !default;
-$green-800: #2F7C18 !default;
-$green-900: #266413 !default;
+$green-50: #e8f5e9 !default;
+$green-100: #c8e6c9 !default;
+$green-200: #a5d6a7 !default;
+$green-300: #81c784 !default;
+$green-400: #66bb6a !default;
+$green-500: #4caf50 !default;
+$green-600: #43a047 !default;
+$green-700: #388e3c !default;
+$green-800: #2e7d32 !default;
+$green-900: #1b5e20 !default;
 $green-accent-100: #b9f6ca !default;
 $green-accent-200: #69f0ae !default;
 $green-accent-400: #00e676 !default;
@@ -315,16 +310,3 @@ $dark: $gray-900 !default;
 // scss-docs-start variable-gradient
 $gradient: linear-gradient(180deg, rgba($white, 0.15), rgba($white, 0)) !default;
 // scss-docs-end variable-gradient
-
-// Headings.
-$headings-color: null !default;
-
-// Texts.
-$text-muted: $gray-500 !default;
-
-// Text selection colors.
-$text-selection-color: null !default;
-$text-selection-bg-color: null !default;
-
-// Borders.
-$border-color: $gray-300 !default;

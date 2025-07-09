@@ -1,7 +1,6 @@
 // Section divider with optional label (alternative for <hr>).
-@use "borders";
 @use "colors";
 
 $section-divider-color: colors.$gray-700;
-$section-divider-border-color: borders.$border-color;
+$section-divider-border-color: colors.$border-color;
 $section-divider-border-color-darker: #BBB;

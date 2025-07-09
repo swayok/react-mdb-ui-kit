@@ -4,7 +4,6 @@
 @use "z-index";
 @use "shadows";
 @use "colors";
-@use "typography";
 
 $file-picker-preview-transition: opacity 0.1s linear !default;
 $file-picker-preview-border-radius: 0.75rem !default;
@@ -30,8 +29,8 @@ $file-picker-previews-adder-transition: border-color 200ms linear !default;
 $file-picker-previews-adder-hover-color: colors.$blue-400 !default;
 $file-picker-previews-adder-hover-border-color: $file-picker-previews-adder-hover-color !default;
 
-$file-picker-previews-adder-disabled-color: typography.$text-muted !default;
-$file-picker-previews-adder-disabled-border-color: typography.$text-muted !default;
+$file-picker-previews-adder-disabled-color: colors.$text-muted !default;
+$file-picker-previews-adder-disabled-border-color: colors.$text-muted !default;
 
 // .file-picker-previews-white-bg
 $file-picker-previews-with-white-bg: colors.$white !default;

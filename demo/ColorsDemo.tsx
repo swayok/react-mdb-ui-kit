@@ -80,6 +80,11 @@ export default function ColorsDemo() {
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="test-palette" single>
                     <ColorPaletteDemo color="test"/>
+                    <SectionDivider
+                        label="Camparison"
+                        labelClassName="text-blue"
+                    />
+                    <ColorPaletteDemo color="test-compare" accents={[]}/>
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

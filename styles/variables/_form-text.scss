@@ -1,10 +1,11 @@
 // Text block inside form.
 @use "typography";
+@use "colors";
 
 // scss-docs-start form-text-variables
 $form-text-margin-top: 0.25rem !default;
 $form-text-font-size: typography.$small-font-size !default;
 $form-text-font-style: null !default;
 $form-text-font-weight: null !default;
-$form-text-color: typography.$text-muted !default;
+$form-text-color: colors.$text-muted !default;
 // scss-docs-end form-text-variables

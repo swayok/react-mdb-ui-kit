@@ -7,6 +7,7 @@ import {DataGridDemo} from 'swayok-react-mdb-ui-kit/demo/groups/DataGridDemo'
 import ImagesPreviewDemo from 'swayok-react-mdb-ui-kit/demo/groups/ImagesPreviewDemo'
 import RatingStarsDemo from 'swayok-react-mdb-ui-kit/demo/groups/RatingStarsDemo'
 import {TablesDemo} from 'swayok-react-mdb-ui-kit/demo/groups/TablesDemo'
+import ToastsDemo from 'swayok-react-mdb-ui-kit/demo/groups/ToastsDemo'
 import TabContentForDemoTabsheet from 'swayok-react-mdb-ui-kit/demo/TabContentForDemoTabsheet'
 
 // Демонстрация компонентов.
@@ -23,6 +24,9 @@ export default function ComponentsDemo() {
                 <TabSheetTabButton name="rating-stars">
                     Rating Stars
                 </TabSheetTabButton>
+                <TabSheetTabButton name="toast">
+                    Toast
+                </TabSheetTabButton>
                 <TabSheetTabButton name="images-previewer">
                     Images Previewer
                 </TabSheetTabButton>
@@ -36,6 +40,9 @@ export default function ComponentsDemo() {
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="rating-stars">
                     <RatingStarsDemo/>
+                </TabContentForDemoTabsheet>
+                <TabContentForDemoTabsheet name="toast" single>
+                    <ToastsDemo/>
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="images-previewer">
                     <ImagesPreviewDemo/>

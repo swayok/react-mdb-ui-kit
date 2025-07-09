@@ -1,5 +1,6 @@
 @use '../functions/color-utils';
 @use '../variables/colors';
+@use '../variables/color-lists';
 
 $demo-primary-colors: (
     'primary': colors.$primary,
@@ -12,310 +13,58 @@ $demo-primary-colors: (
     'dark': colors.$dark,
 ) !default;
 
-$demo-test-palette: color-utils.generate-color-palette('test', colors.$blue-500) !default;
+/*
+Usage example:
+@use 'swayok-react-mdb-ui-kit/styles/functions';
+@use 'swayok-react-mdb-ui-kit/styles/variables/color-lists';
+@use 'swayok-react-mdb-ui-kit/styles/demo/colors-demo' with (
+    $demo-test-palette: color-utils.generate-color-palette(
+        colors.$blue-500,
+        20%,
+        20%,
+        color-utils.shade-color(colors.$blue-500, 60%)
+    ),
+    $demo-test-compare-palette: color-lists.$palette-blue,
+);
+*/
+$demo-test-palette: color-utils.generate-color-palette(
+        colors.$blue-500,
+        20%,
+        20%,
+        color-utils.shade-color(colors.$blue-500, 60%)
+) !default;
+$demo-test-compare-palette: color-lists.$palette-blue !default;
 
 $demo-palettes: (
-    'gray': (
-        '50': colors.$gray-50,
-        '100': colors.$gray-100,
-        '200': colors.$gray-200,
-        '300': colors.$gray-300,
-        '350': colors.$gray-350,
-        '400': colors.$gray-400,
-        '500': colors.$gray-500,
-        '600': colors.$gray-600,
-        '700': colors.$gray-700,
-        '800': colors.$gray-800,
-        '900': colors.$gray-900,
-    ),
-    'blue': (
-        '50': colors.$blue-50,
-        '100': colors.$blue-100,
-        '200': colors.$blue-200,
-        '300': colors.$blue-300,
-        '400': colors.$blue-400,
-        '500': colors.$blue-500,
-        '600': colors.$blue-600,
-        '700': colors.$blue-700,
-        '800': colors.$blue-800,
-        '900': colors.$blue-900,
-        'accent-100': colors.$blue-accent-100,
-        'accent-200': colors.$blue-accent-200,
-        'accent-400': colors.$blue-accent-400,
-        'accent-700': colors.$blue-accent-700,
-    ),
-    'indigo': (
-        '50': colors.$indigo-50,
-        '100': colors.$indigo-100,
-        '200': colors.$indigo-200,
-        '300': colors.$indigo-300,
-        '400': colors.$indigo-400,
-        '500': colors.$indigo-500,
-        '600': colors.$indigo-600,
-        '700': colors.$indigo-700,
-        '800': colors.$indigo-800,
-        '900': colors.$indigo-900,
-        'accent-100': colors.$indigo-accent-100,
-        'accent-200': colors.$indigo-accent-200,
-        'accent-400': colors.$indigo-accent-400,
-        'accent-700': colors.$indigo-accent-700,
-    ),
-    'purple': (
-        '50': colors.$purple-50,
-        '100': colors.$purple-100,
-        '200': colors.$purple-200,
-        '300': colors.$purple-300,
-        '400': colors.$purple-400,
-        '500': colors.$purple-500,
-        '600': colors.$purple-600,
-        '700': colors.$purple-700,
-        '800': colors.$purple-800,
-        '900': colors.$purple-900,
-        'accent-100': colors.$purple-accent-100,
-        'accent-200': colors.$purple-accent-200,
-        'accent-400': colors.$purple-accent-400,
-        'accent-700': colors.$purple-accent-700,
-    ),
-    'pink': (
-        '50': colors.$pink-50,
-        '100': colors.$pink-100,
-        '200': colors.$pink-200,
-        '300': colors.$pink-300,
-        '400': colors.$pink-400,
-        '500': colors.$pink-500,
-        '600': colors.$pink-600,
-        '700': colors.$pink-700,
-        '800': colors.$pink-800,
-        '900': colors.$pink-900,
-        'accent-100': colors.$pink-accent-100,
-        'accent-200': colors.$pink-accent-200,
-        'accent-400': colors.$pink-accent-400,
-        'accent-700': colors.$pink-accent-700,
-    ),
-    'red': (
-        '50': colors.$red-50,
-        '100': colors.$red-100,
-        '200': colors.$red-200,
-        '300': colors.$red-300,
-        '400': colors.$red-400,
-        '500': colors.$red-500,
-        '600': colors.$red-600,
-        '700': colors.$red-700,
-        '800': colors.$red-800,
-        '900': colors.$red-900,
-        'accent-100': colors.$red-accent-100,
-        'accent-200': colors.$red-accent-200,
-        'accent-400': colors.$red-accent-400,
-        'accent-700': colors.$red-accent-700,
-    ),
-    'orange': (
-        '50': colors.$orange-50,
-        '100': colors.$orange-100,
-        '200': colors.$orange-200,
-        '300': colors.$orange-300,
-        '400': colors.$orange-400,
-        '500': colors.$orange-500,
-        '600': colors.$orange-600,
-        '700': colors.$orange-700,
-        '800': colors.$orange-800,
-        '900': colors.$orange-900,
-        'accent-100': colors.$orange-accent-100,
-        'accent-200': colors.$orange-accent-200,
-        'accent-400': colors.$orange-accent-400,
-        'accent-700': colors.$orange-accent-700,
-    ),
-    'yellow': (
-        '50': colors.$yellow-50,
-        '100': colors.$yellow-100,
-        '200': colors.$yellow-200,
-        '300': colors.$yellow-300,
-        '400': colors.$yellow-400,
-        '500': colors.$yellow-500,
-        '600': colors.$yellow-600,
-        '700': colors.$yellow-700,
-        '800': colors.$yellow-800,
-        '900': colors.$yellow-900,
-        'accent-100': colors.$yellow-accent-100,
-        'accent-200': colors.$yellow-accent-200,
-        'accent-400': colors.$yellow-accent-400,
-        'accent-700': colors.$yellow-accent-700,
-    ),
-    'green': (
-        '50': colors.$green-50,
-        '100': colors.$green-100,
-        '200': colors.$green-200,
-        '300': colors.$green-300,
-        '400': colors.$green-400,
-        '500': colors.$green-500,
-        '600': colors.$green-600,
-        '700': colors.$green-700,
-        '800': colors.$green-800,
-        '900': colors.$green-900,
-        'accent-100': colors.$green-accent-100,
-        'accent-200': colors.$green-accent-200,
-        'accent-400': colors.$green-accent-400,
-        'accent-700': colors.$green-accent-700,
-    ),
-    'teal': (
-        '50': colors.$teal-50,
-        '100': colors.$teal-100,
-        '200': colors.$teal-200,
-        '300': colors.$teal-300,
-        '400': colors.$teal-400,
-        '500': colors.$teal-500,
-        '600': colors.$teal-600,
-        '700': colors.$teal-700,
-        '800': colors.$teal-800,
-        '900': colors.$teal-900,
-        'accent-100': colors.$teal-accent-100,
-        'accent-200': colors.$teal-accent-200,
-        'accent-400': colors.$teal-accent-400,
-        'accent-700': colors.$teal-accent-700,
-    ),
-    'cyan': (
-        '50': colors.$cyan-50,
-        '100': colors.$cyan-100,
-        '200': colors.$cyan-200,
-        '300': colors.$cyan-300,
-        '400': colors.$cyan-400,
-        '500': colors.$cyan-500,
-        '600': colors.$cyan-600,
-        '700': colors.$cyan-700,
-        '800': colors.$cyan-800,
-        '900': colors.$cyan-900,
-        'accent-100': colors.$cyan-accent-100,
-        'accent-200': colors.$cyan-accent-200,
-        'accent-400': colors.$cyan-accent-400,
-        'accent-700': colors.$cyan-accent-700,
-    ),
-    'deep-purple': (
-        '50': colors.$deep-purple-50,
-        '100': colors.$deep-purple-100,
-        '200': colors.$deep-purple-200,
-        '300': colors.$deep-purple-300,
-        '400': colors.$deep-purple-400,
-        '500': colors.$deep-purple-500,
-        '600': colors.$deep-purple-600,
-        '700': colors.$deep-purple-700,
-        '800': colors.$deep-purple-800,
-        '900': colors.$deep-purple-900,
-        'accent-100': colors.$deep-purple-accent-100,
-        'accent-200': colors.$deep-purple-accent-200,
-        'accent-400': colors.$deep-purple-accent-400,
-        'accent-700': colors.$deep-purple-accent-700,
-    ),
-    'light-blue': (
-        '50': colors.$light-blue-50,
-        '100': colors.$light-blue-100,
-        '200': colors.$light-blue-200,
-        '300': colors.$light-blue-300,
-        '400': colors.$light-blue-400,
-        '500': colors.$light-blue-500,
-        '600': colors.$light-blue-600,
-        '700': colors.$light-blue-700,
-        '800': colors.$light-blue-800,
-        '900': colors.$light-blue-900,
-        'accent-100': colors.$light-blue-accent-100,
-        'accent-200': colors.$light-blue-accent-200,
-        'accent-400': colors.$light-blue-accent-400,
-        'accent-700': colors.$light-blue-accent-700,
-    ),
-    'light-green': (
-        '50': colors.$light-green-50,
-        '100': colors.$light-green-100,
-        '200': colors.$light-green-200,
-        '300': colors.$light-green-300,
-        '400': colors.$light-green-400,
-        '500': colors.$light-green-500,
-        '600': colors.$light-green-600,
-        '700': colors.$light-green-700,
-        '800': colors.$light-green-800,
-        '900': colors.$light-green-900,
-        'accent-100': colors.$light-green-accent-100,
-        'accent-200': colors.$light-green-accent-200,
-        'accent-400': colors.$light-green-accent-400,
-        'accent-700': colors.$light-green-accent-700,
-    ),
-    'lime': (
-        '50': colors.$lime-50,
-        '100': colors.$lime-100,
-        '200': colors.$lime-200,
-        '300': colors.$lime-300,
-        '400': colors.$lime-400,
-        '500': colors.$lime-500,
-        '600': colors.$lime-600,
-        '700': colors.$lime-700,
-        '800': colors.$lime-800,
-        '900': colors.$lime-900,
-        'accent-100': colors.$lime-accent-100,
-        'accent-200': colors.$lime-accent-200,
-        'accent-400': colors.$lime-accent-400,
-        'accent-700': colors.$lime-accent-700,
-    ),
-    'amber': (
-        '50': colors.$amber-50,
-        '100': colors.$amber-100,
-        '200': colors.$amber-200,
-        '300': colors.$amber-300,
-        '400': colors.$amber-400,
-        '500': colors.$amber-500,
-        '600': colors.$amber-600,
-        '700': colors.$amber-700,
-        '800': colors.$amber-800,
-        '900': colors.$amber-900,
-        'accent-100': colors.$amber-accent-100,
-        'accent-200': colors.$amber-accent-200,
-        'accent-400': colors.$amber-accent-400,
-        'accent-700': colors.$amber-accent-700,
-    ),
-    'deep-orange': (
-        '50': colors.$deep-orange-50,
-        '100': colors.$deep-orange-100,
-        '200': colors.$deep-orange-200,
-        '300': colors.$deep-orange-300,
-        '400': colors.$deep-orange-400,
-        '500': colors.$deep-orange-500,
-        '600': colors.$deep-orange-600,
-        '700': colors.$deep-orange-700,
-        '800': colors.$deep-orange-800,
-        '900': colors.$deep-orange-900,
-        'accent-100': colors.$deep-orange-accent-100,
-        'accent-200': colors.$deep-orange-accent-200,
-        'accent-400': colors.$deep-orange-accent-400,
-        'accent-700': colors.$deep-orange-accent-700,
-    ),
-    'brown': (
-        '50': colors.$brown-50,
-        '100': colors.$brown-100,
-        '200': colors.$brown-200,
-        '300': colors.$brown-300,
-        '400': colors.$brown-400,
-        '500': colors.$brown-500,
-        '600': colors.$brown-600,
-        '700': colors.$brown-700,
-        '800': colors.$brown-800,
-        '900': colors.$brown-900,
-    ),
-    'blue-gray': (
-        '50': colors.$blue-gray-50,
-        '100': colors.$blue-gray-100,
-        '200': colors.$blue-gray-200,
-        '300': colors.$blue-gray-300,
-        '400': colors.$blue-gray-400,
-        '500': colors.$blue-gray-500,
-        '600': colors.$blue-gray-600,
-        '700': colors.$blue-gray-700,
-        '800': colors.$blue-gray-800,
-        '900': colors.$blue-gray-900,
-    ),
+    'gray': color-lists.$palette-gray,
+    'blue': color-lists.$palette-blue,
+    'indigo': color-lists.$palette-indigo,
+    'purple': color-lists.$palette-purple,
+    'pink': color-lists.$palette-pink,
+    'red': color-lists.$palette-red,
+    'orange': color-lists.$palette-orange,
+    'yellow': color-lists.$palette-yellow,
+    'green': color-lists.$palette-green,
+    'teal': color-lists.$palette-teal,
+    'cyan': color-lists.$palette-cyan,
+    'deep-purple': color-lists.$palette-deep-purple,
+    'light-blue': color-lists.$palette-light-blue,
+    'light-green': color-lists.$palette-light-green,
+    'lime': color-lists.$palette-lime,
+    'amber': color-lists.$palette-amber,
+    'deep-orange': color-lists.$palette-deep-orange,
+    'brown': color-lists.$palette-brown,
+    'blue-gray': color-lists.$palette-blue-gray,
     '': $demo-primary-colors,
+    'test-compare': $demo-test-compare-palette,
     'test': $demo-test-palette,
 ) !default;
 
 @mixin color-variant($color-name, $color-variant, $color) {
     .color-variant-#{$color-variant} {
+        display: grid;
         height: 26px;
-        $var-name: if($color-name != '', "$#{$color-name}-#{$color-variant}", "#{$color-variant}");
+        $var-name: if($color-name != '', "$#{$color-name}-#{$color-variant}", "$#{$color-variant}");
         $var-and-color: "#{$var-name}: #{color-utils.convert-color-to-hex($color)};";
         @debug $var-and-color;
 
@@ -338,12 +87,11 @@ $demo-palettes: (
     }
 }
 
-.color-palette-demo,
-.common-colors-demo {
+.color-palette-demo {
     [class*="color-variant-"] {
+        display: none;
         position: relative;
-        display: grid;
-        grid-template-columns: 120px 120px 130px 130px 130px 130px 200px;
+        grid-template-columns: 90px 120px 120px 130px 130px 130px 130px 200px;
         grid-column-gap: 12px;
 
         .color-variable,
@@ -366,6 +114,7 @@ $demo-palettes: (
         .color-variable {
             border-left: 1px solid colors.$gray-400;
             padding-left: 16px;
+            margin-left: 8px;
         }
 
         .color-in-text.black-bg {
