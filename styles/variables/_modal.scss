@@ -1,5 +1,5 @@
 // Modals.
-@use "../functions";
+@use "../functions/calc-utils";
 @use "spacers";
 @use "colors";
 @use "borders";
@@ -22,7 +22,7 @@ $modal-content-bg: colors.$white !default;
 $modal-content-border-color: rgba(colors.$black, 0.2) !default;
 $modal-content-border-width: 0 !default;
 $modal-content-border-radius: borders.$border-radius-xl !default;
-$modal-content-inner-border-radius: functions.subtract($modal-content-border-radius, $modal-content-border-width) !default;
+$modal-content-inner-border-radius: calc-utils.subtract($modal-content-border-radius, $modal-content-border-width) !default;
 $modal-content-box-shadow-xs: shadows.$box-shadow-sm !default;
 $modal-content-box-shadow-sm-up: shadows.$box-shadow-4 !default;
 

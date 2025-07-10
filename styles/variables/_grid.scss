@@ -3,7 +3,7 @@
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 @use 'sass:math';
-@use "../functions";
+@use "../functions/map-utils";
 @use "spacers";
 
 // scss-docs-start grid-breakpoints
@@ -17,8 +17,8 @@ $grid-breakpoints: (
 ) !default;
 // scss-docs-end grid-breakpoints
 
-@include functions.assert-ascending($grid-breakpoints, '$grid-breakpoints');
-@include functions.assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
+@include map-utils.assert-ascending($grid-breakpoints, '$grid-breakpoints');
+@include map-utils.assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
 
 // Grid containers
 //
@@ -34,7 +34,7 @@ $container-max-widths: (
 ) !default;
 // scss-docs-end container-max-widths
 
-@include functions.assert-ascending($container-max-widths, '$container-max-widths');
+@include map-utils.assert-ascending($container-max-widths, '$container-max-widths');
 
 // Grid columns
 //

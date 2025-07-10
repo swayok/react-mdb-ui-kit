@@ -1,6 +1,6 @@
 // Form checkbox styled as on-off switch.
 @use 'sass:math';
-@use "../functions";
+@use "../functions/color-utils";
 @use "form-check";
 @use "colors";
 @use "shadows";
@@ -38,7 +38,7 @@ $form-switch-toggler-checked-focus-bg-color: $form-switch-toggler-checked-bg-col
 $form-switch-toggler-checked-focus-opacity: 0.7 !default;
 $form-switch-toggler-checked-focus-box-shadow: none !default;
 
-$form-switch-track-checked-bg-color: functions.tint-color($form-switch-toggler-checked-bg-color, 70%) !default;
+$form-switch-track-checked-bg-color: color-utils.tint-color($form-switch-toggler-checked-bg-color, 70%) !default;
 
 $form-switch-label-margin: form-check.$form-check-label-margin !default;
 $form-switch-label-margin-sm: form-check.$form-check-label-margin-sm !default;

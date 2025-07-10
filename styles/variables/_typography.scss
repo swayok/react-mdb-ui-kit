@@ -6,9 +6,19 @@
 @use 'colors';
 @use 'borders';
 
+$_font-url: (
+    'Roboto': 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
+    'Open Sans': 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap',
+    'Manrope': 'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap',
+);
+
 // scss-docs-start font-variables
+// Font family to import from Google Fonts.
+$import-font-family: 'Roboto' !default;
+// Possible values: url like 'https://fonts.googleapis.com/css2?family=...'
+$import-font-family-from-url: map-get($_font-url, $import-font-family) !default;
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Open Sans', 'Helvetica Neue', Roboto, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans',
+$font-family-sans-serif: $import-font-family, 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans',
 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
 // stylelint-enable value-keyword-case

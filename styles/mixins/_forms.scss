@@ -1,7 +1,8 @@
 // This mixin uses an `if()` technique to be compatible with Dart Sass
 // See https://github.com/sass/sass/issues/1873#issuecomment-152293725 for more details
 
-@use "../functions";
+@use "../functions/color-utils";
+@use "../functions/string-utils";
 @use "rfs";
 @use "border-radius";
 @use "../variables/tooltip";
@@ -29,7 +30,7 @@
     $state,
     $color,
     $icon,
-    $tooltip-color: functions.color-contrast($color),
+    $tooltip-color: color-utils.color-contrast($color),
     $tooltip-bg-color: rgba($color, tooltip.$form-feedback-tooltip-opacity),
     $focus-box-shadow: 0 0 0 form-input-base.$input-focus-box-shadow-width rgba($color, form-input-base.$input-focus-box-shadow-color-opacity)
 ) {
@@ -74,7 +75,7 @@
 
             @if features.$enable-validation-icons {
                 padding-right: form-input-base.$input-height-inner;
-                background-image: functions.escape-svg($icon);
+                background-image: string-utils.escape-svg($icon);
                 background-repeat: no-repeat;
                 background-position: right form-input-base.$input-height-inner-quarter center;
                 background-size: form-input-base.$input-height-inner-half form-input-base.$input-height-inner-half;
@@ -121,7 +122,7 @@
                 &:not([multiple]):not([size]),
                 &:not([multiple])[size='1'] {
                     padding-right: form-select.$form-select-feedback-icon-padding-end;
-                    background-image: functions.escape-svg(form-select.$form-select-indicator), functions.escape-svg($icon);
+                    background-image: string-utils.escape-svg(form-select.$form-select-indicator), string-utils.escape-svg($icon);
                     background-position: form-select.$form-select-bg-position, form-select.$form-select-feedback-icon-position;
                     background-size: form-select.$form-select-bg-size, form-select.$form-select-feedback-icon-size;
                 }

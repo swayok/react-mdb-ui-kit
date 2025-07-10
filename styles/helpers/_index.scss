@@ -7,14 +7,15 @@
 @use 'clearfix';
 
 @use 'ratio';
-@use 'flexbox';
 @use 'position';
 @use 'visually-hidden';
 @use 'background-attachment';
-@use 'width-and-height';
 @use 'list';
 @use 'blockquote';
 @use 'text';
 @use 'misc';
 
+// @use order matters!
 @use 'utilities';
+@use 'flexbox';
+@use 'width-and-height';

@@ -7,7 +7,6 @@ export interface BadgeProps extends ComponentPropsWithModifiableTag {
     dot?: boolean,
     notification?: boolean,
     color?: BackgroundColors,
-    large?: boolean
 }
 
 // Элемент, стилизованный под небольшой блок с фоном и текстом или числом (кол-во, теги и т.п.)
@@ -17,7 +16,6 @@ function Badge(props: BadgeProps, ref: React.ForwardedRef<HTMLAllCollection>) {
         color,
         pill,
         dot,
-        large,
         tag: Tag = 'span',
         children,
         notification,
@@ -30,7 +28,6 @@ function Badge(props: BadgeProps, ref: React.ForwardedRef<HTMLAllCollection>) {
         dot ? 'badge-dot' : null,
         pill ? 'rounded-pill' : null,
         notification ? 'badge-notification' : null,
-        large ? 'badge-lg' : null,
         className
     )
 

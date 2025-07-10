@@ -23,7 +23,8 @@ $enable-custom-svg-icons: false !default;
 $include-column-box-sizing: true !default;
 
 // Global styles flags.
-// Here you can enable/disable :root{} vars and CSS reboot styles .
+// Here you can enable/disable :root{} vars, fonts import and CSS reboot styles .
+$include-fonts-import: true !default;
 $include-reboot: true !default;
 $include-root: true !default;
 

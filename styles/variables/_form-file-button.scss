@@ -1,10 +1,10 @@
 // File input as a button.
-@use "../functions";
+@use "../functions/color-utils";
 @use "form-input-base";
 @use "form-input-group";
 
 // scss-docs-start form-file-variables
 $form-file-button-color: form-input-base.$input-color !default;
 $form-file-button-bg: form-input-group.$input-group-addon-bg !default;
-$form-file-button-hover-bg: functions.shade-color($form-file-button-bg, 5%) !default;
+$form-file-button-hover-bg: color-utils.shade-color($form-file-button-bg, 5%) !default;
 // scss-docs-end form-file-variables

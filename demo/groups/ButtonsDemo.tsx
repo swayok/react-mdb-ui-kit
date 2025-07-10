@@ -235,8 +235,6 @@ export const buttonColors: ButtonColors[] = [
     'red',
     'orange',
     'blue',
-    'light',
-    'dark',
     'link',
 
     'primary',
@@ -245,6 +243,7 @@ export const buttonColors: ButtonColors[] = [
     'info',
     'warning',
     'danger',
+    'light',
     'dark',
     'white',
     'black',

@@ -1,9 +1,13 @@
 // Badge.
+@use "sass:list";
+@use "../functions/color-utils";
 @use "../mixins/gradients";
 @use "../mixins/border-radius";
 @use "../mixins/rfs";
 @use "../variables/features";
 @use "../variables/badge";
+@use "../variables/color-lists";
+@use "../variables/color-contrast";
 
 @if (features.$include-badge) {
     // Requires one of the contextual, color modifier classes for `color` and
@@ -24,6 +28,16 @@
         // Empty badges collapse automatically
         &:empty {
             display: none;
+        }
+    }
+
+    %contrast-badge-color {
+        color: badge.$badge-color-light-bg;
+    }
+    // Change text color for light backgrounds.
+    @each $color-name, $bg-color in color-utils.filter-light-colors(color-lists.$bg-colors) {
+        .badge.bg-#{$color-name} {
+            @extend %contrast-badge-color;
         }
     }
 

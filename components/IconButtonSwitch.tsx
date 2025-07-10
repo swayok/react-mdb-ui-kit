@@ -1,13 +1,16 @@
 import React from 'react'
+import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import IconButton, {IconButtonProps} from './IconButton'
 import clsx from 'clsx'
 import {mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle} from '@mdi/js'
 
 interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {
-    active: boolean,
-    activeIcon?: string,
-    inactiveIcon?: string,
+    active: boolean
+    activeIcon?: string
+    inactiveIcon?: string
+    activeColor?: TextColors
     activeClassName?: string
+    inactiveColor?: TextColors
     inactiveClassName?: string
 }
 
@@ -16,9 +19,11 @@ function IconButtonSwitch(props: IconButtonSwitchProps) {
     const {
         active,
         activeIcon = mdiCheckboxMarkedCircle,
-        activeClassName = 'text-green',
+        activeColor = 'green',
+        activeClassName,
         inactiveIcon = mdiCheckboxBlankCircleOutline,
-        inactiveClassName = 'text-muted',
+        inactiveColor = 'muted',
+        inactiveClassName,
         className,
         ...otherProps
     } = props
@@ -26,6 +31,7 @@ function IconButtonSwitch(props: IconButtonSwitchProps) {
     return (
         <IconButton
             path={active ? activeIcon : inactiveIcon}
+            color={active ? activeColor : inactiveColor}
             className={clsx(
                 className,
                 active ? activeClassName : inactiveClassName

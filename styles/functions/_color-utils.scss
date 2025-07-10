@@ -1,6 +1,5 @@
 @use 'sass:math';
-
-@use "../variables/color-contrast" as *;
+@use "../variables/color-contrast";
 
 // scss-docs-start color-functions
 
@@ -20,11 +19,11 @@
 
 @function color-contrast(
     $background,
-    $color-contrast-dark: $color-contrast-dark,
-    $color-contrast-light: $color-contrast-light,
-    $min-contrast-ratio: $min-contrast-ratio
+    $color-contrast-dark: color-contrast.$color-contrast-dark,
+    $color-contrast-light: color-contrast.$color-contrast-light,
+    $min-contrast-ratio: color-contrast.$min-contrast-ratio
 ) {
-    $foregrounds: $color-contrast-light, $color-contrast-dark, $color-contrast-white, $color-contrast-black;
+    $foregrounds: $color-contrast-light, $color-contrast-dark, color-contrast.$color-contrast-white, color-contrast.$color-contrast-black;
     $max-ratio: 0;
     $max-ratio-color: null;
 
@@ -43,7 +42,7 @@
     @return $max-ratio-color;
 }
 
-@function contrast-ratio($background, $foreground: $color-contrast-light) {
+@function contrast-ratio($background, $foreground: color-contrast.$color-contrast-light) {
     $l1: luminance($background);
     $l2: luminance(opaque($background, $foreground));
 
@@ -119,7 +118,7 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
 @function link-hover-color($color, $link-shade-percentage) {
     @if ($link-shade-percentage != 0) {
         @return if(
-                color-contrast($color) == $color-contrast-light,
+                color-contrast($color) == color-contrast.$color-contrast-light,
                 shade-color($color, $link-shade-percentage),
                 tint-color($color, $link-shade-percentage)
         );
@@ -176,3 +175,54 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
     @debug '=================================';
     @return $map;
 }
+
+// Get only light colors from the map.
+// Primarily used to change text color depending on bg color.
+@function filter-light-colors($colors) {
+    $light: ();
+    @each $color-name, $value in $colors {
+        @if (contrast-ratio($value) < color-contrast.$min-contrast-ratio) {
+            $light: map-merge($light, ($color-name: $value));
+        }
+    }
+    @return $light
+}
+
+// Get only dark colors from the map.
+// Primarily used to change text color depending on bg color.
+@function filter-dark-colors($colors) {
+    $dark: ();
+    @each $color-name, $value in $colors {
+        @if (contrast-ratio($value) > color-contrast.$min-contrast-ratio) {
+            $dark: map-merge($dark, ($color-name: $value));
+        }
+    }
+    @return $dark
+}
+
+/*
+Usage example:
+%contrast-badge-color {
+    color: badge.$badge-color-light-bg;
+}
+// Change text color for light backgrounds.
+@each $color-name, $bg-color in color-utils.filter-light-colors(color-lists.$bg-colors) {
+    // Remove space between # and {$color-name}.
+    .badge.bg-# {$color-name} {
+        @extend %contrast-badge-color;
+    }
+}
+
+This will produce optimized selectors list like:
+.badge.bg-white, .badge.bg-light, ... {
+    color: #000000;
+}
+instead of adding separate selectors for each background color:
+.badge.bg-white {
+    color: #000000;
+}
+.badge.bg-light {
+    color: #000000;
+}
+...
+*/

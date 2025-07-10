@@ -1,0 +1,6 @@
+@use "../variables/features";
+@use "../variables/typography";
+
+@if (features.$include-fonts-import and typography.$import-font-family-from-url) {
+    @import url('#{typography.$import-font-family-from-url}');
+}

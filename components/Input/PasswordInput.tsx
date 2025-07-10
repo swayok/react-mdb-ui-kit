@@ -34,7 +34,7 @@ function PasswordInput(props: PasswordInputProps) {
             {withUnmaskToggler && props.value && props.value.length > 0 && (
                 <InputAddonText>
                     <IconButton
-                        className="text-muted"
+                        color="muted"
                         path={masked ? mdiEye : mdiEyeOff}
                         onClick={() => {
                             setMasked(!masked)

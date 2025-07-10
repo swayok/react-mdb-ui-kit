@@ -97,7 +97,7 @@
     }
 
     @each $color, $value in color-lists.$button-colors {
-        .btn.btn-with-icon {
+        .btn {
             &.btn-#{$color} {
                 @include svg-icons.contained-mdi-icon-color-in-button($value)
             }

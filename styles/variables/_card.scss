@@ -1,7 +1,7 @@
 // Cards
 
 @use "sass:math";
-@use "../functions";
+@use "../functions/calc-utils";
 @use "borders";
 @use "grid";
 @use "shadows";
@@ -16,7 +16,7 @@ $card-title-spacer-y: 0 !default;
 $card-border-width: 0 !default;
 $card-border-radius: borders.$border-radius-xl !default;
 $card-border-color: rgba(colors.$black, 0.125) !default;
-$card-inner-border-radius: functions.subtract($card-border-radius, $card-border-width) !default;
+$card-inner-border-radius: calc-utils.subtract($card-border-radius, $card-border-width) !default;
 
 $card-header-border-width: borders.$border-width !default;
 $card-header-padding-y: math.div($card-spacer-y, 2) !default;

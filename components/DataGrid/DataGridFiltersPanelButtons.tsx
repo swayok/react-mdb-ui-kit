@@ -44,7 +44,7 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
                     tooltip={translations.filters.apply}
                     color="blue"
                     className="mx-2"
-                    disabled={disabled || loading}
+                    disabled={disabled ?? loading}
                     onClick={() => onSubmit?.()}
                 />
             )
@@ -70,7 +70,7 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
                     tooltip={translations.filters.reset}
                     color="muted"
                     className="mx-2"
-                    disabled={disabled || loading}
+                    disabled={disabled ?? loading}
                     onClick={() => onReset?.()}
                 />
             )

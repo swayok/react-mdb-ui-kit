@@ -112,6 +112,10 @@
         }
     }
 
+    .input-group-stretched {
+        align-items: stretch;
+    }
+
     .input-group > [class*='btn-outline-'] + [class*='btn-outline-'] {
         border-left: 0;
     }

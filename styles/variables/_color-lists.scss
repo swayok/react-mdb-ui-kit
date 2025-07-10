@@ -1,4 +1,4 @@
-@use "../functions";
+@use "../functions/color-utils";
 @use "colors";
 @use "body";
 
@@ -428,12 +428,12 @@ $table-bg-scale: -80% !default;
 
 // scss-docs-start table-loop
 $table-variants: (
-    'primary': functions.shift-color(colors.$primary, $table-bg-scale),
-    'secondary': functions.shift-color(colors.$secondary, $table-bg-scale),
-    'success': functions.shift-color(colors.$success, $table-bg-scale),
-    'info': functions.shift-color(colors.$info, $table-bg-scale),
-    'warning': functions.shift-color(colors.$warning, $table-bg-scale),
-    'danger': functions.shift-color(colors.$danger, $table-bg-scale),
+    'primary': color-utils.shift-color(colors.$primary, $table-bg-scale),
+    'secondary': color-utils.shift-color(colors.$secondary, $table-bg-scale),
+    'success': color-utils.shift-color(colors.$success, $table-bg-scale),
+    'info': color-utils.shift-color(colors.$info, $table-bg-scale),
+    'warning': color-utils.shift-color(colors.$warning, $table-bg-scale),
+    'danger': color-utils.shift-color(colors.$danger, $table-bg-scale),
     'light': colors.$light,
     'dark': colors.$dark,
 ) !default;
@@ -459,7 +459,7 @@ $form-checkbox-colors: (
 // scss-docs-end form-switch-loop
 
 // scss-docs-start icon-colors-loop
-$icon-colors: map_merge($text-colors, $theme-colors) !default;
+$icon-colors: map_merge($theme-colors, $text-colors) !default;
 // scss-docs-end icon-colors-loop
 
 // scss-docs-start tooltip-text-colors-loop

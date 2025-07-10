@@ -1,12 +1,12 @@
 // Select input with dropdown (<Dropdown> component for options).
-@use "../functions";
+@use "../functions/calc-utils";
 @use "colors";
 
 $form-dropdown-select-padding-right: 2rem !default;
 $form-dropdown-select-dropup-offset: 0.625rem !default;
 
 $form-dropdown-select-chevron-color: colors.$text-muted !default;
-$form-dropdown-select-chevron-offset-x: functions.subtract($form-dropdown-select-padding-right, 24px) !default;
+$form-dropdown-select-chevron-offset-x: calc-utils.subtract($form-dropdown-select-padding-right, 24px) !default;
 
 $form-dropdown-select-empty-option-color: colors.$text-muted !default;
 $form-dropdown-select-empty-option-selected-color: colors.$text-muted !default;

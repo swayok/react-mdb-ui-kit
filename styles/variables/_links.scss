@@ -1,12 +1,11 @@
 // Links.
-@use "../functions";
-@use "typography";
+@use "../functions/color-utils";
 @use "colors";
 
 $link-color: colors.$primary !default;
 $link-decoration: underline !default;
 $link-shade-percentage: 20% !default;
-$link-hover-color: functions.shift-color($link-color, $link-shade-percentage) !default;
+$link-hover-color: color-utils.link-hover-color($link-color, $link-shade-percentage) !default;
 $link-hover-decoration: none !default;
 $link-transition: color 0.2s linear !default;
 $link-disabled-color: colors.$text-muted !default;
