@@ -16,7 +16,7 @@ export interface DropdownContextProps {
 
 export interface DropdownProps extends Omit<
     ComponentPropsWithModifiableTag,
-    'onSelect' | 'onToggle'
+    'onSelect' | 'onToggle' | 'open'
 > {
     // Начальное состояние выпадающего меню.
     defaultShow?: boolean

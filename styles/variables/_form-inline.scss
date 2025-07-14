@@ -1,4 +1,5 @@
 // Inline form.
+@use "sass:math";
 @use "spacers";
 @use "form-outline-input";
 
@@ -6,4 +7,9 @@ $inline-form-items-gap: map_get(spacers.$spacers, 3) !default;
 
 $inline-form-item-min-height: form-outline-input.$form-outline-input-min-height !default;
 $inline-form-item-min-height-sm: form-outline-input.$form-outline-input-min-height-sm !default;
-$inline-form-item-min-height-lg: form-outline-input.$form-outline-input-min-height !default;
+$inline-form-item-min-height-lg: $inline-form-item-min-height !default;
+
+$inline-form-btn-white-space: nowrap !default;
+$inline-form-btn-padding-y: math.div(form-outline-input.$form-outline-input-padding-top + form-outline-input.$form-outline-input-padding-bottom, 2) !default;
+$inline-form-btn-padding-y-sm: math.div(form-outline-input.$form-outline-input-padding-top-sm + form-outline-input.$form-outline-input-padding-bottom-sm, 2) !default;
+$inline-form-btn-padding-y-lg: $inline-form-btn-padding-y !default;

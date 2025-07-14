@@ -155,13 +155,16 @@
         flex-shrink: 0;
         align-items: flex-start;
         justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
-        padding: modal.$modal-header-padding;
+        padding: modal.$modal-header-padding-y modal.$modal-header-padding-x;
         border-bottom: modal.$modal-header-border-width solid modal.$modal-header-border-color;
         @include border-radius.border-top-radius(modal.$modal-content-inner-border-radius);
 
         .btn-close {
             padding: (math.div(modal.$modal-header-padding-y, 2)) (math.div(modal.$modal-header-padding-x, 2));
-            margin: (math.div(modal.$modal-header-padding-y, -2)) (math.div(modal.$modal-header-padding-x, -2)) (math.div(modal.$modal-header-padding-y, -2)) auto;
+        }
+
+        .modal-title + .btn-close {
+            margin: modal.$modal-header-close-button-margin;
         }
 
         .layout-mobile & {

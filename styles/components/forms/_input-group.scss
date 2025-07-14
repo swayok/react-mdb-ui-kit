@@ -58,9 +58,15 @@
             position: relative;
             z-index: 2;
             min-height: form-input-group.$input-group-addon-min-height;
+            padding-top: form-input-group.$input-group-addon-btn-padding-y;
+            padding-bottom: form-input-group.$input-group-addon-btn-padding-y;
+            white-space: form-input-group.$input-group-addon-btn-white-space;
+            flex-shrink: 0;
 
             &.btn-sm {
                 min-height: form-input-group.$input-group-addon-min-height-sm;
+                padding-top: form-input-group.$input-group-addon-btn-padding-y-sm;
+                padding-bottom: form-input-group.$input-group-addon-btn-padding-y-sm;
             }
 
             &:focus {

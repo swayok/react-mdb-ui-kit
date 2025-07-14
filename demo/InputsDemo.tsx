@@ -8,6 +8,7 @@ import ButtonsSwitchDemo from 'swayok-react-mdb-ui-kit/demo/groups/ButtonsSwitch
 import CheckboxesAndRadiosDemo from 'swayok-react-mdb-ui-kit/demo/groups/CheckboxesAndRadiosDemo'
 import DateInputsDemo from 'swayok-react-mdb-ui-kit/demo/groups/DateInputsDemo'
 import FilePickersDemo from 'swayok-react-mdb-ui-kit/demo/groups/FilePickersDemo'
+import {FormInlineDemo} from 'swayok-react-mdb-ui-kit/demo/groups/FormInlineDemo'
 import HtmlEditorsDemo from 'swayok-react-mdb-ui-kit/demo/groups/HtmlEditorsDemo'
 import MdbTextAreaInputsDemo from 'swayok-react-mdb-ui-kit/demo/groups/MdbTextAreaInputsDemo'
 import MdbTextInputsDemo from 'swayok-react-mdb-ui-kit/demo/groups/MdbTextInputsDemo'
@@ -55,6 +56,9 @@ export default function InputsDemo() {
                 <TabSheetTabButton name="file-pickers">
                     File Pickers
                 </TabSheetTabButton>
+                <TabSheetTabButton name="form-inline">
+                    Form Inline
+                </TabSheetTabButton>
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="checkboxes">
@@ -93,6 +97,9 @@ export default function InputsDemo() {
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="file-pickers">
                     <FilePickersDemo/>
+                </TabContentForDemoTabsheet>
+                <TabContentForDemoTabsheet name="form-inline">
+                    <FormInlineDemo/>
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

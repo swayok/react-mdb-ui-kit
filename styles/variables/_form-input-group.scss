@@ -1,4 +1,5 @@
 // Form inputs group.
+@use "sass:math";
 @use "colors";
 @use "form-input-base";
 @use "form-outline-input";
@@ -16,6 +17,7 @@ $input-group-focus-box-shadow: inset 0 0 0 1px colors.$primary !default;
 $input-group-form-outline-border-left-width: 1px !default;
 $input-group-form-outline-border-left-color: #bdbdbd !default;
 
+// Normal:
 $input-group-addon-min-height: form-outline-input.$form-outline-input-min-height;
 $input-group-addon-padding-y: form-input-base.$input-padding-y !default;
 $input-group-addon-padding-x: form-input-base.$input-padding-x !default;
@@ -24,12 +26,15 @@ $input-group-addon-font-weight: form-input-base.$input-font-weight !default;
 $input-group-addon-color: form-input-base.$input-color !default;
 $input-group-addon-bg: transparent !default;
 $input-group-addon-border-color: form-input-base.$input-border-color !default;
+$input-group-addon-btn-white-space: nowrap !default;
+$input-group-addon-btn-padding-y: math.div(form-outline-input.$form-outline-label-padding-top + form-outline-input.$form-outline-input-padding-bottom, 2) !default;
 
 // Small:
 $input-group-addon-min-height-sm: form-outline-input.$form-outline-input-min-height-sm;
 $input-group-addon-font-size-sm: form-input-base.$input-font-size-sm !default;
 $input-group-addon-padding-y-sm: form-input-base.$input-padding-y-sm !default;
 $input-group-addon-padding-x-sm: form-input-base.$input-padding-x-sm !default;
+$input-group-addon-btn-padding-y-sm: math.div(form-outline-input.$form-outline-label-padding-top-sm + form-outline-input.$form-outline-input-padding-bottom-sm, 2) !default;
 
 // Large:
 $input-group-addon-min-height-lg: form-outline-input.$form-outline-input-min-height;

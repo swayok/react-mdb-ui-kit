@@ -1,4 +1,4 @@
-// Inline form.
+// Inlined form inputs and buttons.
 @use "sass:math";
 @use "../../mixins/buttons";
 @use "../../variables/form-inline";
@@ -12,19 +12,28 @@
         justify-content: start;
         gap: form-inline.$inline-form-items-gap;
 
+        .form-validation-container,
         .form-outline {
             margin-bottom: 0 !important;
         }
 
         .btn {
             min-height: form-inline.$inline-form-item-min-height;
+            padding-top: form-inline.$inline-form-btn-padding-y;
+            padding-bottom: form-inline.$inline-form-btn-padding-y;
+            white-space: form-inline.$inline-form-btn-white-space;
+            flex-shrink: 0;
 
             &.btn-sm {
                 min-height: form-inline.$inline-form-item-min-height-sm;
+                padding-top: form-inline.$inline-form-btn-padding-y-sm;
+                padding-bottom: form-inline.$inline-form-btn-padding-y-sm;
             }
 
             &.btn-lg {
                 min-height: form-inline.$inline-form-item-min-height-lg;
+                padding-top: form-inline.$inline-form-btn-padding-y-lg;
+                padding-bottom: form-inline.$inline-form-btn-padding-y-lg;
             }
         }
     }
