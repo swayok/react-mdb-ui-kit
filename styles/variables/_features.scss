@@ -38,7 +38,7 @@ $include-buttons: true !default;
 $include-card: true !default;
 $include-carousel: true !default;
 $include-chevron: true !default;
-$include-ckeditor-iframe-content: true !default;
+$include-ckeditor-iframe-content: false !default;
 $include-collapse: true !default;
 $include-data-grid: true !default;
 $include-drag-and-drop: true !default;
@@ -111,6 +111,7 @@ $include-transition-helpers: true !default;
 $include-utilities: true !default;
 $include-visually-hidden-helpers: true !default;
 $include-width-and-height-helpers: true !default;
+$include-with-icon-helpers: true !default;
 
 // Utilities flags.
 // Here you can enable/disable individual utilities.

@@ -43,7 +43,6 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
                     size={30}
                     tooltip={translations.filters.apply}
                     color="blue"
-                    className="mx-2"
                     disabled={disabled ?? loading}
                     onClick={() => onSubmit?.()}
                 />
@@ -52,8 +51,8 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
                 <Button
                     color="blue"
                     type={onSubmit ? 'button' : 'submit'}
-                    className="mx-2 full-height"
-                    disabled={disabled || loading}
+                    className="full-height"
+                    disabled={!!disabled || loading}
                     onClick={onSubmit}
                 >
                     {translations.filters.apply}
@@ -69,17 +68,16 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
                     size={30}
                     tooltip={translations.filters.reset}
                     color="muted"
-                    className="mx-2"
                     disabled={disabled ?? loading}
                     onClick={() => onReset?.()}
                 />
             )
             : (
                 <Button
-                    color="default"
+                    color="gray"
                     type={onSubmit ? 'button' : 'reset'}
-                    className="mx-2 full-height"
-                    disabled={disabled || loading}
+                    className="full-height"
+                    disabled={!!disabled || loading}
                     onClick={onReset}
                 >
                     {translations.filters.reset}
@@ -91,7 +89,7 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
         <div
             {...otherProps}
             className={clsx(
-                'py-2 align-self-stretch d-flex flex-row align-items-center justify-content-end',
+                'align-self-stretch d-flex flex-row gap-3 align-items-center justify-content-end',
                 className
             )}
         >

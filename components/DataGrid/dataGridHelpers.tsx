@@ -6,7 +6,7 @@ import {AnyObject} from '../../types/Common'
 import clsx from 'clsx'
 
 // Стандартные отступы для полей ввода панели фильтрации,
-export const dataGridFiltersPanelInputMargins: string = 'mt-2 mb-2 ms-2 me-2'
+export const dataGridFiltersPanelInputMargins: string = ''
 
 // Нормализация смещения отображаемых строк на странице.
 export function normalizeOffset(limit: number, offset: number): number {

@@ -1,0 +1,33 @@
+@use "../variables/features";
+
+@if (features.$include-with-icon-helpers) {
+    .with-icon:not(.btn) {
+        svg.mdi-icon,
+        svg.custom-icon {
+            display: inline-block;
+            margin-top: -2px;
+        }
+    }
+
+    .btn.with-icon {
+        display: inline-block;
+        vertical-align: top;
+
+        svg.mdi-icon,
+        svg.custom-icon {
+            vertical-align: text-top;
+        }
+    }
+
+    .with-icon-flex {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        svg.mdi-icon,
+        svg.custom-icon {
+            vertical-align: top;
+        }
+    }
+}

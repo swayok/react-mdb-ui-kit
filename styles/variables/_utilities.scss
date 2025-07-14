@@ -280,6 +280,18 @@ $utilities: map-merge(
                 class: gap,
                 values: spacers.$spacers,
             ),
+            'row-gap': (
+                responsive: true,
+                property: row-gap,
+                class: row-gap,
+                values: spacers.$spacers,
+            ),
+            'col-gap': (
+                responsive: true,
+                property: column-gap,
+                class: col-gap,
+                values: spacers.$spacers,
+            ),
             'justify-content': (
                 responsive: true,
                 property: justify-content,

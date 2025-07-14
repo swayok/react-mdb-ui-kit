@@ -11,7 +11,6 @@ function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
     const {
         children,
         className,
-        flex = true,
         borderBottom = true,
         paddings = true,
         disabled,
@@ -29,10 +28,9 @@ function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
         <form
             {...otherProps}
             className={clsx(
-                'data-grid-filters m-0 form-inline',
+                'data-grid-filters m-0 form-inline flex-wrap align-items-center',
                 borderBottom ? 'border-bottom' : null,
-                flex ? 'd-flex flex-row flex-wrap align-items-center justify-content-start' : null,
-                paddings ? 'pt-1 pb-1 ps-2 pe-2' : null,
+                paddings ? 'p-3' : null,
                 className
             )}
             action="/public"

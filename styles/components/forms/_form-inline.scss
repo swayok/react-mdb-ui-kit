@@ -10,12 +10,8 @@
         flex-direction: row;
         align-items: start;
         justify-content: start;
-        gap: form-inline.$inline-form-items-gap;
-
-        .form-validation-container,
-        .form-outline {
-            margin-bottom: 0 !important;
-        }
+        row-gap: form-inline.$inline-form-items-row-gap;
+        column-gap: form-inline.$inline-form-items-column-gap;
 
         .btn {
             min-height: form-inline.$inline-form-item-min-height;

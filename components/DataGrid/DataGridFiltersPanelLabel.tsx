@@ -9,7 +9,7 @@ function DataGridFiltersPanelLabel(props: DataGridFiltersPanelLabelProps) {
 
     const {
         label = translations.filters.header,
-        className = 'mt-2 mb-2 me-2 ms-2 fs-6 text-muted fw-600',
+        className = 'fs-6 text-muted fw-600',
         ...otherProps
     } = props
 

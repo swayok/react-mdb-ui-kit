@@ -24,6 +24,7 @@ export function FormInlineDemo() {
                     label="Input 1"
                     value={formValues.value1}
                     onChange={event => setFormValue('value1', event.currentTarget.value)}
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -34,6 +35,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"
@@ -48,6 +50,7 @@ export function FormInlineDemo() {
                     onChange={event => setFormValue('value1', event.currentTarget.value)}
                     invalid={true}
                     validationMessage="Invalid value with long long long long long text"
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -58,6 +61,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"
@@ -73,6 +77,7 @@ export function FormInlineDemo() {
                     value={formValues.value1}
                     small
                     onChange={event => setFormValue('value1', event.currentTarget.value)}
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -84,6 +89,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"
@@ -100,6 +106,7 @@ export function FormInlineDemo() {
                     invalid={true}
                     small
                     validationMessage="Invalid value with long long long long long text"
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -111,6 +118,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"
@@ -127,6 +135,7 @@ export function FormInlineDemo() {
                     value={formValues.value1}
                     large
                     onChange={event => setFormValue('value1', event.currentTarget.value)}
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -138,6 +147,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"
@@ -154,6 +164,7 @@ export function FormInlineDemo() {
                     invalid={true}
                     large
                     validationMessage="Invalid value with long long long long long text"
+                    wrapperClass="m-0"
                 />
                 <SelectInput
                     label="Select"
@@ -165,6 +176,7 @@ export function FormInlineDemo() {
                         {label: 'Value 3', value: 'value3'},
                     ]}
                     onChange={value => setFormValue('value2', value)}
+                    wrapperClass="m-0"
                 />
                 <Button
                     color="green"

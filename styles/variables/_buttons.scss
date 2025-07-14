@@ -11,7 +11,7 @@
 // scss-docs-start btn-variables
 $btn-text-transform: uppercase !default;
 $btn-padding-top: 0.625rem !default;
-// Null means that function padding-bottom() will calculate bottom padding
+// Null means that function btn-padding-bottom() will calculate bottom padding
 // based on $btn-padding-top, $btn-text-transform and $btn-font-size.
 // Value can be overridden to disable calculation.
 $btn-padding-bottom: null !default;
