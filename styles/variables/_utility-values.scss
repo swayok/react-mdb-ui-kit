@@ -186,3 +186,19 @@ $spacers-y-values: spacers.$spacers !default;
 
 $negative-spacers-x: map-utils.negativify-map($spacers-x-values) !default;
 $negative-spacers-y: map-utils.negativify-map($spacers-y-values) !default;
+
+$z-index-values: [
+    1,
+    2,
+    3,
+    4,
+    5,
+] !default;
+
+// scss-docs-start position-map
+$position-values: (
+    0: 0,
+    50: 50%,
+    100: 100%,
+) !default;
+// scss-docs-end position-map
