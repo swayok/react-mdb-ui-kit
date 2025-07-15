@@ -1,5 +1,5 @@
 // CSS Grid mixins.
-@use '../variables/css-grid';
+@use "../variables/css-grid";
 
 @mixin css-grid-classes($infix: '') {
     @for $i from 1 through css-grid.$css-grid-max-columns {
@@ -14,13 +14,13 @@
         }
     }
 
-    @each $step, $value in css-grid.$css-grid-columns-gaps {
+    @each $step, $value in css-grid.$css-grid-column-gaps {
         .grid-columns-gap#{$infix}-#{$step} {
             grid-column-gap: $value;
         }
     }
 
-    @each $step, $value in css-grid.$css-grid-rows-gaps {
+    @each $step, $value in css-grid.$css-grid-row-gaps {
         .grid-rows-gap#{$infix}-#{$step} {
             grid-row-gap: $value;
         }

@@ -9,14 +9,6 @@
 
         @include breakpoints.media-breakpoint-up($breakpoint) {
 
-            .flex#{$infix}-1 {
-                flex: 1 !important;
-            }
-
-            .flex#{$infix}-0 {
-                flex: none !important;
-            }
-
             .flex#{$infix}-center {
                 display: flex !important;
                 flex-direction: column;

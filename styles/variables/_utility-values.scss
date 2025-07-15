@@ -1,5 +1,78 @@
-@use 'shadows';
-@use 'card';
+@use "sass:math";
+@use "../functions/map-utils";
+@use "shadows";
+@use "card";
+@use "borders";
+@use "typography";
+@use "spacers";
+
+$border-radius-values: (
+    null: borders.$border-radius,
+    0: 0,
+    1: borders.$border-radius-sm,
+    2: borders.$border-radius,
+    3: borders.$border-radius-lg,
+    4: 0.375rem,
+    5: 0.5rem,
+    6: 0.75rem,
+    7: 1rem,
+    8: 1.25rem,
+    9: 1.5rem,
+    circle: 50%,
+    pill: borders.$border-radius-pill,
+) !default;
+
+// scss-docs-start font-sizes
+$font-size-values: (
+    1: typography.$h1-font-size,
+    2: typography.$h2-font-size,
+    3: typography.$h3-font-size,
+    4: typography.$h4-font-size,
+    5: typography.$h5-font-size,
+    6: typography.$h6-font-size,
+    7: typography.$font-size-sm,
+    8: typography.$font-size-xs,
+) !default;
+
+$display-font-size-values: (
+    1: 5rem,
+    2: 4.5rem,
+    3: 4rem,
+    4: 3.5rem,
+    5: 3rem,
+    6: 2.5rem,
+) !default;
+// scss-docs-end font-sizes
+
+// scss-docs-start font-weights
+$font-weight-values: (
+    light: typography.$font-weight-light,
+    lighter: typography.$font-weight-lighter,
+    normal: typography.$font-weight-normal,
+    bold: typography.$font-weight-bold,
+    bolder: typography.$font-weight-bolder,
+    200: 200,
+    300: 300,
+    400: 400,
+    500: 500,
+    600: 600,
+    700: 700,
+    800: 800,
+) !default;
+// scss-docs-end font-weights
+
+$line-height-values: (
+    1: 1,
+    sm: typography.$line-height-sm,
+    base: typography.$line-height-base,
+    lg: typography.$line-height-lg,
+) !default;
+
+$cursor-values: (
+    null: pointer,
+    not-allowed: not-allowed,
+    default: default,
+) !default;
 
 // scss-docs-start opacity-values
 $opacity-values: (
@@ -59,3 +132,57 @@ $letter-spacing-values: (
     widest: 0.1em,
 ) !default;
 // scss-docs-end letter-spacing-values
+
+$order-values: (
+    first: -1,
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    last: 6,
+) !default;
+
+$flex-size-values: (
+    0: 0,
+    1: 1,
+    fill: 1 1 auto,
+) !default;
+
+$height-values: (
+    25: 25%,
+    50: 50%,
+    75: 75%,
+    100: 100%,
+    auto: auto,
+) !default;
+
+$width-values: (
+    25: 25%,
+    50: 50%,
+    75: 75%,
+    100: 100%,
+    auto: auto,
+) !default;
+
+$spacers-xy-values: (
+    0: map-get(spacers.$spacers, 0),
+    1: map-get(spacers.$spacers, 1),
+    2: map-get(spacers.$spacers, 2),
+    3: map-get(spacers.$spacers, 3),
+    4: map-get(spacers.$spacers, 4),
+    5: map-get(spacers.$spacers, 5),
+) !default;
+$spacers-x-values: (
+    0: map-get(spacers.$spacers, 0),
+    1: map-get(spacers.$spacers, 1),
+    2: map-get(spacers.$spacers, 2),
+    3: map-get(spacers.$spacers, 3),
+    4: map-get(spacers.$spacers, 4),
+    5: map-get(spacers.$spacers, 5),
+) !default;
+$spacers-y-values: spacers.$spacers !default;
+
+$negative-spacers-x: map-utils.negativify-map($spacers-x-values) !default;
+$negative-spacers-y: map-utils.negativify-map($spacers-y-values) !default;

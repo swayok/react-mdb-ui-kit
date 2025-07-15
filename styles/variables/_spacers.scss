@@ -3,7 +3,7 @@
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
 
-@use 'sass:math';
+@use "sass:math";
 @use "../functions/map-utils";
 @use "features";
 
@@ -21,6 +21,16 @@ $spacers: (
     8: $spacer * 4,
     9: $spacer * 5,
 ) !default;
+// В utilities для оси x используется значения от 0 до 5.
+// См.: $spacers-x-values, $spacers-y-values, $negative-spacers-x, $negative-spacers-y, $gaps-values.
 
-$negative-spacers: if(features.$enable-negative-margins, map-utils.negativify-map($spacers), null) !default;
+// Для flexbox (gap, row-gap, column-gap) и css-grid (grid-column-gap, grid-row-gap).
+$gaps: (
+    0: map-get($spacers, 0),
+    1: map-get($spacers, 1),
+    2: map-get($spacers, 2),
+    3: map-get($spacers, 3),
+    4: map-get($spacers, 4),
+    5: map-get($spacers, 5),
+) !default;
 // scss-docs-end spacer-variables-maps

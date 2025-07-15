@@ -3,7 +3,7 @@
 // .modal           - container to scroll within
 // .modal-dialog    - positioning shell for the actual modal
 // .modal-content   - actual modal w/ bg and corners and stuff
-@use 'sass:math';
+@use "sass:math";
 @use "../functions/calc-utils";
 @use "../mixins/transition";
 @use "../mixins/border-radius";

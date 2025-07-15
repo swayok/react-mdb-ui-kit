@@ -1,9 +1,7 @@
 // Body
-//
 // Settings for the `<body>` element.
-
 @use "colors";
 
-$body-bg: colors.$white !default;
+$body-bg: #fafafa !default;
 $body-color: colors.$gray-800 !default;
 $body-text-align: null !default;

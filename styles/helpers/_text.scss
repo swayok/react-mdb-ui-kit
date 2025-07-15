@@ -4,16 +4,20 @@
 @use "../global/reboot";
 @use "../variables/features";
 @use "../variables/typography";
+@use "../variables/utility-values";
 
 @if (features.$include-helpers and features.$include-text-helpers) {
+
+    %display-font-size {
+        font-weight: typography.$display-font-weight;
+        line-height: typography.$display-line-height;
+    }
     //
     // Display font sizes classes
     //
-    @each $display, $font-size in typography.$display-font-sizes {
+    @each $display, $font-size in utility-values.$display-font-size-values {
         .display-#{$display} {
-            font-weight: typography.$display-font-weight;
-            line-height: typography.$display-line-height;
-
+            @extend %display-font-size;
             @include rfs.font-size($font-size);
         }
     }

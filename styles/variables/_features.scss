@@ -13,7 +13,6 @@ $enable-grid-classes: true !default;
 $enable-button-pointers: true !default;
 $enable-rfs: true !default;
 $enable-validation-icons: false !default;
-$enable-negative-margins: true !default;
 $enable-deprecation-messages: true !default;
 $enable-important-utilities: true !default;
 // Allow styling of MDI icons.
@@ -115,6 +114,27 @@ $include-with-icon-helpers: true !default;
 
 // Utilities flags.
 // Here you can enable/disable individual utilities.
+$include-vertical-align-utilities: true !default;
+$include-float-utilities: true !default;
+$include-overflow-utilities: true !default;
+$include-display-utilities: true !default;
+$include-z-index-utilities: true !default;
+$include-cursor-utilities: true !default;
+$include-position-utilities: true !default;
+$include-border-utilities: true !default;
+$include-width-utilities: true !default;
+$include-height-utilities: true !default;
+$include-flexbox-utilities: true !default;
+$include-margin-utilities: true !default;
+$include-negative-margin-utilities: true !default;
+$include-padding-utilities: true !default;
+$include-text-utilities: true !default;
+$include-text-color-utilities: true !default;
+$include-bg-color-utilities: true !default;
+$include-gradient-utilities: true !default;
+$include-interaction-utilities: true !default; // user-select & pointer-events
+$include-border-radius-utilities: true !default; // user-select & pointer-events
+$include-visibility-utilities: true !default; // user-select & pointer-events
 $include-rfs-scaling-for-utilities: true !default;
 $include-print-styles: false !default;
 $include-shadow-utilities: true !default;

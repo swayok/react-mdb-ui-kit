@@ -1,4 +1,5 @@
 @use "../variables/features";
+@use "../variables/buttons";
 
 @if (features.$include-with-icon-helpers) {
     .with-icon:not(.btn) {

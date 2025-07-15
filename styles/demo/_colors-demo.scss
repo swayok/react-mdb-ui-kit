@@ -1,6 +1,6 @@
-@use '../functions/color-utils';
-@use '../variables/colors';
-@use '../variables/color-lists';
+@use "../functions/color-utils";
+@use "../variables/colors";
+@use "../variables/color-lists";
 
 $demo-primary-colors: (
     'primary': colors.$primary,
@@ -15,9 +15,9 @@ $demo-primary-colors: (
 
 /*
 Usage example:
-@use 'swayok-react-mdb-ui-kit/styles/functions';
-@use 'swayok-react-mdb-ui-kit/styles/variables/color-lists';
-@use 'swayok-react-mdb-ui-kit/styles/demo/colors-demo' with (
+@use "swayok-react-mdb-ui-kit/styles/functions";
+@use "swayok-react-mdb-ui-kit/styles/variables/color-lists";
+@use "swayok-react-mdb-ui-kit/styles/demo/colors-demo" with (
     $demo-test-palette: color-utils.generate-color-palette(
         colors.$blue-500,
         20%,
