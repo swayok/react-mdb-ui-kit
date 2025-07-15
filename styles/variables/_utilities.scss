@@ -428,7 +428,7 @@ $utilities: () !default;
                     class: m,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-xy-values,
                             (
                                 auto: auto,
                             )
@@ -440,7 +440,7 @@ $utilities: () !default;
                     class: mx,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-x-values,
                             (
                                 auto: auto,
                             )
@@ -452,7 +452,7 @@ $utilities: () !default;
                     class: my,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-y-values,
                             (
                                 auto: auto,
                             )
@@ -464,7 +464,7 @@ $utilities: () !default;
                     class: mt,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-y-values,
                             (
                                 auto: auto,
                             )
@@ -476,7 +476,7 @@ $utilities: () !default;
                     class: me,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-x-values,
                             (
                                 auto: auto,
                             )
@@ -488,7 +488,7 @@ $utilities: () !default;
                     class: mb,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-y-values,
                             (
                                 auto: auto,
                             )
@@ -500,7 +500,7 @@ $utilities: () !default;
                     class: ms,
                     values:
                     map-merge(
-                            spacers.$spacers,
+                            utility-values.$spacers-x-values,
                             (
                                 auto: auto,
                             )
