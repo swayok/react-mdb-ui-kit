@@ -35,7 +35,7 @@ export const FilePickerFilePreviewFileInfo = React.memo(function FilePickerFileP
                 )
             } else {
                 return (
-                    <div className="mt-1 text-orange">
+                    <div className="mt-1 text-warning">
                         {translations.status.not_uploaded}
                     </div>
                 )

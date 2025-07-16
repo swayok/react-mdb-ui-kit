@@ -36,8 +36,9 @@ export interface UILayout {
 }
 
 // Все возможные цвета различных компонентов (зависит от стилей).
-export type TextColors = 'default' | 'white' | 'muted' | 'secondary'
-    | 'theme' | 'dark' | 'gray' | 'primary' | 'blue' | 'red' | 'green' | 'orange' | string
+export type TextColors = 'body' | 'white' | 'muted'
+    | 'dark' | 'gray' | 'light-gray' | 'blue' | 'red' | 'green' | 'orange'
+    | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | string
 export type ButtonColors = 'none' | 'gray' | 'green' | 'red' | 'orange' | 'blue' | 'primary'
     | 'secondary' | 'link' | 'light' | 'dark' | string
 export type BackgroundColors = 'transparent' | 'white' | 'gray' | 'green' | 'red' | 'orange'

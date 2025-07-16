@@ -51,7 +51,7 @@ function DataGridPagination(props: DataGridPaginationProps) {
                     >
                         <Icon
                             path={mdiPageFirst}
-                            className={disabled || currentPage <= 1 ? 'text-muted' : ''}
+                            color={disabled || currentPage <= 1 ? 'muted' : undefined}
                         />
                     </div>
                 </div>
@@ -105,11 +105,7 @@ function DataGridPagination(props: DataGridPaginationProps) {
                     >
                         <Icon
                             path={mdiChevronRight}
-                            className={
-                                disabled || currentPage >= pagesCount
-                                    ? 'text-muted'
-                                    : ''
-                            }
+                            color={disabled || currentPage >= pagesCount ? 'muted' : undefined}
                         />
                     </div>
                 </div>

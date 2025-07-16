@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
 import {Dropdown} from 'swayok-react-mdb-ui-kit/components/Dropdown/Dropdown'
+import {IconProps} from 'swayok-react-mdb-ui-kit/components/MDIIcon'
 import {BasicRegionConfig, FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import {mdiChevronUp, mdiEarth} from '@mdi/js'
 import clsx from 'clsx'
@@ -19,7 +20,9 @@ interface Props {
     // Запрет роботам преходить по ссылке. По умолчанию: true.
     noFollow?: boolean
     className?: string
+    iconColor?: IconProps['color']
     iconClassName?: string
+    chevronColor?: IconProps['color']
     chevronClassName?: string
     chevronRotate?: number
     iconSize?: number
@@ -37,8 +40,10 @@ function RegionSwitcherDropdown(props: Props) {
         url,
         noFollow = true,
         className,
+        iconColor,
         iconClassName,
-        chevronClassName = 'text-gray',
+        chevronColor = 'gray',
+        chevronClassName,
         chevronRotate = 0,
         iconSize = 24,
         offset = 4,
@@ -58,7 +63,11 @@ function RegionSwitcherDropdown(props: Props) {
         >
             <DropdownToggle
                 color="link"
-                className={iconClassName}
+                className={clsx(
+                    'text-decoration-none',
+                    iconColor ? 'link-' + iconColor : null,
+                    iconClassName
+                )}
             >
                 <Icon
                     path={mdiEarth}
@@ -66,6 +75,7 @@ function RegionSwitcherDropdown(props: Props) {
                 />
                 <Icon
                     path={mdiChevronUp}
+                    color={chevronColor}
                     className={clsx(
                         'ms-n1 mt-n2',
                         chevronClassName

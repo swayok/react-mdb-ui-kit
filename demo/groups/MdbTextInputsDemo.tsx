@@ -229,7 +229,7 @@ export default function MdbTextInputsDemo() {
                 <InputGroupText className="px-3">
                     <Icon
                         path={mdiTranslate}
-                        className="text-muted"
+                        color="muted"
                     />
                 </InputGroupText>
             </InputGroup>

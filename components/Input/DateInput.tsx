@@ -165,7 +165,8 @@ function DateInput(props: DateInputProps) {
                         <Icon
                             path={mdiCalendarMonthOutline}
                             size={24}
-                            className="text-muted calendar-icon"
+                            color="muted"
+                            className="calendar-icon"
                         />
                     )}
                 </InputAddonText>

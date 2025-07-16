@@ -78,7 +78,7 @@ export const FilePickerFilePreviewImage = React.memo(function FilePickerFilePrev
                 <Icon
                     path={isImagePreviewError ? mdiImageBroken : mdiImageFrame}
                     size={32}
-                    className={isImagePreviewError ? 'text-error' : 'text-muted'}
+                    color={isImagePreviewError ? 'danger' : 'muted'}
                 />
             </div>
         </div>

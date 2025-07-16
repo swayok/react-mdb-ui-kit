@@ -79,7 +79,7 @@ function DataGridOrderingPanel<
             />
             <IconButton
                 path={directionIcons.asc}
-                color={orderDirection === 'asc' ? 'theme' : 'muted'}
+                color={orderDirection === 'asc' ? 'primary' : 'muted'}
                 tooltip={translations.ordering.ascending}
                 className="ms-3"
                 disabled={isDisabled}
@@ -89,7 +89,7 @@ function DataGridOrderingPanel<
             />
             <IconButton
                 path={directionIcons.desc}
-                color={orderDirection === 'desc' ? 'theme' : 'muted'}
+                color={orderDirection === 'desc' ? 'primary' : 'muted'}
                 tooltip={translations.ordering.descending}
                 className="ms-3"
                 disabled={isDisabled}

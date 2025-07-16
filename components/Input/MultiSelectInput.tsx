@@ -1,5 +1,6 @@
 import React, {HTMLProps} from 'react'
 import clsx from 'clsx'
+import {IconProps} from 'swayok-react-mdb-ui-kit/components/MDIIcon'
 import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DropdownItemProps} from '../Dropdown/DropdownTypes'
 import Icon from '../Icon'
@@ -154,20 +155,20 @@ class MultiSelectInput<
                 } = option
                 const selected = selectedValues.includes(value)
                 let icon: string
-                let iconColor: string
+                let iconColor: IconProps['color']
                 if (selected) {
                     icon = radiosGroup ? mdiCheckboxMarkedCircleOutline : mdiCheckboxMarkedOutline
-                    iconColor = 'text-blue'
+                    iconColor = 'blue'
                 } else {
                     icon = radiosGroup ? mdiCheckboxBlankCircleOutline : mdiCheckboxBlankOutline
-                    iconColor = 'text-gray'
+                    iconColor = 'gray'
                 }
                 const disabled: boolean = (
                     !!option.disabled
                     || !!this.props.disableOptions?.includes(value)
                 )
                 if (disabled) {
-                    iconColor = 'text-muted'
+                    iconColor = 'muted'
                 }
                 ret.push(
                     <DropdownItem
@@ -191,7 +192,8 @@ class MultiSelectInput<
                     >
                         <Icon
                             path={icon}
-                            className={clsx('me-1', iconColor)}
+                            color={iconColor}
+                            className="me-1"
                         />
                         {
                             this.props.renderOptionLabel

@@ -101,6 +101,7 @@ $include-container-helpers: true !default;
 $include-css-grid-helpers: true !default;
 $include-flex-grid-helpers: true !default;
 $include-flexbox-helpers: true !default;
+$include-link-helpers: true !default;
 $include-list-helpers: true !default;
 $include-misc-helpers: true !default;
 $include-position-helpers: true !default;
@@ -114,14 +115,20 @@ $include-with-icon-helpers: true !default;
 
 // Utilities flags.
 // Here you can enable/disable individual utilities.
+$include-print-styles: false !default;
 $include-vertical-align-utilities: true !default;
 $include-float-utilities: true !default;
 $include-overflow-utilities: true !default;
 $include-display-utilities: true !default;
 $include-z-index-utilities: true !default;
 $include-cursor-utilities: true !default;
+// Only .position-static/relative/absolute/fixed/sticky.
 $include-position-utilities: true !default;
+// .top-0/50/100, .bottom-0/50/100, .left-0/50/100, .right-0/50/100,
+// .translate-middle, .translate-middle-x/y.
+$include-extended-position-utilities: $include-position-utilities !default;
 $include-border-utilities: true !default;
+$include-border-color-utilities: true !default;
 $include-width-utilities: true !default;
 $include-height-utilities: true !default;
 $include-flexbox-utilities: true !default;
@@ -136,7 +143,6 @@ $include-interaction-utilities: true !default; // user-select & pointer-events
 $include-border-radius-utilities: true !default; // user-select & pointer-events
 $include-visibility-utilities: true !default; // user-select & pointer-events
 $include-rfs-scaling-for-utilities: true !default;
-$include-print-styles: false !default;
 $include-shadow-utilities: true !default;
 $include-letter-spacing-utilities: true !default;
 $include-opacity-utilities: true !default;

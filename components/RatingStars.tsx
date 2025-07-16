@@ -1,22 +1,33 @@
 import React from 'react'
+import {IconProps} from 'swayok-react-mdb-ui-kit/components/MDIIcon'
 import Icon from './Icon'
 import clsx from 'clsx'
 import {mdiStar, mdiStarHalfFull, mdiStarOutline} from '@mdi/js'
 import withStable from '../helpers/withStable'
 
-type Props = {
-    rating: number,
-    className?: string,
-    starSize?: number,
-    onClick?: (value: number) => void,
+interface Props {
+    rating: number
+    className?: string
+    starSize?: number
+    onClick?: (value: number) => void
+    inactiveIconColor?: IconProps['color']
     inactiveIconClassName?: string
 }
 
 // Отображает рейтинг в виде набора из 5 иконок-звезд.
 function RatingStars(props: Props) {
 
+    const {
+        rating,
+        className,
+        starSize,
+        onClick,
+        inactiveIconColor,
+        inactiveIconClassName,
+    } = props
+
     const stars = []
-    const ratingRounded: number = Math.round(props.rating * 2) / 2
+    const ratingRounded: number = Math.round(rating * 2) / 2
     for (let i = 1; i <= 5; i++) {
         let icon: string = mdiStar
         let isActive: boolean = true
@@ -35,17 +46,16 @@ function RatingStars(props: Props) {
                 key={'star-' + i}
                 className={clsx(
                     'rating-stars-star',
-                    props.rating >= i ? 'active' : '',
+                    rating >= i ? 'active' : '',
                     i === 1 ? '' : 'ms-1'
                 )}
                 onClick={() => props.onClick?.(i)}
             >
                 <Icon
                     path={icon}
-                    size={props.starSize}
-                    className={
-                        (!isActive && props.inactiveIconClassName) || undefined
-                    }
+                    size={starSize}
+                    color={isActive ? undefined : inactiveIconColor}
+                    className={!isActive ? '' : inactiveIconClassName}
                 />
             </div>
         )
@@ -55,8 +65,8 @@ function RatingStars(props: Props) {
         <div
             className={clsx(
                 'rating-stars flex-row-center-vertical',
-                props.className,
-                props.onClick ? 'interactive' : null
+                className,
+                onClick ? 'interactive' : null
             )}
         >
             {stars}

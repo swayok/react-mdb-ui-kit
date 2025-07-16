@@ -17,11 +17,9 @@ function FilePickerTrigger<TagProps = unknown>(
     const {
         onClick,
         children,
-        tag,
+        tag: Tag = 'div',
         ...otherProps
     } = props
-
-    const Tag = tag || 'div'
 
     return (
         <Tag

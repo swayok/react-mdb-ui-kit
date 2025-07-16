@@ -389,9 +389,7 @@ export function handleMessageFromResponse(
     message?: string,
     messageType?: ApiResponseData['_message_type']
 ): void {
-    if (message === undefined) {
-        message = response.data._message
-    }
+    message ??= response.data._message
     if (!message) {
         return
     }

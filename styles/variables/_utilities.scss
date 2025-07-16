@@ -133,6 +133,16 @@ $utilities: () !default;
                     property: position,
                     values: static relative absolute fixed sticky,
                 ),
+                // scss-docs-end utils-position
+            ),
+            $utilities,
+    )
+}
+
+@if (features.$include-extended-position-utilities) {
+    $utilities: map-merge(
+            (
+                // scss-docs-start utils-position
                 'top': (
                     property: top,
                     values: utility-values.$position-values,
@@ -219,6 +229,21 @@ $utilities: () !default;
                     values: borders.$border-widths,
                 ),
                 // scss-docs-end utils-borders
+            ),
+            $utilities,
+    )
+}
+
+@if (features.$include-border-color-utilities) {
+    $utilities: map-merge(
+            (
+                // scss-docs-start utils-border-colors
+                'border-color': (
+                    property: border-color,
+                    class: border,
+                    values: color-lists.$border-colors,
+                ),
+                // scss-docs-end utils-border-colors
             ),
             $utilities,
     )
@@ -517,43 +542,43 @@ $utilities: () !default;
                     responsive: true,
                     property: margin,
                     class: m,
-                    values: utility-values.$spacers-xy-values,
+                    values: utility-values.$negative-spacers-xy,
                 ),
                 'negative-margin-x': (
                     responsive: true,
                     property: margin-right margin-left,
                     class: mx,
-                    values: utility-values.$spacers-x-values,
+                    values: utility-values.$negative-spacers-x,
                 ),
                 'negative-margin-y': (
                     responsive: true,
                     property: margin-top margin-bottom,
                     class: my,
-                    values: utility-values.$spacers-y-values,
+                    values: utility-values.$negative-spacers-y,
                 ),
                 'negative-margin-top': (
                     responsive: true,
                     property: margin-top,
                     class: mt,
-                    values: utility-values.$spacers-y-values,
+                    values: utility-values.$negative-spacers-y,
                 ),
                 'negative-margin-end': (
                     responsive: true,
                     property: margin-right,
                     class: me,
-                    values: utility-values.$spacers-x-values,
+                    values: utility-values.$negative-spacers-x,
                 ),
                 'negative-margin-bottom': (
                     responsive: true,
                     property: margin-bottom,
                     class: mb,
-                    values: utility-values.$spacers-y-values,
+                    values: utility-values.$negative-spacers-y,
                 ),
                 'negative-margin-start': (
                     responsive: true,
                     property: margin-left,
                     class: ms,
-                    values: utility-values.$spacers-x-values,
+                    values: utility-values.$negative-spacers-x,
                 ),
                 // scss-docs-end utils-spacing
             ),

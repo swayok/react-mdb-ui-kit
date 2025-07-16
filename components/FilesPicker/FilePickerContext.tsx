@@ -65,7 +65,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
                 return (
                     <FilePickerFilePreviewAsIcon
                         path={mdiFilePdfOutline}
-                        className="text-red"
+                        color="red"
                         previewSize={previewWidth}
                     />
                 )
@@ -78,7 +78,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
                 return (
                     <FilePickerFilePreviewAsIcon
                         path={mdiFileWordOutline}
-                        className="text-blue"
+                        color="blue"
                         previewSize={previewWidth}
                     />
                 )
@@ -91,7 +91,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
                 return (
                     <FilePickerFilePreviewAsIcon
                         path={mdiFileWordOutline}
-                        className="text-blue"
+                        color="blue"
                         previewSize={previewWidth}
                     />
                 )
@@ -104,7 +104,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
                 return (
                     <FilePickerFilePreviewAsIcon
                         path={mdiFileExcelOutline}
-                        className="text-green"
+                        color="green"
                         previewSize={previewWidth}
                     />
                 )
@@ -117,7 +117,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
                 return (
                     <FilePickerFilePreviewAsIcon
                         path={mdiFileExcelOutline}
-                        className="text-green"
+                        color="green"
                         previewSize={previewWidth}
                     />
                 )
@@ -128,7 +128,7 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
         return (
             <FilePickerFilePreviewAsIcon
                 path={mdiFileOutline}
-                className="text-muted"
+                color="muted"
                 previewSize={previewWidth}
             />
         )

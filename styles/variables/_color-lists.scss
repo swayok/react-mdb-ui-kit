@@ -326,8 +326,14 @@ $text-colors: (
     'green': colors.$green,
     'teal': colors.$teal,
     'cyan': colors.$cyan,
+    'light-gray': colors.$gray-400,
     'gray': colors.$gray-600,
     'gray-dark': colors.$gray-800,
+    'primary': colors.$primary,
+    'secondary': colors.$secondary,
+    'danger': colors.$danger,
+    'warning': colors.$warning,
+    'success': colors.$success,
 ) !default;
 
 $text-colors: map-merge((

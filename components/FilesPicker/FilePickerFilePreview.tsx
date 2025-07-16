@@ -144,8 +144,8 @@ function FilePickerFilePreview(
                                 <Icon
                                     path={mdiAlertCircle}
                                     size={iconSize}
-                                    className="bg-white text-red"
-                                    style={{borderRadius: '50%'}}
+                                    color="red"
+                                    className="bg-white rounded-circle"
                                 />
                             </div>
                         )}
@@ -169,7 +169,7 @@ function FilePickerFilePreview(
                         <Icon
                             path={mdiCloseCircleOutline}
                             size={24}
-                            className="text-red"
+                            color="red"
                         />
                     </a>
                 )}
@@ -188,7 +188,7 @@ function FilePickerFilePreview(
                         <Icon
                             path={mdiBackupRestore}
                             size={24}
-                            className="text-blue"
+                            color="blue"
                         />
                     </a>
                 )}

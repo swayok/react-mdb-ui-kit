@@ -13,7 +13,8 @@ function InputAddonIcon(props: Props) {
 
     const {
         className,
-        iconClassName = 'text-muted',
+        color = 'muted',
+        iconClassName,
         ...otherProps
     } = props
 
@@ -21,6 +22,7 @@ function InputAddonIcon(props: Props) {
         <InputAddonText className={className}>
             <Icon
                 {...otherProps}
+                color={color}
                 className={iconClassName}
             />
         </InputAddonText>

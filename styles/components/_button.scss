@@ -215,6 +215,22 @@
             box-shadow: none;
             color: buttons.$btn-link-disabled-color;
         }
+
+        &.text-decoration-reversed {
+            text-decoration: if(buttons.$btn-link-decoration == underline, none, underline);
+
+            &:hover {
+                text-decoration: buttons.$btn-link-decoration;
+            }
+        }
+
+        &.text-decoration-hover-underline:hover {
+            text-decoration: underline !important;
+        }
+
+        &.text-decoration-hover-none:hover {
+            text-decoration: none !important;
+        }
     }
 
     //

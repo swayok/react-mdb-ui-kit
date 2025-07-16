@@ -1,0 +1,22 @@
+// Link helpers.
+@use "../functions/color-utils";
+@use "../variables/color-lists";
+@use "../variables/links";
+@use "../variables/features";
+
+@if (features.$include-link-helpers) {
+    // scss-docs-start link-variant-loops
+    @each $color, $value in color-lists.$link-colors {
+        .link-#{$color} {
+            color: $value;
+
+            @if links.$link-shade-percentage != 0 {
+                &:hover,
+                &:focus {
+                    color: color-utils.link-hover-color($value, links.$link-shade-percentage);
+                }
+            }
+        }
+    }
+    // scss-docs-start link-variant-loops
+}

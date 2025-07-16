@@ -3,7 +3,6 @@ import Icon from '../Icon'
 import React from 'react'
 import {DataGridContextProps, DataGridOrderByValuesType, DataGridOrderingDirection} from '../../types/DataGrid'
 import {AnyObject} from '../../types/Common'
-import clsx from 'clsx'
 
 // Стандартные отступы для полей ввода панели фильтрации,
 export const dataGridFiltersPanelInputMargins: string = ''
@@ -40,10 +39,8 @@ export function renderSortingIcon(
         <Icon
             key={rotate == 0 ? 'no-sort' : 'sort'}
             path={icon}
-            className={clsx(
-                'data-grid-sort-icon',
-                state && !disabled ? 'text-primary' : 'text-muted'
-            )}
+            color={state && !disabled ? 'primary' : 'muted'}
+            className="data-grid-sort-icon"
             size={18}
             rotate={rotate}
         />
@@ -52,11 +49,11 @@ export function renderSortingIcon(
 
 // Сортировка строк в таблице по заданным параметрам.
 export function reorderDataGridRows<RowDataType extends object = AnyObject>(
-    rows: ReadonlyArray<RowDataType>,
+    rows: readonly RowDataType[],
     orderBy: DataGridContextProps['orderBy'],
     direction: DataGridContextProps['orderDirection'],
     type?: DataGridOrderByValuesType
-): Array<RowDataType> {
+): RowDataType[] {
     // eslint-disable-next-line no-prototype-builtins
     if (rows.length <= 1 || orderBy === null || !rows[0].hasOwnProperty(orderBy)) {
         return rows.slice()
@@ -101,9 +98,9 @@ function compareNumbers(
         return ret
     }
     if (direction === 'asc') {
-        return (p1 as number) > (p2 as number) ? 1 : -1
+        return p1! > p2! ? 1 : -1
     } else {
-        return (p1 as number) > (p2 as number) ? -1 : 1
+        return p1! > p2! ? -1 : 1
     }
 }
 

@@ -22,7 +22,7 @@
             cursor: not-allowed;
         }
 
-        &[class*=text-]:not(.btn) {
+        &[class*=link-]:not(.btn) {
             text-decoration: links.$link-variant-decoration;
 
             &:hover {
@@ -36,13 +36,29 @@
 
         &.with-icon,
         &.with-icon-flex,
-        &.with-icon[class*=text-]:not(.btn),
-        &.with-icon-flex[class*=text-]:not(.btn) {
+        &.with-icon[class*=link-]:not(.btn),
+        &.with-icon-flex[class*=link-]:not(.btn) {
             text-decoration: none;
 
             &:hover {
                 text-decoration: none;
             }
+        }
+
+        &.text-decoration-reversed {
+            text-decoration: if(links.$link-decoration == underline, none, underline);
+
+            &:hover {
+                text-decoration: links.$link-decoration;
+            }
+        }
+
+        &.text-decoration-hover-underline:hover {
+            text-decoration: underline !important;
+        }
+
+        &.text-decoration-hover-none:hover {
+            text-decoration: none !important;
         }
     }
 
@@ -63,25 +79,6 @@
             content: '';
         }
     }
-
-    //
-    // Alternate colors
-    //
-
-    // scss-docs-start link-variant-loops
-    @each $color, $value in color-lists.$link-colors {
-        .link-#{$color} {
-            color: $value;
-
-            @if links.$link-shade-percentage != 0 {
-                &:hover,
-                &:focus {
-                    color: color-utils.link-hover-color($value, links.$link-shade-percentage);
-                }
-            }
-        }
-    }
-    // scss-docs-start link-variant-loops
 
     // And undo these styles for placeholder links/named anchors (without href).
     // It would be more straightforward to just use a[href] in previous block, but that

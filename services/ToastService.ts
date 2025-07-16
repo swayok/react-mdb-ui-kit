@@ -18,10 +18,10 @@ export const defaultToastServiceConfig: Partial<INotyfOptions> = {
     ],
 }
 
-export type ToastServiceToastDurations = {
-    error: number,
-    info: number,
-    success: number,
+export interface ToastServiceToastDurations {
+    error: number
+    info: number
+    success: number
 }
 
 // Сервис отображения всплывающих уведомлений.
