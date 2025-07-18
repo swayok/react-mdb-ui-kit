@@ -1,4 +1,6 @@
 // Loading indicator.
+@use "sass:color";
+@use "../functions/color-utils";
 @use "colors";
 @use "body";
 
@@ -9,6 +11,6 @@ $loading-indicator-with-logo-color: colors.$primary;
 $loading-indicator-with-logo-text-color: colors.$gray-700;
 
 $loading-indicator-overlay-default-bg: body.$body-bg;
-$loading-indicator-overlay-default-bg-semitransparent: fade-out($loading-indicator-overlay-default-bg, opacity($loading-indicator-overlay-default-bg) * 0.6);
+$loading-indicator-overlay-default-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-default-bg, opacity($loading-indicator-overlay-default-bg) * 0.6);
 $loading-indicator-overlay-white-bg: colors.$white;
-$loading-indicator-overlay-white-bg-semitransparent: fade-out($loading-indicator-overlay-white-bg, opacity($loading-indicator-overlay-white-bg) * 0.6);
+$loading-indicator-overlay-white-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-white-bg, opacity($loading-indicator-overlay-white-bg) * 0.6);

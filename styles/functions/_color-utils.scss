@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 @use "../variables/color-contrast";
 
 // scss-docs-start color-functions
@@ -198,6 +199,30 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
         }
     }
     @return $dark
+}
+
+// Make color more opaque.
+// Replacement for deprecated fade-out() SASS builtin function.
+@function fade-out($color, $opacityShift) {
+    @return color.adjust($color, $alpha: $opacityShift * -1)
+}
+
+// Make color less opaque.
+// Replacement for deprecated fade-in() SASS builtin function.
+@function fade-in($color, $opacityShift) {
+    @return color.adjust($color, $alpha: $opacityShift)
+}
+
+// Make color lighter.
+// Replacement for deprecated lighten() SASS builtin function.
+@function lighten($color, $percentage) {
+    @return color.adjust($color, $lightness: $percentage)
+}
+
+// Make color lighter.
+// Replacement for deprecated darken() SASS builtin function.
+@function darken($color, $percentage) {
+    @return color.adjust($color, $lightness: $percentage * -1)
 }
 
 /*

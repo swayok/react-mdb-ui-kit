@@ -398,27 +398,27 @@ $alert-colors: $theme-colors !default;
 // scss-docs-start note-colors-map
 $note-colors: (
     'primary': (
-        'bgc': lighten(colors.$primary, 43%),
+        'bgc': color-utils.lighten(colors.$primary, 43%),
         'border-color': colors.$primary,
     ),
     'secondary': (
-        'bgc': lighten(colors.$secondary, 33%),
+        'bgc': color-utils.lighten(colors.$secondary, 33%),
         'border-color': colors.$secondary,
     ),
     'success': (
-        'bgc': lighten(colors.$success, 53%),
+        'bgc': color-utils.lighten(colors.$success, 53%),
         'border-color': colors.$success,
     ),
     'danger': (
-        'bgc': lighten(colors.$danger, 36%),
+        'bgc': color-utils.lighten(colors.$danger, 36%),
         'border-color': colors.$danger,
     ),
     'warning': (
-        'bgc': lighten(colors.$warning, 42%),
+        'bgc': color-utils.lighten(colors.$warning, 42%),
         'border-color': colors.$warning,
     ),
     'info': (
-        'bgc': lighten(colors.$info, 36%),
+        'bgc': color-utils.lighten(colors.$info, 36%),
         'border-color': colors.$info,
     ),
     'light': (
