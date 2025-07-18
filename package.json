@@ -2,6 +2,7 @@
     "name": "swayok-react-mdb-ui-kit",
     "version": "1.0.0",
     "description": "React components based on free version of MDB styles",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
