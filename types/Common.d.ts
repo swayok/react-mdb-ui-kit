@@ -1,5 +1,5 @@
 import React, {AllHTMLAttributes, HTMLProps} from 'react'
-import {DropdownItemProps} from '../components/Dropdown/DropdownItem'
+import {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
 import {NumeralJSLocale} from 'numeral'
 
 // Объект, который может содержать любые ключи.
