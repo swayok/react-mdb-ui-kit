@@ -1,4 +1,5 @@
 // Alert.
+@use "sass:color";
 @use "sass:math";
 @use "../functions/color-utils";
 @use "../mixins/alert" as alert-mixins;
@@ -54,7 +55,7 @@
         $alert-border: color-utils.shift-color($value, alert.$alert-border-scale);
         $alert-color: color-utils.shift-color($value, alert.$alert-color-scale);
         @if (color-utils.contrast-ratio($alert-background, $alert-color) < color-contrast.$min-contrast-ratio) {
-            $alert-color: mix($value, color-utils.color-contrast($alert-background), math.abs(alert.$alert-color-scale));
+            $alert-color: color.mix($value, color-utils.color-contrast($alert-background), math.abs(alert.$alert-color-scale));
         }
         .alert-#{$state} {
             @include alert-mixins.alert-variant($alert-background, $alert-border, $alert-color);

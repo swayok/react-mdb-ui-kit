@@ -1,4 +1,5 @@
 // Dropdown menu, toggle and contents.
+@use "sass:map";
 @use "../mixins/transition";
 @use "../mixins/caret";
 @use "../mixins/rfs";
@@ -35,16 +36,16 @@
         min-width: dropdown.$dropdown-min-width;
         padding: dropdown.$dropdown-padding-y dropdown.$dropdown-padding-x;
         margin: 0; // Override default margin of ul
-        @include rfs.font-size(dropdown.$dropdown-font-size);
         color: dropdown.$dropdown-color;
         text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
         list-style: none;
         background-color: dropdown.$dropdown-bg;
         background-clip: padding-box;
         border: dropdown.$dropdown-border-width solid dropdown.$dropdown-border-color;
-        @include border-radius.border-radius(dropdown.$dropdown-border-radius);
         box-shadow: dropdown.$dropdown-box-shadow;
         overflow-y: auto;
+        @include border-radius.border-radius(dropdown.$dropdown-border-radius);
+        @include rfs.font-size(dropdown.$dropdown-font-size);
 
         &[data-mdb-popper] {
             top: 100%;
@@ -64,7 +65,7 @@
     // We deliberately hardcode the `bs-` prefix because we check
     // this custom property in JS to determine Popper's positioning
 
-    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
         @include breakpoints.media-breakpoint-up($breakpoint) {
             $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
@@ -217,10 +218,10 @@
         display: block;
         padding: dropdown.$dropdown-header-padding;
         margin-bottom: 0; // for use with heading elements
-        @include rfs.font-size(dropdown.$dropdown-header-font-size);
         font-weight: dropdown.$dropdown-header-font-weight;
         color: dropdown.$dropdown-header-color;
         white-space: nowrap; // as with > li > a
+        @include rfs.font-size(dropdown.$dropdown-header-font-size);
     }
 
     // Dropdown text

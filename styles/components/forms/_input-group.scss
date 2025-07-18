@@ -1,4 +1,6 @@
 // Inputs group
+@use "sass:map";
+@use "sass:string";
 @use "sass:math";
 @use "../../mixins/rfs";
 @use "../../mixins/border-radius";
@@ -136,7 +138,6 @@
         align-items: center;
         flex-shrink: 0;
         padding: form-input-group.$input-group-addon-padding-y form-input-group.$input-group-addon-padding-x;
-        @include rfs.font-size(form-input-group.$input-group-addon-font-size); // Match inputs
         font-weight: form-input-group.$input-group-addon-font-weight;
         line-height: form-input-base.$input-line-height;
         color: form-input-group.$input-group-addon-color;
@@ -146,17 +147,18 @@
         border: form-input-base.$input-border-width solid form-input-group.$input-group-addon-border-color;
         min-height: form-input-group.$input-group-addon-min-height;
         @include border-radius.border-radius(form-input-base.$input-border-radius);
+        @include rfs.font-size(form-input-group.$input-group-addon-font-size); // Match inputs
 
         &.input-group-text-sm {
             padding: form-input-group.$input-group-addon-padding-y-sm form-input-group.$input-group-addon-padding-x-sm;
-            @include rfs.font-size(form-input-group.$input-group-addon-font-size-sm);
             min-height: form-input-group.$input-group-addon-min-height-sm;
+            @include rfs.font-size(form-input-group.$input-group-addon-font-size-sm);
         }
 
         &.input-group-text-lg {
             padding: form-input-group.$input-group-addon-padding-y-lg form-input-group.$input-group-addon-padding-x-lg;
-            @include rfs.font-size(form-input-group.$input-group-addon-font-size-lg);
             min-height: form-input-group.$input-group-addon-min-height-lg;
+            @include rfs.font-size(form-input-group.$input-group-addon-font-size-lg);
         }
     }
 
@@ -228,8 +230,8 @@
         }
 
         $validation-messages: '';
-        @each $state in map-keys(form-validation.$form-validation-states) {
-            $validation-messages: $validation-messages + ':not(.' + unquote($state) + '-tooltip)' + ':not(.' + unquote($state) + '-feedback)';
+        @each $state in map.keys(form-validation.$form-validation-states) {
+            $validation-messages: $validation-messages + ':not(.' + string.unquote($state) + '-tooltip)' + ':not(.' + string.unquote($state) + '-feedback)';
         }
 
         > :not(:first-child):not(.dropdown-menu)#{$validation-messages} {

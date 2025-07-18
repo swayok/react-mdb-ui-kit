@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../functions/color-utils";
 @use "colors";
 @use "body";
@@ -336,7 +337,7 @@ $text-colors: (
     'success': colors.$success,
 ) !default;
 
-$text-colors: map-merge((
+$text-colors: map.merge((
     'white': colors.$white,
     'body': body.$body-color,
     'muted': colors.$text-muted,
@@ -380,11 +381,11 @@ $border-colors: $theme-colors !default;
 // scss-docs-end border-colors-map
 
 // scss-docs-start bg-colors-map
-$bg-colors: map-merge((
+$bg-colors: map.merge((
     'super-light': colors.$gray-50
 ), $theme-colors) !default;
 
-$bg-colors: map-merge((
+$bg-colors: map.merge((
     'body': body.$body-bg,
     'white': colors.$white,
     'transparent': transparent,
@@ -465,7 +466,7 @@ $form-checkbox-colors: (
 // scss-docs-end form-switch-loop
 
 // scss-docs-start icon-colors-loop
-$icon-colors: map_merge($theme-colors, $text-colors) !default;
+$icon-colors: map.merge($theme-colors, $text-colors) !default;
 // scss-docs-end icon-colors-loop
 
 // scss-docs-start tooltip-text-colors-loop

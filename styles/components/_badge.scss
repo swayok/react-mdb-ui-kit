@@ -15,7 +15,6 @@
     .badge {
         display: inline-block;
         padding: badge.$badge-padding-y badge.$badge-padding-x;
-        @include rfs.font-size(badge.$badge-font-size);
         font-weight: badge.$badge-font-weight;
         line-height: 1;
         color: badge.$badge-color;
@@ -24,6 +23,7 @@
         vertical-align: baseline;
         @include border-radius.border-radius(badge.$badge-border-radius);
         @include gradients.gradient-bg();
+        @include rfs.font-size(badge.$badge-font-size);
 
         // Empty badges collapse automatically
         &:empty {

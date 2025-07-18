@@ -1,4 +1,5 @@
 // Note.
+@use "sass:map";
 @use "../variables/features";
 @use "../variables/note";
 @use "../variables/color-lists";
@@ -25,8 +26,8 @@
 
     @each $name, $color in color-lists.$note-colors {
         .note-#{$name} {
-            background-color: map-get($color, bgc);
-            border-color: map-get($color, border-color);
+            background-color: map.get($color, bgc);
+            border-color: map.get($color, border-color);
         }
     }
 }

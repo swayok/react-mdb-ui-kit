@@ -1,4 +1,5 @@
 // General form controls (plus a few specific high-level interventions).
+@use "sass:math";
 @use "../../mixins/rfs";
 @use "../../mixins/border-radius";
 @use "../../mixins/box-shadow";
@@ -15,7 +16,6 @@
         min-height: auto;
         padding: form-input-base.$input-padding-y form-input-base.$input-padding-x;
         font-family: form-input-base.$input-font-family;
-        @include rfs.font-size(form-input-base.$input-font-size);
         font-weight: form-input-base.$input-font-weight;
         line-height: form-input-base.$input-line-height;
         color: form-input-base.$input-color;
@@ -28,6 +28,7 @@
         @include border-radius.border-radius(form-input-base.$input-border-radius, 0);
 
         @include box-shadow.box-shadow(form-input-base.$input-box-shadow);
+        @include rfs.font-size(form-input-base.$input-font-size);
         @include transition.transition(form-input-base.$input-transition);
 
         &[type='file'] {
@@ -119,8 +120,8 @@
     .form-control-sm {
         min-height: form-input-base.$input-height-sm;
         padding: form-input-base.$input-padding-y-sm form-input-base.$input-padding-x-sm;
-        @include rfs.font-size(form-input-base.$input-font-size-sm);
         @include border-radius.border-radius(form-input-base.$input-border-radius-sm);
+        @include rfs.font-size(form-input-base.$input-font-size-sm);
 
         &::file-selector-button {
             padding: form-input-base.$input-padding-y-sm form-input-base.$input-padding-x-sm;
@@ -138,8 +139,8 @@
     .form-control-lg {
         min-height: form-input-base.$input-height-lg;
         padding: form-input-base.$input-padding-y-lg form-input-base.$input-padding-x-lg;
-        @include rfs.font-size(form-input-base.$input-font-size-lg);
         @include border-radius.border-radius(form-input-base.$input-border-radius-lg);
+        @include rfs.font-size(form-input-base.$input-font-size-lg);
 
         &::file-selector-button {
             padding: form-input-base.$input-padding-y-lg form-input-base.$input-padding-x-lg;
@@ -183,12 +184,12 @@
         }
 
         &::-moz-color-swatch {
-            height: if(unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
+            height: if(math.unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
             @include border-radius.border-radius(form-input-base.$input-border-radius);
         }
 
         &::-webkit-color-swatch {
-            height: if(unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
+            height: if(math.unit(form-input-base.$input-line-height) == '', form-input-base.$input-line-height * 1em, form-input-base.$input-line-height);
             @include border-radius.border-radius(form-input-base.$input-border-radius);
         }
     }

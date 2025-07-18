@@ -1,3 +1,4 @@
+@use "sass:meta";
 @use "../variables/css-variables";
 @use "../variables/typography";
 @use "../variables/color-lists";
@@ -17,8 +18,8 @@
 
         // Use `inspect` for lists so that quoted items keep the quotes.
         // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
-        --#{css-variables.$variable-prefix}font-sans-serif: #{inspect(typography.$font-family-sans-serif)};
-        --#{css-variables.$variable-prefix}font-monospace: #{inspect(typography.$font-family-monospace)};
+        --#{css-variables.$variable-prefix}font-sans-serif: #{meta.inspect(typography.$font-family-sans-serif)};
+        --#{css-variables.$variable-prefix}font-monospace: #{meta.inspect(typography.$font-family-monospace)};
         --#{css-variables.$variable-prefix}gradient: #{colors.$gradient};
     }
 }

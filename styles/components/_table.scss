@@ -1,6 +1,7 @@
 //
 // Basic Bootstrap table
 //
+@use "sass:map";
 @use "../mixins/breakpoints";
 @use "../mixins/table-variants";
 @use "../variables/css-variables";
@@ -184,7 +185,7 @@
     // Generate series of `.table-responsive-*` classes for configuring the screen
     // size of where your table will overflow.
 
-    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
         $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
         @include breakpoints.media-breakpoint-down($breakpoint) {

@@ -153,10 +153,10 @@
     );
     padding: $padding-top $padding-right $padding-bottom-modified $padding-left;
     line-height: $line-height;
-    @include rfs.font-size($font-size);
     font-weight: $font-weight;
     // Manually declare to provide an override to the browser default
     @include border-radius.border-radius($border-radius, 0);
+    @include rfs.font-size($font-size);
 }
 
 // Button size variant outline

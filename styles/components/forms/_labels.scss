@@ -8,10 +8,10 @@
 @if (features.$include-forms-and-inputs and features.$include-form-labels) {
     .form-label {
         margin-bottom: form-label.$form-label-margin-bottom;
-        @include rfs.font-size(form-label.$form-label-font-size);
         font-style: form-label.$form-label-font-style;
         font-weight: form-label.$form-label-font-weight;
         color: form-label.$form-label-color;
+        @include rfs.font-size(form-label.$form-label-font-size);
     }
 
     // For use with horizontal and inline forms, when you need the label (or legend)
@@ -20,11 +20,11 @@
         padding-top: calc-utils.add(form-input-base.$input-padding-y, form-input-base.$input-border-width);
         padding-bottom: calc-utils.add(form-input-base.$input-padding-y, form-input-base.$input-border-width);
         margin-bottom: 0; // Override the `<legend>` default
-        @include rfs.font-size(inherit); // Override the `<legend>` default
         font-style: form-label.$form-label-font-style;
         font-weight: form-label.$form-label-font-weight;
         line-height: form-input-base.$input-line-height;
         color: form-label.$form-label-color;
+        @include rfs.font-size(inherit); // Override the `<legend>` default
     }
 
     .col-form-label-lg {

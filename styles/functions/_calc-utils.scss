@@ -1,3 +1,5 @@
+@use "sass:meta";
+@use "sass:string";
 @use "sass:math";
 
 // Return valid calc
@@ -10,11 +12,11 @@
         @return $value1;
     }
 
-    @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @if meta.type-of($value1) == number and meta.type-of($value2) == number and math.compatible($value1, $value2) {
         @return $value1 + $value2;
     }
 
-    @return if($return-calc == true, calc(#{$value1} + #{$value2}), $value1 + unquote(' + ') + $value2);
+    @return if($return-calc == true, calc(#{$value1} + #{$value2}), $value1 + string.unquote(' + ') + $value2);
 }
 
 @function subtract($value1, $value2, $return-calc: true) {
@@ -30,9 +32,9 @@
         @return $value1;
     }
 
-    @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @if meta.type-of($value1) == number and meta.type-of($value2) == number and math.compatible($value1, $value2) {
         @return $value1 - $value2;
     }
 
-    @return if($return-calc == true, calc(#{$value1} - #{$value2}), $value1 + unquote(' - ') + $value2);
+    @return if($return-calc == true, calc(#{$value1} - #{$value2}), $value1 + string.unquote(' - ') + $value2);
 }

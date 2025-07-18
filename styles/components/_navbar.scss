@@ -10,6 +10,7 @@
 // Responsive navbar
 // Navbar position
 // Navbar themes
+@use "sass:map";
 @use "../functions/string-utils";
 @use "../mixins/transition";
 @use "../mixins/gradients";
@@ -72,9 +73,9 @@
         padding-top: nav.$navbar-brand-padding-y;
         padding-bottom: nav.$navbar-brand-padding-y;
         margin-right: nav.$navbar-brand-margin-end;
-        @include rfs.font-size(nav.$navbar-brand-font-size);
         text-decoration: if(links.$link-decoration == none, null, none);
         white-space: nowrap;
+        @include rfs.font-size(nav.$navbar-brand-font-size);
 
         &:hover,
         &:focus {
@@ -135,12 +136,12 @@
     // Button for toggling the navbar when in its collapsed state
     .navbar-toggler {
         padding: nav.$navbar-toggler-padding-y nav.$navbar-toggler-padding-x;
-        @include rfs.font-size(nav.$navbar-toggler-font-size);
         line-height: 1;
         background-color: transparent; // remove default button style
         border: nav.$navbar-toggler-border-width solid transparent; // remove default button style
         @include border-radius.border-radius(nav.$navbar-toggler-border-radius);
         @include transition.transition(nav.$navbar-toggler-transition);
+        @include rfs.font-size(nav.$navbar-toggler-font-size);
 
         &:hover {
             text-decoration: none;
@@ -174,7 +175,7 @@
     // Generate series of `.navbar-expand-*` responsive classes for configuring
     // where your navbar collapses.
     .navbar-expand {
-        @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+        @each $breakpoint in map.keys(grid.$grid-breakpoints) {
             $next: breakpoints.breakpoint-next($breakpoint, grid.$grid-breakpoints);
             $infix: breakpoints.breakpoint-infix($next, grid.$grid-breakpoints);
 

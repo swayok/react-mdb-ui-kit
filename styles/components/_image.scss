@@ -114,7 +114,7 @@
     }
 
     .figure-caption {
-        @include rfs.font-size(images.$figure-caption-font-size);
         color: images.$figure-caption-color;
+        @include rfs.font-size(images.$figure-caption-font-size);
     }
 }

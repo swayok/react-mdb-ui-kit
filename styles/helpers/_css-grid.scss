@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../mixins/breakpoints";
 @use "../mixins/css-grid";
 @use "../variables/grid";
@@ -47,7 +48,7 @@
         grid-auto-rows: max-content;
     }
 
-    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
         $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
         @include breakpoints.media-breakpoint-up($breakpoint) {

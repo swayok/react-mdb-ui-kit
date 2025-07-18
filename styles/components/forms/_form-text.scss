@@ -6,9 +6,9 @@
 @if (features.$include-forms-and-inputs and features.$include-form-text) {
     .form-text {
         margin-top: form-text.$form-text-margin-top;
-        @include rfs.font-size(form-text.$form-text-font-size);
         font-style: form-text.$form-text-font-style;
         font-weight: form-text.$form-text-font-weight;
         color: form-text.$form-text-color;
+        @include rfs.font-size(form-text.$form-text-font-size);
     }
 }

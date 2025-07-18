@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:string";
 @use "sass:math";
 @use "sass:color";
 @use "../variables/color-contrast";
@@ -74,14 +77,14 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
 // See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests
 @function luminance($color) {
     $rgb: (
-        'r': red($color),
-        'g': green($color),
-        'b': blue($color),
+        'r': math.round(color.channel($color, 'red', $space: rgb)),
+        'g': math.round(color.channel($color, 'green', $space: rgb)),
+        'b': math.round(color.channel($color, 'blue', $space: rgb)),
     );
 
     @each $name, $value in $rgb {
-        $value: if(math.div($value, 255) < 0.03928, math.div(math.div($value, 255), 12.92), nth($_luminance-list, $value + 1));
-        $rgb: map-merge(
+        $value: if(math.div($value, 255) < 0.03928, math.div(math.div($value, 255), 12.92), list.nth($_luminance-list, $value + 1));
+        $rgb: map.merge(
                 $rgb,
                 (
                     $name: $value,
@@ -89,25 +92,24 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
         );
     }
 
-    @return (map-get($rgb, 'r') * 0.2126) + (map-get($rgb, 'g') * 0.7152) + (map-get($rgb, 'b') * 0.0722);
+    @return (map.get($rgb, 'r') * 0.2126) + (map.get($rgb, 'g') * 0.7152) + (map.get($rgb, 'b') * 0.0722);
 }
-
 
 // Return opaque color
 // opaque(#fff, rgba(0, 0, 0, .5)) => #808080
 @function opaque($background, $foreground) {
-    @return mix(rgba($foreground, 1), $background, percentage(opacity($foreground)));
+    @return color.mix(rgba($foreground, 1), $background, math.percentage(get-opacity($foreground)));
 }
 
 // scss-docs-start color-functions
 // Tint a color: mix a color with white
 @function tint-color($color, $weight, $tint-color: #ffffff) {
-    @return mix($tint-color, $color, $weight);
+    @return color.mix($tint-color, $color, $weight);
 }
 
 // Shade a color: mix a color with black
 @function shade-color($color, $weight, $shade-color: #000000) {
-    @return mix($shade-color, $color, $weight);
+    @return color.mix($shade-color, $color, $weight);
 }
 
 // Shade the color if the weight is positive, else tint it
@@ -129,7 +131,7 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
 }
 
 @function convert-color-to-hex($color) {
-    @return '##{str-slice(ie-hex-str($color), 4)}'
+    @return '##{string.slice(color.ie-hex-str($color), 4)}'
 }
 
 // Generate a color palette for specified base color.
@@ -183,10 +185,10 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
     $light: ();
     @each $color-name, $value in $colors {
         @if (contrast-ratio($value) < color-contrast.$min-contrast-ratio) {
-            $light: map-merge($light, ($color-name: $value));
+            $light: map.merge($light, ($color-name: $value));
         }
     }
-    @return $light
+    @return $light;
 }
 
 // Get only dark colors from the map.
@@ -195,34 +197,40 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025 0
     $dark: ();
     @each $color-name, $value in $colors {
         @if (contrast-ratio($value) > color-contrast.$min-contrast-ratio) {
-            $dark: map-merge($dark, ($color-name: $value));
+            $dark: map.merge($dark, ($color-name: $value));
         }
     }
-    @return $dark
+    @return $dark;
 }
 
 // Make color more opaque.
 // Replacement for deprecated fade-out() SASS builtin function.
 @function fade-out($color, $opacityShift) {
-    @return color.adjust($color, $alpha: $opacityShift * -1)
+    @return color.adjust($color, $alpha: $opacityShift * -1);
 }
 
 // Make color less opaque.
 // Replacement for deprecated fade-in() SASS builtin function.
 @function fade-in($color, $opacityShift) {
-    @return color.adjust($color, $alpha: $opacityShift)
+    @return color.adjust($color, $alpha: $opacityShift);
 }
 
 // Make color lighter.
 // Replacement for deprecated lighten() SASS builtin function.
 @function lighten($color, $percentage) {
-    @return color.adjust($color, $lightness: $percentage)
+    @return color.adjust($color, $lightness: $percentage);
 }
 
 // Make color lighter.
 // Replacement for deprecated darken() SASS builtin function.
 @function darken($color, $percentage) {
-    @return color.adjust($color, $lightness: $percentage * -1)
+    @return color.adjust($color, $lightness: $percentage * -1);
+}
+
+// Get opacity of a color.
+// Replacement for deprecated opacity() SASS builtin function.
+@function get-opacity($color) {
+    @return color.opacity($color);
 }
 
 /*

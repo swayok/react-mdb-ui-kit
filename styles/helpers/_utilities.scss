@@ -1,4 +1,6 @@
 // Utility classes.
+@use "sass:map";
+@use "sass:meta";
 @use "../mixins/utilities" as utilities-mixins;
 @use "../mixins/breakpoints";
 @use "../mixins/rfs";
@@ -7,7 +9,7 @@
 @use "../variables/utilities";
 
 // Loop over each breakpoint and utility.
-@each $breakpoint in map-keys(grid.$grid-breakpoints) {
+@each $breakpoint in map.keys(grid.$grid-breakpoints) {
     // Generate media query if needed
     @include breakpoints.media-breakpoint-up($breakpoint) {
         $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
@@ -16,7 +18,7 @@
         @each $key, $utility in utilities.$utilities {
             // The utility can be disabled with `false`, thus check if the utility is a map first
             // Only proceed if responsive media queries are enabled or if it's the base media query
-            @if type-of($utility) == 'map' and (map-get($utility, responsive) or $infix == '') {
+            @if meta.type-of($utility) == 'map' and (map.get($utility, responsive) or $infix == '') {
                 @include utilities-mixins.generate-utility($utility, $infix);
             }
         }
@@ -26,15 +28,15 @@
 // RFS rescaling.
 @if features.$include-rfs-scaling-for-utilities {
     @media (min-width: rfs.$rfs-mq-value) {
-        @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+        @each $breakpoint in map.keys(grid.$grid-breakpoints) {
             $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
-            @if (map-get(grid.$grid-breakpoints, $breakpoint) < rfs.$rfs-breakpoint) {
+            @if (map.get(grid.$grid-breakpoints, $breakpoint) < rfs.$rfs-breakpoint) {
                 // Loop over each utility property
                 @each $key, $utility in utilities.$utilities {
                     // The utility can be disabled with `false`, thus check if the utility is a map first
                     // Only proceed if responsive media queries are enabled or if it's the base media query
-                    @if type-of($utility) == 'map' and map-get($utility, rfs) and (map-get($utility, responsive) or $infix == '') {
+                    @if meta.type-of($utility) == 'map' and map.get($utility, rfs) and (map.get($utility, responsive) or $infix == '') {
                         @include utilities-mixins.generate-utility($utility, $infix, true);
                     }
                 }
@@ -49,7 +51,7 @@
         @each $key, $utility in utilities.$utilities {
             // The utility can be disabled with `false`, thus check if the utility is a map first
             // Then check if the utility needs print styles
-            @if type-of($utility) == 'map' and map-get($utility, print) == true {
+            @if meta.type-of($utility) == 'map' and map.get($utility, print) == true {
                 @include utilities-mixins.generate-utility($utility, '-print');
             }
         }

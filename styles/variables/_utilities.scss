@@ -1,5 +1,6 @@
 // stylelint-disable indentation
 // Utilities.
+@use "sass:map";
 @use "utility-values";
 @use "borders";
 @use "colors";
@@ -11,7 +12,7 @@
 $utilities: () !default;
 
 @if (features.$include-vertical-align-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-vertical-align
                 'align':
@@ -27,7 +28,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-float-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-float
                 'float':
@@ -47,7 +48,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-overflow-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-overflow
                 'overflow':
@@ -75,7 +76,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-display-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-display
                 'display':
@@ -93,7 +94,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-z-index-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-z-index
                 'z-index':
@@ -109,7 +110,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-cursor-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-cursor
                 'cursor':
@@ -125,7 +126,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-position-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-position
                 'position':
@@ -140,7 +141,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-extended-position-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-position
                 'top': (
@@ -177,7 +178,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-border-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-borders
                 'border':
@@ -235,7 +236,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-border-color-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-border-colors
                 'border-color': (
@@ -250,7 +251,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-width-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-sizing
                 'width':
@@ -287,7 +288,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-height-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-sizing
                 'height': (
@@ -323,7 +324,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-flexbox-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-flex
                 'flex':
@@ -439,7 +440,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-margin-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-spacing
                 'margin':
@@ -448,7 +449,7 @@ $utilities: () !default;
                     property: margin,
                     class: m,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-xy-values,
                             (
                                 auto: auto,
@@ -460,7 +461,7 @@ $utilities: () !default;
                     property: margin-right margin-left,
                     class: mx,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-x-values,
                             (
                                 auto: auto,
@@ -472,7 +473,7 @@ $utilities: () !default;
                     property: margin-top margin-bottom,
                     class: my,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-y-values,
                             (
                                 auto: auto,
@@ -484,7 +485,7 @@ $utilities: () !default;
                     property: margin-top,
                     class: mt,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-y-values,
                             (
                                 auto: auto,
@@ -496,7 +497,7 @@ $utilities: () !default;
                     property: margin-right,
                     class: me,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-x-values,
                             (
                                 auto: auto,
@@ -508,7 +509,7 @@ $utilities: () !default;
                     property: margin-bottom,
                     class: mb,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-y-values,
                             (
                                 auto: auto,
@@ -520,7 +521,7 @@ $utilities: () !default;
                     property: margin-left,
                     class: ms,
                     values:
-                    map-merge(
+                    map.merge(
                             utility-values.$spacers-x-values,
                             (
                                 auto: auto,
@@ -534,7 +535,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-negative-margin-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-spacing
                 'negative-margin':
@@ -587,7 +588,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-padding-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-spacing
                 'padding':
@@ -640,7 +641,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-text-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-text
                 'font-family':
@@ -714,14 +715,14 @@ $utilities: () !default;
 }
 
 @if (features.$include-text-color-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-color
                 'color':
                 (
                     property: color,
                     class: text,
-                    values: map_merge((
+                    values: map.merge((
                         'reset': inherit
                     ), color-lists.$text-colors),
                 ),
@@ -732,7 +733,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-bg-color-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-bg-color
                 'background-color':
@@ -748,7 +749,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-gradient-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 'gradient':
                 (
@@ -764,7 +765,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-interaction-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-interaction
                 'user-select':
@@ -784,7 +785,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-border-radius-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-border-radius
                 'rounded':
@@ -797,28 +798,28 @@ $utilities: () !default;
                     property: border-top-left-radius border-top-right-radius,
                     class: rounded-top,
                     values: (
-                        null: map_get(utility-values.$border-radius-values, null),
+                        null: map.get(utility-values.$border-radius-values, null),
                     ),
                 ),
                 'rounded-end': (
                     property: border-top-right-radius border-bottom-right-radius,
                     class: rounded-end,
                     values: (
-                        null: map_get(utility-values.$border-radius-values, null),
+                        null: map.get(utility-values.$border-radius-values, null),
                     ),
                 ),
                 'rounded-bottom': (
                     property: border-bottom-right-radius border-bottom-left-radius,
                     class: rounded-bottom,
                     values: (
-                        null: map_get(utility-values.$border-radius-values, null),
+                        null: map.get(utility-values.$border-radius-values, null),
                     ),
                 ),
                 'rounded-start': (
                     property: border-bottom-left-radius border-top-left-radius,
                     class: rounded-start,
                     values: (
-                        null: map_get(utility-values.$border-radius-values, null),
+                        null: map.get(utility-values.$border-radius-values, null),
                     ),
                 ),
                 // scss-docs-end utils-border-radius
@@ -828,7 +829,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-visibility-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 // scss-docs-start utils-visibility
                 'visibility':
@@ -847,7 +848,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-opacity-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 'opacity': (
                     property: opacity,
@@ -860,7 +861,7 @@ $utilities: () !default;
 
 @if (features.$include-shadow-utilities) {
     // scss-docs-start utils-shadow
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 'shadow': (
                     property: box-shadow,
@@ -874,7 +875,7 @@ $utilities: () !default;
 }
 
 @if (features.$include-letter-spacing-utilities) {
-    $utilities: map-merge(
+    $utilities: map.merge(
             (
                 'letter-spacing': (
                     property: letter-spacing,

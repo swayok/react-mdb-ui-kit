@@ -40,9 +40,9 @@
         width: auto;
         margin-top: form-validation.$form-feedback-margin-top;
         margin-left: form-validation.$form-feedback-margin-left;
-        @include rfs.font-size(form-validation.$form-feedback-font-size);
         font-style: form-validation.$form-feedback-font-style;
         color: $color;
+        @include rfs.font-size(form-validation.$form-feedback-font-size);
     }
 
     .#{$state}-tooltip {
@@ -53,11 +53,11 @@
         max-width: 100%; // Contain to parent when possible
         padding: tooltip.$form-feedback-tooltip-padding-y tooltip.$form-feedback-tooltip-padding-x;
         margin-top: 0.1rem;
-        @include rfs.font-size(tooltip.$form-feedback-tooltip-font-size);
         line-height: tooltip.$form-feedback-tooltip-line-height;
         color: $tooltip-color;
         background-color: $tooltip-bg-color;
         @include border-radius.border-radius(tooltip.$form-feedback-tooltip-border-radius);
+        @include rfs.font-size(tooltip.$form-feedback-tooltip-font-size);
     }
 
     @include form-validation-state-selector($state) {

@@ -24,10 +24,10 @@
         display: flex;
         height: progress-bar.$progress-height;
         overflow: hidden; // force rounded corners by cropping it
-        @include rfs.font-size(progress-bar.$progress-font-size);
         background-color: progress-bar.$progress-bg;
         @include border-radius.border-radius(progress-bar.$progress-border-radius);
         @include box-shadow.box-shadow(progress-bar.$progress-box-shadow);
+        @include rfs.font-size(progress-bar.$progress-font-size);
     }
 
     .progress-bar {

@@ -12,8 +12,8 @@
 ) {
     .page-link {
         padding: $padding-y $padding-x;
-        @include rfs.font-size($font-size);
         @include border-radius.border-radius($border-radius);
+        @include rfs.font-size($font-size);
     }
 
     .page-item {

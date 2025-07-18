@@ -16,8 +16,8 @@
     .blockquote-footer {
         margin-top: typography.$blockquote-margin-y * -1;
         margin-bottom: typography.$blockquote-margin-y;
-        @include rfs.font-size(typography.$blockquote-footer-font-size);
         color: typography.$blockquote-footer-color;
+        @include rfs.font-size(typography.$blockquote-footer-font-size);
 
         &::before {
             content: '\2014\00A0'; // em dash, nbsp

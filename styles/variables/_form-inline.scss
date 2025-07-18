@@ -1,10 +1,11 @@
 // Inline form.
+@use "sass:map";
 @use "sass:math";
 @use "spacers";
 @use "form-outline-input";
 
-$inline-form-items-column-gap: map_get(spacers.$spacers, 3) !default;
-$inline-form-items-row-gap: map_get(spacers.$spacers, 3) !default;
+$inline-form-items-column-gap: map.get(spacers.$spacers, 3) !default;
+$inline-form-items-row-gap: map.get(spacers.$spacers, 3) !default;
 
 $inline-form-item-min-height: form-outline-input.$form-outline-input-min-height !default;
 $inline-form-item-min-height-sm: form-outline-input.$form-outline-input-min-height-sm !default;

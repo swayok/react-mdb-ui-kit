@@ -1,4 +1,5 @@
 // Positioning.
+@use "sass:map";
 @use "../mixins/breakpoints";
 @use "../variables/features";
 @use "../variables/z-index";
@@ -22,7 +23,7 @@
     }
 
     // Responsive sticky top
-    @each $breakpoint in map-keys(grid.$grid-breakpoints) {
+    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
         @include breakpoints.media-breakpoint-up($breakpoint) {
             $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 

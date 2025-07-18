@@ -51,7 +51,6 @@
     body {
         margin: 0; // 1
         font-family: typography.$font-family-base;
-        @include mixins.font-size(typography.$font-size-base);
         font-weight: typography.$font-weight-base;
         line-height: typography.$line-height-base;
         color: body.$body-color;
@@ -59,6 +58,7 @@
         background-color: body.$body-bg; // 2
         -webkit-text-size-adjust: 100%; // 3
         -webkit-tap-highlight-color: rgba(colors.$black, 0); // 4
+        @include mixins.font-size(typography.$font-size-base);
     }
 
     // Text selection colors.
@@ -247,9 +247,9 @@
     sub,
     sup {
         position: relative;
-        @include mixins.font-size(typography.$sub-sup-font-size);
         line-height: 0;
         vertical-align: baseline;
+        @include mixins.font-size(typography.$sub-sup-font-size);
     }
 
     sub {
@@ -267,10 +267,10 @@
     kbd,
     samp {
         font-family: typography.$font-family-code;
-        @include mixins.font-size(1em); // Correct the odd `em` font sizing in all browsers.
         /*!rtl:ignore*/
         direction: ltr;
         unicode-bidi: bidi-override;
+        @include mixins.font-size(1em); // Correct the odd `em` font sizing in all browsers.
     }
 
     // 1. Remove browser default top margin
@@ -282,21 +282,21 @@
         margin-top: 0; // 1
         margin-bottom: 1rem; // 2
         overflow: auto; // 3
-        @include mixins.font-size(pre-kbd-code.$code-font-size);
         color: pre-kbd-code.$pre-color;
+        @include mixins.font-size(pre-kbd-code.$code-font-size);
 
         // Account for some code outputs that place code tags in pre tags
         code {
-            @include mixins.font-size(inherit);
             color: inherit;
             word-break: normal;
+            @include mixins.font-size(inherit);
         }
     }
 
     code {
-        @include mixins.font-size(pre-kbd-code.$code-font-size);
         color: pre-kbd-code.$code-color;
         word-wrap: break-word;
+        @include mixins.font-size(pre-kbd-code.$code-font-size);
 
         // Streamline the style when inside anchors to avoid broken underline and more
         a > & {
@@ -306,15 +306,15 @@
 
     kbd {
         padding: pre-kbd-code.$kbd-padding-y pre-kbd-code.$kbd-padding-x;
-        @include mixins.font-size(pre-kbd-code.$kbd-font-size);
         color: pre-kbd-code.$kbd-color;
         background-color: pre-kbd-code.$kbd-bg;
         @include mixins.border-radius(borders.$border-radius-sm);
+        @include mixins.font-size(pre-kbd-code.$kbd-font-size);
 
         kbd {
             padding: 0;
-            @include mixins.font-size(1em);
             font-weight: pre-kbd-code.$nested-kbd-font-weight;
+            @include mixins.font-size(1em);
         }
     }
 
@@ -404,8 +404,8 @@
     textarea {
         margin: 0; // 1
         font-family: inherit;
-        @include mixins.font-size(inherit);
         line-height: inherit;
+        @include mixins.font-size(inherit);
     }
 
     // Remove the inheritance of text transform in Firefox

@@ -14,7 +14,6 @@
         width: 100%;
         padding: form-select.$form-select-padding-y form-select.$form-select-indicator-padding form-select.$form-select-padding-y form-select.$form-select-padding-x;
         font-family: form-select.$form-select-font-family;
-        @include rfs.font-size(form-select.$form-select-font-size);
         font-weight: form-select.$form-select-font-weight;
         line-height: form-select.$form-select-line-height;
         color: form-select.$form-select-color;
@@ -24,9 +23,10 @@
         background-position: form-select.$form-select-bg-position;
         background-size: form-select.$form-select-bg-size;
         border: form-select.$form-select-border-width solid form-select.$form-select-border-color;
+        appearance: none;
         @include border-radius.border-radius(form-select.$form-select-border-radius, 0);
         @include box-shadow.box-shadow(form-select.$form-select-box-shadow);
-        appearance: none;
+        @include rfs.font-size(form-select.$form-select-font-size);
 
         &:focus {
             border-color: form-select.$form-select-focus-border-color;

@@ -188,11 +188,11 @@
     .btn-link {
         padding: buttons.$btn-link-padding;
         box-shadow: none;
-        @include rfs.font-size(buttons.$btn-link-font-size);
         font-weight: buttons.$btn-link-font-weight;
         color: buttons.$btn-link-color;
         text-decoration: buttons.$btn-link-decoration;
         text-transform: buttons.$btn-link-text-transform;
+        @include rfs.font-size(buttons.$btn-link-font-size);
 
         &:hover,
         &:focus,

@@ -46,8 +46,8 @@
 
     // Builds on `abbr`
     .initialism {
-        @include rfs.font-size(typography.$initialism-font-size);
         text-transform: uppercase;
+        @include rfs.font-size(typography.$initialism-font-size);
     }
 
     .text-truncate {
@@ -57,7 +57,6 @@
     // Heading.
     .lead {
         font-weight: typography.$lead-font-weight;
-
         @include rfs.font-size(typography.$lead-font-size);
     }
 }

@@ -1,3 +1,5 @@
+@use "sass:color";
+@use "sass:math";
 @use "../functions/color-utils";
 @use "../variables/body";
 @use "../variables/table";
@@ -7,9 +9,9 @@
 @mixin table-variant($state, $background) {
     .table-#{$state} {
         $color: color-utils.color-contrast(color-utils.opaque(body.$body-bg, $background));
-        $hover-bg: mix($color, $background, percentage(table.$table-hover-bg-factor));
-        $striped-bg: mix($color, $background, percentage(table.$table-striped-bg-factor));
-        $active-bg: mix($color, $background, percentage(table.$table-active-bg-factor));
+        $hover-bg: color.mix($color, $background, math.percentage(table.$table-hover-bg-factor));
+        $striped-bg: color.mix($color, $background, math.percentage(table.$table-striped-bg-factor));
+        $active-bg: color.mix($color, $background, math.percentage(table.$table-active-bg-factor));
 
         --#{css-variables.$variable-prefix}table-bg: #{$background};
         --#{css-variables.$variable-prefix}table-striped-bg: #{$striped-bg};
@@ -20,7 +22,7 @@
         --#{css-variables.$variable-prefix}table-hover-color: #{color-utils.color-contrast($hover-bg)};
 
         color: $color;
-        border-color: mix($color, $background, percentage(table.$table-border-factor));
+        border-color: color.mix($color, $background, math.percentage(table.$table-border-factor));
     }
 }
 

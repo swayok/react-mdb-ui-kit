@@ -24,11 +24,11 @@
     .nav-link {
         display: block;
         padding: nav.$nav-link-padding-y nav.$nav-link-padding-x;
-        @include rfs.font-size(nav.$nav-link-font-size);
         font-weight: nav.$nav-link-font-weight;
         color: nav.$nav-link-color;
         text-decoration: if(links.$link-decoration == none, null, none);
         @include transition.transition(nav.$nav-link-transition);
+        @include rfs.font-size(nav.$nav-link-font-size);
 
         &:hover,
         &:focus {
@@ -61,9 +61,9 @@
             text-transform: nav.$nav-tabs-link-text-transform;
             line-height: nav.$nav-tabs-link-line-height;
             font-weight: nav.$nav-tabs-link-font-weight;
-            @include rfs.font-size(nav.$nav-tabs-link-font-size);
             color: nav.$nav-tabs-link-color;
             padding: nav.$nav-tabs-link-padding-top nav.$nav-tabs-link-padding-x nav.$nav-tabs-link-padding-bottom nav.$nav-tabs-link-padding-x;
+            @include rfs.font-size(nav.$nav-tabs-link-font-size);
 
             &:hover,
             &:focus {
@@ -105,7 +105,6 @@
         .nav-link {
             border: 0;
             @include border-radius.border-radius(nav.$nav-pills-border-radius);
-            @include rfs.font-size(nav.$nav-pills-link-font-size);
             text-transform: uppercase;
             padding: nav.$nav-pills-link-padding-top nav.$nav-pills-link-padding-x nav.$nav-pills-link-padding-bottom nav.$nav-pills-link-padding-x;
             line-height: nav.$nav-pills-link-line-height;
@@ -113,6 +112,7 @@
             font-weight: nav.$nav-pills-link-font-weight;
             color: nav.$nav-pills-link-color;
             margin: nav.$nav-pills-margin;
+            @include rfs.font-size(nav.$nav-pills-link-font-size);
         }
 
         .nav-link.active,
