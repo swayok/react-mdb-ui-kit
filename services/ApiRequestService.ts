@@ -11,7 +11,7 @@ export interface ApiRequestServiceConfig {
     // Список запросов, которые не нужно выводить в консоль.
     // Формат: pathname без baseApiUrl, точно такие же, какие передаются в
     // ApiRequestService.get(pathname) / ApiRequestService.post(pathname)
-    notLoggableRequests: string[],
+    notLoggableRequests?: string[],
     // Добавить опции или заголовки к вопросу.
     beforeSend?: (headers: Headers, request: RequestInit) => void,
 }
@@ -115,8 +115,10 @@ export class ApiRequestService {
     // Проверить можно ли выводить логи для этого запроса.
     private static isLoggableRequest(relativeUrl: string, fullUrl: string): boolean {
         if (!this.config.allowRequestsLogs) {
-            // Отключаем для production среды.
             return false
+        }
+        if (!this.config.notLoggableRequests) {
+            return true
         }
         return (
             !this.config.notLoggableRequests.includes(relativeUrl.replace(/\?.*/, ''))
