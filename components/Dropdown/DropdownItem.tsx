@@ -2,13 +2,15 @@ import React from 'react'
 import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, LinkProps} from 'react-router-dom'
 import {useDropdownContext} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownContext'
 import {AnyObject, ReactComponentOrTagName} from '../../types/Common'
 import {DropdownItemProps} from './DropdownTypes'
 
 // Элемент выпадающего меню.
-export function DropdownItem(props: DropdownItemProps) {
+export function DropdownItem<
+    ComponentProps = Omit<LinkProps, 'to'>
+>(props: DropdownItemProps & Omit<ComponentProps, 'to' | keyof DropdownItemProps>) {
 
     const {
         className,
@@ -85,7 +87,7 @@ function getComponentAndProps(
     const componentProps: AnyObject = {}
     let Component: ReactComponentOrTagName = tag ?? (href ? 'a' : 'div')
     if (Component === 'a') {
-        // Это ссылка (<a>).
+        // Это ссылка (<a href="">).
         if (target) {
             componentProps.target = target
         }

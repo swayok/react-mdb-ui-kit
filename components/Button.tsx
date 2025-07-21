@@ -3,9 +3,10 @@ import clsx from 'clsx'
 import {AnyObject, ButtonColors, ReactComponentOrTagName} from '../types/Common'
 import Ripple, {RippleProps} from './Ripple/Ripple'
 import {Link, LinkProps} from 'react-router-dom'
-import {PropsWithForwardedRef, withStableAndRef} from '../helpers/withStable'
+import withStable from '../helpers/withStable'
 
 export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
+    LinkComponent?: React.ComponentType,
     hidden?: boolean,
     visible?: boolean,
     ripple?: ButtonColors | RippleProps,
@@ -22,13 +23,15 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
     hasIcon?: boolean,
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean,
-    ref?: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement | null>,
+    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | null>,
     // Состояние для компонента <Link>.
     state?: LinkProps['state'],
 }
 
 // Стилизованная кнопка.
-function Button(props: PropsWithForwardedRef<ButtonProps>) {
+function Button<
+    LinkPropsType = LinkProps
+>(props: ButtonProps & Omit<LinkPropsType, 'to' | keyof ButtonProps>) {
 
     if (props.hidden || props.visible === false) {
         return null
@@ -56,14 +59,15 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
         disabled,
         hasIcon,
         className,
-        forwardedRef,
+        LinkComponent = Link,
+        ref,
         ...commonHtmlProps
     } = props
 
     let Tag: ReactComponentOrTagName
     if (href) {
         // Если указан external, то ссылку считаем внешней (не должна идти через роутер).
-        Tag = external ? 'a' : Link
+        Tag = external ? 'a' : LinkComponent
     } else {
         Tag = labelFor ? 'label' : 'button'
     }
@@ -122,7 +126,7 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
                 className={classes}
                 {...calculatedProps}
                 {...commonHtmlProps}
-                ref={forwardedRef as React.Ref<HTMLAllCollection>}
+                ref={ref as React.Ref<HTMLAllCollection>}
             >
                 {children}
             </Tag>
@@ -136,7 +140,7 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
                 className={classes}
                 {...calculatedProps}
                 {...commonHtmlProps}
-                ref={forwardedRef as React.Ref<HTMLAllCollection>}
+                ref={ref as React.Ref<HTMLAllCollection>}
             >
                 {children}
             </Ripple>
@@ -144,14 +148,11 @@ function Button(props: PropsWithForwardedRef<ButtonProps>) {
     }
 }
 
-// Делаем props.onClick стабильным чтобы при перерисовках родительского компонента
+// Делаем props.onClick стабильным, чтобы при перерисовках родительского компонента
 // не перерисовывался этот компонент до тех пор, пока не изменятся нестабильные
 // свойства. При этом изменение props.onClick не вызовет перерисовку, но работать
 // будет без проблем.
-export default withStableAndRef<
-    ButtonProps,
-    HTMLButtonElement | HTMLAnchorElement | null
->(['onClick'], Button, 'Button')
+export default withStable<ButtonProps>(['onClick'], Button) as typeof Button
 
 // Нормализация свойств анимации нажатия на кнопку.
 function normalizeRippleProps(
