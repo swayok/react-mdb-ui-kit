@@ -9,7 +9,7 @@ import {DropdownItemProps} from './DropdownTypes'
 
 // Элемент выпадающего меню.
 export function DropdownItem<
-    ComponentProps = Omit<LinkProps, 'to'>
+    ComponentProps = LinkProps
 >(props: DropdownItemProps & Omit<ComponentProps, 'to' | keyof DropdownItemProps>) {
 
     const {
@@ -20,6 +20,7 @@ export function DropdownItem<
         active,
         external,
         tag,
+        LinkComponent = Link,
         target,
         href,
         ref,
@@ -43,7 +44,14 @@ export function DropdownItem<
     const {
         Component,
         componentProps,
-    } = getComponentAndProps(tag, href, target, external, disableAllItems)
+    } = getComponentAndProps(
+        tag,
+        href,
+        target,
+        external,
+        LinkComponent,
+        disableAllItems
+    )
 
     return (
         <Component
@@ -68,6 +76,7 @@ function getComponentAndProps(
     href: DropdownItemProps['href'],
     target: DropdownItemProps['target'],
     external: DropdownItemProps['external'],
+    LinkComponent: DropdownItemProps['LinkComponent'],
     disableAllItems: boolean
 ): {
     Component: ReactComponentOrTagName
@@ -93,7 +102,7 @@ function getComponentAndProps(
         }
         if (!external) {
             // Конвертируем в <Link>, чтобы работало с навигацией
-            Component = Link
+            Component = LinkComponent
             componentProps.to = href
         } else {
             // Если указан target или external, то ссылку считаем внешней (не должна идти через роутер)

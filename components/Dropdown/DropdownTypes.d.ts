@@ -1,7 +1,7 @@
 import {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
 import {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
 import {Offset, UsePopperOptions} from '@restart/ui/usePopper'
-import {HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
+import React, {HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
 import {AnyRefObject, ComponentPropsWithModifiableTag, ReactComponentOrTagName} from '../../types/Common'
 
 export interface DropdownContextProps {
@@ -101,6 +101,7 @@ export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
 
 export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
     tag?: ReactComponentOrTagName
+    LinkComponent?: React.ComponentProps
     target?: HTMLAttributeAnchorTarget
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean
