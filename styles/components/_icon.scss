@@ -8,9 +8,10 @@
 
 @if (features.$include-icon) {
     svg.mdi-icon {
-        @include svg-icons.mdi-icon-color(icons.$icon-text-color);
         pointer-events: none;
         flex-shrink: 0;
+
+        @include svg-icons.mdi-icon-color(icons.$icon-text-color);
 
         path {
             transition: fill 0.2s linear;
@@ -71,7 +72,7 @@
         }
     }
 
-    a,
+    a:not(.btn),
     .clickable {
         @include svg-icons.contained-mdi-icon-color-in-link(
                 links.$link-color,
@@ -96,15 +97,5 @@
         }
     }
 
-    @each $color, $value in color-lists.$button-colors {
-        .btn {
-            &.btn-#{$color} {
-                @include svg-icons.contained-mdi-icon-color-in-button($value)
-            }
-
-            &.btn-outline-#{$color} {
-                @include svg-icons.contained-mdi-icon-color($value);
-            }
-        }
-    }
+    // Icon colors inside buttons (.btn-*, .btn-outline-*) are in mixins/_buttons.scss
 }

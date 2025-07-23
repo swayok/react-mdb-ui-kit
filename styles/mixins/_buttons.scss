@@ -8,6 +8,7 @@
 @use "box-shadow";
 @use "border-radius";
 @use "rfs";
+@use "svg-icons";
 @use "../variables/buttons";
 @use "../variables/color-contrast";
 @use "../variables/features";
@@ -56,12 +57,20 @@
         color: $hover-color;
         @include gradients.gradient-bg($hover-background);
         border-color: $hover-border;
+
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $hover-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($hover-color)
+        }
     }
 
     &:focus {
         color: $hover-color;
         @include gradients.gradient-bg($hover-background);
         border-color: $hover-border;
+
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $hover-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($hover-color)
+        }
     }
 
     &:active,
@@ -76,6 +85,10 @@
         &:focus {
             box-shadow: buttons.$btn-focus-box-shadow;
         }
+
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $active-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($active-color)
+        }
     }
 
     &:disabled,
@@ -85,6 +98,14 @@
         // Remove CSS gradients if they're enabled
         background-image: if(features.$enable-gradients, none, null);
         border-color: $disabled-border;
+
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $disabled-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($disabled-color)
+        }
+    }
+
+    @if (features.$include-icon and features.$enable-mdi-svg-icons) {
+        @include svg-icons.contained-mdi-icon-color($color)
     }
 }
 
@@ -105,6 +126,10 @@
     &:hover {
         color: $hover-color;
         background-color: $hover-background;
+
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $hover-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($hover-color)
+        }
     }
 
     &:focus {
@@ -119,6 +144,10 @@
         background-color: $active-background;
         border-color: $active-border;
 
+        @if (features.$include-icon and features.$enable-mdi-svg-icons and $active-color != $color) {
+            @include svg-icons.contained-mdi-icon-color($active-color)
+        }
+
         &:focus {
             box-shadow: none;
         }
@@ -129,6 +158,10 @@
         color: $color;
         border-color: $color;
         background-color: transparent;
+    }
+
+    @if (features.$include-icon and features.$enable-mdi-svg-icons) {
+        @include svg-icons.contained-mdi-icon-color($color)
     }
 }
 
