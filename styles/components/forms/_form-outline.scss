@@ -56,6 +56,7 @@
                     top: 0;
                     height: 100%;
                     width: form-outline-input.$form-notch-leading-width;
+                    min-width: form-outline-input.$form-notch-border-radius;
                     border-right: none;
                     border-radius: form-outline-input.$form-notch-border-radius 0 0 form-outline-input.$form-notch-border-radius;
                 }
@@ -174,6 +175,17 @@
                 &:focus ~ .form-label,
                 &.active ~ .form-label {
                     transform: form-outline-input.$form-outline-active-label-transform-sm;
+                }
+
+                ~ .form-notch {
+                    .form-notch-leading {
+                        min-width: form-outline-input.$form-notch-border-radius-sm;
+                        border-radius: form-outline-input.$form-notch-border-radius-sm 0 0 form-outline-input.$form-notch-border-radius-sm;
+                    }
+
+                    .form-notch-trailing {
+                        border-radius: 0 form-outline-input.$form-notch-border-radius-sm form-outline-input.$form-notch-border-radius-sm 0;
+                    }
                 }
             }
         }
