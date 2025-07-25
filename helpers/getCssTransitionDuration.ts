@@ -8,12 +8,18 @@ export function getCssTransitionDuration(
     property: string,
     defaultDuration: number = 300
 ): number {
+    if (
+        !('computedStyleMap' in element) || typeof element.computedStyleMap !== 'function'
+    ) {
+        // Firefox не поддерживает Element.computedStyleMap().
+        return defaultDuration
+    }
     const stylesMap = element.computedStyleMap()
     if (!stylesMap.has('transition-duration') || !stylesMap.has('transition-property')) {
         return 0
     }
     // Проверка наличия анимации для указанного свойства.
-    const transitionProperties: string[] = (stylesMap.get('transition-property') as CSSStyleValue)
+    const transitionProperties: string[] = (stylesMap.get('transition-property')!)
         .toString()
         .split(/\s*,\s*/)
 
