@@ -30,9 +30,22 @@ export type AnyUrlParams = Record<string, string | undefined>
 
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {
-    deviceType: 'desktop' | 'tablet' | 'mobile',
-    isWide: boolean,
-    bootstrapSize: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl',
+    /**
+     * Тип устройства.
+     */
+    deviceType: 'desktop' | 'tablet' | 'mobile'
+    /**
+     * У каждого типа имеется 2 версии - обычная и широкая.
+     * Сопоставление примерно такое:
+     * mobile = xxs|xs, mobile wide = sm;
+     * tablet = md, tablet wide = lg;
+     * desktop = xl, desktop wide = xxl;
+     */
+    isWide: boolean
+    /**
+     * Размер устройства по брейкпоинтам Bootstrap CSS.
+     */
+    bootstrapSize: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 }
 
 // Все возможные цвета различных компонентов (зависит от стилей).

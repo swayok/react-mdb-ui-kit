@@ -26,6 +26,18 @@
 
         // Generate the caret automatically
         @include caret.caret();
+
+        &.btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .chevron {
+                margin-left: dropdown.$dropdown-chevron-margin-left;
+                margin-right: dropdown.$dropdown-chevron-margin-right;
+            }
+        }
     }
 
     // The dropdown menu

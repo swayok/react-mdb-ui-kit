@@ -1,15 +1,14 @@
-import React, {AllHTMLAttributes} from 'react'
 import useMergedRefs from '@restart/hooks/useMergedRefs'
 import DropdownContext from '@restart/ui/DropdownContext'
 import {useDropdownToggle} from '@restart/ui/DropdownToggle'
-import {useContext} from 'react'
 import clsx from 'clsx'
-import Button from '../Button'
+import React, {useContext} from 'react'
+import Button, {ButtonProps} from '../Button'
 import {DropdownToggleProps} from './DropdownTypes'
 
 export function DropdownToggle<
-    T = AllHTMLAttributes<HTMLElement>
->(props: DropdownToggleProps & Omit<T, 'ref'>) {
+    T = ButtonProps
+>(props: DropdownToggleProps & Omit<T, 'ref' | keyof DropdownToggleProps>) {
 
     const dropdownContext = useContext(DropdownContext)
 
