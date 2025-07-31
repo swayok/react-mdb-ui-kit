@@ -6,19 +6,19 @@ import withStable from '../helpers/withStable'
 import FadeSwitch from './FadeSwitch'
 
 export interface AsyncDataLoadingProps<DataType = undefined> {
-    loading: boolean | null;
-    loadingLabel?: string | React.ReactNode;
+    loading: boolean | null
+    loadingLabel?: string | React.ReactNode
     // Отложить отображение индикатора загрузки на указанное кол-во миллисекунд.
-    loadingShowDelay?: number | null;
-    error?: boolean | number;
-    errorMessage: string;
-    onReload?: () => unknown;
-    retryButtonTitle: string;
-    showContent?: boolean;
-    className?: string;
-    style?: CSSProperties;
-    loadedData?: DataType | null,
-    render: (loadedData: DataType) => React.ReactNode;
+    loadingShowDelay?: number | null
+    error?: boolean | number
+    errorMessage: string
+    onReload?: () => unknown
+    retryButtonTitle: string
+    showContent?: boolean
+    className?: string
+    style?: CSSProperties
+    loadedData?: DataType | null
+    render: (loadedData: DataType) => React.ReactNode
 }
 
 // Показывает индикатор загрузки данных пока не загрузятся данные.

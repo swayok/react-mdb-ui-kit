@@ -172,9 +172,9 @@ export class ApiRequestService {
                 if (isError || this.isLoggableRequest(relativeUrl, fullUrl)) {
                     const logTime: string = (new Date()).toLocaleTimeString('en', {hour12: false})
                     const requestMethod: string = ((data._method ?? typeToLog) as string).toUpperCase()
-                    data.request = requestInit
                     console[isError ? 'error' : 'log'](
                         `[API][${logTime}][${action}][${requestMethod}] ${decodeURI(fullUrl)}`,
+                        requestInit,
                         data
                     )
                 }

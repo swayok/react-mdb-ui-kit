@@ -1,3 +1,4 @@
+import {HtmlErrorResponseData, OtherErrorResponseData} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
 import NavigationService from '../services/NavigationService'
 import ToastService from '../services/ToastService'
 import {ApiError, ApiResponse, ValidationErrorsResponseData} from '../services/ApiRequestService'
@@ -485,4 +486,27 @@ export function normalizeValidationErrorsKeysForArraysAndObjects<ErrorsType exte
         }
     }
     return ret
+}
+
+const defaultApiErrorData: ApiError = {
+    data: {},
+    errorType: 'http_error',
+    message: 'Unknown error',
+    name: 'Unknown error',
+    request: {},
+    response: null,
+    status: 0,
+    success: false,
+    url: '',
+}
+
+// Создать объект ApiError с указанным статусом и данными.
+export function createApiError<
+    T extends ApiResponseData = ApiResponseData | ValidationErrorsResponseData | HtmlErrorResponseData | OtherErrorResponseData
+>(status: number, errorData?: Partial<Omit<ApiError<T>, 'status'>>): ApiError<T> {
+    return {
+        ...(defaultApiErrorData as ApiError<T>),
+        ...(errorData ?? {}),
+        status,
+    }
 }

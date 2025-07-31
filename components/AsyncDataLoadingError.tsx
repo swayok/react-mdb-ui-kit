@@ -3,13 +3,13 @@ import Button from './Button'
 import clsx from 'clsx'
 import withStable from '../helpers/withStable'
 
-export type AsyncDataLoadingErrorProps = {
+export interface AsyncDataLoadingErrorProps {
     className?: string,
     style?: CSSProperties,
     errorMessage: string,
     retryButtonTitle: string,
     onReload?: () => void,
-};
+}
 
 // Ошибка загрузки данных с сервера.
 function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
@@ -23,7 +23,7 @@ function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
             </div>
             {props.onReload && (
                 <Button
-                    onClick={props.onReload}
+                    onClick={() => props.onReload?.()}
                     color="primary"
                 >
                     {props.retryButtonTitle}
