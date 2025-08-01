@@ -1,4 +1,5 @@
-import {generatePath, Location, NavigateFunction} from 'react-router-dom'
+import {Location, NavigateFunction} from 'react-router-dom'
+import {makeUrl} from 'swayok-react-mdb-ui-kit/helpers/makeUrl'
 import {AnyObject} from '../types/Common'
 
 type ExtractRouteParam<Path, NextPart> = Path extends `:${infer Param}`
@@ -211,15 +212,7 @@ export default class NavigationService {
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null
     ): string {
-        //relativeUrl = (relativeUrl.length > 0 && relativeUrl[0] !== '/' ? '/' : '') + relativeUrl;
-        if (params && Object.keys(params).length > 0) {
-            relativeUrl = generatePath(relativeUrl, params)
-        }
-        if (queryArgs && Object.keys(queryArgs).length > 0) {
-            const queryString: URLSearchParams = new URLSearchParams(queryArgs)
-            relativeUrl += '?' + queryString.toString()
-        }
-        return relativeUrl
+        return makeUrl(relativeUrl, params, queryArgs)
     }
 
     // Сборка абсолютного URL из частей.
