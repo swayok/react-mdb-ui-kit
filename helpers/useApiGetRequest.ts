@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {ApiError} from '../services/ApiRequestService'
 
 export interface UseApiGetRequestHookConfig<DataType> {
@@ -15,6 +15,12 @@ export interface UseApiGetRequestHookConfig<DataType> {
     initialData?: DataType
     // Модификация загруженных данных.
     modifyLoadedData?: (data: DataType) => DataType
+    // Замена стандартного обработчика успешной загрузки данных.
+    // Вызов modifyLoadedData() не выполняется.
+    onSuccess?: (
+        responseData: DataType,
+        hookState: Readonly<UseApiGetRequestHookState<DataType>>,
+    ) => void
     // Обработка ошибки загрузки данных.
     onError?: (error: ApiError, silent: boolean) => void
 }
@@ -22,10 +28,20 @@ export interface UseApiGetRequestHookConfig<DataType> {
 export interface UseApiGetRequestHookReturn<DataType> {
     data?: DataType
     loading: boolean
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     error: ApiError | null
     setError: React.Dispatch<React.SetStateAction<ApiError | null>>
     reload: (silent?: boolean) => Promise<DataType>
     setData: React.Dispatch<React.SetStateAction<DataType | undefined>>
+}
+
+export interface UseApiGetRequestHookState<DataType> extends Omit<UseApiGetRequestHookReturn<DataType>, 'reload'> {
+    sendRequest: () => Promise<DataType>
+    defaultOnSuccess: (data: DataType) => void
+    options: Omit<Readonly<
+        UseApiGetRequestHookConfig<DataType>>,
+        'onSuccess' | 'autoStart' | 'defaultIsLoadingState' | 'resetDataBeforeReload'
+    >
 }
 
 // Хук для отправки GET запроса в API.
@@ -43,6 +59,7 @@ export function useApiGetRequest<DataType>(
         resetDataBeforeReload = true,
         initialData,
         modifyLoadedData,
+        onSuccess,
         onError,
     } = (options ?? {})
 
@@ -62,33 +79,59 @@ export function useApiGetRequest<DataType>(
         setIsLoading,
     ] = useState(defaultIsLoadingState)
 
-    // Запуск запроса и обработка ответа.
-    const executeRequest = useCallback((silent?: boolean): Promise<DataType> => {
-        if (!silent) {
-            setIsLoading(true)
-            setError(null)
-            if (resetDataBeforeReload) {
-                setData(initialData)
+    const hookState = useRef<UseApiGetRequestHookState<DataType>>(null)
+    hookState.current = {
+        data,
+        setData,
+        loading: isLoading,
+        setIsLoading,
+        error,
+        setError,
+        sendRequest,
+        defaultOnSuccess(data: DataType) {
+            if (modifyLoadedData) {
+                data = modifyLoadedData(data)
             }
-        }
-        return sendRequest()
-            .then((data: DataType) => {
-                if (modifyLoadedData) {
-                    data = modifyLoadedData(data)
-                }
-                setData(data)
-                setIsLoading(false)
+            setData(data)
+            setIsLoading(false)
+            setError(null)
+        },
+        options: {
+            initialData,
+            modifyLoadedData,
+            onError,
+        },
+    }
+
+    // Запуск запроса и обработка ответа.
+    const executeRequest = useCallback(
+        (silent?: boolean): Promise<DataType> => {
+            if (!silent) {
+                setIsLoading(true)
                 setError(null)
-                return data
-            })
-            .catch((error: ApiError) => {
-                if (!silent) {
-                    setError(error)
+                if (resetDataBeforeReload) {
+                    setData(initialData)
                 }
-                setIsLoading(false)
-                onError?.(error, !!silent)
-            }) as Promise<DataType>
-    }, [key])
+            }
+            return sendRequest()
+                .then((data: DataType) => {
+                    if (onSuccess) {
+                        onSuccess(data, hookState.current!)
+                    } else {
+                        hookState.current!.defaultOnSuccess(data)
+                    }
+                    return data
+                })
+                .catch((error: ApiError) => {
+                    if (!silent) {
+                        setError(error)
+                    }
+                    setIsLoading(false)
+                    onError?.(error, !!silent)
+                }) as Promise<DataType>
+        },
+        [key]
+    )
 
     // Запуск запроса при монтировании или изменении key (через executeRequest).
     useEffect(() => {
@@ -99,10 +142,11 @@ export function useApiGetRequest<DataType>(
 
     return {
         data,
+        setData,
         loading: isLoading,
+        setIsLoading,
         error,
         setError,
         reload: executeRequest,
-        setData,
     }
 }
