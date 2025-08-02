@@ -5,6 +5,8 @@ import {
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from 'swayok-react-mdb-ui-kit/types/FilePicker'
+import Tooltip from 'swayok-react-mdb-ui-kit/components/Tooltip'
+import FilePickerHelpers from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerHelpers'
 
 interface Props {
     file: FilePickerFileInfo
@@ -13,6 +15,7 @@ interface Props {
     borderRadius?: number | null
     className?: string
     additionalClassName?: string
+    allowFileNameTooltip?: boolean
     style?: CSSProperties
 }
 
@@ -23,13 +26,20 @@ export const FilePickerFilePreviewFile = React.memo(function FilePickerFilePrevi
         sizes,
         renderer,
         borderRadius = 6,
-        className = 'd-flex flex-row align-items-stretch',
+        allowFileNameTooltip,
+        className = 'd-flex flex-row align-items-stretch justify-content-center',
         additionalClassName,
         style,
     } = props
 
     return (
-        <div
+        <Tooltip
+            tag="div"
+            title={
+                allowFileNameTooltip
+                    ? file.file.name + (file.file.size > 0 ? ' (' + FilePickerHelpers.getFileSizeMb(file) + 'MB)' : '')
+                    : undefined
+            }
             className={clsx(
                 'file-picker-preview-file',
                 borderRadius ? 'rounded-' + borderRadius : null,
@@ -41,7 +51,7 @@ export const FilePickerFilePreviewFile = React.memo(function FilePickerFilePrevi
                 ...style,
             }}
         >
-            {renderer(sizes.width, file.file.name)}
-        </div>
+            {renderer(sizes.width, file.file.name, file.file)}
+        </Tooltip>
     )
 })

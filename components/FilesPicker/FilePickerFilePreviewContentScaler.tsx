@@ -1,13 +1,16 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes} from 'react'
+import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
 
 interface Props extends AllHTMLAttributes<HTMLAnchorElement> {
+    file: FileAPISelectedFileInfo
     scaleImageOnHover?: boolean
 }
 
 export const FilePickerFilePreviewContentScaler = React.memo(function FilePickerFilePreviewContentContainer(props: Props) {
 
     const {
+        file,
         children,
         scaleImageOnHover,
         onClick,
@@ -18,7 +21,7 @@ export const FilePickerFilePreviewContentScaler = React.memo(function FilePicker
         ...otherProps
     } = props
 
-    if (!scaleImageOnHover) {
+    if (!scaleImageOnHover || !file.isImage) {
         return (
             <>
                 {children}

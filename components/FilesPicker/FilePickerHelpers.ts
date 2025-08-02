@@ -159,6 +159,7 @@ export default {
     ): string | FilePickerContextMimeTypeInfo {
         const extension = file.name.replace(/^.+\.([a-zA-Z0-9]{3,4})$/, '$1').toLowerCase()
         if (!mimes[file.type]) {
+            console.log('[FilePicker] No preview config for mime type: ' + file.type)
             return translations.error.mime_type_forbidden(extension || file.type)
         }
         const mimesForType: FilePickerContextMimeTypeInfo = mimes[file.type]

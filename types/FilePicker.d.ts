@@ -5,7 +5,7 @@ import {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../helpers/FileAPI/
 
 // Рендерер предпросмотра файла.
 export type FilePickerContextMimeTypePreviewRenderer =
-    (previewWidth: number, fileName: string) => React.ReactNode
+    (previewWidth: number, fileName: string, fileData: FileAPISelectedFileInfo) => React.ReactNode
 
 // Настройки предпросмотра для типа файлов.
 export interface FilePickerContextMimeTypeInfo {
@@ -14,7 +14,7 @@ export interface FilePickerContextMimeTypeInfo {
     // Рендерер.
     preview: FilePickerContextMimeTypePreviewRenderer | 'image'
     // Тип файла.
-    type: 'image' | 'file' | 'video' | 'document'
+    type: 'image' | 'file' | 'video' | 'audio' | 'document'
 }
 
 // Состояние компонентов выбора файлов для загрузки на сервер.

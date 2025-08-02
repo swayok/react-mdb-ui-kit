@@ -19,6 +19,7 @@ interface Props {
     additionalClassName?: string
     imageClassName?: string
     fileClassName?: string
+    allowFileNameTooltip?: boolean
     style?: CSSProperties
 }
 
@@ -38,6 +39,7 @@ export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePr
         additionalClassName,
         imageClassName,
         fileClassName,
+        allowFileNameTooltip,
         style,
     } = props
 
@@ -78,6 +80,7 @@ export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePr
                     sizes={previewSizes}
                     renderer={previewInfo.preview}
                     borderRadius={borderRadius}
+                    allowFileNameTooltip={allowFileNameTooltip}
                     style={style}
                     additionalClassName={fileClassName}
                 />

@@ -1,8 +1,12 @@
 import React from 'react'
 import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
-import {mdiFileExcelOutline, mdiFileOutline, mdiFileWordOutline} from '@mdi/js'
+import {mdiFileExcelOutline, mdiFileOutline, mdiFileWordOutline, mdiVolumeHigh} from '@mdi/js'
 import {FilePickerContextProps, FilePickerTranslations} from '../../types/FilePicker'
 import {mdiFilePdfOutline} from '../../helpers/icons'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {FilePickerContextMimeTypeInfo} from 'swayok-react-mdb-ui-kit/types/FilePicker'
+import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
+import FilePickerAudioFilePreview from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerAudioFilePreview'
 
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = {
@@ -38,92 +42,108 @@ export const filePickerDefaultTranslations: FilePickerTranslations = {
     restore: 'Restore file.',
 }
 
+export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo> = {
+    'image/jpeg': {
+        type: 'image',
+        extensions: ['jpg', 'jpeg'],
+        preview: 'image',
+    },
+    'image/png': {
+        type: 'image',
+        extensions: ['png'],
+        preview: 'image',
+    },
+    'image/svg+xml': {
+        type: 'image',
+        extensions: ['svg'],
+        preview: 'image',
+    },
+    'application/pdf': {
+        type: 'document',
+        extensions: ['pdf'],
+        preview(previewWidth: number) {
+            return (
+                <FilePickerFilePreviewAsIcon
+                    path={mdiFilePdfOutline}
+                    color="red"
+                    previewSize={previewWidth}
+                />
+            )
+        },
+    },
+    'application/msword': {
+        type: 'document',
+        extensions: ['doc'],
+        preview(previewWidth: number) {
+            return (
+                <FilePickerFilePreviewAsIcon
+                    path={mdiFileWordOutline}
+                    color="blue"
+                    previewSize={previewWidth}
+                />
+            )
+        },
+    },
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
+        type: 'document',
+        extensions: ['docx'],
+        preview(previewWidth: number) {
+            return (
+                <FilePickerFilePreviewAsIcon
+                    path={mdiFileWordOutline}
+                    color="blue"
+                    previewSize={previewWidth}
+                />
+            )
+        },
+    },
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
+        type: 'document',
+        extensions: ['xlsx'],
+        preview(previewWidth: number) {
+            return (
+                <FilePickerFilePreviewAsIcon
+                    path={mdiFileExcelOutline}
+                    color="green"
+                    previewSize={previewWidth}
+                />
+            )
+        },
+    },
+    'text/csv': {
+        type: 'document',
+        extensions: ['csv'],
+        preview(previewWidth: number) {
+            return (
+                <FilePickerFilePreviewAsIcon
+                    path={mdiFileExcelOutline}
+                    color="green"
+                    previewSize={previewWidth}
+                />
+            )
+        },
+    },
+    'audio/mpeg': {
+        type: 'audio',
+        extensions: ['mp3'],
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
+            return (
+                <FilePickerAudioFilePreview
+                    path={mdiVolumeHigh}
+                    color="blue"
+                    previewSize={previewWidth}
+                    fileData={fileData}
+                />
+            )
+        },
+    },
+}
+
 // Контекст компонентов прикрепления файлов.
 export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContextProps>> = {
     translations: filePickerDefaultTranslations,
     maxFiles: null,
-    previews: {
-        'image/jpeg': {
-            type: 'image',
-            extensions: ['jpg', 'jpeg'],
-            preview: 'image',
-        },
-        'image/png': {
-            type: 'image',
-            extensions: ['png'],
-            preview: 'image',
-        },
-        'image/svg+xml': {
-            type: 'image',
-            extensions: ['svg'],
-            preview: 'image',
-        },
-        'application/pdf': {
-            type: 'document',
-            extensions: ['pdf'],
-            preview(previewWidth: number) {
-                return (
-                    <FilePickerFilePreviewAsIcon
-                        path={mdiFilePdfOutline}
-                        color="red"
-                        previewSize={previewWidth}
-                    />
-                )
-            },
-        },
-        'application/msword': {
-            type: 'document',
-            extensions: ['doc'],
-            preview(previewWidth: number) {
-                return (
-                    <FilePickerFilePreviewAsIcon
-                        path={mdiFileWordOutline}
-                        color="blue"
-                        previewSize={previewWidth}
-                    />
-                )
-            },
-        },
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
-            type: 'document',
-            extensions: ['docx'],
-            preview(previewWidth: number) {
-                return (
-                    <FilePickerFilePreviewAsIcon
-                        path={mdiFileWordOutline}
-                        color="blue"
-                        previewSize={previewWidth}
-                    />
-                )
-            },
-        },
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
-            type: 'document',
-            extensions: ['xlsx'],
-            preview(previewWidth: number) {
-                return (
-                    <FilePickerFilePreviewAsIcon
-                        path={mdiFileExcelOutline}
-                        color="green"
-                        previewSize={previewWidth}
-                    />
-                )
-            },
-        },
-        'text/csv': {
-            type: 'document',
-            extensions: ['csv'],
-            preview(previewWidth: number) {
-                return (
-                    <FilePickerFilePreviewAsIcon
-                        path={mdiFileExcelOutline}
-                        color="green"
-                        previewSize={previewWidth}
-                    />
-                )
-            },
-        },
-    },
+    previews: filePickerDefaultPreviews,
     fallbackPreview(previewWidth: number) {
         return (
             <FilePickerFilePreviewAsIcon

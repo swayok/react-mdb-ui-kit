@@ -97,7 +97,8 @@ function FilePickerFilePreview(
                     )}
                 >
                     <FilePickerFilePreviewContentScaler
-                        scaleImageOnHover={scaleImageOnHover}
+                        file={file.file}
+                        scaleImageOnHover={scaleImageOnHover && file.file.isImage}
                     >
                         <FilePickerFilePreviewContent
                             file={file}
@@ -106,6 +107,7 @@ function FilePickerFilePreview(
                             additionalClassName="me-3"
                             imageClassName={imageClassName}
                             fileClassName={fileClassName}
+                            allowFileNameTooltip={false}
                             style={style}
                         />
                     </FilePickerFilePreviewContentScaler>

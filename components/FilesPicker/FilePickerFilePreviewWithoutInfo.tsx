@@ -94,11 +94,12 @@ function FilePickerFilePreviewWithoutInfo(
                 {...containerProps}
             >
                 <FilePickerFilePreviewContentScaler
+                    file={file.file}
+                    scaleImageOnHover={scaleImageOnHover}
                     className={clsx(
                         'file-picker-preview-container',
                         (file.isDeleted && showIfDeleted) ? 'opacity-30' : null
                     )}
-                    scaleImageOnHover={scaleImageOnHover}
                 >
                     <FilePickerFilePreviewContent
                         file={file}
@@ -106,6 +107,7 @@ function FilePickerFilePreviewWithoutInfo(
                         imagePreviewSize={imagePreviewSize}
                         imageClassName={imageClassName}
                         fileClassName={fileClassName}
+                        allowFileNameTooltip={true}
                         style={style}
                     />
                     <div className="pt-2">

@@ -24,6 +24,11 @@
                 }
             }
 
+            %scale-transform {
+                transform: form-file-picker.$file-picker-preview-hover-transform;
+                transform-origin: form-file-picker.$file-picker-preview-hover-transform-origin;
+            }
+
             a.file-picker-preview-scaler {
                 outline: none !important;
                 @include transition.transition(form-file-picker.$file-picker-preview-transition);
@@ -33,35 +38,39 @@
                     // При наведении на удалённую картинку нужно убрать изменение opacity.
                     opacity: 1 !important;
                 }
+
+                .file-picker-preview:hover {
+                    @extend %scale-transform;
+                }
+
+                .file-picker-preview-delete,
+                .file-picker-preview-restore {
+                    @include transition.transition(form-file-picker.$file-picker-preview-transition);
+
+                    &:hover {
+                        opacity: 1 !important;
+                    }
+                }
             }
 
-            .file-picker-preview-delete,
-            .file-picker-preview-restore {
-                @include transition.transition(form-file-picker.$file-picker-preview-transition);
-
-                &:hover {
-                    opacity: 1 !important;
-                }
+            &.active a.file-picker-preview-scaler .file-picker-preview {
+                @extend %scale-transform;
             }
 
             &.without-info .file-picker-preview-wrapper {
                 &:hover,
                 &.active {
-                    .file-picker-preview-delete,
-                    .file-picker-preview-restore {
-                        opacity: 0;
+                    a.file-picker-preview-scaler {
+                        .file-picker-preview-delete,
+                        .file-picker-preview-restore {
+                            opacity: 0;
+                        }
                     }
                 }
             }
 
             .file-picker-preview {
                 @include transition.transition(form-file-picker.$file-picker-preview-hover-transition);
-            }
-
-            .file-picker-preview:hover,
-            &.active .file-picker-preview {
-                transform: form-file-picker.$file-picker-preview-hover-transform;
-                transform-origin: form-file-picker.$file-picker-preview-hover-transform-origin;
             }
         }
 
