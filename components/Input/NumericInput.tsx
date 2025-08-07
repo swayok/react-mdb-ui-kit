@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
-import Input, {InputProps} from './Input'
 import numeral from 'numeral'
+import React, {useCallback, useRef} from 'react'
 import withStable from '../../helpers/withStable'
+import Input, {InputProps} from './Input'
 
 export interface NumericInputProps extends Omit<InputProps, 'onChange'> {
     /**
@@ -30,7 +30,7 @@ function NumericInput(props: NumericInputProps) {
         onFocus,
         onBlur,
         onClick,
-        inputRef,
+        inputRef: propsInputRef,
         value,
         decimalSeparator = numeral.localeData().delimiters.decimal,
         numeralFormat = '0[.]0[00000]',
@@ -44,24 +44,11 @@ function NumericInput(props: NumericInputProps) {
         ...otherProps
     } = props
 
+    const cursorPositionRef = useRef<number | null>(null)
+    const isFocusedRef = useRef<boolean>(false)
+
     const fallbackInputRef = useRef<HTMLInputElement>(null)
-    const [
-        focused,
-        setFocused,
-    ] = useState<boolean>(false)
-
-    const cursorPosition = useRef<number | null>(null)
-
-    const inputReference = inputRef ?? fallbackInputRef
-
-    useEffect(() => {
-        if (inputReference.current && focused) {
-            if (cursorPosition !== null) {
-                inputReference.current.setSelectionRange(cursorPosition.current, cursorPosition.current)
-                cursorPosition.current = null
-            }
-        }
-    }, [inputReference.current, value, focused])
+    const inputRef = propsInputRef ?? fallbackInputRef
 
     // Форматирование значения по шаблону.
     const formatValue = useCallback((value: string): string => {
@@ -218,7 +205,7 @@ function NumericInput(props: NumericInputProps) {
 
     return (
         <Input
-            inputRef={inputReference}
+            inputRef={inputRef}
             {...otherProps}
             value={value ? formatValue(value) : ''}
             allowedChars={allowedChars}
@@ -230,7 +217,7 @@ function NumericInput(props: NumericInputProps) {
                     event.currentTarget.value,
                     event.currentTarget.selectionStart ?? 0
                 )
-                cursorPosition.current = nextCursorPosition
+                cursorPositionRef.current = nextCursorPosition
                 event.currentTarget.setSelectionRange(nextCursorPosition, nextCursorPosition)
                 onChange(event, value, cleanValue(event.currentTarget.value))
             }}
@@ -250,14 +237,15 @@ function NumericInput(props: NumericInputProps) {
                 event.preventDefault()
             }}
             onFocus={(event: React.FocusEvent<HTMLInputElement>) => {
-                setFocused(true)
-                if (props.value === '') {
+                isFocusedRef.current = true
+                if (value === '') {
                     onChange(event, '', null)
                 }
                 onFocus?.(event)
             }}
             onClick={(event: React.MouseEvent<HTMLInputElement>) => {
-                if (focused) {
+                if (isFocusedRef.current) {
+                    // Смещение курсора, если клик был на decimal separator.
                     const input = event.currentTarget
                     if (input.selectionStart === input.selectionEnd) {
                         const position = findCursorPosition(
@@ -271,7 +259,7 @@ function NumericInput(props: NumericInputProps) {
                 onClick?.(event)
             }}
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
-                setFocused(false)
+                isFocusedRef.current = false
                 onBlur?.(event)
             }}
         >

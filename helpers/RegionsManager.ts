@@ -23,7 +23,7 @@ export default class RegionsManager<
     static getUrlQueryArgName(): string {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.languageUrlQueryArgName || this.defaultUrlQueryArgName
+        return window?.config?.languageUrlQueryArgName ?? this.defaultUrlQueryArgName
     }
 
     // Конструктор.
@@ -80,8 +80,8 @@ export default class RegionsManager<
         }
         // Поискать подходящую локаль среди языков браузера.
         const languages = this.getLanguagesFromUserAgent()
-        for (let i = 0; i < languages.length; i++) {
-            const language: RegionConfigType | null = this.findRegion(languages[i])
+        for (const item of languages) {
+            const language: RegionConfigType | null = this.findRegion(item)
             if (language) {
                 return detectedRegion = language
             }
@@ -132,7 +132,7 @@ export default class RegionsManager<
     private getRegionFromGlobalConfig(): string | null {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.region || null
+        return window?.config?.region ?? null
     }
 
     // Достать предпочтительные локали из User-Agent.

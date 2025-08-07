@@ -231,6 +231,7 @@ export interface BasicLanguageConfig<
     loader: () => Promise<AnyObject>;
     // Настройки форматирования чисел.
     numeral: {
+        // Настройки currency относятся к региону, а не к языку.
         localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>,
     };
     // Настройки форматирования даты и времени.
@@ -265,6 +266,7 @@ export interface BasicRegionConfig<
     variations: string[];
     // Настройки форматирования чисел.
     numeral: {
+        // Остальные настройки относятся к языку, а не к региону.
         localeConfig: Pick<NumeralJSLocale, 'currency'>,
         defaultFormat: string,
     },

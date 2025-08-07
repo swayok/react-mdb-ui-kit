@@ -2,9 +2,10 @@ import {AnyObject, BasicLanguageConfig, BasicRegionConfig} from '../types/Common
 import numeral from 'numeral'
 
 interface CurrentLocale {
-    language: string;
-    region: string | null;
-    defaultFormat: string;
+    language: string
+    region: string | null
+    code: string
+    defaultFormat: string
 }
 
 // Сервис настройки пакета numeral.
@@ -17,6 +18,7 @@ class NumbersService {
     private currentLocale: CurrentLocale = {
         language: 'en',
         region: null,
+        code: 'en',
         defaultFormat: this.defaultFormat,
     }
 
@@ -30,17 +32,17 @@ class NumbersService {
 
     // Символ валюты.
     get currencySymbol(): string {
-        return numeral.locales[this.currentLocale.language].currency.symbol || ''
+        return numeral.locales[this.currentLocale.code].currency.symbol || ''
     }
 
     // Разделитель целой и дробной части числа.
     get decimalSeparator(): string {
-        return numeral.locales[this.currentLocale.language].delimiters.decimal || '.'
+        return numeral.locales[this.currentLocale.code].delimiters.decimal || '.'
     }
 
     // Разделитель тысяч.
     get thousandsSeparator(): string {
-        return numeral.locales[this.currentLocale.language].delimiters.thousands || ''
+        return numeral.locales[this.currentLocale.code].delimiters.thousands || ''
     }
 
     // Регистрация локализаций в numeral.
@@ -70,6 +72,8 @@ class NumbersService {
                 {
                     ...languageConfig.numeral.localeConfig,
                     currency: {
+                        // Символ валюты относится к региону, а не к языку,
+                        // поэтому тут мы залаем пустую строку.
                         symbol: '',
                     },
                 }
@@ -97,8 +101,9 @@ class NumbersService {
         // Формируем текущую локаль из настроек по умолчанию.
         this.currentLocale = {
             language: defaultLanguage.language,
-            region: defaultRegion?.region || null,
+            region: defaultRegion?.region ?? null,
             defaultFormat: '', //< само установится.
+            code: '', //< само установится.
         }
         // Применяем настройки для локали по умолчанию.
         this.onCurrentLocaleChange()
@@ -120,12 +125,14 @@ class NumbersService {
     private onCurrentLocaleChange(): void {
         numeral.reset()
         this.currentLocale.defaultFormat = this.currentLocale.region
-            ? (this.formatsByRegion[this.currentLocale.region] || this.defaultFormat)
+            ? (this.formatsByRegion[this.currentLocale.region] ?? this.defaultFormat)
             : this.defaultFormat
         numeral.defaultFormat(this.currentLocale.defaultFormat)
-        numeral.locale(
-            this.getLocaleCode(this.currentLocale.language, this.currentLocale.region)
+        this.currentLocale.code = this.getLocaleCode(
+            this.currentLocale.language,
+            this.currentLocale?.region ?? null
         )
+        numeral.locale(this.currentLocale.code)
     }
 
     // Код локали для numeral.
