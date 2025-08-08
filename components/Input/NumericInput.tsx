@@ -17,6 +17,8 @@ export interface NumericInputProps extends Omit<
     allowNegative?: boolean;
     // Разделитель целой и дробной части числа.
     decimalSeparator?: '.' | ',',
+    // Кол-во цифр в целой части вводимого числа.
+    maxLength?: number
     onChange: (
         e: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
         formattedValue: string,
@@ -27,20 +29,15 @@ export interface NumericInputProps extends Omit<
 // Поле ввода числа.
 export default function NumericInput(props: NumericInputProps) {
 
+    // Переименование переменных требуется, чтобы в eventHandlers точно не использовались
+    // никакие значения из props напрямую.
     const {
-        onChange,
-        onFocus,
-        onClick,
-        inputRef,
-        value,
-        decimalSeparator = numeral.localeData().delimiters.decimal,
-        numeralFormat = '0[.]0[00000]',
-        allowNegative = false,
-        allowedChars = allowNegative ? /[0-9.,-]/ : /[0-9.,]/,
-        // Кол-во цифр в целой части вводимого числа.
-        maxLength,
-        min,
-        max,
+        onChange: propsOnChange,
+        value: propsValue,
+        decimalSeparator: propsDecimalSeparator = numeral.localeData().delimiters.decimal,
+        numeralFormat: propsNumeralFormat = '0[.]0[00000]',
+        allowNegative: propsAllowNegative = false,
+        allowedChars: propsAllowedChars = propsAllowNegative ? /[0-9.,-]/ : /[0-9.,]/,
         children,
         ...otherProps
     } = props
@@ -48,12 +45,12 @@ export default function NumericInput(props: NumericInputProps) {
     // Данные для вспомогательных функций.
     const utilityFnSettingsRef = useRef<UtilityFnSettings>(null)
     utilityFnSettingsRef.current = {
-        numeralFormat,
-        decimalSeparator,
-        min,
-        max,
-        allowNegative,
-        maxLength,
+        numeralFormat: propsNumeralFormat,
+        decimalSeparator: propsDecimalSeparator,
+        min: props.min,
+        max: props.max,
+        allowNegative: propsAllowNegative,
+        maxLength: props.maxLength,
     }
 
     // Обработчики событий, переданные через props.
@@ -61,9 +58,9 @@ export default function NumericInput(props: NumericInputProps) {
         Pick<NumericInputProps, 'onChange' | 'onFocus' | 'onClick'>
     >(undefined)
     propEventHandlersRef.current = {
-        onChange,
-        onFocus,
-        onClick,
+        onChange: propsOnChange,
+        onFocus: props.onFocus,
+        onClick: props.onClick,
     }
 
     // Обработчики событий поля ввода.
@@ -173,10 +170,9 @@ export default function NumericInput(props: NumericInputProps) {
 
     return (
         <Input
-            inputRef={inputRef}
             {...otherProps}
-            value={value ? formatValue(value, utilityFnSettingsRef.current) : ''}
-            allowedChars={allowedChars}
+            value={propsValue ? formatValue(propsValue, utilityFnSettingsRef.current) : ''}
+            allowedChars={propsAllowedChars}
             {...eventHandlers}
         >
             {children}
