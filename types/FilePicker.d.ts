@@ -237,9 +237,12 @@ export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElemen
     // Анимировать добавление и удаление файла.
     animatePreviews?: boolean
     // Увеличивать картинку при наведении курсора?
-    scaleImageOnHover?: boolean,
+    scaleImageOnHover?: boolean
     // Количество элементов в строке.
     columns?: CssGridColumnsConfig
+    // Подпись кнопки прикрепления файла.
+    // По умолчанию: FilePickerContextProps.translations.attach_file.
+    attachFileButtonLabel?: string
 }
 
 /**
@@ -309,6 +312,7 @@ export interface FilePickerTranslations {
         uploading: (uploadedPercent: number) => string
     },
     attach_file: string
+    replace_file: string
     not_all_valid_files_uploaded: string
     internal_error_during_files_uploading: string
     file_will_be_deleted: string

@@ -5,7 +5,10 @@ import useInputErrorSetter from './useInputErrorSetter'
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
 // Возвращаемые хуком значения и методы.
-export interface FormValuesHookReturn<FormData, FormErrors> {
+export interface FormValuesHookReturn<
+    FormData extends AnyObject,
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>
+> {
     // Начальные значения полей ввода.
     initialFormValues: Readonly<FormData>
     // Значения полей ввода.
@@ -48,7 +51,7 @@ export interface FormValuesHookReturn<FormData, FormErrors> {
 // Дает возможность управления данными формы и ошибками.
 export default function useFormValues<
     FormData extends AnyObject,
-    FormErrors extends AnyObject = AnyObject<string | null, keyof FormData>
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>
 >(
     initialValues: FormData | (() => FormData),
     deps?: React.DependencyList,

@@ -27,6 +27,7 @@ const translations: FilePickerTranslations = {
         uploading: (uploadedPercent: number) => `Uploading: ${uploadedPercent}%`,
     },
     attach_file: 'Attach file',
+    replace_file: 'Replace file',
     not_all_valid_files_uploaded: 'Failed to upload some of the attached files to server. Check errors and replace or detach invalid files.',
     internal_error_during_files_uploading: 'Unknown error happened during uploading of the attached files to server. Maybe some files are corrupted or cannot be uploaded.',
     file_will_be_deleted: 'File will be deleted after submitting the form.',

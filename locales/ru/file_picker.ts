@@ -27,6 +27,7 @@ const translations: FilePickerTranslations = {
         uploading: (uploadedPercent: number) => `Загрузка файла на сервер: ${uploadedPercent}%`,
     },
     attach_file: 'Прикрепить файл',
+    replace_file: 'Заменить файл',
     not_all_valid_files_uploaded: 'Не удалось отправить часть прикреплённых файлов. Проверьте ошибки и замените или удалите проблемные файлы.',
     internal_error_during_files_uploading: 'Произошла непредвиденная ошибка при отправке прикреплённых файлов. Вероятно какой-то файл повреждён и не может быть отправлен.',
     file_will_be_deleted: 'Файл будет удалён после сохранения формы.',

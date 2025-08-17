@@ -40,9 +40,11 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
             lg: 2,
         },
         children,
+        attachFileButtonLabel = maxFiles === 1 && files.length > 0
+            ? translations.replace_file
+            : translations.attach_file,
         ...otherProps
     } = props
-
 
     const cssClasses = clsx(
         'file-picker-previews-container with-info',
@@ -129,7 +131,7 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
                         size={Math.round(previewSize / 2)}
                     />
                     <div className="fs-5 ms-2">
-                        {translations.attach_file}
+                        {attachFileButtonLabel}
                     </div>
                 </a>
                 {/* Заполнитель пустого пространства в конце */}

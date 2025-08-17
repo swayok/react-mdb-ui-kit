@@ -27,6 +27,7 @@ const translations: FilePickerTranslations = {
         uploading: (uploadedPercent: number) => `Đang tải tệp lên máy chủ: ${uploadedPercent}%`,
     },
     attach_file: 'Đính kèm tệp',
+    replace_file: 'Thay thế tệp',
     not_all_valid_files_uploaded: 'Không thể gửi một số tệp đã đính kèm. Vui lòng kiểm tra lỗi và thay thế hoặc xóa các tệp gặp vấn đề.',
     internal_error_during_files_uploading: 'Đã xảy ra lỗi không mong muốn khi gửi các tệp đã đính kèm. Có thể một số tệp bị hỏng và không thể được gửi.',
     file_will_be_deleted: 'Tệp sẽ bị xóa sau khi biểu mẫu được lưu.',

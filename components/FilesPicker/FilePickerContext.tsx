@@ -7,41 +7,12 @@ import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {FilePickerContextMimeTypeInfo} from 'swayok-react-mdb-ui-kit/types/FilePicker'
 import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
 import FilePickerAudioFilePreview from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerAudioFilePreview'
+import file_picker from 'swayok-react-mdb-ui-kit/locales/en/file_picker'
 
 // Стандартная локализация таблицы.
-export const filePickerDefaultTranslations: FilePickerTranslations = {
-    file_size: 'Size',
-    error_label: 'Error',
-    error: {
-        mime_type_forbidden: (extension: string) => `Files of type ${extension} are forbidden.`,
-        mime_type_and_extension_mismatch: (extension: string, type: string) => `File extension (${extension}) does not match its type (${type}).`,
-        already_attached: (name: string) => `File ${name} is already attached.`,
-        too_many_files: (limit: number) => `Attachments limit reached: ${limit}.`,
-        file_too_large: (maxSizeMb: number) => `File size exceeds the limit of ${maxSizeMb} MB.`,
-        server_error: 'Unknown error happened while saving the file.',
-        unexpected_error: 'Failed to process and save the file.',
-        non_json_validation_error: 'The file has failed server-side validation.',
-        invalid_response: 'Invalid responce was received from server.',
-        invalid_file: (fileName: string, error: string) => `Error happened while attaching file ${fileName}: ${error}`,
-        internal_error_during_upload: 'Unexpected error happened during file processing. File contents might be corrupted.',
-        internal_error_in_xhr: 'Unexpected error happened while sending file to server.',
-        timed_out: 'File upload has timed out. Maybe you internet connection is too slow.',
-        failed_to_get_file_blob: 'Failed to get file contents to upload to server.',
-        failed_to_resize_image: 'Failed to process image before uploading it to server.',
-        http401: 'Authentication error. Please login into your account.',
-    },
-    status: {
-        uploaded: 'The file was uploaded to server',
-        not_uploaded: 'The file is not uploaded to server yet',
-        uploading: (uploadedPercent: number) => `Uploading the file: ${uploadedPercent}%`,
-    },
-    attach_file: 'Attach file',
-    not_all_valid_files_uploaded: 'Filed to upload some of the attached files to server. Fix errors or detach files with errors.',
-    internal_error_during_files_uploading: 'Unexpected error happened while uploading files to server. Maybe some files are corruped and cannot be uploaded.',
-    file_will_be_deleted: 'File will be deleted after form is saved.',
-    restore: 'Restore file.',
-}
+export const filePickerDefaultTranslations: FilePickerTranslations = file_picker
 
+// Стандартный набор настроек пердпросмотра прикрепленных файлов в зависимости от типа.
 export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo> = {
     'image/jpeg': {
         type: 'image',
