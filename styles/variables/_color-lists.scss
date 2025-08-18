@@ -373,7 +373,9 @@ $button-colors: $theme-colors !default;
 // scss-docs-end button-colors-map
 
 // scss-docs-start button-outline-colors-map
-$button-outline-colors: $button-colors !default;
+$button-outline-colors: map.merge($button-colors, (
+    'gray': colors.$gray-700,
+)) !default;
 // scss-docs-end button-outline-colors-map
 
 // scss-docs-start border-colors-map

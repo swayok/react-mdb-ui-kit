@@ -799,6 +799,7 @@ $utilities: () !default;
                     class: rounded-top,
                     values: (
                         null: map.get(utility-values.$border-radius-values, null),
+                        0: 0
                     ),
                 ),
                 'rounded-end': (
@@ -806,6 +807,7 @@ $utilities: () !default;
                     class: rounded-end,
                     values: (
                         null: map.get(utility-values.$border-radius-values, null),
+                        0: 0
                     ),
                 ),
                 'rounded-bottom': (
@@ -813,6 +815,7 @@ $utilities: () !default;
                     class: rounded-bottom,
                     values: (
                         null: map.get(utility-values.$border-radius-values, null),
+                        0: 0
                     ),
                 ),
                 'rounded-start': (
@@ -820,6 +823,7 @@ $utilities: () !default;
                     class: rounded-start,
                     values: (
                         null: map.get(utility-values.$border-radius-values, null),
+                        0: 0
                     ),
                 ),
                 // scss-docs-end utils-border-radius
