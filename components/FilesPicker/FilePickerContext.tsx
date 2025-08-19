@@ -12,7 +12,7 @@ import file_picker from 'swayok-react-mdb-ui-kit/locales/en/file_picker'
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = file_picker
 
-// Стандартный набор настроек пердпросмотра прикрепленных файлов в зависимости от типа.
+// Стандартный набор настроек предпросмотра прикрепленных файлов в зависимости от типа.
 export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo> = {
     'image/jpeg': {
         type: 'image',
@@ -22,6 +22,16 @@ export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo>
     'image/png': {
         type: 'image',
         extensions: ['png'],
+        preview: 'image',
+    },
+    'image/avif': {
+        type: 'image',
+        extensions: ['avif'],
+        preview: 'image',
+    },
+    'image/webp': {
+        type: 'image',
+        extensions: ['webp'],
         preview: 'image',
     },
     'image/svg+xml': {
