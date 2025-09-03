@@ -1,14 +1,15 @@
-import React, {AllHTMLAttributes, CSSProperties, useId} from 'react'
-import {AnyObject, CheckboxColors, FormSelectOption, FormSelectOptionsList} from '../../types/Common'
-import withStable from '../../helpers/withStable'
-import Radio from './Radio'
-import InputValidationError from './InputValidationError'
-import SectionDivider from '../SectionDivider'
 import clsx from 'clsx'
+import React, {AllHTMLAttributes, CSSProperties, useId} from 'react'
+import withStable from '../../helpers/withStable'
+import {AnyObject, CheckboxColors, FormSelectOption, FormSelectOptionsList} from '../../types/Common'
+import SectionDivider from '../SectionDivider'
+import InputValidationError from './InputValidationError'
+import Radio from './Radio'
 
 export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
     // Основная подпись.
-    label?: string | null;
+    // Если false - не отображать <SectionDivider>.
+    label?: string | null | false;
     // Имя группы (<input type="radio" name>).
     name?: string;
     // Выбранные значения (опции).
@@ -73,7 +74,10 @@ export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
  * Поле выбора одного значения из списка в виде списка <Radio> компонентов.
  * Опции нельзя группировать в FormSelectOptionGroup.
  */
-function RadiosGroup(props: RadiosGroupProps) {
+function RadiosGroup<
+    Value = unknown,
+    Extras = AnyObject
+>(props: RadiosGroupProps<Value, Extras>) {
 
     const defaultName = useId()
 
@@ -102,7 +106,7 @@ function RadiosGroup(props: RadiosGroupProps) {
         radiosContainerStyle,
 
         validationMessage,
-        validationMessageClassName,
+        validationMessageClassName = 'ps-0',
         invalid,
 
         disabled,
@@ -143,7 +147,7 @@ function RadiosGroup(props: RadiosGroupProps) {
                 if (readOnly || disabled || !event.currentTarget.checked) {
                     return
                 }
-                onChange?.(option.value, option)
+                onChange?.(option.value as Value, option as FormSelectOption<Value, Extras>)
             }}
         />
     )
@@ -161,19 +165,23 @@ function RadiosGroup(props: RadiosGroupProps) {
             inputContainerClassName={className}
             inputContainerStyle={style}
         >
-            <SectionDivider
-                label={label}
-                className={clsx(
-                    'radios-input-label',
-                    labelClassName
-                )}
-                margins="none"
-                style={labelStyle}
-            />
+            {label !== false && (
+                <SectionDivider
+                    label={label}
+                    className={clsx(
+                        'radios-input-label',
+                        labelClassName
+                    )}
+                    margins="none"
+                    style={labelStyle}
+                />
+            )}
             <div
                 className={clsx(
                     radiosContainerClassName,
-                    `d-grid grid-columns-${columns} grid-columns-gap-3 grid-rows-gap-3`
+                    columns
+                        ? `d-grid grid-columns-${columns} grid-columns-gap-3 grid-rows-gap-3`
+                        : null
                 )}
                 style={radiosContainerStyle}
             >
@@ -186,4 +194,4 @@ function RadiosGroup(props: RadiosGroupProps) {
 export default withStable<RadiosGroupProps>(
     ['onChange'],
     RadiosGroup
-)
+) as typeof RadiosGroup
