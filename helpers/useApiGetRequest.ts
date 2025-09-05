@@ -55,6 +55,7 @@ export interface UseApiGetRequestHookState<
 
 // Хук для отправки GET запроса в API.
 // Реализует стандартный вариант запроса данных с индикатором загрузки и обработкой ошибок.
+// Не поддерживает AbortSignal, поэтому при включенном Strict Mode отрабатывает 2 раза.
 export function useApiGetRequest<
     ApiDataType,
     ModifiedDataType = ApiDataType | undefined
@@ -94,6 +95,7 @@ export function useApiGetRequest<
     const hookState = useRef<
         UseApiGetRequestHookState<ApiDataType, ModifiedDataType>
     >(null)
+
     hookState.current = {
         data: data!,
         setData,

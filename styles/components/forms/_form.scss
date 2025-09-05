@@ -1,0 +1,6 @@
+@use "../../variables/form";
+@use "../../variables/features";
+
+.limited-form-width {
+    max-width: form.$limited-form-width;
+}

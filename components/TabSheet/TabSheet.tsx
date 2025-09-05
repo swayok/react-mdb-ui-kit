@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {TabSheetProps} from '../../types/TabSheet'
 import Card from '../Card/Card'
 import TabSheetContext from './TabSheetContext'
@@ -26,6 +26,7 @@ function TabSheet<TabName extends string = string>(
         defaultTab,
         savesStateToUrlQuery,
         urlQueryArgName = 'tab',
+        onTabChange,
         children,
         ...otherProps
     } = props
@@ -41,6 +42,11 @@ function TabSheet<TabName extends string = string>(
         }
         return defaultTab
     })
+
+    // Вызов обработчика изменения вкладки.
+    useEffect(() => {
+        onTabChange?.(currentTab)
+    }, [currentTab])
 
     // Контекст.
     const Context  = TabSheetContext<TabName>()
