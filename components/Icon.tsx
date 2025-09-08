@@ -66,13 +66,13 @@ function Icon(props: AppIconProps) {
         const {
             className: tooltipWrapperClassName,
             tag: tooltipTag = 'span',
-            disableClickHandler: tooltipDisableClickHandler,
+            disableClickHandler: tooltipDisableClickHandler = true,
             tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
             ...otherTooltipProps
         } = tooltipProps
         const commonTooltipProps: Partial<TooltipProps> = {
             title: tooltip,
-            disableClickHandler: tooltipDisableClickHandler ?? true,
+            disableClickHandler: tooltipDisableClickHandler,
             tooltipMaxWidth: tooltipMaxWidthFromProps,
         }
         if (label !== undefined) {
