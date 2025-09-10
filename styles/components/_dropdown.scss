@@ -71,6 +71,12 @@
             animation-duration: dropdown.$dropdown-menu-animation-duration;
             animation-timing-function: dropdown.$dropdown-menu-animation-timing-function;
         }
+
+        &.text-nowrap-on-items {
+            .dropdown-item {
+                white-space: nowrap;
+            }
+        }
     }
 
     // scss-docs-start responsive-breakpoints
@@ -178,7 +184,6 @@
         color: dropdown.$dropdown-item-color;
         text-align: inherit; // For `<button>`s
         text-decoration: dropdown.$dropdown-item-text-decoration;
-        white-space: nowrap; // prevent links from randomly breaking onto new lines
         background-color: transparent; // For `<button>`s
         border: 0; // For `<button>`s
         cursor: pointer;
@@ -219,6 +224,10 @@
             // Remove CSS gradients if they're enabled
             background-image: if(features.$enable-gradients, none, null);
         }
+    }
+
+    a.dropdown-item {
+        white-space: nowrap; // prevent links from randomly breaking onto new lines
     }
 
     .dropdown-menu.show {

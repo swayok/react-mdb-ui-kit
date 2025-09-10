@@ -40,6 +40,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
         offset = contextOffset ?? [0, 2],
         closeOnScrollOutside = false,
         maxHeight,
+        textNowrapOnItems,
         style = {},
         fillContainer,
         ...otherProps
@@ -153,6 +154,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
                 alignEnd && 'dropdown-menu-end',
                 variant && `dropdown-menu-${variant}`,
                 fillContainer ? 'full-width' : null,
+                textNowrapOnItems ? 'text-nowrap-on-items' : null,
                 ...alignClasses
             )}
         />

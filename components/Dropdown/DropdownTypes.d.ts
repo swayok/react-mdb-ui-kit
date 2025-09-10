@@ -97,6 +97,8 @@ export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
     closeOnScrollOutside?: boolean
     maxHeight?: number
     fillContainer?: boolean
+    // Добавить white-space: nowrap ко всем .dropdown-item?
+    textNowrapOnItems?: boolean
 }
 
 export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
