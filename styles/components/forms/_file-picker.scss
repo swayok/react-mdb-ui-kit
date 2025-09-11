@@ -43,8 +43,8 @@
                     @extend %scale-transform;
                 }
 
-                .file-picker-preview-delete,
-                .file-picker-preview-restore {
+                + .file-picker-preview-delete,
+                + .file-picker-preview-restore {
                     @include transition.transition(form-file-picker.$file-picker-preview-transition);
 
                     &:hover {
@@ -61,8 +61,8 @@
                 &:hover,
                 &.active {
                     a.file-picker-preview-scaler {
-                        .file-picker-preview-delete,
-                        .file-picker-preview-restore {
+                        + .file-picker-preview-delete,
+                        + .file-picker-preview-restore {
                             opacity: 0;
                         }
                     }
