@@ -25,18 +25,20 @@ export interface MultiSelectInputProps<
     OptionValueType = string,
     OptionExtrasType extends AnyObject = AnyObject
 > extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
-    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>;
-    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void;
-    values?: OptionValueType[];
+    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
+    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
+    values?: OptionValueType[]
     // Требуется ли выбрать хотя бы одно значение?
-    required?: boolean;
+    required?: boolean
     // Конвертация выбранных опций для отображения в поле ввода.
     // По умолчанию отображается список из FormSelectOption['label'].
-    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string;
+    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string
     // Текст для отображения в случае, если ни одной опции не выбрано.
-    nothingSelectedPlaceholder?: string;
+    nothingSelectedPlaceholder?: string
     // Отключить возможность выбрать указанные опции.
-    disableOptions?: OptionValueType[];
+    disableOptions?: OptionValueType[]
+    // Нужно ли перемещать выбранные опции в начало списка опций?
+    stickSelectedOptionsToTop?: boolean
     // Отрисовка подписи для опции или группы опций в выпадающем меню.
     renderOptionLabel?: (
         option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
@@ -65,6 +67,7 @@ class MultiSelectInput<
             values,
             dropdownFluidWidth = true,
             dropdownMenuClassName,
+            stickSelectedOptionsToTop = false,
             onChange,
             required,
             nothingSelectedPlaceholder,
@@ -84,7 +87,8 @@ class MultiSelectInput<
                 value={this.getSelectedValuesForTextInput()}
                 dropdownMenuClassName={clsx(
                     'form-multiselect-dropdown',
-                    dropdownMenuClassName
+                    dropdownMenuClassName,
+                    stickSelectedOptionsToTop ? 'stick-selected-options-to-top' : null
                 )}
                 closeDropdownOnSelect={false}
             >
@@ -174,7 +178,7 @@ class MultiSelectInput<
                     <DropdownItem
                         key={'option-' + i}
                         {...attributes}
-                        active={false}
+                        active={selected}
                         onClick={(e: React.MouseEvent) => {
                             e.preventDefault()
                             if (!disabled) {
