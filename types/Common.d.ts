@@ -104,7 +104,9 @@ export type FormSelectOptionOrGroup<Value = string, Extras = AnyObject> =
     | FormSelectOptionGroup<Value, Extras>
 
 // Список содержащий и опции и группы опций для SelectInput.
-export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject> = FormSelectOptionOrGroup<Value, Extras>[]
+export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject> =
+    FormSelectOptionOrGroup<Value, Extras>[]
+    | FormSelectOptionGroup<Value, Extras>[]
 
 // Свойство этого типа может быть React компонентом или реальным HTML тегом (строкой).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
