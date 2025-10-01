@@ -91,6 +91,7 @@ function Input(props: InputProps) {
         onPaste,
         allowedChars,
         trackBehaviorAs,
+        hidden,
         ...otherProps
     } = props
 
@@ -149,6 +150,8 @@ function Input(props: InputProps) {
                     setLabelNotchWidth('80%')
                     setTimeout(updateWidth, 500)
                 }
+            } else {
+                setLabelNotchWidth(0)
             }
         },
         [
@@ -280,6 +283,10 @@ function Input(props: InputProps) {
             <div className="form-notch-trailing"/>
         </div>
     )
+
+    if (hidden) {
+        return null
+    }
 
     let input
     if (textarea) {

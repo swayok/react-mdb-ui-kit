@@ -100,62 +100,72 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         )
     )
 
+    const content = (
+        <div
+            className={clsx(
+                'file-picker-previews-container without-info',
+                ' d-flex flex-row flex-wrap align-items-stretch justify-content-around',
+                'justify-content-sm-start',
+                scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
+                className
+            )}
+            {...otherProps}
+        >
+            {children}
+            {previews}
+            <a
+                className={clsx(
+                    'file-picker-previews-adder rounded-6 p-3 cursor',
+                    'd-flex flex-row justify-content-center align-items-center',
+                    reorderable ? 'file-picker-previews-reorderable' : null,
+                    !canAttachMoreFiles() || isDisabled ? 'disabled' : null,
+                    pickerButtonClassName
+                )}
+                style={{
+                    ...previewSizes,
+                    order: adderPosition,
+                }}
+                href="#"
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault()
+                    if (canAttachMoreFiles()) {
+                        pickFile()
+                    } else {
+                        ToastService.error(
+                            translations.error.too_many_files(maxFiles!)
+                        )
+                    }
+                }}
+            >
+                <Icon
+                    path={adderIcon ?? (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
+                    size={iconSize}
+                />
+            </a>
+            {/* Заполнитель пустого пространства в конце */}
+            {(files.length + existingFiles.length) % 2 === 0 && (
+                <div
+                    className="flex-1 d-none d-sm-block"
+                    style={{
+                        order: adderPosition + 100,
+                    }}
+                />
+            )}
+        </div>
+    )
+
+    if (alwaysVisible) {
+        return content
+    }
+
+    const hasFiles: boolean = files.length > 0 || existingFiles.length > 0
+
     return (
         <Collapse
-            show={!!alwaysVisible || files.length > 0 || existingFiles.length > 0}
-            showImmediately={alwaysVisible}
+            show={hasFiles}
+            showImmediately={hasFiles}
         >
-            <div
-                className={clsx(
-                    'file-picker-previews-container without-info',
-                    ' d-flex flex-row flex-wrap align-items-stretch justify-content-around',
-                    'justify-content-sm-start',
-                    scaleImageOnHover ? 'file-picker-previews-scale-on-hover' : null,
-                    className
-                )}
-                {...otherProps}
-            >
-                {children}
-                {previews}
-                <a
-                    className={clsx(
-                        'file-picker-previews-adder rounded-6 p-3 cursor',
-                        'd-flex flex-row justify-content-center align-items-center',
-                        reorderable ? 'file-picker-previews-reorderable' : null,
-                        !canAttachMoreFiles() || isDisabled ? 'disabled' : null,
-                        pickerButtonClassName
-                    )}
-                    style={{
-                        ...previewSizes,
-                        order: adderPosition,
-                    }}
-                    href="#"
-                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                        e.preventDefault()
-                        if (canAttachMoreFiles()) {
-                            pickFile()
-                        } else {
-                            ToastService.error(
-                                translations.error.too_many_files(maxFiles!)
-                            )
-                        }
-                    }}
-                >
-                    <Icon
-                        path={adderIcon ?? (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
-                        size={iconSize}
-                    />
-                </a>
-                {/* Заполнитель пустого пространства в конце */}
-                {(files.length + existingFiles.length) % 2 === 0 && (
-                    <div
-                        className="flex-1 d-none d-sm-block"
-                        style={{
-                            order: adderPosition + 100,
-                        }}
-                    />
-                )}
-            </div>
+            {content}
         </Collapse>
     )
 }

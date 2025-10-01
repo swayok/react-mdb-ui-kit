@@ -80,11 +80,16 @@ function Checkbox(props: CheckboxProps) {
         inputRef,
         onChange,
         trackBehaviorAs,
+        hidden,
         ...otherProps
     } = props
 
     const fallbackId: string = useId()
     const inputId: string = id ?? fallbackId
+
+    if (hidden) {
+        return null
+    }
 
     const wrapperIsValidationMessageContainer: boolean = (
         !withoutValidationMessage

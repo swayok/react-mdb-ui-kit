@@ -58,8 +58,13 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         withoutValidationMessage,
         addon,
         closeDropdownOnSelect = true,
+        hidden,
         ...inputProps
     } = props
+
+    if (hidden) {
+        return null
+    }
 
     const dropdownMenuStyle: CSSProperties = {}
 
