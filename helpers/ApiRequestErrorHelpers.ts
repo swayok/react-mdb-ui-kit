@@ -453,39 +453,46 @@ export interface NormalizedNestedLaravelValidationErrors {
  * Этот метод конвертирует:
  * 1. {'array.0': 'string1', 'array.3': 'string2'} в {array: {0: 'string1', 3: 'string2'}}
  * 2. {'object.key1': 'string1', 'object.key2': 'string2'} в {object: {key1: 'string1', key2: 'string2'}}
+ * 2. {'object.0.key1': 'string1', 'object.0.key2': 'string2'} в {object: {0: {key2: 'string1', key3: 'string2'}}}
  * Рекурсивно.
+ *
+ * Внимание! Вызывать только после extractAndNormalizeValidationErrorsFromResponseData().
  * @param errors
  */
 export function normalizeValidationErrorsKeysForArraysAndObjects<ErrorsType extends object = AnyObject<string>>(
     errors: ErrorsType
 ): NormalizedNestedLaravelValidationErrors {
-    const ret: NormalizedNestedLaravelValidationErrors = {}
+    const ret: AnyObject = {}
     for (const errorsKey in errors) {
-        const parts = errorsKey.split('.', 2)
-        if (parts.length === 0) {
-            // Обычный ключ
+        const parts: string[] = errorsKey.split('.')
+        const maxDepth: number = parts.length
+        if (maxDepth === 1) {
+            // Обычный ключ.
             ret[errorsKey] = errors[errorsKey] as string
             continue
         }
-        if (!(parts[0] in ret)) {
-            ret[parts[0]] = {}
-        } else if (typeof ret[parts[0]] !== 'object') {
-            // Конфликт с другим ключом, содержащим строку
-            ret[errorsKey] = errors[errorsKey] as string
-            continue
+        let tmp: AnyObject = ret;
+        for (let depth = 0; depth < maxDepth; depth++) {
+            const subKey: string = parts[depth]
+            if (subKey in tmp && typeof tmp[subKey] !== 'object') {
+                // Конфликт: ключ parts[i] уже существует в tmp и
+                // Конфликт с другим ключом, содержащим строку.
+                tmp[parts.slice(depth).join('.')] = errors[errorsKey] as string
+                break;
+            }
+            if (depth === maxDepth - 1) {
+                // Достигнута максимальная глубина: сохраняем сообщение об ошибке.
+                tmp[parts[depth]] = errors[errorsKey] as string
+                break;
+            }
+            if (!(subKey in tmp)) {
+                tmp[parts[depth]] = {}
+            }
+            // Перемещаемся глубже.
+            tmp = tmp[parts[depth]]
         }
-
-        (ret[parts[0]] as AnyObject<string>)[parts[1]] = errors[errorsKey] as string
     }
-    for (const retKey in ret) {
-        if (typeof retKey === 'object') {
-            // Рекурсивно конвертируем в объекты
-            ret[retKey] = normalizeValidationErrorsKeysForArraysAndObjects(
-                ret[retKey] as AnyObject<string>
-            )
-        }
-    }
-    return ret
+    return ret as NormalizedNestedLaravelValidationErrors
 }
 
 const defaultApiErrorData: ApiError = {

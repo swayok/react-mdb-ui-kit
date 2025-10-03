@@ -15,20 +15,32 @@ type Props = {
 // Вывод ошибки в форме.
 function FormError(props: Props) {
 
-    const className = clsx('form-error', props.className || 'pb-3')
+    const {
+        message,
+        html,
+        wrapperClassName,
+        className = 'pb-3',
+        visible,
+        showImmediately
+    } = props
+
+    const contentClassName = clsx('form-error', className)
 
     return (
-        <Collapse show={props.visible} showImmediately={props.showImmediately}>
-            <div className={props.wrapperClassName}>
-                {props.html ? (
+        <Collapse
+            show={visible}
+            showImmediately={showImmediately}
+        >
+            <div className={wrapperClassName}>
+                {html ? (
                     <HtmlContent
                         block
-                        className={className}
-                        html={props.message || ''}
+                        className={contentClassName}
+                        html={message ?? ''}
                     />
                 ) : (
-                    <div className={className}>
-                        {props.message}
+                    <div className={contentClassName}>
+                        {message}
                     </div>
                 )}
             </div>
