@@ -1,23 +1,28 @@
-import {generatePath} from 'react-router-dom'
-import {ExtractRouteParams} from 'swayok-react-mdb-ui-kit/services/NavigationService'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {generatePath, PathParam} from 'react-router-dom'
 
 // Сборка URL из частей.
-export function makeUrl<QueryArgsType = AnyObject<string>>(
+export function makeUrl<QueryArgsType extends object, Path extends string = string>(
     // Путь к странице (/path/to/page или /path/to/resource/:id).
-    urlPath: string,
+    urlPath: Path,
     // Параметры, которые нужно вставить в path.
     // Пример: {id: 1} для urlPath = /path/to/resource/:id
-    params: ExtractRouteParams<string> | null = null,
+    params: {
+        [key in PathParam<Path>]: string | null;
+    } | null = null,
     // URL Query аргументы, которые нужно добавить в URL.
     queryArgs: QueryArgsType | null = null
-) {
-    if (params && Object.keys(params).length > 0) {
-        urlPath = generatePath(urlPath, params)
+): string {
+    try {
+        if (params && Object.keys(params).length > 0) {
+            urlPath = generatePath(urlPath, params) as Path
+        }
+        if (queryArgs && Object.keys(queryArgs).length > 0) {
+            const queryString: URLSearchParams = new URLSearchParams(queryArgs as Record<string, string>)
+            urlPath = (urlPath + '?' + queryString.toString()) as Path
+        }
+        return urlPath
+    } catch (error) {
+        console.error('[makeUrl] Error', error, {urlPath, params, queryArgs})
+        return '#'
     }
-    if (queryArgs && Object.keys(queryArgs).length > 0) {
-        const queryString: URLSearchParams = new URLSearchParams(queryArgs)
-        urlPath += '?' + queryString.toString()
-    }
-    return urlPath
 }
