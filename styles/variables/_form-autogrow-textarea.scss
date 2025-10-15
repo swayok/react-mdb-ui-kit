@@ -1,0 +1,11 @@
+@use "../functions/calc-utils";
+@use "form-outline-input";
+@use "form-input-base";
+
+// Textarea with autogrow
+$input-textarea-autogrow-min-height: calc-utils.add(4rem, 1px) !default;
+$input-textarea-autogrow-transition: height 0.1s linear, form-input-base.$input-transition !default;
+
+$input-textarea-autogrow-minimal-min-height: form-outline-input.$form-outline-input-min-height !default;
+$input-textarea-autogrow-minimal-line-height: 1.6rem !default;
+$input-textarea-autogrow-minimal-padding-y: 0.45rem !default;

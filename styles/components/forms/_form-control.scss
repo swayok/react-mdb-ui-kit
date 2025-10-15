@@ -204,21 +204,4 @@
             box-shadow: 0 0 0 1000px #FFF inset !important;
         }
     }
-
-    // Поле ввода с автоматическим ростом высоты по мере ввода текста.
-    textarea.autogrow {
-        overflow-y: auto !important;
-        height: form-input-base.$input-textarea-autogrow-min-height; //< required for animation to work
-        min-height: form-input-base.$input-textarea-autogrow-min-height; //< required for animation to work
-        transition: height 0.1s linear, form-input-base.$input-transition !important;
-        resize: none;
-
-        &.minimal {
-            min-height: form-input-base.$input-textarea-autogrow-minimal-min-height;
-            height: form-input-base.$input-textarea-autogrow-minimal-min-height;
-            line-height: form-input-base.$input-textarea-autogrow-minimal-line-height;
-            padding-top: form-input-base.$input-textarea-autogrow-minimal-padding-y;
-            padding-bottom: form-input-base.$input-textarea-autogrow-minimal-padding-y;
-        }
-    }
 }

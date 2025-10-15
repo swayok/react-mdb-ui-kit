@@ -74,9 +74,3 @@ $form-white-label-color: colors.$gray-50 !default;
 $form-white-notch-div-border-color: colors.$gray-50 !default;
 $form-white-input-focus-label-color: colors.$white !default;
 $form-white-input-focus-border-color: colors.$white !default;
-
-$input-textarea-autogrow-min-height: calc-utils.add(4rem, 1px) !default;
-
-$input-textarea-autogrow-minimal-min-height: 2.5rem !default;
-$input-textarea-autogrow-minimal-line-height: 1.6rem !default;
-$input-textarea-autogrow-minimal-padding-y: 0.45rem !default;

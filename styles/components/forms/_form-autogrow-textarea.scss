@@ -1,0 +1,23 @@
+@use "../../variables/features";
+@use "../../variables/form-autogrow-textarea";
+
+@if (features.$include-forms-and-inputs and features.$include-autogrow-textarea) {
+    // Поле ввода с автоматическим ростом высоты по мере ввода текста.
+    textarea.autogrow {
+        overflow-y: auto !important;
+        transition: form-autogrow-textarea.$input-textarea-autogrow-transition !important;
+        // Required for animation to work.
+        height: form-autogrow-textarea.$input-textarea-autogrow-min-height;
+        // Required for animation to work.
+        min-height: form-autogrow-textarea.$input-textarea-autogrow-min-height;
+        resize: none;
+
+        &.minimal {
+            min-height: form-autogrow-textarea.$input-textarea-autogrow-minimal-min-height;
+            height: form-autogrow-textarea.$input-textarea-autogrow-minimal-min-height;
+            line-height: form-autogrow-textarea.$input-textarea-autogrow-minimal-line-height;
+            padding-top: form-autogrow-textarea.$input-textarea-autogrow-minimal-padding-y;
+            padding-bottom: form-autogrow-textarea.$input-textarea-autogrow-minimal-padding-y;
+        }
+    }
+}

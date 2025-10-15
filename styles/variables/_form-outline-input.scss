@@ -1,6 +1,7 @@
 // Material design form input.
 @use "colors";
 @use "form-input-base";
+@use "../functions/calc-utils";
 
 $form-outline-input-min-height: 2.875rem !default;
 $form-outline-input-padding-top: 0.625rem !default;
@@ -38,3 +39,4 @@ $form-outline-active-label-transform-sm: translateY(-1rem) translateX(0.1rem) sc
 $form-outline-input-font-size-sm: form-input-base.$input-font-size-sm !default;
 $form-outline-input-line-height-sm: $form-outline-input-line-height !default;
 $form-notch-border-radius-sm: form-input-base.$input-border-radius-sm !default;
+
