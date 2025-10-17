@@ -5,6 +5,7 @@ interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
     label: string;
     // true: обернуть в <span>, false: обернуть в <div>
     inline?: boolean
+    flex?: boolean
     // true: без отступа после элемента. При inline=true, всегда noMargin=true.
     noMargin?: boolean;
     children?: React.ReactNode | string;
@@ -20,6 +21,7 @@ export default function LabeledValue(props: Props) {
     const {
         label,
         inline,
+        flex,
         noMargin,
         className,
         labelClassName,
@@ -30,20 +32,22 @@ export default function LabeledValue(props: Props) {
     } = props
 
     const Tag = inline ? 'span' : 'div'
+    const InnerTag = flex ? 'div' : 'span'
 
     return (
         <Tag
             className={clsx(
                 noMargin || inline ? null : 'mb-1',
+                flex ? 'd-flex flex-row align-items-center justify-content-start' : null,
                 className
             )}
             {...otherProps}
         >
-            {wrapInBraces && '('}<span className={clsx(labelClassName, 'text-muted')}>
+            {wrapInBraces && '('}<InnerTag className={clsx(labelClassName, 'text-muted')}>
                 {label}:
-            </span> <span className={valueClassName}>
+            </InnerTag> <InnerTag className={valueClassName}>
                 {children}
-            </span>{wrapInBraces && ')'}
+            </InnerTag>{wrapInBraces && ')'}
         </Tag>
     )
 }
