@@ -1,4 +1,4 @@
-import React, {AllHTMLAttributes} from 'react'
+import React, {AllHTMLAttributes, ComponentType, ReactNode} from 'react'
 import {ButtonColors, ComponentPropsWithModifiableTag} from './Common'
 import {RippleProps} from '../components/Ripple/Ripple'
 
@@ -52,5 +52,6 @@ export interface TabSheetTabContentProps<
 > extends Omit<AllHTMLAttributes<HTMLDivElement>, 'role'> {
     name: TabName
     lazy?: boolean
+    ErrorBoundary?: ComponentType<{children: ReactNode | ReactNode[]}>
 }
 

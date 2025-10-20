@@ -16,6 +16,7 @@ function TabSheetTabContent<
         className,
         children,
         lazy,
+        ErrorBoundary,
         ...otherProps
     } = props
 
@@ -78,6 +79,14 @@ function TabSheetTabContent<
         }
     }, [currentTab, shouldMountContents, lazy, name])
 
+    let content = ErrorBoundary
+        ? (
+            <ErrorBoundary>
+                {children}
+            </ErrorBoundary>
+        )
+        : children
+
     return (
         <div
             className={clsx(
@@ -91,7 +100,7 @@ function TabSheetTabContent<
             role="tabpanel"
             {...otherProps}
         >
-            {shouldMountContents ? children : null}
+            {shouldMountContents ? content : null}
         </div>
     )
 }
