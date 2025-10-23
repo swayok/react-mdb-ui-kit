@@ -19,6 +19,8 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
     // Настройки выпадающего меню.
     dropdownMenuClassName?: string
     dropdownToggleClassName?: string
+    // Добавить white-space: nowrap ко всем опция выпадающего меню?
+    textNowrapOnOptions?: boolean
     dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
     drop?: DropdownDropDirection
     // Максимальная высота выпадающего меню.
@@ -44,6 +46,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         className,
         dropdownToggleClassName,
         dropdownMenuClassName,
+        textNowrapOnOptions = false,
         wrapperClass = 'mb-4',
         wrapperStyle,
         dropdownProps,
@@ -167,6 +170,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
                     dropdownMenuClassName
                 )}
                 style={dropdownMenuStyle}
+                textNowrapOnItems={textNowrapOnOptions}
             >
                 {children}
             </DropdownMenu>

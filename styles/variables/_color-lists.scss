@@ -398,30 +398,39 @@ $bg-colors: map.merge((
 $alert-colors: $theme-colors !default;
 // scss-docs-end alert-colors-map
 
+$note-colors-bg-lightness: (
+    'primary': 43%,
+    'secondary': 33%,
+    'success': 53%,
+    'danger': 36%,
+    'warning': 42%,
+    'info': 36%,
+) !default;
+
 // scss-docs-start note-colors-map
 $note-colors: (
     'primary': (
-        'bgc': color-utils.lighten(colors.$primary, 43%),
+        'bgc': color-utils.lighten(colors.$primary, map.get($note-colors-bg-lightness, 'primary')),
         'border-color': colors.$primary,
     ),
     'secondary': (
-        'bgc': color-utils.lighten(colors.$secondary, 33%),
+        'bgc': color-utils.lighten(colors.$secondary, map.get($note-colors-bg-lightness, 'secondary')),
         'border-color': colors.$secondary,
     ),
     'success': (
-        'bgc': color-utils.lighten(colors.$success, 53%),
+        'bgc': color-utils.lighten(colors.$success, map.get($note-colors-bg-lightness, 'success')),
         'border-color': colors.$success,
     ),
     'danger': (
-        'bgc': color-utils.lighten(colors.$danger, 36%),
+        'bgc': color-utils.lighten(colors.$danger, map.get($note-colors-bg-lightness, 'danger')),
         'border-color': colors.$danger,
     ),
     'warning': (
-        'bgc': color-utils.lighten(colors.$warning, 42%),
+        'bgc': color-utils.lighten(colors.$warning, map.get($note-colors-bg-lightness, 'warning')),
         'border-color': colors.$warning,
     ),
     'info': (
-        'bgc': color-utils.lighten(colors.$info, 36%),
+        'bgc': color-utils.lighten(colors.$info, map.get($note-colors-bg-lightness, 'info')),
         'border-color': colors.$info,
     ),
     'light': (
