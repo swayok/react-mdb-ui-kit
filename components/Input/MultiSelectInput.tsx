@@ -44,6 +44,25 @@ export interface MultiSelectInputProps<
         option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
         isGroup: boolean
     ) => string | React.ReactNode
+    // Todo: Вкл/Выкл поиска по опциям.
+    search?: boolean
+    // Пояснение для поля ввода ключевых слов поиска по опциям.
+    searchPlaceholder?: string
+    // Todo: Виртуализация списка опций для экономии памяти.
+    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
+    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
+    virtualizationConfig?: {
+        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
+        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
+        enabled: boolean | 'auto'
+        // Обязательное, если не указан SelectInputProps.maxHeight,
+        // т.к. автоматически высота выпадающего меню не вычисляется.
+        // По умолчанию: 500.
+        // Если также указано значение SelectInputProps.maxHeight,
+        // то будет выбрано меньшее из значений:
+        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
+        dropdownHeight?: number
+    }
 }
 
 export interface MultiSelectInputOptionExtras extends AnyObject {
