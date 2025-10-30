@@ -2,12 +2,13 @@ import React from 'react'
 import {CSSTransition} from 'react-transition-group'
 
 type Props = {
-    visible?: boolean,
-    transitionRef?: React.RefObject<HTMLElement>,
-    animationTimeout?: number,
-    unmountOnExit?: boolean,
-    mountOnEnter?: boolean,
-    children: React.ReactNode | React.ReactNode[],
+    visible?: boolean
+    long?: boolean
+    transitionRef?: React.RefObject<HTMLElement | null>
+    animationTimeout?: number
+    unmountOnExit?: boolean
+    mountOnEnter?: boolean
+    children: React.ReactNode | React.ReactNode[]
 }
 
 // Анимированное отображение children (fade-in).
@@ -17,17 +18,18 @@ function FadeIn(props: Props) {
 
     const {
         visible = true,
+        long = false,
         transitionRef = containerRef,
         children,
         unmountOnExit = true,
         mountOnEnter = true,
-        animationTimeout = 300,
+        animationTimeout = long ? 600 : 300,
     } = props
 
     return (
         <CSSTransition
             in={visible}
-            classNames="fade"
+            classNames={long ? 'fade-long' : 'fade'}
             appear
             timeout={animationTimeout}
             unmountOnExit={unmountOnExit}

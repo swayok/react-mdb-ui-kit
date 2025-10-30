@@ -1,4 +1,5 @@
-import {Location, NavigateFunction} from 'react-router-dom'
+import {useEffect} from 'react'
+import {Location, NavigateFunction, useLocation, useNavigate} from 'react-router-dom'
 import {makeUrl} from 'swayok-react-mdb-ui-kit/helpers/makeUrl'
 import {AnyObject} from '../types/Common'
 
@@ -276,4 +277,22 @@ export default class NavigationService {
     static getCurrentPath(): string | null {
         return this.location?.pathname ?? null
     }
+}
+
+/**
+ * Настройка NavigationService и отслеживание текущей локации.
+ */
+export function useNavigationService() {
+    const location: Location = useLocation()
+    const navigate = useNavigate()
+
+    // Сохранение навигатора в сервисе.
+    useEffect(() => {
+        NavigationService.setNavigator(navigate)
+    }, [navigate])
+
+    // Сохранение текущей локации в сервисе.
+    useEffect(() => {
+        NavigationService.setLocation(location)
+    }, [location])
 }
