@@ -4,6 +4,9 @@ import {AnyObject} from '../types/Common'
 // Сервис кэширования данных в window.localStorage или this.sessionStorage.
 export class CacheServiceClass<NameT extends string = string> {
 
+    // Версия приложения.
+    // При изменении весь кеш становится устаревшим.
+    private readonly appVersion: string = ''
     // Префикс для имени ключа в window.localStorage.
     private readonly keyNamePrefix: string = ''
     // Регион или язык по умолчанию.
@@ -21,8 +24,10 @@ export class CacheServiceClass<NameT extends string = string> {
         keyNamePrefix: string = '',
         preferSessionStorage: boolean = false,
         defaultLifetimeMinutes: number = 60,
-        defaultRegionOrLang: string | (() => string) = 'any'
+        defaultRegionOrLang: string | (() => string) = 'any',
+        appVersion: string = '1.0.0'
     ) {
+        this.appVersion = appVersion
         this.keyNamePrefix = keyNamePrefix
         this.preferSessionStorage = preferSessionStorage
         this.defaultLifetimeMinutes = defaultLifetimeMinutes
@@ -89,7 +94,7 @@ export class CacheServiceClass<NameT extends string = string> {
         }
         if (data) {
             const cacheItem: CacheItem<Type> = {
-                uid: regionOrLang,
+                uid: this.getCacheUid(regionOrLang),
                 data,
                 exp: DateTimeService.now().add(lifetimeMinutes, 'minutes').unix(),
             }
@@ -205,9 +210,14 @@ export class CacheServiceClass<NameT extends string = string> {
             && 'uid' in cacheItem
             && 'data' in cacheItem
             && 'exp' in cacheItem
-            && cacheItem.uid === regionOrLang
+            && cacheItem.uid === this.getCacheUid(regionOrLang)
             && DateTimeService.unixSeconds(cacheItem.exp).isAfter()
         )
+    }
+
+    // Получить идентификатор кеша.
+    private getCacheUid(regionOrLang: string) {
+        return regionOrLang + '_' + this.appVersion;
     }
 }
 
