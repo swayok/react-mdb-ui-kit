@@ -6,7 +6,7 @@ export class CacheServiceClass<NameT extends string = string> {
 
     // Версия приложения.
     // При изменении весь кеш становится устаревшим.
-    private readonly appVersion: string = ''
+    private readonly appVersion: () => string = () => '1.0.0'
     // Префикс для имени ключа в window.localStorage.
     private readonly keyNamePrefix: string = ''
     // Регион или язык по умолчанию.
@@ -25,9 +25,11 @@ export class CacheServiceClass<NameT extends string = string> {
         preferSessionStorage: boolean = false,
         defaultLifetimeMinutes: number = 60,
         defaultRegionOrLang: string | (() => string) = 'any',
-        appVersion: string = '1.0.0'
+        appVersion: string | (() => string) = '1.0.0'
     ) {
-        this.appVersion = appVersion
+        this.appVersion = typeof appVersion === 'string'
+            ? (): string => appVersion
+            : appVersion
         this.keyNamePrefix = keyNamePrefix
         this.preferSessionStorage = preferSessionStorage
         this.defaultLifetimeMinutes = defaultLifetimeMinutes
@@ -217,7 +219,7 @@ export class CacheServiceClass<NameT extends string = string> {
 
     // Получить идентификатор кеша.
     private getCacheUid(regionOrLang: string) {
-        return regionOrLang + '_' + this.appVersion;
+        return regionOrLang + '_' + this.appVersion();
     }
 }
 
