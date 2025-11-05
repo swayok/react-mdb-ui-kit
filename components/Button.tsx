@@ -23,7 +23,7 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
     hasIcon?: boolean,
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean,
-    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | null>,
+    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>,
     // Состояние для компонента <Link>.
     state?: LinkProps['state'],
 }

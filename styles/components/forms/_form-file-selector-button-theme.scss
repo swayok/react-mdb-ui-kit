@@ -6,7 +6,7 @@
 @use "../../variables/buttons";
 @use "../../variables/features";
 
-@if (features.$include-forms-and-inputs and features.$include-file-upload-button-input) {
+@if (features.$include-forms-and-inputs and features.$include-file-selector-button-theme) {
     .form-control {
         // File input buttons theming
         &::file-selector-button,
