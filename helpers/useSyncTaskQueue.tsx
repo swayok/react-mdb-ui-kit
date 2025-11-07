@@ -1,21 +1,22 @@
 import {useCallback, useEffect, useState} from 'react'
 import {flushSync} from 'react-dom'
 
-type Task = () => Promise<void> | void
+export type SyncQueueTask = () => Promise<void> | void
 
 export type SyncQueueOptions = {
     shouldProcess: boolean
 }
 
 export type SyncQueue = {
-    tasks: ReadonlyArray<Task>
+    tasks: ReadonlyArray<SyncQueueTask>
     isProcessing: boolean
-    addTask: (task: Task) => void
+    addTask: (task: SyncQueueTask) => void
+    reset: () => void
 }
 
 type QueueState = {
     isProcessing: boolean
-    tasks: Task[]
+    tasks: SyncQueueTask[]
 }
 
 const defaultOptions: SyncQueueOptions = {
@@ -68,6 +69,12 @@ export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptio
                 tasks: [...prev.tasks, task],
             }))
         }, []),
+        reset: useCallback(() => {
+            setQueue({
+                isProcessing: false,
+                tasks: [],
+            })
+        }, [])
     }
 }
 
