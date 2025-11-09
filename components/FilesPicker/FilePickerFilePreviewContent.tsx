@@ -44,6 +44,7 @@ export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePr
     } = props
 
     const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.type] ?? {
+        mime: '',
         type: 'file',
         extensions: [],
         preview: fallbackPreview,

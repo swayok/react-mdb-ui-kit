@@ -289,11 +289,16 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
     // Получить разрешенные типы файлов.
     private getAllowedFileTypes(): FilePickerContextProps['previews'] {
         if (this.props.allowedMimeTypes) {
+            const allowedMimeTypes = this.props.allowedMimeTypes
             const ret: FilePickerContextProps['previews'] = {}
-            for (let i = 0; i < this.props.allowedMimeTypes.length; i++) {
-                const mimeType: string = this.props.allowedMimeTypes[i]
-                if (mimeType in FilePickerContextPropsDefaults.previews) {
-                    ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+            for (const mimeType of allowedMimeTypes) {
+                if (typeof mimeType === 'string') {
+                    if (mimeType in FilePickerContextPropsDefaults.previews) {
+                        ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+                    }
+                } else {
+                    // Конфиг отображения предпросмотров.
+                    ret[mimeType.mime] = mimeType
                 }
             }
             return ret

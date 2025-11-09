@@ -15,96 +15,112 @@ export const filePickerDefaultTranslations: FilePickerTranslations = file_picker
 // Стандартный набор настроек предпросмотра прикрепленных файлов в зависимости от типа.
 export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo> = {
     'image/jpeg': {
+        mime: 'image/jpeg',
         type: 'image',
         extensions: ['jpg', 'jpeg'],
         preview: 'image',
     },
     'image/png': {
+        mime: 'image/png',
         type: 'image',
         extensions: ['png'],
         preview: 'image',
     },
     'image/avif': {
+        mime: 'image/avif',
         type: 'image',
         extensions: ['avif'],
         preview: 'image',
     },
     'image/webp': {
+        mime: 'image/webp',
         type: 'image',
         extensions: ['webp'],
         preview: 'image',
     },
     'image/svg+xml': {
+        mime: 'image/svg+xml',
         type: 'image',
         extensions: ['svg'],
         preview: 'image',
     },
     'application/pdf': {
+        mime: 'application/pdf',
         type: 'document',
         extensions: ['pdf'],
-        preview(previewWidth: number) {
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
             return (
                 <FilePickerFilePreviewAsIcon
                     path={mdiFilePdfOutline}
                     color="red"
                     previewSize={previewWidth}
+                    fileData={fileData}
                 />
             )
         },
     },
     'application/msword': {
+        mime: 'application/msword',
         type: 'document',
         extensions: ['doc'],
-        preview(previewWidth: number) {
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
             return (
                 <FilePickerFilePreviewAsIcon
                     path={mdiFileWordOutline}
                     color="blue"
                     previewSize={previewWidth}
+                    fileData={fileData}
                 />
             )
         },
     },
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
+        mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         type: 'document',
         extensions: ['docx'],
-        preview(previewWidth: number) {
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
             return (
                 <FilePickerFilePreviewAsIcon
                     path={mdiFileWordOutline}
                     color="blue"
                     previewSize={previewWidth}
+                    fileData={fileData}
                 />
             )
         },
     },
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
+        mime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         type: 'document',
         extensions: ['xlsx'],
-        preview(previewWidth: number) {
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
             return (
                 <FilePickerFilePreviewAsIcon
                     path={mdiFileExcelOutline}
                     color="green"
                     previewSize={previewWidth}
+                    fileData={fileData}
                 />
             )
         },
     },
     'text/csv': {
+        mime: 'text/csv',
         type: 'document',
         extensions: ['csv'],
-        preview(previewWidth: number) {
+        preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
             return (
                 <FilePickerFilePreviewAsIcon
                     path={mdiFileExcelOutline}
                     color="green"
                     previewSize={previewWidth}
+                    fileData={fileData}
                 />
             )
         },
     },
     'audio/mpeg': {
+        mime: 'audio/mpeg',
         type: 'audio',
         extensions: ['mp3'],
         preview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
@@ -125,12 +141,13 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
     translations: filePickerDefaultTranslations,
     maxFiles: null,
     previews: filePickerDefaultPreviews,
-    fallbackPreview(previewWidth: number) {
+    fallbackPreview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
         return (
             <FilePickerFilePreviewAsIcon
                 path={mdiFileOutline}
                 color="muted"
                 previewSize={previewWidth}
+                fileData={fileData}
             />
         )
     },

@@ -76,6 +76,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
                 animate={animatePreviews}
                 scaleImageOnHover={scaleImageOnHover}
                 className={itemClassName}
+                imageClassName={imagePreviewClassName}
                 previewSize={previewSize}
                 imagePreviewSize={imagePreviewSize}
                 onDelete={file => {

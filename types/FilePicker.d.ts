@@ -9,6 +9,7 @@ export type FilePickerContextMimeTypePreviewRenderer =
 
 // Настройки предпросмотра для типа файлов.
 export interface FilePickerContextMimeTypeInfo {
+    mime: string
     // Расширения файлов, например: ['jpeg', 'jpg'].
     extensions: string[]
     // Рендерер.
@@ -132,7 +133,7 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
     // Локализация.
     translations: FilePickerTranslations
     // Разрешенные mime-типы файлов.
-    allowedMimeTypes?: string[]
+    allowedMimeTypes?: (string | FilePickerContextMimeTypeInfo)[]
     // При прикреплении некорректного файла - не добавлять его в список файлов, а игнорировать.
     // В этом случае не будет отображаться блок предпросмотра.
     dropInvalidFiles?: boolean
@@ -183,7 +184,7 @@ export interface FilePickerInputProps {
     // Локализация.
     translations: FilePickerTranslations
     // Разрешенные mime-типы файлов.
-    allowedMimeTypes?: string[]
+    allowedMimeTypes?: (string | FilePickerContextMimeTypeInfo)[]
     // При прикреплении некорректного файла - не добавлять его в список файлов, а игнорировать.
     // В этом случае не будет отображаться блок предпросмотра.
     dropInvalidFiles?: boolean
