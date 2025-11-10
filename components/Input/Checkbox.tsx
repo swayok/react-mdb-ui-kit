@@ -105,7 +105,7 @@ function Checkbox(props: CheckboxProps) {
         )
     } else {
         typeClasses = clsx(
-            label ? 'form-check' : null,
+            'form-check',
             type === 'radio' ? 'form-radio' : 'form-checkbox',
             small ? 'form-check-sm' : null,
             color ? 'form-check-' + color : null

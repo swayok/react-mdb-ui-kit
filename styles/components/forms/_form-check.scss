@@ -157,7 +157,7 @@
                 &:after {
                     display: block;
                     transform: form-check.$form-check-checkbox-checked-after-transform #{'/*!rtl:ignore*/'};
-                    transform-origin: center;
+                    transform-origin: form-check.$form-check-checkbox-checked-after-transform-origin;
                     border-width: form-check.$form-check-checkbox-checked-check-width;
                     border-color: form-check.$form-check-checkbox-checked-check-color;
                     width: form-check.$form-check-checkbox-checked-after-width;
@@ -165,8 +165,6 @@
                     border-style: solid;
                     border-top: 0;
                     border-left: 0 #{'/*!rtl:ignore*/'};
-                    top: 50%;
-                    left: 50%;
                     margin-left: form-check.$form-check-checkbox-checked-after-margin-left;
                     margin-top: form-check.$form-check-checkbox-checked-after-margin-top;
                     background-color: transparent;
