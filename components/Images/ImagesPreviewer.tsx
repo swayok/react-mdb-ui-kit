@@ -6,7 +6,7 @@ import {getResponsiveCssGridClassNames} from 'swayok-react-mdb-ui-kit/helpers/ge
 import {ImagesPreviewerProps} from 'swayok-react-mdb-ui-kit/types/ImagesPreviewer'
 
 // Отображение фотографий с просмотром "на весь экран" по клику.
-function ImagesPreviewer(props: ImagesPreviewerProps) {
+export default React.memo(function ImagesPreviewer(props: ImagesPreviewerProps) {
 
     const {
         className,
@@ -32,8 +32,6 @@ function ImagesPreviewer(props: ImagesPreviewerProps) {
         isModalVisible,
         setIsModalVisible,
     ] = useState<boolean | null>(null)
-
-
 
     return (
         <div
@@ -109,6 +107,4 @@ function ImagesPreviewer(props: ImagesPreviewerProps) {
             />
         </div>
     )
-}
-
-export default React.memo(ImagesPreviewer)
+})
