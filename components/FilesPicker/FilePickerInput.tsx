@@ -105,8 +105,13 @@ export default function FilePickerInput(props: FilePickerInputProps) {
             if (allowedMimeTypes) {
                 const ret: FilePickerContextProps['previews'] = {}
                 for (const mimeType of allowedMimeTypes) {
-                    if (mimeType in FilePickerContextPropsDefaults.previews) {
-                        ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+                    if (typeof mimeType === 'string') {
+                        if (mimeType in FilePickerContextPropsDefaults.previews) {
+                            ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+                        }
+                    } else {
+                        // Конфиг отображения предпросмотров.
+                        ret[mimeType.mime] = mimeType
                     }
                 }
                 return ret
