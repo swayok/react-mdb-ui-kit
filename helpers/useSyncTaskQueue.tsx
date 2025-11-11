@@ -1,10 +1,11 @@
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useEffectEvent, useRef, useState} from 'react'
 import {flushSync} from 'react-dom'
 
 export type SyncQueueTask = () => Promise<void> | void
 
 export type SyncQueueOptions = {
     shouldProcess: boolean
+    onFinished?: () => void
 }
 
 export type SyncQueue = {
@@ -25,19 +26,32 @@ const defaultOptions: SyncQueueOptions = {
 
 // Синхронная очередь заданий.
 export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): SyncQueue {
+
+    const {
+        shouldProcess,
+        onFinished
+    } = params
+
     const [queue, setQueue] = useState<QueueState>({
         isProcessing: false,
         tasks: [],
     })
 
+    const onEmptyQueue = useEffectEvent(() => {
+        onFinished?.()
+    })
+
+    const queueHasStarted = useRef<boolean>(false)
+
     useEffect(() => {
-        if (!params.shouldProcess) {
+        if (!shouldProcess || queue.isProcessing) {
             return
         }
         if (queue.tasks.length === 0) {
-            return
-        }
-        if (queue.isProcessing) {
+            if (queueHasStarted.current) {
+                queueHasStarted.current = false
+                onEmptyQueue()
+            }
             return
         }
 
@@ -47,18 +61,21 @@ export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptio
             tasks: prev.tasks.slice(1),
         }))
 
+        queueHasStarted.current = true
         void Promise.resolve(task())
             .finally(() => {
                 // Нужно отключить batching т.к. при быстрых задачах будет
                 // потенциальная проблема: "Maximum update depth exceeded".
                 flushSync(() => {
-                    setQueue(prev => ({
-                        isProcessing: false,
-                        tasks: prev.tasks,
-                    }))
+                    setQueue(prev => {
+                        return {
+                            isProcessing: false,
+                            tasks: prev.tasks,
+                        }
+                    })
                 })
             })
-    }, [queue, params.shouldProcess])
+    }, [queue, shouldProcess])
 
     return {
         tasks: queue.tasks,

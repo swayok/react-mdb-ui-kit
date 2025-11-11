@@ -12,6 +12,14 @@ export interface CustomEventEmitterWithSyncQueueHookReturn<Payload = undefined> 
     isProcessing: boolean
 }
 
+// Параметры для хука useCustomEventEmitterWithSyncQueue()
+export interface CustomEventEmitterWithSyncQueueHookParams {
+    onQueueFinished?: () => void
+}
+
+const defaultParams: CustomEventEmitterWithSyncQueueHookParams = {
+}
+
 /**
  * Получить CustomEventEmitter для компонента.
  * При вызове emit() все обработчики будут выполняться последовательно, ожидая выполнения предыдущего.
@@ -19,13 +27,18 @@ export interface CustomEventEmitterWithSyncQueueHookReturn<Payload = undefined> 
  *
  * @see useSyncTaskQueue().
  */
-export function useCustomEventEmitterWithSyncQueue<
-    Payload = undefined
->(): CustomEventEmitterWithSyncQueueHookReturn<Payload> {
+export function useCustomEventEmitterWithSyncQueue<Payload = undefined>(
+    params: CustomEventEmitterWithSyncQueueHookParams = defaultParams
+): CustomEventEmitterWithSyncQueueHookReturn<Payload> {
+
+    const {
+        onQueueFinished
+    } = params
 
     const emitter = useMemo(() => new CustomEventEmitter<Payload>(), [])
     const queue = useSyncTaskQueue({
-        shouldProcess: true
+        shouldProcess: true,
+        onFinished: onQueueFinished
     })
 
     // Сброс всех подписок при демонтаже компонента.
@@ -41,7 +54,7 @@ export function useCustomEventEmitterWithSyncQueue<
                 unsubscribeAll: emitter.reset,
                 subscribe: (task, once = false) => emitter.subscribe(() => queue.addTask(task), once),
                 once: task => emitter.once(() => queue.addTask(task)),
-                resetQueue: queue.reset
+                resetQueue: queue.reset,
             }
         },
         []
