@@ -25,7 +25,7 @@ export interface CardProps extends ComponentPropsWithModifiableTag {
 //          Содержимое карточки
 //      CardFooter
 //          Кнопки или другие элементы
-function Card(props: CardProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+function Card(props: CardProps, ref: React.ForwardedRef<HTMLElement>) {
     const {
         className,
         children,
@@ -59,4 +59,4 @@ function Card(props: CardProps, ref: React.ForwardedRef<HTMLAllCollection>) {
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, CardProps>(Card))
+export default React.memo(React.forwardRef<HTMLElement, CardProps>(Card))

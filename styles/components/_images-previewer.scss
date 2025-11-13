@@ -101,11 +101,14 @@
         .images-carousel-modal-image {
             width: 100%;
             height: images-previewer.$images-carousel-modal-image-height;
-            background-repeat: no-repeat;
-            background-position: center center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-            body.layout-mobile & {
-                background-size: contain;
+            img {
+                max-height: images-previewer.$images-carousel-modal-image-height;
+                max-width: 100%;
             }
         }
     }

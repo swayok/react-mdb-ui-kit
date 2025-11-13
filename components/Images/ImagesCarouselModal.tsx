@@ -101,12 +101,9 @@ function ImagesCarouselModal(props: ImagesCarouselModalProps) {
                                 touchEndX = null
                             }}
                         >
-                            <div
-                                className="images-carousel-modal-image"
-                                style={{
-                                    backgroundImage: `url('${images[index]}')`,
-                                }}
-                            />
+                            <div className="images-carousel-modal-image">
+                                <img src={images[index]} alt=""/>
+                            </div>
                         </div>
                     </FadeSwitch>
                 </ModalContent>
