@@ -38,7 +38,7 @@ export default function LabeledValue(props: Props) {
         <Tag
             className={clsx(
                 noMargin || inline ? null : 'mb-1',
-                flex ? 'd-flex flex-row align-items-center justify-content-start' : null,
+                flex ? 'd-flex flex-row align-items-center justify-content-start gap-1' : null,
                 className
             )}
             {...otherProps}

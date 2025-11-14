@@ -10,6 +10,7 @@ export interface CustomEventEmitterWithSyncQueueHookReturn<Payload = undefined> 
     once: (callback: SyncQueueTask) => CancelSubscriptionFn
     resetQueue: () => void
     isProcessing: boolean
+    tasks: ReadonlyArray<SyncQueueTask>
 }
 
 // Параметры для хука useCustomEventEmitterWithSyncQueue()
@@ -47,7 +48,7 @@ export function useCustomEventEmitterWithSyncQueue<Payload = undefined>(
         queue.tasks
     }, [])
 
-    const api: Omit<CustomEventEmitterWithSyncQueueHookReturn<Payload>, 'isProcessing'> = useMemo(
+    const api: Omit<CustomEventEmitterWithSyncQueueHookReturn<Payload>, 'isProcessing' | 'tasks'> = useMemo(
         () => {
             return {
                 emit: emitter.emit,
@@ -62,6 +63,7 @@ export function useCustomEventEmitterWithSyncQueue<Payload = undefined>(
 
     return {
         ...api,
-        isProcessing: queue.isProcessing
+        isProcessing: queue.isProcessing,
+        tasks: queue.tasks,
     }
 }
