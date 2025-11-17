@@ -5,7 +5,9 @@ interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
     label: string;
     // true: обернуть в <span>, false: обернуть в <div>
     inline?: boolean
-    flex?: boolean
+    // true | string: использовать flexbox для позиционирование содержимого.
+    // 'with-icon' - добавить CSS классы 'with-icon-flex gap-1' к контейнеру значения.
+    flex?: boolean | 'with-icon'
     // true: без отступа после элемента. При inline=true, всегда noMargin=true.
     noMargin?: boolean;
     children?: React.ReactNode | string;
@@ -44,8 +46,13 @@ export default function LabeledValue(props: Props) {
             {...otherProps}
         >
             {wrapInBraces && '('}<InnerTag className={clsx(labelClassName, 'text-muted')}>
-                {label}:
-            </InnerTag> <InnerTag className={valueClassName}>
+            {label}:
+            </InnerTag> <InnerTag
+                className={clsx(
+                    valueClassName,
+                    flex === 'with-icon' ? 'with-icon-flex gap-1' : null
+                )}
+            >
                 {children}
             </InnerTag>{wrapInBraces && ')'}
         </Tag>
