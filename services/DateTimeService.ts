@@ -36,7 +36,7 @@ dayjs.extend(function (
  * Сервис для работы с датой и временем, совместимый с большинством библиотек,
  * которые используют API, похожий на moment.js.
  */
-export default class DateTimeService {
+export class DateTimeService {
 
     // Установка локали пакета (глобально).
     static setDefaultLocale(
@@ -118,3 +118,9 @@ export default class DateTimeService {
         return dayjs.isDayjs(value)
     }
 }
+
+/**
+ * @deprecated
+ * Use import {DateTimeService} from 'swayok-react-mdb-ui-kit/services/DateTimeService'
+ */
+export default DateTimeService

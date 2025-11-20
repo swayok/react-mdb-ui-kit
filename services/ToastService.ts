@@ -25,7 +25,7 @@ export interface ToastServiceToastDurations {
 }
 
 // Сервис отображения всплывающих уведомлений.
-abstract class ToastService {
+export abstract class ToastService {
 
     // Длительность отображения в зависимости от типа.
     private static duration: ToastServiceToastDurations = {
@@ -85,4 +85,8 @@ abstract class ToastService {
     }
 }
 
+/**
+ * @deprecated
+ * Use import {ToastService} from 'swayok-react-mdb-ui-kit/services/ToastService'
+ */
 export default ToastService

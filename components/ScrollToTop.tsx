@@ -1,4 +1,4 @@
-import React from 'react'
+import {useEffect} from 'react'
 import scrollToTop, {ScrollBehavior} from '../helpers/scrollToTop'
 
 type Props = {
@@ -7,12 +7,16 @@ type Props = {
 }
 
 // При монтировании этого компонента, скроллинг страницы будет перемещен в начало.
-function ScrollToTop(props: Props) {
-    React.useEffect(() => {
-        scrollToTop(props.behavior || 'smooth', props.container)
+export default function ScrollToTop(props: Props) {
+
+    const {
+        behavior = 'smooth',
+        container
+    } = props
+
+    useEffect(() => {
+        scrollToTop(behavior, container)
     }, [])
 
     return null
 }
-
-export default React.memo(ScrollToTop)

@@ -24,7 +24,7 @@ export interface NavigationServiceConfig {
 export type NavigationCallback = (url: Location) => void
 
 // Сервис навигации по страницам.
-export default class NavigationService {
+export class NavigationService {
 
     private static config: NavigationServiceConfig = {
         rootUrl: '/',
@@ -278,6 +278,12 @@ export default class NavigationService {
         return this.location?.pathname ?? null
     }
 }
+
+/**
+ * @deprecated
+ * Use import {NavigationService} from 'swayok-react-mdb-ui-kit/services/NavigationService'
+ */
+export default NavigationService
 
 /**
  * Настройка NavigationService и отслеживание текущей локации.

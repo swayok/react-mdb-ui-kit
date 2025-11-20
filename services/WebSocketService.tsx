@@ -39,7 +39,7 @@ interface WebsocketSubscription {
 }
 
 // Сервис для работы с web сокетами и уведомлениями через них.
-abstract class WebSocketService {
+export abstract class WebSocketService {
 
     private static laravelEchoConfig: LaravelEchoConfigType = {
         broadcaster: 'pusher',
@@ -270,6 +270,10 @@ abstract class WebSocketService {
     }
 }
 
+/**
+ * @deprecated
+ * Use import {WebSocketService} from 'swayok-react-mdb-ui-kit/services/WebSocketService'
+ */
 export default WebSocketService
 
 export interface WebSocketConnectorProps {
