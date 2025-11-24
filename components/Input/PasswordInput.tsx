@@ -1,9 +1,9 @@
 import {mdiEye, mdiEyeOff} from '@mdi/js'
 import clsx from 'clsx'
 import React, {useState} from 'react'
-import IconButton from 'swayok-react-mdb-ui-kit/components/IconButton'
-import Input, {InputProps} from 'swayok-react-mdb-ui-kit/components/Input/Input'
-import InputAddonText from 'swayok-react-mdb-ui-kit/components/Input/InputAddonText'
+import IconButton from '../IconButton'
+import Input, {InputProps} from './Input'
+import InputAddonText from './InputAddonText'
 import withStable from '../../helpers/withStable'
 
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {

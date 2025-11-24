@@ -1,10 +1,9 @@
 import {
     AnyObject,
-    BasicLanguageConfig,
-    BasicRegionConfig,
     FormSelectOption,
     FormSelectOptionsList,
 } from '../types/Common'
+import {BasicLanguageConfig, BasicRegionConfig} from '../types/Locale'
 import LanguagesManager from '../helpers/LanguagesManager'
 import RegionsManager from '../helpers/RegionsManager'
 import NumbersService from '../services/NumbersService'

@@ -3,7 +3,7 @@ import {
     DropdownAlign, DropdownApi,
     DropdownDropDirection,
     DropdownProps,
-} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+} from '../Dropdown/DropdownTypes'
 import Icon from '../Icon'
 import clsx from 'clsx'
 import {Dropdown} from '../Dropdown/Dropdown'
@@ -14,10 +14,10 @@ import InputValidationError from './InputValidationError'
 import {mdiCalendarMonthOutline, mdiClose} from '@mdi/js'
 import withStable from '../../helpers/withStable'
 import IconButton from '../IconButton'
-import DateTimeService from '../../services/DateTimeService'
+import {DateTimeService} from '../../services/DateTimeService'
 import {CalendarProps} from 'react-calendar'
 import InputAddonText from './InputAddonText'
-import UserBehaviorService from '../../services/UserBehaviorService'
+import {UserBehaviorService} from '../../services/UserBehaviorService'
 
 const Calendar = React.lazy<React.ComponentType<CalendarProps>>(() => import('react-calendar'))
 

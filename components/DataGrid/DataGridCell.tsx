@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {DataGridCellProps} from 'swayok-react-mdb-ui-kit/types/DataGrid'
+import {DataGridCellProps} from '../../types/DataGrid'
 
 // Ячейка таблицы.
 function DataGridCell(props: DataGridCellProps) {

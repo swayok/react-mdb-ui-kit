@@ -1,13 +1,12 @@
-import React from 'react'
-import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
 import {mdiFileExcelOutline, mdiFileOutline, mdiFileWordOutline, mdiVolumeHigh} from '@mdi/js'
-import {FilePickerContextProps, FilePickerTranslations} from '../../types/FilePicker'
+import React from 'react'
+import FilePickerAudioFilePreview from './FilePickerAudioFilePreview'
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import file_picker from '../../locales/en/file_picker'
 import {mdiFilePdfOutline} from '../../helpers/icons'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {FilePickerContextMimeTypeInfo} from 'swayok-react-mdb-ui-kit/types/FilePicker'
-import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
-import FilePickerAudioFilePreview from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerAudioFilePreview'
-import file_picker from 'swayok-react-mdb-ui-kit/locales/en/file_picker'
+import {AnyObject} from '../../types/Common'
+import {FilePickerContextMimeTypeInfo, FilePickerContextProps, FilePickerTranslations} from '../../types/FilePicker'
+import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
 
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = file_picker

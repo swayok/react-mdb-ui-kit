@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import Icon from '../Icon'
 import {mdiChevronLeft, mdiChevronRight, mdiPageFirst, mdiPageLast} from '@mdi/js'
-import DataGridPaginationPagesList from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridPaginationPagesList'
+import DataGridPaginationPagesList from './DataGridPaginationPagesList'
 import {DataGridPaginationProps} from '../../types/DataGrid'
 import withStable from '../../helpers/withStable'
 

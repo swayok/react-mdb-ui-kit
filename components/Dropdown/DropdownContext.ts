@@ -1,5 +1,5 @@
 import React from 'react'
-import {DropdownContextProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {DropdownContextProps} from './DropdownTypes'
 
 // Контекст для компонентов Dropdown.
 export const DropdownContext = React.createContext<DropdownContextProps>({

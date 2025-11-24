@@ -1,8 +1,8 @@
 import React from 'react'
-import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
-import CheckboxesGroup from 'swayok-react-mdb-ui-kit/components/Input/CheckboxesGroup'
-import Radio from 'swayok-react-mdb-ui-kit/components/Input/Radio'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import Checkbox, {CheckboxProps} from '../../components/Input/Checkbox'
+import CheckboxesGroup from '../../components/Input/CheckboxesGroup'
+import Radio from '../../components/Input/Radio'
+import SectionDivider from '../../components/SectionDivider'
 
 export default function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import Input from 'swayok-react-mdb-ui-kit/components/Input/Input'
-import InputInfo from 'swayok-react-mdb-ui-kit/components/Input/InputInfo'
+import Input from '../../components/Input/Input'
+import InputInfo from '../../components/Input/InputInfo'
 
 export default function MdbTextAreaInputsDemo() {
 

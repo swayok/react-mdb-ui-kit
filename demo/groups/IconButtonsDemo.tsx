@@ -1,7 +1,7 @@
 import {mdiCloseBoxOutline, mdiPencilBoxOutline, mdiPlusBoxOutline} from '@mdi/js'
 import React from 'react'
-import IconButton from 'swayok-react-mdb-ui-kit/components/IconButton'
-import {buttonColors} from 'swayok-react-mdb-ui-kit/demo/groups/ButtonsDemo'
+import IconButton from '../../components/IconButton'
+import {buttonColors} from '../../demo/groups/ButtonsDemo'
 
 export default function IconButtonsDemo() {
 

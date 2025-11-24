@@ -1,5 +1,5 @@
 import React, {AllHTMLAttributes, CSSProperties, useMemo} from 'react'
-import {CheckboxColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import {CheckboxColors} from '../../types/Common'
 import withStable from '../../helpers/withStable'
 import Checkbox from './Checkbox'
 import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from '../../types/Common'

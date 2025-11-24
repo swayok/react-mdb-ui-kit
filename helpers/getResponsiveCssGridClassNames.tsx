@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CssGridColumnsConfig} from 'swayok-react-mdb-ui-kit/types/Common'
+import {CssGridColumnsConfig} from '../types/Common'
 
 // Собрать классы для CSS Grid по настройкам.
 export function getResponsiveCssGridClassNames(

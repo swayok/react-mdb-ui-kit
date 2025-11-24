@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes} from 'react'
-import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 
 interface Props extends AllHTMLAttributes<HTMLAnchorElement> {
     file: FileAPISelectedFileInfo

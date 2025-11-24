@@ -8,7 +8,7 @@ import {
     FilePickerInputProps,
 } from '../../types/FilePicker'
 import ErrorBoundary from '../ErrorBoundary'
-import ToastService from '../../services/ToastService'
+import {ToastService} from '../../services/ToastService'
 import {AnyObject, MinMax} from '../../types/Common'
 import ReorderableList from '../ReorderableList/ReorderableList'
 import FilePickerHelpers from './FilePickerHelpers'

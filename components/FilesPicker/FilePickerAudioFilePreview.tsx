@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react'
 import Icon, {AppIconProps} from '../Icon'
-import {FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 
 interface Props extends Omit<AppIconProps, 'label'> {
     // Размер предпросмотра для определения размера иконки (1/3 от previewSize, максимум 50).

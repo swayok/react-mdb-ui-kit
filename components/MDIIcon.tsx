@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {AllHTMLAttributes, CSSProperties, SVGAttributes, useId} from 'react'
-import ReusableSvg from 'swayok-react-mdb-ui-kit/components/ReusableSvg'
+import ReusableSvg from './ReusableSvg'
 
 export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string

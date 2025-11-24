@@ -1,7 +1,7 @@
 import {mdiPencilBoxOutline} from '@mdi/js'
 import React from 'react'
-import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import Icon from '../../components/Icon'
+import SectionDivider from '../../components/SectionDivider'
 
 export default function LinksDemo() {
     return (

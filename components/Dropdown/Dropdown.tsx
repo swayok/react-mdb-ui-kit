@@ -6,7 +6,7 @@ import {
     DropdownApi,
     DropdownContextProps,
     DropdownToggleEventMetadata,
-} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+} from './DropdownTypes'
 import {useUncontrolled} from 'uncontrollable'
 import {DropdownContext} from './DropdownContext'
 import {DropdownMenuOffset, DropdownProps} from './DropdownTypes'

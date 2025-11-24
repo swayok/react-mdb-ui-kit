@@ -3,7 +3,7 @@ import {AllHTMLAttributes, useEffect, useRef} from 'react'
 import {
     ReusableSvgRepository,
     ReusableSvgRepositorySetSvgElementFn
-} from 'swayok-react-mdb-ui-kit/helpers/ReusableSvgRepository'
+} from '../helpers/ReusableSvgRepository'
 
 export interface ReusableSvgProps extends AllHTMLAttributes<SVGSVGElement> {
     ref?: React.RefObject<SVGSVGElement>

@@ -1,14 +1,14 @@
 import clsx from 'clsx'
 import React, {CSSProperties, useContext} from 'react'
-import FilePickerContext from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerContext'
-import {FilePickerFilePreviewFile} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerFilePreviewFile'
-import {FilePickerFilePreviewImage} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerFilePreviewImage'
+import FilePickerContext from './FilePickerContext'
+import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
+import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
-} from 'swayok-react-mdb-ui-kit/types/FilePicker'
+} from '../../types/FilePicker'
 
 interface Props {
     file: FilePickerFileInfo

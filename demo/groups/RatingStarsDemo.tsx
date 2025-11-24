@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import RatingStars from 'swayok-react-mdb-ui-kit/components/RatingStars'
+import RatingStars from '../../components/RatingStars'
 
 export default function RatingStarsDemo() {
 

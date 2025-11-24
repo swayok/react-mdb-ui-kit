@@ -1,5 +1,5 @@
 import React from 'react'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import SectionDivider from '../../components/SectionDivider'
 
 // Демонстрация заголовков.
 export function HeadingsDemo() {

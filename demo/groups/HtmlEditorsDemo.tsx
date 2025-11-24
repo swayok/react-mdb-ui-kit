@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import WysiwygInput from 'swayok-react-mdb-ui-kit/components/Input/WysiwygInput'
+import WysiwygInput from '../../components/Input/WysiwygInput'
 
 export default function HtmlEditorsDemo() {
 

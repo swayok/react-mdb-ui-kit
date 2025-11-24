@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from 'swayok-react-mdb-ui-kit/components/Button'
-import ToastService from 'swayok-react-mdb-ui-kit/services/ToastService'
+import Button from '../../components/Button'
+import {ToastService} from '../../services/ToastService'
 
 // Демонстрация всплывающих уведомлений.
 export default function ToastsDemo() {

@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {Location, NavigateFunction, useLocation, useNavigate} from 'react-router-dom'
-import {makeUrl} from 'swayok-react-mdb-ui-kit/helpers/makeUrl'
+import {makeUrl} from '../helpers/makeUrl'
 import {AnyObject} from '../types/Common'
 
 type ExtractRouteParam<Path, NextPart> = Path extends `:${infer Param}`

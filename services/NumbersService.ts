@@ -1,4 +1,5 @@
-import {AnyObject, BasicLanguageConfig, BasicRegionConfig} from '../types/Common'
+import {AnyObject} from '../types/Common'
+import {BasicLanguageConfig, BasicRegionConfig} from '../types/Locale'
 import numeral from 'numeral'
 
 interface CurrentLocale {

@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from 'swayok-react-mdb-ui-kit/components/Button'
-import Input from 'swayok-react-mdb-ui-kit/components/Input/Input'
-import SelectInput from 'swayok-react-mdb-ui-kit/components/Input/SelectInput/SelectInput'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
-import useFormValues from 'swayok-react-mdb-ui-kit/helpers/useFormValues'
+import Button from '../../components/Button'
+import Input from '../../components/Input/Input'
+import SelectInput from '../../components/Input/SelectInput/SelectInput'
+import SectionDivider from '../../components/SectionDivider'
+import useFormValues from '../../helpers/useFormValues'
 
 // Демонстрация inline форм.
 export function FormInlineDemo() {

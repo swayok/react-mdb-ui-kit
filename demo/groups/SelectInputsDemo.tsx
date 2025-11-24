@@ -1,7 +1,7 @@
 import React from 'react'
-import MultiSelectInput from 'swayok-react-mdb-ui-kit/components/Input/MultiSelectInput'
-import SelectInput from 'swayok-react-mdb-ui-kit/components/Input/SelectInput/SelectInput'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import MultiSelectInput from '../../components/Input/MultiSelectInput'
+import SelectInput from '../../components/Input/SelectInput/SelectInput'
+import SectionDivider from '../../components/SectionDivider'
 
 export default function SelectInputsDemo() {
 

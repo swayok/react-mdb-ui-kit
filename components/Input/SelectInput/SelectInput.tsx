@@ -14,7 +14,7 @@ import {stripTags} from '../../../helpers/stripTags'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
 import VirtualizedSelectInputOptions from '../../../components/Input/SelectInput/VirtualizedSelectInputOptions'
-import UserBehaviorService from '../../../services/UserBehaviorService'
+import {UserBehaviorService} from '../../../services/UserBehaviorService'
 
 export interface SelectInputProps<
     OptionValueType = string,

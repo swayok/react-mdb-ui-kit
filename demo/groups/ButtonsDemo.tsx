@@ -1,9 +1,9 @@
 import {mdiPencilBoxOutline} from '@mdi/js'
 import React from 'react'
-import Button from 'swayok-react-mdb-ui-kit/components/Button'
-import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
-import {ButtonColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import Button from '../../components/Button'
+import Icon from '../../components/Icon'
+import SectionDivider from '../../components/SectionDivider'
+import {ButtonColors} from '../../types/Common'
 
 export default function ButtonsDemo() {
 

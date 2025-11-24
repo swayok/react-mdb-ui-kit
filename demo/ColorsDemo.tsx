@@ -1,11 +1,11 @@
 import React from 'react'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
-import TabSheet from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheet'
-import TabSheetBody from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetBody'
-import TabSheetHeader from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetHeader'
-import TabSheetTabButton from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabButton'
-import {ColorPaletteDemo} from 'swayok-react-mdb-ui-kit/demo/groups/ColorPaletteDemo'
-import TabContentForDemoTabsheet from 'swayok-react-mdb-ui-kit/demo/TabContentForDemoTabsheet'
+import SectionDivider from '../components/SectionDivider'
+import TabSheet from '../components/TabSheet/TabSheet'
+import TabSheetBody from '../components/TabSheet/TabSheetBody'
+import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
+import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
+import {ColorPaletteDemo} from './groups/ColorPaletteDemo'
+import TabContentForDemoTabsheet from '../demo/TabContentForDemoTabsheet'
 
 const palettes: string[] = [
     'gray',

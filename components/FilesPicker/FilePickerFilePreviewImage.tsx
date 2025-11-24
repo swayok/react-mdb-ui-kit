@@ -1,9 +1,9 @@
 import {mdiImageBroken, mdiImageFrame} from '@mdi/js'
 import clsx from 'clsx'
 import React, {CSSProperties, useEffect, useRef, useState} from 'react'
-import Icon from 'swayok-react-mdb-ui-kit/components/Icon'
-import FileApiImageManipulation from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileApiImageManipulation'
-import {FilePickerFileInfo, FilePickerPreviewSizes} from 'swayok-react-mdb-ui-kit/types/FilePicker'
+import Icon from '../Icon'
+import FileApiImageManipulation from '../../helpers/FileAPI/FileApiImageManipulation'
+import {FilePickerFileInfo, FilePickerPreviewSizes} from '../../types/FilePicker'
 
 interface Props {
     file: FilePickerFileInfo

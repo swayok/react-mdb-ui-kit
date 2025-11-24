@@ -1,5 +1,5 @@
 import React, {AllHTMLAttributes, useId} from 'react'
-import Button, {ButtonProps} from 'swayok-react-mdb-ui-kit/components/Button'
+import Button, {ButtonProps} from '../Button'
 
 interface Props extends
     Omit<ButtonProps, 'onChange' | 'onClick' | 'labelFor' | 'id' | 'ref'>,

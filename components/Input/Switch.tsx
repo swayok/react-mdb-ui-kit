@@ -1,5 +1,5 @@
 import React from 'react'
-import Checkbox, {CheckboxProps} from 'swayok-react-mdb-ui-kit/components/Input/Checkbox'
+import Checkbox, {CheckboxProps} from './Checkbox'
 
 // Чекбокс в виде переключателя.
 export default function Switch(props: Omit<CheckboxProps, 'type'>) {

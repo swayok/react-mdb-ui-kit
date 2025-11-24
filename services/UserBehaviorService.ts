@@ -26,7 +26,7 @@ const defaultHandlers: UserBehaviorHandlers = {
 }
 
 // Сервис отслеживания поведения пользователя при заполнении полей ввода.
-class UserBehaviorService {
+export class UserBehaviorServiceClass {
     // Обработчики взаимодействий с полями ввода.
     private handlers: UserBehaviorHandlers = defaultHandlers
 
@@ -70,4 +70,10 @@ class UserBehaviorService {
     }
 }
 
-export default (new UserBehaviorService())
+export const UserBehaviorService: UserBehaviorServiceClass = new UserBehaviorServiceClass()
+
+/**
+ * @deprecated
+ * Use import {UserBehaviorService} from '../../services/UserBehaviorService'
+ */
+export default UserBehaviorService

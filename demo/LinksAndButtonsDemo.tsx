@@ -1,12 +1,12 @@
 import React from 'react'
-import TabSheet from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheet'
-import TabSheetBody from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetBody'
-import TabSheetHeader from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetHeader'
-import TabSheetTabButton from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabButton'
-import ButtonsDemo from 'swayok-react-mdb-ui-kit/demo/groups/ButtonsDemo'
-import IconButtonsDemo from 'swayok-react-mdb-ui-kit/demo/groups/IconButtonsDemo'
-import LinksDemo from 'swayok-react-mdb-ui-kit/demo/groups/LinksDemo'
-import TabContentForDemoTabsheet from 'swayok-react-mdb-ui-kit/demo/TabContentForDemoTabsheet'
+import TabSheet from '../components/TabSheet/TabSheet'
+import TabSheetBody from '../components/TabSheet/TabSheetBody'
+import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
+import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
+import ButtonsDemo from './groups/ButtonsDemo'
+import IconButtonsDemo from './groups/IconButtonsDemo'
+import LinksDemo from './groups/LinksDemo'
+import TabContentForDemoTabsheet from '../demo/TabContentForDemoTabsheet'
 
 // Демонстрация ссылок и кнопок.
 export default function LinksAndButtonsDemo() {

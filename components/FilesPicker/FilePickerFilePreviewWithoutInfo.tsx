@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import React, {useContext, useRef} from 'react'
 import {CSSTransition} from 'react-transition-group'
 import withStable from '../../helpers/withStable'
-import ToastService from '../../services/ToastService'
+import {ToastService} from '../../services/ToastService'
 import {
     FilePickerContextProps,
     FilePickerFileInfo,

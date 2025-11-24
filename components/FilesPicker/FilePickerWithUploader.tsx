@@ -9,8 +9,8 @@ import {
     FilePickerWithUploaderProps,
 } from '../../types/FilePicker'
 import ErrorBoundary from '../ErrorBoundary'
-import ToastService from '../../services/ToastService'
-import NavigationService from '../../services/NavigationService'
+import {ToastService} from '../../services/ToastService'
+import {NavigationService} from '../../services/NavigationService'
 import {AnyObject, MinMax} from '../../types/Common'
 import {
     extractAndNormalizeValidationErrorsFromResponseData,

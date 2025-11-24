@@ -2,7 +2,8 @@ import clsx from 'clsx'
 import React, {AllHTMLAttributes, Suspense, useCallback, useEffect, useRef, useState} from 'react'
 import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
-import {AnyObject, CKEditorInstance, ReactComponentOrTagName} from '../../types/Common'
+import {CKEditorInstance} from '../../types/Wysiwyg'
+import {AnyObject, ReactComponentOrTagName} from '../../types/Common'
 import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 import withStable from '../../helpers/withStable'
 import getDefaultWysiwygConfig from '../../helpers/getDefaultWysiwygConfig'
@@ -217,9 +218,9 @@ function WysiwygInput(props: WysiwygInputProps) {
                     onBeforeLoad={(config: CKEditorConfig) => {
                         // Меняем timestamp, чтобы CSS/JS файлы, загружаемые для редактора, были актуальными.
                         // @ts-ignore
-                        if (window.config?.wysiwygAssetsVersion) {
+                        if (window.wysiwyg?.assetsVersion) {
                             // @ts-ignore
-                            config.timestamp = window.config.wysiwygAssetsVersion
+                            config.timestamp = window.wysiwyg.assetsVersion
                         }
                     }}
                     onInstanceReady={(e: CKEditorEventPayload<'instanceReady'>) => {

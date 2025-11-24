@@ -1,7 +1,7 @@
 import React from 'react'
-import Card from 'swayok-react-mdb-ui-kit/components/Card/Card'
-import CardBody from 'swayok-react-mdb-ui-kit/components/Card/CardBody'
-import TabSheetTabContent from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTabContent'
+import Card from '../components/Card/Card'
+import CardBody from '../components/Card/CardBody'
+import TabSheetTabContent from '../components/TabSheet/TabSheetTabContent'
 
 interface Props {
     name: string

@@ -10,7 +10,7 @@ import Collapse from '../Collapse'
 import Icon from '../Icon'
 import {mdiFolderOpenOutline, mdiPlus} from '@mdi/js'
 import FilePickerFilePreviewWithoutInfo from './FilePickerFilePreviewWithoutInfo'
-import ToastService from '../../services/ToastService'
+import {ToastService} from '../../services/ToastService'
 
 // Блок со списком предпросмотров прикрепленных картинок.
 function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps) {

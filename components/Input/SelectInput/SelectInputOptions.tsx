@@ -6,7 +6,7 @@ import withStable from '../../../helpers/withStable'
 import SelectInputOptionsGroupHeader from '../../../components/Input/SelectInput/SelectInputOptionsGroupHeader'
 import SelectInputOption from '../../../components/Input/SelectInput/SelectInputOption'
 import shouldDisplaySelectInputOption from '../../../components/Input/SelectInput/shouldDisplaySelectInputOption'
-import UserBehaviorService from '../../../services/UserBehaviorService'
+import {UserBehaviorService} from '../../../services/UserBehaviorService'
 
 export interface SelectInputOptionsProps<
     OptionValueType = string,

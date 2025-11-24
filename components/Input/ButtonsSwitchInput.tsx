@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes} from 'react'
-import ButtonsSwitch from 'swayok-react-mdb-ui-kit/components/ButtonsSwitch'
+import ButtonsSwitch from '../ButtonsSwitch'
 import withStable from '../../helpers/withStable'
 import {ButtonColors, FormSelectOption} from '../../types/Common'
 import {ButtonProps} from '../Button'

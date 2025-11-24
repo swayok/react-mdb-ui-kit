@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import FilePickerHelpers from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerHelpers'
-import FilePickerInput from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerInput'
-import FilePickerPreviews from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerPreviews'
-import FilePickerPreviewsWithoutInfo from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerPreviewsWithoutInfo'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
-import file_picker from 'swayok-react-mdb-ui-kit/locales/en/file_picker'
-import {FilePickerFileInfo} from 'swayok-react-mdb-ui-kit/types/FilePicker'
+import FilePickerHelpers from '../../components/FilesPicker/FilePickerHelpers'
+import FilePickerInput from '../../components/FilesPicker/FilePickerInput'
+import FilePickerPreviews from '../../components/FilesPicker/FilePickerPreviews'
+import FilePickerPreviewsWithoutInfo from '../../components/FilesPicker/FilePickerPreviewsWithoutInfo'
+import SectionDivider from '../../components/SectionDivider'
+import file_picker from '../../locales/en/file_picker'
+import {FilePickerFileInfo} from '../../types/FilePicker'
 
 export default function FilePickersDemo() {
 

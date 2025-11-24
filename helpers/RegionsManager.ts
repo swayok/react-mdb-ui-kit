@@ -1,4 +1,5 @@
-import {AnyObject, BasicRegionConfig, FormSelectOption, FormSelectOptionsList} from '../types/Common'
+import {BasicRegionConfig} from '../types/Locale'
+import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../types/Common'
 import NumbersService from '../services/NumbersService'
 
 // Автоматически определенная локаль.
@@ -23,7 +24,7 @@ export default class RegionsManager<
     static getUrlQueryArgName(): string {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.languageUrlQueryArgName ?? this.defaultUrlQueryArgName
+        return window?.localeConfig?.regionUrlQueryArgName ?? this.defaultUrlQueryArgName
     }
 
     // Конструктор.
@@ -132,7 +133,7 @@ export default class RegionsManager<
     private getRegionFromGlobalConfig(): string | null {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.region ?? null
+        return window?.localeConfig?.region ?? null
     }
 
     // Достать предпочтительные локали из User-Agent.

@@ -6,7 +6,7 @@ import SelectInputOption from '../../../components/Input/SelectInput/SelectInput
 import SelectInputOptionsGroupHeader from '../../../components/Input/SelectInput/SelectInputOptionsGroupHeader'
 import shouldDisplaySelectInputOption from '../../../components/Input/SelectInput/shouldDisplaySelectInputOption'
 import useVirtuosoLibAsync from '../../../helpers/useVirtuosoLibAsync'
-import UserBehaviorService from '../../../services/UserBehaviorService'
+import {UserBehaviorService} from '../../../services/UserBehaviorService'
 
 export interface VirtualizedSelectInputOptionsProps<
     OptionValueType = string,

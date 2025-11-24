@@ -1,5 +1,6 @@
-import {AnyObject, BasicLanguageConfig, FormSelectOption, FormSelectOptionsList} from '../types/Common'
-import DateTimeService from '../services/DateTimeService'
+import {BasicLanguageConfig} from '../types/Locale'
+import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../types/Common'
+import {DateTimeService} from '../services/DateTimeService'
 import NumbersService from '../services/NumbersService'
 
 // Автоматически определенная локаль.
@@ -33,7 +34,7 @@ export default class LanguagesManager<
     static getUrlQueryArgName(): string {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.languageUrlQueryArgName ?? this.defaultUrlQueryArgName
+        return window?.localeConfig?.languageUrlQueryArgName ?? this.defaultUrlQueryArgName
     }
 
     // Конструктор.
@@ -201,7 +202,7 @@ export default class LanguagesManager<
     private getLanguageFromGlobalConfig(): string | null {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return window?.config?.language ?? null
+        return window?.localeConfig?.language ?? null
     }
 
     // Достать предпочтительные локали из User-Agent.

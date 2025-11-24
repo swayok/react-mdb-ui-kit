@@ -1,5 +1,5 @@
 import {AllHTMLAttributes} from 'react'
-import {CssGridColumnsConfig} from 'swayok-react-mdb-ui-kit/types/Common'
+import {CssGridColumnsConfig} from './Common'
 
 // Свойства предпросмотрщика изображений.
 export interface ImagesPreviewerProps extends AllHTMLAttributes<HTMLDivElement> {

@@ -1,7 +1,7 @@
 import React from 'react'
-import ButtonsSwitch from 'swayok-react-mdb-ui-kit/components/ButtonsSwitch'
-import ButtonsSwitchInput from 'swayok-react-mdb-ui-kit/components/Input/ButtonsSwitchInput'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import ButtonsSwitch from '../../components/ButtonsSwitch'
+import ButtonsSwitchInput from '../../components/Input/ButtonsSwitchInput'
+import SectionDivider from '../../components/SectionDivider'
 
 export default function ButtonsSwitchDemo() {
 

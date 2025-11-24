@@ -1,5 +1,5 @@
 import React from 'react'
-import {IconProps} from 'swayok-react-mdb-ui-kit/components/MDIIcon'
+import {IconProps} from './MDIIcon'
 import Icon from './Icon'
 import clsx from 'clsx'
 import {mdiStar, mdiStarHalfFull, mdiStarOutline} from '@mdi/js'

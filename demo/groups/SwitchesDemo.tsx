@@ -1,5 +1,5 @@
 import React from 'react'
-import Switch from 'swayok-react-mdb-ui-kit/components/Input/Switch'
+import Switch from '../../components/Input/Switch'
 
 export default function SwitchesDemo() {
 

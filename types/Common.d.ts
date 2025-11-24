@@ -1,6 +1,7 @@
 import React, {AllHTMLAttributes, HTMLProps} from 'react'
 import {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
-import {NumeralJSLocale} from 'numeral'
+import * as LocaleTypes from './Locale'
+import * as Translations from './Translations'
 
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
@@ -130,163 +131,6 @@ export interface SvgIconInfo {
     coloredBy: 'stroke' | 'fill' | 'various'
 }
 
-// Переводы ошибок
-export interface HttpErrorsTranslations {
-    go_back: string,
-    code401: {
-        toast: string,
-    },
-    code403: {
-        title: string,
-        message: string,
-        toast: string,
-    },
-    code404: {
-        title: string,
-        message: string,
-        toast: string,
-    },
-    code408: {
-        toast: string,
-    },
-    code419: {
-        toast: string,
-    },
-    code422: {
-        toast: string,
-    },
-    code426: {
-        toast: string,
-    },
-    code429: {
-        toast: string,
-    },
-    code4xx: {
-        toast: string,
-    },
-    code500: {
-        title: string,
-        message: string,
-        toast: string,
-    },
-    unknown: {
-        toast: string,
-    },
-    js_error: {
-        title: string,
-        message: string,
-        toast: string,
-    },
-    code503: {
-        title: string,
-        message: string,
-        toast: string,
-    },
-    code501: {
-        toast: string,
-    },
-    code502: {
-        toast: string,
-    },
-    code504: {
-        toast: string,
-    },
-    code5xx: {
-        toast: string,
-    },
-    axios: {
-        toast: string,
-    },
-    response_parsing: {
-        toast: string,
-    },
-}
-
-/**
- * Базовый набор настроек языка для LanguagesManager.
- * @see LanguagesManager
- */
-export interface BasicLanguageConfig<
-    LanguageCode extends string = string,
-    RegionCode extends string = string,
-> {
-    // Код языка локали: vi, ru, ...
-    language: LanguageCode;
-    // Код региона локали: vn, ru, ...
-    // todo: remove BasicLanguageConfig.region
-    region: RegionCode,
-    // Полный код локали: vi-VN, ru-RU, ...
-    full: string;
-    // Название локали для выпадающего меню смены локали.
-    label: string;
-    // Вариации локали в нижнем регистре.
-    variations: string[];
-    // Загрузчик словаря для приложения и всех сторонних пакетов (datetime и т.п.).
-    // Должен вернуть словарь для приложения.
-    // Примеры:
-    // () => (await import('../locales/vi')).default .
-    // С загрузкой переводов из dayjs:
-    // () => {
-    //     await import('dayjs/locale/en.js')
-    //     return (await import('../locales/en')).default
-    // }
-    loader: () => Promise<AnyObject>;
-    // Настройки форматирования чисел.
-    numeral: {
-        // Настройки currency относятся к региону, а не к языку.
-        localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>,
-    };
-    // Настройки форматирования даты и времени.
-    dateTime: {
-        /**
-         * Формат даты для DateTimeService.
-         * По умолчанию: L.
-         *
-         * @see DateTimeService
-         * @see https://day.js.org/docs/en/display/format
-         * @see https://day.js.org/docs/en/plugin/localized-format
-         */
-        dateFormat?: 'L' | string,
-    }
-}
-
-/**
- * Базовый набор настроек региона для RegionsManager.
- * @see RegionsManager
- */
-export interface BasicRegionConfig<
-    RegionCode extends string = string,
-    LanguageCode extends string = string,
-> {
-    // Код региона: vn, ru, ...
-    region: RegionCode,
-    // Языка региона по умолчанию: vi, ru, ...
-    defaultLanguage: LanguageCode;
-    // Название локали для выпадающего меню смены локали.
-    label: string;
-    // Вариации локали в нижнем регистре.
-    variations: string[];
-    // Настройки форматирования чисел.
-    numeral: {
-        // Остальные настройки относятся к языку, а не к региону.
-        localeConfig: Pick<NumeralJSLocale, 'currency'>,
-        defaultFormat: string,
-    },
-}
-
-// Часть методов и свойств CKEditor.
-export interface CKEditorInstance {
-    getData: (rawValue?: string) => string,
-    setData: (rawValue?: string) => string,
-    setReadOnly: (value: boolean) => void,
-    element: {
-        $: HTMLTextAreaElement,
-    },
-    container: {
-        $: HTMLDivElement,
-    },
-}
-
 // Настройка количества колонок CSS Grid.
 export interface CssGridColumnsConfig {
     xs?: number,
@@ -296,3 +140,30 @@ export interface CssGridColumnsConfig {
     xl?: number,
     xxl?: number,
 }
+
+//
+// Deprecated!
+//
+
+/**
+ * Переводы ошибок
+ * @deprecated
+ * Use import {HttpErrorsTranslations} from 'swayok-react-mdb-ui-kit/types/Translations'
+ */
+export type HttpErrorsTranslations = Translations.HttpErrorsTranslations
+
+/**
+ * Базовый набор настроек языка для LanguagesManager.
+ * @see LanguagesManager
+ * @deprecated
+ * Use import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+ */
+export type BasicLanguageConfig = LocaleTypes.BasicLanguageConfig
+
+/**
+ * Базовый набор настроек региона для RegionsManager.
+ * @see RegionsManager
+ * @deprecated
+ * Use import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+ */
+export type BasicRegionConfig = LocaleTypes.BasicRegionConfig

@@ -1,6 +1,6 @@
 import React from 'react'
-import DateInput from 'swayok-react-mdb-ui-kit/components/Input/DateInput'
-import SectionDivider from 'swayok-react-mdb-ui-kit/components/SectionDivider'
+import DateInput from '../../components/Input/DateInput'
+import SectionDivider from '../../components/SectionDivider'
 
 export default function DateInputsDemo() {
 
