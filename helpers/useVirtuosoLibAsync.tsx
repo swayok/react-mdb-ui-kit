@@ -11,7 +11,7 @@ import {
     VirtuosoHandle as _VirtuosoHandle,
     VirtuosoProps as _VirtuosoProps,
 } from 'react-virtuoso'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 function Placeholder() {
     return (

@@ -1,6 +1,6 @@
 import Echo, {Channel} from 'laravel-echo'
 import React, {useEffect} from 'react'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../helpers/withStable'
 
 interface WebSocketServiceAuthInfo {

@@ -1,5 +1,5 @@
-import {AnyObject} from '../types/Common'
-import {BasicLanguageConfig, BasicRegionConfig} from '../types/Locale'
+import {AnyObject, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
+import {BasicLanguageConfig, BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import numeral from 'numeral'
 
 interface CurrentLocale {
@@ -48,21 +48,29 @@ class NumbersService {
 
     // Регистрация локализаций в numeral.
     registerLocales(
-        languages: AnyObject<BasicLanguageConfig>,
+        languages: PartialRecord<string, BasicLanguageConfig>,
         defaultLanguage: BasicLanguageConfig,
-        regions: AnyObject<BasicRegionConfig> | null = null,
+        regions: PartialRecord<string, BasicRegionConfig> | null = null,
         defaultRegion: BasicRegionConfig | null = null
     ): void {
         // Внимание: нельзя удалять numeral.locales полностью т.к. numeral ломается!
 
         // Собираем форматы чисел по умолчанию для каждого региона.
         this.formatsByRegion = {}
-        for (const key in regions) {
-            this.formatsByRegion[regions[key].region] = regions[key].numeral.defaultFormat
+        if (regions) {
+            for (const region in regions) {
+                const regionConfig = regions[region]
+                if (regionConfig) {
+                    this.formatsByRegion[regionConfig.region] = regionConfig.numeral.defaultFormat
+                }
+            }
         }
         // Добавляем локали в numeral.
         for (const lang in languages) {
             const languageConfig = languages[lang]
+            if (!languageConfig) {
+                continue
+            }
             // Удаляем существующие локали в numeral.
             // Если не удалять, то ругается в режиме dev hot/watch.
             delete numeral.locales[languageConfig.language]
@@ -82,6 +90,9 @@ class NumbersService {
             // Локаль = язык + регион.
             for (const region in regions) {
                 const regionConfig = regions[region]
+                if (!regionConfig) {
+                    continue
+                }
                 const localeCode: string = this.getLocaleCode(
                     languageConfig.language,
                     regionConfig.region

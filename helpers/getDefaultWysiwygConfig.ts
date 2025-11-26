@@ -1,6 +1,6 @@
 import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
-import {CKEditorInstance} from '../types/Wysiwyg'
+import {CKEditorInstance} from 'swayok-react-mdb-ui-kit/types/Wysiwyg'
 
 // Получить стандартные настройки для CKEditor.
 export default function getDefaultWysiwygConfig(

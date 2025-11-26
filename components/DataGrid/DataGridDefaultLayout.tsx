@@ -2,8 +2,8 @@ import React from 'react'
 import DataGridFooter from './DataGridFooter'
 import DataGridTable from './DataGridTable'
 import clsx from 'clsx'
-import {AnyObject} from '../../types/Common'
-import {DataGridDefaultLayoutProps, DataGridFooterProps, DataGridTableProps} from '../../types/DataGrid'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridDefaultLayoutProps, DataGridFooterProps, DataGridTableProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import withStable from '../../helpers/withStable'
 
 // Стандартная разметка таблицы с данными.

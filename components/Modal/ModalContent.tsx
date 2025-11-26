@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ModalContentProps} from '../../types/Modals'
+import {ModalContentProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Контейнер для основных элементов модального окна.
 // Внутри обычно несколько компонентов: ModalHeader, ModalBody, ModalFooter.

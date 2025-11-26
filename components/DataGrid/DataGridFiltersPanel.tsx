@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import DataGridFiltersPanelLabel from './DataGridFiltersPanelLabel'
 import DataGridFiltersPanelButtons from './DataGridFiltersPanelButtons'
-import {DataGridFiltersPanelProps} from '../../types/DataGrid'
+import {DataGridFiltersPanelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import withStable from '../../helpers/withStable'
 
 // Панель фильтрации для таблицы.

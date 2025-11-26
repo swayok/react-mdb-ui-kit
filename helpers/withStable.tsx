@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call */
 import React, {DependencyList, forwardRef, FunctionComponent, MemoExoticComponent} from 'react'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Imported from package https://www.npmjs.com/package/react-with-stable.
 

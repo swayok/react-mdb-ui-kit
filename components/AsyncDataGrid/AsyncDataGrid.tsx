@@ -9,9 +9,9 @@ import {
     AsyncDataGridContextProps,
     AsyncDataGridProps,
     AsyncDataGridRows,
-} from '../../types/AsyncDataGrid'
-import {AnyObject} from '../../types/Common'
-import {DataGridOrderingDirection} from '../../types/DataGrid'
+} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import DataGridContext from '../DataGrid/DataGridContext'
 import AsyncDataGridUrlQueryManager from './AsyncDataGridUrlQueryManager'
 import toggleValueInArray from '../../helpers/toggleValueInArray'

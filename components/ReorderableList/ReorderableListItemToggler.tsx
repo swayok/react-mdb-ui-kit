@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react'
 import clsx from 'clsx'
 import ReorderableListItemContext from './ReorderableListItemContext'
-import {AnyObject, ComponentPropsWithModifiableTag} from '../../types/Common'
+import {AnyObject, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface DragAndDropTogglerProps extends Omit<ComponentPropsWithModifiableTag, 'onMouseDown' | 'disabled' | 'draggable'> {
     payload?: AnyObject | null

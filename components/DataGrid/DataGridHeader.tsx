@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridHeaderProps, DataGridOrderingDirection} from '../../types/DataGrid'
+import {DataGridHeaderProps, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import DataGridHeaderWrapper from './DataGridHeaderWrapper'
 
 // Заголовок колонки таблицы (<th>).

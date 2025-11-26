@@ -1,6 +1,6 @@
-// Настройки Wysiwyg редактора для window.wysiwyg.
-import {AnyObject} from './Common'
+import type {AnyObject} from './Common'
 
+// Настройки Wysiwyg редактора для window.wysiwyg.
 export interface WysiwygGlobalConfigType {
     // Версия CSS/JS файлов, загружаемых в Wysiwyg редактор.
     assetsVersion?: string

@@ -1,5 +1,5 @@
 import React from 'react'
-import {ComponentPropsWithModifiableTag} from '../types/Common'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 import DOMPurify from 'dompurify'
 
 interface Props extends Omit<ComponentPropsWithModifiableTag, 'children' | 'dangerouslySetInnerHTML'> {

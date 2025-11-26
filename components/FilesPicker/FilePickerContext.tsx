@@ -4,8 +4,8 @@ import FilePickerAudioFilePreview from './FilePickerAudioFilePreview'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import file_picker from '../../locales/en/file_picker'
 import {mdiFilePdfOutline} from '../../helpers/icons'
-import {AnyObject} from '../../types/Common'
-import {FilePickerContextMimeTypeInfo, FilePickerContextProps, FilePickerTranslations} from '../../types/FilePicker'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {FilePickerContextMimeTypeInfo, FilePickerContextProps, FilePickerTranslations} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
 
 // Стандартная локализация таблицы.

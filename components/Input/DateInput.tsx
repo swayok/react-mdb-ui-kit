@@ -3,7 +3,7 @@ import {
     DropdownAlign, DropdownApi,
     DropdownDropDirection,
     DropdownProps,
-} from '../Dropdown/DropdownTypes'
+} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import Icon from '../Icon'
 import clsx from 'clsx'
 import {Dropdown} from '../Dropdown/Dropdown'

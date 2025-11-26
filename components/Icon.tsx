@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import Tooltip, {TooltipProps} from './Tooltip'
 import MDIIcon, {IconProps} from './MDIIcon'
-import {SvgIconInfo, TextColors} from '../types/Common'
+import {SvgIconInfo, TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import SvgIcon, {SvgIconProps} from './SvgIcon'
 
 export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {

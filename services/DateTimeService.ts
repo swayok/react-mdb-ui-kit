@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import {BasicLanguageConfig} from '../types/Locale'
+import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import utc from 'dayjs/plugin/utc'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 

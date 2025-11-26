@@ -1,5 +1,5 @@
 import {DateTimeService} from './DateTimeService'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Сервис кэширования данных в window.localStorage или this.sessionStorage.
 export class CacheServiceClass<NameT extends string = string> {
@@ -46,7 +46,7 @@ export class CacheServiceClass<NameT extends string = string> {
         if (regionOrLang === undefined) {
             regionOrLang = this.defaultRegionOrLang()
         }
-        if (name in this.sessionStorage) {
+        if (this.sessionStorage[name]) {
             const data: CacheItem<unknown> = this.sessionStorage[name]
             if (this.isValidCachedData(data, regionOrLang)) {
                 return data.data as Type

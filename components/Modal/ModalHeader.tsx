@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import ModalTitle from './ModalTitle'
 import ModalHeaderCloseButton from './ModalHeaderCloseButton'
-import {ModalHeaderProps} from '../../types/Modals'
+import {ModalHeaderProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Шапка модального окна.
 // Обычно содержит название (ModalTitle) и кнопку закрытия (ModalHeaderCloseButton).

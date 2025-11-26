@@ -1,6 +1,6 @@
 import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-import {BackgroundColors} from '../../types/Common'
+import {BackgroundColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface ProgressBarProps extends AllHTMLAttributes<HTMLDivElement> {
     // Анимация.

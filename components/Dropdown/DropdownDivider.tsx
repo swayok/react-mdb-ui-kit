@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {DropdownDividerProps} from './DropdownTypes'
+import {DropdownDividerProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 
 export function DropdownDivider(props: DropdownDividerProps) {
 

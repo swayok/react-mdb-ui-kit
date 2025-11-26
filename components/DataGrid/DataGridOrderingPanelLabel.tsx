@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridOrderingPanelLabelProps} from '../../types/DataGrid'
+import {DataGridOrderingPanelLabelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Заголовок панели фильтрации.
 function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {

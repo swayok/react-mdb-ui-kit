@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import clsx from 'clsx'
 import {usePopper} from 'react-popper'
 import * as PopperJS from '@popperjs/core'
-import {ComponentPropsWithModifiableTag} from '../types/Common'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface TooltipProps extends Omit<ComponentPropsWithModifiableTag, 'title'> {
     placement?: PopperJS.Placement,

@@ -1,5 +1,5 @@
 import ApiRequestDebugService from './ApiRequestDebugService'
-import {AnyObject, ApiResponseData} from '../types/Common'
+import {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.

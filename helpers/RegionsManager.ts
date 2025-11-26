@@ -1,26 +1,26 @@
-import {BasicRegionConfig} from '../types/Locale'
-import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../types/Common'
+import {FormSelectOption, FormSelectOptionsList, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
+import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import NumbersService from '../services/NumbersService'
 
-// Автоматически определенная локаль.
+// Автоматически определенный регион.
 let detectedRegion: BasicRegionConfig | undefined
 
 // Менеджер регионов (определение, хранение, загрузка, изменение).
 export default class RegionsManager<
-    RegionConfigType extends BasicRegionConfig = BasicRegionConfig,
-    RegionCode extends string = string
+    RegionCode extends string = string,
+    RegionConfigType extends BasicRegionConfig<RegionCode> = BasicRegionConfig<RegionCode>,
 > {
-    // Имя URL Query аргумента для задания новой локали.
+    // Имя URL Query аргумента для задания нового региона.
     private static readonly defaultUrlQueryArgName: string = 'region'
-    // Список доступных локалей.
-    private readonly regions: AnyObject<RegionConfigType, RegionCode>
-    // Локаль по умолчанию.
+    // Список доступных регионов.
+    private readonly regions: PartialRecord<RegionCode, RegionConfigType>
+    // Регион по умолчанию.
     private readonly defaultRegion: RegionConfigType
 
-    // Основная локаль.
+    // Основной регион.
     private primaryRegion: RegionConfigType
 
-    // Имя URL Query аргумента для изменения языка интерфейса.
+    // Имя URL Query аргумента для изменения региона.
     static getUrlQueryArgName(): string {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -29,7 +29,7 @@ export default class RegionsManager<
 
     // Конструктор.
     constructor(
-        regions: AnyObject<RegionConfigType, RegionCode>,
+        regions: PartialRecord<RegionCode, RegionConfigType>,
         defaultRegion: RegionConfigType
     ) {
         this.regions = regions
@@ -37,26 +37,26 @@ export default class RegionsManager<
         this.primaryRegion = defaultRegion
     }
 
-    // Список локалей.
-    getRegions(): AnyObject<RegionConfigType, RegionCode> {
+    // Список регионов.
+    getRegions(): PartialRecord<RegionCode, RegionConfigType> {
         return this.regions
     }
 
-    // Локаль по умолчанию.
+    // Регион по умолчанию.
     getDefaultRegion(): RegionConfigType {
         return this.defaultRegion
     }
 
-    // Текущая локаль.
+    // Текущий регион.
     getPrimaryRegion(): RegionConfigType {
         return this.primaryRegion
     }
 
-    // Получить список опций для компонентов смены локализации
+    // Получить список опций для компонентов смены региона
     getRegionsListAsOptions(): FormSelectOptionsList<RegionCode, RegionConfigType> {
         const ret: FormSelectOption<RegionCode, RegionConfigType>[] = []
         for (const key in this.regions) {
-            const config: RegionConfigType = this.regions[key]
+            const config: RegionConfigType = this.regions[key]!
             ret.push({
                 value: config.region as RegionCode,
                 label: config.label,
@@ -66,7 +66,7 @@ export default class RegionsManager<
         return ret
     }
 
-    // Определение локали разными способами.
+    // Определение региона разными способами.
     detectRegion(): RegionConfigType {
         if (detectedRegion) {
             return detectedRegion as RegionConfigType
@@ -79,7 +79,7 @@ export default class RegionsManager<
             detectedRegion = globalConfigLanguage
             return globalConfigLanguage
         }
-        // Поискать подходящую локаль среди языков браузера.
+        // Поискать подходящий регион среди языков браузера.
         const languages = this.getLanguagesFromUserAgent()
         for (const item of languages) {
             const language: RegionConfigType | null = this.findRegion(item)
@@ -87,35 +87,35 @@ export default class RegionsManager<
                 return detectedRegion = language
             }
         }
-        // Локали не найдено - используем локаль по умолчанию.
+        // Регион не найден - используем регион по умолчанию.
         return detectedRegion = this.defaultRegion
     }
 
-    // Поиск поддерживаемой локали по коду или языку.
+    // Поиск поддерживаемого региона по коду или языку.
     findRegion(
-        languageOrLocale: string | null
+        regionOrLocale: RegionCode | string | null
     ): RegionConfigType | null {
-        if (!languageOrLocale) {
+        if (!regionOrLocale) {
             return null
         }
         for (const key in this.regions) {
-            const language = this.regions[key]
-            if (this.regions[key].variations.includes(languageOrLocale.toLowerCase())) {
-                return language
+            const region = this.regions[key]!
+            if (region.variations.includes(regionOrLocale.toLowerCase())) {
+                return region
             }
         }
         return null
     }
 
-    // Поиск поддерживаемой локали по коду или языку или возврат локали по умолчанию.
+    // Поиск поддерживаемого региона по коду или языку или возврат региона по умолчанию.
     findRegionOrDefault(
-        languageOrLocale: string | null
+        languageOrLocale: RegionCode | string | null
     ): RegionConfigType {
         if (languageOrLocale) {
             for (const key in this.regions) {
-                const language = this.regions[key]
-                if (this.regions[key].variations.includes(languageOrLocale.toLowerCase())) {
-                    return language
+                const region = this.regions[key]!
+                if (region.variations.includes(languageOrLocale.toLowerCase())) {
+                    return region
                 }
             }
         }
@@ -129,14 +129,14 @@ export default class RegionsManager<
         NumbersService.setRegion(config.region)
     }
 
-    // Достать локаль из URL.
+    // Достать регион из URL.
     private getRegionFromGlobalConfig(): string | null {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return window?.localeConfig?.region ?? null
     }
 
-    // Достать предпочтительные локали из User-Agent.
+    // Достать предпочтительные регионы из User-Agent.
     private getLanguagesFromUserAgent(): string[] {
         if ('languages' in window.navigator) {
             return navigator.languages.slice()

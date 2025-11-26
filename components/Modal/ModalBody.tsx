@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ModalBodyProps} from '../../types/Modals'
+import {ModalBodyProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Контейнер содержимого модального окна.
 function ModalBody(

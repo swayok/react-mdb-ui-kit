@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import clsx from 'clsx'
-import {TabSheetTabContentProps} from '../../types/TabSheet'
+import {TabSheetTabContentProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import {useTabSheetContext} from './TabSheetContext'
 
 // Длительность анимаций fade in/out.

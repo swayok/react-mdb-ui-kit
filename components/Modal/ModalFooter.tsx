@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ModalFooterProps} from '../../types/Modals'
+import {ModalFooterProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Подвал модального окна.
 // Обычно содержит 1 или несколько кнопок (Button, ModalFooterCloseButton).

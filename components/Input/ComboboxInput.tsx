@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Input, {InputProps} from './Input'
-import {FormSelectOptionsList} from '../../types/Common'
+import {FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../../helpers/withStable'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'

@@ -1,10 +1,10 @@
 import React from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AnyObject} from '../../types/Common'
-import {AsyncDataGridEventsProps} from '../../types/AsyncDataGrid'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AsyncDataGridEventsProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 import withStable from '../../helpers/withStable'
 
-// Выполняет заданные функции когда происходят определенные события с таблицей.
+// Выполняет заданные функции, когда происходят определенные события с таблицей.
 function AsyncDataGridEvents<
     RowDataType extends object = AnyObject,
     FiltersDataType extends object = AnyObject

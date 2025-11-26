@@ -2,7 +2,7 @@ import React from 'react'
 import DataGridItemsCount from './DataGridItemsCount'
 import DataGridPagination from './DataGridPagination'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFooterProps} from '../../types/DataGrid'
+import {DataGridFooterProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import DataGridFooterWrapper from './DataGridFooterWrapper'
 
 // Подвал таблицы с данными.

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, {useLayoutEffect, useMemo, useRef} from 'react'
-import {ComponentPropsWithModifiableTag} from '../types/Common'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../helpers/withStable'
 import {getCssTransitionDuration} from '../helpers/getCssTransitionDuration'
 

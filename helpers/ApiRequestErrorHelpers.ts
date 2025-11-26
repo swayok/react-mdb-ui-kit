@@ -1,9 +1,9 @@
 import {HtmlErrorResponseData, OtherErrorResponseData} from '../services/ApiRequestService'
-import {HttpErrorsTranslations} from '../types/Translations'
+import {HttpErrorsTranslations} from 'swayok-react-mdb-ui-kit/types/Translations'
 import {NavigationService} from '../services/NavigationService'
 import {ToastService} from '../services/ToastService'
 import {ApiError, ApiResponse, ValidationErrorsResponseData} from '../services/ApiRequestService'
-import {AnyObject, ApiResponseData} from '../types/Common'
+import {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export const TimeoutErrorHttpCode: number = 408
 export const ValidationErrorHttpCode: number = 422

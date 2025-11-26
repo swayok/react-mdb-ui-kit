@@ -2,7 +2,7 @@ import React, {CSSProperties} from 'react'
 import Icon, {AppIconProps} from './Icon'
 import clsx from 'clsx'
 import {TooltipProps} from './Tooltip'
-import {TextColors} from '../types/Common'
+import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../helpers/withStable'
 
 export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {

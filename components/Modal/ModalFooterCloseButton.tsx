@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button'
 import clsx from 'clsx'
-import {ModalFooterCloseButtonProps} from '../../types/Modals'
+import {ModalFooterCloseButtonProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 import withStable from '../../helpers/withStable'
 
 // Кнопка закрытия модального окна для ModalFooter.

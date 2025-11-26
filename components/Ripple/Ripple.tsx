@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, RefObject, useCallback, useEffect, useRef, useState} from 'react'
 import RippleWave from './RippleWave'
-import {ButtonColors, ReactComponentOrTagName} from '../../types/Common'
+import {ButtonColors, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface RippleProps extends AllHTMLAttributes<HTMLElement> {
     rippleUnbound?: boolean;

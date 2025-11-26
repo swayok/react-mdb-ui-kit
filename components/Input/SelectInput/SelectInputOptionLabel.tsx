@@ -1,5 +1,5 @@
 import React from 'react'
-import {AnyObject, FormSelectOptionOrGroup} from '../../../types/Common'
+import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
 import HtmlContent from '../../../components/HtmlContent'
 import {SelectInputProps} from './SelectInput'
 

@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, CSSProperties, useCallback, useEffect, useId} from 'react'
-import {CheckboxColors} from '../../types/Common'
+import {CheckboxColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import withStable from '../../helpers/withStable'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {ReactComponentOrTagName} from '../../types/Common'
+import {ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 import HtmlContent from '../HtmlContent'
 import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 

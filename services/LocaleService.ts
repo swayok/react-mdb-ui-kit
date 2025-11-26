@@ -1,9 +1,9 @@
 import {
     AnyObject,
     FormSelectOption,
-    FormSelectOptionsList,
-} from '../types/Common'
-import {BasicLanguageConfig, BasicRegionConfig} from '../types/Locale'
+    FormSelectOptionsList, PartialRecord,
+} from 'swayok-react-mdb-ui-kit/types/Common'
+import {BasicLanguageConfig, BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import LanguagesManager from '../helpers/LanguagesManager'
 import RegionsManager from '../helpers/RegionsManager'
 import NumbersService from '../services/NumbersService'
@@ -18,22 +18,22 @@ export class LocaleService<
 > {
 
     // Менеджер языков.
-    readonly languagesManager: LanguagesManager<LanguageConfig, Translations, LanguageCode>
+    readonly languagesManager: LanguagesManager<LanguageCode, LanguageConfig, Translations>
     // Менеджер регионов.
-    readonly regionsManager: RegionsManager<RegionConfig, RegionCode>
+    readonly regionsManager: RegionsManager<RegionCode, RegionConfig>
 
     // Конструктор.
     constructor(
-        languages: AnyObject<LanguageConfig, LanguageCode>,
+        languages: PartialRecord<LanguageCode, LanguageConfig>,
         defaultLanguage: LanguageConfig,
-        regions: AnyObject<RegionConfig, RegionCode>,
+        regions: PartialRecord<RegionCode, RegionConfig>,
         defaultRegion: RegionConfig
     ) {
-        this.languagesManager = new LanguagesManager<LanguageConfig, Translations, LanguageCode>(
+        this.languagesManager = new LanguagesManager<LanguageCode, LanguageConfig, Translations>(
             languages,
             defaultLanguage
         )
-        this.regionsManager = new RegionsManager<RegionConfig, RegionCode>(
+        this.regionsManager = new RegionsManager<RegionCode, RegionConfig>(
             regions,
             defaultRegion
         )

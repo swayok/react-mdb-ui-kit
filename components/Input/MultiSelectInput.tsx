@@ -1,8 +1,8 @@
 import React, {HTMLProps} from 'react'
 import clsx from 'clsx'
 import {IconProps} from '../MDIIcon'
-import {AnyObject, FormSelectOptionOrGroup} from '../../types/Common'
-import {DropdownItemProps} from '../Dropdown/DropdownTypes'
+import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import Icon from '../Icon'
 import {
     mdiCheckboxBlankCircleOutline,
@@ -15,7 +15,7 @@ import {
     FormSelectOptionGroup,
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
-} from '../../types/Common'
+} from 'swayok-react-mdb-ui-kit/types/Common'
 import SelectInputBasic, {SelectInputBasicProps} from './SelectInput/SelectInputBasic'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownHeader} from '../Dropdown/DropdownHeader'

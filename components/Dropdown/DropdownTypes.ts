@@ -1,8 +1,8 @@
-import {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
-import {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
-import {Offset, UsePopperOptions} from '@restart/ui/usePopper'
-import React, {HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
-import {AnyRefObject, ComponentPropsWithModifiableTag, ReactComponentOrTagName} from '../../types/Common'
+import type {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
+import type {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
+import type {Offset, UsePopperOptions} from '@restart/ui/usePopper'
+import type {ComponentProps, HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
+import type {AnyRefObject, ComponentPropsWithModifiableTag, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface DropdownContextProps {
     align?: DropdownAlign
@@ -55,11 +55,11 @@ export interface DropdownProps extends Omit<
     /**
      * A callback fired when a DropdownItem has been selected.
      */
-    onSelect?: SelectCallback
+    onSelect?: (eventKey: string | null, e: SyntheticEvent<unknown>) => void
 }
 
 // API выпадающего меню.
-interface DropdownApi {
+export interface DropdownApi {
     toggle: (nextShow: boolean, meta?: DropdownToggleEventMetadata) => void
 }
 
@@ -103,7 +103,7 @@ export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
 
 export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
     tag?: ReactComponentOrTagName
-    LinkComponent?: React.ComponentProps
+    LinkComponent?: ComponentProps<any>
     target?: HTMLAttributeAnchorTarget
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean

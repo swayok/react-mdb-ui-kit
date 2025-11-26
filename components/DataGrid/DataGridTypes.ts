@@ -1,5 +1,5 @@
-import {AnyObject, FormSelectOption, TableHighlightColors} from './Common'
-import React, {CSSProperties, HTMLAttributes, TableHTMLAttributes} from 'react'
+import type {AnyObject, FormSelectOption, TableHighlightColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import type {CSSProperties, HTMLAttributes, ReactElement, ReactNode, TableHTMLAttributes, TdHTMLAttributes} from 'react'
 
 // Строки локализации.
 export interface DataGridTranslations {
@@ -48,7 +48,7 @@ export interface DataGridContextProps<
 
     filters: FiltersDataType
     defaultFilters: FiltersDataType
-    applyFilters: (filters: FiltersDataType, resetOffset: boolean = false) => void
+    applyFilters: (filters: FiltersDataType, resetOffset?: boolean) => void
 
     unfilteredRowsCount: number
 
@@ -73,7 +73,7 @@ export interface DataGridContextProps<
     setOrder: (
         column: string,
         direction: DataGridOrderingDirection,
-        resetOffset: boolean = false,
+        resetOffset?: boolean,
         valuesType?: DataGridOrderByValuesType,
     ) => void
 }
@@ -83,7 +83,7 @@ export interface DataGridProps<
     RowDataType extends object,
     FiltersDataType extends object
 > {
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
 
     translations?: DataGridTranslations
 
@@ -121,14 +121,14 @@ export interface DataGridOrdering {
 // Свойства для стандартной разметки таблицы с данными.
 export interface DataGridDefaultLayoutProps<RowDataType extends object = AnyObject> {
     // Панель фильтрации.
-    filtersPanel?: React.ReactElement | (() => React.ReactElement)
+    filtersPanel?: ReactElement | (() => ReactElement)
     // Дополнительные элементы, выводимые перед таблицей и панелью фильтрации.
     // Свойство нужно для того, чтобы не сломать прокрутку таблицы в режиме
     // заполнения таблицей свободного места (fill, inline).
-    prepend?: React.ReactElement | (() => React.ReactElement)
+    prepend?: ReactElement | (() => ReactElement)
     // Дополнительные элементы, выводимые после таблицы и подвала таблицы (пагинации).
     // Свойство нужно по той же причине, что и prepend.
-    append?: React.ReactElement | (() => React.ReactElement)
+    append?: ReactElement | (() => ReactElement)
     // Настройка таблицы.
     tableProps?: Partial<Omit<
         DataGridTableProps<RowDataType>,
@@ -245,7 +245,7 @@ export interface DataGridFooterProps extends Omit<
 
 // Свойства обертки для одного заголовка колонки таблицы (<th>).
 export interface DataGridHeaderWrapperProps<OrderByOptions extends string = string> {
-    children?: React.ReactNode | React.ReactNode[]
+    children?: ReactNode | ReactNode[]
     nowrap?: boolean
     sortable?: OrderByOptions | null | false
     resizable?: boolean
@@ -271,7 +271,7 @@ export interface DataGridHeaderProps<
 
 // Свойства заголовков колонок таблицы (<thead> -> <tr> -> <DataGridHeader>+).
 export interface DataGridHeadersProps {
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
     hidden?: boolean
     sticky?: boolean
 }
@@ -333,7 +333,7 @@ export interface DataGridRowProps extends HTMLAttributes<HTMLTableRowElement> {
     highlight?: TableHighlightColors
 }
 
-export interface DataGridCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
+export interface DataGridCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     highlight?: TableHighlightColors
 }
 
@@ -354,16 +354,16 @@ export interface DataGridTableProps<
     wrapperStyle?: CSSProperties
     verticalAlign?: 'top' | 'middle' | 'bottom'
 
-    renderHeaders: React.ReactElement | (() => React.ReactElement)
+    renderHeaders: ReactElement | (() => ReactElement)
     renderRow: (
         rowData: Readonly<RowDataType>,
         index: number,
         rows: readonly RowDataType[],
         context: DataGridContextProps<RowDataType>
-    ) => React.ReactElement | React.ReactElement[]
+    ) => ReactElement | ReactElement[]
     renderTotalsRow?: (
         rows: readonly RowDataType[],
         context: DataGridContextProps<RowDataType>
-    ) => React.ReactElement | React.ReactElement[]
-    noItemsMessage?: string | React.ReactElement
+    ) => ReactElement | ReactElement[]
+    noItemsMessage?: string | ReactElement
 }

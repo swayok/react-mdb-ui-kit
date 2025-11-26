@@ -1,4 +1,4 @@
-import {UILayout} from '../types/Common'
+import {UILayout} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export default function detectUiLayout(): UILayout {
     let layout: UILayout

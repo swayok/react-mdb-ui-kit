@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {ReactNode} from 'react'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface ReusableSvgRepositoryConfig {
     containerClassName?: string
@@ -38,8 +38,8 @@ export class ReusableSvgRepository {
     ): ReactNode | ReactNode[] {
         const reusableId = this.getSvgId(name)
         if (name in this.svgElements) {
-            return this.svgElements[name].uid === uid
-                ? this.svgElements[name].children
+            return this.svgElements[name]!.uid === uid
+                ? this.svgElements[name]!.children
                 : <use href={'#' + reusableId} />
         }
         // Запоминаем сразу uid, чтобы в дальнейшем для этого uid отдавать результат.

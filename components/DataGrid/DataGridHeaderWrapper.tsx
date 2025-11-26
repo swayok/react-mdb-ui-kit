@@ -1,7 +1,7 @@
 import React, {CSSProperties} from 'react'
 import clsx from 'clsx'
 import {normalizeDimensionForReactStyles, renderSortingIcon} from './dataGridHelpers'
-import {DataGridHeaderWrapperProps, DataGridOrderingDirection} from '../../types/DataGrid'
+import {DataGridHeaderWrapperProps, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import Ripple from '../Ripple/Ripple'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
 import withStable from '../../helpers/withStable'

@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import DataGridContext, {dataGridDefaultLimit, getDataGridContextDefaults} from './DataGridContext'
 import {normalizeOffset, reorderDataGridRows} from './dataGridHelpers'
-import {AnyObject} from '../../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {
     DataGridContextProps,
     DataGridOrderByValuesType,
     DataGridOrdering,
     DataGridOrderingDirection,
     DataGridProps,
-} from '../../types/DataGrid'
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Обертка таблицы с данными (настройка контекста).
 function DataGrid<

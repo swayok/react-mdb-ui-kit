@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
+import {ImagesCarouselModalProps} from 'swayok-react-mdb-ui-kit/components/Images/ImagesPreviewerTypes'
 import ModalContent from '../Modal/ModalContent'
 import ModalHeaderCloseButton from '../Modal/ModalHeaderCloseButton'
 import Modal from '../Modal/Modal'
 import withStable from '../../helpers/withStable'
 import FadeSwitch from '../FadeSwitch'
-import {ImagesCarouselModalProps} from '../../types/ImagesPreviewer'
 
 // Модальное окно просмотра списка картинок.
 function ImagesCarouselModal(props: ImagesCarouselModalProps) {

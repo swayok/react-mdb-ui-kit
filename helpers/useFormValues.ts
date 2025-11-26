@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import useInputErrorSetter from './useInputErrorSetter'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>

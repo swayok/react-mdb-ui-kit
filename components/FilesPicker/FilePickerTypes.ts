@@ -1,7 +1,7 @@
 import React, {AllHTMLAttributes} from 'react'
-import {ApiRequestMethod} from '../services/ApiRequestService'
-import {AnyObject, CssGridColumnsConfig} from './Common'
-import {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../helpers/FileAPI/FileAPI'
+import {ApiRequestMethod} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
+import {AnyObject, CssGridColumnsConfig} from 'swayok-react-mdb-ui-kit/types/Common'
+import {FileAPIImageFileInfo, FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
 
 // Рендерер предпросмотра файла.
 export type FilePickerContextMimeTypePreviewRenderer =
@@ -73,8 +73,8 @@ export interface FilePickerApi<T extends FilePickerFileInfo = FilePickerFileInfo
      */
     getFilesForUpload(
         detachInvalidFiles: boolean,
-        rejectIfNotAllFilesAreValid: boolean = false,
-        useUidAsFileName: boolean = false
+        rejectIfNotAllFilesAreValid?: boolean,
+        useUidAsFileName?: boolean
     ): Promise<FilePickerUploadInfo<T>[]>
 
     // Получить список корректных файлов.

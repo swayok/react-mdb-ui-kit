@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, useId} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../../types/Common'
+import {AnyObject, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import {findSelectedOption} from '../../helpers/findSelectedOption'
 import withStable from '../../helpers/withStable'
 

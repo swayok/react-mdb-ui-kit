@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React, {AllHTMLAttributes, useCallback, useEffect, useRef, useState} from 'react'
 import withStable from '../../helpers/withStable'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {ReactComponentOrTagName} from '../../types/Common'
+import {ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 import {TooltipProps} from '../Tooltip'
 import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {DataGridHeadersProps} from '../../types/DataGrid'
+import {DataGridHeadersProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Заголовки колонок таблицы (<thead> -> <tr> -> <DataGridHeader>+).
 function DataGridHeaders(props: DataGridHeadersProps) {

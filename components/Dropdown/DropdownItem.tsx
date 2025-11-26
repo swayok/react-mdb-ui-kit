@@ -4,8 +4,8 @@ import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
 import {Link, LinkProps} from 'react-router-dom'
 import {useDropdownContext} from './DropdownContext'
-import {AnyObject, ReactComponentOrTagName} from '../../types/Common'
-import {DropdownItemProps} from './DropdownTypes'
+import {AnyObject, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 
 // Элемент выпадающего меню.
 export function DropdownItem<

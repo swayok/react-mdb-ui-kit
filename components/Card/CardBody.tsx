@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag} from '../../types/Common'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export type CardBodyProps = ComponentPropsWithModifiableTag
 

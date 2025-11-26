@@ -4,7 +4,7 @@ import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import clsx from 'clsx'
 import React, {CSSProperties, RefObject, useEffect, useRef} from 'react'
 import warning from 'warning'
-import {AnyObject} from '../../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {useDropdownContext} from './DropdownContext'
 import {
     DropdownAlign,
@@ -12,7 +12,7 @@ import {
     DropdownDropDirection,
     DropdownMenuProps,
     DropdownResponsiveAlign,
-} from './DropdownTypes'
+} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 // Выпадающее меню (отображение).

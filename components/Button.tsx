@@ -1,6 +1,6 @@
 import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-import {AnyObject, ButtonColors, ReactComponentOrTagName} from '../types/Common'
+import {AnyObject, ButtonColors, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 import Ripple, {RippleProps} from './Ripple/Ripple'
 import {Link, LinkProps} from 'react-router-dom'
 import withStable from '../helpers/withStable'

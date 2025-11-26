@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {TabSheetContextProps} from '../../types/TabSheet'
+import {TabSheetContextProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 
 // Контекст для компонентов Tabsheet.
 const TabSheetContextInstance = React.createContext<TabSheetContextProps>({

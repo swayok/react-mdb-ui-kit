@@ -6,7 +6,7 @@ import DataGridPagination from '../DataGrid/DataGridPagination'
 import Icon from '../Icon'
 import {mdiRefresh} from '@mdi/js'
 import DataGridFooterWrapper from '../DataGrid/DataGridFooterWrapper'
-import {AsyncDataGridFooterProps} from '../../types/AsyncDataGrid'
+import {AsyncDataGridFooterProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 
 // Подвал таблицы с данными.
 // Слева:

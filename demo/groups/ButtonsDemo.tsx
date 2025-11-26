@@ -3,7 +3,7 @@ import React from 'react'
 import Button from '../../components/Button'
 import Icon from '../../components/Icon'
 import SectionDivider from '../../components/SectionDivider'
-import {ButtonColors} from '../../types/Common'
+import {ButtonColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export default function ButtonsDemo() {
 

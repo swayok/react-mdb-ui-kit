@@ -1,7 +1,7 @@
+import {AsyncDataGridRows} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 import {ApiRequestService} from '../../services/ApiRequestService'
-import {AnyObject} from '../../types/Common'
-import {DataGridOrderingDirection} from '../../types/DataGrid'
-import {AsyncDataGridRows} from '../../types/AsyncDataGrid'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Имя ключа, используемого для отправки фильтров в API.
 export const asyncDataGridApiFiltersKey = 'filters'

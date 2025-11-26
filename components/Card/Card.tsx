@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {BackgroundColors, BorderColors, ComponentPropsWithModifiableTag} from '../../types/Common'
+import {BackgroundColors, BorderColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface CardProps extends ComponentPropsWithModifiableTag {
     // толщина границы: 0, 1, 2, 3, 4, 5

@@ -2,14 +2,15 @@ import useEventCallback from '@restart/hooks/useEventCallback'
 import BaseDropdown from '@restart/ui/Dropdown'
 import clsx from 'clsx'
 import React, {useImperativeHandle, useMemo, useState} from 'react'
+import {useUncontrolled} from 'uncontrollable'
+import {DropdownContext} from './DropdownContext'
 import {
     DropdownApi,
     DropdownContextProps,
+    DropdownMenuOffset,
+    DropdownProps,
     DropdownToggleEventMetadata,
 } from './DropdownTypes'
-import {useUncontrolled} from 'uncontrollable'
-import {DropdownContext} from './DropdownContext'
-import {DropdownMenuOffset, DropdownProps} from './DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 export function Dropdown(props: DropdownProps) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {TabSheetHeaderProps} from '../../types/TabSheet'
+import {TabSheetHeaderProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import CardHeader from '../Card/CardHeader'
 import clsx from 'clsx'
 

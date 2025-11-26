@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ModalTitleProps} from '../../types/Modals'
+import {ModalTitleProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Заголовок модального окна.
 function ModalTitle(

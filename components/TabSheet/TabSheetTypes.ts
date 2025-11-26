@@ -1,6 +1,6 @@
-import React, {AllHTMLAttributes, ComponentType, ReactNode} from 'react'
-import {ButtonColors, ComponentPropsWithModifiableTag} from './Common'
-import {RippleProps} from '../components/Ripple/Ripple'
+import type {MouseEvent, AllHTMLAttributes, ComponentType, ReactNode} from 'react'
+import type {ButtonColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import type {RippleProps} from 'swayok-react-mdb-ui-kit/components/Ripple/Ripple'
 
 // Свойства контекста.
 export interface TabSheetContextProps<TabName extends string = string> {
@@ -35,9 +35,9 @@ export interface TabSheetHeaderProps extends ComponentPropsWithModifiableTag {
 // Свойства кнопки переключения на вкладку.
 export interface TabSheetTabButtonProps<
     TabName extends string = string
-> extends AllHTMLAttributes<HTMLLIElement> {
+> extends Omit<AllHTMLAttributes<HTMLLIElement>, 'onClick'> {
     name: TabName
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => void
     buttonProps?: Omit<AllHTMLAttributes<HTMLButtonElement>, 'role' | 'aria-selected' | 'type' | 'onClick'>
     ripple?: ButtonColors | RippleProps
     noRipple?: boolean

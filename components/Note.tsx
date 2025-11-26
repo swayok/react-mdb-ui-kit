@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag, NoteColors} from '../types/Common'
+import {ComponentPropsWithModifiableTag, NoteColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface NoteProps extends ComponentPropsWithModifiableTag {
     color?: NoteColors,

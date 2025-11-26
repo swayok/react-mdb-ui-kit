@@ -1,4 +1,4 @@
-import {DropdownDropDirection} from './DropdownTypes'
+import {DropdownDropDirection} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import {Placement} from '@popperjs/core'
 
 export function getDropdownMenuPlacement(

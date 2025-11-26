@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFiltersPanelButtonsProps} from '../../types/DataGrid'
+import {DataGridFiltersPanelButtonsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import clsx from 'clsx'
 import IconButton from '../IconButton'
 import {mdiCheck, mdiClose} from '@mdi/js'

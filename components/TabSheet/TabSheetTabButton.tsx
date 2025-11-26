@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react'
-import {TabSheetTabButtonProps} from '../../types/TabSheet'
+import {TabSheetTabButtonProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import clsx from 'clsx'
 import {useTabSheetContext} from './TabSheetContext'
 import withStable from '../../helpers/withStable'

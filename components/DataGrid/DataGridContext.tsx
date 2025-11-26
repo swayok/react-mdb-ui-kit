@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
-import {AnyObject} from '../../types/Common'
-import {DataGridContextProps, DataGridTranslations} from '../../types/DataGrid'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridContextProps, DataGridTranslations} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Лимиты количества строк в таблице.
 export const dataGridDefaultLimits: DataGridContextProps['limits'] = [10, 20, 50]

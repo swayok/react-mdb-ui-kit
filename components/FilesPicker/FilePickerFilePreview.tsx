@@ -10,7 +10,7 @@ import {
     FilePickerFilePreviewProps,
     FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
-} from '../../types/FilePicker'
+} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import Card from '../Card/Card'
 import CardBody from '../Card/CardBody'
 import Icon from '../Icon'

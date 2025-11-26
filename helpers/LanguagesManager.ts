@@ -1,33 +1,33 @@
-import {BasicLanguageConfig} from '../types/Locale'
-import {AnyObject, FormSelectOption, FormSelectOptionsList} from '../types/Common'
+import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+import {AnyObject, FormSelectOption, FormSelectOptionsList, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DateTimeService} from '../services/DateTimeService'
 import NumbersService from '../services/NumbersService'
 
-// Автоматически определенная локаль.
+// Автоматически определенный язык.
 let detectedLanguage: BasicLanguageConfig | undefined
 
-// Менеджер локализаций (определение, хранение, загрузка, изменение).
+// Менеджер локализаций (определение, хранение, загрузка словарей, изменение).
 export default class LanguagesManager<
-    LanguageConfigType extends BasicLanguageConfig = BasicLanguageConfig,
-    DictionaryType extends object = AnyObject,
     LanguageCode extends string = string,
+    LanguageConfigType extends BasicLanguageConfig<LanguageCode> = BasicLanguageConfig<LanguageCode>,
+    DictionaryType extends object = AnyObject,
 > {
-    // Имя URL Query аргумента для задания новой локали.
+    // Имя URL Query аргумента для задания нового языка.
     private static readonly defaultUrlQueryArgName: string = 'lang'
-    // Список доступных локалей.
-    private readonly languages: AnyObject<LanguageConfigType, LanguageCode>
-    // Локаль по умолчанию.
+    // Список доступных языков.
+    private readonly languages: PartialRecord<LanguageCode, LanguageConfigType>
+    // Язык по умолчанию.
     private readonly defaultLanguage: LanguageConfigType
 
-    // Загруженные локали (строки).
-    private loadedTranslations: AnyObject<DictionaryType, LanguageCode> = {}
+    // Загруженные языки (строки).
+    private loadedTranslations: PartialRecord<LanguageCode, DictionaryType> = {}
 
-    // Основная локаль.
+    // Основной язык.
     private primaryLanguage: LanguageConfigType
-    // Строки для основной локали.
+    // Словарь для основного языка.
     private translations?: DictionaryType
 
-    // Список обработчиков изменения строк локали (Hot Module Reload).
+    // Список обработчиков изменения словаря для языка (Hot Module Reload).
     private languageReloadCallbacks: AnyObject<() => void> = {}
 
     // Имя URL Query аргумента для изменения языка интерфейса.
@@ -39,7 +39,7 @@ export default class LanguagesManager<
 
     // Конструктор.
     constructor(
-        languages: AnyObject<LanguageConfigType, LanguageCode>,
+        languages: PartialRecord<LanguageCode, LanguageConfigType>,
         defaultLanguage: LanguageConfigType
     ) {
         this.languages = languages
@@ -47,27 +47,27 @@ export default class LanguagesManager<
         this.primaryLanguage = defaultLanguage
     }
 
-    // Список локалей.
-    getLanguages(): AnyObject<LanguageConfigType, LanguageCode> {
+    // Список языков.
+    getLanguages(): PartialRecord<LanguageCode, LanguageConfigType> {
         return this.languages
     }
 
-    // Локаль по умолчанию.
+    // Язык по умолчанию.
     getDefaultLanguage(): LanguageConfigType {
         return this.defaultLanguage
     }
 
     // Список загруженных словарей.
-    getLoadedTranslations(): AnyObject<DictionaryType, LanguageCode> {
+    getLoadedTranslations(): PartialRecord<LanguageCode, DictionaryType> {
         return this.loadedTranslations
     }
 
-    // Текущая локаль.
+    // Текущий язык.
     getPrimaryLanguage(): LanguageConfigType {
         return this.primaryLanguage
     }
 
-    // Словарь для текущей локали.
+    // Словарь для текущего языка.
     getTranslations(): DictionaryType {
         return this.translations!
     }
@@ -76,7 +76,7 @@ export default class LanguagesManager<
     getLanguagesListAsOptions(): FormSelectOptionsList<LanguageCode, LanguageConfigType> {
         const ret: FormSelectOption<LanguageCode, LanguageConfigType>[] = []
         for (const key in this.languages) {
-            const config: LanguageConfigType = this.languages[key]
+            const config: LanguageConfigType = this.languages[key]!
             ret.push({
                 value: config.language as LanguageCode,
                 label: config.label,
@@ -86,7 +86,7 @@ export default class LanguagesManager<
         return ret
     }
 
-    // Определение локали разными способами.
+    // Определение языка разными способами.
     detectLanguage(): LanguageConfigType {
         if (detectedLanguage) {
             return detectedLanguage as LanguageConfigType
@@ -99,7 +99,7 @@ export default class LanguagesManager<
             detectedLanguage = globalConfigLanguage
             return globalConfigLanguage
         }
-        // Поискать подходящую локаль среди языков браузера.
+        // Поискать подходящий язык среди языков браузера.
         const languages = this.getLanguagesFromUserAgent()
         for (const item of languages) {
             const language: LanguageConfigType | null = this.findLanguage(item)
@@ -107,30 +107,30 @@ export default class LanguagesManager<
                 return detectedLanguage = language
             }
         }
-        // Локали не найдено - используем локаль по умолчанию.
+        // Язык не найден - используем язык по умолчанию.
         return detectedLanguage = this.defaultLanguage
     }
 
-    // Поиск поддерживаемой локали по коду или языку.
+    // Поиск поддерживаемого языка по коду или языку.
     findLanguage(languageOrLocale: string | null): LanguageConfigType | null {
         if (!languageOrLocale) {
             return null
         }
         for (const key in this.languages) {
-            const language = this.languages[key]
-            if (this.languages[key].variations.includes(languageOrLocale.toLowerCase())) {
+            const language = this.languages[key]!
+            if (language.variations.includes(languageOrLocale.toLowerCase())) {
                 return language
             }
         }
         return null
     }
 
-    // Поиск поддерживаемой локали по коду или языку или возврат локали по умолчанию.
+    // Поиск поддерживаемого язык по коду или языку или возврат языка по умолчанию.
     findLanguageOrDefault(languageOrLocale: string | null): LanguageConfigType {
         if (languageOrLocale) {
             for (const key in this.languages) {
-                const language = this.languages[key]
-                if (this.languages[key].variations.includes(languageOrLocale.toLowerCase())) {
+                const language = this.languages[key]!
+                if (language.variations.includes(languageOrLocale.toLowerCase())) {
                     return language
                 }
             }
@@ -138,39 +138,39 @@ export default class LanguagesManager<
         return this.getDefaultLanguage()
     }
 
-    // Установка и настройка основной локали. Использовать только через loadTranslations!
+    // Установка и настройка основного языка. Использовать только через loadTranslations!
     private setPrimaryLanguage(config: LanguageConfigType): void {
         this.primaryLanguage = config
-        this.translations = this.loadedTranslations[config.language]
+        this.translations = this.loadedTranslations[config.language as LanguageCode]
         window.document.documentElement.lang = config.language
         // Меняем язык форматирования чисел.
         NumbersService.setLanguage(config.language)
-        // Настройка локали для сервиса работы с датой и временем.
+        // Настройка языка для сервиса работы с датой и временем.
         DateTimeService.setDefaultLanguageFromConfig(config)
     }
 
-    // Загрузка строк для локали (асинхронная).
+    // Загрузка строк для языка (асинхронная).
     async loadTranslations(
         config: LanguageConfigType,
         useAsPrimary: boolean,
         reload: boolean = false
     ): Promise<DictionaryType> {
         console.log('[LanguagesManager] Load translations => ' + config.language)
-        if (!this.loadedTranslations[config.language] || reload) {
+        if (reload || !this.loadedTranslations[config.language]) {
             this.loadedTranslations[config.language] = await config.loader() as DictionaryType
         }
         if (useAsPrimary) {
             this.setPrimaryLanguage(config)
         }
-        return this.loadedTranslations[config.language]
+        return this.loadedTranslations[config.language]!
     }
 
-    // Удалить словарь локали.
-    forgetTranslations(language: string): void {
-        delete this.loadedTranslations[language]
+    // Удалить словарь языка.
+    forgetTranslations(language: LanguageCode | string): void {
+        delete this.loadedTranslations[language as LanguageCode]
     }
 
-    // Регистрация обработчика обновления строк локали (только в режиме dev hot/watch).
+    // Регистрация обработчика обновления словаря для языка (только в режиме dev hot/watch).
     onLanguageReload(name: string, callback: () => void): void {
         this.languageReloadCallbacks[name] = callback
     }

@@ -4,7 +4,7 @@ import {useDropdownToggle} from '@restart/ui/DropdownToggle'
 import clsx from 'clsx'
 import React, {useContext} from 'react'
 import Button, {ButtonProps} from '../Button'
-import {DropdownToggleProps} from './DropdownTypes'
+import {DropdownToggleProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 
 export function DropdownToggle<
     T = ButtonProps

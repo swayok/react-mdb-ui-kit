@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {AllHTMLAttributes, CSSProperties} from 'react'
 import clsx from 'clsx'
-import {SvgIconInfo} from '../types/Common'
+import {SvgIconInfo} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface SvgIconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string;

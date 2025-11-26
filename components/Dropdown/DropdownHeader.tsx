@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {DropdownHeaderProps} from './DropdownTypes'
+import {DropdownHeaderProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 
 export function DropdownHeader(props: DropdownHeaderProps) {
 

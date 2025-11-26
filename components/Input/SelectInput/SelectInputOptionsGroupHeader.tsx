@@ -1,5 +1,5 @@
 import React from 'react'
-import {AnyObject, FormSelectOptionGroup} from '../../../types/Common'
+import {AnyObject, FormSelectOptionGroup} from 'swayok-react-mdb-ui-kit/types/Common'
 import {SelectInputProps} from './SelectInput'
 import clsx from 'clsx'
 import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'

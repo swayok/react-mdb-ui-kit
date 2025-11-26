@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AnyObject} from '../../types/Common'
-import {DataGridOrderingDirection} from '../../types/DataGrid'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
-import {AsyncDataGridStateForUrlQuery, AsyncDataGridUrlQueryManagerProps} from '../../types/AsyncDataGrid'
+import {AsyncDataGridStateForUrlQuery, AsyncDataGridUrlQueryManagerProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 
 // Хранение и восстановление состояния таблицы из URL query.
 function AsyncDataGridUrlQueryManager<

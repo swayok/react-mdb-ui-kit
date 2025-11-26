@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {TabSheetProps} from '../../types/TabSheet'
+import {TabSheetProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import Card from '../Card/Card'
 import TabSheetContext from './TabSheetContext'
 import TabSheetStateToUrlQueryHandler from './TabSheetStateToUrlQueryHandler'

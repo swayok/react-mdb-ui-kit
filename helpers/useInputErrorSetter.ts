@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction, useCallback, useRef} from 'react'
-import {AnyObject} from '../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Хук для создания функции, изменяющей ошибку в поле ввода.
 export default function useInputErrorSetter<

@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from '../../../types/Common'
+import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import clsx from 'clsx'
 import {SelectInputProps} from './SelectInput'
 import withStable from '../../../helpers/withStable'

@@ -1,33 +1,41 @@
-import React, {AllHTMLAttributes, HTMLProps} from 'react'
-import {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
-import * as LocaleTypes from './Locale'
-import * as Translations from './Translations'
+import type {AllHTMLAttributes, ComponentProps, ForwardedRef, HTMLProps, MutableRefObject, RefObject} from 'react'
+import type {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
 // Это удобно для абстрактных объектов получаемых извне и для подсказок в IDE.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/consistent-indexed-object-style
-export interface AnyObject<ValuesType = any, Keys = string> extends Record<
-    Keys extends string ? Keys | string : keyof Keys | string, ValuesType
+// @ts-ignore TS ругается на невозможность расширения интерфейса таким образом, но IDE отлично с этим работает.
+export interface AnyObject<ValuesType = any, Keys extends string | number | object = string> extends Record<
+    Keys extends string ? Keys | string : Keys extends number ? Keys : keyof Keys | string,
+    ValuesType
 > {
-    [key: string]: ValuesType;
+    [key: string]: ValuesType
 }
+
+// Объект, который может содержать любые ключи в виде интерфейса.
+export interface AnyObjectInterface<ValuesType = any> extends Partial<Record<string, ValuesType>> {}
+
+// Объект с опциональным наличием значения для всех ключей.
+export type PartialRecord<Keys extends number | string | symbol = string, ValuesType = any> = Partial<Record<Keys, ValuesType>>
 
 // Объект, в котором все ключи должны быть числами.
 // По сути - это массив, в котором индексы не упорядочены.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type NumericKeysObject<ValuesType = any> = Record<number, ValuesType>;
 
 // Ref любого вида.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyRefObject<RefType = any, ApiType = any> = React.RefObject<RefType & ApiType>
-    | React.MutableRefObject<RefType & ApiType>
-    | React.ForwardedRef<RefType & ApiType>
+export type AnyRefObject<RefType = any, ApiType = any> = RefObject<RefType & ApiType>
+    | MutableRefObject<RefType & ApiType>
+    | ForwardedRef<RefType & ApiType>
 
 /**
  * Базовый тип URL параметров для хука useParams<UrlParams>().
  */
 export type AnyUrlParams = Record<string, string | undefined>
+
+/**
+ * Базовый тип URL параметров для хука useParams<UrlParams>().
+ */
+export type AnyRouteParams = AnyUrlParams
 
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {
@@ -111,7 +119,7 @@ export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject> =
 
 // Свойство этого типа может быть React компонентом или реальным HTML тегом (строкой).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ReactComponentOrTagName = React.ComponentProps<any>
+export type ReactComponentOrTagName = ComponentProps<any>
 
 // Компонент имеет свойство tag, которое может быть React компонентом или реальным HTML тегом (строкой).
 export interface ComponentPropsWithModifiableTag extends AllHTMLAttributes<HTMLElement> {
@@ -140,30 +148,3 @@ export interface CssGridColumnsConfig {
     xl?: number,
     xxl?: number,
 }
-
-//
-// Deprecated!
-//
-
-/**
- * Переводы ошибок
- * @deprecated
- * Use import {HttpErrorsTranslations} from 'swayok-react-mdb-ui-kit/types/Translations'
- */
-export type HttpErrorsTranslations = Translations.HttpErrorsTranslations
-
-/**
- * Базовый набор настроек языка для LanguagesManager.
- * @see LanguagesManager
- * @deprecated
- * Use import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
- */
-export type BasicLanguageConfig = LocaleTypes.BasicLanguageConfig
-
-/**
- * Базовый набор настроек региона для RegionsManager.
- * @see RegionsManager
- * @deprecated
- * Use import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
- */
-export type BasicRegionConfig = LocaleTypes.BasicRegionConfig

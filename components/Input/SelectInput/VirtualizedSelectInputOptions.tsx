@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from '../../../types/Common'
+import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import {SelectInputProps} from './SelectInput'
 import withStable from '../../../helpers/withStable'
 import SelectInputOption from '../../../components/Input/SelectInput/SelectInputOption'

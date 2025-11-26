@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo} from 'react'
 import clsx from 'clsx'
-import {DropdownProps} from '../Dropdown/DropdownTypes'
-import {FormSelectOption} from '../../types/Common'
+import {DropdownProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridItemsCountProps} from '../../types/DataGrid'
+import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import withStable from '../../helpers/withStable'
 
 const dropdownProps: Partial<DropdownProps> = {

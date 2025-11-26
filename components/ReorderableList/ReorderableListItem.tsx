@@ -2,7 +2,7 @@ import React, {AllHTMLAttributes, useState} from 'react'
 import {useReorderableListContext} from './ReorderableListContext'
 import clsx from 'clsx'
 import ReorderableListItemContext, {getReorderableListItemContextDefaults} from './ReorderableListItemContext'
-import {ComponentPropsWithModifiableTag} from '../../types/Common'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface DragAndDropItemProps<PayloadType = unknown> extends Omit<ComponentPropsWithModifiableTag, 'draggable'> {
     position: number,

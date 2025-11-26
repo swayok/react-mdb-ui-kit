@@ -1,6 +1,6 @@
-import React, {AllHTMLAttributes} from 'react'
-import {ButtonProps} from '../components/Button'
-import {ComponentPropsWithModifiableTag} from './Common'
+import type {AllHTMLAttributes, ReactNode, RefObject} from 'react'
+import type {ButtonProps} from 'swayok-react-mdb-ui-kit/components/Button'
+import type {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Стандартная структура:
 // Modal
@@ -59,13 +59,13 @@ export interface ModalProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'siz
     // Если окно содержит вставку данных, которые нужно сначала получить извне,
     // то вместо использования children лучше использовать render,
     // чтобы не усложнять верстку проверками наличия данных.
-    render?: React.ReactNode | (() => React.ReactNode),
+    render?: ReactNode | (() => ReactNode),
     // Ожидается только 1 элемент внутри.
     // Обычно ModalContent.
     // Не используется, если задан render.
-    children?: React.ReactNode,
+    children?: ReactNode,
     // Ссылка на самый верхний элемент окна (содержит backdrop и само окно)
-    modalRef?: React.RefObject<HTMLDivElement>,
+    modalRef?: RefObject<HTMLDivElement>,
     // Контейнер модальных окон, по умолчанию: document.body.
     // Строка - CSS ID контейнера.
     container?: HTMLElement | string,
@@ -85,7 +85,7 @@ export interface ModalDialogProps extends Omit<AllHTMLAttributes<HTMLDivElement>
 
 export type ModalContentProps = AllHTMLAttributes<HTMLDivElement>
 
-export interface ModalHeaderProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface ModalHeaderProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'title'> {
     // Если задано, то автоматически добавляет компонент
     // ModalTitle с указанным title.
     title?: string | null,

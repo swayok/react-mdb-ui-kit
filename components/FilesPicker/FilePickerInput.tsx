@@ -6,10 +6,10 @@ import {
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerInputProps,
-} from '../../types/FilePicker'
+} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import ErrorBoundary from '../ErrorBoundary'
 import {ToastService} from '../../services/ToastService'
-import {AnyObject, MinMax} from '../../types/Common'
+import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
 import ReorderableList from '../ReorderableList/ReorderableList'
 import FilePickerHelpers from './FilePickerHelpers'
 

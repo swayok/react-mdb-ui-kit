@@ -6,7 +6,7 @@ import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import {DataGridPaginationPagesListProps} from '../../types/DataGrid'
+import {DataGridPaginationPagesListProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import withStable from '../../helpers/withStable'
 
 // Кнопка, открывающая выпадающее меню со списком номеров страниц

@@ -1,5 +1,5 @@
 import React from 'react'
-import {TextColors} from '../types/Common'
+import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import IconButton, {IconButtonProps} from './IconButton'
 import clsx from 'clsx'
 import {mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle} from '@mdi/js'

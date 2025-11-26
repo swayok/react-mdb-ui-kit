@@ -4,7 +4,7 @@ import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGrid
 import FilePickerContext from './FilePickerContext'
 import FilePickerFilePreview from './FilePickerFilePreview'
 import {ToastService} from '../../services/ToastService'
-import {FilePickerContextProps, FilePickerFileInfo, FilePickerPreviewsProps} from '../../types/FilePicker'
+import {FilePickerContextProps, FilePickerFileInfo, FilePickerPreviewsProps} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import Collapse from '../Collapse'
 import Icon from '../Icon'
 import {mdiPlus} from '@mdi/js'

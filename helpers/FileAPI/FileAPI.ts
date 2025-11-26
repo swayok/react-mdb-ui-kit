@@ -1,4 +1,4 @@
-import {AnyObject} from '../../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import ExifStatic from 'exif-js/exif.d'
 
 // Данные прикрепленного файла.

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {BackgroundColors, ComponentPropsWithModifiableTag} from '../types/Common'
+import {BackgroundColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface BadgeProps extends ComponentPropsWithModifiableTag {
     pill?: boolean,

@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo} from 'react'
-import {TabSheetStateToUrlQueryHandlerProps} from '../../types/TabSheet'
+import {TabSheetStateToUrlQueryHandlerProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import {useTabSheetContext} from './TabSheetContext'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
-import {AnyObject} from '../../types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Контроль сохранения и восстановления текущей вкладки из URL Query.
 function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerProps) {

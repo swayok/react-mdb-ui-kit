@@ -1,3 +1,6 @@
+import type {NumeralJSLocale} from 'numeral'
+import type {AnyObject} from './Common'
+
 /**
  * Настройки региона и языка приложения в window.localeConfig.
  *
@@ -28,16 +31,16 @@ export interface BasicLanguageConfig<
     RegionCode extends string = string,
 > {
     // Код языка локали: vi, ru, ...
-    language: LanguageCode;
+    language: LanguageCode
     // Код региона локали: vn, ru, ...
     // todo: remove BasicLanguageConfig.region
-    region: RegionCode,
+    region: RegionCode
     // Полный код локали: vi-VN, ru-RU, ...
-    full: string;
+    full: string
     // Название локали для выпадающего меню смены локали.
-    label: string;
+    label: string
     // Вариации локали в нижнем регистре.
-    variations: string[];
+    variations: string[]
     // Загрузчик словаря для приложения и всех сторонних пакетов (datetime и т.п.).
     // Должен вернуть словарь для приложения.
     // Примеры:
@@ -47,12 +50,12 @@ export interface BasicLanguageConfig<
     //     await import('dayjs/locale/en.js')
     //     return (await import('../locales/en')).default
     // }
-    loader: () => Promise<AnyObject>;
+    loader: () => Promise<AnyObject>
     // Настройки форматирования чисел.
     numeral: {
         // Настройки currency относятся к региону, а не к языку.
         localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>,
-    };
+    }
     // Настройки форматирования даты и времени.
     dateTime: {
         /**
@@ -63,7 +66,7 @@ export interface BasicLanguageConfig<
          * @see https://day.js.org/docs/en/display/format
          * @see https://day.js.org/docs/en/plugin/localized-format
          */
-        dateFormat?: 'L' | string,
+        dateFormat?: 'L' | string
     }
 }
 

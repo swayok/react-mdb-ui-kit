@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import FilePickerContext from './FilePickerContext'
-import {FilePickerContextProps} from '../../types/FilePicker'
-import {ComponentPropsWithModifiableTag} from '../../types/Common'
+import {FilePickerContextProps} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 
 type Props = ComponentPropsWithModifiableTag
 
