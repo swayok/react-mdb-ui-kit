@@ -77,7 +77,7 @@ export class ApiRequestService {
         url: string,
         searchParams: AnyObject = {},
         options: ApiRequestOptions = {},
-        abortController?: AbortController
+        abortController?: AbortController | null
     ): Promise<ApiResponse<T>> {
         return this.request<T>('get', url, searchParams, options, abortController)
     }
@@ -87,7 +87,7 @@ export class ApiRequestService {
         url: string,
         data?: object | FormData,
         options: ApiRequestOptions = {},
-        abortController?: AbortController
+        abortController?: AbortController | null
     ): Promise<ApiResponse<T>> {
         return this.request<T>('post', url, data, options, abortController)
     }
@@ -97,7 +97,7 @@ export class ApiRequestService {
         url: string,
         data?: AnyObject | FormData,
         options: ApiRequestOptions = {},
-        abortController?: AbortController
+        abortController?: AbortController | null
     ): Promise<ApiResponse<T>> {
         return this.request<T>('put', url, data, options, abortController)
     }
@@ -107,7 +107,7 @@ export class ApiRequestService {
         url: string,
         data?: AnyObject | FormData,
         options: ApiRequestOptions = {},
-        abortController?: AbortController
+        abortController?: AbortController | null
     ): Promise<ApiResponse<T>> {
         return this.request<T>('delete', url, data, options, abortController)
     }
@@ -132,7 +132,7 @@ export class ApiRequestService {
         url: string,
         data?: AnyObject | FormData,
         options: ApiRequestOptions = {},
-        abortController?: AbortController
+        abortController?: AbortController | null
     ): Promise<ApiResponse<T>> {
         return new Promise<ApiResponse<T>>((resolve, reject) => {
             const requestInit: RequestInit = {
@@ -234,7 +234,7 @@ export class ApiRequestService {
 
     // Создать и настроить сигнал отмены запроса.
     private static getAbortSignal(
-        abortController?: AbortController,
+        abortController?: AbortController | null,
         customTimeout?: ApiRequestOptions['timeout']
     ): AbortSignal {
         const timeout: number = customTimeout === false
