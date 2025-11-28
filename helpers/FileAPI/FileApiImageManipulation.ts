@@ -30,7 +30,7 @@ export const getImageResizer = async (): Promise<ImageBlobReduce> => {
 // Манипуляции выполняются библиотеками:
 // - https://github.com/nodeca/pica
 // - https://github.com/nodeca/image-blob-reduce (обертка поверх pica для input[type=file])
-export default class FileApiImageManipulation<FileType extends File = File> {
+export class FileApiImageManipulation<FileType extends File = File> {
     // Прикрепленный файл.
     private readonly file: File
 
@@ -38,11 +38,14 @@ export default class FileApiImageManipulation<FileType extends File = File> {
     private maxSize: number = 1920
 
     // Создание манипулятора.
-    constructor(file: FileType | FileApiImageManipulation) {
+    constructor(file: FileType | FileApiImageManipulation, maxSize?: number) {
         if (file instanceof FileApiImageManipulation) {
             this.file = file.getFile()
         } else {
             this.file = file
+        }
+        if (maxSize && maxSize > 0) {
+            this.maxSize = maxSize
         }
     }
 
@@ -90,3 +93,9 @@ export function canvasToJpegBlob(
 ): Promise<Blob> {
     return canvasToBlob(canvas, 'image/jpeg', quality)
 }
+
+/**
+ * @deprecated
+ * Use import {FileApiImageManipulation} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileApiImageManipulation'
+ */
+export default FileApiImageManipulation
