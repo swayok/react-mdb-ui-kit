@@ -12,7 +12,7 @@ type Props = {
 }
 
 // Анимированное отображение children (fade-in).
-function FadeIn(props: Props) {
+export function FadeIn(props: Props) {
 
     const containerRef = React.useRef<HTMLDivElement>(null)
 
@@ -50,4 +50,5 @@ function FadeIn(props: Props) {
     )
 }
 
-export default React.memo(FadeIn)
+/** @deprecated */
+export default FadeIn

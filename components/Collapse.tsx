@@ -1,28 +1,33 @@
 import clsx from 'clsx'
-import React, {useLayoutEffect, useMemo, useRef} from 'react'
+import {
+    RefObject,
+    useEffectEvent,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+} from 'react'
 import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../helpers/withStable'
 import {getCssTransitionDuration} from '../helpers/getCssTransitionDuration'
 
 export interface CollapseProps extends Omit<ComponentPropsWithModifiableTag, 'onTransitionEnd'> {
-    navbar?: boolean;
-    show: boolean;
+    navbar?: boolean
+    show: boolean
     // Использовать горизонтальное скрытие?
-    horizontal?: boolean;
+    horizontal?: boolean
     // Если true и show === true, то содержимое отображается без анимации открытия.
     // Если false и show === true, то содержимое отображается с анимацией открытия.
-    showImmediately?: boolean;
+    showImmediately?: boolean
     // Ссылка на контейнер компонента.
-    wrapperRef?: React.RefObject<HTMLElement>;
+    wrapperRef?: RefObject<HTMLElement>
     // Функция, вызываемая при завершении анимации.
-    onTransitionEnd?: (opened: boolean, ref: null | HTMLElement) => void;
+    onTransitionEnd?: (opened: boolean, ref: null | HTMLElement) => void
     // Добавляет CSS класс d-block чтобы компонент не скрывался через {display: 'none'}.
     // Может пригодится, если подряд расположено несколько Collapse компонентов.
-    alwaysMounted?: boolean;
+    alwaysMounted?: boolean
 }
 
 // Анимированное отображение данных (вертикальная/горизонтальная slide open/close анимация).
-function Collapse(props: CollapseProps) {
+export function Collapse(props: CollapseProps) {
     const {
         className,
         horizontal = false,
@@ -32,14 +37,14 @@ function Collapse(props: CollapseProps) {
         id,
         navbar,
         wrapperRef,
-        onTransitionEnd,
+        onTransitionEnd: propsOnTransitionEnd,
         alwaysMounted,
         tag: Tag = 'div',
         ...otherProps
     } = props
 
     const localRef = useRef<HTMLElement>(null)
-    const containerRef: React.RefObject<HTMLElement | null> = wrapperRef ?? localRef
+    const containerRef = wrapperRef ?? localRef
     const isRenderedOnce = useRef<boolean>(false)
     const cssProperty: 'width' | 'height' = horizontal ? 'width' : 'height'
 
@@ -47,6 +52,12 @@ function Collapse(props: CollapseProps) {
     const updateContentSize = (el: HTMLElement) => {
         el.style[cssProperty] = ((cssProperty === 'width' ? el.scrollWidth : el.scrollHeight) || '0') + 'px'
     }
+
+    const onTransitionEnd = useEffectEvent(
+        (opened: boolean, ref: null | HTMLElement) => {
+            propsOnTransitionEnd?.(opened, ref)
+        },
+    )
 
     // Подписываемся на отслеживание размеров содержимого.
     useLayoutEffect(() => {
@@ -91,11 +102,11 @@ function Collapse(props: CollapseProps) {
                 container.classList.add('closed')
                 container.classList.remove('opened')
             }
-            onTransitionEnd?.(show, container)
+            onTransitionEnd(show, container)
             return
         }
 
-        let timoutId: number | undefined = undefined
+        let timeoutId: number | undefined = undefined
 
         if (isFirstRender) {
             container.style[cssProperty] = '0'
@@ -117,10 +128,10 @@ function Collapse(props: CollapseProps) {
                 container.classList.remove('closed')
                 container.classList.add('transition', 'opened')
             }
-            timoutId = window.setTimeout(() => {
+            timeoutId = window.setTimeout(() => {
                 container.classList.remove('transition')
-                timoutId = undefined
-                onTransitionEnd?.(true, container)
+                timeoutId = undefined
+                onTransitionEnd(true, container)
             }, cssTransitionDuration + 10)
             // Нужно высоту менять после изменения container.classList, а это невозможно
             // сделать без тайм-аута.
@@ -135,10 +146,10 @@ function Collapse(props: CollapseProps) {
             } else {
                 container.classList.remove('opened')
                 container.classList.add('transition', 'closed')
-                timoutId = window.setTimeout(() => {
+                timeoutId = window.setTimeout(() => {
                     container.classList.remove('transition')
-                    timoutId = undefined
-                    onTransitionEnd?.(false, container)
+                    timeoutId = undefined
+                    onTransitionEnd(false, container)
                 }, cssTransitionDuration + 10)
             }
             // Нужно высоту менять после изменения container.classList, а это невозможно
@@ -149,7 +160,7 @@ function Collapse(props: CollapseProps) {
         }
 
         return () => {
-            clearTimeout(timoutId)
+            clearTimeout(timeoutId)
         }
     }, [show])
 
@@ -158,7 +169,7 @@ function Collapse(props: CollapseProps) {
         horizontal ? 'horizontal' : 'vertical',
         navbar ? 'navbar-collapse' : null,
         alwaysMounted ? 'd-block' : null,
-        className
+        className,
     ), [className, horizontal, navbar, alwaysMounted])
 
     return (
@@ -173,4 +184,5 @@ function Collapse(props: CollapseProps) {
     )
 }
 
-export default withStable<CollapseProps>(['onTransitionEnd'], Collapse)
+/** @deprecated */
+export default Collapse

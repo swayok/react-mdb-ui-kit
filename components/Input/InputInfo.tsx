@@ -1,7 +1,7 @@
 import React from 'react'
 import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 import clsx from 'clsx'
-import HtmlContent from '../HtmlContent'
+import {HtmlContent} from '../HtmlContent'
 
 interface PropsForHtml extends Omit<ComponentPropsWithModifiableTag, 'dangerouslySetInnerHTML'> {
     html: string;

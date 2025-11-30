@@ -25,7 +25,7 @@ const defaultOptions: SyncQueueOptions = {
 }
 
 // Синхронная очередь заданий.
-export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): SyncQueue {
+export function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): SyncQueue {
 
     const {
         shouldProcess,
@@ -95,3 +95,5 @@ export default function useSyncTaskQueue(params: SyncQueueOptions = defaultOptio
     }
 }
 
+/** @deprecated */
+export default useSyncTaskQueue

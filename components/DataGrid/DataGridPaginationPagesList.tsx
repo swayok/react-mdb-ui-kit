@@ -1,13 +1,13 @@
 import React from 'react'
 import clsx from 'clsx'
-import Icon from '../Icon'
+import {Icon} from '../Icon'
 import {mdiDotsHorizontal} from '@mdi/js'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DataGridPaginationPagesListProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Кнопка, открывающая выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.

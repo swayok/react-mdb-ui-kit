@@ -9,7 +9,7 @@ interface Props {
     single?: boolean
 }
 
-export default function TabContentForDemoTabsheet(props: Props) {
+export function TabContentForDemoTabsheet(props: Props) {
     return (
         <TabSheetTabContent
             name={props.name}

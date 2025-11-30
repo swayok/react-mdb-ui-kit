@@ -3,13 +3,13 @@ import TabSheet from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
-import ButtonsDemo from './groups/ButtonsDemo'
-import IconButtonsDemo from './groups/IconButtonsDemo'
-import LinksDemo from './groups/LinksDemo'
-import TabContentForDemoTabsheet from '../demo/TabContentForDemoTabsheet'
+import {ButtonsDemo} from './groups/ButtonsDemo'
+import {IconButtonsDemo} from './groups/IconButtonsDemo'
+import {LinksDemo} from './groups/LinksDemo'
+import {TabContentForDemoTabsheet} from './TabContentForDemoTabsheet'
 
 // Демонстрация ссылок и кнопок.
-export default function LinksAndButtonsDemo() {
+export function LinksAndButtonsDemo() {
 
     return (
         <TabSheet

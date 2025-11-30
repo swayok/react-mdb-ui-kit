@@ -17,7 +17,7 @@ export interface AsyncDataGridContextProps<
     validationErrors: AnyObject<string> | null
     preloaderProps?: Omit<
         AsyncDataGridLoadingProps,
-        'loading' | 'error' | 'onReload' | 'showContent'
+        'loading' | 'error' | 'onReload'
     >
     /**
      * Если true или string: использовать URL Query для хранения и восстановления состояния таблицы:

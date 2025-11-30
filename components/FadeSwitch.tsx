@@ -21,7 +21,7 @@ type Props = {
 }
 
 // Анимированная смена children.
-function FadeSwitch(props: Props) {
+export function FadeSwitch(props: Props) {
 
     const containerRef = React.useRef<HTMLDivElement>(null)
 
@@ -72,4 +72,5 @@ function FadeSwitch(props: Props) {
     )
 }
 
-export default React.memo(FadeSwitch)
+/** @deprecated */
+export default FadeSwitch

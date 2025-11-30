@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import WysiwygInput from '../../components/Input/WysiwygInput'
 
-export default function HtmlEditorsDemo() {
+export function HtmlEditorsDemo() {
 
     const [
         text,

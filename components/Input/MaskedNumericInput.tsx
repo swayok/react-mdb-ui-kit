@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import Input, {InputProps} from './Input'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 export interface MaskedNumericInputProps extends Omit<InputProps, 'onChange' | 'maxLength'> {
     // Шаблон значения.

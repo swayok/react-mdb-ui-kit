@@ -19,7 +19,7 @@ export interface TooltipProps extends Omit<ComponentPropsWithModifiableTag, 'tit
 }
 
 // Всплывающая подсказка.
-function Tooltip<PropsType>(props: TooltipProps & PropsType) {
+export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
 
     const {
         children,
@@ -241,4 +241,5 @@ function Tooltip<PropsType>(props: TooltipProps & PropsType) {
     )
 }
 
-export default React.memo(Tooltip) as typeof Tooltip
+/** @deprecated */
+export default Tooltip

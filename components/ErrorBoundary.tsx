@@ -1,7 +1,10 @@
-import React from 'react'
+import {
+    Component,
+    ReactNode,
+} from 'react'
 
 type Props = {
-    children: React.ReactNode | React.ReactNode[],
+    children: ReactNode | ReactNode[],
     silent?: boolean,
 };
 
@@ -12,7 +15,7 @@ type State = {
 // Ограничитель глубины отрабатывания ошибок в JS/JSX.
 // Если ошибка произошла внутри этого компонента, то отображается страница с ошибкой.
 // Ошибка так же не будет влиять на всё приложение (т.е. интерфейс вне компонента продолжит работать вместо полного отказа).
-export default class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
 
     state: State = {
         hasError: false,
@@ -50,3 +53,6 @@ export default class ErrorBoundary extends React.Component<Props, State> {
         return this.props.children
     }
 }
+
+/** @deprecated */
+export default ErrorBoundary

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import RatingStars from '../../components/RatingStars'
+import {RatingStars} from '../../components/RatingStars'
 
-export default function RatingStarsDemo() {
+export function RatingStarsDemo() {
 
     const [
         rating,

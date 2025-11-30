@@ -1,9 +1,8 @@
 import React from 'react'
 import {IconProps} from './MDIIcon'
-import Icon from './Icon'
+import {Icon} from './Icon'
 import clsx from 'clsx'
 import {mdiStar, mdiStarHalfFull, mdiStarOutline} from '@mdi/js'
-import withStable from '../helpers/withStable'
 
 interface Props {
     rating: number
@@ -15,7 +14,7 @@ interface Props {
 }
 
 // Отображает рейтинг в виде набора из 5 иконок-звезд.
-function RatingStars(props: Props) {
+export function RatingStars(props: Props) {
 
     const {
         rating,
@@ -49,7 +48,7 @@ function RatingStars(props: Props) {
                     rating >= i ? 'active' : '',
                     i === 1 ? '' : 'ms-1'
                 )}
-                onClick={() => props.onClick?.(i)}
+                onClick={() => onClick?.(i)}
             >
                 <Icon
                     path={icon}
@@ -74,4 +73,5 @@ function RatingStars(props: Props) {
     )
 }
 
-export default withStable<Props>(['onClick'], RatingStars)
+/** @deprecated */
+export default RatingStars

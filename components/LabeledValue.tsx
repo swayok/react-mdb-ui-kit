@@ -18,7 +18,7 @@ interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
 }
 
 // Блок вида "Название: значение" ({label}: {value})
-export default function LabeledValue(props: Props) {
+export function LabeledValue(props: Props) {
 
     const {
         label,
@@ -58,3 +58,6 @@ export default function LabeledValue(props: Props) {
         </Tag>
     )
 }
+
+/** @deprecated */
+export default LabeledValue

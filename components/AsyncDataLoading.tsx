@@ -1,9 +1,8 @@
 import React, {CSSProperties} from 'react'
 import clsx from 'clsx'
-import AsyncDataLoadingError from './AsyncDataLoadingError'
-import Loading from './Loading'
-import withStable from '../helpers/withStable'
-import FadeSwitch from './FadeSwitch'
+import {AsyncDataLoadingError} from './AsyncDataLoadingError'
+import {Loading} from './Loading'
+import {FadeSwitch} from './FadeSwitch'
 
 export interface AsyncDataLoadingProps<DataType = undefined> {
     loading: boolean | null
@@ -24,7 +23,7 @@ export interface AsyncDataLoadingProps<DataType = undefined> {
 // Показывает индикатор загрузки данных пока не загрузятся данные.
 // Если загрузка не удалась (error), то отображает ошибку (errorMessage)
 // с кнопкой перезагрузки данных (retryButtonTitle, onReload).
-function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<DataType>) {
+export function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<DataType>) {
 
     // Можно ли показывать контент?
     const canShowContent = (): boolean => props.showContent ?? props.showContent === undefined
@@ -76,4 +75,5 @@ function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<Dat
     )
 }
 
-export default withStable<AsyncDataLoadingProps>(['onReload'], AsyncDataLoading) as typeof AsyncDataLoading
+/** @deprecated */
+export default AsyncDataLoading

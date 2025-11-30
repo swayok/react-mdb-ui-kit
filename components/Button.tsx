@@ -1,9 +1,15 @@
-import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-import {AnyObject, ButtonColors, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
+import React, {AllHTMLAttributes} from 'react'
+import {
+    Link,
+    LinkProps,
+} from 'react-router-dom'
+import {
+    AnyObject,
+    ButtonColors,
+    ReactComponentOrTagName,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 import Ripple, {RippleProps} from './Ripple/Ripple'
-import {Link, LinkProps} from 'react-router-dom'
-import withStable from '../helpers/withStable'
 
 export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
     LinkComponent?: React.ComponentType,
@@ -29,7 +35,7 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
 }
 
 // Стилизованная кнопка.
-function Button<
+export function Button<
     LinkPropsType = LinkProps
 >(props: ButtonProps & Omit<LinkPropsType, 'to' | keyof ButtonProps>) {
 
@@ -148,11 +154,8 @@ function Button<
     }
 }
 
-// Делаем props.onClick стабильным, чтобы при перерисовках родительского компонента
-// не перерисовывался этот компонент до тех пор, пока не изменятся нестабильные
-// свойства. При этом изменение props.onClick не вызовет перерисовку, но работать
-// будет без проблем.
-export default withStable<ButtonProps>(['onClick'], Button) as typeof Button
+/** @deprecated */
+export default Button
 
 // Нормализация свойств анимации нажатия на кнопку.
 function normalizeRippleProps(

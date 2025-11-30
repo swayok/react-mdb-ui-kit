@@ -1,4 +1,4 @@
-import ApiRequestDebugService from './ApiRequestDebugService'
+import {ApiRequestDebugService} from './ApiRequestDebugService'
 import {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface ApiRequestServiceConfig {

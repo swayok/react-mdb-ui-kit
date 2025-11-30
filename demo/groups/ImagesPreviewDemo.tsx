@@ -1,7 +1,7 @@
 import React from 'react'
 import ImagesPreviewer from '../../components/Images/ImagesPreviewer'
 
-export default function ImagesPreviewDemo() {
+export function ImagesPreviewDemo() {
 
     return (
         <ImagesPreviewer

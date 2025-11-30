@@ -4,10 +4,10 @@ import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
 import {HeadingsDemo} from './groups/HeadingsDemo'
-import TabContentForDemoTabsheet from './TabContentForDemoTabsheet'
+import {TabContentForDemoTabsheet} from './TabContentForDemoTabsheet'
 
 // Демонстрация компонентов.
-export default function TypographyDemo() {
+export function TypographyDemo() {
 
     return (
         <TabSheet

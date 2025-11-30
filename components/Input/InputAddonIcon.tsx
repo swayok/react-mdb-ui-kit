@@ -1,7 +1,7 @@
 import React from 'react'
 import InputAddonText from './InputAddonText'
 import {IconProps} from '../MDIIcon'
-import Icon from '../Icon'
+import {Icon} from '../Icon'
 
 interface Props extends IconProps {
     iconClassName?: string;

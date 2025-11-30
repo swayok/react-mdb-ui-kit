@@ -228,5 +228,3 @@ interface CacheItem<Type> {
     data: Type;
     exp: number;
 }
-
-export default (new CacheServiceClass())

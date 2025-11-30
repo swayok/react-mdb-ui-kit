@@ -1,7 +1,6 @@
 import React, {CSSProperties} from 'react'
-import Button from './Button'
+import {Button} from './Button'
 import clsx from 'clsx'
-import withStable from '../helpers/withStable'
 
 export interface AsyncDataLoadingErrorProps {
     className?: string,
@@ -12,25 +11,37 @@ export interface AsyncDataLoadingErrorProps {
 }
 
 // Ошибка загрузки данных с сервера.
-function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
+export function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
+    const {
+        className,
+        style,
+        errorMessage,
+        retryButtonTitle,
+        onReload,
+    } = props
+
     return (
         <div
-            className={clsx('text-center fs-5 pt-4 pb-4 ps-3 pe-3', props.className)}
-            style={props.style}
+            className={clsx(
+                'text-center fs-5 pt-4 pb-4 ps-3 pe-3',
+                className
+            )}
+            style={style}
         >
             <div className="text-center text-danger mb-3">
-                {props.errorMessage}
+                {errorMessage}
             </div>
-            {props.onReload && (
+            {onReload && (
                 <Button
-                    onClick={() => props.onReload?.()}
+                    onClick={() => onReload?.()}
                     color="primary"
                 >
-                    {props.retryButtonTitle}
+                    {retryButtonTitle}
                 </Button>
             )}
         </div>
     )
 }
 
-export default withStable<AsyncDataLoadingErrorProps>(['onReload'], AsyncDataLoadingError)
+/** @deprecated */
+export default AsyncDataLoadingError

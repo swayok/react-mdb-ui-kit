@@ -1,16 +1,21 @@
 import clsx from 'clsx'
 import React from 'react'
-import {BackgroundColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyRefObject,
+    BackgroundColors,
+    ComponentPropsWithModifiableTag,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface BadgeProps extends ComponentPropsWithModifiableTag {
     pill?: boolean,
     dot?: boolean,
     notification?: boolean,
     color?: BackgroundColors,
+    ref?: AnyRefObject<HTMLAllCollection>
 }
 
 // Элемент, стилизованный под небольшой блок с фоном и текстом или числом (кол-во, теги и т.п.)
-function Badge(props: BadgeProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+export function Badge(props: BadgeProps) {
     const {
         className,
         color,
@@ -34,7 +39,6 @@ function Badge(props: BadgeProps, ref: React.ForwardedRef<HTMLAllCollection>) {
     return (
         <Tag
             className={classes}
-            ref={ref}
             {...otherProps}
         >
             {children}
@@ -42,4 +46,5 @@ function Badge(props: BadgeProps, ref: React.ForwardedRef<HTMLAllCollection>) {
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, BadgeProps>(Badge))
+/** @deprecated */
+export default Badge

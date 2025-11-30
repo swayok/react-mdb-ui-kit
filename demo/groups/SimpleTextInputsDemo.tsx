@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SimpleTextInputsDemo() {
+export function SimpleTextInputsDemo() {
 
     return (
         <>

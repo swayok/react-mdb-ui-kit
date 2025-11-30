@@ -5,7 +5,7 @@ import {
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import Tooltip from '../Tooltip'
+import {Tooltip} from '../Tooltip'
 import FilePickerHelpers from './FilePickerHelpers'
 
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react'
-import Badge from '../../components/Badge'
-import SectionDivider from '../../components/SectionDivider'
+import {Badge} from '../../components/Badge'
+import {SectionDivider} from '../../components/SectionDivider'
 import {BackgroundColors} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Демонстрация компонента <Badge>.

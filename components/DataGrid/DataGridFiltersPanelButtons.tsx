@@ -1,11 +1,11 @@
 import React from 'react'
-import Button from '../Button'
+import {Button} from '../Button'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridFiltersPanelButtonsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import clsx from 'clsx'
-import IconButton from '../IconButton'
+import {IconButton} from '../IconButton'
 import {mdiCheck, mdiClose} from '@mdi/js'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Кнопки для панели фильтрации: применить и сбросить.
 function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {

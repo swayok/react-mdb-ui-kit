@@ -1,7 +1,7 @@
 import React from 'react'
 import Switch from '../../components/Input/Switch'
 
-export default function SwitchesDemo() {
+export function SwitchesDemo() {
 
     return (
         <>

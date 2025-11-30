@@ -5,14 +5,14 @@ import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
 import {BadgesDemo} from './groups/BadgesDemo'
 import {DataGridDemo} from './groups/DataGridDemo'
-import ImagesPreviewDemo from './groups/ImagesPreviewDemo'
-import RatingStarsDemo from './groups/RatingStarsDemo'
+import {ImagesPreviewDemo} from './groups/ImagesPreviewDemo'
+import {RatingStarsDemo} from './groups/RatingStarsDemo'
 import {TablesDemo} from './groups/TablesDemo'
-import ToastsDemo from './groups/ToastsDemo'
-import TabContentForDemoTabsheet from './TabContentForDemoTabsheet'
+import {ToastsDemo} from './groups/ToastsDemo'
+import {TabContentForDemoTabsheet} from './TabContentForDemoTabsheet'
 
 // Демонстрация компонентов.
-export default function ComponentsDemo() {
+export function ComponentsDemo() {
 
     return (
         <TabSheet

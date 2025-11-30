@@ -5,8 +5,8 @@ import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
 import {CKEditorInstance} from 'swayok-react-mdb-ui-kit/types/Wysiwyg'
 import {AnyObject, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
 import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
-import withStable from '../../helpers/withStable'
-import getDefaultWysiwygConfig from '../../helpers/getDefaultWysiwygConfig'
+import {withStable} from '../../helpers/withStable'
+import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
 
 const CKEditorReact = React.lazy(async () => ({
     default: (await import('ckeditor4-react')).CKEditor,

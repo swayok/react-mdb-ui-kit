@@ -4,7 +4,7 @@ import {normalizeDimensionForReactStyles, renderSortingIcon} from './dataGridHel
 import {DataGridHeaderWrapperProps, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import Ripple from '../Ripple/Ripple'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Обертка заголовка колонки таблицы (<th>).
 function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {

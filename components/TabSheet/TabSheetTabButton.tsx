@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import {TabSheetTabButtonProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import clsx from 'clsx'
 import {useTabSheetContext} from './TabSheetContext'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 import Ripple, {RippleProps} from '../Ripple/Ripple'
 
 // Кнопка переключения на вкладку.

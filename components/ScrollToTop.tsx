@@ -1,5 +1,5 @@
 import {useEffect} from 'react'
-import scrollToTop, {ScrollBehavior} from '../helpers/scrollToTop'
+import {scrollToTop, ScrollBehavior} from '../helpers/scrollToTop'
 
 type Props = {
     behavior?: ScrollBehavior,
@@ -7,7 +7,7 @@ type Props = {
 }
 
 // При монтировании этого компонента, скроллинг страницы будет перемещен в начало.
-export default function ScrollToTop(props: Props) {
+export function ScrollToTop(props: Props) {
 
     const {
         behavior = 'smooth',
@@ -20,3 +20,6 @@ export default function ScrollToTop(props: Props) {
 
     return null
 }
+
+/** @deprecated */
+export default ScrollToTop

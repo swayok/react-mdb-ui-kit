@@ -1,7 +1,7 @@
 import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Фильтрация опций по ключевым словам.
-export default function filterOptions<T = unknown>(
+export function filterOptions<T = unknown>(
     keywords: string,
     options?: FormSelectOption<T>[],
     // Показывать все опции, если keywords полностью совпадает с value одной из опций.
@@ -30,3 +30,5 @@ export default function filterOptions<T = unknown>(
     }
     return filtered
 }
+
+export default filterOptions

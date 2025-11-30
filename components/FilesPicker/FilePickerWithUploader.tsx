@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react'
 import FilePickerContext, {FilePickerContextPropsDefaults, filePickerDefaultTranslations} from './FilePickerContext'
-import FileAPI, {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileAPI, FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
@@ -8,7 +8,7 @@ import {
     FilePickerUploadInfo,
     FilePickerWithUploaderProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import ErrorBoundary from '../ErrorBoundary'
+import {ErrorBoundary} from '../ErrorBoundary'
 import {ToastService} from '../../services/ToastService'
 import {NavigationService} from '../../services/NavigationService'
 import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
@@ -19,7 +19,7 @@ import {
 } from '../../helpers/ApiRequestErrorHelpers'
 import ReorderableList from '../ReorderableList/ReorderableList'
 import FilePickerHelpers from './FilePickerHelpers'
-import getCookieValue from '../../helpers/getCookieValue'
+import {getCookieValue} from '../../helpers/getCookieValue'
 
 type State = {
     // Новые прикрепленные файлы.

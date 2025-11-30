@@ -26,7 +26,7 @@ let exif: typeof ExifStatic
 /**
  * API для работы с файлами.
  */
-export default class FileAPI {
+export class FileAPI {
 
     /**
      * Достать прикрепленные файлы из поля ввода.
@@ -137,3 +137,5 @@ export default class FileAPI {
         return !!(file.type && file.type.match(/^image/) !== null)
     }
 }
+
+export default FileAPI

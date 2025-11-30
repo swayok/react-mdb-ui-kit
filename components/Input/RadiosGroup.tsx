@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import React, {AllHTMLAttributes, CSSProperties, useId} from 'react'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 import {AnyObject, CheckboxColors, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
-import SectionDivider from '../SectionDivider'
+import {SectionDivider} from '../SectionDivider'
 import InputValidationError from './InputValidationError'
 import Radio from './Radio'
 

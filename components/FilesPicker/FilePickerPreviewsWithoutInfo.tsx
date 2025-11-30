@@ -6,8 +6,8 @@ import {
     FilePickerPreviewSizes,
     FilePickerPreviewsWithoutInfoProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import Collapse from '../Collapse'
-import Icon from '../Icon'
+import {Collapse} from '../Collapse'
+import {Icon} from '../Icon'
 import {mdiFolderOpenOutline, mdiPlus} from '@mdi/js'
 import FilePickerFilePreviewWithoutInfo from './FilePickerFilePreviewWithoutInfo'
 import {ToastService} from '../../services/ToastService'

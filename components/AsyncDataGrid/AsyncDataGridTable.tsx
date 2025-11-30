@@ -1,12 +1,12 @@
 import React from 'react'
 import clsx from 'clsx'
 import DataGridNoItems from '../DataGrid/DataGridNoItems'
-import AsyncDataGridLoading from './AsyncDataGridLoading'
+import {AsyncDataGridLoading} from './AsyncDataGridLoading'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {AsyncDataGridTableProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
-import withStable from '../../helpers/withStable'
-import FadeIn from '../FadeIn'
+import {withStable} from '../../helpers/withStable'
+import {FadeIn} from '../FadeIn'
 
 // Таблица с данными, получаемыми с сервера (<table>).
 function AsyncDataGridTable<RowDataType extends object = AnyObject>(

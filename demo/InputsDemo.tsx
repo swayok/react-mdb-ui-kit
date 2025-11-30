@@ -1,25 +1,25 @@
 import React from 'react'
-import SectionDivider from '../components/SectionDivider'
+import {SectionDivider} from '../components/SectionDivider'
 import TabSheet from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
-import ButtonsSwitchDemo from './groups/ButtonsSwitchDemo'
-import CheckboxesAndRadiosDemo from './groups/CheckboxesAndRadiosDemo'
-import DateInputsDemo from './groups/DateInputsDemo'
-import FilePickersDemo from './groups/FilePickersDemo'
+import {ButtonsSwitchDemo} from './groups/ButtonsSwitchDemo'
+import {CheckboxesAndRadiosDemo} from './groups/CheckboxesAndRadiosDemo'
+import {DateInputsDemo} from './groups/DateInputsDemo'
+import {FilePickersDemo} from './groups/FilePickersDemo'
 import {FormInlineDemo} from './groups/FormInlineDemo'
-import HtmlEditorsDemo from './groups/HtmlEditorsDemo'
-import MdbTextAreaInputsDemo from './groups/MdbTextAreaInputsDemo'
-import MdbTextInputsDemo from './groups/MdbTextInputsDemo'
-import SelectInputsDemo from './groups/SelectInputsDemo'
-import SimpleTextAreaInputsDemo from './groups/SimpleTextAreaInputsDemo'
-import SimpleTextInputsDemo from './groups/SimpleTextInputsDemo'
-import SwitchesDemo from './groups/SwitchesDemo'
-import TabContentForDemoTabsheet from './TabContentForDemoTabsheet'
+import {HtmlEditorsDemo} from './groups/HtmlEditorsDemo'
+import {MdbTextAreaInputsDemo} from './groups/MdbTextAreaInputsDemo'
+import {MdbTextInputsDemo} from './groups/MdbTextInputsDemo'
+import {SelectInputsDemo} from './groups/SelectInputsDemo'
+import {SimpleTextAreaInputsDemo} from './groups/SimpleTextAreaInputsDemo'
+import {SimpleTextInputsDemo} from './groups/SimpleTextInputsDemo'
+import {SwitchesDemo} from './groups/SwitchesDemo'
+import {TabContentForDemoTabsheet} from './TabContentForDemoTabsheet'
 
 // Демонстрация полей ввода.
-export default function InputsDemo() {
+export function InputsDemo() {
 
     return (
         <TabSheet

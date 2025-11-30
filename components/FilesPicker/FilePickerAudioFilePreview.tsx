@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react'
-import Icon, {AppIconProps} from '../Icon'
+import {Icon, AppIconProps} from '../Icon'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 
 interface Props extends Omit<AppIconProps, 'label'> {

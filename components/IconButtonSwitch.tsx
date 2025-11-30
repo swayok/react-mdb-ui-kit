@@ -1,6 +1,6 @@
 import React from 'react'
 import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import IconButton, {IconButtonProps} from './IconButton'
+import {IconButton, IconButtonProps} from './IconButton'
 import clsx from 'clsx'
 import {mdiCheckboxBlankCircleOutline, mdiCheckboxMarkedCircle} from '@mdi/js'
 
@@ -15,7 +15,7 @@ interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {
 }
 
 // Иконка-кнопка, работающая по аналогии с <checkbox> (вкл/выкл)
-function IconButtonSwitch(props: IconButtonSwitchProps) {
+export function IconButtonSwitch(props: IconButtonSwitchProps) {
     const {
         active,
         activeIcon = mdiCheckboxMarkedCircle,
@@ -41,4 +41,5 @@ function IconButtonSwitch(props: IconButtonSwitchProps) {
     )
 }
 
-export default React.memo(IconButtonSwitch)
+/** @deprecated */
+export default IconButtonSwitch

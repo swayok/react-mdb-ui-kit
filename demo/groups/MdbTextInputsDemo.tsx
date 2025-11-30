@@ -1,7 +1,7 @@
 import {mdiAccount, mdiTranslate} from '@mdi/js'
 import React from 'react'
-import Button from '../../components/Button'
-import Icon from '../../components/Icon'
+import {Button} from '../../components/Button'
+import {Icon} from '../../components/Icon'
 import Input from '../../components/Input/Input'
 import InputAddonIcon from '../../components/Input/InputAddonIcon'
 import InputAddonText from '../../components/Input/InputAddonText'
@@ -9,9 +9,9 @@ import InputGroup from '../../components/Input/InputGroup'
 import InputGroupText from '../../components/Input/InputGroupText'
 import InputInfo from '../../components/Input/InputInfo'
 import PasswordInput from '../../components/Input/PasswordInput'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function MdbTextInputsDemo() {
+export function MdbTextInputsDemo() {
 
     return (
         <>

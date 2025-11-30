@@ -13,7 +13,7 @@ interface Props extends Omit<ComponentPropsWithModifiableTag, 'children' | 'dang
  * Безопасно вставляет HTML-строку.
  * Удаляет потенциально вредоносные теги.
  */
-function HtmlContent(props: Props) {
+export function HtmlContent(props: Props) {
     const {
         html,
         block,
@@ -34,4 +34,5 @@ function HtmlContent(props: Props) {
     )
 }
 
-export default React.memo(HtmlContent)
+/** @deprecated */
+export default HtmlContent

@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {DataGridOrderingPanelOptionType, DataGridOrderingPanelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import DataGridOrderingPanelLabel from './DataGridOrderingPanelLabel'
 import SelectInput from '../Input/SelectInput/SelectInput'
-import IconButton from '../IconButton'
+import {IconButton} from '../IconButton'
 import {
     mdiSortAlphabeticalAscending,
     mdiSortAlphabeticalDescending,

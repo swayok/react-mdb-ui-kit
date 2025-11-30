@@ -14,7 +14,7 @@ import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import DataGridContext from '../DataGrid/DataGridContext'
 import AsyncDataGridUrlQueryManager from './AsyncDataGridUrlQueryManager'
-import toggleValueInArray from '../../helpers/toggleValueInArray'
+import {toggleValueInArray} from '../../helpers/toggleValueInArray'
 
 // Обертка таблицы с данными, получаемыми с сервера (настройка контекста).
 function AsyncDataGrid<

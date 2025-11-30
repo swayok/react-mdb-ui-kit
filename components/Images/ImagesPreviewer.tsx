@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import clsx from 'clsx'
 import {ImagesPreviewerProps} from 'swayok-react-mdb-ui-kit/components/Images/ImagesPreviewerTypes'
 import ImagesCarouselModal from './ImagesCarouselModal'
-import FadeSwitch from '../FadeSwitch'
+import {FadeSwitch} from '../FadeSwitch'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
 
 // Отображение фотографий с просмотром "на весь экран" по клику.

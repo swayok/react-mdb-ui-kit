@@ -9,7 +9,7 @@ import AsyncDataGridTable from './AsyncDataGridTable'
 import {AsyncDataGridFooter} from './AsyncDataGridFooter'
 import clsx from 'clsx'
 import AsyncDataGridEvents from './AsyncDataGridEvents'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Стандартная разметка таблицы с данными получаемыми с сервера.
 // Сверху вниз:

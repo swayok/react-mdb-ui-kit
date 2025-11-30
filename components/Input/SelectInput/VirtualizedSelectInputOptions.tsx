@@ -1,11 +1,11 @@
 import React, {useCallback, useMemo} from 'react'
 import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import {SelectInputProps} from './SelectInput'
-import withStable from '../../../helpers/withStable'
+import {withStable} from '../../../helpers/withStable'
 import SelectInputOption from '../../../components/Input/SelectInput/SelectInputOption'
 import SelectInputOptionsGroupHeader from '../../../components/Input/SelectInput/SelectInputOptionsGroupHeader'
 import shouldDisplaySelectInputOption from '../../../components/Input/SelectInput/shouldDisplaySelectInputOption'
-import useVirtuosoLibAsync from '../../../helpers/useVirtuosoLibAsync'
+import {useVirtuosoLibAsync} from '../../../helpers/useVirtuosoLibAsync'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 
 export interface VirtualizedSelectInputOptionsProps<

@@ -1,9 +1,9 @@
 import {mdiPencilBoxOutline} from '@mdi/js'
 import React from 'react'
-import Icon from '../../components/Icon'
-import SectionDivider from '../../components/SectionDivider'
+import {Icon} from '../../components/Icon'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function LinksDemo() {
+export function LinksDemo() {
     return (
         <>
             <div>

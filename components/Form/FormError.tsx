@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react'
-import Collapse from '../Collapse'
+import {Collapse} from '../Collapse'
 import clsx from 'clsx'
-import HtmlContent from '../HtmlContent'
+import {HtmlContent} from '../HtmlContent'
 
 interface Props {
     wrapperClassName?: string

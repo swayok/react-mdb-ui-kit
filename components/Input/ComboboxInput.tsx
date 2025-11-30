@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import Input, {InputProps} from './Input'
 import {FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownItem} from '../Dropdown/DropdownItem'
-import filterOptions from '../../helpers/filterOptions'
+import {filterOptions} from '../../helpers/filterOptions'
 
 interface Props extends Omit<InputProps, 'onChange'> {
     options?: FormSelectOptionsList<string | number | null>;

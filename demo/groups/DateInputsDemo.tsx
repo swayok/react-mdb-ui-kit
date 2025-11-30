@@ -1,8 +1,8 @@
 import React from 'react'
 import DateInput from '../../components/Input/DateInput'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function DateInputsDemo() {
+export function DateInputsDemo() {
 
     const today = new Date()
     const range: [Date, Date] = [new Date(),  new Date()]

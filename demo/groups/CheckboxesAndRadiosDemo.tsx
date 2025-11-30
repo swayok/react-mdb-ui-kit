@@ -2,9 +2,9 @@ import React from 'react'
 import Checkbox, {CheckboxProps} from '../../components/Input/Checkbox'
 import CheckboxesGroup from '../../components/Input/CheckboxesGroup'
 import Radio from '../../components/Input/Radio'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
+export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
 
     return (
         <>

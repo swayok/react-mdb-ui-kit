@@ -1,7 +1,10 @@
 import Echo, {Channel} from 'laravel-echo'
-import React, {useEffect} from 'react'
+import React, {
+    RefObject,
+    useEffect,
+    useRef,
+} from 'react'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../helpers/withStable'
 
 interface WebSocketServiceAuthInfo {
     userId: number
@@ -34,7 +37,7 @@ export type WebsocketUnsubscribeHandler = () => void;
 interface WebsocketSubscription {
     id: string
     event: string
-    handler: WebsocketEventHandler
+    handler: WebsocketEventHandler<any>
     channels: string[] | null
 }
 
@@ -163,7 +166,7 @@ export abstract class WebSocketService {
     static subscribe<EventType extends WebsocketEventData = WebsocketEventData>(
         id: string,
         event: string,
-        handler: WebsocketEventHandler<EventType>,
+        handlerRef: RefObject<WebsocketEventHandler<EventType>>,
         channels?: string[] | null
     ): WebsocketUnsubscribeHandler {
         if (this.subscriptions[id]) {
@@ -181,7 +184,7 @@ export abstract class WebSocketService {
         this.subscriptions[id] = {
             id,
             event,
-            handler: handler as WebsocketEventHandler,
+            handler: eventData => handlerRef.current(eventData),
             channels: channels ?? null,
         }
         this.activateSubscription(this.subscriptions[id])
@@ -290,7 +293,7 @@ export interface WebSocketConnectorProps {
 // Отсоединение - при демонтаже.
 // Можно размещать <WebSocketEventsHandler> внутри этого компонента для удобства.
 // Примечание: аналогичного смысла React-хук работает достаточно криво.
-function WebSocketConnectorComponent(props: WebSocketConnectorProps) {
+export function WebSocketConnector(props: WebSocketConnectorProps) {
 
     // Открыть/закрыть соединение.
     useEffect(() => {
@@ -307,8 +310,6 @@ function WebSocketConnectorComponent(props: WebSocketConnectorProps) {
     )
 }
 
-export const WebSocketConnector = React.memo(WebSocketConnectorComponent)
-
 export interface WebSocketEventsHandlerProps<EventData extends WebsocketEventData = WebsocketEventData> {
     subscriptionId: string
     event: string
@@ -323,23 +324,28 @@ export interface WebSocketEventsHandlerProps<EventData extends WebsocketEventDat
 // Регистрация происходит при монтаже компонента, остановка - при демонтаже.
 // Важно: Свойство channels должно быть стабильным, чтобы не запускать переподключения постоянно.
 // Плохо: <WebSocketEventsHandlerBase channels={['public']} />, ['public'] нужно вынести в константу вне компонента.
-function WebSocketEventsHandlerBase<
+export function WebSocketEventsHandler<
     EventData extends WebsocketEventData = WebsocketEventData
 >(props: WebSocketEventsHandlerProps<EventData>): null {
+
+    const {
+        subscriptionId,
+        event,
+        handler: propsHandler,
+        channels,
+    } = props
+
+    const handlerRef = useRef(propsHandler)
+    handlerRef.current = propsHandler
+
     useEffect(
         () => WebSocketService.subscribe<EventData>(
-            props.subscriptionId,
-            props.event,
-            props.handler,
-            props.channels
+            subscriptionId,
+            event,
+            handlerRef,
+            channels
         ),
-        [props.handler, props.subscriptionId, props.event, props.channels]
+        [subscriptionId, event, channels]
     )
     return null
 }
-
-// Обертка WebSocketEventsHandlerBase для уменьшения количества пересоединений из-за перерисовок.
-export const WebSocketEventsHandler = withStable(
-    ['handler'],
-    WebSocketEventsHandlerBase
-) as typeof WebSocketEventsHandlerBase

@@ -9,7 +9,7 @@ import {
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
-import FileApiImageManipulation from '../../helpers/FileAPI/FileApiImageManipulation'
+import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
 
 // Функции-помощники для FilePicker и FilePickerWithUploader.
 export default {

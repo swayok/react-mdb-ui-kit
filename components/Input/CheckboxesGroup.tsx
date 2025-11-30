@@ -1,10 +1,10 @@
 import React, {AllHTMLAttributes, CSSProperties, useMemo} from 'react'
 import {CheckboxColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 import Checkbox from './Checkbox'
 import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import clsx from 'clsx'
-import SectionDivider from '../SectionDivider'
+import {SectionDivider} from '../SectionDivider'
 import InputValidationError from './InputValidationError'
 
 export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {

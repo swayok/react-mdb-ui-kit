@@ -3,7 +3,7 @@ import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
 import {CKEditorInstance} from 'swayok-react-mdb-ui-kit/types/Wysiwyg'
 
 // Получить стандартные настройки для CKEditor.
-export default function getDefaultWysiwygConfig(
+export function getDefaultWysiwygConfig(
     language: string = 'en',
     onInstanceReady?: (event: CKEditorEventPayload<'instanceReady'>) => void
 ): CKEditorConfig {
@@ -47,6 +47,9 @@ export default function getDefaultWysiwygConfig(
         versionCheck: false,
     }
 }
+
+/** @deprecated */
+export default getDefaultWysiwygConfig
 
 // Расширить стандартные настройки для CKEditor.
 export function extendDefaultWysiwygConfig(

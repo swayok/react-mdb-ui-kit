@@ -1,5 +1,5 @@
 // Если значение имеется в массиве - удаляет его из массива, если нет - добавляет.
-export default function toggleValueInArray<T = unknown>(
+export function toggleValueInArray<T = unknown>(
     array: T[],
     value: T,
     selected?: boolean,
@@ -39,3 +39,6 @@ export default function toggleValueInArray<T = unknown>(
     }
     return updatedArray
 }
+
+/** @deprecated */
+export default toggleValueInArray

@@ -1,9 +1,9 @@
 import React, {CSSProperties} from 'react'
-import Icon, {AppIconProps} from './Icon'
+import {Icon, AppIconProps} from './Icon'
 import clsx from 'clsx'
 import {TooltipProps} from './Tooltip'
 import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../helpers/withStable'
+import {withStable} from '../helpers/withStable'
 
 export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     tooltip?: string,
@@ -19,7 +19,7 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
 }
 
 // Иконка-кнопка со всплывающей подсказкой при наведении
-function IconButton(props: IconButtonProps) {
+function _IconButton(props: IconButtonProps) {
 
     const {
         tooltipProps,
@@ -84,4 +84,7 @@ function IconButton(props: IconButtonProps) {
     }
 }
 
-export default withStable<IconButtonProps>(['onClick'], IconButton)
+export const IconButton = withStable<IconButtonProps>(['onClick'], _IconButton)
+
+/** @deprecated */
+export default IconButton

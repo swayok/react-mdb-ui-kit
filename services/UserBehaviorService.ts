@@ -1,5 +1,6 @@
 import {KeyboardEvent} from 'react'
 
+// Обработчики по умолчанию.
 export interface UserBehaviorHandlers {
     onFocus: (
         input: HTMLInputElement | HTMLTextAreaElement,
@@ -12,36 +13,24 @@ export interface UserBehaviorHandlers {
     onCheckboxOrRadioChange: (input: HTMLInputElement, id: string) => void;
 }
 
-const defaultHandlers: UserBehaviorHandlers = {
-    onFocus() {
-    },
-    onBlur() {
-    },
-    onPaste() {
-    },
-    onKeyDown() {
-    },
-    onCheckboxOrRadioChange() {
-    },
-}
-
 // Сервис отслеживания поведения пользователя при заполнении полей ввода.
-export class UserBehaviorServiceClass {
+export abstract class UserBehaviorService {
+
     // Обработчики взаимодействий с полями ввода.
-    private handlers: UserBehaviorHandlers = defaultHandlers
+    private static handlers: UserBehaviorHandlers = getDefaultHandlers()
 
     // Задание обработчиков взаимодействий с полями ввода.
-    setHandlers(handlers: UserBehaviorHandlers) {
+    static setHandlers(handlers: UserBehaviorHandlers) {
         this.handlers = handlers
     }
 
     // Очистка обработчиков взаимодействий с полями ввода.
-    unsetHandlers(): void {
-        this.handlers = defaultHandlers
+    static unsetHandlers(): void {
+        this.handlers = getDefaultHandlers()
     }
 
     // Обработка события: начало взаимодействия с полем ввода.
-    onFocus(
+    static onFocus(
         input: HTMLInputElement | HTMLTextAreaElement,
         id: string,
         value?: string | number | null
@@ -50,30 +39,38 @@ export class UserBehaviorServiceClass {
     }
 
     // Обработка события: завершение взаимодействия с полем ввода.
-    onBlur(value?: string | null): void {
+    static onBlur(value?: string | null): void {
         this.handlers.onBlur(value)
     }
 
     // Обработка события: вставка текста в поле ввода.
-    onPaste(): void {
+    static onPaste(): void {
         this.handlers.onPaste()
     }
 
     // Обработка события: нажатие на клавишу в поле ввода.
-    onKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+    static onKeyDown(event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void {
         this.handlers.onKeyDown(event)
     }
 
     // Обработка изменения значения в <input type="checkbox"/> и <input type="radio"/>
-    onCheckboxOrRadioChange(input: HTMLInputElement, id: string): void {
+    static onCheckboxOrRadioChange(input: HTMLInputElement, id: string): void {
         this.handlers.onCheckboxOrRadioChange(input, id)
     }
 }
 
-export const UserBehaviorService: UserBehaviorServiceClass = new UserBehaviorServiceClass()
-
-/**
- * @deprecated
- * Use import {UserBehaviorService} from '../../services/UserBehaviorService'
- */
-export default UserBehaviorService
+// Обработчики по умолчанию.
+function getDefaultHandlers(): UserBehaviorHandlers {
+    return {
+        onFocus() {
+        },
+        onBlur() {
+        },
+        onPaste() {
+        },
+        onKeyDown() {
+        },
+        onCheckboxOrRadioChange() {
+        },
+    }
+}

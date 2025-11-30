@@ -1,8 +1,8 @@
 import React from 'react'
 import clsx from 'clsx'
-import Button from '../Button'
+import {Button} from '../Button'
 import {ModalHeaderCloseButtonProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Кнопка закрытия модального окна для ModalHeader.
 function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {

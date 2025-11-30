@@ -1,4 +1,5 @@
-export default class ApiRequestDebugService {
+// Сервис для отладки запросов API.
+export class ApiRequestDebugService {
 
     private static setDebugModalContents: (html: string | null) => void | null
 

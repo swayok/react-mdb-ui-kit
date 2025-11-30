@@ -4,9 +4,9 @@ import {
     FormSelectOptionsList, PartialRecord,
 } from 'swayok-react-mdb-ui-kit/types/Common'
 import {BasicLanguageConfig, BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
-import LanguagesManager from '../helpers/LanguagesManager'
-import RegionsManager from '../helpers/RegionsManager'
-import NumbersService from '../services/NumbersService'
+import {LanguagesManager} from '../helpers/LanguagesManager'
+import {RegionsManager} from '../helpers/RegionsManager'
+import {NumbersService} from './NumbersService'
 
 // Сервис для работы с языками и регионами приложения.
 export class LocaleService<

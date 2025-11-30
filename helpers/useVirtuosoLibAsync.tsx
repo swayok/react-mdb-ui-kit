@@ -39,7 +39,7 @@ interface HookReturn<ItemData = AnyObject, Context = AnyObject | undefined | nul
 }
 
 // Асинхронная загрузка компонентов react-virtuoso.
-export default function useVirtuosoLibAsync<
+export function useVirtuosoLibAsync<
     ItemData = AnyObject,
     Context = AnyObject | undefined | null
 >(): HookReturn<ItemData, Context> {
@@ -69,6 +69,9 @@ export default function useVirtuosoLibAsync<
 
     return virtuoso
 }
+
+/** @deprecated */
+export default useVirtuosoLibAsync
 
 export type GroupedTableVirtuosoHandle = _GroupedTableVirtuosoHandle
 export type GroupedTableVirtuosoProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _GroupedTableVirtuosoProps<ItemData, Context>

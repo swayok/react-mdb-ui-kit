@@ -6,7 +6,7 @@ export type WindowSize = {
 }
 
 // Хук для получения размеров окна
-export default function useWindowSize(): WindowSize {
+export function useWindowSize(): WindowSize {
     const [windowSize, setWindowSize] = useState<WindowSize>({
         width: undefined,
         height: undefined,

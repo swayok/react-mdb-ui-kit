@@ -2,7 +2,7 @@ import {Dispatch, SetStateAction, useCallback, useRef} from 'react'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Хук для создания функции, изменяющей ошибку в поле ввода.
-export default function useInputErrorSetter<
+export function useInputErrorSetter<
     FormErrors extends AnyObject<string | null> = AnyObject<string | null>
 >(
     setErrors: Dispatch<SetStateAction<FormErrors>>,
@@ -18,6 +18,9 @@ export default function useInputErrorSetter<
         callbackRef.current?.(key, message)
     }, [])
 }
+
+/** @deprecated */
+export default useInputErrorSetter
 
 // Добавить/удалить сообщение об ошибке для одного поля ввода.
 export function setInputError<

@@ -1,6 +1,6 @@
 import {UILayout} from 'swayok-react-mdb-ui-kit/types/Common'
 
-export default function detectUiLayout(): UILayout {
+export function detectUiLayout(): UILayout {
     let layout: UILayout
     if (window.innerWidth < 350) {
         layout = {
@@ -48,3 +48,5 @@ export default function detectUiLayout(): UILayout {
     console.log(`[detectUiLayout] ${window.innerWidth}x${window.innerHeight} => ${JSON.stringify(layout)}`)
     return layout
 }
+
+export default detectUiLayout

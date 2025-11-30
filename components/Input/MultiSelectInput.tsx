@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {IconProps} from '../MDIIcon'
 import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import Icon from '../Icon'
+import {Icon} from '../Icon'
 import {
     mdiCheckboxBlankCircleOutline,
     mdiCheckboxBlankOutline,
@@ -19,7 +19,7 @@ import {
 import SelectInputBasic, {SelectInputBasicProps} from './SelectInput/SelectInputBasic'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownHeader} from '../Dropdown/DropdownHeader'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 export interface MultiSelectInputProps<
     OptionValueType = string,

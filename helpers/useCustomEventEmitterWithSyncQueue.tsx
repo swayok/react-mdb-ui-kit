@@ -1,6 +1,6 @@
 import {useEffect, useMemo} from 'react'
 import {CancelSubscriptionFn, CustomEventEmitter} from './CustomEventEmitter'
-import useSyncTaskQueue, {SyncQueueTask} from './useSyncTaskQueue'
+import {useSyncTaskQueue, SyncQueueTask} from './useSyncTaskQueue'
 
 // Функции и данные, возвращаемые из хука useCustomEventEmitterWithSyncQueue()
 export interface CustomEventEmitterWithSyncQueueHookReturn<Payload = undefined> {

@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import ReactDOM from 'react-dom'
 import ModalDialog from './ModalDialog'
 import {ModalProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 // Отслеживание количества открытых окон для управления скролбаром страницы.
 export let openedModals: number = 0

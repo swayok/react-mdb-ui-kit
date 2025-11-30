@@ -2,7 +2,7 @@ import React from 'react'
 import Input from '../../components/Input/Input'
 import InputInfo from '../../components/Input/InputInfo'
 
-export default function MdbTextAreaInputsDemo() {
+export function MdbTextAreaInputsDemo() {
 
     return (
         <>

@@ -1,13 +1,13 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef} from 'react'
 import FilePickerContext, {FilePickerContextPropsDefaults, filePickerDefaultTranslations} from './FilePickerContext'
-import FileAPI, {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileAPI, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerInputProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import ErrorBoundary from '../ErrorBoundary'
+import {ErrorBoundary} from '../ErrorBoundary'
 import {ToastService} from '../../services/ToastService'
 import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
 import ReorderableList from '../ReorderableList/ReorderableList'

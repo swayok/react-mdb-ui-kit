@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call */
-import React, {DependencyList, forwardRef, FunctionComponent, MemoExoticComponent} from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    DependencyList,
+    FunctionComponent,
+    memo,
+    MemoExoticComponent,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+} from 'react'
 
 // Imported from package https://www.npmjs.com/package/react-with-stable.
 
 const Prefix: string = '__react-with-stable__'
 const StableSymbol: string = `${Prefix}StableSymbol`
 const DepsSymbol: string = `${Prefix}DepsSymbol`
-
-export type PropsWithForwardedRef<Props, HtmlElementType extends HTMLElement | null = HTMLElement> = React.PropsWithoutRef<Props> & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    forwardedRef: Props extends any
-        ? ('ref' extends keyof Props ? Props['ref'] : React.ForwardedRef<HtmlElementType | null>)
-        : React.ForwardedRef<HtmlElementType | null>;
-}
 
 /**
  * Поверхностное сравнение двух значений.
@@ -45,12 +44,12 @@ function areEqual(a: any, b: any) {
  * В идеале нужно оборачивать все компоненты с функциями-обработчиками событий либо
  * в withStable(), если не нужен forwardRef(), либо в withStableAndRef() если нужен.
  */
-export default function withStable<ComponentProps extends object>(
+export function withStable<ComponentProps extends object>(
     stableKeys: (keyof ComponentProps)[],
     Component: FunctionComponent<ComponentProps>
 ): MemoExoticComponent<FunctionComponent<ComponentProps>> {
     const stableSet = new Set(stableKeys as any)
-    const Memo = React.memo(Component, (prev: ComponentProps, next: ComponentProps) => {
+    const Memo = memo(Component, (prev: ComponentProps, next: ComponentProps) => {
         for (const k in prev) {
             if (!(k in prev)) {
                 continue
@@ -71,12 +70,12 @@ export default function withStable<ComponentProps extends object>(
     })
 
     function ComponentWithStable(props: ComponentProps) {
-        const propsRef = React.useRef<ComponentProps>(props)
-        React.useLayoutEffect(() => {
+        const propsRef = useRef<ComponentProps>(props)
+        useLayoutEffect(() => {
             propsRef.current = props
         })
-        const cache: AnyObject = React.useMemo(() => ({}), [])
-        const stable: AnyObject = {}
+        const cache: Record<string, unknown> = useMemo(() => ({}), [])
+        const stable: Record<string, unknown> = {}
         for (const k in props) {
             if (!(k in props)) {
                 continue
@@ -110,6 +109,9 @@ export default function withStable<ComponentProps extends object>(
     return ComponentWithStable
 }
 
+/** @deprecated */
+export default withStable
+
 type Callback = (...args: any[]) => any
 
 /**
@@ -128,39 +130,3 @@ export function depFn<T extends Callback>(
     return callback
 }
 
-/**
- * Оборачивает компонент в forwardRef() и withStable().
- * Подробнее: смотри описание withStable().
- *
- * В идеале нужно оборачивать все компоненты с функциями-обработчиками событий либо
- * в withStable(), если не нужен forwardRef(), либо в withStableAndRef() если нужен.
- */
-export function withStableAndRef<
-    ComponentProps extends object,
-    HtmlElementType extends HTMLElement | null
->(
-    stableProps: (keyof ComponentProps)[],
-    Component: FunctionComponent<PropsWithForwardedRef<ComponentProps, HtmlElementType>>,
-    displayName: string
-): React.ForwardRefExoticComponent<React.PropsWithoutRef<ComponentProps> & React.RefAttributes<HtmlElementType>> {
-
-    const StableComponent = withStable<ComponentProps>(
-        stableProps,
-        Component as FunctionComponent<ComponentProps>
-    )
-
-    const ComponentWithRef = forwardRef<HtmlElementType, ComponentProps>(
-        // @ts-ignore
-        (props: ComponentProps, ref: React.ForwardedRef<HtmlElementType | null>) =>
-            React.createElement<ComponentProps & PropsWithForwardedRef<HtmlElementType>>(
-                // @ts-ignore
-                StableComponent,
-                // @ts-ignore
-                Object.assign({forwardedRef: ref}, props)
-            )
-    )
-
-    ComponentWithRef.displayName = displayName
-
-    return ComponentWithRef
-}

@@ -8,7 +8,7 @@ import {
     FormSelectOptionOrGroup,
     FormSelectOptionsAndGroupsList,
 } from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../../../helpers/withStable'
+import {withStable} from '../../../helpers/withStable'
 import SelectInputOptions from './SelectInputOptions'
 import {stripTags} from '../../../helpers/stripTags'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'

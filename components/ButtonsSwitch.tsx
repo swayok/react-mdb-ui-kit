@@ -1,8 +1,7 @@
 import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
 import {ButtonColors, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
-import Button, {ButtonProps} from './Button'
-import withStable from '../helpers/withStable'
+import {Button, ButtonProps} from './Button'
 
 export interface ButtonsSwitchProps<ValueType = string> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
     value?: ValueType | ValueType[]
@@ -17,7 +16,7 @@ export interface ButtonsSwitchProps<ValueType = string> extends Omit<AllHTMLAttr
 }
 
 // Выбор одной или нескольких опций из вариантов в виде кнопок.
-function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>) {
+export function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>) {
 
     const {
         value,
@@ -70,7 +69,5 @@ function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<ValueType>)
     )
 }
 
-export default withStable<ButtonsSwitchProps>(
-    ['onChange'],
-    ButtonsSwitch
-) as typeof ButtonsSwitch
+/** @deprecated */
+export default ButtonsSwitch

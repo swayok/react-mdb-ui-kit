@@ -1,6 +1,6 @@
 import {FunctionComponent, MouseEvent, useCallback, useEffect, useState} from 'react'
-import withStable from '../helpers/withStable'
-import Collapse, {CollapseProps} from './Collapse'
+import {withStable} from '../helpers/withStable'
+import {Collapse, CollapseProps} from './Collapse'
 
 // Свойства кнопки открытия/закрытия для компонента <CollapsedContent>.
 export interface CollapsedContentTogglerProps {

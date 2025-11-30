@@ -1,7 +1,7 @@
 import React, {AllHTMLAttributes, CSSProperties, useEffect, useState} from 'react'
 import clsx from 'clsx'
 import {AnyObject, NumericKeysObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import Collapse from '../Collapse'
+import {Collapse} from '../Collapse'
 
 export interface InputValidationErrorProps extends AllHTMLAttributes<HTMLDivElement> {
     invalid: boolean,

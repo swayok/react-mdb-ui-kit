@@ -1,9 +1,14 @@
-import {useEffect} from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import withStable from '../helpers/withStable'
+import {
+    RefObject,
+    useEffect,
+    useRef,
+} from 'react'
+import {AnyObject} from '../types'
+
+export type PollingServiceHandlerFn = () => Promise<unknown>
 
 // Сервис для контроля регулярно выполняющихся действий.
-export default class PollingService {
+export abstract class PollingService {
 
     static timeouts: AnyObject<number> = {}
     static fails: AnyObject<number> = {}
@@ -18,7 +23,7 @@ export default class PollingService {
         // Частота запуска.
         interval: number,
         // Функция, которую нужно запускать.
-        handler: () => Promise<unknown>,
+        handlerRef: RefObject<PollingServiceHandlerFn>,
         // Запустить сразу же или через interval?
         immediate: boolean = false
     ): void {
@@ -29,10 +34,10 @@ export default class PollingService {
         console.log('[Polling] started: ' + name)
         this.fails[name] = 0
         if (immediate) {
-            this.pollingCallback(name, interval, handler)
+            this.pollingCallback(name, interval, handlerRef)
         }
         this.timeouts[name] = window.setTimeout(
-            () => this.pollingCallback(name, interval, handler),
+            () => this.pollingCallback(name, interval, handlerRef),
             interval
         )
     }
@@ -64,14 +69,14 @@ export default class PollingService {
     private static pollingCallback(
         name: string,
         interval: number,
-        handler: () => Promise<unknown>
+        handlerRef: RefObject<PollingServiceHandlerFn>
     ): void {
-        handler()
+        handlerRef.current()
             .then(() => {
                 this.clearPollingTimeout(name)
                 this.fails[name] = 0
                 this.timeouts[name] = window.setTimeout(
-                    () => this.pollingCallback(name, interval, handler),
+                    () => this.pollingCallback(name, interval, handlerRef),
                     interval
                 )
             })
@@ -79,7 +84,7 @@ export default class PollingService {
                 this.clearPollingTimeout(name)
                 this.fails[name] = (this.fails[name] || 0) + 1
                 this.timeouts[name] = window.setTimeout(
-                    () => this.pollingCallback(name, interval, handler),
+                    () => this.pollingCallback(name, interval, handlerRef),
                     interval * (this.fails[name] + 1)
                 )
             })
@@ -90,35 +95,43 @@ export type DataPollingProps = {
     condition: boolean,
     name: string,
     interval: number,
-    handler: () => Promise<unknown>,
+    handler: PollingServiceHandlerFn,
     immediate?: boolean
 }
 
 // React компонент для регистрации и остановки регулярно выполняющегося действия.
 // Регистрация происходит если condition === true.
 // Остановка - если condition === false или при демонтаже компонента.
-function DataPollingComponent(props: DataPollingProps): null {
+export function DataPolling(props: DataPollingProps): null {
+
+    const {
+        condition,
+        name,
+        interval,
+        handler: propsHandler,
+        immediate,
+    } = props
+
+    const handlerRef = useRef<PollingServiceHandlerFn>(
+        propsHandler
+    )
+    handlerRef.current = propsHandler
+
     useEffect(() => {
-        if (props.condition) {
+        if (condition) {
             PollingService.startPolling(
-                props.name,
-                props.interval,
-                props.handler,
-                !!props.immediate
+                name,
+                interval,
+                handlerRef,
+                !!immediate
             )
         } else {
-            PollingService.stopPolling(props.name)
+            PollingService.stopPolling(name)
         }
-    }, [props.condition])
+    }, [condition])
     // Остановить, если компонент демонтирован.
     useEffect(() => () => {
-        PollingService.stopPolling(props.name)
+        PollingService.stopPolling(name)
     }, [])
     return null
 }
-
-// Оборачиваем в withStable для уменьшения перерисовок.
-export const DataPolling = withStable<DataPollingProps>(
-    ['handler'],
-    DataPollingComponent
-)

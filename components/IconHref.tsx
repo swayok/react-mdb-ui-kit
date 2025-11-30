@@ -1,10 +1,10 @@
 import React, {AnchorHTMLAttributes, CSSProperties} from 'react'
-import Icon from './Icon'
+import {Icon} from './Icon'
 import clsx from 'clsx'
-import Tooltip, {TooltipProps} from './Tooltip'
+import {Tooltip, TooltipProps} from './Tooltip'
 import {AnyObject, ReactComponentOrTagName, SvgIconInfo, TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
 import {Link} from 'react-router-dom'
-import withStable from '../helpers/withStable'
+import {withStable} from '../helpers/withStable'
 import {IconProps} from './MDIIcon'
 
 export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -27,7 +27,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 // Ссылка в виде иконки без подписи
-function IconHref(props: IconHrefProps) {
+function _IconHref(props: IconHrefProps) {
 
     const {
         tooltip,
@@ -96,7 +96,10 @@ function IconHref(props: IconHrefProps) {
     )
 }
 
-export default withStable<IconHrefProps>(
+export const IconHref = withStable<IconHrefProps>(
     ['onClick', 'iconProps', 'tooltipProps'],
-    IconHref
+    _IconHref
 )
+
+/** @deprecated */
+export default IconHref

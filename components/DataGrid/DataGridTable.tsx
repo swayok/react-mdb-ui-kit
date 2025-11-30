@@ -4,8 +4,8 @@ import DataGridNoItems from './DataGridNoItems'
 import {useDataGridContext} from './DataGridContext'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DataGridTableProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import withStable from '../../helpers/withStable'
-import FadeSwitch from '../FadeSwitch'
+import {withStable} from '../../helpers/withStable'
+import {FadeSwitch} from '../FadeSwitch'
 
 // Таблица с данными (<table>).
 function DataGridTable<

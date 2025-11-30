@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
 export function TablesDemo() {
 

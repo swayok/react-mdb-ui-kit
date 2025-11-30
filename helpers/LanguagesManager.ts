@@ -1,13 +1,13 @@
 import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import {AnyObject, FormSelectOption, FormSelectOptionsList, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DateTimeService} from '../services/DateTimeService'
-import NumbersService from '../services/NumbersService'
+import {NumbersService} from '../services/NumbersService'
 
 // Автоматически определенный язык.
 let detectedLanguage: BasicLanguageConfig | undefined
 
 // Менеджер локализаций (определение, хранение, загрузка словарей, изменение).
-export default class LanguagesManager<
+export class LanguagesManager<
     LanguageCode extends string = string,
     LanguageConfigType extends BasicLanguageConfig<LanguageCode> = BasicLanguageConfig<LanguageCode>,
     DictionaryType extends object = AnyObject,
@@ -216,3 +216,6 @@ export default class LanguagesManager<
         return []
     }
 }
+
+/** @deprecated */
+export default LanguagesManager

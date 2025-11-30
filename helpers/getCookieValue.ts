@@ -1,5 +1,5 @@
 // Получить значение cookie по ключу.
-export default function getCookieValue(key: string): string | null {
+export function getCookieValue(key: string): string | null {
     if (typeof document === 'undefined' || (arguments.length && !key)) {
         return null
     }
@@ -20,6 +20,9 @@ export default function getCookieValue(key: string): string | null {
 
     return null
 }
+
+/** @deprecated */
+export default getCookieValue
 
 // Декодирование значения из cookie.
 function decodeCookieValue(value: string) {

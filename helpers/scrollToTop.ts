@@ -1,7 +1,7 @@
 export type ScrollBehavior = 'auto' | 'smooth' | 'instant'
 
 // Скроллинг страницы в начало.
-export default function scrollToTop(
+export function scrollToTop(
     behavior: ScrollBehavior = 'smooth',
     container?: HTMLElement | null
 ) {
@@ -12,3 +12,6 @@ export default function scrollToTop(
         behavior: behavior as never,
     })
 }
+
+/** @deprecated */
+export default scrollToTop

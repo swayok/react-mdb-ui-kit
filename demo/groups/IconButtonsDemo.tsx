@@ -1,9 +1,9 @@
 import {mdiCloseBoxOutline, mdiPencilBoxOutline, mdiPlusBoxOutline} from '@mdi/js'
 import React from 'react'
-import IconButton from '../../components/IconButton'
-import {buttonColors} from '../../demo/groups/ButtonsDemo'
+import {IconButton} from '../../components/IconButton'
+import {buttonColors} from './ButtonsDemo'
 
-export default function IconButtonsDemo() {
+export function IconButtonsDemo() {
 
     return (
         <div className="d-grid grid-columns-2 grid-columns-gap-3">

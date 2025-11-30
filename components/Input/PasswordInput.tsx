@@ -1,10 +1,10 @@
 import {mdiEye, mdiEyeOff} from '@mdi/js'
 import clsx from 'clsx'
 import React, {useState} from 'react'
-import IconButton from '../IconButton'
+import {IconButton} from '../IconButton'
 import Input, {InputProps} from './Input'
 import InputAddonText from './InputAddonText'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {
     withUnmaskToggler?: boolean

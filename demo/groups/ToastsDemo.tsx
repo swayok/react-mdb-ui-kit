@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from '../../components/Button'
+import {Button} from '../../components/Button'
 import {ToastService} from '../../services/ToastService'
 
 // Демонстрация всплывающих уведомлений.
-export default function ToastsDemo() {
+export function ToastsDemo() {
 
     return (
         <div>

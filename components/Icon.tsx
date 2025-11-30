@@ -1,9 +1,9 @@
 import React from 'react'
 import clsx from 'clsx'
-import Tooltip, {TooltipProps} from './Tooltip'
-import MDIIcon, {IconProps} from './MDIIcon'
+import {Tooltip, TooltipProps} from './Tooltip'
+import {MDIIcon, IconProps} from './MDIIcon'
 import {SvgIconInfo, TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import SvgIcon, {SvgIconProps} from './SvgIcon'
+import {SvgIcon, SvgIconProps} from './SvgIcon'
 
 export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
     path: IconProps['path'] | SvgIconInfo
@@ -16,7 +16,7 @@ export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
 }
 
 // SVG-иконка с дополнительными функциями (всплывающая подсказка, подпись).
-function Icon(props: AppIconProps) {
+export function Icon(props: AppIconProps) {
     const {
         className,
         label,
@@ -113,4 +113,5 @@ function Icon(props: AppIconProps) {
     }
 }
 
-export default React.memo(Icon)
+/** @deprecated */
+export default Icon

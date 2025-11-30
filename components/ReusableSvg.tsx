@@ -28,7 +28,7 @@ export interface ReusableSvgProps extends AllHTMLAttributes<SVGSVGElement> {
 // Содержимое полностью отрисовывается только 1 раз, а при необходимости
 // повторного использования будет использоваться ссылка вида:
 // <use href="#reusable-svg-icon-{reuse}"/>
-function ReusableSvg(props: ReusableSvgProps) {
+export function ReusableSvg(props: ReusableSvgProps) {
     const {
         ref,
         reuse,
@@ -65,4 +65,5 @@ function ReusableSvg(props: ReusableSvgProps) {
     )
 }
 
-export default React.memo(ReusableSvg)
+/** @deprecated */
+export default ReusableSvg

@@ -15,14 +15,19 @@ interface CachedSvgElement {
     children: ReactNode | ReactNode[]
 }
 
-export class ReusableSvgRepository {
+// Репозиторий для кеширования SVG элементов.
+export abstract class ReusableSvgRepository {
 
+    // Контейнер для кешированных SVG элементов.
     private static container: HTMLDivElement | null = null
 
+    // Кешированные SVG элементы.
     private static svgElements: AnyObject<CachedSvgElement, string> = {}
 
+    // Настройки репозитория.
     private static config: ReusableSvgRepositoryConfig = {}
 
+    // Настроить репозиторий.
     static configure(config: ReusableSvgRepositoryConfig) {
         this.config = {...this.config, ...config}
         if (this.container) {
@@ -30,6 +35,7 @@ export class ReusableSvgRepository {
         }
     }
 
+    // Получить содержимое SVG элемента.
     static getSvgContents(
         name: string,
         uid: string | number,
@@ -56,6 +62,7 @@ export class ReusableSvgRepository {
         return this.svgElements[name].children
     }
 
+    // Запомнить SVG элемент.
     private static rememberSvgElement(
         name: string,
         svgElement: SVGSVGElement | null,
@@ -82,6 +89,7 @@ export class ReusableSvgRepository {
         this.getContainer().appendChild(iconContainer)
     }
 
+    // Получить контейнер кешированных SVG элементов.
     private static getContainer(): Node {
         if (!this.container) {
             this.container = document.createElement('div')
@@ -91,9 +99,8 @@ export class ReusableSvgRepository {
         return this.container
     }
 
+    // Получить ID кешируемого SVG элемента.
     private static getSvgId(name: string): string {
         return 'reusable-svg-' + name
     }
-
-
 }

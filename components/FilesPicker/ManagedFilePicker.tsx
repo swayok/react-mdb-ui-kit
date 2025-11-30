@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import FilePickerContext, {FilePickerContextPropsDefaults, filePickerDefaultTranslations} from './FilePickerContext'
-import FileAPI, {FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileAPI, FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
@@ -8,11 +8,11 @@ import {
     FilePickerUploadInfo,
     FilePickerFileInfo,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import ErrorBoundary from '../ErrorBoundary'
+import {ErrorBoundary} from '../ErrorBoundary'
 import {ToastService} from '../../services/ToastService'
 import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
 import ReorderableList from '../ReorderableList/ReorderableList'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 import FilePickerHelpers from './FilePickerHelpers'
 
 // Добавляется к максимальной позиции при прикреплении нового файла.

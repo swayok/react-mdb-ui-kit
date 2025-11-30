@@ -15,7 +15,7 @@ export interface SvgIconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'si
 }
 
 // Отображение не оптимизированной SVG иконки по примеру <MDIIcon>.
-function SvgIcon(props: SvgIconProps) {
+export function SvgIcon(props: SvgIconProps) {
     const {
         iconInfo,
         size = 24,
@@ -68,4 +68,5 @@ function SvgIcon(props: SvgIconProps) {
     )
 }
 
-export default React.memo(SvgIcon)
+/** @deprecated */
+export default SvgIcon

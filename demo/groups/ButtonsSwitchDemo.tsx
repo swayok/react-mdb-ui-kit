@@ -1,9 +1,9 @@
 import React from 'react'
-import ButtonsSwitch from '../../components/ButtonsSwitch'
+import {ButtonsSwitch} from '../../components/ButtonsSwitch'
 import ButtonsSwitchInput from '../../components/Input/ButtonsSwitchInput'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function ButtonsSwitchDemo() {
+export function ButtonsSwitchDemo() {
 
     return (
         <>

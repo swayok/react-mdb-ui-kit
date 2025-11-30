@@ -16,7 +16,7 @@ export interface LoadingProps {
 }
 
 // Индикатор загрузки.
-function Loading(props: LoadingProps) {
+export function Loading(props: LoadingProps) {
 
     const [
         showOverlay,
@@ -109,4 +109,5 @@ function Loading(props: LoadingProps) {
     )
 }
 
-export default React.memo(Loading)
+/** @deprecated */
+export default Loading

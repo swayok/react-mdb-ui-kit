@@ -12,7 +12,7 @@ export interface SectionDividerProps {
 }
 
 // Разделитель с подписью.
-function SectionDivider(props: SectionDividerProps) {
+export function SectionDivider(props: SectionDividerProps) {
 
     let margins: string = ''
     switch (props.margins) {
@@ -59,4 +59,5 @@ function SectionDivider(props: SectionDividerProps) {
     )
 }
 
-export default React.memo(SectionDivider)
+/** @deprecated */
+export default SectionDivider

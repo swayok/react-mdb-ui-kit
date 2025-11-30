@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import Note, {NoteProps} from './Note'
+import {Note, NoteProps} from './Note'
 import ModalHeaderCloseButton from './Modal/ModalHeaderCloseButton'
-import Collapse from './Collapse'
+import {Collapse} from './Collapse'
 
 interface Props extends NoteProps {
     onDismissed?: () => void,
@@ -10,7 +10,7 @@ interface Props extends NoteProps {
 }
 
 // Скрываемое уведомление.
-function DismissibleNote(props: Props) {
+export function DismissibleNote(props: Props) {
 
     const {
         visible,
@@ -71,4 +71,5 @@ function DismissibleNote(props: Props) {
     )
 }
 
-export default React.memo(DismissibleNote)
+/** @deprecated */
+export default DismissibleNote

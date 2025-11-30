@@ -1,11 +1,11 @@
 import React from 'react'
-import SectionDivider from '../components/SectionDivider'
+import {SectionDivider} from '../components/SectionDivider'
 import TabSheet from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
 import {ColorPaletteDemo} from './groups/ColorPaletteDemo'
-import TabContentForDemoTabsheet from '../demo/TabContentForDemoTabsheet'
+import {TabContentForDemoTabsheet} from './TabContentForDemoTabsheet'
 
 const palettes: string[] = [
     'gray',
@@ -30,7 +30,7 @@ const palettes: string[] = [
 ]
 
 // Демонстрация цветовых палитр.
-export default function ColorsDemo() {
+export function ColorsDemo() {
 
     return (
         <TabSheet

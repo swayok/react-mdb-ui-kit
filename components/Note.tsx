@@ -1,18 +1,23 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag, NoteColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyRefObject,
+    ComponentPropsWithModifiableTag,
+    NoteColors,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface NoteProps extends ComponentPropsWithModifiableTag {
     color?: NoteColors,
+    ref?: AnyRefObject<HTMLElement>
 }
 
 // Цветной блок с текстом-пояснением.
-const Note = ((props: NoteProps, ref: React.ForwardedRef<HTMLElement>) => {
+export function Note(props: NoteProps) {
     const {
         className,
         color,
         children,
         tag: Tag = 'p',
+        ref,
         ...otherProps
     } = props
 
@@ -31,6 +36,7 @@ const Note = ((props: NoteProps, ref: React.ForwardedRef<HTMLElement>) => {
             {children}
         </Tag>
     )
-})
+}
 
-export default React.memo(React.forwardRef<HTMLElement, NoteProps>(Note))
+/** @deprecated */
+export default Note

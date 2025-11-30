@@ -1,9 +1,9 @@
 import React from 'react'
 import MultiSelectInput from '../../components/Input/MultiSelectInput'
 import SelectInput from '../../components/Input/SelectInput/SelectInput'
-import SectionDivider from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/SectionDivider'
 
-export default function SelectInputsDemo() {
+export function SelectInputsDemo() {
 
     return (
         <>

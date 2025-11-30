@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {AllHTMLAttributes, CSSProperties, SVGAttributes, useId} from 'react'
-import ReusableSvg from './ReusableSvg'
+import {ReusableSvg} from './ReusableSvg'
 
 export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string
@@ -28,7 +28,7 @@ export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size'
 }
 
 // Иконка.
-function MDIIcon(props: IconProps) {
+export function MDIIcon(props: IconProps) {
     const {
         path,
         title,
@@ -160,4 +160,5 @@ function MDIIcon(props: IconProps) {
     }
 }
 
-export default React.memo(MDIIcon)
+/** @deprecated */
+export default MDIIcon

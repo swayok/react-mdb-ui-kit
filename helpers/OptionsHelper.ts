@@ -1,7 +1,7 @@
 import {AnyObject, FormSelectOption, NumericKeysObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Набор методов для конвертации различных типов объектов в опции для SelectInput.
-const OptionsHelper = {
+export abstract class OptionsHelper {
     // Конвертирует список строк в список опций для использования в этом компоненте.
     stringListToOptions(list: string[]): FormSelectOption<string>[] {
         const options: FormSelectOption<string>[] = []
@@ -12,7 +12,7 @@ const OptionsHelper = {
             })
         }
         return options
-    },
+    }
 
     // Конвертирует список объектов в список опций для использования в этом компоненте.
     objectListToOptions<ObjectType extends object, ValueType = string>(
@@ -28,7 +28,7 @@ const OptionsHelper = {
             })
         }
         return options
-    },
+    }
 
     // Конвертирует одномерный объект (ключ-значение) в список опций для использования в этом компоненте.
     // Ключ в объекте: строка или число (value для опции), значение: строка (label для опции).
@@ -43,7 +43,8 @@ const OptionsHelper = {
             })
         }
         return options
-    },
+    }
 }
 
+/** @deprecated */
 export default OptionsHelper

@@ -1,5 +1,5 @@
 import {mdiRayStartArrow, mdiSwapVertical} from '@mdi/js'
-import Icon from '../Icon'
+import {Icon} from '../Icon'
 import React from 'react'
 import {DataGridContextProps, DataGridOrderByValuesType, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'

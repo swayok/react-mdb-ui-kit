@@ -5,7 +5,7 @@ import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import withStable from '../../helpers/withStable'
+import {withStable} from '../../helpers/withStable'
 
 const dropdownProps: Partial<DropdownProps> = {
     offset: 6,
