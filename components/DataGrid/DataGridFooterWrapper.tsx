@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {DataGridFooterWrapperProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Обертка подвала таблицы с данными.
-function DataGridFooterWrapper(props: DataGridFooterWrapperProps) {
+export function DataGridFooterWrapper(props: DataGridFooterWrapperProps) {
 
     const {
         className,
@@ -27,5 +27,3 @@ function DataGridFooterWrapper(props: DataGridFooterWrapperProps) {
         </div>
     )
 }
-
-export default React.memo(DataGridFooterWrapper)

@@ -1,17 +1,15 @@
 import clsx from 'clsx'
 import React from 'react'
 import {
-    AnyRefObject,
     BackgroundColors,
-    ComponentPropsWithModifiableTag,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+    ComponentPropsWithModifiableTagAndRef,
+} from '../types'
 
-export interface BadgeProps extends ComponentPropsWithModifiableTag {
-    pill?: boolean,
-    dot?: boolean,
-    notification?: boolean,
-    color?: BackgroundColors,
-    ref?: AnyRefObject<HTMLAllCollection>
+export interface BadgeProps extends ComponentPropsWithModifiableTagAndRef {
+    pill?: boolean
+    dot?: boolean
+    notification?: boolean
+    color?: BackgroundColors
 }
 
 // Элемент, стилизованный под небольшой блок с фоном и текстом или числом (кол-во, теги и т.п.)

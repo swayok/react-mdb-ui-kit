@@ -1,5 +1,5 @@
 import React from 'react'
-import TabSheet from '../components/TabSheet/TabSheet'
+import {TabSheet} from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
@@ -31,13 +31,13 @@ export function LinksAndButtonsDemo() {
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="links">
-                    <LinksDemo/>
+                    <LinksDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="icon-buttons">
-                    <IconButtonsDemo/>
+                    <IconButtonsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="buttons">
-                    <ButtonsDemo/>
+                    <ButtonsDemo />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

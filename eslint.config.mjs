@@ -437,17 +437,8 @@ const rules = {
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     {
-        files: ['**/*.{ts,tsx,mjs,d.ts}'],
+        files: ['**/*.{ts,tsx,d.ts}'],
         ignores: [
-            '**/app.min.js',
-            '**/webpack.mix.js',
-            '**/webpack.mix.css.js',
-            '**/webpack.mix.frontend.js',
-            '**/webpack.mix.management.js',
-            '**/webpack.mix.admin.js',
-            '**/webpack.mix.partials.js',
-            '**/webpack.mix.copy-vendor-files.js',
-            '**/webpack.mix.service-workers.js',
             '**/.eslintrc.js',
             // '**/eslint.config.mjs'
         ],

@@ -1,15 +1,14 @@
 import React from 'react'
 import clsx from 'clsx'
-import DataGridNoItems from './DataGridNoItems'
+import {DataGridNoItems} from './DataGridNoItems'
 import {useDataGridContext} from './DataGridContext'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DataGridTableProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {withStable} from '../../helpers/withStable'
 import {FadeSwitch} from '../FadeSwitch'
 
 // Таблица с данными (<table>).
-function DataGridTable<
-    RowDataType extends object = AnyObject
+export function DataGridTable<
+    RowDataType extends object = AnyObject,
 >(props: DataGridTableProps<RowDataType>) {
 
     const {translations} = useDataGridContext()
@@ -27,16 +26,16 @@ function DataGridTable<
         wrapperId,
         wrapperStyle,
 
-        renderHeaders,
+        Headers,
         renderRow,
-        renderTotalsRow,
+        TotalsRow,
         noItemsMessage,
 
         ...tableProps
     } = props
 
     const context = useDataGridContext<RowDataType>()
-    const {visibleRows} = context
+    const visibleRows = context.visibleRows
 
     const renderNoItemsMessage = () => {
         if (!noItemsMessage || typeof noItemsMessage === 'string') {
@@ -74,19 +73,20 @@ function DataGridTable<
                         )}
                         {...tableProps}
                     >
-                        {typeof renderHeaders === 'function' ? renderHeaders() : renderHeaders}
-                        {visibleRows.length > 0 && (
-                            <tbody>
-                                {visibleRows.map((
-                                    rowData: Readonly<RowDataType>,
-                                    index: number,
-                                    rows: readonly RowDataType[]
-                                ) => renderRow(rowData, index, rows, context))}
-                            </tbody>
-                        )}
-                        {!!renderTotalsRow && visibleRows.length > 0 && (
+                        {Headers}
+                        <tbody>
+                            {visibleRows.map(
+                                (rowData, index, rows) => renderRow(
+                                    rowData,
+                                    index,
+                                    rows,
+                                    context
+                                )
+                            )}
+                        </tbody>
+                        {!!TotalsRow && (
                             <tfoot>
-                                {renderTotalsRow?.(visibleRows, context)}
+                                {TotalsRow && <TotalsRow />}
                             </tfoot>
                         )}
                     </table>
@@ -96,7 +96,5 @@ function DataGridTable<
     )
 }
 
-export default withStable<DataGridTableProps>(
-    ['renderRow', 'renderTotalsRow', 'renderHeaders'],
-    DataGridTable
-) as typeof DataGridTable
+/** @deprecated */
+export default DataGridTable

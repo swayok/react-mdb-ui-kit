@@ -3,7 +3,7 @@ import React from 'react'
 import {DataGridCellProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Ячейка таблицы.
-function DataGridCell(props: DataGridCellProps) {
+export function DataGridCell(props: DataGridCellProps) {
 
     const {
         children,
@@ -25,4 +25,5 @@ function DataGridCell(props: DataGridCellProps) {
     )
 }
 
-export default React.memo(DataGridCell)
+/** @deprecated */
+export default DataGridCell

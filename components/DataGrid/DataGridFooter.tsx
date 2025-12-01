@@ -1,18 +1,17 @@
-import React from 'react'
-import DataGridItemsCount from './DataGridItemsCount'
-import DataGridPagination from './DataGridPagination'
+import {DataGridItemsCount} from './DataGridItemsCount'
+import {DataGridPagination} from './DataGridPagination'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFooterProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import DataGridFooterWrapper from './DataGridFooterWrapper'
+import {DataGridFooterProps} from './DataGridTypes'
+import {DataGridFooterWrapper} from './DataGridFooterWrapper'
 
 // Подвал таблицы с данными.
 // Слева:
 // - количество строк в таблице
 // - диапазон отображаемых строк
-// - выбор лимита кол-ва строк отображаемых на странице
+// - выбор лимита кол-ва строк, отображаемых на странице
 // Справа:
 // - пагинация
-function DataGridFooter(props: DataGridFooterProps) {
+export function DataGridFooter(props: DataGridFooterProps) {
 
     const {
         disabled,
@@ -62,4 +61,4 @@ function DataGridFooter(props: DataGridFooterProps) {
     )
 }
 
-export default React.memo(DataGridFooter)
+export default DataGridFooter

@@ -1,5 +1,5 @@
 import React from 'react'
-import TabSheet from '../components/TabSheet/TabSheet'
+import {TabSheet} from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
@@ -43,22 +43,25 @@ export function ComponentsDemo() {
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="rating-stars">
-                    <RatingStarsDemo/>
+                    <RatingStarsDemo />
                 </TabContentForDemoTabsheet>
-                <TabContentForDemoTabsheet name="toast" single>
-                    <ToastsDemo/>
+                <TabContentForDemoTabsheet
+                    name="toast"
+                    single
+                >
+                    <ToastsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="badges">
-                    <BadgesDemo/>
+                    <BadgesDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="images-previewer">
-                    <ImagesPreviewDemo/>
+                    <ImagesPreviewDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="tables">
-                    <TablesDemo/>
+                    <TablesDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="data-grid">
-                    <DataGridDemo/>
+                    <DataGridDemo />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

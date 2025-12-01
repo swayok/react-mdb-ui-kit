@@ -1,11 +1,13 @@
-import React, {useCallback, useMemo} from 'react'
 import clsx from 'clsx'
+import React, {
+    useCallback,
+    useMemo,
+} from 'react'
+import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {DropdownProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {withStable} from '../../helpers/withStable'
 
 const dropdownProps: Partial<DropdownProps> = {
     offset: 6,
@@ -14,7 +16,7 @@ const dropdownProps: Partial<DropdownProps> = {
 }
 
 // Количество строк в таблице, диапазон отображаемых строк и выбор лимита строк на странице.
-function DataGridItemsCount(props: DataGridItemsCountProps) {
+export function DataGridItemsCount(props: DataGridItemsCountProps) {
 
     const {translations} = useDataGridContext()
 
@@ -75,7 +77,7 @@ function DataGridItemsCount(props: DataGridItemsCountProps) {
                     )}
                 </span>
             )}
-            <span className="data-grid-vertical-separator"/>
+            <span className="data-grid-vertical-separator" />
             <span>
                 {translations.items_count.items_shown(
                     totalCount === 0 ? 0 : offset + 1,
@@ -84,7 +86,7 @@ function DataGridItemsCount(props: DataGridItemsCountProps) {
             </span>
             {limitsOptions.length > 1 && !!onLimitChange && (
                 <div className="d-flex flex-row align-items-center justify-content-start">
-                    <span className="data-grid-vertical-separator"/>
+                    <span className="data-grid-vertical-separator" />
                     <SelectInput<number>
                         options={limitsOptions}
                         value={limit}
@@ -102,5 +104,3 @@ function DataGridItemsCount(props: DataGridItemsCountProps) {
         </div>
     )
 }
-
-export default withStable(['onLimitChange'], DataGridItemsCount)

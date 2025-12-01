@@ -1,12 +1,11 @@
-import React from 'react'
 import clsx from 'clsx'
-import DataGridFiltersPanelLabel from './DataGridFiltersPanelLabel'
-import DataGridFiltersPanelButtons from './DataGridFiltersPanelButtons'
+import React from 'react'
 import {DataGridFiltersPanelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {withStable} from '../../helpers/withStable'
+import {DataGridFiltersPanelButtons} from './DataGridFiltersPanelButtons'
+import {DataGridFiltersPanelLabel} from './DataGridFiltersPanelLabel'
 
 // Панель фильтрации для таблицы.
-function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
+export function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
 
     const {
         children,
@@ -49,7 +48,7 @@ function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
                 }
             }}
         >
-            {!noLabel && <DataGridFiltersPanelLabel/>}
+            {!noLabel && <DataGridFiltersPanelLabel />}
             {children}
             {!noButtons && (
                 <DataGridFiltersPanelButtons
@@ -66,7 +65,5 @@ function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
     )
 }
 
-export default withStable<DataGridFiltersPanelProps>(
-    ['onReset', 'onSubmit'],
-    DataGridFiltersPanel
-)
+/** @deprecated */
+export default DataGridFiltersPanel

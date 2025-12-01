@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import DataGrid from '../../components/DataGrid/DataGrid'
-import DataGridCell from '../../components/DataGrid/DataGridCell'
-import DataGridDefaultLayout from '../../components/DataGrid/DataGridDefaultLayout'
-import DataGridFiltersPanel from '../../components/DataGrid/DataGridFiltersPanel'
-import DataGridHeader from '../../components/DataGrid/DataGridHeader'
-import DataGridHeaders from '../../components/DataGrid/DataGridHeaders'
-import DataGridRow from '../../components/DataGrid/DataGridRow'
+import {DataGrid} from '../../components/DataGrid/DataGrid'
+import {DataGridCell} from '../../components/DataGrid/DataGridCell'
+import {DataGridDefaultLayout} from '../../components/DataGrid/DataGridDefaultLayout'
+import {DataGridFiltersPanel} from '../../components/DataGrid/DataGridFiltersPanel'
+import {DataGridHeader} from '../../components/DataGrid/DataGridHeader'
+import {DataGridHeaders} from '../../components/DataGrid/DataGridHeaders'
+import {DataGridRow} from '../../components/DataGrid/DataGridRow'
 import Input from '../../components/Input/Input'
 import {SectionDivider} from '../../components/SectionDivider'
 import data_grid from '../../locales/en/data_grid'
@@ -14,7 +14,7 @@ export function DataGridDemo() {
 
     return (
         <>
-            <SectionDivider label="Table default + hover"/>
+            <SectionDivider label="Table default + hover" />
             <DataGrid
                 rows={rows}
                 translations={data_grid}
@@ -25,8 +25,8 @@ export function DataGridDemo() {
             >
                 <DataGridDefaultLayout
                     className="mb-4"
-                    filtersPanel={<FiltersPanel/>}
-                    renderHeaders={<Headers/>}
+                    FiltersPanel={<FiltersPanel />}
+                    Headers={<Headers />}
                     renderRow={renderRow}
                 />
             </DataGrid>
@@ -43,8 +43,8 @@ export function DataGridDemo() {
                     tableProps={{
                         bordered: true,
                     }}
-                    filtersPanel={<FiltersPanel/>}
-                    renderHeaders={<Headers/>}
+                    FiltersPanel={<FiltersPanel />}
+                    Headers={<Headers />}
                     renderRow={renderRow}
                 />
             </DataGrid>
@@ -60,7 +60,8 @@ function FiltersPanel() {
 
     return (
         <DataGridFiltersPanel
-            onSubmit={() => {}}
+            onSubmit={() => {
+            }}
         >
             <Input
                 label="Keywords"
@@ -120,10 +121,10 @@ function renderRow(row: RowData, index: number) {
 }
 
 interface RowData {
-    id: number;
-    name: string;
-    email: string;
-    is_active: boolean;
+    id: number
+    name: string
+    email: string
+    is_active: boolean
 }
 
 const rows: RowData[] = [

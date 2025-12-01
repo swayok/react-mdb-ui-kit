@@ -1,9 +1,17 @@
-import React, {useContext} from 'react'
+import {
+    Context,
+    createContext,
+    useContext,
+} from 'react'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DataGridContextProps, DataGridTranslations} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {
+    DataGridContextProps,
+    DataGridTranslations,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Лимиты количества строк в таблице.
 export const dataGridDefaultLimits: DataGridContextProps['limits'] = [10, 20, 50]
+
 export const dataGridDefaultLimit: DataGridContextProps['limit'] = 20
 
 // Стандартная локализация таблицы.
@@ -43,7 +51,7 @@ export const dataGridDefaultTranslations: DataGridTranslations = {
 // Стандартные значения для контекста.
 export function getDataGridContextDefaults<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 >(
     props?: Partial<DataGridContextProps<RowDataType, FiltersDataType>>
 ): DataGridContextProps<RowDataType, FiltersDataType> {
@@ -98,22 +106,24 @@ export function getDataGridContextDefaults<
     return mergedProps
 }
 
-const DataGridContextInstance = React.createContext<DataGridContextProps>(getDataGridContextDefaults())
-
 // Контекст для таблиц данных (<DataGrid>).
-function DataGridContext<
-    RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
->(): React.Context<DataGridContextProps<RowDataType, FiltersDataType>> {
-    return DataGridContextInstance as unknown as React.Context<DataGridContextProps<RowDataType, FiltersDataType>>
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const DataGridContext = createContext<DataGridContextProps<any, any>>(
+    getDataGridContextDefaults()
+)
 
-export default DataGridContext
+// Получить контекст для таблиц данных (<DataGrid>) с правильной типизацией.
+export function getDataGridContextInstance<
+    RowDataType extends object = AnyObject,
+    FiltersDataType extends object = AnyObject,
+>(): Context<DataGridContextProps<RowDataType, FiltersDataType>> {
+    return DataGridContext as Context<DataGridContextProps<RowDataType, FiltersDataType>>
+}
 
 // Хук для получения контекста.
 export function useDataGridContext<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 >(): DataGridContextProps<RowDataType, FiltersDataType> {
-    return useContext(DataGridContext<RowDataType, FiltersDataType>())
+    return useContext(DataGridContext as Context<DataGridContextProps<RowDataType, FiltersDataType>>)
 }

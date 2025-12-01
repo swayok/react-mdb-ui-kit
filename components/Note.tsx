@@ -1,13 +1,11 @@
 import clsx from 'clsx'
 import {
-    AnyRefObject,
-    ComponentPropsWithModifiableTag,
+    ComponentPropsWithModifiableTagAndRef,
     NoteColors,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../types'
 
-export interface NoteProps extends ComponentPropsWithModifiableTag {
-    color?: NoteColors,
-    ref?: AnyRefObject<HTMLElement>
+export interface NoteProps extends ComponentPropsWithModifiableTagAndRef {
+    color?: NoteColors
 }
 
 // Цветной блок с текстом-пояснением.

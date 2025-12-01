@@ -1,7 +1,9 @@
 import useEventCallback from '@restart/hooks/useEventCallback'
 import BaseDropdown from '@restart/ui/Dropdown'
 import clsx from 'clsx'
-import React, {useImperativeHandle, useMemo, useState} from 'react'
+import React, {
+    useImperativeHandle, useMemo, useState,
+} from 'react'
 import {useUncontrolled} from 'uncontrollable'
 import {DropdownContext} from './DropdownContext'
 import {
@@ -13,6 +15,7 @@ import {
 } from './DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
+// Обёртка и контекст выпадающего меню.
 export function Dropdown(props: DropdownProps) {
     const {
         defaultShow,
@@ -125,7 +128,9 @@ export function Dropdown(props: DropdownProps) {
             align,
             drop,
             isRTL,
-            (Array.isArray(normalizedOffset) ? normalizedOffset.join(',') : normalizedOffset),
+            (Array.isArray(normalizedOffset)
+                ? normalizedOffset.join(',')
+                : normalizedOffset),
             disableAllItems,
         ]
     )

@@ -1,8 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
 import type {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
-import type {Offset, UsePopperOptions} from '@restart/ui/usePopper'
-import type {ComponentProps, HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent} from 'react'
-import type {AnyRefObject, ComponentPropsWithModifiableTag, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
+import type {
+    Offset, UsePopperOptions,
+} from '@restart/ui/usePopper'
+import type {
+    ComponentProps, HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent,
+} from 'react'
+import type {
+    AnyRefObject,
+    ComponentPropsWithModifiableTag,
+    ComponentPropsWithModifiableTagAndRef,
+    ReactComponentOrTagName,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface DropdownContextProps {
     align?: DropdownAlign
@@ -10,7 +20,7 @@ export interface DropdownContextProps {
     isRTL?: boolean
     offset?: DropdownMenuOffset
     // Индикатор того, что все DropdownItem внутри этого Dropdown должны быть disabled.
-    disableAllItems: boolean,
+    disableAllItems: boolean
     setDisableAllItems: (disabled: boolean) => void
 }
 
@@ -38,7 +48,6 @@ export interface DropdownProps extends Omit<
     // По умолчанию: true.
     autoClose?: boolean | 'outside' | 'inside'
     // Ссылка на обертку и API выпадающего меню.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref?: AnyRefObject<any, DropdownApi>
     // Режим Right-To-Left.
     isRTL?: boolean
@@ -70,8 +79,7 @@ export interface DropdownToggleEventMetadata {
     originalEvent?: SyntheticEvent | KeyboardEvent | MouseEvent
 }
 
-export interface DropdownToggleProps extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
+export interface DropdownToggleProps extends ComponentPropsWithModifiableTagAndRef {
     split?: boolean
     /**
      * A render prop that returns a Toggle element. The `props`
@@ -83,8 +91,7 @@ export interface DropdownToggleProps extends ComponentPropsWithModifiableTag {
 
 export type DropdownToggleMetadata = UseDropdownToggleMetadata
 
-export interface DropdownMenuProps extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
+export interface DropdownMenuProps extends ComponentPropsWithModifiableTagAndRef {
     show?: boolean
     renderOnMount?: boolean
     flip?: boolean
@@ -110,43 +117,37 @@ export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
     ref?: AnyRefObject
 }
 
-export interface DropdownItemTextProps extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
-}
+export type DropdownItemTextProps = ComponentPropsWithModifiableTagAndRef
 
-export interface DropdownDividerProps extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
-}
+export type DropdownDividerProps = ComponentPropsWithModifiableTagAndRef
 
-export interface DropdownHeaderProps extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
-}
+export type DropdownHeaderProps = ComponentPropsWithModifiableTagAndRef
 
 export type DropdownMenuOffset = Offset
 
-export type DropdownDropDirection =
-    | 'up'
-    | 'up-centered'
-    | 'start'
-    | 'end'
-    | 'down'
-    | 'down-centered';
+export type DropdownDropDirection
+    = | 'up'
+        | 'up-centered'
+        | 'start'
+        | 'end'
+        | 'down'
+        | 'down-centered'
 
 export type DropdownAlignDirection = 'start' | 'end'
 
-export type DropdownResponsiveAlign =
-    | { sm: DropdownAlignDirection }
-    | { md: DropdownAlignDirection }
-    | { lg: DropdownAlignDirection }
-    | { xl: DropdownAlignDirection }
-    | { xxl: DropdownAlignDirection }
-    | Record<string, DropdownAlignDirection>
+export type DropdownResponsiveAlign
+    = | {sm: DropdownAlignDirection;}
+        | {md: DropdownAlignDirection;}
+        | {lg: DropdownAlignDirection;}
+        | {xl: DropdownAlignDirection;}
+        | {xxl: DropdownAlignDirection;}
+        | Record<string, DropdownAlignDirection>
 
 export type DropdownAlign = DropdownAlignDirection | DropdownResponsiveAlign
 
 export type DropdownMenuVariant = 'dark' | string
 
 export interface DropdownPlacement {
-    drop: DropdownDropDirection,
-    align: DropdownAlign,
+    drop: DropdownDropDirection
+    align: DropdownAlign
 }

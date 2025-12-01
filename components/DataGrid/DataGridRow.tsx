@@ -3,7 +3,7 @@ import {DataGridRowProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/Data
 import clsx from 'clsx'
 
 // Обертка строки таблицы (<tr>).
-function DataGridRow(props: DataGridRowProps) {
+export function DataGridRow(props: DataGridRowProps) {
 
     const {
         children,
@@ -29,4 +29,5 @@ function DataGridRow(props: DataGridRowProps) {
     )
 }
 
-export default React.memo(DataGridRow)
+/** @deprecated */
+export default DataGridRow

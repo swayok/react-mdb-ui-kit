@@ -2,19 +2,19 @@ import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
 
 interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
-    label: string;
+    label: string
     // true: обернуть в <span>, false: обернуть в <div>
     inline?: boolean
     // true | string: использовать flexbox для позиционирование содержимого.
     // 'with-icon' - добавить CSS классы 'with-icon-flex gap-1' к контейнеру значения.
     flex?: boolean | 'with-icon'
     // true: без отступа после элемента. При inline=true, всегда noMargin=true.
-    noMargin?: boolean;
-    children?: React.ReactNode | string;
-    labelClassName?: string;
-    valueClassName?: string;
+    noMargin?: boolean
+    children?: React.ReactNode | string
+    labelClassName?: string
+    valueClassName?: string
     // Обернуть содержимое в круглые скобки.
-    wrapInBraces?: boolean;
+    wrapInBraces?: boolean
 }
 
 // Блок вида "Название: значение" ({label}: {value})
@@ -46,7 +46,7 @@ export function LabeledValue(props: Props) {
             {...otherProps}
         >
             {wrapInBraces && '('}<InnerTag className={clsx(labelClassName, 'text-muted')}>
-            {label}:
+                {label}:
             </InnerTag> <InnerTag
                 className={clsx(
                     valueClassName,

@@ -1,7 +1,14 @@
-import {mdiRayStartArrow, mdiSwapVertical} from '@mdi/js'
+import {
+    mdiRayStartArrow,
+    mdiSwapVertical,
+} from '@mdi/js'
 import {Icon} from '../Icon'
 import React from 'react'
-import {DataGridContextProps, DataGridOrderByValuesType, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {
+    DataGridContextProps,
+    DataGridOrderByValuesType,
+    DataGridOrderingDirection,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Стандартные отступы для полей ввода панели фильтрации,
@@ -54,7 +61,7 @@ export function reorderDataGridRows<RowDataType extends object = AnyObject>(
     direction: DataGridContextProps['orderDirection'],
     type?: DataGridOrderByValuesType
 ): RowDataType[] {
-    // eslint-disable-next-line no-prototype-builtins
+
     if (rows.length <= 1 || orderBy === null || !rows[0].hasOwnProperty(orderBy)) {
         return rows.slice()
     }
@@ -142,7 +149,7 @@ function compareStrings(
         : (p2 as string).localeCompare(p1 as string)
 }
 
-// Сравнение двух значений на равенство учитывающее ситуацию
+// Сравнение двух значений на равенство, учитывающее ситуацию,
 // когда одно или оба значения могут быть пустыми (null | undefined).
 export function compareWhenSomeValueIsEmpty(
     p1?: unknown | null,
@@ -163,14 +170,14 @@ export function compareWhenSomeValueIsEmpty(
         return direction === 'asc' ? -1 : 1
     }
     if (!p2) {
-        //place empty p2 after p1 (asc) or p2 before p1 (desc)
+        // place empty p2 after p1 (asc) or p2 before p1 (desc)
         return direction === 'asc' ? 1 : -1
     }
     return null
 }
 
 // Нормализация ширины.
-// Решает проблему когда число без единицы измерения передается в виде строки.
+// Решает проблему, когда число без единицы измерения передается в виде строки.
 export function normalizeDimensionForReactStyles(width: string | number | undefined): string | number | undefined {
     if (typeof width === 'string' && /^[\d.]+$/.test(width)) {
         // Числовая строка без единицы измерения: конвертируем в число.

@@ -1,6 +1,6 @@
 import React from 'react'
 import {SectionDivider} from '../components/SectionDivider'
-import TabSheet from '../components/TabSheet/TabSheet'
+import {TabSheet} from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
@@ -48,7 +48,10 @@ export function ColorsDemo() {
                 </TabSheetTabButton>
             </TabSheetHeader>
             <TabSheetBody>
-                <TabContentForDemoTabsheet name="palettes" single>
+                <TabContentForDemoTabsheet
+                    name="palettes"
+                    single
+                >
                     <SectionDivider
                         label="Primary colors"
                         labelClassName="text-blue"
@@ -74,17 +77,23 @@ export function ColorsDemo() {
                                 label={color[0].toUpperCase() + color.slice(1) + ' palette'}
                                 labelClassName="text-blue"
                             />
-                            <ColorPaletteDemo color={color}/>
+                            <ColorPaletteDemo color={color} />
                         </div>
                     ))}
                 </TabContentForDemoTabsheet>
-                <TabContentForDemoTabsheet name="test-palette" single>
-                    <ColorPaletteDemo color="test"/>
+                <TabContentForDemoTabsheet
+                    name="test-palette"
+                    single
+                >
+                    <ColorPaletteDemo color="test" />
                     <SectionDivider
                         label="Camparison"
                         labelClassName="text-blue"
                     />
-                    <ColorPaletteDemo color="test-compare" accents={[]}/>
+                    <ColorPaletteDemo
+                        color="test-compare"
+                        accents={[]}
+                    />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

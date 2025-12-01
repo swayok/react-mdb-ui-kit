@@ -1,11 +1,11 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
+import {ComponentPropsWithModifiableTagAndRef} from '../../types'
 
-export type CardTitleProps = ComponentPropsWithModifiableTag
+export type CardTitleProps = ComponentPropsWithModifiableTagAndRef
 
-// Заголовок карточки
-function CardTitle(props: CardTitleProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+// Заголовок карточки.
+export function CardTitle(props: CardTitleProps) {
     const {
         className,
         children,
@@ -17,11 +17,11 @@ function CardTitle(props: CardTitleProps, ref: React.ForwardedRef<HTMLAllCollect
         <Tag
             className={clsx('card-title', className)}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </Tag>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, CardTitleProps>(CardTitle))
+/** @deprecated */
+export default CardTitle

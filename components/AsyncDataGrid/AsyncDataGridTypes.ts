@@ -1,11 +1,25 @@
-import type {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
-import type {DataGridFooterProps, DataGridHeaderProps, DataGridOrderingDirection, DataGridTranslations} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import type {CSSProperties, TableHTMLAttributes, MouseEvent, ReactNode, FunctionComponent} from 'react'
+import type {
+    AnyObject,
+    ApiResponseData,
+} from 'swayok-react-mdb-ui-kit/types/Common'
+import type {
+    DataGridFooterProps,
+    DataGridHeaderProps,
+    DataGridOrderingDirection,
+    DataGridTranslations,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import type {
+    CSSProperties,
+    TableHTMLAttributes,
+    MouseEvent,
+    ReactNode,
+    FunctionComponent,
+} from 'react'
 
 // Контекст таблицы с данными, получаемыми с сервера.
 export interface AsyncDataGridContextProps<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 > {
     translations: DataGridTranslations
 
@@ -47,7 +61,7 @@ export interface AsyncDataGridContextProps<
     // Открыть/закрыть панель фильтрации.
     setIsFiltersPanelOpened: (isOpened: boolean) => void
 
-    rows: RowDataType[]
+    rows: readonly RowDataType[]
     totalCount: number | null
     setRows: (rows: RowDataType[], totalCount?: number) => void
     updateRows: (callback: (rows: RowDataType[]) => RowDataType[]) => void
@@ -79,7 +93,7 @@ export interface AsyncDataGridContextProps<
         rowData: RowDataType,
         rowIndex: number,
         // Установка индикатора выполнения действия над строкой.
-        setIsProcessing: (isProcessing: boolean) => void,
+        setIsProcessing: (isProcessing: boolean) => void
     ) => void
     // Закрыть контекстное меню для строки.
     closeContextMenu?: () => void
@@ -109,7 +123,7 @@ export interface AsyncDataGridContextProps<
 // Свойства обертки таблицы с данными, получаемыми с сервера (настройка контекста).
 export interface AsyncDataGridProps<
     FiltersDataType extends object,
-    RowDataType extends object = AnyObject
+    RowDataType extends object = AnyObject,
 > {
     apiUrl: AsyncDataGridContextProps<RowDataType, FiltersDataType>['apiUrl']
     // HTTP метод отправки запроса.
@@ -151,21 +165,21 @@ export interface AsyncDataGridProps<
 
 // Свойства для стандартной разметки таблицы с данными, получаемыми с сервера.
 export interface AsyncDataGridDefaultLayoutProps<
-    RowDataType extends object = AnyObject
->{
+    RowDataType extends object = AnyObject,
+> {
     // Панель фильтрации.
-    filtersPanel?: ReactNode | (() => ReactNode)
+    FiltersPanel?: ReactNode
     // Отрисовка блока с заголовками колонок (<thead>, <DataGridHeaders>).
-    renderHeaders: AsyncDataGridTableProps<RowDataType>['renderHeaders']
+    Headers: AsyncDataGridTableProps<RowDataType>['Headers']
     // Отрисовка строки таблицы.
     renderRow: AsyncDataGridTableProps<RowDataType>['renderRow']
     // Дополнительные элементы, выводимые перед таблицей и панелью фильтрации.
     // Свойство нужно для того, чтобы не сломать прокрутку таблицы в режиме
     // заполнения таблицей свободного места (fill, inline).
-    prepend?: ReactNode | (() => ReactNode)
+    Prepend?: ReactNode
     // Дополнительные элементы, выводимые после таблицы и подвала таблицы (пагинации).
     // Свойство нужно по той же причине, что и prepend.
-    append?: ReactNode | (() => ReactNode)
+    Append?: ReactNode
 
     // Если true: отображать таблицу как есть.
     // Если false: отображать таблицу в режиме заполнения свободного пространства.
@@ -176,7 +190,7 @@ export interface AsyncDataGridDefaultLayoutProps<
     tableWrapperClassName?: string
     tableProps?: Partial<Omit<
         AsyncDataGridTableProps<RowDataType>,
-        'renderHeaders' | 'renderRow' | 'fillHeight'
+        'Headers' | 'renderRow' | 'fillHeight'
     >>
     striped?: AsyncDataGridTableProps['striped']
     hover?: AsyncDataGridTableProps['hover']
@@ -201,7 +215,7 @@ export interface AsyncDataGridFooterProps extends DataGridFooterProps {
 
 // Свойства таблицы с данными, получаемыми с сервера (<table>).
 export interface AsyncDataGridTableProps<
-    RowDataType extends object = AnyObject
+    RowDataType extends object = AnyObject,
 > extends Omit<TableHTMLAttributes<HTMLTableElement>, 'children'> {
     striped?: boolean
     hover?: boolean
@@ -214,7 +228,7 @@ export interface AsyncDataGridTableProps<
     wrapperId?: string
     verticalAlign?: 'top' | 'middle' | 'bottom'
 
-    renderHeaders: ReactNode | (() => ReactNode)
+    Headers: ReactNode
     renderRow: (
         rowData: RowDataType,
         index: number,
@@ -244,7 +258,7 @@ export interface AsyncDataGridLoadingProps {
 
 // Данные для таблицы, получаемые с сервера.
 export interface AsyncDataGridRows<
-    RowDataType extends object = AnyObject
+    RowDataType extends object = AnyObject,
 > extends ApiResponseData {
     records: RowDataType[]
     count: number
@@ -260,7 +274,7 @@ export type AsyncDataGridHeaderProps<OrderByOptions extends string> = Omit<
 // Функции, выполняемые, когда происходят определенные события с таблицей.
 export interface AsyncDataGridEventsProps<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 > {
     // Получено новый набор строк.
     onSetRows?: (context: AsyncDataGridContextProps<RowDataType, FiltersDataType>) => void
@@ -297,7 +311,7 @@ export interface AsyncDataGridUrlQueryManagerProps {
 
 // Свойства компонента, отображающего контекстное меню для строки таблицы.
 export interface AsyncDataGridContextMenuProps<
-    RowDataType extends object = AnyObject
+    RowDataType extends object = AnyObject,
 > {
     show: boolean
     mouseEvent?: MouseEvent<HTMLElement>

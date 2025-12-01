@@ -1,6 +1,6 @@
 import React from 'react'
 import {SectionDivider} from '../components/SectionDivider'
-import TabSheet from '../components/TabSheet/TabSheet'
+import {TabSheet} from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
@@ -62,44 +62,44 @@ export function InputsDemo() {
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="checkboxes">
-                    <SectionDivider label="Checkbox & Radio (normal size)"/>
-                    <CheckboxesAndRadiosDemo/>
+                    <SectionDivider label="Checkbox & Radio (normal size)" />
+                    <CheckboxesAndRadiosDemo />
 
-                    <SectionDivider label="Checkbox & Radio (small size)"/>
-                    <CheckboxesAndRadiosDemo small/>
+                    <SectionDivider label="Checkbox & Radio (small size)" />
+                    <CheckboxesAndRadiosDemo small />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="switches">
-                    <SwitchesDemo/>
+                    <SwitchesDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="text">
-                    <SectionDivider label="Text inputs (simple)"/>
-                    <SimpleTextInputsDemo/>
-                    <SectionDivider label="Text inputs (material design)"/>
-                    <MdbTextInputsDemo/>
+                    <SectionDivider label="Text inputs (simple)" />
+                    <SimpleTextInputsDemo />
+                    <SectionDivider label="Text inputs (material design)" />
+                    <MdbTextInputsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="text-area">
-                    <SectionDivider label="Text areas (simple)"/>
-                    <SimpleTextAreaInputsDemo/>
-                    <SectionDivider label="Text areas (material design)"/>
-                    <MdbTextAreaInputsDemo/>
+                    <SectionDivider label="Text areas (simple)" />
+                    <SimpleTextAreaInputsDemo />
+                    <SectionDivider label="Text areas (material design)" />
+                    <MdbTextAreaInputsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="buttons-switch">
-                    <ButtonsSwitchDemo/>
+                    <ButtonsSwitchDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="selects">
-                    <SelectInputsDemo/>
+                    <SelectInputsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="date-inputs">
-                    <DateInputsDemo/>
+                    <DateInputsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="html-editors">
-                    <HtmlEditorsDemo/>
+                    <HtmlEditorsDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="file-pickers">
-                    <FilePickersDemo/>
+                    <FilePickersDemo />
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="form-inline">
-                    <FormInlineDemo/>
+                    <FormInlineDemo />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

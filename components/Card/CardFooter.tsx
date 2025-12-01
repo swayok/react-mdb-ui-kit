@@ -1,18 +1,22 @@
-import React from 'react'
 import clsx from 'clsx'
-import {BackgroundColors, BorderColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
+import {
+    BackgroundColors,
+    BorderColors,
+    ComponentPropsWithModifiableTagAndRef,
+} from '../../types'
 
-export interface CardFooterProps extends ComponentPropsWithModifiableTag {
-    // толщина верхней границы: 0, 1, 2, 3, 4, 5
-    border?: number,
-    // цвет границы
-    borderColor?: BorderColors,
-    // цвет фона
-    background?: BackgroundColors,
+export interface CardFooterProps extends ComponentPropsWithModifiableTagAndRef {
+    // Толщина верхней границы: 0, 1, 2, 3, 4, 5.
+    border?: number
+    // Цвет границы.
+    borderColor?: BorderColors
+    // Цвет фона.
+    background?: BackgroundColors
 }
 
-// Подвал карточки
-function CardFooter(props: CardFooterProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+// Подвал карточки.
+export function CardFooter(props: CardFooterProps) {
     const {
         className,
         children,
@@ -35,11 +39,11 @@ function CardFooter(props: CardFooterProps, ref: React.ForwardedRef<HTMLAllColle
         <Tag
             className={classes}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </Tag>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, CardFooterProps>(CardFooter))
+/** @deprecated */
+export default CardFooter

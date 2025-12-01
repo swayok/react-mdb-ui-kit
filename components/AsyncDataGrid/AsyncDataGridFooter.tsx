@@ -1,11 +1,11 @@
 import React from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import clsx from 'clsx'
-import DataGridItemsCount from '../DataGrid/DataGridItemsCount'
-import DataGridPagination from '../DataGrid/DataGridPagination'
+import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'
+import {DataGridPagination} from '../DataGrid/DataGridPagination'
 import {Icon} from '../Icon'
 import {mdiRefresh} from '@mdi/js'
-import DataGridFooterWrapper from '../DataGrid/DataGridFooterWrapper'
+import {DataGridFooterWrapper} from '../DataGrid/DataGridFooterWrapper'
 import {AsyncDataGridFooterProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 
 // Подвал таблицы с данными.
@@ -16,7 +16,7 @@ import {AsyncDataGridFooterProps} from 'swayok-react-mdb-ui-kit/components/Async
 // Справа:
 // - пагинация;
 // - кнопка перезагрузки данных.
-export const AsyncDataGridFooter = React.memo(function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
+export function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
 
     const {
         disabled,
@@ -84,11 +84,11 @@ export const AsyncDataGridFooter = React.memo(function AsyncDataGridFooter(props
                                 }
                             }}
                         >
-                            <Icon path={mdiRefresh}/>
+                            <Icon path={mdiRefresh} />
                         </div>
                     </div>
                 )}
             </div>
         </DataGridFooterWrapper>
     )
-})
+}

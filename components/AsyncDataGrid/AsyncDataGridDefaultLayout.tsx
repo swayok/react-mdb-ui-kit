@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import {
     AsyncDataGridDefaultLayoutProps,
@@ -5,19 +6,17 @@ import {
     AsyncDataGridTableProps,
 } from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import AsyncDataGridTable from './AsyncDataGridTable'
+import {AsyncDataGridEvents} from './AsyncDataGridEvents'
 import {AsyncDataGridFooter} from './AsyncDataGridFooter'
-import clsx from 'clsx'
-import AsyncDataGridEvents from './AsyncDataGridEvents'
-import {withStable} from '../../helpers/withStable'
+import {AsyncDataGridTable} from './AsyncDataGridTable'
 
-// Стандартная разметка таблицы с данными получаемыми с сервера.
+// Стандартная разметка таблицы с данными, получаемыми с сервера.
 // Сверху вниз:
 // - фильтры (если заданы)
 // - таблица
 // - подвал (кол-во строк, пагинация, выбор лимита строк)
-function AsyncDataGridDefaultLayout<
-    RowDataType extends object = AnyObject
+export function AsyncDataGridDefaultLayout<
+    RowDataType extends object = AnyObject,
 >(props: AsyncDataGridDefaultLayoutProps<RowDataType>) {
 
     const {
@@ -30,10 +29,10 @@ function AsyncDataGridDefaultLayout<
         inline,
         tableWrapperClassName = inline ? 'border' : '',
         className,
-        prepend,
-        append,
-        filtersPanel,
-        renderHeaders,
+        Prepend,
+        Append,
+        FiltersPanel,
+        Headers,
         renderRow,
         hideFooter,
     } = props
@@ -64,24 +63,18 @@ function AsyncDataGridDefaultLayout<
         >
             {/* Отслеживание событий. */}
             {events && (
-                <AsyncDataGridEvents {...events}/>
+                <AsyncDataGridEvents {...events} />
             )}
-            {typeof prepend === 'function' ? prepend() : prepend}
-            {typeof filtersPanel === 'function' ? filtersPanel() : filtersPanel}
+            {Prepend}
+            {FiltersPanel}
             <AsyncDataGridTable<RowDataType>
                 {...tableProps}
-                renderHeaders={renderHeaders}
+                Headers={Headers}
                 renderRow={renderRow}
             />
-            {!hideFooter &&
-                <AsyncDataGridFooter {...footerProps}/>
-            }
-            {typeof append === 'function' ? append() : append}
+            {!hideFooter
+                && <AsyncDataGridFooter {...footerProps} />}
+            {Append}
         </div>
     )
 }
-
-export default withStable(
-    ['filtersPanel', 'prepend', 'append'],
-    AsyncDataGridDefaultLayout
-) as typeof AsyncDataGridDefaultLayout

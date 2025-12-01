@@ -2,11 +2,11 @@ import React, {useCallback} from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {AsyncDataGridHeaderProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
-import DataGridHeaderWrapper from '../DataGrid/DataGridHeaderWrapper'
+import {DataGridHeaderWrapper} from '../DataGrid/DataGridHeaderWrapper'
 
-// Заголовок колонки таблицы с данными получаемыми с сервера (<th>).
-function AsyncDataGridHeader<
-    OrderByOptions extends string = string
+// Заголовок колонки таблицы с данными, получаемыми с сервера (<th>).
+export function AsyncDataGridHeader<
+    OrderByOptions extends string = string,
 >(props: AsyncDataGridHeaderProps<OrderByOptions>) {
 
     const {
@@ -34,4 +34,5 @@ function AsyncDataGridHeader<
     )
 }
 
-export default React.memo(AsyncDataGridHeader) as typeof AsyncDataGridHeader
+/** @deprecated */
+export default AsyncDataGridHeader

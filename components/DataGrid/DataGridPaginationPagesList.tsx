@@ -7,14 +7,13 @@ import {DropdownItem} from '../Dropdown/DropdownItem'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DataGridPaginationPagesListProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {withStable} from '../../helpers/withStable'
 
 // Кнопка, открывающая выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.
 // Пагинация выглядит так:
 // [1] [2] [3] [...] [90] [91] [92],
 // где [...] - этот компонент.
-function DataGridPaginationPagesList(props: DataGridPaginationPagesListProps) {
+export function DataGridPaginationPagesList(props: DataGridPaginationPagesListProps) {
 
     const {
         className,
@@ -49,7 +48,7 @@ function DataGridPaginationPagesList(props: DataGridPaginationPagesListProps) {
                         tag="div"
                         className="page-link with-icon"
                     >
-                        <Icon path={mdiDotsHorizontal}/>
+                        <Icon path={mdiDotsHorizontal} />
                     </DropdownToggle>
                 </div>
             )
@@ -150,11 +149,6 @@ function DataGridPaginationPagesList(props: DataGridPaginationPagesListProps) {
     }
 }
 
-export default withStable<DataGridPaginationPagesListProps>(
-    ['onOffsetChange'],
-    DataGridPaginationPagesList
-)
-
 // Собрать список номеров страниц, которые нужно отобразить в панели.
 // Если страниц слишком много, то в середину списка будет добавлен "...".
 function getVisiblePageNumbers(
@@ -162,7 +156,7 @@ function getVisiblePageNumbers(
     currentPage: number,
     maxVisiblePages: number
 ): {
-    items: (number | '...')[],
+    items: (number | '...')[]
     hasFiller: boolean
 } {
     const items: (number | '...')[] = []

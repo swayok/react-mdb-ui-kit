@@ -1,14 +1,16 @@
-import React from 'react'
-import {Button} from '../Button'
-import {useDataGridContext} from './DataGridContext'
-import {DataGridFiltersPanelButtonsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {
+    mdiCheck,
+    mdiClose,
+} from '@mdi/js'
 import clsx from 'clsx'
+import React from 'react'
+import {DataGridFiltersPanelButtonsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {Button} from '../Button'
 import {IconButton} from '../IconButton'
-import {mdiCheck, mdiClose} from '@mdi/js'
-import {withStable} from '../../helpers/withStable'
+import {useDataGridContext} from './DataGridContext'
 
 // Кнопки для панели фильтрации: применить и сбросить.
-function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
+export function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
 
     const {
         translations,
@@ -94,14 +96,12 @@ function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {
             )}
         >
             {/* Кнопка требуется, чтобы отрабатывало submit событие формы при нажатии Enter в поле ввода.*/}
-            <button type="submit" className="d-none"/>
+            <button
+                type="submit"
+                className="d-none"
+            />
             {buttons.submit}
             {buttons.reset}
         </div>
     )
 }
-
-export default withStable<DataGridFiltersPanelButtonsProps>(
-    ['onReset', 'onSubmit'],
-    DataGridFiltersPanelButtons
-)

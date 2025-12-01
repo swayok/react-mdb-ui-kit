@@ -1,21 +1,26 @@
-import React from 'react'
 import clsx from 'clsx'
-import {BackgroundColors, BorderColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
+import {
+    BackgroundColors,
+    BorderColors,
+    ComponentPropsWithModifiableTagAndRef,
+} from '../../types'
 
-export interface CardProps extends ComponentPropsWithModifiableTag {
-    // толщина границы: 0, 1, 2, 3, 4, 5
-    border?: number,
-    // цвет границы
-    borderColor?: BorderColors,
-    // цвет фона
-    background?: BackgroundColors,
-    // тень: inner, 0, 1, 2, 3, 4, 5, 6. Суффиксы: '{w}-soft' ('2-soft'), '{w}-strong' ('2-strong')
-    shadow?: number | string,
-    // Расположение текста в карточке
-    alignment?: 'end' | 'center' | 'start',
+export interface CardProps extends ComponentPropsWithModifiableTagAndRef {
+    // Толщина границы: 0, 1, 2, 3, 4, 5.
+    border?: number
+    // Цвет границы.
+    borderColor?: BorderColors
+    // Цвет фона.
+    background?: BackgroundColors
+    // Тень: inner, 0, 1, 2, 3, 4, 5, 6.
+    // Суффиксы: '{w}-soft' ('2-soft'), '{w}-strong' ('2-strong').
+    shadow?: number | string
+    // Расположение текста в карточке.
+    alignment?: 'end' | 'center' | 'start'
 }
 
-// Контейнер каточки (блок с белым фоном, скругленными углами и тенью)
+// Контейнер каточки (блок с белым фоном, скругленными углами и тенью).
 // Структура:
 // Card
 //      CardHeader
@@ -25,7 +30,7 @@ export interface CardProps extends ComponentPropsWithModifiableTag {
 //          Содержимое карточки
 //      CardFooter
 //          Кнопки или другие элементы
-function Card(props: CardProps, ref: React.ForwardedRef<HTMLElement>) {
+export function Card(props: CardProps) {
     const {
         className,
         children,
@@ -51,7 +56,6 @@ function Card(props: CardProps, ref: React.ForwardedRef<HTMLElement>) {
     return (
         <Tag
             className={classes}
-            ref={ref}
             {...otherProps}
         >
             {children}
@@ -59,4 +63,5 @@ function Card(props: CardProps, ref: React.ForwardedRef<HTMLElement>) {
     )
 }
 
-export default React.memo(React.forwardRef<HTMLElement, CardProps>(Card))
+/** @deprecated */
+export default CardProps

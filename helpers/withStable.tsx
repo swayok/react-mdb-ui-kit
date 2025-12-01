@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+    createElement,
     DependencyList,
     FunctionComponent,
     memo,
@@ -18,15 +20,18 @@ const DepsSymbol: string = `${Prefix}DepsSymbol`
  * Поверхностное сравнение двух значений.
  */
 function areEqual(a: any, b: any) {
-    if (!(typeof a === 'function' &&
-        a[DepsSymbol] &&
-        typeof b === 'function' &&
-        b[DepsSymbol])) {
+    if (!(typeof a === 'function'
+        && a[DepsSymbol]
+        && typeof b === 'function'
+        && b[DepsSymbol])) {
         return a === b
     }
     const depsA = a[DepsSymbol]
     const depsB = b[DepsSymbol]
-    for (const [i, itemA] of depsA.entries()) {
+
+    for (const [i,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        itemA] of depsA.entries()) {
         if (!areEqual(itemA, depsB[i])) {
             return false
         }
@@ -48,7 +53,7 @@ export function withStable<ComponentProps extends object>(
     stableKeys: (keyof ComponentProps)[],
     Component: FunctionComponent<ComponentProps>
 ): MemoExoticComponent<FunctionComponent<ComponentProps>> {
-    const stableSet = new Set(stableKeys as any)
+    const stableSet = new Set(stableKeys)
     const Memo = memo(Component, (prev: ComponentProps, next: ComponentProps) => {
         for (const k in prev) {
             if (!(k in prev)) {
@@ -93,6 +98,8 @@ export function withStable<ComponentProps extends object>(
                         return cache[k]
                     }
                     // @ts-ignore
+                    // eslint-disable-next-line @stylistic/max-len
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return
                     cache[k] = (...args: any[]) => propsRef.current[k](...args)
                     // @ts-ignore
                     cache[k][StableSymbol] = true
@@ -102,7 +109,7 @@ export function withStable<ComponentProps extends object>(
             })()
         }
         // @ts-ignore
-        return React.createElement(Memo, Object.assign({}, stable))
+        return createElement(Memo, Object.assign({}, stable))
     }
 
     // @ts-ignore

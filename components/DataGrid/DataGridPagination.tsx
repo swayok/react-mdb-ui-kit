@@ -1,13 +1,17 @@
 import React from 'react'
 import clsx from 'clsx'
 import {Icon} from '../Icon'
-import {mdiChevronLeft, mdiChevronRight, mdiPageFirst, mdiPageLast} from '@mdi/js'
-import DataGridPaginationPagesList from './DataGridPaginationPagesList'
+import {
+    mdiChevronLeft,
+    mdiChevronRight,
+    mdiPageFirst,
+    mdiPageLast,
+} from '@mdi/js'
+import {DataGridPaginationPagesList} from './DataGridPaginationPagesList'
 import {DataGridPaginationProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {withStable} from '../../helpers/withStable'
 
 // Пагинация таблицы с данными.
-function DataGridPagination(props: DataGridPaginationProps) {
+export function DataGridPagination(props: DataGridPaginationProps) {
 
     const {
         className,
@@ -136,8 +140,3 @@ function DataGridPagination(props: DataGridPaginationProps) {
         </div>
     )
 }
-
-export default withStable<DataGridPaginationProps>(
-    ['onOffsetChange'],
-    DataGridPagination
-)

@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    useEffect,
+    useRef,
+} from 'react'
+import {
+    AsyncDataGridStateForUrlQuery,
+    AsyncDataGridUrlQueryManagerProps,
+} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
-import {AsyncDataGridStateForUrlQuery, AsyncDataGridUrlQueryManagerProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {useAsyncDataGridContext} from './AsyncDataGridContext'
 
 // Хранение и восстановление состояния таблицы из URL query.
-function AsyncDataGridUrlQueryManager<
+export function AsyncDataGridUrlQueryManager<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 >(props: AsyncDataGridUrlQueryManagerProps) {
 
     const {
@@ -29,10 +35,11 @@ function AsyncDataGridUrlQueryManager<
     } = useAsyncDataGridContext<RowDataType, FiltersDataType>()
 
     // Параметры URL.
-    const [urlQueryParams, setUrlQueryParams] = useUrlQueryParams({})
+    const [urlQueryParams,
+        setUrlQueryParams] = useUrlQueryParams({})
 
     // Предыдущий хеш.
-    const [prevHash, setPrevHash] = useState<string>(
+    const prevHash = useRef<string>(
         encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters)
     )
 
@@ -44,7 +51,7 @@ function AsyncDataGridUrlQueryManager<
     useEffect(() => {
         if (urlQueryParams.has(urlQueryParamName)) {
             const hash: string = urlQueryParams.get(urlQueryParamName)!
-            if (prevHash === hash) {
+            if (prevHash.current === hash) {
                 // Ничего не изменилось.
                 return
             }
@@ -81,7 +88,7 @@ function AsyncDataGridUrlQueryManager<
             } else {
                 resetFilters(false)
             }
-            setPrevHash(hash)
+            prevHash.current = hash
         } else {
             // Параметра нет в URL query: проверяем хеш параметров по-умолчанию.
             const hash: string = encodeAsyncDataGridState(
@@ -91,7 +98,7 @@ function AsyncDataGridUrlQueryManager<
                 defaultOrderDirection,
                 defaultFilters
             )
-            if (prevHash === hash) {
+            if (prevHash.current === hash) {
                 // Ничего не изменилось.
                 return
             }
@@ -102,9 +109,9 @@ function AsyncDataGridUrlQueryManager<
                 setOrder(defaultOrderBy, defaultOrderDirection)
             }
             resetFilters(false)
-            setPrevHash(hash)
+            prevHash.current = hash
         }
-    }, [urlQueryParams, prevHash, urlQueryParamName])
+    }, [urlQueryParams, urlQueryParamName])
 
     // При монтировании компонента выполнить props.onReady после небольшого таймаута
     useEffect(() => {
@@ -114,19 +121,20 @@ function AsyncDataGridUrlQueryManager<
     }, [urlQueryParamName])
 
     // Получен новый набор данных.
-    useEffect(() => {
-        const hash: string = encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters)
-        if (hash !== prevHash) {
-            setPrevHash(hash)
-            urlQueryParams.set(urlQueryParamName, hash)
-            setUrlQueryParams(urlQueryParams)
-        }
-    }, [limit, offset, orderBy, orderDirection, filters, prevHash, urlQueryParamName])
+    useEffect(
+        () => {
+            const hash: string = encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters)
+            if (hash !== prevHash.current) {
+                prevHash.current = hash
+                urlQueryParams.set(urlQueryParamName, hash)
+                setUrlQueryParams(urlQueryParams)
+            }
+        },
+        [limit, offset, orderBy, orderDirection, filters, urlQueryParamName]
+    )
 
     return null
 }
-
-export default React.memo(AsyncDataGridUrlQueryManager) as typeof AsyncDataGridUrlQueryManager
 
 // Конвертирует параметры выборки в строку.
 export function encodeAsyncDataGridState(

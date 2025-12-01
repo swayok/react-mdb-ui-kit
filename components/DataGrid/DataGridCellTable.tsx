@@ -1,12 +1,11 @@
-import React from 'react'
+import {TableHTMLAttributes} from 'react'
 import clsx from 'clsx'
 
 // Таблица для отображения в ячейке таблицы.
-function DataGridCellTable(props: React.TableHTMLAttributes<HTMLTableElement>) {
+export function DataGridCellTable(props: TableHTMLAttributes<HTMLTableElement>) {
 
     const {
         children,
-        // eslint-disable-next-line react/prop-types
         className,
         ...otherProps
     } = props
@@ -23,4 +22,5 @@ function DataGridCellTable(props: React.TableHTMLAttributes<HTMLTableElement>) {
     )
 }
 
-export default React.memo(DataGridCellTable)
+/** @deprecated */
+export default DataGridCellTable

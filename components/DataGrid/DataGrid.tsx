@@ -1,7 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react'
-import DataGridContext, {dataGridDefaultLimit, getDataGridContextDefaults} from './DataGridContext'
-import {normalizeOffset, reorderDataGridRows} from './dataGridHelpers'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import React, {
+    useCallback,
+    useEffect,
+    useState,
+} from 'react'
 import {
     DataGridContextProps,
     DataGridOrderByValuesType,
@@ -9,146 +10,252 @@ import {
     DataGridOrderingDirection,
     DataGridProps,
 } from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    DataGridContext,
+    dataGridDefaultLimit,
+    dataGridDefaultLimits,
+    dataGridDefaultTranslations,
+} from './DataGridContext'
+import {
+    normalizeOffset,
+    reorderDataGridRows,
+} from './dataGridHelpers'
 
 // Обертка таблицы с данными (настройка контекста).
-function DataGrid<
+export function DataGrid<
     RowDataType extends object,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 >(props: DataGridProps<RowDataType, FiltersDataType>) {
 
-    const [limit, setLimit] = useState<DataGridContextProps['limit']>(props.defaultLimit || props.limits?.[0] || dataGridDefaultLimit)
-    const [offset, setOffset] = useState<DataGridContextProps['offset']>(props.startingOffset || 0)
-    const [ordering, setOrdering] = useState<DataGridOrdering>({
-        column: props.defaultOrderBy || null,
-        direction: props.defaultOrderDirection || 'asc',
-        valuesType: props.defaultOrderByValuesType,
-    })
-    const [filters, setFilters] = useState<FiltersDataType>(Object.assign(
-        {},
-        props.defaultFilters || {},
-        props.startingFilters || {}
-    ) as FiltersDataType)
+    const {
+        children,
+        translations = dataGridDefaultTranslations,
+        rows,
+        limits = dataGridDefaultLimits,
+        defaultLimit,
+        startingOffset = 0,
+        startingFilters = {} as FiltersDataType,
+        defaultFilters = {} as FiltersDataType,
+        onFilter,
+        defaultOrderBy = null,
+        defaultOrderByValuesType,
+        defaultOrderDirection = 'asc',
+        onOrder,
+        loading = false,
+        setIsLoading = () => {
+        },
+    } = props
 
-    // Фильтрация и сортировка строк.
-    const filterAndOrderRows = (allRows: RowDataType[]) => {
-        let rows: RowDataType[]
-        if (props.onFilter) {
-            rows = props.onFilter(allRows, filters)
-        } else {
-            rows = allRows.slice()
-        }
-        return (props.onOrder || reorderDataGridRows)(rows, ordering.column, ordering.direction)
-    }
+    const [
+        limit,
+        setLimit,
+    ] = useState<DataGridContextProps['limit']>(() => (
+        defaultLimit ?? limits?.[0] ?? dataGridDefaultLimit
+    ))
 
-    // Получение строк для отображения на текущей странице.
-    const getRowsForCurrentPage = (allRows: RowDataType[]): RowDataType[] =>
-        allRows.slice(offset, limit)
+    const [
+        offset,
+        setOffset,
+    ] = useState<DataGridContextProps['offset']>(startingOffset)
+
+    const [
+        ordering,
+        setOrdering,
+    ] = useState<DataGridOrdering>(() => ({
+        column: defaultOrderBy,
+        direction: defaultOrderDirection,
+        valuesType: defaultOrderByValuesType,
+    }))
+
+    const [
+        filters,
+        setFilters,
+    ] = useState<FiltersDataType>(
+        () => ({
+            ...defaultFilters,
+            ...startingFilters,
+        })
+    )
 
     // Отфильтрованные и отсортированные строки (все).
     const [
         filteredOrderedRows,
         setFilteredOrderedRows,
-    ] = useState<RowDataType[]>(filterAndOrderRows(props.rows))
+    ] = useState<RowDataType[]>(
+        () => filterAndOrderRows(
+            rows,
+            filters,
+            ordering,
+            onFilter,
+            onOrder
+        )
+    )
 
     // Отфильтрованные и отсортированные строки (текущая страница).
     const [
         visibleRows,
         setVisibleRows,
-    ] = useState<RowDataType[]>(getRowsForCurrentPage(filteredOrderedRows))
+    ] = useState<RowDataType[]>(
+        () => getRowsForCurrentPage(filteredOrderedRows, offset, limit)
+    )
 
     // Фильтрация и сортировка данных при изменениях.
-    useEffect(() => {
-        const rows: RowDataType[] = filterAndOrderRows(props.rows)
-        setFilteredOrderedRows(rows)
-        setVisibleRows(getRowsForCurrentPage(rows))
-    }, [props.rows, filters, ordering, props.onFilter, props.onOrder])
+    useEffect(
+        () => {
+            const filteredRows: RowDataType[] = filterAndOrderRows(
+                rows,
+                filters,
+                ordering,
+                onFilter,
+                onOrder
+            )
+            setFilteredOrderedRows(filteredRows)
+            setVisibleRows(getRowsForCurrentPage(filteredRows, offset, limit))
+        },
+        [rows, filters, ordering, onFilter, onOrder]
+    )
 
     // Задать полный набор строк в таблице (включая скрытые).
-    const onSetRows = useCallback((rows: RowDataType[]): void => {
-        setFilteredOrderedRows(rows)
-        setOffset(0)
-        setVisibleRows(rows.slice(0, limit))
-    }, [limit])
+    const onSetRows = useCallback(
+        (rows: RowDataType[]): void => {
+            setFilteredOrderedRows(rows)
+            setOffset(0)
+            setVisibleRows(rows.slice(0, limit))
+        },
+        [limit]
+    )
 
     // Обновить данные видимых строк.
-    // Используется если после какого-то действия нужно отобразить изменения.
-    // Внимание: таким образом нельзя внести изменения в props.rows!
-    const updateVisibleRows = useCallback((callback: (rows: RowDataType[]) => RowDataType[]): void => {
-        setVisibleRows(callback(visibleRows))
-    }, [visibleRows, filteredOrderedRows])
+    // Используется, если после какого-то действия нужно отобразить изменения.
+    // Внимание: таким образом нельзя внести изменения в rows!
+    const updateVisibleRows = useCallback(
+        (callback: (rows: RowDataType[]) => RowDataType[]): void => {
+            setVisibleRows(callback(visibleRows))
+        },
+        [visibleRows, filteredOrderedRows]
+    )
 
     // Установить лимит строк на странице.
-    const onSetLimit = useCallback((newLimit: number): void => {
-        setLimit(newLimit)
-        const newOffset = normalizeOffset(newLimit, offset)
-        setOffset(newOffset)
-        setVisibleRows(filteredOrderedRows.slice(newOffset, newOffset + newLimit))
-    }, [offset])
+    const onSetLimit = useCallback(
+        (newLimit: number): void => {
+            setLimit(newLimit)
+            const newOffset = normalizeOffset(newLimit, offset)
+            setOffset(newOffset)
+            setVisibleRows(filteredOrderedRows.slice(newOffset, newOffset + newLimit))
+        },
+        [offset]
+    )
 
     // Изменить смещение отображаемых строк (по сути перейти на другую страницу).
-    const onSetOffset = useCallback((newOffset: number): void => {
-        setOffset(newOffset)
-        setVisibleRows(filteredOrderedRows.slice(newOffset, newOffset + limit))
-    }, [limit])
+    const onSetOffset = useCallback(
+        (newOffset: number): void => {
+            setOffset(newOffset)
+            setVisibleRows(filteredOrderedRows.slice(newOffset, newOffset + limit))
+        },
+        [limit]
+    )
 
     // Изменить сортировку.
-    const onSetOrder = useCallback((
-        column: string,
-        direction: DataGridOrderingDirection,
-        resetOffset: boolean = false,
-        valuesType?: DataGridOrderByValuesType
-    ): void => {
-        if (resetOffset) {
-            setOffset(0)
-        }
-        setOrdering({column, direction, valuesType})
-    }, [])
+    const onSetOrder = useCallback(
+        (
+            column: string,
+            direction: DataGridOrderingDirection,
+            resetOffset: boolean = false,
+            valuesType?: DataGridOrderByValuesType
+        ): void => {
+            if (resetOffset) {
+                setOffset(0)
+            }
+            setOrdering({column, direction, valuesType})
+        },
+        []
+    )
 
     // Применить фильтры.
-    const applyFilters = useCallback((filters: FiltersDataType, resetOffset: boolean = false): void => {
-        if (resetOffset) {
-            setOffset(0)
-        }
-        setFilters(filters)
-    }, [])
+    const applyFilters = useCallback(
+        (filters: FiltersDataType, resetOffset: boolean = false): void => {
+            if (resetOffset) {
+                setOffset(0)
+            }
+            setFilters(filters)
+        },
+        []
+    )
 
-    const contextProps: DataGridContextProps<RowDataType, FiltersDataType> = getDataGridContextDefaults<RowDataType, FiltersDataType>(
-        {
-            translations: props.translations,
+    const contextProps: DataGridContextProps<RowDataType, FiltersDataType> = {
+        translations,
 
-            limits: props.limits,
-            limit,
-            setLimit: onSetLimit,
+        limits,
+        limit,
+        setLimit: onSetLimit,
 
-            offset,
-            setOffset: onSetOffset,
+        offset,
+        setOffset: onSetOffset,
 
-            orderBy: ordering.column,
-            orderDirection: ordering.direction,
-            setOrder: onSetOrder,
+        orderBy: ordering.column,
+        orderDirection: ordering.direction,
+        setOrder: onSetOrder,
 
-            filters,
-            defaultFilters: props.defaultFilters || {} as FiltersDataType,
-            applyFilters,
+        filters,
+        defaultFilters,
+        applyFilters,
 
-            rows: filteredOrderedRows,
-            setRows: onSetRows,
-            updateVisibleRows,
-            unfilteredRowsCount: props.rows.length,
+        rows: filteredOrderedRows,
+        setRows: onSetRows,
+        updateVisibleRows,
+        unfilteredRowsCount: rows.length,
 
-            visibleRows,
-            setVisibleRows,
-        })
+        visibleRows,
+        setVisibleRows,
 
-    const Context = DataGridContext<RowDataType, FiltersDataType>()
+        loading,
+        setIsLoading,
+        defaultOrderBy,
+        defaultOrderDirection,
+    }
 
     return (
-        <Context.Provider
+        <DataGridContext.Provider
             value={contextProps}
         >
-            {props.children}
-        </Context.Provider>
+            {children}
+        </DataGridContext.Provider>
     )
 }
 
-export default React.memo(DataGrid) as typeof DataGrid
+// Получение строк для отображения на текущей странице.
+export function getRowsForCurrentPage<RowDataType extends object>(
+    allRows: RowDataType[],
+    offset: number,
+    limit: number
+): RowDataType[] {
+    return allRows.slice(offset, limit)
+}
+
+// Фильтрация и сортировка строк.
+export function filterAndOrderRows<
+    RowDataType extends object,
+    FiltersDataType extends object = AnyObject,
+>(
+    allRows: RowDataType[],
+    filters: FiltersDataType,
+    ordering: DataGridOrdering,
+    onFilter?: DataGridProps<RowDataType, FiltersDataType>['onFilter'],
+    onOrder?: DataGridProps<RowDataType, FiltersDataType>['onOrder']
+) {
+    let rows: RowDataType[]
+    if (onFilter) {
+        rows = onFilter(allRows, filters)
+    } else {
+        rows = allRows.slice()
+    }
+    return (onOrder || reorderDataGridRows)(
+        rows,
+        ordering.column,
+        ordering.direction
+    )
+}
+
+/** @deprecated */
+export default DataGrid

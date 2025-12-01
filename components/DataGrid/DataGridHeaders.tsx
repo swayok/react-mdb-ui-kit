@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {DataGridHeadersProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Заголовки колонок таблицы (<thead> -> <tr> -> <DataGridHeader>+).
-function DataGridHeaders(props: DataGridHeadersProps) {
+export function DataGridHeaders(props: DataGridHeadersProps) {
 
     return (
         <thead
@@ -19,4 +19,5 @@ function DataGridHeaders(props: DataGridHeadersProps) {
     )
 }
 
-export default React.memo(DataGridHeaders)
+/** @deprecated */
+export default DataGridHeaders

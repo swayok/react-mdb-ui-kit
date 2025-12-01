@@ -1,11 +1,14 @@
 import React from 'react'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridHeaderProps, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import DataGridHeaderWrapper from './DataGridHeaderWrapper'
+import {
+    DataGridHeaderProps,
+    DataGridOrderingDirection,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridHeaderWrapper} from './DataGridHeaderWrapper'
 
 // Заголовок колонки таблицы (<th>).
-function DataGridHeader<
-    OrderByOptions extends string = string
+export function DataGridHeader<
+    OrderByOptions extends string = string,
 >(props: DataGridHeaderProps<OrderByOptions>) {
 
     const {
@@ -44,4 +47,5 @@ function DataGridHeader<
     )
 }
 
-export default React.memo(DataGridHeader) as typeof DataGridHeader
+/** @deprecated */
+export default DataGridHeader

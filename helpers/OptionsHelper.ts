@@ -1,9 +1,14 @@
-import {AnyObject, FormSelectOption, NumericKeysObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyObject,
+    FormSelectOption,
+    NumericKeysObject,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Набор методов для конвертации различных типов объектов в опции для SelectInput.
 export abstract class OptionsHelper {
+
     // Конвертирует список строк в список опций для использования в этом компоненте.
-    stringListToOptions(list: string[]): FormSelectOption<string>[] {
+    static stringListToOptions(list: string[]): FormSelectOption<string>[] {
         const options: FormSelectOption<string>[] = []
         for (let i = 0; i < list.length; i++) {
             options.push({
@@ -15,7 +20,7 @@ export abstract class OptionsHelper {
     }
 
     // Конвертирует список объектов в список опций для использования в этом компоненте.
-    objectListToOptions<ObjectType extends object, ValueType = string>(
+    static objectListToOptions<ObjectType extends object, ValueType = string>(
         list: ObjectType[],
         labelKey: keyof ObjectType,
         valueKey: keyof ObjectType
@@ -32,7 +37,7 @@ export abstract class OptionsHelper {
 
     // Конвертирует одномерный объект (ключ-значение) в список опций для использования в этом компоненте.
     // Ключ в объекте: строка или число (value для опции), значение: строка (label для опции).
-    keyValueObjectToOptions<T extends string | number = string>(
+    static keyValueObjectToOptions<T extends string | number = string>(
         assocObject: T extends number ? NumericKeysObject<string> : AnyObject<string>
     ): FormSelectOption<T>[] {
         const options: FormSelectOption<T>[] = []

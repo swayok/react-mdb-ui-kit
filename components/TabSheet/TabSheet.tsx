@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import {
+    useEffect, useState,
+} from 'react'
 import {TabSheetProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
-import Card from '../Card/Card'
+import {Card} from '../Card/Card'
 import TabSheetContext from './TabSheetContext'
 import TabSheetStateToUrlQueryHandler from './TabSheetStateToUrlQueryHandler'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
@@ -17,7 +19,7 @@ import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 //      ...
 //  </TabSheetBody>
 // </TabSheet>
-function TabSheet<TabName extends string = string>(
+export function TabSheet<TabName extends string = string>(
     props: TabSheetProps<TabName>
 ) {
 
@@ -35,7 +37,8 @@ function TabSheet<TabName extends string = string>(
     const [urlQueryParams] = useUrlQueryParams()
 
     // Открытая вкладка.
-    const [currentTab, setCurrentTab] = useState<TabName>(() => {
+    const [currentTab,
+        setCurrentTab] = useState<TabName>(() => {
         if (savesStateToUrlQuery && urlQueryParams.has(urlQueryArgName)) {
             // Достаем текущую вкладку из URL Query.
             return urlQueryParams.get(urlQueryArgName) as TabName
@@ -49,7 +52,7 @@ function TabSheet<TabName extends string = string>(
     }, [currentTab])
 
     // Контекст.
-    const Context  = TabSheetContext<TabName>()
+    const Context = TabSheetContext<TabName>()
 
     return (
         <Tag {...otherProps}>
@@ -61,7 +64,7 @@ function TabSheet<TabName extends string = string>(
                 }}
             >
                 {savesStateToUrlQuery && (
-                    <TabSheetStateToUrlQueryHandler name={urlQueryArgName}/>
+                    <TabSheetStateToUrlQueryHandler name={urlQueryArgName} />
                 )}
                 {children}
             </Context.Provider>
@@ -69,4 +72,5 @@ function TabSheet<TabName extends string = string>(
     )
 }
 
-export default React.memo(TabSheet) as typeof TabSheet
+/** @deprecated */
+export default TabSheet

@@ -1,15 +1,14 @@
-import React from 'react'
 import clsx from 'clsx'
-import DataGridNoItems from '../DataGrid/DataGridNoItems'
-import {AsyncDataGridLoading} from './AsyncDataGridLoading'
-import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
 import {AsyncDataGridTableProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
-import {withStable} from '../../helpers/withStable'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridNoItems} from '../DataGrid/DataGridNoItems'
 import {FadeIn} from '../FadeIn'
+import {useAsyncDataGridContext} from './AsyncDataGridContext'
+import {AsyncDataGridLoading} from './AsyncDataGridLoading'
 
 // Таблица с данными, получаемыми с сервера (<table>).
-function AsyncDataGridTable<RowDataType extends object = AnyObject>(
+export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
     props: AsyncDataGridTableProps<RowDataType>
 ) {
 
@@ -27,7 +26,7 @@ function AsyncDataGridTable<RowDataType extends object = AnyObject>(
         wrapperClass,
         wrapperId,
 
-        renderHeaders,
+        Headers,
         renderRow,
         noItemsMessage,
 
@@ -65,7 +64,7 @@ function AsyncDataGridTable<RowDataType extends object = AnyObject>(
                 )}
                 {...tableProps}
             >
-                {typeof renderHeaders === 'function' ? renderHeaders() : renderHeaders}
+                {Headers}
                 {rows.length > 0 && !loadingError && (
                     <tbody>
                         {rows.map((rowData: RowDataType, index: number) => renderRow(rowData, index, context))}
@@ -92,7 +91,5 @@ function AsyncDataGridTable<RowDataType extends object = AnyObject>(
     )
 }
 
-export default withStable<AsyncDataGridTableProps>(
-    ['renderRow', 'renderHeaders'],
-    AsyncDataGridTable
-) as typeof AsyncDataGridTable
+/** @deprecated */
+export default AsyncDataGridTable

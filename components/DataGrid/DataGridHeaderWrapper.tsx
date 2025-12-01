@@ -1,13 +1,18 @@
 import React, {CSSProperties} from 'react'
 import clsx from 'clsx'
-import {normalizeDimensionForReactStyles, renderSortingIcon} from './dataGridHelpers'
-import {DataGridHeaderWrapperProps, DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {
+    normalizeDimensionForReactStyles,
+    renderSortingIcon,
+} from './dataGridHelpers'
+import {
+    DataGridHeaderWrapperProps,
+    DataGridOrderingDirection,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import Ripple from '../Ripple/Ripple'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
-import {withStable} from '../../helpers/withStable'
 
 // Обертка заголовка колонки таблицы (<th>).
-function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
+export function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
 
     const {
         loading,
@@ -28,7 +33,7 @@ function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
         children,
     } = props
 
-    //todo: implement resizable
+    // todo: implement resizable
     const additionalStyles: CSSProperties = {}
     if (minWidth) {
         additionalStyles.minWidth = normalizeDimensionForReactStyles(minWidth)
@@ -90,8 +95,3 @@ function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
         </th>
     )
 }
-
-export default withStable<DataGridHeaderWrapperProps>(
-    ['onClick'],
-    DataGridHeaderWrapper
-)

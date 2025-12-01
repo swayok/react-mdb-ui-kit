@@ -1,7 +1,10 @@
 import React from 'react'
 import clsx from 'clsx'
-import {DataGridOrderingPanelOptionType, DataGridOrderingPanelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import DataGridOrderingPanelLabel from './DataGridOrderingPanelLabel'
+import {
+    DataGridOrderingPanelOptionType,
+    DataGridOrderingPanelProps,
+} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridOrderingPanelLabel} from './DataGridOrderingPanelLabel'
 import SelectInput from '../Input/SelectInput/SelectInput'
 import {IconButton} from '../IconButton'
 import {
@@ -17,13 +20,13 @@ import {
 import {useDataGridContext} from './DataGridContext'
 
 interface OrderingDirectionIcons {
-    asc: string,
+    asc: string
     desc: string
 }
 
 // Панель фильтрации для таблицы.
-function DataGridOrderingPanel<
-    SortableColumn extends string = string
+export function DataGridOrderingPanel<
+    SortableColumn extends string = string,
 >(props: DataGridOrderingPanelProps<SortableColumn>) {
 
     const {
@@ -63,7 +66,7 @@ function DataGridOrderingPanel<
             )}
         >
             {!noLabel && (
-                <DataGridOrderingPanelLabel/>
+                <DataGridOrderingPanelLabel />
             )}
             <SelectInput<SortableColumn>
                 value={(orderBy ?? '') as SortableColumn}
@@ -101,7 +104,8 @@ function DataGridOrderingPanel<
     )
 }
 
-export default React.memo(DataGridOrderingPanel) as typeof DataGridOrderingPanel
+/** @deprecated */
+export default DataGridOrderingPanel
 
 // Иконки направления сортировки для разных типов данных.
 const orderingDirectionIcons: Record<DataGridOrderingPanelOptionType, OrderingDirectionIcons> = {

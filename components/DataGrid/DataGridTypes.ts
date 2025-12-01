@@ -1,5 +1,16 @@
-import type {AnyObject, FormSelectOption, TableHighlightColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import type {CSSProperties, HTMLAttributes, ReactElement, ReactNode, TableHTMLAttributes, TdHTMLAttributes} from 'react'
+import type {
+    CSSProperties,
+    FunctionComponent,
+    HTMLAttributes,
+    ReactNode,
+    TableHTMLAttributes,
+    TdHTMLAttributes,
+} from 'react'
+import type {
+    AnyObject,
+    FormSelectOption,
+    TableHighlightColors,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Строки локализации.
 export interface DataGridTranslations {
@@ -40,7 +51,7 @@ export type DataGridOrderByValuesType = 'number' | 'boolean' | 'string'
 // Контекст таблицы с данными.
 export interface DataGridContextProps<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 > {
     translations: DataGridTranslations
     loading: boolean
@@ -74,14 +85,14 @@ export interface DataGridContextProps<
         column: string,
         direction: DataGridOrderingDirection,
         resetOffset?: boolean,
-        valuesType?: DataGridOrderByValuesType,
+        valuesType?: DataGridOrderByValuesType
     ) => void
 }
 
 // Свойства таблицы с данными (<DataGrid>)
 export interface DataGridProps<
     RowDataType extends object,
-    FiltersDataType extends object
+    FiltersDataType extends object,
 > {
     children: ReactNode | ReactNode[]
 
@@ -109,6 +120,9 @@ export interface DataGridProps<
         orderBy: DataGridContextProps['orderBy'],
         direction: DataGridContextProps['orderDirection']
     ) => RowDataType[]
+
+    loading?: boolean
+    setIsLoading?: (value: boolean) => void
 }
 
 // Настройки для сортировки строк.
@@ -121,27 +135,27 @@ export interface DataGridOrdering {
 // Свойства для стандартной разметки таблицы с данными.
 export interface DataGridDefaultLayoutProps<RowDataType extends object = AnyObject> {
     // Панель фильтрации.
-    filtersPanel?: ReactElement | (() => ReactElement)
+    FiltersPanel?: ReactNode
     // Дополнительные элементы, выводимые перед таблицей и панелью фильтрации.
     // Свойство нужно для того, чтобы не сломать прокрутку таблицы в режиме
     // заполнения таблицей свободного места (fill, inline).
-    prepend?: ReactElement | (() => ReactElement)
+    Prepend?: ReactNode
     // Дополнительные элементы, выводимые после таблицы и подвала таблицы (пагинации).
     // Свойство нужно по той же причине, что и prepend.
-    append?: ReactElement | (() => ReactElement)
+    Append?: ReactNode
     // Настройка таблицы.
     tableProps?: Partial<Omit<
         DataGridTableProps<RowDataType>,
-        'renderHeaders' | 'renderRow' | 'flexFill'>
+        'Headers' | 'renderRow' | 'flexFill'>
     >
     // Настройка подвала таблицы (<AsyncDataGridFooter>).
     footerProps?: Partial<DataGridFooterProps>
     // Отрисовка блока с заголовками колонок (<thead>, <DataGridHeaders>).
-    renderHeaders: DataGridTableProps<RowDataType>['renderHeaders']
+    Headers: DataGridTableProps<RowDataType>['Headers']
     // Отрисовка строки таблицы.
     renderRow: DataGridTableProps<RowDataType>['renderRow']
     // Отрисовка строки с итоговыми значениями (последняя строка в таблице).
-    renderTotalsRow?: DataGridTableProps<RowDataType>['renderTotalsRow']
+    renderTotalsRow?: DataGridTableProps<RowDataType>['TotalsRow']
 
     className?: string
     id?: string
@@ -194,11 +208,11 @@ export interface DataGridFiltersPanelLabelProps extends Omit<
 
 // Свойства панели сортировки данных в таблице.
 export interface DataGridOrderingPanelProps<
-    SortableColumn extends string = string
+    SortableColumn extends string = string,
 > extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    'children'
-> {
+        HTMLAttributes<HTMLDivElement>,
+        'children'
+    > {
     options: DataGridOrderingPanelOption<SortableColumn>[]
     resetOffset?: boolean
     paddings?: boolean
@@ -211,7 +225,7 @@ export type DataGridOrderingPanelOptionType = 'numbers' | 'strings' | 'dates' | 
 
 // Данные опции для панели сортировки.
 export interface DataGridOrderingPanelOption<
-    ValueType extends string = string
+    ValueType extends string = string,
 > extends FormSelectOption<ValueType> {
     type?: DataGridOrderingPanelOptionType
 }
@@ -260,11 +274,11 @@ export interface DataGridHeaderWrapperProps<OrderByOptions extends string = stri
 
 // Свойства одного заголовка колонки таблицы (<th>).
 export interface DataGridHeaderProps<
-    OrderByOptions extends string = string
+    OrderByOptions extends string = string,
 > extends Omit<
-    DataGridHeaderWrapperProps<OrderByOptions>,
-    'onClick'
-> {
+        DataGridHeaderWrapperProps<OrderByOptions>,
+        'onClick'
+    > {
     sortingDataType?: DataGridOrderByValuesType
     resetOffset?: boolean
 }
@@ -292,7 +306,7 @@ export interface DataGridItemsCountProps extends Omit<
 
 // Свойства компонента, отображающего сообщение, что в таблице нет строк.
 export interface DataGridNoItemsProps extends HTMLAttributes<HTMLDivElement> {
-    flexFill?: boolean;
+    flexFill?: boolean
 }
 
 // Свойства пагинации таблицы.
@@ -333,17 +347,26 @@ export interface DataGridRowProps extends HTMLAttributes<HTMLTableRowElement> {
     highlight?: TableHighlightColors
 }
 
+// Свойства ячейки таблицы данных.
 export interface DataGridCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     highlight?: TableHighlightColors
 }
 
+// Свойства компонента, отображающего данные строки таблицы данных.
+export interface DataGridRowRendererProps<
+    RowDataType extends object = AnyObject,
+> {
+    rowData: Readonly<RowDataType>
+    index: number
+}
+
 // Свойства таблицы (<table>).
 export interface DataGridTableProps<
-    RowDataType extends object = AnyObject
+    RowDataType extends object = AnyObject,
 > extends Omit<
-    TableHTMLAttributes<HTMLTableElement>,
-    'children'
-> {
+        TableHTMLAttributes<HTMLTableElement>,
+        'children'
+    > {
     striped?: boolean
     hover?: boolean
     small?: boolean
@@ -354,16 +377,13 @@ export interface DataGridTableProps<
     wrapperStyle?: CSSProperties
     verticalAlign?: 'top' | 'middle' | 'bottom'
 
-    renderHeaders: ReactElement | (() => ReactElement)
+    Headers: ReactNode
     renderRow: (
         rowData: Readonly<RowDataType>,
         index: number,
         rows: readonly RowDataType[],
         context: DataGridContextProps<RowDataType>
-    ) => ReactElement | ReactElement[]
-    renderTotalsRow?: (
-        rows: readonly RowDataType[],
-        context: DataGridContextProps<RowDataType>
-    ) => ReactElement | ReactElement[]
-    noItemsMessage?: string | ReactElement
+    ) => ReactNode | ReactNode[]
+    TotalsRow?: FunctionComponent
+    noItemsMessage?: string | ReactNode
 }

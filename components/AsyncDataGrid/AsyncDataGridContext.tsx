@@ -1,10 +1,15 @@
-import React, {useContext} from 'react'
+import {
+    Context,
+    createContext,
+    useContext,
+} from 'react'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {dataGridDefaultTranslations} from '../DataGrid/DataGridContext'
 import {AsyncDataGridContextProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
 
 // Лимиты количества строк в таблице.
 export const asyncDataGridDefaultLimits: AsyncDataGridContextProps['limits'] = [10, 20, 50]
+
 export const asyncDataGridDefaultLimit: AsyncDataGridContextProps['limit'] = 20
 
 // Стандартные значения для контекста.
@@ -14,7 +19,8 @@ const defaultProps: AsyncDataGridContextProps<AnyObject, AnyObject> = {
     initialized: false,
     drawsCount: 0,
     loading: false,
-    setIsLoading(){},
+    setIsLoading() {
+    },
     loadingError: false,
     validationErrors: null,
     storeStateInUrlQuery: false,
@@ -24,42 +30,59 @@ const defaultProps: AsyncDataGridContextProps<AnyObject, AnyObject> = {
     filters: {},
     defaultFilters: {},
     forcedFilters: {},
-    applyFilters() {},
-    resetFilters() {},
+    applyFilters() {
+    },
+    resetFilters() {
+    },
     isFiltersPanelOpened: false,
-    setIsFiltersPanelOpened() {},
+    setIsFiltersPanelOpened() {
+    },
 
     rows: [],
     totalCount: null,
-    setRows() {},
-    updateRows() {},
-    updateRow() {},
-    setTotalCount() {},
+    setRows() {
+    },
+    updateRows() {
+    },
+    updateRow() {
+    },
+    setTotalCount() {
+    },
     permissions: {},
-    setPermissions() {},
+    setPermissions() {
+    },
     selectedRows: [],
-    setSelectedRows() {},
-    selectRow() {},
+    setSelectedRows() {
+    },
+    selectRow() {
+    },
 
-    reload() {},
+    reload() {
+    },
 
     offset: 0,
-    setOffset() {},
+    setOffset() {
+    },
 
     limits: asyncDataGridDefaultLimits,
     defaultLimit: asyncDataGridDefaultLimit,
     limit: asyncDataGridDefaultLimit,
-    setLimit() {},
+    setLimit() {
+    },
 
     defaultOrderBy: null,
     defaultOrderDirection: 'asc',
     orderBy: null,
     orderDirection: 'asc',
-    setOrder() {},
+    setOrder() {
+    },
 }
 
 // Стандартные значения для контекста, объединенные с опционально переданными значениями.
-export function getAsyncDataGridContextDefaults<RowDataType extends object = AnyObject, FiltersDataType extends object = AnyObject>(
+export function getAsyncDataGridContextDefaults<
+    RowDataType extends object = AnyObject,
+    FiltersDataType extends object = AnyObject,
+>(
     props?: Partial<AsyncDataGridContextProps<RowDataType, FiltersDataType>>
 ): AsyncDataGridContextProps<RowDataType, FiltersDataType> {
     return {
@@ -72,24 +95,23 @@ export function getAsyncDataGridContextDefaults<RowDataType extends object = Any
 }
 
 // Контекст для таблиц с данными, получаемыми с сервера (<AsyncDataGrid>).
-const AsyncDataGridContextInstance = React.createContext<AsyncDataGridContextProps>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const AsyncDataGridContext = createContext<AsyncDataGridContextProps<any, any>>(
     getAsyncDataGridContextDefaults()
 )
 
-// Правильная типизация контекста.
-function AsyncDataGridContext<
+// Получить контекст для асинхронных таблиц данных (<AsyncDataGrid>) с правильной типизацией.
+export function getAsyncDataGridContextInstance<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
->(): React.Context<AsyncDataGridContextProps<RowDataType, FiltersDataType>> {
-    return AsyncDataGridContextInstance as unknown as React.Context<AsyncDataGridContextProps<RowDataType, FiltersDataType>>
+    FiltersDataType extends object = AnyObject,
+>(): Context<AsyncDataGridContextProps<RowDataType, FiltersDataType>> {
+    return AsyncDataGridContext as Context<AsyncDataGridContextProps<RowDataType, FiltersDataType>>
 }
-
-export default AsyncDataGridContext
 
 // Хук для получения контекста.
 export function useAsyncDataGridContext<
     RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject
+    FiltersDataType extends object = AnyObject,
 >(): AsyncDataGridContextProps<RowDataType, FiltersDataType> {
-    return useContext(AsyncDataGridContext<RowDataType, FiltersDataType>())
+    return useContext(AsyncDataGridContext as Context<AsyncDataGridContextProps<RowDataType, FiltersDataType>>)
 }

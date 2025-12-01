@@ -6,7 +6,7 @@ import {Loading} from '../Loading'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 
 // Индикатор загрузки данных для таблицы с сервера.
-function AsyncDataGridLoading(props: AsyncDataGridLoadingProps) {
+export function AsyncDataGridLoading(props: AsyncDataGridLoadingProps) {
 
     const {
         loading,
@@ -48,6 +48,3 @@ function AsyncDataGridLoading(props: AsyncDataGridLoadingProps) {
         </>
     )
 }
-
-/** @deprecated */
-export default AsyncDataGridLoading

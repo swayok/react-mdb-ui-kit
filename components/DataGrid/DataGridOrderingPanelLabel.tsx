@@ -3,7 +3,7 @@ import {useDataGridContext} from './DataGridContext'
 import {DataGridOrderingPanelLabelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
 // Заголовок панели фильтрации.
-function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {
+export function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {
 
     const {translations} = useDataGridContext()
 
@@ -23,4 +23,5 @@ function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {
     )
 }
 
-export default React.memo(DataGridOrderingPanelLabel)
+/** @deprecated */
+export default DataGridOrderingPanelLabel

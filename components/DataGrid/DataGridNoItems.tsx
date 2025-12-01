@@ -2,8 +2,8 @@ import React from 'react'
 import clsx from 'clsx'
 import {DataGridNoItemsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 
-// Сообщение о том что в таблице нет строк.
-function DataGridNoItems(props: DataGridNoItemsProps) {
+// Сообщение о том, что в таблице нет строк.
+export function DataGridNoItems(props: DataGridNoItemsProps) {
 
     const {
         children,
@@ -27,5 +27,3 @@ function DataGridNoItems(props: DataGridNoItemsProps) {
         </div>
     )
 }
-
-export default React.memo(DataGridNoItems)

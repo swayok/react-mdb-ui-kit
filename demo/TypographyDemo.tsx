@@ -1,5 +1,5 @@
 import React from 'react'
-import TabSheet from '../components/TabSheet/TabSheet'
+import {TabSheet} from '../components/TabSheet/TabSheet'
 import TabSheetBody from '../components/TabSheet/TabSheetBody'
 import TabSheetHeader from '../components/TabSheet/TabSheetHeader'
 import TabSheetTabButton from '../components/TabSheet/TabSheetTabButton'
@@ -23,7 +23,7 @@ export function TypographyDemo() {
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="headings">
-                    <HeadingsDemo/>
+                    <HeadingsDemo />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

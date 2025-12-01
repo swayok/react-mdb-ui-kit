@@ -1,11 +1,13 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
+import {
+    ComponentPropsWithModifiableTagAndRef,
+} from '../../types'
 
-export type CardBodyProps = ComponentPropsWithModifiableTag
+export type CardBodyProps = ComponentPropsWithModifiableTagAndRef
 
 // Контейнер содержимого карточки
-function CardBody(props: CardBodyProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+export function CardBody(props: CardBodyProps) {
     const {
         className,
         children,
@@ -17,11 +19,11 @@ function CardBody(props: CardBodyProps, ref: React.ForwardedRef<HTMLAllCollectio
         <Tag
             className={clsx('card-body', className)}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </Tag>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, CardBodyProps>(CardBody))
+/** @deprecated */
+export default CardBody

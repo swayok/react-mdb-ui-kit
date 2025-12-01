@@ -1,18 +1,22 @@
-import React from 'react'
 import clsx from 'clsx'
-import {BackgroundColors, BorderColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import React from 'react'
+import {
+    BackgroundColors,
+    BorderColors,
+    ComponentPropsWithModifiableTagAndRef,
+} from '../../types'
 
-export interface CardHeaderProps extends ComponentPropsWithModifiableTag {
-    // толщина нижней границы: 0, 1, 2, 3, 4, 5
-    border?: number,
-    // цвет границы
-    borderColor?: BorderColors,
-    // цвет фона
-    background?: BackgroundColors,
+export interface CardHeaderProps extends ComponentPropsWithModifiableTagAndRef {
+    // Толщина нижней границы: 0, 1, 2, 3, 4, 5.
+    border?: number
+    // Цвет границы.
+    borderColor?: BorderColors
+    // Цвет фона.
+    background?: BackgroundColors
 }
 
-// Шапка карточки
-function CardHeader(props: CardHeaderProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+// Шапка карточки.
+export function CardHeader(props: CardHeaderProps) {
     const {
         className,
         children,
@@ -35,11 +39,11 @@ function CardHeader(props: CardHeaderProps, ref: React.ForwardedRef<HTMLAllColle
         <Tag
             className={classes}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </Tag>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, CardHeaderProps>(CardHeader))
+/** @deprecated */
+export default CardHeader
