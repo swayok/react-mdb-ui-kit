@@ -12,31 +12,31 @@ import {
 import Ripple, {RippleProps} from './Ripple/Ripple'
 
 export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
-    LinkComponent?: React.ComponentType,
-    hidden?: boolean,
-    visible?: boolean,
-    ripple?: ButtonColors | RippleProps,
-    noRipple?: boolean,
-    color?: ButtonColors,
-    large?: boolean,
-    small?: boolean,
-    type?: 'reset' | 'submit' | 'button',
-    outline?: boolean,
-    rounded?: boolean,
-    labelFor?: string,
-    block?: boolean,
-    active?: boolean,
-    hasIcon?: boolean,
+    LinkComponent?: React.ComponentType
+    hidden?: boolean
+    visible?: boolean
+    ripple?: ButtonColors | RippleProps
+    noRipple?: boolean
+    color?: ButtonColors
+    large?: boolean
+    small?: boolean
+    type?: 'reset' | 'submit' | 'button'
+    outline?: boolean
+    rounded?: boolean
+    labelFor?: string
+    block?: boolean
+    active?: boolean
+    hasIcon?: boolean
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
-    external?: boolean,
-    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>,
+    external?: boolean
+    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>
     // Состояние для компонента <Link>.
-    state?: LinkProps['state'],
+    state?: LinkProps['state']
 }
 
 // Стилизованная кнопка.
 export function Button<
-    LinkPropsType = LinkProps
+    LinkPropsType = LinkProps,
 >(props: ButtonProps & Omit<LinkPropsType, 'to' | keyof ButtonProps>) {
 
     if (props.hidden || props.visible === false) {

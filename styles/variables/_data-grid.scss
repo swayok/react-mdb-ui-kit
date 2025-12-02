@@ -1,8 +1,10 @@
 // Table designed as Data Grid with filters, pagination and so on.
+@use "sass:map";
 @use "../functions/color-utils";
 @use "table";
 @use "shadows";
 @use "colors";
+@use "spacers";
 
 // Таблицы данных (data grids).
 //$table-striped-bg: #f9f9f9 !default;
@@ -38,6 +40,12 @@ $data-grid-pagination-active-disabled-color: colors.$gray-350 !default;
 $data-grid-pagination-active-disabled-bg: colors.$gray-200 !default;
 $data-grid-pagination-active-disabled-color: colors.$text-muted !default;
 $data-grid-pagination-active-box-shadow: none !default;
+$data-grid-pagination-filler-menu-visible-rows-count: 7 !default;
+$data-grid-pagination-filler-menu-button-height: 2.125rem !default;
+$data-grid-pagination-filler-menu-max-height: (
+    ($data-grid-pagination-filler-menu-visible-rows-count * ($data-grid-pagination-filler-menu-button-height + map.get(spacers.$spacers, 2)))
+    + map.get(spacers.$spacers, 2)
+) !default;
 
 // Подсветка строк таблицы.
 $data-grid-highlight-bg-blue: colors.$blue-50 !default;

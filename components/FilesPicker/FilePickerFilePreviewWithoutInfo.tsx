@@ -1,39 +1,37 @@
 import {
-    mdiAlertCircle, mdiBackupRestore, mdiCloseCircleOutline,
+    mdiAlertCircle,
+    mdiBackupRestore,
+    mdiCloseCircleOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
-import React, {
-    useContext, useRef,
-} from 'react'
+import React, {useRef} from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {withStable} from '../../helpers/withStable'
-import {ToastService} from '../../services/ToastService'
 import {
-    FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFilePreviewProps,
     FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {ToastService} from '../../services/ToastService'
 import {Card} from '../Card/Card'
 import {CardBody} from '../Card/CardBody'
 import {Icon} from '../Icon'
 import {Loading} from '../Loading'
 import ReorderableListItem from '../ReorderableList/ReorderableListItem'
-import FilePickerContext from './FilePickerContext'
+import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewContent} from './FilePickerFilePreviewContent'
 import {FilePickerFilePreviewContentScaler} from './FilePickerFilePreviewContentScaler'
-import FilePickerHelpers from './FilePickerHelpers'
+import {FilePickerHelpers} from './FilePickerHelpers'
 
 // Компонент предпросмотра прикрепленного файла (только картинка или иконка).
-function FilePickerFilePreviewWithoutInfo(
+export function FilePickerFilePreviewWithoutInfo(
     props: FilePickerFilePreviewProps<FilePickerFileInfo | FilePickerWithUploaderFileInfo>
 ) {
 
     const {
         translations,
         isDisabled,
-    } = useContext<FilePickerContextProps>(FilePickerContext)
+    } = useFilePickerContext()
 
     const transitionRef = useRef<HTMLElement>(null)
 
@@ -216,5 +214,3 @@ function FilePickerFilePreviewWithoutInfo(
 
     return content
 }
-
-export default withStable(['onDelete'], FilePickerFilePreviewWithoutInfo)

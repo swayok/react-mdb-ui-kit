@@ -2,10 +2,14 @@
 import type {DropdownItemProps as BaseDropdownItemProps} from '@restart/ui/DropdownItem'
 import type {UseDropdownToggleMetadata} from '@restart/ui/DropdownToggle'
 import type {
-    Offset, UsePopperOptions,
+    Offset,
+    UsePopperOptions,
 } from '@restart/ui/usePopper'
 import type {
-    ComponentProps, HTMLAttributeAnchorTarget, ReactNode, SyntheticEvent,
+    ComponentProps,
+    HTMLAttributeAnchorTarget,
+    ReactNode,
+    SyntheticEvent,
 } from 'react'
 import type {
     AnyRefObject,
@@ -28,6 +32,8 @@ export interface DropdownProps extends Omit<
     ComponentPropsWithModifiableTag,
     'onSelect' | 'onToggle' | 'open'
 > {
+    // Ссылка на обертку и API выпадающего меню.
+    ref?: AnyRefObject<any, DropdownApi>
     // Начальное состояние выпадающего меню.
     defaultShow?: boolean
     /**
@@ -47,8 +53,6 @@ export interface DropdownProps extends Omit<
     focusFirstItemOnShow?: boolean | 'keyboard'
     // По умолчанию: true.
     autoClose?: boolean | 'outside' | 'inside'
-    // Ссылка на обертку и API выпадающего меню.
-    ref?: AnyRefObject<any, DropdownApi>
     // Режим Right-To-Left.
     isRTL?: boolean
     // Смещение выпадающего меню относительно DropdownToggle.

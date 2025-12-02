@@ -1,14 +1,13 @@
 import clsx from 'clsx'
-import React, {CSSProperties, useContext} from 'react'
-import FilePickerContext from './FilePickerContext'
-import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
-import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
+import React, {CSSProperties} from 'react'
 import {
     FilePickerContextMimeTypeInfo,
-    FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {useFilePickerContext} from './FilePickerContext'
+import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
+import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
 
 interface Props {
     file: FilePickerFileInfo
@@ -28,7 +27,7 @@ export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePr
     const {
         previews,
         fallbackPreview,
-    } = useContext<FilePickerContextProps>(FilePickerContext)
+    } = useFilePickerContext()
 
     const {
         file,

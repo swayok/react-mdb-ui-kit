@@ -4,10 +4,7 @@ import {ModalContentProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalT
 
 // Контейнер для основных элементов модального окна.
 // Внутри обычно несколько компонентов: ModalHeader, ModalBody, ModalFooter.
-function ModalContent(
-    props: ModalContentProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-) {
+export function ModalContent(props: ModalContentProps) {
     const {
         className,
         children,
@@ -18,11 +15,11 @@ function ModalContent(
         <div
             className={clsx('modal-content', className)}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </div>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ModalContentProps>(ModalContent))
+/** @deprecated */
+export default ModalContent

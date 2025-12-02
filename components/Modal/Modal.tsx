@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
+import React, {
+    useCallback, useEffect, useRef, useState,
+} from 'react'
 import clsx from 'clsx'
 import ReactDOM from 'react-dom'
-import ModalDialog from './ModalDialog'
+import {ModalDialog} from './ModalDialog'
 import {ModalProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
-import {withStable} from '../../helpers/withStable'
 
 // Отслеживание количества открытых окон для управления скролбаром страницы.
 export let openedModals: number = 0
@@ -24,7 +25,7 @@ export let openedModals: number = 0
 //              ModalFooter
 //                  Button
 //                  ModalFooterCloseButton
-function Modal(props: ModalProps) {
+export function Modal(props: ModalProps) {
     const {
         backdrop = true,
         depth = 1,
@@ -50,10 +51,14 @@ function Modal(props: ModalProps) {
         ...otherProps
     } = props
 
-    const [isOpenBackdrop, setIsOpenBackdrop] = useState<boolean>(false)
-    const [isOpenModal, setIsOpenModal] = useState<boolean | null>(null)
-    const [innerShow, setInnerShow] = useState<boolean | null>(null)
-    const [staticModal, setStaticModal] = useState<boolean>(false)
+    const [isOpenBackdrop,
+        setIsOpenBackdrop] = useState<boolean>(false)
+    const [isOpenModal,
+        setIsOpenModal] = useState<boolean | null>(null)
+    const [innerShow,
+        setInnerShow] = useState<boolean | null>(null)
+    const [staticModal,
+        setStaticModal] = useState<boolean>(false)
 
     const modalInnerRef = useRef<HTMLDivElement>(null)
     const modalReference = modalRef ?? modalInnerRef
@@ -244,12 +249,10 @@ function Modal(props: ModalProps) {
                 ),
                 modalsContainer
             )}
-            {ReactDOM.createPortal(backdrop && innerShow && <div className={backdropClasses}/>, modalsContainer)}
+            {ReactDOM.createPortal(backdrop && innerShow && <div className={backdropClasses} />, modalsContainer)}
         </>
     )
 }
 
-export default withStable<ModalProps>(
-    ['onShow', 'onShown', 'onClose', 'onClosed'],
-    Modal
-)
+/** @deprecated */
+export default Modal

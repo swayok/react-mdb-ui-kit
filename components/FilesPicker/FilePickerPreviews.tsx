@@ -1,16 +1,19 @@
-import React, {useContext} from 'react'
+import {mdiPlus} from '@mdi/js'
 import clsx from 'clsx'
+import React from 'react'
+import {
+    FilePickerFileInfo,
+    FilePickerPreviewsProps,
+} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
-import FilePickerContext from './FilePickerContext'
-import FilePickerFilePreview from './FilePickerFilePreview'
 import {ToastService} from '../../services/ToastService'
-import {FilePickerContextProps, FilePickerFileInfo, FilePickerPreviewsProps} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import {Collapse} from '../Collapse'
 import {Icon} from '../Icon'
-import {mdiPlus} from '@mdi/js'
+import {useFilePickerContext} from './FilePickerContext'
+import {FilePickerFilePreview} from './FilePickerFilePreview'
 
 // Блок со списком предпросмотров прикрепленных картинок.
-function FilePickerPreviews(props: FilePickerPreviewsProps) {
+export function FilePickerPreviews(props: FilePickerPreviewsProps) {
 
     const {
         existingFiles,
@@ -24,7 +27,7 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
         canAttachMoreFiles,
         pickFile,
         maxFiles,
-    } = useContext<FilePickerContextProps>(FilePickerContext)
+    } = useFilePickerContext()
 
     const {
         className,
@@ -146,5 +149,3 @@ function FilePickerPreviews(props: FilePickerPreviewsProps) {
         </Collapse>
     )
 }
-
-export default React.memo(FilePickerPreviews)

@@ -1,5 +1,7 @@
 import React, {useMemo} from 'react'
-import {Icon, AppIconProps} from '../Icon'
+import {
+    Icon, AppIconProps,
+} from '../Icon'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 
 interface Props extends Omit<AppIconProps, 'label'> {
@@ -9,7 +11,7 @@ interface Props extends Omit<AppIconProps, 'label'> {
 }
 
 // Иконка для предпросмотра прикрепленного файла (если не картинка).
-function FilePickerAudioFilePreview(props: Props) {
+export function FilePickerAudioFilePreview(props: Props) {
 
     const {
         previewSize,
@@ -18,8 +20,8 @@ function FilePickerAudioFilePreview(props: Props) {
     } = props
 
     const audio = useMemo(() => {
-        const blobUrl = fileData.previewDataUrl ?? URL.createObjectURL(fileData);
-        return new Audio(blobUrl);
+        const blobUrl = fileData.previewDataUrl ?? URL.createObjectURL(fileData)
+        return new Audio(blobUrl)
     }, [fileData])
 
     return (
@@ -30,9 +32,10 @@ function FilePickerAudioFilePreview(props: Props) {
                 void audio.play()
             }}
         >
-            <Icon size={Math.max(50, Math.round(previewSize / 3))} {...iconProps} />
+            <Icon
+                size={Math.max(50, Math.round(previewSize / 3))}
+                {...iconProps}
+            />
         </div>
     )
 }
-
-export default React.memo(FilePickerAudioFilePreview)

@@ -1,11 +1,10 @@
-import React from 'react'
 import clsx from 'clsx'
-import {Button} from '../Button'
+import React from 'react'
 import {ModalHeaderCloseButtonProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
-import {withStable} from '../../helpers/withStable'
+import {Button} from '../Button'
 
 // Кнопка закрытия модального окна для ModalHeader.
-function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {
+export function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {
 
     const {
         className,
@@ -34,4 +33,5 @@ function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {
     )
 }
 
-export default withStable<ModalHeaderCloseButtonProps>(['onClose'], ModalHeaderCloseButton)
+/** @deprecated */
+export default ModalHeaderCloseButton

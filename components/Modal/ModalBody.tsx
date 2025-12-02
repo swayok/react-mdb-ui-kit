@@ -3,10 +3,7 @@ import clsx from 'clsx'
 import {ModalBodyProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Контейнер содержимого модального окна.
-function ModalBody(
-    props: ModalBodyProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-) {
+export function ModalBody(props: ModalBodyProps) {
     const {
         className,
         children,
@@ -17,11 +14,11 @@ function ModalBody(
         <div
             className={clsx('modal-body', className)}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </div>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ModalBodyProps>(ModalBody))
+/** @deprecated */
+export default ModalBody

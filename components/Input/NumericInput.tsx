@@ -1,5 +1,7 @@
 import numeral from 'numeral'
-import React, {useMemo, useRef} from 'react'
+import React, {
+    useMemo, useRef,
+} from 'react'
 import Input, {InputProps} from './Input'
 
 export interface NumericInputProps extends Omit<
@@ -12,18 +14,22 @@ export interface NumericInputProps extends Omit<
      *
      * @see http://numeraljs.com/#format
      */
-    numeralFormat?: string,
+    numeralFormat?: string
     // Разрешить отрицательные числа?
-    allowNegative?: boolean;
+    allowNegative?: boolean
     // Разделитель целой и дробной части числа.
-    decimalSeparator?: '.' | ',',
+    decimalSeparator?: '.' | ','
     // Кол-во цифр в целой части вводимого числа.
     maxLength?: number
     onChange: (
-        e: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
+        e: (
+            React.ChangeEvent<HTMLInputElement>
+            | React.FocusEvent<HTMLInputElement>
+            | React.KeyboardEvent<HTMLInputElement>
+        ),
         formattedValue: string,
         cleanValue: number | null
-    ) => void;
+    ) => void
 }
 
 // Поле ввода числа.

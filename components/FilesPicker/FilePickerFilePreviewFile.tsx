@@ -6,7 +6,7 @@ import {
     FilePickerPreviewSizes,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import {Tooltip} from '../Tooltip'
-import FilePickerHelpers from './FilePickerHelpers'
+import {FilePickerHelpers} from './FilePickerHelpers'
 
 interface Props {
     file: FilePickerFileInfo
@@ -20,7 +20,7 @@ interface Props {
 }
 
 // Предпросмотр прикрепленного файла.
-export const FilePickerFilePreviewFile = React.memo(function FilePickerFilePreviewFile(props: Props) {
+export function FilePickerFilePreviewFile(props: Props) {
     const {
         file,
         sizes,
@@ -54,4 +54,4 @@ export const FilePickerFilePreviewFile = React.memo(function FilePickerFilePrevi
             {renderer(sizes.width, file.file.name, file.file)}
         </Tooltip>
     )
-})
+}

@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import FilePickerHelpers from '../../components/FilesPicker/FilePickerHelpers'
-import FilePickerInput from '../../components/FilesPicker/FilePickerInput'
-import FilePickerPreviews from '../../components/FilesPicker/FilePickerPreviews'
-import FilePickerPreviewsWithoutInfo from '../../components/FilesPicker/FilePickerPreviewsWithoutInfo'
+import {useState} from 'react'
+import {FilePickerHelpers} from '../../components/FilesPicker/FilePickerHelpers'
+import {FilePickerInput} from '../../components/FilesPicker/FilePickerInput'
+import {FilePickerPreviews} from '../../components/FilesPicker/FilePickerPreviews'
+import {FilePickerPreviewsWithoutInfo} from '../../components/FilesPicker/FilePickerPreviewsWithoutInfo'
 import {SectionDivider} from '../../components/SectionDivider'
 import file_picker from '../../locales/en/file_picker'
 import {FilePickerFileInfo} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
@@ -53,7 +53,7 @@ export function FilePickersDemo() {
                 onChange={setFiles}
                 reorderable
             >
-                <SectionDivider label="Detailed Previews"/>
+                <SectionDivider label="Detailed Previews" />
                 <FilePickerPreviews
                     previewSize={100}
                     alwaysVisible
@@ -62,7 +62,7 @@ export function FilePickersDemo() {
                         xs: 1,
                     }}
                 />
-                <SectionDivider label="Small Previews"/>
+                <SectionDivider label="Small Previews" />
                 <FilePickerPreviewsWithoutInfo
                     previewSize={100}
                     alwaysVisible
@@ -77,7 +77,7 @@ export function FilePickersDemo() {
                 onChange={setFiles}
                 disabled
             >
-                <SectionDivider label="Detailed Previews Disabled"/>
+                <SectionDivider label="Detailed Previews Disabled" />
                 <FilePickerPreviews
                     previewSize={100}
                     alwaysVisible
@@ -86,7 +86,7 @@ export function FilePickersDemo() {
                         xs: 1,
                     }}
                 />
-                <SectionDivider label="Small Previews Disabled"/>
+                <SectionDivider label="Small Previews Disabled" />
                 <FilePickerPreviewsWithoutInfo
                     previewSize={100}
                     alwaysVisible
@@ -100,7 +100,7 @@ export function FilePickersDemo() {
                 onChange={setFiles2}
                 reorderable
             >
-                <SectionDivider label="Detailed Previews With Preset Files"/>
+                <SectionDivider label="Detailed Previews With Preset Files" />
                 <FilePickerPreviews
                     previewSize={100}
                     alwaysVisible
@@ -110,7 +110,7 @@ export function FilePickersDemo() {
                         xs: 1,
                     }}
                 />
-                <SectionDivider label="Small Previews With Preset Files"/>
+                <SectionDivider label="Small Previews With Preset Files" />
                 <FilePickerPreviewsWithoutInfo
                     previewSize={100}
                     alwaysVisible

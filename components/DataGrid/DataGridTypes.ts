@@ -1,4 +1,4 @@
-import type {
+import {
     CSSProperties,
     FunctionComponent,
     HTMLAttributes,
@@ -335,8 +335,20 @@ export interface DataGridPaginationPagesListProps extends Omit<
     offset: number
     limit: number
     disabled?: boolean
-    onOffsetChange: (offset: number) => void
+    onPageChange: (page: number) => void
     maxVisiblePages?: number
+}
+
+// Свойства выпадающего меню со списком всех номеров страниц для пагинатора.
+export interface DataGridPaginationPagesListFillerDropdownProps extends Omit<
+    HTMLAttributes<HTMLDivElement>,
+    'onSelect' | 'onToggle'
+> {
+    DropdownToggle: ReactNode
+    pagesCount: number
+    currentPage: number
+    disabled?: boolean
+    onSelect: (pageNumber: number) => void
 }
 
 // Свойства обертки строки таблицы (<tr>).

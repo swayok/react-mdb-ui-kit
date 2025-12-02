@@ -1,5 +1,5 @@
 import React from 'react'
-import ImagesPreviewer from '../../components/Images/ImagesPreviewer'
+import {ImagesPreviewer} from '../../components/Images/ImagesPreviewer'
 
 export function ImagesPreviewDemo() {
 

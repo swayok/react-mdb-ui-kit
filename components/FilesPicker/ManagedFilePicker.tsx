@@ -1,19 +1,37 @@
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import FilePickerContext, {FilePickerContextPropsDefaults, filePickerDefaultTranslations} from './FilePickerContext'
-import {FileAPI, FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import React, {
+    ChangeEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    ManagedFilePickerProps,
-    FilePickerUploadInfo,
     FilePickerFileInfo,
+    FilePickerUploadInfo,
+    ManagedFilePickerProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import {ErrorBoundary} from '../ErrorBoundary'
+import {
+    AnyObject,
+    MinMax,
+} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    FileAPI,
+    FileAPIImageFileInfo,
+    FileAPISelectedFileInfo,
+} from '../../helpers/FileAPI/FileAPI'
 import {ToastService} from '../../services/ToastService'
-import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
+import {ErrorBoundary} from '../ErrorBoundary'
 import ReorderableList from '../ReorderableList/ReorderableList'
-import {withStable} from '../../helpers/withStable'
-import FilePickerHelpers from './FilePickerHelpers'
+import {
+    FilePickerContext,
+    filePickerDefaultPreviews,
+    filePickerDefaultTranslations,
+    filePickerFallbackPreview,
+} from './FilePickerContext'
+import {FilePickerHelpers} from './FilePickerHelpers'
 
 // Добавляется к максимальной позиции при прикреплении нового файла.
 const positionDelta: number = 1
@@ -21,12 +39,12 @@ const positionDelta: number = 1
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
 // и отображении списка выбранных файлов т.к. создает контекст с состоянием и действиями.
-function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
+export function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
 
     const {
         allowImages = true,
         allowFiles = true,
-        maxFiles = FilePickerContextPropsDefaults.maxFiles,
+        maxFiles = null,
         maxFileSizeKb = 8 * 1024,
         disabled = false,
         maxImageSize = 1920,
@@ -99,8 +117,8 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
                 const ret: FilePickerContextProps['previews'] = {}
                 for (const mimeType of allowedMimeTypes) {
                     if (typeof mimeType === 'string') {
-                        if (mimeType in FilePickerContextPropsDefaults.previews) {
-                            ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+                        if (mimeType in filePickerDefaultPreviews) {
+                            ret[mimeType] = filePickerDefaultPreviews[mimeType]
                         }
                     } else {
                         // Конфиг отображения предпросмотров.
@@ -110,11 +128,11 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
                 return ret
             }
             if (allowFiles && allowImages) {
-                return FilePickerContextPropsDefaults.previews
+                return filePickerDefaultPreviews
             }
             const ret: FilePickerContextProps['previews'] = {}
-            for (const mimeType in FilePickerContextPropsDefaults.previews) {
-                const preview: FilePickerContextMimeTypeInfo = FilePickerContextPropsDefaults.previews[mimeType]
+            for (const mimeType in filePickerDefaultPreviews) {
+                const preview: FilePickerContextMimeTypeInfo = filePickerDefaultPreviews[mimeType]
                 if (allowFiles && preview.type === 'file') {
                     ret[mimeType] = preview
                 } else if (allowImages && preview.type === 'image') {
@@ -229,7 +247,7 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
                     FilePickerHelpers.isValidFile(processedFile)
                 )
             } catch (e: unknown) {
-                if (e !== null) { //< except for a file is already added or there no more places left
+                if (e !== null) { // < except for a file is already added or there no more places left
                     console.error('[FilePicker] Failed to process new file', {
                         index: i,
                         file: selectedFiles[i],
@@ -238,7 +256,7 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
                 }
             }
         }
-        setFiles(files => maxFiles === 1 ? newFilesList : files.concat(newFilesList))
+        setFiles(files => (maxFiles === 1 ? newFilesList : files.concat(newFilesList)))
     }
 
     // Обработка нажатия на кнопку удаления файла.
@@ -415,8 +433,11 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         && (props?.maxFiles ?? 2) > 1
     )
 
+    const dummyFn = useCallback(() => {
+    }, [])
+
     // Данные контекста.
-    const context: FilePickerContextProps = Object.assign({}, FilePickerContextPropsDefaults, {
+    const context: FilePickerContextProps = {
         pickFile: useCallback(
             () => {
                 if (!disabled) {
@@ -427,8 +448,9 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         ),
         maxFiles,
         previews: allowedFileTypes,
+        fallbackPreview: filePickerFallbackPreview,
         existingFiles,
-        onExistingFileDelete,
+        onExistingFileDelete: onExistingFileDelete ?? dummyFn,
         onExistingFileRestore,
         files,
         reorderable,
@@ -437,7 +459,12 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         canAttachMoreFiles,
         translations,
         getNextFilePosition,
-    })
+        isUploading: false,
+        startUploading: useCallback(
+            () => Promise.reject(new Error('action_not_allowed')),
+            []
+        ),
+    }
 
     // Получить минимальное и максимальное значения позиций файлов.
     const minMaxPositions: MinMax = FilePickerHelpers.getMinMaxFilePositions(
@@ -481,9 +508,3 @@ function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileInfo>) {
         </FilePickerContext.Provider>
     )
 }
-
-export default withStable(
-    ['onFileAttached', 'onExistingFileDelete', 'onFileRemoved', 'onReorder'],
-    ManagedFilePicker
-)
-

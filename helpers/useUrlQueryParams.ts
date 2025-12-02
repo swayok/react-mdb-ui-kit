@@ -1,4 +1,6 @@
-import {NavigateOptions, URLSearchParamsInit, useSearchParams} from 'react-router-dom'
+import {
+    NavigateOptions, URLSearchParamsInit, useSearchParams,
+} from 'react-router-dom'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {useMemo} from 'react'
 
@@ -9,7 +11,9 @@ export function useUrlQueryParams<KeysOrObject extends string | object>(
     const [
         params,
         setParams,
-    ] = useSearchParams(defaultInit as URLSearchParamsInit) as [TypedUrlQueryParams<KeysOrObject>, SetTypedUrlQueryParams<KeysOrObject>]
+    ] = useSearchParams(
+        defaultInit as URLSearchParamsInit
+    ) as [TypedUrlQueryParams<KeysOrObject>, SetTypedUrlQueryParams<KeysOrObject>]
     return [
         useMemo(() => {
             params.length = 0
@@ -35,17 +39,17 @@ type ParamValueType<KeysOrObject extends string | object> = KeysOrObject extends
 
 // Generic типы с возможностью задать набор ключей для параметров в URL Query
 export interface TypedUrlQueryParams<KeysOrObject extends string | object> extends URLSearchParams {
-    append(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, value: string): void;
+    append(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, value: string): void
 
-    delete(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): void;
+    delete(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): void
 
-    get(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): ParamValueType<KeysOrObject>;
+    get(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): ParamValueType<KeysOrObject>
 
-    getAll(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): string[];
+    getAll(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): string[]
 
-    has(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): boolean;
+    has(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject): boolean
 
-    set(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, value: string): void;
+    set(name: KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, value: string): void
 
     forEach(
         callbackfn: (
@@ -54,21 +58,24 @@ export interface TypedUrlQueryParams<KeysOrObject extends string | object> exten
             parent: TypedUrlQueryParams<KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject>
         ) => void,
         thisArg?: unknown
-    ): void;
+    ): void
 
-    length: number;
+    length: number
 
-    data: Partial<RecordType<KeysOrObject>>;
+    data: Partial<RecordType<KeysOrObject>>
 }
 
-export type TypedURLSearchParamsInit<KeysOrObject extends string | object> =
-    string
-    | [KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, string]
-    | Partial<Record<KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, string | string[]>>
-    | AnyObject<string | string[], KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject>
-    | TypedUrlQueryParams<KeysOrObject>
+export type TypedURLSearchParamsInit<KeysOrObject extends string | object>
+    = string
+        | [KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, string]
+        | Partial<Record<KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject, string | string[]>>
+        | AnyObject<string | string[], KeysOrObject extends string ? KeysOrObject : keyof KeysOrObject>
+        | TypedUrlQueryParams<KeysOrObject>
 
 export type SetTypedUrlQueryParams<KeysOrType extends string | object> = (
-    nextInit?: TypedURLSearchParamsInit<KeysOrType> | ((prev: TypedUrlQueryParams<KeysOrType>) => TypedURLSearchParamsInit<KeysOrType>),
+    nextInit?: (
+        TypedURLSearchParamsInit<KeysOrType>
+        | ((prev: TypedUrlQueryParams<KeysOrType>) => TypedURLSearchParamsInit<KeysOrType>)
+    ),
     navigateOpts?: NavigateOptions
-) => void;
+) => void

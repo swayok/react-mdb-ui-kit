@@ -1,18 +1,20 @@
-import React from 'react'
-import {Icon} from '../Icon'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {IconProps} from '../MDIIcon'
-import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import {mdiChevronUp, mdiEarth} from '@mdi/js'
+import {
+    mdiChevronUp,
+    mdiEarth,
+} from '@mdi/js'
 import clsx from 'clsx'
-import {withStable} from '../../helpers/withStable'
-import {RegionsManager} from '../../helpers/RegionsManager'
-import {LanguagesManager} from '../../helpers/LanguagesManager'
+import React from 'react'
 import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import { DropdownItem } from '../Dropdown/DropdownItem'
-import { DropdownToggle } from '../Dropdown/DropdownToggle'
-import { DropdownMenu } from '../Dropdown/DropdownMenu'
+import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
 import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+import {LanguagesManager} from '../../helpers/LanguagesManager'
+import {RegionsManager} from '../../helpers/RegionsManager'
+import {Dropdown} from '../Dropdown/Dropdown'
+import {DropdownItem} from '../Dropdown/DropdownItem'
+import {DropdownMenu} from '../Dropdown/DropdownMenu'
+import {DropdownToggle} from '../Dropdown/DropdownToggle'
+import {Icon} from '../Icon'
+import {IconProps} from '../MDIIcon'
 
 interface Props {
     currentRegion: BasicRegionConfig
@@ -33,7 +35,7 @@ interface Props {
 }
 
 // Переключатель региона.
-function RegionSwitcherDropdown(props: Props) {
+export function RegionSwitcherDropdown(props: Props) {
 
     const {
         currentRegion,
@@ -115,4 +117,5 @@ function RegionSwitcherDropdown(props: Props) {
     )
 }
 
-export default withStable<Props>(['onSwitch'], RegionSwitcherDropdown)
+/** @deprecated */
+export default RegionSwitcherDropdown

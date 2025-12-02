@@ -1,15 +1,12 @@
 import React from 'react'
 import clsx from 'clsx'
-import ModalTitle from './ModalTitle'
-import ModalHeaderCloseButton from './ModalHeaderCloseButton'
-import {ModalHeaderProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
+import {ModalTitle} from './ModalTitle'
+import {ModalHeaderCloseButton} from './ModalHeaderCloseButton'
+import {ModalHeaderProps} from './ModalTypes'
 
 // Шапка модального окна.
 // Обычно содержит название (ModalTitle) и кнопку закрытия (ModalHeaderCloseButton).
-function ModalHeader(
-    props: ModalHeaderProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-) {
+export function ModalHeader(props: ModalHeaderProps) {
 
     const {
         className,
@@ -32,7 +29,6 @@ function ModalHeader(
         <div
             className={classes}
             {...otherProps}
-            ref={ref}
         >
             {title && (
                 <ModalTitle {...titleProps}>
@@ -50,4 +46,5 @@ function ModalHeader(
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ModalHeaderProps>(ModalHeader))
+/** @deprecated */
+export default ModalHeader

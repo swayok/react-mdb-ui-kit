@@ -1,44 +1,59 @@
 import React, {ChangeEvent} from 'react'
-import FilePickerContext, {FilePickerContextPropsDefaults, filePickerDefaultTranslations} from './FilePickerContext'
-import {FileAPI, FileAPIImageFileInfo, FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
-    FilePickerWithUploaderFileInfo,
+    FilePickerFileInfo,
     FilePickerUploadInfo,
+    FilePickerWithUploaderFileInfo,
     FilePickerWithUploaderProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import {ErrorBoundary} from '../ErrorBoundary'
-import {ToastService} from '../../services/ToastService'
-import {NavigationService} from '../../services/NavigationService'
-import {AnyObject, MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyObject,
+    MinMax,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 import {
     extractAndNormalizeValidationErrorsFromResponseData,
     UnauthorisedErrorHttpCode,
     ValidationErrorHttpCode,
 } from '../../helpers/ApiRequestErrorHelpers'
-import ReorderableList from '../ReorderableList/ReorderableList'
-import FilePickerHelpers from './FilePickerHelpers'
+import {
+    FileAPI,
+    FileAPIImageFileInfo,
+    FileAPISelectedFileInfo,
+} from '../../helpers/FileAPI/FileAPI'
 import {getCookieValue} from '../../helpers/getCookieValue'
+import {NavigationService} from '../../services/NavigationService'
+import {ToastService} from '../../services/ToastService'
+import {ErrorBoundary} from '../ErrorBoundary'
+import ReorderableList from '../ReorderableList/ReorderableList'
+import {
+    FilePickerContext,
+    filePickerDefaultPreviews,
+    filePickerDefaultTranslations,
+    filePickerFallbackPreview,
+} from './FilePickerContext'
+import {FilePickerHelpers} from './FilePickerHelpers'
 
-type State = {
+interface State {
     // Новые прикрепленные файлы.
-    files: FilePickerContextProps<FilePickerWithUploaderFileInfo>['files'],
+    files: FilePickerContextProps<FilePickerWithUploaderFileInfo>['files']
     // Состояние отправки файлов на сервер.
-    isUploading: boolean,
-};
+    isUploading: boolean
+}
 
 const positionDelta: number = 1
 
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
 // и отображении списка выбранных файлов, т.к. создает контекст с состоянием и действиями.
-export default class FilePickerWithUploader extends React.Component<FilePickerWithUploaderProps, State> {
+export class FilePickerWithUploader extends React.Component<
+    FilePickerWithUploaderProps, State
+> {
 
     static defaultProps: Partial<FilePickerWithUploaderProps> = {
         allowImages: true,
         allowFiles: true,
-        maxFiles: FilePickerContextPropsDefaults.maxFiles,
+        maxFiles: null,
         maxFileSizeKb: 8 * 1024,
         autoUpload: false,
         disabled: false,
@@ -123,7 +138,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                 .catch((error: Error) => {
                     reject(error)
                 })
-        })
+        }
+    )
 
     // Открепить файлы непрошедшие валидацию.
     detachInvalidFiles(): void {
@@ -153,7 +169,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                 }
                 resolve(uploadedFiles)
             })
-            .catch(reject) //< exception during upload.
+            .catch(reject) // < exception during upload.
     })
 
     // Отмена отправки файлов на сервер.
@@ -205,6 +221,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         return ret
     }
 
+    private dummyFn = () => {
+    }
 
     // Отображение блока прикрепления файлов.
     render() {
@@ -213,7 +231,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
             && (this.props?.maxFiles || 2) > 1
         )
 
-        const context: FilePickerContextProps = Object.assign({}, FilePickerContextPropsDefaults, {
+        const context: FilePickerContextProps<FilePickerWithUploaderFileInfo> = {
             pickFile: () => {
                 if (!this.props.disabled) {
                     this.inputRef.current?.click()
@@ -221,19 +239,19 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
             },
             maxFiles: this.props.maxFiles,
             previews: this.getAllowedFileTypes(),
-            fallbackPreview: this.getFallbackPreview(),
-            existingFiles: this.props.existingFiles,
-            onExistingFileDelete: this.props.onExistingFileDelete,
+            fallbackPreview: filePickerFallbackPreview,
+            existingFiles: this.props.existingFiles ?? [],
+            onExistingFileDelete: this.props.onExistingFileDelete ?? this.dummyFn,
             files: this.state.files,
             reorderable,
             isUploading: this.state.isUploading,
-            isDisabled: this.props.disabled,
+            isDisabled: this.props.disabled ?? false,
             onFileDelete: this.onFileDelete,
             startUploading: this.uploadFiles,
             canAttachMoreFiles: this.canAttachMoreFiles,
             translations: this.props.translations,
             getNextFilePosition: this.getNextFilePosition,
-        })
+        }
 
         // Получить минимальное и максимальное значения позиций файлов.
         const minMaxPositions: MinMax = FilePickerHelpers.getMinMaxFilePositions(
@@ -243,7 +261,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
 
         return (
             <FilePickerContext.Provider
-                value={context}
+                value={context as unknown as FilePickerContextProps<FilePickerFileInfo>}
             >
                 <ErrorBoundary>
                     <input
@@ -279,7 +297,11 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
         for (let i = 0; i < this.state.files.length; i++) {
             if (this.state.files[i].uploading.uploadedFileInfo) {
                 inputs.push(
-                    <input name={this.props.inputName + '[]'} type="hidden" key={'uploaded-file-info-' + i}/>
+                    <input
+                        name={this.props.inputName + '[]'}
+                        type="hidden"
+                        key={'uploaded-file-info-' + i}
+                    />
                 )
             }
         }
@@ -293,8 +315,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
             const ret: FilePickerContextProps['previews'] = {}
             for (const mimeType of allowedMimeTypes) {
                 if (typeof mimeType === 'string') {
-                    if (mimeType in FilePickerContextPropsDefaults.previews) {
-                        ret[mimeType] = FilePickerContextPropsDefaults.previews[mimeType]
+                    if (mimeType in filePickerDefaultPreviews) {
+                        ret[mimeType] = filePickerDefaultPreviews[mimeType]
                     }
                 } else {
                     // Конфиг отображения предпросмотров.
@@ -304,11 +326,11 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
             return ret
         }
         if (this.props.allowFiles && this.props.allowImages) {
-            return FilePickerContextPropsDefaults.previews
+            return filePickerDefaultPreviews
         }
         const ret: FilePickerContextProps['previews'] = {}
-        for (const mimeType in FilePickerContextPropsDefaults.previews) {
-            const preview = FilePickerContextPropsDefaults.previews[mimeType]
+        for (const mimeType in filePickerDefaultPreviews) {
+            const preview = filePickerDefaultPreviews[mimeType]
             if (this.props.allowFiles && preview.type === 'file') {
                 ret[mimeType] = preview
             } else if (this.props.allowImages && preview.type === 'image') {
@@ -316,11 +338,6 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
             }
         }
         return ret
-    }
-
-    // Стандартный блок предпросмотра файла, если для типа файла нет собственного.
-    private getFallbackPreview(): FilePickerContextProps['fallbackPreview'] {
-        return FilePickerContextPropsDefaults.fallbackPreview
     }
 
     // Обработка прикрепленного файла (валидация, уменьшение).
@@ -502,7 +519,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                     FilePickerHelpers.isValidFile(processedFile)
                 )
             } catch (e: unknown) {
-                if (e !== null) { //< except for a file is already added or there no more places left
+                if (e !== null) { // < except for a file is already added or there no more places left
                     console.error('[FilePicker] Failed to process new file', {
                         index: i,
                         file: selectedFiles[i],
@@ -790,7 +807,7 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
                     xhr.setRequestHeader('Accept', 'application/json')
                     xhr.timeout = this.props.fileUploadingRequestTimeout || 30000
-                    //xhr.setRequestHeader('Content-Type', 'multipart/form-data'); //< this header causes fails!!
+                    // xhr.setRequestHeader('Content-Type', 'multipart/form-data'); //< this header causes fails!!
                     let throttler: number | null = null
                     xhr.upload.addEventListener('progress', (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
                         if (throttler && e.total !== e.loaded) {
@@ -838,7 +855,8 @@ export default class FilePickerWithUploader extends React.Component<FilePickerWi
                                 message = this.props.translations.error.invalid_response
                             }
                             this.finishFileUploadingWithError(fileInfo.file.UID, message, false).then(resolve).catch(
-                                reject)
+                                reject
+                            )
                         } else if (xhr.status === UnauthorisedErrorHttpCode) {
                             ToastService.error(this.props.translations.error.http401)
                             NavigationService.reload()

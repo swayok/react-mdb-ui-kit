@@ -1,5 +1,5 @@
 import React from 'react'
-import FilePickerHelpers from './FilePickerHelpers'
+import {FilePickerHelpers} from './FilePickerHelpers'
 import {
     FilePickerFileInfo,
     FilePickerTranslations,
@@ -12,7 +12,7 @@ interface Props {
 }
 
 // Информация о прикрепленном файле.
-export const FilePickerFilePreviewFileInfo = React.memo(function FilePickerFilePreviewFileInfo(props: Props) {
+export function FilePickerFilePreviewFileInfo(props: Props) {
 
     const {
         file,
@@ -56,4 +56,4 @@ export const FilePickerFilePreviewFileInfo = React.memo(function FilePickerFileP
             )}
         </div>
     )
-})
+}

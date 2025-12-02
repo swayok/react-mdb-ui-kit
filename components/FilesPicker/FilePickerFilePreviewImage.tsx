@@ -1,9 +1,15 @@
-import {mdiImageBroken, mdiImageFrame} from '@mdi/js'
+import {
+    mdiImageBroken, mdiImageFrame,
+} from '@mdi/js'
 import clsx from 'clsx'
-import React, {CSSProperties, useEffect, useRef, useState} from 'react'
+import React, {
+    CSSProperties, useEffect, useRef, useState,
+} from 'react'
 import {Icon} from '../Icon'
 import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
-import {FilePickerFileInfo, FilePickerPreviewSizes} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {
+    FilePickerFileInfo, FilePickerPreviewSizes,
+} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 
 interface Props {
     file: FilePickerFileInfo
@@ -14,7 +20,7 @@ interface Props {
 }
 
 // Предпросмотр прикрепленной картинки.
-export const FilePickerFilePreviewImage = React.memo(function FilePickerFilePreviewImage(props: Props) {
+export function FilePickerFilePreviewImage(props: Props) {
     const {
         file,
         sizes,
@@ -83,4 +89,4 @@ export const FilePickerFilePreviewImage = React.memo(function FilePickerFilePrev
             </div>
         </div>
     )
-})
+}

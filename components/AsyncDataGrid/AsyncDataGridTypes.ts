@@ -304,7 +304,7 @@ export interface AsyncDataGridUrlQueryManagerProps {
     // Если false, то не нужно добавлять состояние в URL.
     // Если true, то в URL query используется имя параметра 'state' для хранения состояния.
     // Если string, то в URL query используется указанное имя параметра.
-    urlQueryParamName: string | true
+    urlQueryParamName?: string
     // Вызывается, когда первоначальный импорт параметров из URL query завершен.
     onReady?: () => void
 }

@@ -1,12 +1,25 @@
-import {mdiFileExcelOutline, mdiFileOutline, mdiFileWordOutline, mdiVolumeHigh} from '@mdi/js'
-import React from 'react'
-import FilePickerAudioFilePreview from './FilePickerAudioFilePreview'
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
-import file_picker from '../../locales/en/file_picker'
-import {mdiFilePdfOutline} from '../../helpers/icons'
+import {
+    mdiFileExcelOutline,
+    mdiFileOutline,
+    mdiFileWordOutline,
+    mdiVolumeHigh,
+} from '@mdi/js'
+import {
+    createContext,
+    useContext,
+} from 'react'
+import {
+    FilePickerContextMimeTypeInfo,
+    FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerTranslations,
+} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {FilePickerContextMimeTypeInfo, FilePickerContextProps, FilePickerTranslations} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import FilePickerFilePreviewAsIcon from './FilePickerFilePreviewAsIcon'
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {mdiFilePdfOutline} from '../../helpers/icons'
+import file_picker from '../../locales/en/file_picker'
+import {FilePickerAudioFilePreview} from './FilePickerAudioFilePreview'
+import {FilePickerFilePreviewAsIcon} from './FilePickerFilePreviewAsIcon'
 
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = file_picker
@@ -135,21 +148,24 @@ export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo>
     },
 }
 
-// Контекст компонентов прикрепления файлов.
-export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContextProps>> = {
+// Предпросмотр для неопределенных MIME-типов.
+export function filePickerFallbackPreview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
+    return (
+        <FilePickerFilePreviewAsIcon
+            path={mdiFileOutline}
+            color="muted"
+            previewSize={previewWidth}
+            fileData={fileData}
+        />
+    )
+}
+
+// Значения "по умолчанию" для контекста.
+export const filePickerContextDefaults: Readonly<Required<FilePickerContextProps>> = {
     translations: filePickerDefaultTranslations,
     maxFiles: null,
     previews: filePickerDefaultPreviews,
-    fallbackPreview(previewWidth: number, _fileName: string, fileData: FileAPISelectedFileInfo) {
-        return (
-            <FilePickerFilePreviewAsIcon
-                path={mdiFileOutline}
-                color="muted"
-                previewSize={previewWidth}
-                fileData={fileData}
-            />
-        )
-    },
+    fallbackPreview: filePickerFallbackPreview,
     canAttachMoreFiles() {
         return true
     },
@@ -171,6 +187,14 @@ export const FilePickerContextPropsDefaults: Readonly<Required<FilePickerContext
     },
 }
 
-const FilePickerContext = React.createContext<FilePickerContextProps>(FilePickerContextPropsDefaults)
+// Контекст компонентов прикрепления файлов.
+export const FilePickerContext = createContext<FilePickerContextProps>(
+    filePickerContextDefaults
+)
 
-export default FilePickerContext
+// Контекст компонентов прикрепления файлов.
+export function useFilePickerContext<
+    T extends FilePickerFileInfo = FilePickerFileInfo,
+>(): FilePickerContextProps<T> {
+    return useContext(FilePickerContext) as unknown as FilePickerContextProps<T>
+}

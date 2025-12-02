@@ -88,6 +88,7 @@ export function AsyncDataGrid<
         offset,
         setOffset,
     ] = useState<AsyncDataGridContextProps['offset']>(startingOffset)
+
     // Сортировка.
     const [
         orderBy,
@@ -473,7 +474,11 @@ export function AsyncDataGrid<
             >
                 {asyncContextProps.storeStateInUrlQuery && (
                     <AsyncDataGridUrlQueryManager
-                        urlQueryParamName={asyncContextProps.storeStateInUrlQuery}
+                        urlQueryParamName={
+                            asyncContextProps.storeStateInUrlQuery === true
+                                ? undefined
+                                : asyncContextProps.storeStateInUrlQuery
+                        }
                         onReady={() => {
                             if (!initialized) {
                                 setIsInitialized(true)

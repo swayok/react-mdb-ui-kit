@@ -1,12 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {Note, NoteProps} from './Note'
-import ModalHeaderCloseButton from './Modal/ModalHeaderCloseButton'
+import React, {
+    useEffect, useState,
+} from 'react'
+import {
+    Note, NoteProps,
+} from './Note'
+import {ModalHeaderCloseButton} from './Modal/ModalHeaderCloseButton'
 import {Collapse} from './Collapse'
 
 interface Props extends NoteProps {
-    onDismissed?: () => void,
-    visible?: boolean,
-    collapseClassName?: string,
+    onDismissed?: () => void
+    visible?: boolean
+    collapseClassName?: string
 }
 
 // Скрываемое уведомление.
@@ -63,7 +67,7 @@ export function DismissibleNote(props: Props) {
                 >
                     <div className="flex-1">{children}</div>
                     <div className="flex-shrink-0">
-                        <ModalHeaderCloseButton onClose={() => setIsVisible(false)}/>
+                        <ModalHeaderCloseButton onClose={() => setIsVisible(false)} />
                     </div>
                 </Note>
             </div>

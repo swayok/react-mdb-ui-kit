@@ -1,5 +1,11 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes, useCallback, useEffect, useRef, useState} from 'react'
+import React, {
+    AllHTMLAttributes,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {withStable} from '../../helpers/withStable'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
@@ -13,45 +19,45 @@ const activeInputLabelSizeMultipliers = {
 }
 
 export interface InputProps extends AllHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-    textarea?: boolean;
-    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
-    label?: string;
-    labelId?: string;
-    labelClass?: string;
-    labelStyle?: React.CSSProperties;
-    labelRef?: React.RefObject<HTMLLabelElement>;
+    textarea?: boolean
+    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
+    label?: string
+    labelId?: string
+    labelClass?: string
+    labelStyle?: React.CSSProperties
+    labelRef?: React.RefObject<HTMLLabelElement>
     // Мультипликаторы размера label в активном состоянии.
     activeInputLabelSizeMultiplier?: number | {
-        normal?: number,
-        small?: number,
+        normal?: number
+        small?: number
         large?: number
-    };
-    wrapperTag?: ReactComponentOrTagName;
-    wrapperProps?: AllHTMLAttributes<HTMLElement> | TooltipProps;
-    wrapperClass?: string;
-    wrapperStyle?: React.CSSProperties;
-    value?: string;
-    disabled?: boolean;
-    small?: boolean;
-    large?: boolean;
-    contrast?: boolean;
+    }
+    wrapperTag?: ReactComponentOrTagName
+    wrapperProps?: AllHTMLAttributes<HTMLElement> | TooltipProps
+    wrapperClass?: string
+    wrapperStyle?: React.CSSProperties
+    value?: string
+    disabled?: boolean
+    small?: boolean
+    large?: boolean
+    contrast?: boolean
     // Настройки валидности введенных данных.
-    invalid?: boolean;
-    validationMessage?: string | null;
-    validationMessageClassName?: string;
+    invalid?: boolean
+    validationMessage?: string | null
+    validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean;
+    withoutValidationMessage?: boolean
     // Указать true, если label должен быть как будто поле ввода в активном состоянии.
-    active?: boolean;
+    active?: boolean
     // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
-    grouped?: boolean | 'first' | 'center' | 'last';
+    grouped?: boolean | 'first' | 'center' | 'last'
     // Указать true, если поле ввода используется в качестве <DropdownToggle>.
-    isDropdownToggle?: boolean;
+    isDropdownToggle?: boolean
     // Регулярное выражение для фильтрации вводимых символов.
-    allowedChars?: RegExp;
+    allowedChars?: RegExp
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string;
+    trackBehaviorAs?: string
 }
 
 // Поле ввода значения.
@@ -102,8 +108,14 @@ function Input(props: InputProps) {
     const labelReference = labelRef ?? labelEl
     const inputReference = inputRef ?? (textarea ? textareaEl : inputEl)
 
-    const [labelNotchWidth, setLabelNotchWidth] = useState<number | string>(0)
-    const [isFocused, setFocused] = useState<boolean>(false)
+    const [
+        labelNotchWidth,
+        setLabelNotchWidth,
+    ] = useState<number | string>(0)
+    const [
+        isFocused,
+        setFocused,
+    ] = useState<boolean>(false)
 
     const wrapperIsValidationMessageContainer: boolean = (
         !withoutValidationMessage
@@ -114,7 +126,9 @@ function Input(props: InputProps) {
         isDropdownToggle ? null : 'form-outline',
         contrast ? 'form-white' : null,
         !wrapperIsValidationMessageContainer && grouped ? 'flex-1' : null,
-        !wrapperIsValidationMessageContainer && typeof grouped === 'string' ? 'input-group-item ' + grouped : null,
+        !wrapperIsValidationMessageContainer && typeof grouped === 'string'
+            ? 'input-group-item ' + grouped
+            : null,
         wrapperIsValidationMessageContainer ? null : wrapperClass
     )
     let size: 'normal' | 'small' | 'large' = 'normal'
@@ -123,7 +137,14 @@ function Input(props: InputProps) {
     } else if (large && !small) {
         size = 'large'
     }
-    const hasNotEmptyValue: boolean = (String(value ?? '').length || 0) > 0
+    let hasNotEmptyValue: boolean
+    if (value === undefined) {
+        // Не managed поле ввода.
+        hasNotEmptyValue = (inputRef?.current?.value.length ?? 0) > 0
+    } else {
+        // Managed поле ввода.
+        hasNotEmptyValue = (String(value ?? '').length ?? 0) > 0
+    }
     const inputClassesCalculated = clsx(
         active || isFocused || hasNotEmptyValue ? 'active' : null,
         size === 'small' ? 'form-control-sm' : null,
@@ -145,7 +166,7 @@ function Input(props: InputProps) {
                     if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
                         multiplier = activeInputLabelSizeMultiplier[size]!
                     }
-                    setLabelNotchWidth(labelReference.current.clientWidth * multiplier + 8)
+                    setLabelNotchWidth((labelReference.current.clientWidth * multiplier) + 8)
                 } else if (labelNotchWidth === 0) {
                     setLabelNotchWidth('80%')
                     setTimeout(updateWidth, 500)
@@ -275,12 +296,12 @@ function Input(props: InputProps) {
 
     let notch: null | React.ReactNode = (
         <div className="form-notch">
-            <div className="form-notch-leading"/>
+            <div className="form-notch-leading" />
             <div
                 className="form-notch-middle"
                 style={{width: labelNotchWidth}}
             />
-            <div className="form-notch-trailing"/>
+            <div className="form-notch-trailing" />
         </div>
     )
 

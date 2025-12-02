@@ -1,11 +1,17 @@
 import React, {AllHTMLAttributes} from 'react'
+import {
+    FileAPIImageFileInfo,
+    FileAPISelectedFileInfo,
+} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
 import {ApiRequestMethod} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
-import {AnyObject, CssGridColumnsConfig} from 'swayok-react-mdb-ui-kit/types/Common'
-import {FileAPIImageFileInfo, FileAPISelectedFileInfo} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
+import {
+    AnyObject,
+    CssGridColumnsConfig,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Рендерер предпросмотра файла.
-export type FilePickerContextMimeTypePreviewRenderer =
-    (previewWidth: number, fileName: string, fileData: FileAPISelectedFileInfo) => React.ReactNode
+export type FilePickerContextMimeTypePreviewRenderer
+    = (previewWidth: number, fileName: string, fileData: FileAPISelectedFileInfo) => React.ReactNode
 
 // Настройки предпросмотра для типа файлов.
 export interface FilePickerContextMimeTypeInfo {
@@ -43,7 +49,7 @@ export interface FilePickerContextProps<T extends FilePickerFileInfo = FilePicke
     // Обработчик нажатия на кнопку удаления прикрепленного файла.
     onFileDelete: (file: T, delay?: number) => void
     // Запуск отправки файлов на сервер.
-    startUploading: () => Promise<void>
+    startUploading: (isAutoUpload: boolean) => Promise<void>
     // Разрешить изменение позиций картинок?
     reorderable: boolean
     // Получить позицию для нового прикрепленного файла (используется для изменения позиции файлов).
@@ -116,7 +122,7 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
     // Прикреплен новый файл.
     onFileAttached?: (
         file: T,
-        isValid: boolean,
+        isValid: boolean
     ) => void
     // Файл удалён (откреплён).
     onFileRemoved?: (file: T) => void
@@ -249,7 +255,7 @@ export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElemen
 /**
  * Размер элемента предпросмотра файла.
  */
-export interface FilePickerPreviewSizes{
+export interface FilePickerPreviewSizes {
     width: number
     height: number
 }
@@ -311,7 +317,7 @@ export interface FilePickerTranslations {
         uploaded: string
         not_uploaded: string
         uploading: (uploadedPercent: number) => string
-    },
+    }
     attach_file: string
     replace_file: string
     not_all_valid_files_uploaded: string
@@ -370,7 +376,7 @@ export interface FilePickerWithUploaderFileInfo extends FilePickerFileInfo {
 
 // Свойства компонента, показывающего предпросмотр файла.
 export interface FilePickerFilePreviewProps<
-    T extends FilePickerFileInfo = FilePickerFileInfo
+    T extends FilePickerFileInfo = FilePickerFileInfo,
 > extends AllHTMLAttributes<HTMLElement> {
     key: string
     file: T

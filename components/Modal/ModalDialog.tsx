@@ -5,10 +5,7 @@ import {ModalDialogProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTy
 // Контейнер модального окна.
 // Отвечает за размеры и расположение.
 // Внутри должен быть компонент ModalContent.
-function ModalDialog(
-    props: ModalDialogProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-) {
+export function ModalDialog(props: ModalDialogProps) {
 
     const {
         className,
@@ -31,11 +28,11 @@ function ModalDialog(
         <div
             className={classes}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </div>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ModalDialogProps>(ModalDialog))
+/** @deprecated */
+export default ModalDialog

@@ -1,10 +1,12 @@
 // Table styled as Data Grid with filtering, pagination, sorting, etc.
+@use "sass:map";
 @use "../mixins/svg-icons";
 @use "../variables/table";
 @use "../variables/data-grid";
 @use "../variables/z-index";
 @use "../variables/buttons";
 @use "../variables/features";
+@use "../variables/spacers";
 
 @if (features.$include-data-grid) {
     .data-grid-table-container {
@@ -352,6 +354,14 @@
         z-index: 9;
         background-color: data-grid.$data-grid-footer-bg;
         color: data-grid.$data-grid-footer-color;
+
+        .data-grid-pagination-filler-dropdown-menu {
+            max-height: data-grid.$data-grid-pagination-filler-menu-max-height;
+
+            .page-link {
+                height: data-grid.$data-grid-pagination-filler-menu-button-height;
+            }
+        }
 
         .page-item {
             &.dropdown-item {

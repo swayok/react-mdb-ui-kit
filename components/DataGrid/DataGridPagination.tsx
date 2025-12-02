@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import clsx from 'clsx'
 import {Icon} from '../Icon'
 import {
@@ -29,6 +29,13 @@ export function DataGridPagination(props: DataGridPaginationProps) {
 
     const pagesCount = Math.floor(totalCount / limit) + (totalCount % limit === 0 ? 0 : 1)
     const currentPage = Math.floor(offset / limit) + 1
+
+    const onPageChange = useCallback(
+        (page: number) => {
+            onOffsetChange(Math.max(0, page - 1) * limit)
+        },
+        [limit, onOffsetChange]
+    )
 
     return (
         <div
@@ -71,7 +78,7 @@ export function DataGridPagination(props: DataGridPaginationProps) {
                         className="page-link cursor with-icon"
                         onClick={() => {
                             if (!disabled && currentPage > 1) {
-                                onOffsetChange((currentPage - 2) * limit)
+                                onPageChange(currentPage - 1)
                             }
                         }}
                     >
@@ -87,7 +94,7 @@ export function DataGridPagination(props: DataGridPaginationProps) {
                     totalCount={totalCount}
                     offset={offset}
                     limit={limit}
-                    onOffsetChange={onOffsetChange}
+                    onPageChange={onPageChange}
                     maxVisiblePages={maxVisiblePages}
                     disabled={disabled}
                 />
@@ -103,7 +110,7 @@ export function DataGridPagination(props: DataGridPaginationProps) {
                         className="page-link cursor with-icon"
                         onClick={() => {
                             if (!disabled && currentPage < pagesCount) {
-                                onOffsetChange(currentPage * limit)
+                                onPageChange(currentPage + 1)
                             }
                         }}
                     >
@@ -126,7 +133,7 @@ export function DataGridPagination(props: DataGridPaginationProps) {
                         className="page-link cursor with-icon"
                         onClick={() => {
                             if (!disabled && currentPage < pagesCount) {
-                                onOffsetChange(pagesCount * limit)
+                                onPageChange(pagesCount)
                             }
                         }}
                     >

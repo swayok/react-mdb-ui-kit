@@ -1,24 +1,9 @@
-import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-import {BackgroundColors} from 'swayok-react-mdb-ui-kit/types/Common'
-
-export interface ProgressBarProps extends AllHTMLAttributes<HTMLDivElement> {
-    // Анимация.
-    animated?: boolean;
-    // Цвет.
-    color?: BackgroundColors;
-    // С полосками?
-    striped?: boolean;
-    // Текущее значение (при minValue=0 и maxValue=100 - аналог процента).
-    currentValue: number;
-    // Минимальное значение (по умолчанию: 0).
-    minValue?: number;
-    // Максимальное значение (по умолчанию: 100).
-    maxValue?: number;
-}
+import React from 'react'
+import {ProgressBarProps} from './ProgressTypes'
 
 // Индикатор прогресса (внутренний компонент, отображает прогресс в %).
-function ProgressBar(props: ProgressBarProps, ref: React.ForwardedRef<HTMLDivElement>) {
+export function ProgressBar(props: ProgressBarProps) {
     const {
         animated,
         children,
@@ -57,7 +42,6 @@ function ProgressBar(props: ProgressBarProps, ref: React.ForwardedRef<HTMLDivEle
         <div
             className={classes}
             style={styles}
-            ref={ref}
             role="progressbar"
             {...otherProps}
             aria-valuenow={currentValue}
@@ -69,4 +53,5 @@ function ProgressBar(props: ProgressBarProps, ref: React.ForwardedRef<HTMLDivEle
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ProgressBarProps>(ProgressBar))
+/** @deprecated */
+export default ProgressBar

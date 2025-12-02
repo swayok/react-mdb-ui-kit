@@ -3,10 +3,7 @@ import clsx from 'clsx'
 import {ModalTitleProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
 
 // Заголовок модального окна.
-function ModalTitle(
-    props: ModalTitleProps,
-    ref: React.ForwardedRef<HTMLAllCollection>
-) {
+export function ModalTitle(props: ModalTitleProps) {
     const {
         className,
         children,
@@ -20,11 +17,11 @@ function ModalTitle(
         <Tag
             className={clsx('modal-title', className)}
             {...otherProps}
-            ref={ref}
         >
             {children}
         </Tag>
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, ModalTitleProps>(ModalTitle))
+/** @deprecated */
+export default ModalTitle

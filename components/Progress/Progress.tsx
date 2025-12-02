@@ -1,15 +1,11 @@
-import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-import ProgressBar from './ProgressBar'
-
-export interface ProgressProps extends AllHTMLAttributes<HTMLDivElement> {
-    // Высота полосы
-    height?: number | string;
-}
+import React from 'react'
+import {ProgressBar} from './ProgressBar'
+import {ProgressProps} from './ProgressTypes'
 
 // Индикатор прогресса (внешний компонент).
 // Должен содержать компонент <ProgressBar>, другие компоненты запрещены.
-function Progress(props: ProgressProps, ref: React.ForwardedRef<HTMLDivElement>) {
+export function Progress(props: ProgressProps) {
     const {
         className,
         children,
@@ -21,7 +17,6 @@ function Progress(props: ProgressProps, ref: React.ForwardedRef<HTMLDivElement>)
     return (
         <div
             className={clsx('progress', className)}
-            ref={ref}
             style={{
                 height,
                 ...style,
@@ -40,4 +35,5 @@ function Progress(props: ProgressProps, ref: React.ForwardedRef<HTMLDivElement>)
     )
 }
 
-export default React.memo(React.forwardRef<HTMLDivElement, ProgressProps>(Progress))
+/** @deprecated */
+export default Progress

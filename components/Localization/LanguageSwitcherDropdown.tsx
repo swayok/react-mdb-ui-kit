@@ -1,17 +1,19 @@
-import React from 'react'
-import {Icon} from '../Icon'
-import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {IconProps} from '../MDIIcon'
-import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import {mdiChevronUp, mdiTranslate} from '@mdi/js'
+import {
+    mdiChevronUp,
+    mdiTranslate,
+} from '@mdi/js'
 import clsx from 'clsx'
-import {withStable} from '../../helpers/withStable'
-import {LanguagesManager} from '../../helpers/LanguagesManager'
+import React from 'react'
 import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import { DropdownToggle } from '../Dropdown/DropdownToggle'
-import { DropdownMenu } from '../Dropdown/DropdownMenu'
-import { DropdownItem } from '../Dropdown/DropdownItem'
+import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
+import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+import {LanguagesManager} from '../../helpers/LanguagesManager'
+import {Dropdown} from '../Dropdown/Dropdown'
+import {DropdownItem} from '../Dropdown/DropdownItem'
+import {DropdownMenu} from '../Dropdown/DropdownMenu'
+import {DropdownToggle} from '../Dropdown/DropdownToggle'
+import {Icon} from '../Icon'
+import {IconProps} from '../MDIIcon'
 
 interface Props {
     currentLanguage: BasicLanguageConfig
@@ -32,7 +34,7 @@ interface Props {
 }
 
 // Переключатель языка.
-function LanguageSwitcherDropdown(props: Props) {
+export function LanguageSwitcherDropdown(props: Props) {
 
     const {
         currentLanguage,
@@ -110,4 +112,5 @@ function LanguageSwitcherDropdown(props: Props) {
     )
 }
 
-export default withStable<Props>(['onSwitch'], LanguageSwitcherDropdown)
+/** @deprecated */
+export default LanguageSwitcherDropdown

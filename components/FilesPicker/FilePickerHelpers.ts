@@ -12,10 +12,10 @@ import {MinMax} from 'swayok-react-mdb-ui-kit/types/Common'
 import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
 
 // Функции-помощники для FilePicker и FilePickerWithUploader.
-export default {
+export abstract class FilePickerHelpers {
 
     // Преобразование FilePickerFileInfoFromDB в FilePickerFileInfo.
-    normalizeValueFromDB(
+    static normalizeValueFromDB(
         value: (FilePickerFileInfoFromDB | FilePickerFileInfo)[]
     ): FilePickerFileInfo[] {
         const normalized: FilePickerFileInfo[] = []
@@ -49,10 +49,10 @@ export default {
             }
         }
         return normalized
-    },
+    }
 
     // Получить минимальное и максимальное значения позиций файлов.
-    getMinMaxFilePositions(
+    static getMinMaxFilePositions(
         oldFiles: FilePickerFileInfo[],
         newFiles: FilePickerFileInfo[]
     ): MinMax {
@@ -72,20 +72,20 @@ export default {
             min: min ?? 0,
             max: max ?? 0,
         }
-    },
+    }
 
     // Файл валидный?
-    isValidFile(file: FilePickerFileInfo): boolean {
+    static isValidFile(file: FilePickerFileInfo): boolean {
         return !file.error && !file.isDeleted
-    },
+    }
 
     // Создание ID файла для проверки прикрепления дубликата.
-    makeFileID(file: FileAPISelectedFileInfo): string {
+    static makeFileID(file: FileAPISelectedFileInfo): string {
         return String(file.size) + '_' + file.name
-    },
+    }
 
     // Получение информации о файле для отправки на сервер.
-    async getFileInfoForUpload<T extends FilePickerFileInfo = FilePickerFileInfo>(
+    static async getFileInfoForUpload<T extends FilePickerFileInfo = FilePickerFileInfo>(
         file: T,
         useUidAsFileName: boolean = false,
         maxImageSize?: number,
@@ -97,10 +97,10 @@ export default {
             data: await this.compressFile(file, maxImageSize, convertImagesToJpeg, imagesCompression),
             fileName: this.getNormalizedFileName(file, useUidAsFileName, convertImagesToJpeg),
         }
-    },
+    }
 
     // Получить имя файла, которое нужно отправить на сервер.
-    getNormalizedFileName(
+    static getNormalizedFileName(
         file: FilePickerFileInfo,
         useUidAsFileName: boolean = false,
         convertImageToJpeg?: boolean
@@ -111,12 +111,12 @@ export default {
             return fileName.replace(/\.[a-zA-Z0-9]{1,6}$/, '.jpg')
         }
         return fileName
-    },
+    }
 
     // Сжатие файла.
     // Если файл - изображение, то сжимаем его до указанного размера.
     // Если не изображение - возвращаем оригинальный файл.
-    compressFile(
+    static compressFile(
         file: FilePickerFileInfo,
         maxImageSize?: number,
         convertImageToJpeg?: boolean,
@@ -148,10 +148,10 @@ export default {
                 })
                 .catch(() => reject(new Error('failed_to_resize_file')))
         }))
-    },
+    }
 
     // Валидация типа и размера файла.
-    validateFileTypeAndSize(
+    static validateFileTypeAndSize(
         file: FileAPISelectedFileInfo,
         mimes: FilePickerContextProps['previews'],
         translations: ManagedFilePickerProps['translations'],
@@ -176,10 +176,10 @@ export default {
             return translations.error.file_too_large(Math.round(maxFileSizeKb / 1024 * 100) / 100)
         }
         return mimesForType
-    },
+    }
 
     // Может ли пользователь удалить этот файл?
-    canDeleteFile(file: FilePickerFileInfo | FilePickerWithUploaderFileInfo): boolean {
+    static canDeleteFile(file: FilePickerFileInfo | FilePickerWithUploaderFileInfo): boolean {
         if (!file.error || !('uploading' in file)) {
             return true
         }
@@ -189,10 +189,10 @@ export default {
             return true
         }
         return false
-    },
+    }
 
     // Размер файла в мегабайтах.
-    getFileSizeMb(file: FilePickerFileInfo): number {
+    static getFileSizeMb(file: FilePickerFileInfo): number {
         return Math.round(file.file.size / 1024 / 1024 * 100) / 100
-    },
+    }
 }

@@ -1,12 +1,10 @@
-import React from 'react'
-import clsx from 'clsx'
-import {Icon} from '../Icon'
 import {mdiDotsHorizontal} from '@mdi/js'
-import {DropdownToggle} from '../Dropdown/DropdownToggle'
-import {DropdownItem} from '../Dropdown/DropdownItem'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {DropdownMenu} from '../Dropdown/DropdownMenu'
+import clsx from 'clsx'
+import React from 'react'
 import {DataGridPaginationPagesListProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DropdownToggle} from '../Dropdown/DropdownToggle'
+import {Icon} from '../Icon'
+import {DataGridPaginationPagesListFillerDropdown} from './DataGridPaginationPagesListFillerDropdown'
 
 // Кнопка, открывающая выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.
@@ -21,7 +19,7 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
         offset,
         limit,
         disabled,
-        onOffsetChange,
+        onPageChange,
         maxVisiblePages,
         ...otherProps
     } = props
@@ -66,7 +64,7 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
                         className="page-link"
                         onClick={() => {
                             if (!disabled) {
-                                onOffsetChange((numberOrFiller - 1) * limit)
+                                onPageChange(numberOrFiller)
                             }
                         }}
                     >
@@ -78,64 +76,20 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
     }
 
     if (hasFiller) {
-        const renderDropdownItems = () => {
-            const dropdownItems = []
-            for (let hiddenPageNumber = 1; hiddenPageNumber <= pagesCount; hiddenPageNumber++) {
-                dropdownItems.push(
-                    <div
-                        key={'page-number-' + hiddenPageNumber}
-                        className={clsx(
-                            'page-item text-center',
-                            currentPage === hiddenPageNumber ? 'active' : null,
-                            disabled ? 'disabled' : null
-                        )}
-                    >
-                        <DropdownItem
-                            tag="div"
-                            className="page-link"
-                            onClick={() => {
-                                if (!disabled) {
-                                    onOffsetChange((hiddenPageNumber - 1) * limit)
-                                }
-                            }}
-                        >
-                            {hiddenPageNumber}
-                        </DropdownItem>
-                    </div>
-                )
-            }
-            return dropdownItems
-        }
-
-        let gridColumns = 10
-        if (pagesCount < 30) {
-            gridColumns = 5
-        }
         return (
-            <Dropdown
-                focusFirstItemOnShow={false}
-                offset={[0, 6]}
-                drop="up"
-                autoClose={true}
-                className={className}
-                {...otherProps}
-            >
-                <div className="d-flex flex-row align-items-center justify-content-center">
-                    {items.map(renderItem)}
-                </div>
-                <DropdownMenu
-                    maxHeight={300}
-                >
-                    <div
-                        className="d-grid grid-columns-gap-2 grid-rows-gap-2 p-2 shadow-2-strong"
-                        style={{
-                            gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
-                        }}
-                    >
-                        {renderDropdownItems()}
+            <DataGridPaginationPagesListFillerDropdown
+                DropdownToggle={
+                    <div className="d-flex flex-row align-items-center justify-content-center">
+                        {items.map(renderItem)}
                     </div>
-                </DropdownMenu>
-            </Dropdown>
+                }
+                pagesCount={pagesCount}
+                currentPage={currentPage}
+                className={className}
+                disabled={disabled}
+                onSelect={onPageChange}
+                {...otherProps}
+            />
         )
     } else {
         return (

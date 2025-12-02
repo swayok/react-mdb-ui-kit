@@ -1,12 +1,12 @@
-import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
+import React, {AllHTMLAttributes} from 'react'
 
 interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'children'> {
-    embedUrl: string;
+    embedUrl: string
 }
 
 // Встройка YouTube видео в страницу.
-function YoutubeEmbed(props: Props) {
+export function YoutubeEmbed(props: Props) {
 
     const {
         embedUrl,
@@ -28,5 +28,3 @@ function YoutubeEmbed(props: Props) {
         </div>
     )
 }
-
-export default React.memo(YoutubeEmbed)

@@ -1,5 +1,7 @@
 import {
     useEffect,
+    useEffectEvent,
+    useMemo,
     useRef,
 } from 'react'
 import {
@@ -16,6 +18,11 @@ export function AsyncDataGridUrlQueryManager<
     RowDataType extends object = AnyObject,
     FiltersDataType extends object = AnyObject,
 >(props: AsyncDataGridUrlQueryManagerProps) {
+
+    const {
+        urlQueryParamName = 'state',
+        onReady,
+    } = props
 
     const {
         limit,
@@ -35,103 +42,102 @@ export function AsyncDataGridUrlQueryManager<
     } = useAsyncDataGridContext<RowDataType, FiltersDataType>()
 
     // Параметры URL.
-    const [urlQueryParams,
-        setUrlQueryParams] = useUrlQueryParams({})
+    const [
+        urlQueryParams,
+        setUrlQueryParams,
+    ] = useUrlQueryParams({})
+
+    const urlQueryParamProcessed = useRef<boolean>(false)
+
+    // Хеш настроек "по умолчанию".
+    const defaultHash: string = useMemo(
+        () => encodeAsyncDataGridState(
+            defaultLimit,
+            0,
+            defaultOrderBy,
+            defaultOrderDirection,
+            defaultFilters
+        ),
+        [defaultLimit, defaultOrderBy, defaultOrderDirection, defaultFilters]
+    )
 
     // Предыдущий хеш.
-    const prevHash = useRef<string>(
-        encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters)
+    const contextHash = useMemo(
+        () => encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters),
+        [limit, offset, orderBy, orderDirection, JSON.stringify(filters)]
     )
 
-    const urlQueryParamName: string = props.urlQueryParamName === true
-        ? 'state'
-        : props.urlQueryParamName
+    // Новый хеш.
+    const urlQueryHash = urlQueryParams.get(urlQueryParamName) ?? defaultHash
 
-    // Проверяем есть ли в URL Query параметры для таблицы.
-    useEffect(() => {
-        if (urlQueryParams.has(urlQueryParamName)) {
-            const hash: string = urlQueryParams.get(urlQueryParamName)!
-            if (prevHash.current === hash) {
-                // Ничего не изменилось.
-                return
-            }
-            const data: Partial<AsyncDataGridStateForUrlQuery> | null = decodeAsyncDataGridState(hash)
-            if (!data) {
-                return
-            }
-            // Восстановление состояния выборки.
-            // noinspection SuspiciousTypeOfGuard
-            if (data.l && typeof data.l === 'number') {
-                setLimit(data.l)
-            } else {
-                setLimit(defaultLimit)
-            }
-            // noinspection SuspiciousTypeOfGuard
-            if (data.o && typeof data.o === 'number') {
-                setOffset(data.o)
-            } else {
-                setOffset(0)
-            }
-            // noinspection SuspiciousTypeOfGuard
-            if (
-                data.sb && typeof data.sb === 'string'
-                && data.sd
-                && (data.sd === 'asc' || data.sd === 'desc')
-            ) {
-                setOrder(data.sb, data.sd)
-            } else if (defaultOrderBy) {
-                setOrder(defaultOrderBy, defaultOrderDirection)
-            }
-            // noinspection SuspiciousTypeOfGuard
-            if (data.f && typeof data.f === 'object') {
-                applyFilters({...(data.f as FiltersDataType)}, false)
-            } else {
-                resetFilters(false)
-            }
-            prevHash.current = hash
-        } else {
-            // Параметра нет в URL query: проверяем хеш параметров по-умолчанию.
-            const hash: string = encodeAsyncDataGridState(
-                defaultLimit,
-                0,
-                defaultOrderBy,
-                defaultOrderDirection,
-                defaultFilters
-            )
-            if (prevHash.current === hash) {
-                // Ничего не изменилось.
-                return
-            }
-            // Применяем значения по умолчанию.
-            setLimit(defaultLimit)
-            setOffset(0)
-            if (defaultOrderBy) {
-                setOrder(defaultOrderBy, defaultOrderDirection)
-            }
-            resetFilters(false)
-            prevHash.current = hash
+    // Обрабатываем изменение состояния в AsyncDataGridContext.
+    // и обновляем состояние URL Query, если требуется.
+    const onContextStateChange = () => {
+        if (
+            urlQueryParamProcessed.current
+            && contextHash !== urlQueryParams.get(urlQueryParamName)
+        ) {
+            urlQueryParams.set(urlQueryParamName, contextHash)
+            setUrlQueryParams(urlQueryParams)
         }
-    }, [urlQueryParams, urlQueryParamName])
+    }
 
-    // При монтировании компонента выполнить props.onReady после небольшого таймаута
+    // Обрабатываем изменение состояния в AsyncDataGridContext.
+    // Возможно, нужно обновить состояние URL Query.
+    useEffect(
+        onContextStateChange,
+        // Не нужно тут реагировать на изменение urlQueryHash или urlQueryParams!
+        // Будет бесконечное обновление.
+        [contextHash, urlQueryParamName]
+    )
+
+    // Обработка изменения состояния в URL Query
+    // и обновление состояния AsyncDataGridContext, если требуется.
+    // Не перемещать выше onContextStateChange()!
+    const onUrlQueryHashChange = useEffectEvent(() => {
+        urlQueryParamProcessed.current = true
+        if (contextHash === urlQueryHash) {
+            // Ничего не изменилось.
+            return
+        }
+        const data = decodeAsyncDataGridState<FiltersDataType>(
+            urlQueryHash,
+            defaultLimit,
+            defaultOrderBy,
+            defaultOrderDirection
+        )
+        if (!data) {
+            // Не удалось декодировать состояние: сбрасываем в состояние "по умолчанию".
+            urlQueryParams.delete(urlQueryParamName)
+            setUrlQueryParams(urlQueryParams)
+            return
+        }
+        // Никогда не передавать true в resetOffset в applyFilters/resetFilters!
+        if (data.filters) {
+            applyFilters(data.filters, false)
+        } else {
+            resetFilters(false)
+        }
+        setLimit(data.limit)
+        setOffset(data.offset)
+        if (data.orderBy) {
+            setOrder(data.orderBy, data.orderDirection)
+        }
+    })
+
+    // Отлавливаем изменения состояния в URL Query.
+    // Не перемещать выше onContextStateChange()!
+    useEffect(
+        onUrlQueryHashChange,
+        [urlQueryHash]
+    )
+
+    // При монтировании компонента выполнить props.onReady после небольшого тайм-аута.
     useEffect(() => {
-        if (props.onReady) {
-            setTimeout(props.onReady, 100)
+        if (onReady) {
+            setTimeout(() => onReady(), 100)
         }
     }, [urlQueryParamName])
-
-    // Получен новый набор данных.
-    useEffect(
-        () => {
-            const hash: string = encodeAsyncDataGridState(limit, offset, orderBy, orderDirection, filters)
-            if (hash !== prevHash.current) {
-                prevHash.current = hash
-                urlQueryParams.set(urlQueryParamName, hash)
-                setUrlQueryParams(urlQueryParams)
-            }
-        },
-        [limit, offset, orderBy, orderDirection, filters, urlQueryParamName]
-    )
 
     return null
 }
@@ -162,17 +168,78 @@ export function encodeAsyncDataGridState(
 }
 
 // Конвертирует строку из URL query в параметры выборки.
-export function decodeAsyncDataGridState(value: string | null): Partial<AsyncDataGridStateForUrlQuery> | null {
+export function decodeAsyncDataGridState<FiltersDataType extends object = object>(
+    value: string | null,
+    defaultLimit: number,
+    defaultOrderBy: string | null,
+    defaultOrderDirection: DataGridOrderingDirection
+): NormalizedAsyncDataGridState<FiltersDataType> | null {
     if (!value || value.trim() === '') {
         return null
     }
     try {
-        const data: AsyncDataGridStateForUrlQuery = JSON.parse(value)
+        const data: AsyncDataGridStateForUrlQuery<FiltersDataType> = JSON.parse(value)
         if (typeof data !== 'object') {
             return null
         }
-        return data
+        return normalizeAsyncDataGridState<FiltersDataType>(
+            data,
+            defaultLimit,
+            defaultOrderBy,
+            defaultOrderDirection
+        )
     } catch (_e) {
         return null
     }
+}
+
+export interface NormalizedAsyncDataGridState<FiltersDataType extends object = object> {
+    limit: number
+    offset: number
+    orderBy: string | null
+    orderDirection: DataGridOrderingDirection
+    filters: FiltersDataType | null
+}
+
+// Нормализация значений состояния таблицы данных.
+export function normalizeAsyncDataGridState<FiltersDataType extends object = object>(
+    data: AsyncDataGridStateForUrlQuery<FiltersDataType>,
+    defaultLimit: number,
+    defaultOrderBy: string | null,
+    defaultOrderDirection: DataGridOrderingDirection
+): NormalizedAsyncDataGridState<FiltersDataType> {
+    const ret: NormalizedAsyncDataGridState<FiltersDataType> = {
+        limit: defaultLimit,
+        offset: 0,
+        orderBy: defaultOrderBy,
+        orderDirection: defaultOrderDirection,
+        filters: null,
+    }
+    // noinspection SuspiciousTypeOfGuard
+    if (data.l && typeof data.l !== 'number' && data.l > 0) {
+        ret.limit = data.l
+    }
+    // noinspection SuspiciousTypeOfGuard
+    if (data.o && typeof data.o === 'number' && data.o >= 0) {
+        ret.offset = data.o
+    }
+    // noinspection SuspiciousTypeOfGuard
+    if (
+        data.sb
+        && typeof data.sb === 'string'
+    ) {
+        ret.orderBy = data.sb
+    }
+
+    if (
+        data.sd
+        && (data.sd === 'asc' || data.sd === 'desc')
+    ) {
+        ret.orderDirection = data.sd
+    }
+    // noinspection SuspiciousTypeOfGuard
+    if (data.f && typeof data.f === 'object') {
+        ret.filters = {...data.f}
+    }
+    return ret
 }

@@ -1,19 +1,21 @@
-import React, {useContext} from 'react'
-import clsx from 'clsx'
-import FilePickerContext from './FilePickerContext'
 import {
-    FilePickerContextProps,
+    mdiFolderOpenOutline,
+    mdiPlus,
+} from '@mdi/js'
+import clsx from 'clsx'
+import React from 'react'
+import {
     FilePickerPreviewSizes,
     FilePickerPreviewsWithoutInfoProps,
 } from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse'
 import {Icon} from '../Icon'
-import {mdiFolderOpenOutline, mdiPlus} from '@mdi/js'
-import FilePickerFilePreviewWithoutInfo from './FilePickerFilePreviewWithoutInfo'
-import {ToastService} from '../../services/ToastService'
+import {useFilePickerContext} from './FilePickerContext'
+import {FilePickerFilePreviewWithoutInfo} from './FilePickerFilePreviewWithoutInfo'
 
 // Блок со списком предпросмотров прикрепленных картинок.
-function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps) {
+export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps) {
 
     const {
         maxFiles,
@@ -28,7 +30,7 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
         onExistingFileDelete,
         onExistingFileRestore,
         onFileDelete,
-    } = useContext<FilePickerContextProps>(FilePickerContext)
+    } = useFilePickerContext()
 
     const {
         children,
@@ -171,4 +173,5 @@ function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps
     )
 }
 
-export default React.memo(FilePickerPreviewsWithoutInfo)
+/** @deprecated */
+export default FilePickerPreviewsWithoutInfo

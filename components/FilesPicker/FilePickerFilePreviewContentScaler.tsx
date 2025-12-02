@@ -7,7 +7,8 @@ interface Props extends AllHTMLAttributes<HTMLAnchorElement> {
     scaleImageOnHover?: boolean
 }
 
-export const FilePickerFilePreviewContentScaler = React.memo(function FilePickerFilePreviewContentContainer(props: Props) {
+// Увеличитель размера картинки предпросмотра.
+export function FilePickerFilePreviewContentScaler(props: Props) {
 
     const {
         file,
@@ -68,4 +69,4 @@ export const FilePickerFilePreviewContentScaler = React.memo(function FilePicker
             {children}
         </a>
     )
-})
+}

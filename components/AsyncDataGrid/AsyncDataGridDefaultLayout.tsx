@@ -35,28 +35,17 @@ export function AsyncDataGridDefaultLayout<
         Headers,
         renderRow,
         hideFooter,
+        footerProps = {} as Partial<AsyncDataGridFooterProps>,
+        tableProps = {} as Partial<AsyncDataGridTableProps<RowDataType>>,
     } = props
 
-    const tableProps: Partial<AsyncDataGridTableProps<RowDataType>> = Object.assign({
-        striped,
-        hover,
-        bordered,
-        small,
-        verticalAlign: 'top',
-        wrapperClass: tableWrapperClassName,
-        fillHeight: !inline,
-    }, props.tableProps ?? {})
-
-    const footerProps: Partial<AsyncDataGridFooterProps> = Object.assign({
-        shadow: !inline,
-        border: !!inline,
-    } as Partial<AsyncDataGridFooterProps>, props.footerProps ?? {})
+    const fillHeight: boolean = !inline
 
     return (
         <div
             className={clsx(
                 'data-grid-wrapper d-flex flex-column align-items-stretch justify-content-start',
-                tableProps.fillHeight ? 'full-height overflow-hidden' : null,
+                fillHeight ? 'full-height overflow-hidden' : null,
                 className
             )}
             id={id}
@@ -68,12 +57,23 @@ export function AsyncDataGridDefaultLayout<
             {Prepend}
             {FiltersPanel}
             <AsyncDataGridTable<RowDataType>
+                striped={striped}
+                hover={hover}
+                bordered={bordered}
+                small={small}
+                verticalAlign="top"
+                wrapperClass={tableWrapperClassName}
+                fillHeight={fillHeight}
                 {...tableProps}
                 Headers={Headers}
                 renderRow={renderRow}
             />
             {!hideFooter
-                && <AsyncDataGridFooter {...footerProps} />}
+                && <AsyncDataGridFooter
+                    shadow={!inline}
+                    border={!!inline}
+                    {...footerProps}
+                />}
             {Append}
         </div>
     )

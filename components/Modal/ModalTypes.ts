@@ -1,6 +1,13 @@
-import type {AllHTMLAttributes, ReactNode, RefObject} from 'react'
+import type {
+    AllHTMLAttributes,
+    ReactNode,
+    RefObject,
+} from 'react'
 import type {ButtonProps} from 'swayok-react-mdb-ui-kit/components/Button'
-import type {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import type {
+    AnyRefObject,
+    ComponentPropsWithModifiableTagAndRef,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Стандартная структура:
 // Modal
@@ -22,100 +29,107 @@ export interface ModalProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'siz
     // Процесс закрытия и демонтажа окна 2х-этапный:
     // 1. onClose = () => this.setState({modalVisible: false}) - запуск анимации закрытия окна;
     // 2. onClosed = () => this.setState({modalVisible: null}) - демонтаж окна.
-    show?: boolean | null,
+    show?: boolean | null
     // false: Не показывать.
-    backdrop?: boolean,
+    backdrop?: boolean
     // Z-index окна (можно открыть несколько окон поверх друг-друга).
-    depth?: number,
+    depth?: number
     // true: Закрыть окно нажатии на ESC.
-    closeOnEsc?: boolean,
+    closeOnEsc?: boolean
     // false: Закрыть окно при клике вне окна.
-    staticBackdrop?: boolean,
+    staticBackdrop?: boolean
     // Запуск закрытия окна
-    onClose?: () => void,
+    onClose?: () => void
     // Окно закрыто (включая анимацию).
-    onClosed?: () => void,
+    onClosed?: () => void
     // Запуск отображения окна (анимация).
     // Здесь можно очистить состояние компонента, в котором настраивается окно,
     // и запустить загрузку данных извне.
-    onShow?: () => void,
+    onShow?: () => void
     // Окно отображено и готово к использованию.
-    onShown?: () => void,
+    onShown?: () => void
     // true: Не добавлять компонент ModalDialog автоматически.
-    noDialog?: boolean,
+    noDialog?: boolean
     // CSS классы для автоматически добавленного ModalDialog.
-    dialogClassName?: string,
+    dialogClassName?: string
     // CSS ID для автоматически добавленного ModalDialog.
-    dialogId?: string,
+    dialogId?: string
     // Другие свойства для автоматически добавленного ModalDialog.
-    dialogProps?: ModalDialogProps,
+    dialogProps?: ModalDialogProps
     // true (default): Отцентрировать модальное окно в окне браузера.
-    centered?: ModalDialogProps['centered'],
+    centered?: ModalDialogProps['centered']
     // Размер окна.
-    size?: ModalDialogProps['size'],
+    size?: ModalDialogProps['size']
     // true: Настроить ModalBody для включения скроллинга,
     // если содержимое больше размера окна браузера.
-    scrollable?: ModalDialogProps['scrollable'],
+    scrollable?: ModalDialogProps['scrollable']
     // Если окно содержит вставку данных, которые нужно сначала получить извне,
     // то вместо использования children лучше использовать render,
     // чтобы не усложнять верстку проверками наличия данных.
-    render?: ReactNode | (() => ReactNode),
+    render?: ReactNode | (() => ReactNode)
     // Ожидается только 1 элемент внутри.
     // Обычно ModalContent.
     // Не используется, если задан render.
-    children?: ReactNode,
+    children?: ReactNode
     // Ссылка на самый верхний элемент окна (содержит backdrop и само окно)
-    modalRef?: RefObject<HTMLDivElement>,
+    modalRef?: RefObject<HTMLDivElement>
     // Контейнер модальных окон, по умолчанию: document.body.
     // Строка - CSS ID контейнера.
-    container?: HTMLElement | string,
+    container?: HTMLElement | string
 }
 
 export interface ModalDialogProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'size'> {
+    ref?: AnyRefObject<HTMLDivElement>
     // true (default): Отцентрировать модальное окно в окне браузера.
-    centered?: boolean,
+    centered?: boolean
     // Размер окна
     size?: 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen'
         | 'fullscreen-sm-down' | 'fullscreen-md-down' | 'fullscreen-lg-down'
-        | 'fullscreen-xl-down' | 'fullscreen-xxl-down',
+        | 'fullscreen-xl-down' | 'fullscreen-xxl-down'
     // true: Настроить ModalBody для включения скроллинга,
     // если содержимое больше размера окна браузера.
-    scrollable?: boolean,
+    scrollable?: boolean
 }
 
-export type ModalContentProps = AllHTMLAttributes<HTMLDivElement>
+export interface ModalContentProps extends AllHTMLAttributes<HTMLDivElement> {
+    ref?: AnyRefObject<HTMLDivElement>
+}
 
 export interface ModalHeaderProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'title'> {
+    ref?: AnyRefObject<HTMLDivElement>
     // Если задано, то автоматически добавляет компонент
     // ModalTitle с указанным title.
-    title?: string | null,
+    title?: string | null
     // Свойства для автоматически добавленного ModalTitle.
-    titleProps?: ModalTitleProps,
+    titleProps?: ModalTitleProps
     // Если задано, то автоматически добавляет компонент
     // ModalHeaderCloseButton с указанным onClose.
-    onClose?: ModalProps['onClose'],
+    onClose?: ModalProps['onClose']
     // Свойства для автоматически добавленного ModalHeaderCloseButton.
-    closeButtonProps?: ButtonProps,
+    closeButtonProps?: ButtonProps
     // true (default): Добавить нижний border.
-    border?: boolean,
+    border?: boolean
 }
 
-export type ModalTitleProps = ComponentPropsWithModifiableTag
+export type ModalTitleProps = ComponentPropsWithModifiableTagAndRef
 
 export interface ModalHeaderCloseButtonProps extends Omit<ButtonProps, 'onClick'> {
     // true: Кнопка находится вне <ModalHeader>.
-    floating?: boolean;
+    floating?: boolean
     // Запуск закрытия окна.
-    onClose: () => void;
+    onClose: () => void
     // Белая версия.
-    white?: boolean;
+    white?: boolean
 }
 
-export type ModalBodyProps = AllHTMLAttributes<HTMLDivElement>
+export interface ModalBodyProps extends AllHTMLAttributes<HTMLDivElement> {
+    ref?: AnyRefObject<HTMLDivElement>
+}
 
 export interface ModalFooterProps extends AllHTMLAttributes<HTMLDivElement> {
+    ref?: AnyRefObject<HTMLDivElement>
     // true (default): Добавить верхний border.
-    border?: boolean,
+    border?: boolean
     // true: Добавить CSS класс justify-content-between flex-nowrap.
     flexBetween?: boolean
     // true: Добавить CSS класс justify-content-center.

@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import React, {ReactNode} from 'react'
 import {Collapse} from '../Collapse'
-import clsx from 'clsx'
 import {HtmlContent} from '../HtmlContent'
 
 interface Props {
@@ -21,7 +21,7 @@ interface HtmlProps extends Props {
 }
 
 // Вывод ошибки в форме.
-function FormError(props: TextProps | HtmlProps) {
+export function FormError(props: TextProps | HtmlProps) {
 
     const {
         message,
@@ -29,7 +29,7 @@ function FormError(props: TextProps | HtmlProps) {
         wrapperClassName,
         className = 'pb-3',
         visible,
-        showImmediately
+        showImmediately,
     } = props
 
     const contentClassName = clsx('form-error', className)
@@ -56,4 +56,5 @@ function FormError(props: TextProps | HtmlProps) {
     )
 }
 
-export default React.memo(FormError)
+/** @deprecated */
+export default FormError
