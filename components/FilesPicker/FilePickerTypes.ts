@@ -1,17 +1,24 @@
-import React, {AllHTMLAttributes} from 'react'
-import {
+import type {
+    AllHTMLAttributes,
+    ReactNode,
+    RefObject,
+} from 'react'
+import type {
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
 } from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
-import {ApiRequestMethod} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
-import {
+import type {ApiRequestMethod} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
+import type {
     AnyObject,
     CssGridColumnsConfig,
 } from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Рендерер предпросмотра файла.
-export type FilePickerContextMimeTypePreviewRenderer
-    = (previewWidth: number, fileName: string, fileData: FileAPISelectedFileInfo) => React.ReactNode
+export type FilePickerContextMimeTypePreviewRenderer = (
+    previewWidth: number,
+    fileName: string,
+    fileData: FileAPISelectedFileInfo
+) => ReactNode
 
 // Настройки предпросмотра для типа файлов.
 export interface FilePickerContextMimeTypeInfo {
@@ -102,9 +109,9 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
      * @see FilePickerPreviews
      * @see FilePickerPreviewsWithoutInfo
      */
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
     // Ссылка на API компонента.
-    apiRef?: React.RefObject<FilePickerApi<T> | null>
+    apiRef?: RefObject<FilePickerApi<T> | null>
     // Список ранее прикрепленных файлов.
     existingFiles?: T[]
     // Удаление ранее прикрепленного файла.
@@ -164,7 +171,7 @@ export interface FilePickerInputProps {
      * @see FilePickerPreviews
      * @see FilePickerPreviewsWithoutInfo
      */
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
     // Список ранее прикрепленных файлов.
     value?: (FilePickerFileInfoFromDB | FilePickerFileInfo)[]
     // Разрешить картинки?

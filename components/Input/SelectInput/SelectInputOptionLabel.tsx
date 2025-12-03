@@ -1,21 +1,12 @@
 import React from 'react'
-import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {HtmlContent} from '../../HtmlContent'
-import {SelectInputProps} from './SelectInput'
-
-export interface SelectInputOptionLabelProps<
-    OptionValueType = string,
-    OptionExtrasType = AnyObject
-> {
-    option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>;
-    renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel'];
-    labelContainsHtml?: boolean;
-}
+import {SelectInputOptionLabelProps} from './SelectInputTypes'
 
 // Подпись для опции или группы опций в выпадающем меню.
-export default function SelectInputOptionLabel<
+export function SelectInputOptionLabel<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(props: SelectInputOptionLabelProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -39,3 +30,6 @@ export default function SelectInputOptionLabel<
     }
     return label
 }
+
+/** @deprecated */
+export default SelectInputOptionLabel

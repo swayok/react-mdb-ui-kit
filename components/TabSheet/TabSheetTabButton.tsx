@@ -1,15 +1,17 @@
-import React, {useCallback} from 'react'
-import {TabSheetTabButtonProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import clsx from 'clsx'
+import React, {
+    useCallback,
+    useMemo,
+} from 'react'
+import {TabSheetTabButtonProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {Ripple} from '../Ripple/Ripple'
+import {RippleProps} from '../Ripple/RippleTypes'
 import {useTabSheetContext} from './TabSheetContext'
-import {withStable} from '../../helpers/withStable'
-import Ripple, {RippleProps} from '../Ripple/Ripple'
 
 // Кнопка переключения на вкладку.
-function TabSheetTabButton<TabName extends string = string>(
+export function TabSheetTabButton<TabName extends string = string>(
     props: TabSheetTabButtonProps<TabName>
 ) {
-
     const {
         children,
         name,
@@ -31,11 +33,24 @@ function TabSheetTabButton<TabName extends string = string>(
         setCurrentTab,
     } = useTabSheetContext<TabName>()
 
-    const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault()
-        setCurrentTab(name)
-        onClick?.(event)
-    }, [onClick, name])
+    const rippleProps = useMemo(() => {
+        let rippleProps: RippleProps = {}
+        if (typeof ripple !== 'object') {
+            rippleProps.color = ripple === undefined ? 'primary' : ripple
+        } else {
+            rippleProps = ripple
+        }
+        return rippleProps
+    }, [ripple])
+
+    const handleClick = useCallback(
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault()
+            setCurrentTab(name)
+            onClick?.(event)
+        },
+        [onClick, name]
+    )
 
     return (
         <li
@@ -43,8 +58,8 @@ function TabSheetTabButton<TabName extends string = string>(
             className={clsx('nav-item', className)}
         >
             <Ripple
-                rippleTag="button"
-                {...normalizeRippleProps(ripple)}
+                tag="button"
+                {...rippleProps}
                 noRipple={noRipple}
                 {...otherButtonProps}
                 type="button"
@@ -63,20 +78,5 @@ function TabSheetTabButton<TabName extends string = string>(
     )
 }
 
-export default withStable<TabSheetTabButtonProps>(
-    ['onClick'],
-    TabSheetTabButton
-) as typeof TabSheetTabButton
-
-// Нормализация свойств анимации нажатия на кнопку.
-function normalizeRippleProps(
-    ripple: TabSheetTabButtonProps['ripple']
-): RippleProps {
-    let rippleProps: RippleProps = {}
-    if (typeof ripple !== 'object') {
-        rippleProps.rippleColor = ripple === undefined ? 'primary' : ripple
-    } else {
-        rippleProps = ripple
-    }
-    return rippleProps
-}
+/** @deprecated */
+export default TabSheetTabButton

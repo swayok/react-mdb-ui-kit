@@ -1,11 +1,14 @@
-import React, {useEffect, useMemo} from 'react'
+import {
+    useEffect,
+    useMemo,
+} from 'react'
 import {TabSheetStateToUrlQueryHandlerProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
-import {useTabSheetContext} from './TabSheetContext'
-import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
+import {useTabSheetContext} from './TabSheetContext'
 
 // Контроль сохранения и восстановления текущей вкладки из URL Query.
-function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerProps) {
+export function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerProps) {
 
     const {
         defaultTab,
@@ -21,7 +24,10 @@ function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerPro
     }, [defaultTab])
 
     // Аргументы в сроке адреса.
-    const [urlQueryParams, setUrlQueryParams] = useUrlQueryParams(defaultQueryArgs)
+    const [
+        urlQueryParams,
+        setUrlQueryParams,
+    ] = useUrlQueryParams(defaultQueryArgs)
 
     // Запоминание текущей вкладки в строке адреса.
     useEffect(() => {
@@ -42,4 +48,5 @@ function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerPro
     return null
 }
 
-export default React.memo(TabSheetStateToUrlQueryHandler)
+/** @deprecated */
+export default TabSheetStateToUrlQueryHandler

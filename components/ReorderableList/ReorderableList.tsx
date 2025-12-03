@@ -1,29 +1,27 @@
-import React, {useState} from 'react'
-import ReorderableListContext, {
-    getReorderableListContextDefaults,
+import React, {
+    useCallback,
+    useState,
+} from 'react'
+import {ReorderableListContext} from './ReorderableListContext'
+import {
     ReorderableListContextProps,
-} from './ReorderableListContext'
-
-type Props<PayloadType> = {
-    children: React.ReactNode | React.ReactNode[],
-    itemsCount: number,
-    minPosition: number,
-    maxPosition: number,
-    droppedItemPlacement?: ReorderableListContextProps['droppedItemPlacement'],
-    disabled?: boolean,
-    onDragFinish: (
-        draggedElementPosition: number,
-        draggedElementPayload: PayloadType,
-        droppedOnElementPosition: number,
-        droppedOnElementPayload: PayloadType
-    ) => void
-};
+    ReorderableListProps,
+} from './ReorderableListTypes'
 
 // Обертка для контроля списка компонентов, которые можно менять местами.
 // Внутри этого компонента предполагается размещение компонентов ReorderableListItem.
-function ReorderableList<PayloadType = unknown>(
-    props: Props<PayloadType>
+export function ReorderableList<PayloadType = unknown>(
+    props: ReorderableListProps<PayloadType>
 ) {
+    const {
+        disabled,
+        droppedItemPlacement,
+        maxPosition,
+        minPosition,
+        itemsCount,
+        children,
+        onDragFinish,
+    } = props
 
     // Позиция перетаскиваемого элемента.
     const [
@@ -47,19 +45,19 @@ function ReorderableList<PayloadType = unknown>(
     ] = useState<PayloadType | undefined>(undefined)
 
     // Отмена перетаскивания.
-    const cancelDragging = () => {
+    const cancelDragging = useCallback(() => {
         setDraggingElementPosition(null)
         setDraggingElementPayload(undefined)
         setDraggingOverElementPosition(null)
         setDraggingOverElementPayload(undefined)
-    }
+    }, [])
 
-    const contextProps: ReorderableListContextProps<PayloadType> = getReorderableListContextDefaults<PayloadType>({
-        itemsCount: props.itemsCount,
-        minPosition: props.minPosition,
-        maxPosition: props.maxPosition,
-        droppedItemPlacement: props.droppedItemPlacement || 'after',
-        isDisabled: !!props.disabled || props.itemsCount < 2,
+    const contextProps: ReorderableListContextProps<PayloadType> = {
+        itemsCount,
+        minPosition,
+        maxPosition,
+        droppedItemPlacement: droppedItemPlacement || 'after',
+        isDisabled: !!disabled || itemsCount < 2,
 
         draggingElementPosition,
         draggingElementPayload: draggingElementPayload as PayloadType,
@@ -67,28 +65,31 @@ function ReorderableList<PayloadType = unknown>(
         draggingOverElementPosition,
         draggingOverElementPayload: draggingOverElementPayload as PayloadType,
 
-        onDragStart(position: number, payload?: PayloadType) {
+        onDragStart: useCallback((position: number, payload?: PayloadType) => {
             // console.log('start', {position, payload});
             setDraggingElementPosition(position)
             setDraggingElementPayload(payload)
-        },
-        onDragEnter(position: number, payload?: PayloadType) {
+        }, []),
+        onDragEnter: useCallback((position: number, payload?: PayloadType) => {
             // console.log('over', {position, payload});
             if (draggingElementPosition !== null) {
                 setDraggingOverElementPosition(position)
                 setDraggingOverElementPayload(payload)
             }
-        },
-        onDragEnd() {
+        }, [draggingElementPosition]),
+        onDragEnd: useCallback(() => {
             // console.log('end', {
-            //     draggingElementPosition, draggingElementPayload, draggingOverElementPosition, draggingOverElementPayload
+            //     draggingElementPosition,
+            //     draggingElementPayload,
+            //     draggingOverElementPosition,
+            //     draggingOverElementPayload
             // });
             if (
                 draggingElementPosition !== null
                 && draggingOverElementPosition !== null
                 && draggingElementPosition !== draggingOverElementPosition
             ) {
-                props.onDragFinish(
+                onDragFinish(
                     draggingElementPosition,
                     draggingElementPayload as PayloadType,
                     draggingOverElementPosition,
@@ -96,16 +97,17 @@ function ReorderableList<PayloadType = unknown>(
                 )
             }
             cancelDragging()
-        },
-    })
+        }, [draggingElementPosition, draggingOverElementPosition, onDragFinish, cancelDragging]),
+    }
 
     return (
         <ReorderableListContext.Provider
             value={contextProps as ReorderableListContextProps}
         >
-            {props.children}
+            {children}
         </ReorderableListContext.Provider>
     )
 }
 
-export default React.memo(ReorderableList) as typeof ReorderableList
+/** @deprecated */
+export default ReorderableList

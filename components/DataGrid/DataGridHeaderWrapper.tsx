@@ -8,7 +8,7 @@ import {
     DataGridHeaderWrapperProps,
     DataGridOrderingDirection,
 } from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import Ripple from '../Ripple/Ripple'
+import {Ripple} from '../Ripple/Ripple'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
 
 // Обертка заголовка колонки таблицы (<th>).
@@ -56,9 +56,9 @@ export function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
         >
             <Ripple
                 noRipple={!sortable}
-                rippleColor="primary"
-                rippleTag="div"
-                minRippleRadius={100}
+                color="primary"
+                tag="div"
+                minRadius={100}
                 className={clsx(
                     'data-grid-column-header',
                     sortable ? 'cursor' : null,

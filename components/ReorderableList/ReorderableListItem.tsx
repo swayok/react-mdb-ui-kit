@@ -1,18 +1,17 @@
-import React, {AllHTMLAttributes, useState} from 'react'
-import {useReorderableListContext} from './ReorderableListContext'
 import clsx from 'clsx'
-import ReorderableListItemContext, {getReorderableListItemContextDefaults} from './ReorderableListItemContext'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
-
-export interface DragAndDropItemProps<PayloadType = unknown> extends Omit<ComponentPropsWithModifiableTag, 'draggable'> {
-    position: number,
-    disabled?: boolean,
-    payload?: PayloadType,
-    wrapperRef?: React.RefObject<HTMLElement | null>,
-}
+import React, {
+    AllHTMLAttributes,
+    useCallback,
+    useState,
+} from 'react'
+import {useReorderableListContext} from './ReorderableListContext'
+import {ReorderableListItemContext} from './ReorderableListItemContext'
+import {ReorderableListItemItemProps} from './ReorderableListTypes'
 
 // Перетаскиваемый элемент списка.
-function ReorderableListItem<PayloadType = unknown>(props: DragAndDropItemProps<PayloadType>) {
+export function ReorderableListItem<PayloadType = unknown>(
+    props: ReorderableListItemItemProps<PayloadType>
+) {
     const {
         tag,
         children,
@@ -92,14 +91,14 @@ function ReorderableListItem<PayloadType = unknown>(props: DragAndDropItemProps<
 
     return (
         <ReorderableListItemContext.Provider
-            value={getReorderableListItemContextDefaults({
+            value={{
                 isDisabled,
                 hasChildToggler,
                 setHasChildToggler,
-                onDragStart() {
+                onDragStart: useCallback(() => {
                     setChildTogglerDragStarted(true)
-                },
-            })}
+                }, []),
+            }}
         >
             <Tag
                 className={clsx(
@@ -123,5 +122,3 @@ function ReorderableListItem<PayloadType = unknown>(props: DragAndDropItemProps<
         </ReorderableListItemContext.Provider>
     )
 }
-
-export default React.memo(ReorderableListItem) as typeof ReorderableListItem

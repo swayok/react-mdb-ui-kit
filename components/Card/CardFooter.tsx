@@ -1,19 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {
-    BackgroundColors,
-    BorderColors,
-    ComponentPropsWithModifiableTagAndRef,
-} from '../../types'
-
-export interface CardFooterProps extends ComponentPropsWithModifiableTagAndRef {
-    // Толщина верхней границы: 0, 1, 2, 3, 4, 5.
-    border?: number
-    // Цвет границы.
-    borderColor?: BorderColors
-    // Цвет фона.
-    background?: BackgroundColors
-}
+import {CardFooterProps} from './CardTypes'
 
 // Подвал карточки.
 export function CardFooter(props: CardFooterProps) {

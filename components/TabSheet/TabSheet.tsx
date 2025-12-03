@@ -3,8 +3,8 @@ import {
 } from 'react'
 import {TabSheetProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import {Card} from '../Card/Card'
-import TabSheetContext from './TabSheetContext'
-import TabSheetStateToUrlQueryHandler from './TabSheetStateToUrlQueryHandler'
+import {TabSheetContext} from './TabSheetContext'
+import {TabSheetStateToUrlQueryHandler} from './TabSheetStateToUrlQueryHandler'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 
 // Обертка вкладок и их содержимого.

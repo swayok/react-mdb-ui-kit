@@ -1,31 +1,32 @@
-import React from 'react'
+import {
+    createContext,
+    useContext,
+} from 'react'
 
 // Свойства контекста компонента ReorderableListItem.
-export type ReorderableListItemContextProps = {
-    hasChildToggler: boolean,
-    setHasChildToggler: (value: boolean) => void,
-    isDisabled: boolean,
+export interface ReorderableListItemContextProps {
+    hasChildToggler: boolean
+    setHasChildToggler: (value: boolean) => void
+    isDisabled: boolean
     onDragStart: () => void
 }
 
 // Значения контекста по умолчанию.
-export function getReorderableListItemContextDefaults(props?: Partial<ReorderableListItemContextProps>): ReorderableListItemContextProps {
-    return Object.assign(
-        {
-            hasChildToggler: 0,
-            setHasChildToggler() {
-            },
-            isDisabled: false,
-            onDragStart() {
-            },
-        },
-        props || {}
-    )
+const reorderableListItemContextDefaults: ReorderableListItemContextProps = {
+    hasChildToggler: false,
+    setHasChildToggler() {
+    },
+    isDisabled: false,
+    onDragStart() {
+    },
 }
 
 // Контекст компонента ReorderableListItem.
-const ReorderableListItemContext = React.createContext<ReorderableListItemContextProps>(
-    getReorderableListItemContextDefaults()
-)
+export const ReorderableListItemContext = createContext<
+    ReorderableListItemContextProps
+>(reorderableListItemContextDefaults)
 
-export default ReorderableListItemContext
+// Получить данные контекста компонента ReorderableListItem.
+export function useReorderableListItemContext(): ReorderableListItemContextProps {
+    return useContext(ReorderableListItemContext)
+}

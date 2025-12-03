@@ -1,24 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {
-    BackgroundColors,
-    BorderColors,
-    ComponentPropsWithModifiableTagAndRef,
-} from '../../types'
-
-export interface CardProps extends ComponentPropsWithModifiableTagAndRef {
-    // Толщина границы: 0, 1, 2, 3, 4, 5.
-    border?: number
-    // Цвет границы.
-    borderColor?: BorderColors
-    // Цвет фона.
-    background?: BackgroundColors
-    // Тень: inner, 0, 1, 2, 3, 4, 5, 6.
-    // Суффиксы: '{w}-soft' ('2-soft'), '{w}-strong' ('2-strong').
-    shadow?: number | string
-    // Расположение текста в карточке.
-    alignment?: 'end' | 'center' | 'start'
-}
+import {CardProps} from './CardTypes'
 
 // Контейнер каточки (блок с белым фоном, скругленными углами и тенью).
 // Структура:
@@ -64,4 +46,4 @@ export function Card(props: CardProps) {
 }
 
 /** @deprecated */
-export default CardProps
+export default Card

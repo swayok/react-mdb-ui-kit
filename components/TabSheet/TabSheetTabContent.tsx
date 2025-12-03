@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {
+    useEffect, useState,
+} from 'react'
 import clsx from 'clsx'
 import {TabSheetTabContentProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
 import {useTabSheetContext} from './TabSheetContext'
@@ -7,8 +9,8 @@ import {useTabSheetContext} from './TabSheetContext'
 const animationDuration: number = 150
 
 // Содержимое вкладки.
-function TabSheetTabContent<
-    TabName extends string = string
+export function TabSheetTabContent<
+    TabName extends string = string,
 >(props: TabSheetTabContentProps<TabName>) {
 
     const {
@@ -79,7 +81,7 @@ function TabSheetTabContent<
         }
     }, [currentTab, shouldMountContents, lazy, name])
 
-    let content = ErrorBoundary
+    const content = ErrorBoundary
         ? (
             <ErrorBoundary>
                 {children}
@@ -105,4 +107,5 @@ function TabSheetTabContent<
     )
 }
 
-export default React.memo(TabSheetTabContent) as typeof TabSheetTabContent
+/** @deprecated */
+export default TabSheetTabContent

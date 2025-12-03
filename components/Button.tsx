@@ -9,7 +9,8 @@ import {
     ButtonColors,
     ReactComponentOrTagName,
 } from 'swayok-react-mdb-ui-kit/types/Common'
-import Ripple, {RippleProps} from './Ripple/Ripple'
+import {Ripple} from './Ripple/Ripple'
+import {RippleProps} from './Ripple/RippleTypes'
 
 export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
     LinkComponent?: React.ComponentType
@@ -140,7 +141,7 @@ export function Button<
     } else {
         return (
             <Ripple
-                rippleTag={Tag}
+                tag={Tag}
                 {...normalizeRippleProps(ripple, color, outline)}
                 noRipple={noRipple}
                 className={classes}
@@ -166,9 +167,9 @@ function normalizeRippleProps(
     let rippleProps: RippleProps = {}
     if (typeof ripple !== 'object') {
         if (ripple === undefined) {
-            rippleProps.rippleColor = isOutline ? (buttonColor ?? 'dark') : 'light'
+            rippleProps.color = isOutline ? (buttonColor ?? 'dark') : 'light'
         } else {
-            rippleProps.rippleColor = ripple
+            rippleProps.color = ripple
         }
     } else {
         rippleProps = ripple

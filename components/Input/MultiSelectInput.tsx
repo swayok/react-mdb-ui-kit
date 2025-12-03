@@ -1,29 +1,31 @@
-import React, {HTMLProps} from 'react'
-import clsx from 'clsx'
-import {IconProps} from '../MDIIcon'
-import {AnyObject, FormSelectOptionOrGroup} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import {Icon} from '../Icon'
 import {
     mdiCheckboxBlankCircleOutline,
     mdiCheckboxBlankOutline,
     mdiCheckboxMarkedCircleOutline,
     mdiCheckboxMarkedOutline,
 } from '@mdi/js'
+import clsx from 'clsx'
+import React, {HTMLProps} from 'react'
+import {DropdownItemProps} from '../Dropdown/DropdownTypes'
+import {withStable} from '../../helpers/withStable'
 import {
+    AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
+    FormSelectOptionOrGroup,
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
-} from 'swayok-react-mdb-ui-kit/types/Common'
-import SelectInputBasic, {SelectInputBasicProps} from './SelectInput/SelectInputBasic'
-import {DropdownItem} from '../Dropdown/DropdownItem'
+} from '../../types'
 import {DropdownHeader} from '../Dropdown/DropdownHeader'
-import {withStable} from '../../helpers/withStable'
+import {DropdownItem} from '../Dropdown/DropdownItem'
+import {Icon} from '../Icon'
+import {IconProps} from '../MDIIcon'
+import {SelectInputBasic} from './SelectInput/SelectInputBasic'
+import {SelectInputBasicProps} from './SelectInput/SelectInputTypes'
 
 export interface MultiSelectInputProps<
     OptionValueType = string,
-    OptionExtrasType extends AnyObject = AnyObject
+    OptionExtrasType extends AnyObject = AnyObject,
 > extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
     onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
@@ -74,7 +76,7 @@ export interface MultiSelectInputOptionExtras extends AnyObject {
 // Todo: добавить поиск по опциям.
 class MultiSelectInput<
     OptionValueType = string,
-    OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras
+    OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras,
 > extends React.Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
 
     render() {
@@ -170,7 +172,10 @@ class MultiSelectInput<
                 )
             } else {
                 // Обычная опция.
-                const option: FormSelectOption<OptionValueType, OptionExtrasType> = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
+                const option: FormSelectOption<
+                    OptionValueType,
+                    OptionExtrasType
+                > = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
                 const {
                     label,
                     value,
@@ -365,5 +370,5 @@ class MultiSelectInput<
 
 export default withStable<MultiSelectInputProps>(
     ['onChange'],
-    props => <MultiSelectInput {...props}/>
+    props => <MultiSelectInput {...props} />
 ) as unknown as typeof MultiSelectInput

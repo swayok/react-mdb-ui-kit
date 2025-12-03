@@ -1,33 +1,14 @@
-import React from 'react'
-import {AnyObject, FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import {SelectInputProps} from './SelectInput'
-import {DropdownItem} from '../../../components/Dropdown/DropdownItem'
 import clsx from 'clsx'
-import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'
-
-export interface SelectInputOptionProps<
-    OptionValueType = string,
-    OptionExtrasType = AnyObject
-> {
-    visible?: boolean;
-    option: FormSelectOption<OptionValueType, OptionExtrasType>;
-    index: number;
-    groupIndex?: number | null;
-    isActive?: boolean;
-    disabled?: boolean;
-    renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel'];
-    labelContainsHtml?: boolean;
-    onSelect: (
-        option: FormSelectOption<OptionValueType, OptionExtrasType>,
-        index: number,
-        groupIndex: number | null
-    ) => void;
-}
+import React from 'react'
+import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DropdownItem} from '../../Dropdown/DropdownItem'
+import {SelectInputOptionLabel} from './SelectInputOptionLabel'
+import {SelectInputOptionProps} from './SelectInputTypes'
 
 // Отображение одной опции в выпадающем меню.
-export default function SelectInputOption<
+export function SelectInputOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(props: SelectInputOptionProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -80,3 +61,6 @@ export default function SelectInputOption<
         </DropdownItem>
     )
 }
+
+/** @deprecated */
+export default SelectInputOption

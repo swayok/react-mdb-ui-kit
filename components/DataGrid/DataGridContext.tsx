@@ -48,69 +48,49 @@ export const dataGridDefaultTranslations: DataGridTranslations = {
     },
 }
 
-// Стандартные значения для контекста.
-export function getDataGridContextDefaults<
-    RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject,
->(
-    props?: Partial<DataGridContextProps<RowDataType, FiltersDataType>>
-): DataGridContextProps<RowDataType, FiltersDataType> {
-    const mergedProps: DataGridContextProps<RowDataType, FiltersDataType> = {
-        translations: dataGridDefaultTranslations,
-        loading: false,
-        setIsLoading() {
-        },
-
-        filters: {} as FiltersDataType,
-        defaultFilters: {} as FiltersDataType,
-        applyFilters() {
-        },
-
-        unfilteredRowsCount: 0,
-
-        rows: [],
-        setRows() {
-        },
-        updateVisibleRows() {
-        },
-
-        visibleRows: [],
-        setVisibleRows() {
-        },
-
-        offset: 0,
-        setOffset() {
-        },
-
-        limits: dataGridDefaultLimits,
-        limit: dataGridDefaultLimit,
-        setLimit() {
-        },
-
-        orderBy: null,
-        orderDirection: 'asc',
-        defaultOrderBy: null,
-        defaultOrderDirection: 'asc',
-        setOrder() {
-        },
-    }
-    if (props) {
-        let propsKey: keyof DataGridContextProps
-        for (propsKey in props) {
-            if (props[propsKey] !== undefined) {
-                // @ts-ignore - shitty ts error
-                mergedProps[propsKey] = props[propsKey]
-            }
-        }
-    }
-    return mergedProps
-}
-
 // Контекст для таблиц данных (<DataGrid>).
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const DataGridContext = createContext<DataGridContextProps<any, any>>(
-    getDataGridContextDefaults()
-)
+export const DataGridContext = createContext<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    DataGridContextProps<any, any>
+>({
+    translations: dataGridDefaultTranslations,
+    loading: false,
+    setIsLoading() {
+    },
+
+    filters: {},
+    defaultFilters: {},
+    applyFilters() {
+    },
+
+    unfilteredRowsCount: 0,
+
+    rows: [],
+    setRows() {
+    },
+    updateVisibleRows() {
+    },
+
+    visibleRows: [],
+    setVisibleRows() {
+    },
+
+    offset: 0,
+    setOffset() {
+    },
+
+    limits: dataGridDefaultLimits,
+    limit: dataGridDefaultLimit,
+    setLimit() {
+    },
+
+    orderBy: null,
+    orderDirection: 'asc',
+    defaultOrderBy: null,
+    defaultOrderDirection: 'asc',
+    setOrder() {
+    },
+})
 
 // Получить контекст для таблиц данных (<DataGrid>) с правильной типизацией.
 export function getDataGridContextInstance<

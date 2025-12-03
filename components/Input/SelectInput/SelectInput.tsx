@@ -1,85 +1,22 @@
-import React, {useDeferredValue, useEffect, useMemo, useRef, useState} from 'react'
 import clsx from 'clsx'
-import SelectInputBasic, {SelectInputBasicProps} from './SelectInputBasic'
+import React, {
+    useDeferredValue,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
+import {AnyObject} from '../../../types'
 import Input from '../../../components/Input/Input'
-import {
-    AnyObject,
-    FormSelectOption,
-    FormSelectOptionOrGroup,
-    FormSelectOptionsAndGroupsList,
-} from 'swayok-react-mdb-ui-kit/types/Common'
-import {withStable} from '../../../helpers/withStable'
-import SelectInputOptions from './SelectInputOptions'
-import {stripTags} from '../../../helpers/stripTags'
+import VirtualizedSelectInputOptions from './VirtualizedSelectInputOptions'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
-import VirtualizedSelectInputOptions from '../../../components/Input/SelectInput/VirtualizedSelectInputOptions'
+import {stripTags} from '../../../helpers/stripTags'
+import {withStable} from '../../../helpers/withStable'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
-
-export interface SelectInputProps<
-    OptionValueType = string,
-    OptionExtrasType = AnyObject
-> extends Omit<
-    SelectInputBasicProps,
-    'value' | 'onChange' | 'children'
-> {
-    // Набор опций.
-    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
-    // Обработчик выбора опции.
-    onChange: (
-        value: OptionValueType,
-        label: string,
-        index: number,
-        groupIndex: number | null,
-        extra?: OptionExtrasType,
-    ) => void
-    // Текущее значение.
-    value?: OptionValueType
-    // Если value не найдено в options, то использовать первую активную опцию из options
-    // и выполнить onChange(firstOption.value).
-    // По умолчанию: true.
-    selectFirstIfNotFound?: boolean
-    // Конвертация опции для отображения в поле ввода (по умолчанию отображается FormSelectOption['label']).
-    valueToString?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string
-    // Отрисовка подписи для опции или группы опций в выпадающем меню.
-    renderOptionLabel?: (
-        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
-        isGroup: boolean
-    ) => string | React.ReactNode
-    // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
-    labelsContainHtml?: boolean
-    // Вкл/Выкл поиска по опциям.
-    search?: boolean
-    // Пояснение для поля ввода ключевых слов поиска по опциям.
-    searchPlaceholder?: string
-    // Спрятать опцию с пустым value.
-    hideEmptyOptionInDropdown?: boolean
-    // Добавить опцию с пустым значением в список опций.
-    withEmptyOption?: FormSelectOption<OptionValueType, OptionExtrasType>
-    // Добавить в конец списка опцию, которая будет видна,
-    // даже при фильтрации списка опций.
-    withPermanentOption?: FormSelectOption<OptionValueType, OptionExtrasType>
-    // Отключить возможность выбрать указанные опции.
-    disableOptions?: OptionValueType[]
-    // Виртуализация списка опций для экономии памяти.
-    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
-    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
-    virtualizationConfig?: {
-        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
-        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
-        enabled: boolean | 'auto'
-        // Обязательное, если не указан SelectInputProps.maxHeight,
-        // т.к. автоматически высота выпадающего меню не вычисляется.
-        // По умолчанию: 500.
-        // Если также указано значение SelectInputProps.maxHeight,
-        // то будет выбрано меньшее из значений:
-        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
-        dropdownHeight?: number
-    }
-    // Отслеживать поведение пользователя в этом поле ввода.
-    // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string
-}
+import {SelectInputBasic} from './SelectInputBasic'
+import {SelectInputOptions} from './SelectInputOptions'
+import {SelectInputProps} from './SelectInputTypes'
 
 interface KeywordsState {
     value: string
@@ -94,9 +31,9 @@ interface KeywordsState {
  * Конвертация различных типов объектов в опции:
  * @see OptionsHelper
  */
-function SelectInput<
+function _SelectInput<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(props: SelectInputProps<OptionValueType, OptionExtrasType>) {
     const {
         className,
@@ -315,7 +252,7 @@ function SelectInput<
     )
 }
 
-export default withStable<SelectInputProps>(
+export const SelectInput: typeof _SelectInput = withStable<SelectInputProps>(
     ['onChange', 'renderOptionLabel', 'valueToString'],
-    props => <SelectInput {...props}/>
-) as unknown as typeof SelectInput
+    _SelectInput
+) as unknown as typeof _SelectInput

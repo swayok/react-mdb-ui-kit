@@ -1,19 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {
-    BackgroundColors,
-    BorderColors,
-    ComponentPropsWithModifiableTagAndRef,
-} from '../../types'
-
-export interface CardHeaderProps extends ComponentPropsWithModifiableTagAndRef {
-    // Толщина нижней границы: 0, 1, 2, 3, 4, 5.
-    border?: number
-    // Цвет границы.
-    borderColor?: BorderColors
-    // Цвет фона.
-    background?: BackgroundColors
-}
+import {CardHeaderProps} from './CardTypes'
 
 // Шапка карточки.
 export function CardHeader(props: CardHeaderProps) {

@@ -1,7 +1,11 @@
-import React, {useContext, useEffect} from 'react'
+import React, {
+    useContext, useEffect,
+} from 'react'
 import clsx from 'clsx'
-import ReorderableListItemContext from './ReorderableListItemContext'
-import {AnyObject, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import {ReorderableListItemContext} from './ReorderableListItemContext'
+import {
+    AnyObject, ComponentPropsWithModifiableTag,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 export interface DragAndDropTogglerProps extends Omit<ComponentPropsWithModifiableTag, 'onMouseDown' | 'disabled' | 'draggable'> {
     payload?: AnyObject | null
@@ -10,7 +14,7 @@ export interface DragAndDropTogglerProps extends Omit<ComponentPropsWithModifiab
 // Компонент, который позволяет перетаскивать элементы списка.
 // Вставляется в ReorderableListItem.
 // Если имеется такой компонент, то только им можно перетаскивать элементы списка.
-function ReorderableListItemToggler(props: DragAndDropTogglerProps) {
+export function ReorderableListItemToggler(props: DragAndDropTogglerProps) {
 
     const {
         children,
@@ -55,5 +59,3 @@ function ReorderableListItemToggler(props: DragAndDropTogglerProps) {
         </Tag>
     )
 }
-
-export default React.memo(ReorderableListItemToggler)

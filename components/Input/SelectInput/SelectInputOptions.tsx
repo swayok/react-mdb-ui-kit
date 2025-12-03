@@ -1,30 +1,22 @@
-import React, {useCallback} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
 import clsx from 'clsx'
-import {SelectInputProps} from './SelectInput'
+import React, {useCallback} from 'react'
+import {
+    AnyObject,
+    FormSelectOption,
+    FormSelectOptionGroup,
+    FormSelectOptionsAndGroupsList,
+} from '../../../types'
 import {withStable} from '../../../helpers/withStable'
-import SelectInputOptionsGroupHeader from '../../../components/Input/SelectInput/SelectInputOptionsGroupHeader'
-import SelectInputOption from '../../../components/Input/SelectInput/SelectInputOption'
-import shouldDisplaySelectInputOption from '../../../components/Input/SelectInput/shouldDisplaySelectInputOption'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
-
-export interface SelectInputOptionsProps<
-    OptionValueType = string,
-    OptionExtrasType = AnyObject
-> extends Pick<
-    SelectInputProps<OptionValueType, OptionExtrasType>,
-    'options' | 'withEmptyOption' | 'withPermanentOption' | 'hideEmptyOptionInDropdown'
-    | 'maxHeight'  | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
-    | 'disableOptions' | 'onChange' | 'trackBehaviorAs'
-> {
-    selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>,
-    keywordsRegexp: RegExp | null,
-}
+import {SelectInputOption} from './SelectInputOption'
+import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
+import {SelectInputOptionsProps} from './SelectInputTypes'
+import {shouldDisplaySelectInputOption} from './shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput.
-function SelectInputOptions<
+function _SelectInputOptions<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(props: SelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -106,7 +98,10 @@ function SelectInputOptions<
                     </div>
                 )
             } else {
-                const option: FormSelectOption<OptionValueType, OptionExtrasType> = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
+                const option: FormSelectOption<
+                    OptionValueType,
+                    OptionExtrasType
+                > = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
                 if (!shouldDisplaySelectInputOption(
                     option.label,
                     option.value,
@@ -179,7 +174,7 @@ function SelectInputOptions<
     }
 }
 
-export default withStable<SelectInputOptionsProps>(
+export const SelectInputOptions = withStable<SelectInputOptionsProps>(
     ['onChange', 'renderOptionLabel'],
-    SelectInputOptions
-) as typeof SelectInputOptions
+    _SelectInputOptions
+) as typeof _SelectInputOptions

@@ -1,7 +1,11 @@
-import React, {HTMLProps, useEffect, useRef} from 'react'
+import {
+    useEffect,
+    useRef,
+} from 'react'
+import {RippleWaveProps} from './RippleTypes'
 
 // Отыгрывание анимации "Волна".
-function RippleWave(props: Omit<HTMLProps<HTMLDivElement>, 'ref'>) {
+export function RippleWave(props: RippleWaveProps) {
 
     const elementRef = useRef<HTMLDivElement>(null)
 
@@ -23,5 +27,3 @@ function RippleWave(props: Omit<HTMLProps<HTMLDivElement>, 'ref'>) {
         />
     )
 }
-
-export default React.memo(RippleWave)

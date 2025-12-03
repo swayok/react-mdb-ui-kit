@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import {ComponentPropsWithModifiableTagAndRef} from '../../types'
-
-export type CardTitleProps = ComponentPropsWithModifiableTagAndRef
+import {CardTitleProps} from './CardTypes'
 
 // Заголовок карточки.
 export function CardTitle(props: CardTitleProps) {

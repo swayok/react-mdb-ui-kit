@@ -12,8 +12,11 @@ export const asyncDataGridDefaultLimits: AsyncDataGridContextProps['limits'] = [
 
 export const asyncDataGridDefaultLimit: AsyncDataGridContextProps['limit'] = 20
 
-// Стандартные значения для контекста.
-const defaultProps: AsyncDataGridContextProps<AnyObject, AnyObject> = {
+// Контекст для таблиц с данными, получаемыми с сервера (<AsyncDataGrid>).
+export const AsyncDataGridContext = createContext<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    AsyncDataGridContextProps<any, any>
+>({
     translations: dataGridDefaultTranslations,
 
     initialized: false,
@@ -76,29 +79,7 @@ const defaultProps: AsyncDataGridContextProps<AnyObject, AnyObject> = {
     orderDirection: 'asc',
     setOrder() {
     },
-}
-
-// Стандартные значения для контекста, объединенные с опционально переданными значениями.
-export function getAsyncDataGridContextDefaults<
-    RowDataType extends object = AnyObject,
-    FiltersDataType extends object = AnyObject,
->(
-    props?: Partial<AsyncDataGridContextProps<RowDataType, FiltersDataType>>
-): AsyncDataGridContextProps<RowDataType, FiltersDataType> {
-    return {
-        ...defaultProps as unknown as AsyncDataGridContextProps<RowDataType, FiltersDataType>,
-        ...Object.fromEntries(
-            Object.entries(props ?? {})
-                .filter(entry => entry[1] !== undefined)
-        ),
-    }
-}
-
-// Контекст для таблиц с данными, получаемыми с сервера (<AsyncDataGrid>).
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const AsyncDataGridContext = createContext<AsyncDataGridContextProps<any, any>>(
-    getAsyncDataGridContextDefaults()
-)
+})
 
 // Получить контекст для асинхронных таблиц данных (<AsyncDataGrid>) с правильной типизацией.
 export function getAsyncDataGridContextInstance<

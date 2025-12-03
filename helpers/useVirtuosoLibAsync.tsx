@@ -1,4 +1,9 @@
-import {ComponentType, Ref, useEffect, useState} from 'react'
+import {
+    ComponentType,
+    Ref,
+    useEffect,
+    useState,
+} from 'react'
 import {
     GroupedTableVirtuosoHandle as _GroupedTableVirtuosoHandle,
     GroupedTableVirtuosoProps as _GroupedTableVirtuosoProps,
@@ -41,7 +46,7 @@ interface HookReturn<ItemData = AnyObject, Context = AnyObject | undefined | nul
 // Асинхронная загрузка компонентов react-virtuoso.
 export function useVirtuosoLibAsync<
     ItemData = AnyObject,
-    Context = AnyObject | undefined | null
+    Context = AnyObject | undefined | null,
 >(): HookReturn<ItemData, Context> {
 
     const [
@@ -74,12 +79,36 @@ export function useVirtuosoLibAsync<
 export default useVirtuosoLibAsync
 
 export type GroupedTableVirtuosoHandle = _GroupedTableVirtuosoHandle
-export type GroupedTableVirtuosoProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _GroupedTableVirtuosoProps<ItemData, Context>
+
+export type GroupedTableVirtuosoProps<
+    ItemData = AnyObject,
+    Context = AnyObject | undefined | null,
+> = _GroupedTableVirtuosoProps<ItemData, Context>
+
 export type GroupedVirtuosoHandle = _GroupedVirtuosoHandle
-export type GroupedVirtuosoProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _GroupedVirtuosoProps<ItemData, Context>
+
+export type GroupedVirtuosoProps<
+    ItemData = AnyObject,
+    Context = AnyObject | undefined | null,
+> = _GroupedVirtuosoProps<ItemData, Context>
+
 export type TableVirtuosoHandle = _TableVirtuosoHandle
-export type TableVirtuosoProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _TableVirtuosoProps<ItemData, Context>
+
+export type TableVirtuosoProps<
+    ItemData = AnyObject,
+    Context = AnyObject | undefined | null,
+> = _TableVirtuosoProps<ItemData, Context>
+
 export type VirtuosoGridHandle = _VirtuosoGridHandle
-export type VirtuosoGridProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _VirtuosoGridProps<ItemData, Context>
+
+export type VirtuosoGridProps<
+    ItemData = AnyObject,
+    Context = AnyObject | undefined | null,
+> = _VirtuosoGridProps<ItemData, Context>
+
 export type VirtuosoHandle = _VirtuosoHandle
-export type VirtuosoProps<ItemData = AnyObject, Context = AnyObject | undefined | null> = _VirtuosoProps<ItemData, Context>
+
+export type VirtuosoProps<
+    ItemData = AnyObject,
+    Context = AnyObject | undefined | null,
+> = _VirtuosoProps<ItemData, Context>

@@ -24,7 +24,7 @@ import {
 } from '../../helpers/FileAPI/FileAPI'
 import {ToastService} from '../../services/ToastService'
 import {ErrorBoundary} from '../ErrorBoundary'
-import ReorderableList from '../ReorderableList/ReorderableList'
+import {ReorderableList} from '../ReorderableList/ReorderableList'
 import {
     FilePickerContext,
     filePickerDefaultPreviews,

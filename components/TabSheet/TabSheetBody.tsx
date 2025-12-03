@@ -3,7 +3,7 @@ import {TabSheetBodyProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/Tab
 import clsx from 'clsx'
 
 // Контейнер с блоками содержимого вкладок (<TabSheetTabContent>).
-function TabSheetBody(props: TabSheetBodyProps) {
+export function TabSheetBody(props: TabSheetBodyProps) {
 
     const {
         tag,
@@ -24,4 +24,5 @@ function TabSheetBody(props: TabSheetBodyProps) {
     )
 }
 
-export default React.memo(TabSheetBody)
+/** @deprecated */
+export default TabSheetBody

@@ -1,7 +1,7 @@
 import {stripTags} from '../../../helpers/stripTags'
 
 // Определение нужно ли отображать опцию в выпадающем списке.
-export default function shouldDisplaySelectInputOption(
+export function shouldDisplaySelectInputOption(
     label: string,
     value: unknown,
     hideEmptyOption: boolean = false,

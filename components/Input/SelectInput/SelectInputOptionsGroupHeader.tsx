@@ -1,27 +1,15 @@
-import React from 'react'
-import {AnyObject, FormSelectOptionGroup} from 'swayok-react-mdb-ui-kit/types/Common'
-import {SelectInputProps} from './SelectInput'
 import clsx from 'clsx'
-import SelectInputOptionLabel from '../../../components/Input/SelectInput/SelectInputOptionLabel'
-import {DropdownHeader} from '../../../components/Dropdown/DropdownHeader'
-
-export interface SelectInputOptionProps<
-    OptionValueType = string,
-    OptionExtrasType = AnyObject
-> {
-    visible?: boolean;
-    group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>;
-    index: number;
-    isActive?: boolean;
-    renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel'];
-    labelContainsHtml?: boolean;
-}
+import React from 'react'
+import {AnyObject} from '../../../types'
+import {DropdownHeader} from '../../Dropdown/DropdownHeader'
+import {SelectInputOptionLabel} from './SelectInputOptionLabel'
+import {SelectInputOptionsGroupHeaderProps} from './SelectInputTypes'
 
 // Отображение заголовка группы опций в выпадающем меню.
-export default function SelectInputOptionsGroupHeader<
+export function SelectInputOptionsGroupHeader<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
->(props: SelectInputOptionProps<OptionValueType, OptionExtrasType>) {
+    OptionExtrasType = AnyObject,
+>(props: SelectInputOptionsGroupHeaderProps<OptionValueType, OptionExtrasType>) {
 
     const {
         group,
@@ -54,3 +42,6 @@ export default function SelectInputOptionsGroupHeader<
         </DropdownHeader>
     )
 }
+
+/** @deprecated */
+export default SelectInputOptionsGroupHeader

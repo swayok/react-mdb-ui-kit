@@ -1,10 +1,9 @@
-import React from 'react'
 import {TabSheetHeaderProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
-import CardHeader from '../Card/CardHeader'
+import {CardHeader} from '../Card/CardHeader'
 import clsx from 'clsx'
 
 // Контейнер кнопок переключения вкладок (<TabSheetTabButton>).
-function TabSheetHeader(props: TabSheetHeaderProps) {
+export function TabSheetHeader(props: TabSheetHeaderProps) {
 
     const {
         tag,
@@ -20,11 +19,15 @@ function TabSheetHeader(props: TabSheetHeaderProps) {
             {...otherProps}
             className={clsx('tabsheet-header', className || 'p-0')}
         >
-            <ul className="nav nav-tabs" role="tablist">
+            <ul
+                className="nav nav-tabs"
+                role="tablist"
+            >
                 {children}
             </ul>
         </Tag>
     )
 }
 
-export default React.memo(TabSheetHeader)
+/** @deprecated */
+export default TabSheetHeader

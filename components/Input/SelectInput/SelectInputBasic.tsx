@@ -1,46 +1,19 @@
 import {mdiChevronDown} from '@mdi/js'
 import clsx from 'clsx'
-import React, {CSSProperties} from 'react'
-import {withStable} from '../../../helpers/withStable'
+import {CSSProperties} from 'react'
 import {Dropdown} from '../../Dropdown/Dropdown'
 import {DropdownMenu} from '../../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../Dropdown/DropdownToggle'
-import {DropdownDropDirection, DropdownProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
-import Input, {InputProps} from '../Input'
+import Input from '../Input'
 import InputValidationError from '../InputValidationError'
-
-export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
-    children: React.ReactNode | React.ReactNode[]
-    // Режим отображения.
-    // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода, подходит для вставки в текст или в панель навигации.
-    // Если input: внешний вид соответствует полю ввода c {chevron} в конце блока.
-    mode?: 'inline' | 'input'
-    // Настройки выпадающего меню.
-    dropdownMenuClassName?: string
-    dropdownToggleClassName?: string
-    // Добавить white-space: nowrap ко всем опция выпадающего меню?
-    textNowrapOnOptions?: boolean
-    dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
-    drop?: DropdownDropDirection
-    // Максимальная высота выпадающего меню.
-    maxHeight?: number | null
-    // Минимальная ширина выпадающего меню.
-    minWidth?: null | number | string
-    // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.
-    // Если false: ширина выпадающего меню зависит от ширины опций.
-    dropdownFluidWidth?: boolean
-    // Нужно ли закрывать выпадающее меню при выборе опции.
-    closeDropdownOnSelect?: boolean
-    // Дополнительные элементы, которые нужно вставить после поля ввода.
-    addon?: React.ReactNode | React.ReactNode[]
-}
+import {SelectInputBasicProps} from './SelectInputTypes'
 
 // Выбор одного из вариантов.
 // Список опций задается через props.children.
 // Опции - список элементов <DropdownItem><DropdownLink>...</DropdownLink></DropdownItem>.
 // Более удобный компонент: FormSelect.
-function SelectInputBasic(props: SelectInputBasicProps) {
+export function SelectInputBasic(props: SelectInputBasicProps) {
 
     const {
         className,
@@ -93,7 +66,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         case 'inline':
             dropdownToggle = (
                 <DropdownToggle
-                    tag={'div'}
+                    tag="div"
                     className={clsx('cursor with-icon-flex', className)}
                 >
                     <div>{inputProps.value}</div>
@@ -154,7 +127,7 @@ function SelectInputBasic(props: SelectInputBasicProps) {
                 inputProps.small && !inputProps.large ? 'form-dropdown-select-sm' : null,
                 inputProps.large && !inputProps.small ? 'form-dropdown-select-lg' : null,
                 wrapperClass
-            )} //< form-outline here needed to apply .input-group styles
+            )} // < form-outline here needed to apply .input-group styles
             style={wrapperStyle}
             drop={drop}
             disabled={props.disabled}
@@ -178,8 +151,3 @@ function SelectInputBasic(props: SelectInputBasicProps) {
         </Dropdown>
     )
 }
-
-export default withStable<SelectInputBasicProps>(
-    ['onChange'],
-    SelectInputBasic
-)

@@ -160,8 +160,10 @@ export function filePickerFallbackPreview(previewWidth: number, _fileName: strin
     )
 }
 
-// Значения "по умолчанию" для контекста.
-export const filePickerContextDefaults: Readonly<Required<FilePickerContextProps>> = {
+// Контекст компонентов прикрепления файлов.
+export const FilePickerContext = createContext<
+    FilePickerContextProps
+>({
     translations: filePickerDefaultTranslations,
     maxFiles: null,
     previews: filePickerDefaultPreviews,
@@ -185,14 +187,9 @@ export const filePickerContextDefaults: Readonly<Required<FilePickerContextProps
     startUploading() {
         return Promise.reject(new Error('unknown'))
     },
-}
+})
 
-// Контекст компонентов прикрепления файлов.
-export const FilePickerContext = createContext<FilePickerContextProps>(
-    filePickerContextDefaults
-)
-
-// Контекст компонентов прикрепления файлов.
+// Получить данные контекста компонентов прикрепления файлов.
 export function useFilePickerContext<
     T extends FilePickerFileInfo = FilePickerFileInfo,
 >(): FilePickerContextProps<T> {
