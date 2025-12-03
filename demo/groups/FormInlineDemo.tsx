@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from '../../components/Button'
 import Input from '../../components/Input/Input'
-import SelectInput from '../../components/Input/SelectInput/SelectInput'
+import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
 import {SectionDivider} from '../../components/SectionDivider'
 import {useFormValues} from '../../helpers/useFormValues'
 
@@ -18,7 +18,11 @@ export function FormInlineDemo() {
 
     return (
         <div>
-            <SectionDivider label="Normal" margins="none" className="mb-4"/>
+            <SectionDivider
+                label="Normal"
+                margins="none"
+                className="mb-4"
+            />
             <div className="form-inline mb-4">
                 <Input
                     label="Input 1"
@@ -70,7 +74,7 @@ export function FormInlineDemo() {
                 </Button>
             </div>
 
-            <SectionDivider label="Small"/>
+            <SectionDivider label="Small" />
             <div className="form-inline mb-4">
                 <Input
                     label="Input 1"
@@ -128,7 +132,7 @@ export function FormInlineDemo() {
                 </Button>
             </div>
 
-            <SectionDivider label="Large"/>
+            <SectionDivider label="Large" />
             <div className="form-inline mb-4">
                 <Input
                     label="Input 1"

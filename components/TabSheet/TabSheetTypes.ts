@@ -1,6 +1,14 @@
-import type {MouseEvent, AllHTMLAttributes, ComponentType, ReactNode} from 'react'
-import type {ButtonColors, ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
-import type {RippleProps} from 'swayok-react-mdb-ui-kit/components/Ripple/Ripple'
+import type {
+    AllHTMLAttributes,
+    ComponentType,
+    MouseEvent,
+    ReactNode,
+} from 'react'
+import type {RippleProps} from 'swayok-react-mdb-ui-kit/components/Ripple/RippleTypes'
+import type {
+    ButtonColors,
+    ComponentPropsWithModifiableTag,
+} from 'swayok-react-mdb-ui-kit/types/Common'
 
 // Свойства контекста.
 export interface TabSheetContextProps<TabName extends string = string> {
@@ -11,7 +19,7 @@ export interface TabSheetContextProps<TabName extends string = string> {
 
 // Свойства обертки для TabSheet компонентов.
 export interface TabSheetProps<
-    TabName extends string = string
+    TabName extends string = string,
 > extends ComponentPropsWithModifiableTag {
     // Либо вкладка по-умолчанию, либо внешний контроль за текущей вкладкой.
     defaultTab: TabName
@@ -34,7 +42,7 @@ export interface TabSheetHeaderProps extends ComponentPropsWithModifiableTag {
 
 // Свойства кнопки переключения на вкладку.
 export interface TabSheetTabButtonProps<
-    TabName extends string = string
+    TabName extends string = string,
 > extends Omit<AllHTMLAttributes<HTMLLIElement>, 'onClick'> {
     name: TabName
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -48,10 +56,10 @@ export type TabSheetBodyProps = ComponentPropsWithModifiableTag
 
 // Свойства обертки содержимого вкладки.
 export interface TabSheetTabContentProps<
-    TabName extends string = string
+    TabName extends string = string,
 > extends Omit<AllHTMLAttributes<HTMLDivElement>, 'role'> {
     name: TabName
     lazy?: boolean
-    ErrorBoundary?: ComponentType<{children: ReactNode | ReactNode[]}>
+    ErrorBoundary?: ComponentType<{children: ReactNode | ReactNode[];}>
 }
 

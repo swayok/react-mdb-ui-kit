@@ -6,7 +6,7 @@ import React, {
 import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
 import {DropdownProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
 import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import SelectInput from '../Input/SelectInput/SelectInput'
+import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 
 const dropdownProps: Partial<DropdownProps> = {

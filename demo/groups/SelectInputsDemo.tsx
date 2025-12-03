@@ -1,13 +1,13 @@
 import React from 'react'
 import MultiSelectInput from '../../components/Input/MultiSelectInput'
-import SelectInput from '../../components/Input/SelectInput/SelectInput'
+import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function SelectInputsDemo() {
 
     return (
         <>
-            <SectionDivider label="Select with dropdown"/>
+            <SectionDivider label="Select with dropdown" />
             <SelectInput
                 label="Select normal"
                 options={[
@@ -15,13 +15,15 @@ export function SelectInputsDemo() {
                     {value: 'option2', label: 'Option 2'},
                     {value: 'option3', label: 'Option 3', disabled: true},
                     {
-                        label: 'Group 1', options: [
+                        label: 'Group 1',
+                        options: [
                             {value: 'group1option1', label: 'Group 1 Option 1'},
                             {value: 'group1option2', label: 'Group 1 Option 2'},
                         ],
                     },
                     {
-                        label: 'Group 2', options: [
+                        label: 'Group 2',
+                        options: [
                             {value: 'group2option1', label: 'Group 2 Option 1'},
                             {value: 'group2option2', label: 'Group 2 Option 2'},
                         ],
@@ -140,7 +142,7 @@ export function SelectInputsDemo() {
                 validationMessage="This field is required"
             />
 
-            <SectionDivider label="Small"/>
+            <SectionDivider label="Small" />
 
             <SelectInput
                 label="Select small"
@@ -149,13 +151,15 @@ export function SelectInputsDemo() {
                     {value: 'option2', label: 'Option 2'},
                     {value: 'option3', label: 'Option 3', disabled: true},
                     {
-                        label: 'Group 1', options: [
+                        label: 'Group 1',
+                        options: [
                             {value: 'group1option1', label: 'Group 1 Option 1'},
                             {value: 'group1option2', label: 'Group 1 Option 2'},
                         ],
                     },
                     {
-                        label: 'Group 2', options: [
+                        label: 'Group 2',
+                        options: [
                             {value: 'group2option1', label: 'Group 2 Option 1'},
                             {value: 'group2option2', label: 'Group 2 Option 2'},
                         ],

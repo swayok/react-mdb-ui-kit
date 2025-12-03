@@ -256,3 +256,6 @@ export const SelectInput: typeof _SelectInput = withStable<SelectInputProps>(
     ['onChange', 'renderOptionLabel', 'valueToString'],
     _SelectInput
 ) as unknown as typeof _SelectInput
+
+/** @deprecated */
+export default SelectInput
