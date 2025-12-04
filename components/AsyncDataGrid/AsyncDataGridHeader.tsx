@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {AsyncDataGridHeaderProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
+import {AsyncDataGridHeaderProps} from './AsyncDataGridTypes'
 import {DataGridHeaderWrapper} from '../DataGrid/DataGridHeaderWrapper'
 
 // Заголовок колонки таблицы с данными, получаемыми с сервера (<th>).

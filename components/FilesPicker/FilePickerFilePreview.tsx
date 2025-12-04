@@ -4,14 +4,14 @@ import {
     mdiCloseCircleOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
-import React, {useRef} from 'react'
+import {useRef} from 'react'
 import {CSSTransition} from 'react-transition-group'
 import {
     FilePickerFileInfo,
     FilePickerFilePreviewProps,
     FilePickerPreviewSizes,
     FilePickerWithUploaderFileInfo,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {ToastService} from '../../services/ToastService'
 import {Card} from '../Card/Card'
 import {CardBody} from '../Card/CardBody'

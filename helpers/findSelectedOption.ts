@@ -1,26 +1,33 @@
-import {AnyObject, FormSelectOption, FormSelectOptionGroup, FormSelectOptionsAndGroupsList} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyObject,
+    FormSelectOption,
+    FormSelectOptionGroup,
+    FormSelectOptionsAndGroupsList,
+} from '../types'
 import {isSameOptionValue} from './isSameOptionValue'
 
 export interface SelectedOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 > {
-    expectedValue?: OptionValueType | null,
-    option: FormSelectOption<OptionValueType, OptionExtrasType>,
-    index: number,
-    groupIndex: number | null,
+    expectedValue?: OptionValueType | null
+    option: FormSelectOption<OptionValueType, OptionExtrasType>
+    index: number
+    groupIndex: number | null
 }
 
 /**
  * Найти выбранную опцию.
  * Если опция не найдена:
  * а) Возвращает emptyOption, если указано.
- * б) Если returnFirstIfNotFound === true, возвращает первый не disabled FormSelectOption объект из options (не FormSelectOptionGroup).
- * в) Возвращает undefined, если returnFirstIfNotFound === false или в options нет ни одного не disabled FormSelectOption объекта.
+ * б) Если returnFirstIfNotFound === true, возвращает первый не disabled
+ * FormSelectOption объект из options (не FormSelectOptionGroup).
+ * в) Возвращает undefined, если returnFirstIfNotFound === false или
+ * в options нет ни одного не disabled FormSelectOption объекта.
  */
 export function findSelectedOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>,
     value?: OptionValueType | null,

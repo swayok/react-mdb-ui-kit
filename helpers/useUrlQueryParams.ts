@@ -1,8 +1,10 @@
-import {
-    NavigateOptions, URLSearchParamsInit, useSearchParams,
-} from 'react-router-dom'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
 import {useMemo} from 'react'
+import {
+    NavigateOptions,
+    URLSearchParamsInit,
+    useSearchParams,
+} from 'react-router-dom'
+import {AnyObject} from '../types'
 
 // Подмена useSearchParams с добавлением типизации (набора ключей)
 export function useUrlQueryParams<KeysOrObject extends string | object>(

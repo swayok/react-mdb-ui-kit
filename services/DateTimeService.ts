@@ -1,14 +1,17 @@
 import dayjs from 'dayjs'
-import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
+import {BasicLanguageConfig} from '../types'
 import utc from 'dayjs/plugin/utc'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 // Тип объекта для манипуляций с датой и временем.
 export type DateTimeInstance = dayjs.Dayjs
+
 // Тип значения, передаваемого в parse.
 export type DateTimeParsable = dayjs.ConfigType
+
 // Тип формата даты, передаваемого в parse.
 export type DateTimeFormatConfig = dayjs.OptionType
+
 // Настройки локализации.
 export type DateTimeLocalization = ILocale
 

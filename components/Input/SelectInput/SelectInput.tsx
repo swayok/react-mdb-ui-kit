@@ -7,7 +7,7 @@ import React, {
     useState,
 } from 'react'
 import {AnyObject} from '../../../types'
-import Input from '../../../components/Input/Input'
+import {Input} from '../../../components/Input/Input'
 import VirtualizedSelectInputOptions from './VirtualizedSelectInputOptions'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'

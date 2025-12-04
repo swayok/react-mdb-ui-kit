@@ -1,82 +1,22 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes, CSSProperties, useId} from 'react'
-import {withStable} from '../../helpers/withStable'
-import {AnyObject, CheckboxColors, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
+import {useId} from 'react'
+import {RadiosGroupProps} from './InputTypes'
+import {
+    AnyObject,
+    FormSelectOption,
+    FormSelectOptionsList,
+} from '../../types'
 import {SectionDivider} from '../SectionDivider'
-import InputValidationError from './InputValidationError'
-import Radio from './Radio'
-
-export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
-    // Основная подпись.
-    // Если false - не отображать <SectionDivider>.
-    label?: string | null | false;
-    // Имя группы (<input type="radio" name>).
-    name?: string;
-    // Выбранные значения (опции).
-    value: Value;
-    // Набор опций или групп опций.
-    options: FormSelectOptionsList<Value, Extras>;
-    // Распределить поля ввода на несколько колонок.
-    // По умолчанию: null (не разделять на колонки).
-    // Для более тонкой настройки под разные размеры экрана используйте inputsContainerClassName.
-    columns?: number | null;
-    // Размер иконки чекбокса: уменьшенный.
-    small?: boolean,
-    // Цвет переключателя.
-    color?: CheckboxColors
-    // CSS класс внешней обертки.
-    wrapperClassName?: string;
-    wrapperStyle?: CSSProperties;
-    // CSS класс обертки подписи и полей ввода содержимого.
-    className?: string;
-    style?: CSSProperties;
-    // CSS класс для основной подписи (radiosProps.label).
-    labelClassName?: string;
-    labelStyle?: CSSProperties;
-    // CSS класс контейнера одного чекбокса (<div className><input></div>).
-    radioWrapperClassName?: string;
-    radioWrapperStyle?: CSSProperties;
-    // CSS класс для чекбокса (<input className>).
-    radioClassName?: string;
-    radioStyle?: CSSProperties;
-    // Свойства одного чекбокса.
-    radioProps?: Omit<
-        AllHTMLAttributes<HTMLInputElement>,
-        'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly' | 'type'
-    >
-    // CSS класс для подписи чекбокса (<input><label className>).
-    radioLabelClassName?: string;
-    radioLabelStyle?: CSSProperties;
-    // CSS класс для контейнера полей ввода (<Items>).
-    // Пример inputsContainerClassName для 2х колонок:
-    // 'd-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3'.
-    radiosContainerClassName?: string;
-    radiosContainerStyle?: CSSProperties;
-    // Настройки валидности введенных данных.
-    invalid?: boolean,
-    validationMessage?: string | null,
-    validationMessageClassName?: string,
-    // Обработчик изменения значения одного из чекбоксов.
-    onChange?: (
-        value: Value,
-        option: FormSelectOption<Value, Extras>
-    ) => void;
-    // Отслеживать поведение пользователя в этом поле ввода.
-    // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string,
-    // Запрет изменения значений.
-    disabled?: boolean,
-    // Запрет изменения значений.
-    readOnly?: boolean,
-}
+import {InputValidationError} from './InputValidationError'
+import {Radio} from './Radio'
 
 /**
  * Поле выбора одного значения из списка в виде списка <Radio> компонентов.
  * Опции нельзя группировать в FormSelectOptionGroup.
  */
-function RadiosGroup<
+export function RadiosGroup<
     Value = unknown,
-    Extras = AnyObject
+    Extras = AnyObject,
 >(props: RadiosGroupProps<Value, Extras>) {
 
     const defaultName = useId()
@@ -191,7 +131,5 @@ function RadiosGroup<
     )
 }
 
-export default withStable<RadiosGroupProps>(
-    ['onChange'],
-    RadiosGroup
-) as typeof RadiosGroup
+/** @deprecated */
+export default RadiosGroup

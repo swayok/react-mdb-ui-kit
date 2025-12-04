@@ -2,9 +2,14 @@ import useIsomorphicEffect from '@restart/hooks/useIsomorphicEffect'
 import useMergedRefs from '@restart/hooks/useMergedRefs'
 import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import clsx from 'clsx'
-import React, {CSSProperties, RefObject, useEffect, useRef} from 'react'
+import {
+    CSSProperties,
+    RefObject,
+    useEffect,
+    useRef,
+} from 'react'
 import warning from 'warning'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {
     DropdownAlign,
@@ -12,7 +17,7 @@ import {
     DropdownDropDirection,
     DropdownMenuProps,
     DropdownResponsiveAlign,
-} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+} from './DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 // Выпадающее меню (отображение).
@@ -53,7 +58,8 @@ export function DropdownMenu(props: DropdownMenuProps) {
     } = getPlacementAndAlignClasses(align, drop, isRTL)
 
     // noinspection SuspiciousTypeOfGuard
-    const [menuProps, {hasShown, popper, show, toggle}] = useDropdownMenu({
+    const [menuProps,
+        {hasShown, popper, show, toggle}] = useDropdownMenu({
         flip,
         rootCloseEvent,
         show: showFromProps,

@@ -1,13 +1,13 @@
 import type {
     AnyObject,
     ApiResponseData,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 import type {
     DataGridFooterProps,
     DataGridHeaderProps,
     DataGridOrderingDirection,
     DataGridTranslations,
-} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+} from '../DataGrid/DataGridTypes'
 import type {
     CSSProperties,
     TableHTMLAttributes,

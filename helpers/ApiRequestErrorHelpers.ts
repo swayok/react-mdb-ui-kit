@@ -1,20 +1,31 @@
-import {HtmlErrorResponseData, OtherErrorResponseData} from '../services/ApiRequestService'
-import {HttpErrorsTranslations} from 'swayok-react-mdb-ui-kit/types/Translations'
+import {
+    ApiError,
+    ApiResponse,
+    HtmlErrorResponseData,
+    OtherErrorResponseData,
+    ValidationErrorsResponseData,
+} from '../services/ApiRequestService'
 import {NavigationService} from '../services/NavigationService'
 import {ToastService} from '../services/ToastService'
-import {ApiError, ApiResponse, ValidationErrorsResponseData} from '../services/ApiRequestService'
-import {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyObject,
+    ApiResponseData,
+    HttpErrorsTranslations,
+} from '../types'
 
 export const TimeoutErrorHttpCode: number = 408
+
 export const ValidationErrorHttpCode: number = 422
+
 export const UnauthorisedErrorHttpCode: number = 401
+
 export const AccessDeniedErrorHttpCode: number = 403
 
 /**
  * Глобальные настройки обработки ошибок от API.
  */
 export interface ApiRequestErrorHelpersConfig {
-    logoutRoute: string,
+    logoutRoute: string
     translator: () => HttpErrorsTranslations
 }
 
@@ -42,39 +53,39 @@ export interface ErrorHandlers {
      *
      * @see handleErrorResponse()
      */
-    suppressValidationErrorMessage?: boolean,
+    suppressValidationErrorMessage?: boolean
     /**
      * Если true, то отключает вызов handleMessage при ошибке авторизации (HTTP 401).
      * По умолчанию: false.
      *
      * @see handleErrorResponse()
      */
-    suppressUnauthorisedErrorMessage?: boolean,
+    suppressUnauthorisedErrorMessage?: boolean
     /**
      * Отключает обработку ошибок для указанных HTTP кодов.
      *
      * @see handleErrorResponse()
      */
-    suppressErrorMessagesForHttpCodes?: number[],
+    suppressErrorMessagesForHttpCodes?: number[]
     /**
      * Обработчик ошибки при отправке запроса.
      *
      * @see handleRequestSendingError()
      */
-    requestSendingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
+    requestSendingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Обработчик ошибки при парсинге данных ответа.
      *
      * @see handleResponseParsingError()
      */
-    responseParsingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
+    responseParsingError?: null | ((error: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Обработчик ошибки 408 (Request Timeout).
      *
      * @see handleRequestTimeoutResponse()
      * @see TimeoutErrorHttpCode
      */
-    timeoutError?: null | ((error: ApiError, handlers: ErrorHandlers) => void),
+    timeoutError?: null | ((error: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Следующие 3 обработчика вызываются в стандартном http4xxError обработчике.
      *
@@ -86,21 +97,21 @@ export interface ErrorHandlers {
      *
      * @see ValidationErrorHttpCode
      */
-    validationErrors?: null | ((errors: AnyObject<string>, response: ApiError) => void),
+    validationErrors?: null | ((errors: AnyObject<string>, response: ApiError) => void)
     /**
      * Обработчик ошибки HTTP 403 (Access Denied).
      *
      * @see handleAuthorisationErrorResponse()
      * @see AccessDeniedErrorHttpCode
      */
-    unauthorisedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    unauthorisedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Обработчик ошибки HTTP 401 (Unauthorized).
      *
      * @see handleAccessDeniedErrorResponse()
      * @see UnauthorisedErrorHttpCode
      */
-    accessDeniedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    accessDeniedError?: null | ((response: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Обработчик ошибок HTTP 4xx (400-499).
      * Задание этого обработчика отключит использование обработчиков
@@ -109,22 +120,22 @@ export interface ErrorHandlers {
      *
      * @see handleHttp4xxErrorResponse()
      */
-    http4xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    http4xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void)
     /**
      * Обработчик ошибок HTTP 5xx (500-599).
      * @see handleHttp5xxErrorResponse()
      */
-    http5xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void),
+    http5xxError?: null | ((response: ApiError, handlers: ErrorHandlers) => void)
     /**
      * @see handleMessageFromResponse()
      */
-    handleMessage?: null | ((response: ApiResponse | ApiError, message?: string, messageType?: ApiResponseData['_message_type']) => void),
+    handleMessage?: null | ((response: ApiResponse | ApiError, message?: string, messageType?: ApiResponseData['_message_type']) => void)
     /**
      * Вызывается при любой HTTP ошибке (HTTP код >= 400), даже если ошибка
      * уже была обработана другим обработчиком HTTP ошибок.
      * Если произошла на HTTP ошибка, то не вызывается.
      */
-    anyHttpError?: ((response: ApiError, handlers: ErrorHandlers) => void),
+    anyHttpError?: ((response: ApiError, handlers: ErrorHandlers) => void)
 }
 
 // Стандартные обработчики ошибок и настройки обработки ошибок.
@@ -410,7 +421,7 @@ export function handleMessageFromResponse(
     })
     let duration: number | undefined
     if (message.length > 100) {
-        duration = 1000 + Math.ceil(message.length / 50) * 1800
+        duration = 1000 + (Math.ceil(message.length / 50) * 1800)
     }
     switch (messageType) {
         case 'info':
@@ -472,19 +483,19 @@ export function normalizeValidationErrorsKeysForArraysAndObjects<ErrorsType exte
             ret[errorsKey] = errors[errorsKey] as string
             continue
         }
-        let tmp: AnyObject = ret;
+        let tmp: AnyObject = ret
         for (let depth = 0; depth < maxDepth; depth++) {
             const subKey: string = parts[depth]
             if (subKey in tmp && typeof tmp[subKey] !== 'object') {
                 // Конфликт: ключ parts[i] уже существует в tmp и
                 // Конфликт с другим ключом, содержащим строку.
                 tmp[parts.slice(depth).join('.')] = errors[errorsKey] as string
-                break;
+                break
             }
             if (depth === maxDepth - 1) {
                 // Достигнута максимальная глубина: сохраняем сообщение об ошибке.
                 tmp[parts[depth]] = errors[errorsKey] as string
-                break;
+                break
             }
             if (!(subKey in tmp)) {
                 tmp[parts[depth]] = {}
@@ -510,7 +521,10 @@ const defaultApiErrorData: ApiError = {
 
 // Создать объект ApiError с указанным статусом и данными.
 export function createApiError<
-    T extends ApiResponseData = ApiResponseData | ValidationErrorsResponseData | HtmlErrorResponseData | OtherErrorResponseData
+    T extends ApiResponseData = ApiResponseData
+        | ValidationErrorsResponseData
+        | HtmlErrorResponseData
+        | OtherErrorResponseData,
 >(status: number, errorData?: Partial<Omit<ApiError<T>, 'status'>>): ApiError<T> {
     return {
         ...(defaultApiErrorData as ApiError<T>),

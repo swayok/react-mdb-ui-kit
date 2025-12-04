@@ -1,7 +1,7 @@
-import React from 'react'
-import Checkbox, {CheckboxProps} from '../../components/Input/Checkbox'
-import CheckboxesGroup from '../../components/Input/CheckboxesGroup'
-import Radio from '../../components/Input/Radio'
+import {Checkbox} from '../../components/Input/Checkbox'
+import {CheckboxProps} from '../../components/Input/InputTypes'
+import {CheckboxesGroup} from '../../components/Input/CheckboxesGroup'
+import {Radio} from '../../components/Input/Radio'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
@@ -41,7 +41,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                 checked
                 solid
             />
-            <Checkbox {...props}/>
+            <Checkbox {...props} />
             <Checkbox
                 {...props}
                 label="Checkbox with very very very very very very very very very very very very very very very very very very very long label"
@@ -80,7 +80,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                 disabled
                 checked
             />
-            <Radio {...props}/>
+            <Radio {...props} />
             <Radio
                 {...props}
                 label="Radio with very very very very very very very very very very very very very very very very very very very long label"
@@ -121,7 +121,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                 labelBeforeInput
             />
 
-            <SectionDivider label="Checkboxes group"/>
+            <SectionDivider label="Checkboxes group" />
 
             <CheckboxesGroup
                 label="Input label"
@@ -151,7 +151,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                 values={['option1', 'option3']}
             />
 
-            <SectionDivider label="Colors"/>
+            <SectionDivider label="Colors" />
 
             <div className="d-grid grid-columns-3">
                 <Checkbox
@@ -242,7 +242,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                     checked
                     color="red"
                 />
-                <div/>
+                <div />
                 <Radio
                     {...props}
                     label="Radio green"
@@ -255,7 +255,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                     checked
                     color="green"
                 />
-                <div/>
+                <div />
                 <Radio
                     {...props}
                     label="Radio blue"
@@ -268,7 +268,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                     checked
                     color="blue"
                 />
-                <div/>
+                <div />
                 <Radio
                     {...props}
                     label="Radio orange"
@@ -281,7 +281,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
                     checked
                     color="orange"
                 />
-                <div/>
+                <div />
             </div>
         </>
     )

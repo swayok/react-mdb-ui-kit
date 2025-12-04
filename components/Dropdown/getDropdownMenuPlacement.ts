@@ -1,6 +1,7 @@
-import {DropdownDropDirection} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {DropdownDropDirection} from './DropdownTypes'
 import {Placement} from '@popperjs/core'
 
+// Получить позицию выпадающего меню.
 export function getDropdownMenuPlacement(
     alignEnd: boolean,
     dropDirection?: DropdownDropDirection,

@@ -1,6 +1,10 @@
-import {FormSelectOption, FormSelectOptionsList, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
-import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import {NumbersService} from '../services/NumbersService'
+import {
+    BasicRegionConfig,
+    FormSelectOption,
+    FormSelectOptionsList,
+    PartialRecord,
+} from '../types'
 
 // Автоматически определенный регион.
 let detectedRegion: BasicRegionConfig | undefined
@@ -10,6 +14,7 @@ export class RegionsManager<
     RegionCode extends string = string,
     RegionConfigType extends BasicRegionConfig<RegionCode> = BasicRegionConfig<RegionCode>,
 > {
+
     // Имя URL Query аргумента для задания нового региона.
     private static readonly defaultUrlQueryArgName: string = 'region'
     // Список доступных регионов.
@@ -58,7 +63,7 @@ export class RegionsManager<
         for (const key in this.regions) {
             const config: RegionConfigType = this.regions[key]!
             ret.push({
-                value: config.region as RegionCode,
+                value: config.region,
                 label: config.label,
                 extra: config,
             })

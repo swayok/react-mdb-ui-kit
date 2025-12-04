@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {AsyncDataGridLoadingProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
 import {AsyncDataLoadingError} from '../AsyncDataLoadingError'
 import {FadeIn} from '../FadeIn'
 import {Loading} from '../Loading'

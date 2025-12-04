@@ -1,11 +1,14 @@
-import React, {
-    useContext, useEffect,
-} from 'react'
 import clsx from 'clsx'
-import {ReorderableListItemContext} from './ReorderableListItemContext'
 import {
-    AnyObject, ComponentPropsWithModifiableTag,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+    MouseEvent,
+    useContext,
+    useEffect,
+} from 'react'
+import {
+    AnyObject,
+    ComponentPropsWithModifiableTag,
+} from '../../types'
+import {ReorderableListItemContext} from './ReorderableListItemContext'
 
 export interface DragAndDropTogglerProps extends Omit<ComponentPropsWithModifiableTag, 'onMouseDown' | 'disabled' | 'draggable'> {
     payload?: AnyObject | null
@@ -48,7 +51,7 @@ export function ReorderableListItemToggler(props: DragAndDropTogglerProps) {
             className={clsx(className, 'drag-and-drop-toggler', isDisabled ? 'disabled' : null)}
             disabled={isDisabled}
             onMouseDown={isDisabled ? undefined : onDragStart}
-            onClick={(e: React.MouseEvent<HTMLElement>) => {
+            onClick={(e: MouseEvent<HTMLElement>) => {
                 e.preventDefault()
                 onClick?.(e)
             }}

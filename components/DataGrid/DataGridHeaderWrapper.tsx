@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react'
+import {CSSProperties} from 'react'
 import clsx from 'clsx'
 import {
     normalizeDimensionForReactStyles,
@@ -7,7 +7,7 @@ import {
 import {
     DataGridHeaderWrapperProps,
     DataGridOrderingDirection,
-} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+} from './DataGridTypes'
 import {Ripple} from '../Ripple/Ripple'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
 

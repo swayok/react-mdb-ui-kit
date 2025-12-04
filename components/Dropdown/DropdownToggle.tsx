@@ -2,12 +2,19 @@ import useMergedRefs from '@restart/hooks/useMergedRefs'
 import DropdownContext from '@restart/ui/DropdownContext'
 import {useDropdownToggle} from '@restart/ui/DropdownToggle'
 import clsx from 'clsx'
-import React, {useContext} from 'react'
-import {Button, ButtonProps} from '../Button'
-import {DropdownToggleProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {
+    RefObject,
+    useContext,
+} from 'react'
+import {
+    Button,
+    ButtonProps,
+} from '../Button'
+import {DropdownToggleProps} from './DropdownTypes'
 
+// Кнопка открытия выпадающего меню.
 export function DropdownToggle<
-    T = ButtonProps
+    T = ButtonProps,
 >(props: DropdownToggleProps & Omit<T, 'ref' | keyof DropdownToggleProps>) {
 
     const dropdownContext = useContext(DropdownContext)
@@ -22,11 +29,12 @@ export function DropdownToggle<
         ...otherProps
     } = props
 
-    const [toggleProps, toggleMetadata] = useDropdownToggle()
+    const [toggleProps,
+        toggleMetadata] = useDropdownToggle()
 
     toggleProps.ref = useMergedRefs(
         toggleProps.ref,
-        ref as React.RefObject<HTMLElement>
+        ref as RefObject<HTMLElement>
     )
 
     // This intentionally forwards size and variant (if set) to the

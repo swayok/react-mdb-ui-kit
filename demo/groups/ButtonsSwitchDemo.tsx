@@ -1,6 +1,6 @@
 import React from 'react'
 import {ButtonsSwitch} from '../../components/ButtonsSwitch'
-import ButtonsSwitchInput from '../../components/Input/ButtonsSwitchInput'
+import {ButtonsSwitchInput} from '../../components/Input/ButtonsSwitchInput'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function ButtonsSwitchDemo() {
@@ -46,7 +46,7 @@ export function ButtonsSwitchDemo() {
                 }}
             />
 
-            <SectionDivider label="Buttons Switch Input"/>
+            <SectionDivider label="Buttons Switch Input" />
 
             <ButtonsSwitchInput
                 options={[

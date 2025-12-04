@@ -1,39 +1,16 @@
 import numeral from 'numeral'
-import React, {
-    useMemo, useRef,
+import {
+    useMemo,
+    useRef,
 } from 'react'
-import Input, {InputProps} from './Input'
-
-export interface NumericInputProps extends Omit<
+import {Input} from './Input'
+import {
     InputProps,
-    'onChange' | 'onPaste' | 'onBeforeInput'
-> {
-    /**
-     * Формат, совместимый с numeral().format().
-     * Внимание: thousands separator в numeralFormat не поддерживается!
-     *
-     * @see http://numeraljs.com/#format
-     */
-    numeralFormat?: string
-    // Разрешить отрицательные числа?
-    allowNegative?: boolean
-    // Разделитель целой и дробной части числа.
-    decimalSeparator?: '.' | ','
-    // Кол-во цифр в целой части вводимого числа.
-    maxLength?: number
-    onChange: (
-        e: (
-            React.ChangeEvent<HTMLInputElement>
-            | React.FocusEvent<HTMLInputElement>
-            | React.KeyboardEvent<HTMLInputElement>
-        ),
-        formattedValue: string,
-        cleanValue: number | null
-    ) => void
-}
+    NumericInputProps,
+} from './InputTypes'
 
 // Поле ввода числа.
-export default function NumericInput(props: NumericInputProps) {
+export function NumericInput(props: NumericInputProps) {
 
     // Переименование переменных требуется, чтобы в eventHandlers точно не использовались
     // никакие значения из props напрямую.
@@ -312,3 +289,6 @@ function isValidCharacter(
     }
     return 'continue'
 }
+
+/** @deprecated */
+export default NumericInput

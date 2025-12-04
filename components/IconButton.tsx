@@ -1,21 +1,27 @@
-import React, {CSSProperties} from 'react'
-import {Icon, AppIconProps} from './Icon'
 import clsx from 'clsx'
-import {TooltipProps} from './Tooltip'
-import {TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    CSSProperties,
+    MouseEvent,
+} from 'react'
 import {withStable} from '../helpers/withStable'
+import {TextColors} from '../types'
+import {
+    AppIconProps,
+    Icon,
+} from './Icon'
+import {TooltipProps} from './Tooltip'
 
 export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
-    tooltip?: string,
-    color?: TextColors | 'link',
-    onClick: (event: React.MouseEvent<HTMLDivElement>) => void,
-    tooltipProps?: Omit<TooltipProps, 'onClick' | 'title' | 'disableClickHandler'>,
-    iconClassName?: string,
-    iconStyle?: CSSProperties,
+    tooltip?: string
+    color?: TextColors | 'link'
+    onClick: (event: MouseEvent<HTMLDivElement>) => void
+    tooltipProps?: Omit<TooltipProps, 'onClick' | 'title' | 'disableClickHandler'>
+    iconClassName?: string
+    iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
     // Если false: использовать CSS класс 'with-icon-flex' для центрирования иконки по вертикали.
     // По умолчанию: false.
-    inline?: boolean,
+    inline?: boolean
 }
 
 // Иконка-кнопка со всплывающей подсказкой при наведении
@@ -43,7 +49,7 @@ function _IconButton(props: IconButtonProps) {
         className
     )
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = (event: MouseEvent<HTMLDivElement>) => {
         if (!disabled) {
             onClick(event)
         }

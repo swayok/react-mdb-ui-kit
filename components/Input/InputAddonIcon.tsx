@@ -1,15 +1,10 @@
-import React from 'react'
-import InputAddonText from './InputAddonText'
-import {IconProps} from '../MDIIcon'
+import {InputAddonIconProps} from './InputTypes'
 import {Icon} from '../Icon'
-
-interface Props extends IconProps {
-    iconClassName?: string;
-}
+import {InputAddonText} from './InputAddonText'
 
 // Дополнение к полю ввода в виде иконки (отображается в правой части поля ввода).
 // Пример использования: <Input...><InputAddonIcon></Input>.
-function InputAddonIcon(props: Props) {
+export function InputAddonIcon(props: InputAddonIconProps) {
 
     const {
         className,
@@ -29,4 +24,5 @@ function InputAddonIcon(props: Props) {
     )
 }
 
-export default React.memo(InputAddonIcon)
+/** @deprecated */
+export default InputAddonIcon

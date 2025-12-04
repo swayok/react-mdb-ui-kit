@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import React from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {MouseEvent} from 'react'
+import {AnyObject} from '../../../types'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
 import {SelectInputOptionLabel} from './SelectInputOptionLabel'
 import {SelectInputOptionProps} from './SelectInputTypes'
@@ -41,7 +41,7 @@ export function SelectInputOption<
             active={false}
             data-value={String(value)}
             tag="div"
-            onClick={(e: React.MouseEvent) => {
+            onClick={(e: MouseEvent) => {
                 e.preventDefault()
                 onSelect(option, index, groupIndex)
             }}

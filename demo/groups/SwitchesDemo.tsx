@@ -1,5 +1,4 @@
-import React from 'react'
-import Switch from '../../components/Input/Switch'
+import {Switch} from '../../components/Input/Switch'
 
 export function SwitchesDemo() {
 
@@ -23,7 +22,7 @@ export function SwitchesDemo() {
                 checked
                 disabled
             />
-            <Switch/>
+            <Switch />
             <Switch
                 label="Switch with very very very very very very very very very very very very very very very very very very very long label"
             />

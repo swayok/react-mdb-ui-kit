@@ -1,4 +1,4 @@
-import {TabSheetHeaderProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {TabSheetHeaderProps} from './TabSheetTypes'
 import {CardHeader} from '../Card/CardHeader'
 import clsx from 'clsx'
 

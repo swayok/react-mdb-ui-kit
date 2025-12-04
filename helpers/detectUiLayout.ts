@@ -1,5 +1,6 @@
-import {UILayout} from 'swayok-react-mdb-ui-kit/types/Common'
+import {UILayout} from '../types'
 
+// Определение разметки UI.
 export function detectUiLayout(): UILayout {
     let layout: UILayout
     if (window.innerWidth < 350) {

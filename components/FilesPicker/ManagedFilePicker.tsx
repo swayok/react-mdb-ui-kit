@@ -1,4 +1,4 @@
-import React, {
+import {
     ChangeEvent,
     useCallback,
     useEffect,
@@ -12,11 +12,11 @@ import {
     FilePickerFileInfo,
     FilePickerUploadInfo,
     ManagedFilePickerProps,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {
     AnyObject,
     MinMax,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 import {
     FileAPI,
     FileAPIImageFileInfo,

@@ -1,51 +1,40 @@
-import React, {Suspense, useMemo, useRef} from 'react'
 import {
-    DropdownAlign, DropdownApi,
-    DropdownDropDirection,
-    DropdownProps,
-} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import {Icon} from '../Icon'
+    mdiCalendarMonthOutline,
+    mdiClose,
+} from '@mdi/js'
 import clsx from 'clsx'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {DropdownToggle} from '../Dropdown/DropdownToggle'
-import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import Input, {InputProps} from './Input'
-import InputValidationError from './InputValidationError'
-import {mdiCalendarMonthOutline, mdiClose} from '@mdi/js'
-import {withStable} from '../../helpers/withStable'
-import {IconButton} from '../IconButton'
-import {DateTimeService} from '../../services/DateTimeService'
+import {
+    ComponentType,
+    lazy,
+    Suspense,
+    useMemo,
+    useRef,
+} from 'react'
 import {CalendarProps} from 'react-calendar'
-import InputAddonText from './InputAddonText'
+import {
+    DropdownApi,
+    DropdownDropDirection,
+} from '../Dropdown/DropdownTypes'
+import {DateTimeService} from '../../services/DateTimeService'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
+import {Dropdown} from '../Dropdown/Dropdown'
+import {DropdownMenu} from '../Dropdown/DropdownMenu'
+import {DropdownToggle} from '../Dropdown/DropdownToggle'
+import {Icon} from '../Icon'
+import {IconButton} from '../IconButton'
+import {Input} from './Input'
+import {InputAddonText} from './InputAddonText'
+import {
+    DateInputProps,
+    DateInputSingleDateValue,
+    DateInputValue,
+} from './InputTypes'
+import {InputValidationError} from './InputValidationError'
 
-const Calendar = React.lazy<React.ComponentType<CalendarProps>>(() => import('react-calendar'))
-
-export type DateInputSingleDateValue = Date | null;
-export type DateInputDateRangeValue = [Date | null, Date | null];
-export type DateInputValue = DateInputSingleDateValue | DateInputDateRangeValue;
-
-export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value'> {
-    value: DateInputValue
-    // Конвертация даты или периода для отображения в поле ввода.
-    valueToString?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => string
-    // Формат даты (DateTimeService) для стандартного valueToString.
-    dateFormat?: string
-    allowEmptyValue?: boolean
-    // Настройки выпадающего меню.
-    dropdownMenuClassName?: string
-    dropdownToggleClassName?: string
-    dropdownProps?: Omit<DropdownProps, 'drop' | 'align' | 'className' | 'disabled'>
-    drop?: DropdownDropDirection
-    align?: DropdownAlign
-    onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
-    calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
-    // Показать иконку календаря? По умолчанию: true.
-    showCalendarIcon?: boolean
-}
+const Calendar = lazy<ComponentType<CalendarProps>>(() => import('react-calendar'))
 
 // Выбор даты или периода.
-function DateInput(props: DateInputProps) {
+export function DateInput(props: DateInputProps) {
 
     const {
         value,
@@ -197,7 +186,7 @@ function DateInput(props: DateInputProps) {
                 inputProps.small && !inputProps.large ? 'form-date-input-sm' : null,
                 inputProps.large && !inputProps.small ? 'form-date-input-lg' : null,
                 wrapperClass
-            )} //< form-outline here needed to apply .input-group styles
+            )} // < form-outline here needed to apply .input-group styles
             drop={drop}
             align={align}
             disabled={props.disabled}
@@ -254,7 +243,5 @@ function convertDateInputValueToString(
         + ' - ' + DateTimeService.parse(to).format(dateFormat)
 }
 
-export default withStable<DateInputProps>(
-    ['onChange', 'onFocus', 'onBlur', 'valueToString'],
-    DateInput
-)
+/** @deprecated */
+export default DateInput

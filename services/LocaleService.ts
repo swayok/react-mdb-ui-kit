@@ -1,20 +1,28 @@
-import {
-    AnyObject,
-    FormSelectOption,
-    FormSelectOptionsList, PartialRecord,
-} from 'swayok-react-mdb-ui-kit/types/Common'
-import {BasicLanguageConfig, BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import {LanguagesManager} from '../helpers/LanguagesManager'
 import {RegionsManager} from '../helpers/RegionsManager'
+import {
+    AnyObject,
+    BasicLanguageConfig,
+    BasicRegionConfig,
+    FormSelectOption,
+    FormSelectOptionsList,
+    PartialRecord,
+} from '../types'
 import {NumbersService} from './NumbersService'
 
 // Сервис для работы с языками и регионами приложения.
 export class LocaleService<
     LanguageCode extends string = string,
     RegionCode extends string = string,
-    LanguageConfig extends BasicLanguageConfig<LanguageCode, RegionCode> = BasicLanguageConfig<LanguageCode, RegionCode>,
+    LanguageConfig extends BasicLanguageConfig<
+        LanguageCode,
+        RegionCode
+    > = BasicLanguageConfig<LanguageCode, RegionCode>,
     Translations extends object = AnyObject,
-    RegionConfig extends BasicRegionConfig<RegionCode, LanguageCode> = BasicRegionConfig<RegionCode, LanguageCode>,
+    RegionConfig extends BasicRegionConfig<
+        RegionCode,
+        LanguageCode
+    > = BasicRegionConfig<RegionCode, LanguageCode>,
 > {
 
     // Менеджер языков.

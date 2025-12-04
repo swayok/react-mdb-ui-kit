@@ -1,10 +1,10 @@
 import {mdiPlus} from '@mdi/js'
 import clsx from 'clsx'
-import React from 'react'
+import {MouseEvent} from 'react'
 import {
     FilePickerFileInfo,
     FilePickerPreviewsProps,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
 import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse'
@@ -118,7 +118,7 @@ export function FilePickerPreviews(props: FilePickerPreviewsProps) {
                         order: adderPosition,
                     }}
                     href="#"
-                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    onClick={(e: MouseEvent<HTMLAnchorElement>) => {
                         e.preventDefault()
                         if (canAttachMoreFiles()) {
                             pickFile()

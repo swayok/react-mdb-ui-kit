@@ -1,10 +1,9 @@
-import React from 'react'
 import {FilePickerHelpers} from './FilePickerHelpers'
 import {
     FilePickerFileInfo,
     FilePickerTranslations,
     FilePickerWithUploaderFileInfo,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 
 interface Props {
     file: FilePickerWithUploaderFileInfo | FilePickerFileInfo

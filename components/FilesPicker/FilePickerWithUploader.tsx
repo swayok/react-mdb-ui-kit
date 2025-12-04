@@ -1,4 +1,9 @@
-import React, {ChangeEvent} from 'react'
+import {
+    ChangeEvent,
+    Component,
+    createRef,
+    RefObject,
+} from 'react'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
@@ -6,11 +11,11 @@ import {
     FilePickerUploadInfo,
     FilePickerWithUploaderFileInfo,
     FilePickerWithUploaderProps,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {
     AnyObject,
     MinMax,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 import {
     extractAndNormalizeValidationErrorsFromResponseData,
     UnauthorisedErrorHttpCode,
@@ -46,7 +51,7 @@ const positionDelta: number = 1
 // Компонент для выбора файла с диска для загрузки на сервер.
 // Компонент должен оборачивать все компоненты, которые участвуют в выборе файлов
 // и отображении списка выбранных файлов, т.к. создает контекст с состоянием и действиями.
-export class FilePickerWithUploader extends React.Component<
+export class FilePickerWithUploader extends Component<
     FilePickerWithUploaderProps, State
 > {
 
@@ -72,12 +77,12 @@ export class FilePickerWithUploader extends React.Component<
         isUploading: false,
     }
 
-    inputRef: React.RefObject<HTMLInputElement | null>
+    inputRef: RefObject<HTMLInputElement | null>
 
     // Конструктор
     constructor(props: FilePickerWithUploaderProps) {
         super(props)
-        this.inputRef = React.createRef<HTMLInputElement>()
+        this.inputRef = createRef<HTMLInputElement>()
         // Полифил для мобильных устройств для имитации drag-and-drop событий из touch событий.
         void import('drag-drop-touch')
     }

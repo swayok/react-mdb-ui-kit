@@ -1,44 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react'
-import Input, {InputProps} from './Input'
+import {
+    ChangeEvent,
+    FocusEvent,
+    ClipboardEvent,
+    KeyboardEvent,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
+import {MaskedNumericInputProps} from './InputTypes'
 import {withStable} from '../../helpers/withStable'
-
-export interface MaskedNumericInputProps extends Omit<InputProps, 'onChange' | 'maxLength'> {
-    // Шаблон значения.
-    // Например, "+7 (___) ___-__-__".
-    // Подчеркивание - это цифра, которую может ввести пользователь,
-    // всё остальное - это неизменные символы (включая пробелы).
-    template: string
-    // Функция для очистки значения для onChange().
-    // По умолчанию: value => value.replace(/[^+0-9]+/g, '')
-    // Пример: template = '0___ ___ ___'.
-    // Введено: value = '0999 888 777'.
-    // Чистое значение: '0999888777'.
-    // Пример: template = '+7 (___) ___-__-__'.
-    // Введено: value = '+7 (999) 888-77-66'.
-    // Чистое значение: '+79998887766'.
-    // Если нужно другое поведение, то можно задать свою функцию очистки значения.
-    valueCleaner?: (value: string) => string
-    // Минимальная позиция курсора в поле ввода,
-    // если ввод значения начинается не с нулевой позиции.
-    // Пример: для template = "+7 (___) ___-__-__"
-    // minCursorPosition = 3 (индекс первого подчеркивания).
-    minCursorPosition: number
-    onChange: (
-        event: React.ChangeEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
-        // Результат выполнения функции из свойства valueCleaner.
-        // Примеры:
-        // event.currentTarget.value = '+7 (000) 111-22-33', cleanValue = '+70001112233'.
-        // event.currentTarget.value = '(111) 222-33-44', cleanValue = '1112223344'.
-        cleanValue: string
-    ) => void
-}
+import {Input} from './Input'
 
 const isHardcodedCharacterRegexp = /[ ()-]/
 const rtrimRegexp = /[)_ -]+$/
 
 // Поле ввода для числового значения в соответствии с маской.
 // Примеры: номер телефона, номер банковской карты, номер паспорта.
-function MaskedNumericInput(props: MaskedNumericInputProps) {
+function _MaskedNumericInput(props: MaskedNumericInputProps) {
     const {
         template,
         valueCleaner = value => value.replace(/[^+0-9]+/g, ''),
@@ -96,9 +74,9 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
             allowedChars={allowedChars}
             // +1 нужен, т.к. шаблон занимает всё место, что мешает его заполнению т.к. блокируется ввод.
             maxLength={template.length + 1}
-            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                 if (!e.altKey && !e.ctrlKey && !e.shiftKey && !e.metaKey) {
-                    const input = e.currentTarget
+                    const input: HTMLInputElement = e.currentTarget
                     switch (e.key) {
                         case 'Delete':
                             if (input.selectionStart === input.selectionEnd) {
@@ -106,7 +84,10 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                                 cursorPositionRef.current = cursorPosition
                                 if (isHardcodedCharacter(input.value[cursorPosition])) {
                                     let endPosition: number = cursorPosition + 1
-                                    while (isHardcodedCharacter(input.value[endPosition]) && endPosition < maxCursorPosition) {
+                                    while (
+                                        isHardcodedCharacter(input.value[endPosition])
+                                        && endPosition < maxCursorPosition
+                                    ) {
                                         endPosition++
                                     }
                                     const newValue: string = input.value.substring(
@@ -131,7 +112,10 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                                 } else if (isHardcodedCharacter(input.value[cursorPosition])) {
                                     if (cursorPosition > minCursorPosition) {
                                         cursorPosition--
-                                        while (isHardcodedCharacter(input.value[cursorPosition]) && cursorPosition > minCursorPosition) {
+                                        while (
+                                            isHardcodedCharacter(input.value[cursorPosition])
+                                            && cursorPosition > minCursorPosition
+                                        ) {
                                             cursorPosition--
                                         }
                                     }
@@ -190,7 +174,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                 }
                 onKeyDown?.(e)
             }}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 if (!isValidValue(e.currentTarget.value, template)) {
                     e.preventDefault()
                     return
@@ -216,17 +200,17 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                 e.currentTarget.setSelectionRange(nextCursorPosition, nextCursorPosition)
                 onChange(e, valueCleaner(value))
             }}
-            onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+            onFocus={e => {
                 setFocused(true)
                 onFocus?.(e)
             }}
-            onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+            onClick={e => {
                 if (focused) {
                     updateCursorPositionOnFocus(e.currentTarget, template, minCursorPosition)
                 }
                 onClick?.(e)
             }}
-            onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(e: FocusEvent<HTMLInputElement>) => {
                 setFocused(false)
                 if (e.currentTarget.value === template) {
                     e.currentTarget.value = ''
@@ -234,7 +218,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                 }
                 onBlur?.(e)
             }}
-            onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+            onPaste={(e: ClipboardEvent<HTMLInputElement>) => {
                 e.preventDefault()
                 const value = formatValueForMask(
                     e.clipboardData.getData('text/plain'),
@@ -242,10 +226,7 @@ function MaskedNumericInput(props: MaskedNumericInputProps) {
                     focused
                 )
                 e.currentTarget.value = value
-                onChange(
-                    e as unknown as React.ChangeEvent<HTMLInputElement>,
-                    valueCleaner(value)
-                )
+                onChange(e, valueCleaner(value))
             }}
         />
     )
@@ -304,7 +285,7 @@ export function testRemoveTemplateCharacters() {
         '+7 (977) 123-45-67',
         '+7(977)123-45-67',
         '+7(977)1234567',
-        '7(977)1234567', //< Тут ожидается несоответствие с expectedValue, т.к. нет + в начале.
+        '7(977)1234567', // < Тут ожидается несоответствие с expectedValue, т.к. нет + в начале.
         '(977)1234567',
         '(977)123-45-67',
         '9771234567',
@@ -415,7 +396,10 @@ function handleKeyboardArrow(
         (action === 'ArrowLeft' ? input.selectionStart : input.selectionEnd)
         ?? 0
     ) + shift
-    while (cursorPosition < template.length && cursorPosition > 0 && isHardcodedCharacter(input.value[cursorPosition])) {
+    while (
+        cursorPosition < template.length
+        && cursorPosition > 0 && isHardcodedCharacter(input.value[cursorPosition])
+    ) {
         cursorPosition += shift
     }
     if (action === 'ArrowLeft' && cursorPosition <= minCursorPosition) {
@@ -433,7 +417,10 @@ function isHardcodedCharacter(char: string): boolean {
     return String(char || '').match(isHardcodedCharacterRegexp) !== null
 }
 
-export default withStable<MaskedNumericInputProps>(
+export const MaskedNumericInput = withStable<MaskedNumericInputProps>(
     ['onChange', 'onFocus', 'onBlur', 'valueCleaner'],
-    MaskedNumericInput
+    _MaskedNumericInput
 )
+
+/** @deprecated */
+export default MaskedNumericInput

@@ -1,4 +1,4 @@
-import {DataGridTranslations} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridTranslations} from '../../components/DataGrid/DataGridTypes'
 
 const translations: DataGridTranslations = {
     filters: {

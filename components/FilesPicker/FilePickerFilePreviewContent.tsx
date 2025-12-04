@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import React, {CSSProperties} from 'react'
+import {CSSProperties} from 'react'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
 import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
@@ -23,7 +23,7 @@ interface Props {
 }
 
 // Предпросмотр прикрепленного файла или картинки.
-export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePreviewContent(props: Props) {
+export function FilePickerFilePreviewContent(props: Props) {
     const {
         previews,
         fallbackPreview,
@@ -87,4 +87,4 @@ export const FilePickerFilePreviewContent = React.memo(function FilePickerFilePr
             )}
         </div>
     )
-})
+}

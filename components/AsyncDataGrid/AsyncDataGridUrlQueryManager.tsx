@@ -7,9 +7,9 @@ import {
 import {
     AsyncDataGridStateForUrlQuery,
     AsyncDataGridUrlQueryManagerProps,
-} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
-import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+} from './AsyncDataGridTypes'
+import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
+import {AnyObject} from '../../types'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 

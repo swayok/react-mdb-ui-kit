@@ -7,7 +7,7 @@ import type {
     MutableRefObject,
     RefObject,
 } from 'react'
-import type {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import type {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
 
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.

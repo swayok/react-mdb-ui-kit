@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import {useCallback} from 'react'
 import clsx from 'clsx'
 import {Icon} from '../Icon'
 import {
@@ -8,7 +8,7 @@ import {
     mdiPageLast,
 } from '@mdi/js'
 import {DataGridPaginationPagesList} from './DataGridPaginationPagesList'
-import {DataGridPaginationProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridPaginationProps} from './DataGridTypes'
 
 // Пагинация таблицы с данными.
 export function DataGridPagination(props: DataGridPaginationProps) {

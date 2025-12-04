@@ -1,6 +1,10 @@
-import {AnyObject, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
-import {BasicLanguageConfig, BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import numeral from 'numeral'
+import {
+    AnyObject,
+    BasicLanguageConfig,
+    BasicRegionConfig,
+    PartialRecord,
+} from '../types'
 
 interface CurrentLocale {
     language: string
@@ -114,8 +118,8 @@ export abstract class NumbersService {
         this.currentLocale = {
             language: defaultLanguage.language,
             region: defaultRegion?.region ?? null,
-            defaultFormat: '', //< само установится.
-            code: '', //< само установится.
+            defaultFormat: '', // < само установится.
+            code: '', // < само установится.
         }
         // Применяем настройки для локали по умолчанию.
         this.onCurrentLocaleChange()

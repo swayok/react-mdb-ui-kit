@@ -6,7 +6,7 @@ import {DataGridFiltersPanel} from '../../components/DataGrid/DataGridFiltersPan
 import {DataGridHeader} from '../../components/DataGrid/DataGridHeader'
 import {DataGridHeaders} from '../../components/DataGrid/DataGridHeaders'
 import {DataGridRow} from '../../components/DataGrid/DataGridRow'
-import Input from '../../components/Input/Input'
+import {Input} from '../../components/Input/Input'
 import {SectionDivider} from '../../components/SectionDivider'
 import data_grid from '../../locales/en/data_grid'
 

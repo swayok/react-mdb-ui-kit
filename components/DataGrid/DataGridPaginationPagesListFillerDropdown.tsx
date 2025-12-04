@@ -11,7 +11,7 @@ import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownApi} from '../Dropdown/DropdownTypes'
 import {Icon} from '../Icon'
-import Input from '../Input/Input'
+import {Input} from '../Input/Input'
 import {DataGridPaginationPagesListFillerDropdownProps} from './DataGridTypes'
 
 // Выпадающее меню со списком всех номеров страниц для пагинатора.

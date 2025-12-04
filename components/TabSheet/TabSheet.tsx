@@ -1,7 +1,8 @@
 import {
-    useEffect, useState,
+    useEffect,
+    useState,
 } from 'react'
-import {TabSheetProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {TabSheetProps} from './TabSheetTypes'
 import {Card} from '../Card/Card'
 import {TabSheetContext} from './TabSheetContext'
 import {TabSheetStateToUrlQueryHandler} from './TabSheetStateToUrlQueryHandler'
@@ -37,8 +38,10 @@ export function TabSheet<TabName extends string = string>(
     const [urlQueryParams] = useUrlQueryParams()
 
     // Открытая вкладка.
-    const [currentTab,
-        setCurrentTab] = useState<TabName>(() => {
+    const [
+        currentTab,
+        setCurrentTab,
+    ] = useState<TabName>(() => {
         if (savesStateToUrlQuery && urlQueryParams.has(urlQueryArgName)) {
             // Достаем текущую вкладку из URL Query.
             return urlQueryParams.get(urlQueryArgName) as TabName

@@ -1,7 +1,12 @@
-import {BasicLanguageConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
-import {AnyObject, FormSelectOption, FormSelectOptionsList, PartialRecord} from 'swayok-react-mdb-ui-kit/types/Common'
 import {DateTimeService} from '../services/DateTimeService'
 import {NumbersService} from '../services/NumbersService'
+import {
+    AnyObject,
+    BasicLanguageConfig,
+    FormSelectOption,
+    FormSelectOptionsList,
+    PartialRecord,
+} from '../types'
 
 // Автоматически определенный язык.
 let detectedLanguage: BasicLanguageConfig | undefined
@@ -12,6 +17,7 @@ export class LanguagesManager<
     LanguageConfigType extends BasicLanguageConfig<LanguageCode> = BasicLanguageConfig<LanguageCode>,
     DictionaryType extends object = AnyObject,
 > {
+
     // Имя URL Query аргумента для задания нового языка.
     private static readonly defaultUrlQueryArgName: string = 'lang'
     // Список доступных языков.
@@ -78,7 +84,7 @@ export class LanguagesManager<
         for (const key in this.languages) {
             const config: LanguageConfigType = this.languages[key]!
             ret.push({
-                value: config.language as LanguageCode,
+                value: config.language,
                 label: config.label,
                 extra: config,
             })
@@ -141,7 +147,7 @@ export class LanguagesManager<
     // Установка и настройка основного языка. Использовать только через loadTranslations!
     private setPrimaryLanguage(config: LanguageConfigType): void {
         this.primaryLanguage = config
-        this.translations = this.loadedTranslations[config.language as LanguageCode]
+        this.translations = this.loadedTranslations[config.language]
         window.document.documentElement.lang = config.language
         // Меняем язык форматирования чисел.
         NumbersService.setLanguage(config.language)

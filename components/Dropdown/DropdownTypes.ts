@@ -16,7 +16,7 @@ import type {
     ComponentPropsWithModifiableTag,
     ComponentPropsWithModifiableTagAndRef,
     ReactComponentOrTagName,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 
 export interface DropdownContextProps {
     align?: DropdownAlign

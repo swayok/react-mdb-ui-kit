@@ -1,9 +1,21 @@
 import React from 'react'
 import clsx from 'clsx'
-import {Tooltip, TooltipProps} from './Tooltip'
-import {MDIIcon, IconProps} from './MDIIcon'
-import {SvgIconInfo, TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
-import {SvgIcon, SvgIconProps} from './SvgIcon'
+import {
+    Tooltip,
+    TooltipProps,
+} from './Tooltip'
+import {
+    MDIIcon,
+    IconProps,
+} from './MDIIcon'
+import {
+    SvgIconInfo,
+    TextColors,
+} from '../types'
+import {
+    SvgIcon,
+    SvgIconProps,
+} from './SvgIcon'
 
 export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
     path: IconProps['path'] | SvgIconInfo
@@ -80,7 +92,10 @@ export function Icon(props: AppIconProps) {
                 <Tooltip
                     tag="div"
                     {...otherTooltipProps}
-                    className={clsx('mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start', tooltipWrapperClassName)}
+                    className={clsx(
+                        'mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start',
+                        tooltipWrapperClassName
+                    )}
                     {...commonTooltipProps}
                 >
                     {icon}
@@ -92,7 +107,10 @@ export function Icon(props: AppIconProps) {
                 <Tooltip
                     {...tooltipProps}
                     tag={tooltipTag}
-                    className={clsx(centerIconInTooltip ? 'd-flex flex-row align-items-center' : null, tooltipWrapperClassName)}
+                    className={clsx(
+                        centerIconInTooltip ? 'd-flex flex-row align-items-center' : null,
+                        tooltipWrapperClassName
+                    )}
                     {...commonTooltipProps}
                 >
                     {icon}

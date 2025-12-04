@@ -1,20 +1,29 @@
-import React, {AbstractView, CSSProperties, useEffect, useRef, useState} from 'react'
-import ReactDOM from 'react-dom'
-import clsx from 'clsx'
-import {usePopper} from 'react-popper'
 import * as PopperJS from '@popperjs/core'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import clsx from 'clsx'
+import {
+    AbstractView,
+    CSSProperties,
+    ReactNode,
+    MouseEvent as ReactMouseEvent,
+    TouchEvent,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
+import ReactDOM from 'react-dom'
+import {usePopper} from 'react-popper'
+import {ComponentPropsWithModifiableTag} from '../types'
 
 export interface TooltipProps extends Omit<ComponentPropsWithModifiableTag, 'title'> {
-    placement?: PopperJS.Placement,
-    options?: Omit<Partial<PopperJS.Options>, 'placement'>,
-    title?: string | React.ReactNode,
-    tooltipClassName?: string,
-    tooltipTextClassName?: string,
-    tooltipStyle?: CSSProperties,
-    tooltipMaxWidth?: number,
-    containsInteractiveElements?: boolean,
-    disableClickHandler?: boolean,
+    placement?: PopperJS.Placement
+    options?: Omit<Partial<PopperJS.Options>, 'placement'>
+    title?: string | ReactNode
+    tooltipClassName?: string
+    tooltipTextClassName?: string
+    tooltipStyle?: CSSProperties
+    tooltipMaxWidth?: number
+    containsInteractiveElements?: boolean
+    disableClickHandler?: boolean
     disableHover?: boolean
 }
 
@@ -40,7 +49,7 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         ...otherProps
     } = props
 
-    //< do not use useRef() because props.tag can be functional component with forwarded ref
+    // < do not use useRef() because props.tag can be functional component with forwarded ref
     const [
         referenceElement,
         setReferenceElement,
@@ -105,12 +114,12 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
     }, [isOpenState, isClicked])
 
     // Catch touch events and remember it.
-    const handleTouchStart = (e: React.TouchEvent<HTMLElement>) => {
+    const handleTouchStart = (e: TouchEvent<HTMLElement>) => {
         isTouchEvent.current = true
         onTouchStart?.(e)
     }
 
-    const handleOnMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    const handleOnMouseEnter = (e: ReactMouseEvent<HTMLElement>) => {
         if (
             disableHover
             // There is a problem when the tooltip is clicked by touch event,
@@ -126,7 +135,7 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         onMouseEnter?.(e)
     }
 
-    const handleOnMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+    const handleOnMouseLeave = (e: ReactMouseEvent<HTMLElement>) => {
         isTouchEvent.current = false
         if (disableHover) {
             return
@@ -147,7 +156,7 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
                 }
 
                 setIsOpenState(false)
-                const event: React.MouseEvent<HTMLElement> = {
+                const event: ReactMouseEvent<HTMLElement> = {
                     ...e,
                     nativeEvent: e,
                     isDefaultPrevented(): boolean {

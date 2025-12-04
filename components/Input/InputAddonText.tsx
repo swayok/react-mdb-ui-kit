@@ -1,13 +1,9 @@
-import React, {AllHTMLAttributes} from 'react'
 import clsx from 'clsx'
-
-interface Props extends AllHTMLAttributes<HTMLDivElement> {
-    contentClassName?: string,
-}
+import {InputAddonTextProps} from './InputTypes'
 
 // Дополнение к полю ввода (отображается в правой части поля ввода).
 // Пример использования: <Input...><InputAddonText>text</InputAddonText></Input>.
-function InputAddonText(props: Props) {
+export function InputAddonText(props: InputAddonTextProps) {
 
     const {
         className,
@@ -28,4 +24,5 @@ function InputAddonText(props: Props) {
     )
 }
 
-export default React.memo(InputAddonText)
+/** @deprecated */
+export default InputAddonText

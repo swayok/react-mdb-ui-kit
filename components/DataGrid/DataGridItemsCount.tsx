@@ -1,11 +1,11 @@
 import clsx from 'clsx'
-import React, {
+import {
     useCallback,
     useMemo,
 } from 'react'
-import {DataGridItemsCountProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {DropdownProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
+import {DataGridItemsCountProps} from './DataGridTypes'
+import {DropdownProps} from '../Dropdown/DropdownTypes'
+import {FormSelectOption} from '../../types'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 

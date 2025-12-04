@@ -3,11 +3,11 @@ import type {
     ReactNode,
     RefObject,
 } from 'react'
-import type {ButtonProps} from 'swayok-react-mdb-ui-kit/components/Button'
+import type {ButtonProps} from '../Button'
 import type {
     AnyRefObject,
     ComponentPropsWithModifiableTagAndRef,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 
 // Стандартная структура:
 // Modal

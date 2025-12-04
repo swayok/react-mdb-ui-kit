@@ -1,4 +1,4 @@
-import React, {
+import {
     ChangeEvent,
     useCallback,
     useEffect,
@@ -6,20 +6,14 @@ import React, {
     useRef,
 } from 'react'
 import {
-    FilePickerContextMimeTypeInfo,
-    FilePickerContextProps,
-    FilePickerFileInfo,
-    FilePickerInputProps,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import {
-    AnyObject,
-    MinMax,
-} from 'swayok-react-mdb-ui-kit/types/Common'
-import {
     FileAPI,
     FileAPISelectedFileInfo,
 } from '../../helpers/FileAPI/FileAPI'
 import {ToastService} from '../../services/ToastService'
+import {
+    AnyObject,
+    MinMax,
+} from '../../types'
 import {ErrorBoundary} from '../ErrorBoundary'
 import {ReorderableList} from '../ReorderableList/ReorderableList'
 import {
@@ -29,6 +23,12 @@ import {
     filePickerFallbackPreview,
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
+import {
+    FilePickerContextMimeTypeInfo,
+    FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerInputProps,
+} from './FilePickerTypes'
 
 // Добавляется к максимальной позиции при прикреплении нового файла.
 const positionDelta: number = 1

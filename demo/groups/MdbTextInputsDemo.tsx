@@ -1,14 +1,16 @@
-import {mdiAccount, mdiTranslate} from '@mdi/js'
+import {
+    mdiAccount, mdiTranslate,
+} from '@mdi/js'
 import React from 'react'
 import {Button} from '../../components/Button'
 import {Icon} from '../../components/Icon'
-import Input from '../../components/Input/Input'
-import InputAddonIcon from '../../components/Input/InputAddonIcon'
-import InputAddonText from '../../components/Input/InputAddonText'
-import InputGroup from '../../components/Input/InputGroup'
-import InputGroupText from '../../components/Input/InputGroupText'
-import InputInfo from '../../components/Input/InputInfo'
-import PasswordInput from '../../components/Input/PasswordInput'
+import {Input} from '../../components/Input/Input'
+import {InputAddonIcon} from '../../components/Input/InputAddonIcon'
+import {InputAddonText} from '../../components/Input/InputAddonText'
+import {InputGroup} from '../../components/Input/InputGroup'
+import {InputGroupText} from '../../components/Input/InputGroupText'
+import {InputInfo} from '../../components/Input/InputInfo'
+import {PasswordInput} from '../../components/Input/PasswordInput'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function MdbTextInputsDemo() {
@@ -84,7 +86,7 @@ export function MdbTextInputsDemo() {
                 large
             />
 
-            <SectionDivider label="Password"/>
+            <SectionDivider label="Password" />
 
             <PasswordInput
                 label="Password input normal"
@@ -101,7 +103,7 @@ export function MdbTextInputsDemo() {
                 withUnmaskToggler
             />
 
-            <SectionDivider label="Inputs with addon"/>
+            <SectionDivider label="Inputs with addon" />
 
             <Input
                 label="Input with addon"
@@ -111,10 +113,10 @@ export function MdbTextInputsDemo() {
             <Input
                 label="Input with addon"
             >
-                <InputAddonIcon path={mdiAccount}/>
+                <InputAddonIcon path={mdiAccount} />
             </Input>
 
-            <SectionDivider label="Grouped inputs"/>
+            <SectionDivider label="Grouped inputs" />
 
             <InputGroup>
                 <Input
@@ -174,7 +176,11 @@ export function MdbTextInputsDemo() {
                 <Button color="blue">Action</Button>
             </InputGroup>
             <InputGroup>
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
                 <Input
                     label="Input grouped small"
                     small
@@ -196,7 +202,11 @@ export function MdbTextInputsDemo() {
                 <InputGroupText small>Text</InputGroupText>
             </InputGroup>
             <InputGroup>
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
                 <Input
                     label="Input small"
                     small
@@ -209,7 +219,11 @@ export function MdbTextInputsDemo() {
                     label="Input small"
                     small
                 />
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
             </InputGroup>
             <InputGroup>
                 <InputGroupText small>Text</InputGroupText>
@@ -219,7 +233,11 @@ export function MdbTextInputsDemo() {
                     invalid
                     validationMessage="Validation error"
                 />
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
             </InputGroup>
             <InputGroup className="with-input-label mb-4">
                 <Input
@@ -264,7 +282,7 @@ export function MdbTextInputsDemo() {
                 />
             </InputGroup>
 
-            <SectionDivider label="Inline form"/>
+            <SectionDivider label="Inline form" />
 
             <div className="form-inline mb-4">
                 <Input
@@ -288,7 +306,11 @@ export function MdbTextInputsDemo() {
                     small
                     wrapperClass="m-0"
                 />
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
             </div>
 
             <div className="form-inline mb-4">
@@ -299,10 +321,14 @@ export function MdbTextInputsDemo() {
                     invalid
                     validationMessage="Validation error"
                 />
-                <Button color="blue" small>Action</Button>
+                <Button
+                    color="blue"
+                    small
+                >Action
+                </Button>
             </div>
 
-            <SectionDivider label="Input with info block"/>
+            <SectionDivider label="Input with info block" />
 
             <Input
                 label="Input with info"

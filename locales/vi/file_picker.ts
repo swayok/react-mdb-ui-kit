@@ -1,4 +1,4 @@
-import {FilePickerTranslations} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {FilePickerTranslations} from '../../components/FilesPicker/FilePickerTypes'
 
 const translations: FilePickerTranslations = {
     file_size: 'Kích thước',

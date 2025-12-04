@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import React, {CSSProperties} from 'react'
+import {CSSProperties} from 'react'
 import {
     FilePickerContextMimeTypePreviewRenderer,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+} from './FilePickerTypes'
 import {Tooltip} from '../Tooltip'
 import {FilePickerHelpers} from './FilePickerHelpers'
 

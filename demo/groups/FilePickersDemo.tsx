@@ -5,7 +5,7 @@ import {FilePickerPreviews} from '../../components/FilesPicker/FilePickerPreview
 import {FilePickerPreviewsWithoutInfo} from '../../components/FilesPicker/FilePickerPreviewsWithoutInfo'
 import {SectionDivider} from '../../components/SectionDivider'
 import file_picker from '../../locales/en/file_picker'
-import {FilePickerFileInfo} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
+import {FilePickerFileInfo} from '../../components/FilesPicker/FilePickerTypes'
 
 export function FilePickersDemo() {
 

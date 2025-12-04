@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import Input, {InputProps} from './Input'
-import {FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
-import {withStable} from '../../helpers/withStable'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import {DropdownItem} from '../Dropdown/DropdownItem'
+import {
+    KeyboardEvent,
+    FormEvent,
+    useEffect,
+    useState,
+} from 'react'
+import {ComboboxInputProps} from './InputTypes'
+import {FormSelectOptionsList} from '../../types'
 import {filterOptions} from '../../helpers/filterOptions'
-
-interface Props extends Omit<InputProps, 'onChange'> {
-    options?: FormSelectOptionsList<string | number | null>;
-    onChange: (value: string, event: React.FormEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>) => void;
-}
+import {Dropdown} from '../Dropdown/Dropdown'
+import {DropdownItem} from '../Dropdown/DropdownItem'
+import {DropdownMenu} from '../Dropdown/DropdownMenu'
+import {Input} from './Input'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.
-function ComboboxInput(props: Props) {
+export function ComboboxInput(props: ComboboxInputProps) {
 
     const {
         options = [],
@@ -27,13 +27,22 @@ function ComboboxInput(props: Props) {
     } = props
 
     // Отфильтрованные опции.
-    const [filteredOptions, setFilteredOptions] = useState<FormSelectOptionsList<string>>(
+    const [
+        filteredOptions,
+        setFilteredOptions,
+    ] = useState<FormSelectOptionsList<string>>(
         options as FormSelectOptionsList<string>
     )
     // Нужно ли показывать результаты быстрого поиска?
-    const [showDropdown, setShowDropdown] = useState<boolean>(false)
+    const [
+        showDropdown,
+        setShowDropdown,
+    ] = useState<boolean>(false)
     // Выбранный элемент в выпадающем меню быстрого поиска.
-    const [dropdownSelectedItem, setDropdownSelectedItem] = useState<number | null>(null)
+    const [
+        dropdownSelectedItem,
+        setDropdownSelectedItem,
+    ] = useState<number | null>(null)
 
     // Обновление списка опций.
     useEffect(() => {
@@ -46,7 +55,7 @@ function ComboboxInput(props: Props) {
     }, [options, props.value])
 
     // Обработка нажатия клавиши на клавиатуре.
-    const onSearchInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const onSearchInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (filteredOptions.length === 0) {
             return
         }
@@ -102,7 +111,7 @@ function ComboboxInput(props: Props) {
             active={active ?? (props.value ?? '').length > 0}
             onChange={event => onChange(
                 event.currentTarget.value,
-                event as React.FormEvent<HTMLInputElement>
+                event as FormEvent<HTMLInputElement>
             )}
             onBlur={event => {
                 // Тайм-аут требуется, чтобы успел отработать клик на кнопку в выпадающем меню.
@@ -146,7 +155,5 @@ function ComboboxInput(props: Props) {
     )
 }
 
-export default withStable(
-    ['onChange'],
-    ComboboxInput
-)
+/** @deprecated */
+export default ComboboxInput

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import React from 'react'
-import {ModalHeaderCloseButtonProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
+import {MouseEvent} from 'react'
+import {ModalHeaderCloseButtonProps} from './ModalTypes'
 import {Button} from '../Button'
 
 // Кнопка закрытия модального окна для ModalHeader.
@@ -23,7 +23,7 @@ export function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {
                 floating ? 'floating' : null
             )}
             color="none"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault()
                 onClose?.()
             }}

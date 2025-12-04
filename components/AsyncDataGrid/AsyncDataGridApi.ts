@@ -1,7 +1,7 @@
-import {AsyncDataGridRows} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {AsyncDataGridRows} from './AsyncDataGridTypes'
 import {ApiRequestService} from '../../services/ApiRequestService'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DataGridOrderingDirection} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {AnyObject} from '../../types'
+import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
 
 // Имя ключа, используемого для отправки фильтров в API.
 export const asyncDataGridApiFiltersKey = 'filters'
@@ -19,9 +19,9 @@ export const AsyncDataGridApi = {
         url: string,
         apiMethod: 'GET' | 'POST',
         config: {
-            limit?: number,
-            offset?: number,
-            order?: { column: string, direction: DataGridOrderingDirection }[]
+            limit?: number
+            offset?: number
+            order?: {column: string; direction: DataGridOrderingDirection;}[]
         },
         filters?: FiltersDataType,
         abortController?: AbortController
@@ -50,9 +50,9 @@ export const AsyncDataGridApi = {
     >(
         url: string,
         config: {
-            limit?: number,
-            offset?: number,
-            order?: { column: string, direction: DataGridOrderingDirection }[]
+            limit?: number
+            offset?: number
+            order?: {column: string; direction: DataGridOrderingDirection;}[]
         },
         filters?: FiltersDataType,
         abortController?: AbortController

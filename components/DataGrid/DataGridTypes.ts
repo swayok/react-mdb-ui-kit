@@ -10,7 +10,7 @@ import type {
     AnyObject,
     FormSelectOption,
     TableHighlightColors,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 
 // Строки локализации.
 export interface DataGridTranslations {

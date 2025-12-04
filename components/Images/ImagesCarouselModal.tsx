@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {ImagesCarouselModalProps} from 'swayok-react-mdb-ui-kit/components/Images/ImagesPreviewerTypes'
+import {useState} from 'react'
+import {ImagesCarouselModalProps} from './ImagesPreviewerTypes'
 import {FadeSwitch} from '../FadeSwitch'
 import {Modal} from '../Modal/Modal'
 import {ModalContent} from '../Modal/ModalContent'

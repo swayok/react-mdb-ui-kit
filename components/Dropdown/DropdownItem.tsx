@@ -1,15 +1,20 @@
-import React from 'react'
 import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
-import {Link, LinkProps} from 'react-router-dom'
+import {
+    Link,
+    LinkProps,
+} from 'react-router-dom'
 import {useDropdownContext} from './DropdownContext'
-import {AnyObject, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DropdownItemProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {
+    AnyObject,
+    ReactComponentOrTagName,
+} from '../../types'
+import {DropdownItemProps} from './DropdownTypes'
 
 // Элемент выпадающего меню.
 export function DropdownItem<
-    ComponentProps = LinkProps
+    ComponentProps = LinkProps,
 >(props: DropdownItemProps & Omit<ComponentProps, 'to' | keyof DropdownItemProps>) {
 
     const {
@@ -31,7 +36,8 @@ export function DropdownItem<
         disableAllItems,
     } = useDropdownContext()
 
-    const [dropdownItemProps, meta] = useDropdownItem({
+    const [dropdownItemProps,
+        meta] = useDropdownItem({
         key: eventKey,
         href,
         disabled,

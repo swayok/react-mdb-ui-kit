@@ -1,5 +1,4 @@
-import React from 'react'
-import {DataGridRowProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridRowProps} from './DataGridTypes'
 import clsx from 'clsx'
 
 // Обертка строки таблицы (<tr>).

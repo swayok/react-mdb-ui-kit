@@ -1,9 +1,10 @@
 import clsx from 'clsx'
-import React, {
+import {
+    MouseEvent,
     useCallback,
     useMemo,
 } from 'react'
-import {TabSheetTabButtonProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {TabSheetTabButtonProps} from './TabSheetTypes'
 import {Ripple} from '../Ripple/Ripple'
 import {RippleProps} from '../Ripple/RippleTypes'
 import {useTabSheetContext} from './TabSheetContext'
@@ -44,7 +45,7 @@ export function TabSheetTabButton<TabName extends string = string>(
     }, [ripple])
 
     const handleClick = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event: MouseEvent<HTMLButtonElement>) => {
             event.preventDefault()
             setCurrentTab(name)
             onClick?.(event)

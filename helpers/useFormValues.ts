@@ -1,5 +1,10 @@
-import React, {useCallback, useMemo, useState} from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    DependencyList,
+    useCallback,
+    useMemo,
+    useState,
+} from 'react'
+import {AnyObject} from '../types'
 import {useInputErrorSetter} from './useInputErrorSetter'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
@@ -7,7 +12,7 @@ type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 // Возвращаемые хуком значения и методы.
 export interface FormValuesHookReturn<
     FormData extends AnyObject,
-    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>,
 > {
     // Начальные значения полей ввода.
     initialFormValues: Readonly<FormData>
@@ -51,16 +56,18 @@ export interface FormValuesHookReturn<
 // Дает возможность управления данными формы и ошибками.
 export function useFormValues<
     FormData extends AnyObject,
-    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>,
 >(
     initialValues: FormData | (() => FormData),
-    deps?: React.DependencyList,
+    deps?: DependencyList,
     errorCallback?: (key: keyof FormErrors, message?: string | null) => void
 ): FormValuesHookReturn<FormData, FormErrors> {
 
     // Кеширование начальных значений.
     const initialValuesMemo: FormData = useMemo(
-        (): FormData => typeof initialValues === 'function' ? initialValues() : initialValues,
+        (): FormData => (typeof initialValues === 'function'
+            ? initialValues()
+            : initialValues),
         deps ?? []
     )
 

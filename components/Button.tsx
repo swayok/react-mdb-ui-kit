@@ -1,5 +1,10 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes} from 'react'
+import {
+    AllHTMLAttributes,
+    ComponentType,
+    Ref,
+    RefObject,
+} from 'react'
 import {
     Link,
     LinkProps,
@@ -8,12 +13,12 @@ import {
     AnyObject,
     ButtonColors,
     ReactComponentOrTagName,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../types'
 import {Ripple} from './Ripple/Ripple'
 import {RippleProps} from './Ripple/RippleTypes'
 
 export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
-    LinkComponent?: React.ComponentType
+    LinkComponent?: ComponentType
     hidden?: boolean
     visible?: boolean
     ripple?: ButtonColors | RippleProps
@@ -30,7 +35,7 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
     hasIcon?: boolean
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean
-    ref?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>
+    ref?: RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>
     // Состояние для компонента <Link>.
     state?: LinkProps['state']
 }
@@ -133,7 +138,7 @@ export function Button<
                 className={classes}
                 {...calculatedProps}
                 {...commonHtmlProps}
-                ref={ref as React.Ref<HTMLAllCollection>}
+                ref={ref as Ref<HTMLAllCollection>}
             >
                 {children}
             </Tag>
@@ -147,7 +152,7 @@ export function Button<
                 className={classes}
                 {...calculatedProps}
                 {...commonHtmlProps}
-                ref={ref as React.Ref<HTMLAllCollection>}
+                ref={ref as Ref<HTMLAllCollection>}
             >
                 {children}
             </Ripple>

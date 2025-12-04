@@ -1,15 +1,8 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
-
-export interface InputGroupTextProps extends ComponentPropsWithModifiableTag {
-    noBorder?: boolean
-    small?: boolean
-    large?: boolean
-}
+import {InputGroupTextProps} from './InputTypes'
 
 // Текст для вставки в <InputGroup>.
-function InputGroupText(props: InputGroupTextProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+export function InputGroupText(props: InputGroupTextProps) {
     const {
         className,
         children,
@@ -31,7 +24,6 @@ function InputGroupText(props: InputGroupTextProps, ref: React.ForwardedRef<HTML
     return (
         <Tag
             className={classes}
-            ref={ref}
             {...otherProps}
         >
             {children}
@@ -39,4 +31,5 @@ function InputGroupText(props: InputGroupTextProps, ref: React.ForwardedRef<HTML
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, InputGroupTextProps>(InputGroupText))
+/** @deprecated */
+export default InputGroupText

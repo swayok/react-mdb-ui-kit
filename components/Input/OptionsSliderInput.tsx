@@ -1,32 +1,13 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes, useId} from 'react'
-import {AnyObject, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
+import {useId} from 'react'
+import {OptionsSliderInputProps} from './InputTypes'
+import {AnyObject} from '../../types'
 import {findSelectedOption} from '../../helpers/findSelectedOption'
-import {withStable} from '../../helpers/withStable'
-
-export interface OptionsSliderInputProps<
-    OptionValueType = number,
-    OptionExtrasType = AnyObject
-> extends Omit<
-    AllHTMLAttributes<HTMLInputElement>, 'value' | 'label' | 'onChange' | 'type'
-> {
-    label?: string | React.ReactNode;
-    options: FormSelectOptionsList<OptionValueType, OptionExtrasType>;
-    value?: OptionValueType;
-    wrapperClass?: string;
-    labelClass?: string;
-    thumbClass?: string;
-    thumbValueClass?: string;
-    optionLabelClass?: string;
-    showValueInLabel?: boolean;
-    minMaxLabelPlacement?: 'inline' | 'below';
-    onChange: (value: OptionValueType, option: FormSelectOption<OptionValueType, OptionExtrasType>) => void;
-}
 
 // Слайдер по списку опций.
-function OptionsSliderInput<
+export function OptionsSliderInput<
     OptionValueType = number,
-    OptionExtrasType = AnyObject
+    OptionExtrasType = AnyObject,
 >(props: OptionsSliderInputProps<OptionValueType, OptionExtrasType>) {
 
     const defaultId: string = useId()
@@ -78,7 +59,7 @@ function OptionsSliderInput<
                     {label}
                     {showValueInLabel && (
                         <span className={clsx('selected-value ms-1', thumbValueClass)}>
-                            {options[selectedOptionIndex]?.label || ''}
+                            {options[selectedOptionIndex]?.label ?? ''}
                         </span>
                     )}
                 </label>
@@ -87,7 +68,8 @@ function OptionsSliderInput<
                 <div className={clsx(
                     'me-1 text-muted form-range-min',
                     optionLabelClass
-                )}>
+                )}
+                >
                     {options[min].label}
                 </div>
                 <div className="flex-1 position-relative d-flex flex-row align-items-center">
@@ -112,11 +94,11 @@ function OptionsSliderInput<
                                 thumbClass
                             )}
                             style={{
-                                left: `calc(${thumbPosition}% + (${thumbPosition <= 0 ? 8.5 : 7.5 - thumbPosition * 0.155}px))`,
+                                left: `calc(${thumbPosition}% + (${thumbPosition <= 0 ? 8.5 : 7.5 - (thumbPosition * 0.155)}px))`,
                             }}
                         >
                             <span className={clsx('thumb-value', thumbValueClass)}>
-                                {options[selectedOptionIndex]?.label || ''}
+                                {options[selectedOptionIndex]?.label ?? ''}
                             </span>
                         </span>
                     )}
@@ -124,7 +106,8 @@ function OptionsSliderInput<
                 <div className={clsx(
                     'ms-1 text-muted form-range-max',
                     optionLabelClass
-                )}>
+                )}
+                >
                     {options[max].label}
                 </div>
             </div>
@@ -132,7 +115,5 @@ function OptionsSliderInput<
     )
 }
 
-export default withStable<OptionsSliderInputProps>(
-    ['onChange'],
-    props => <OptionsSliderInput {...props}/>
-) as unknown as typeof OptionsSliderInput
+/** @deprecated */
+export default OptionsSliderInput

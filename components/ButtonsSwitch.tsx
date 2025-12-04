@@ -1,18 +1,28 @@
-import React, {AllHTMLAttributes} from 'react'
+import {
+    AllHTMLAttributes,
+    ReactNode,
+} from 'react'
 import clsx from 'clsx'
-import {ButtonColors, FormSelectOption, FormSelectOptionsList} from 'swayok-react-mdb-ui-kit/types/Common'
-import {Button, ButtonProps} from './Button'
+import {
+    ButtonColors,
+    FormSelectOption,
+    FormSelectOptionsList,
+} from '../types'
+import {
+    Button,
+    ButtonProps,
+} from './Button'
 
 export interface ButtonsSwitchProps<ValueType = string> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
     value?: ValueType | ValueType[]
-    disabled?: boolean,
-    options: FormSelectOptionsList<ValueType>,
-    buttonsProps?: Omit<ButtonProps, 'color' | 'onChange' | 'small' | 'large' | 'disabled'>,
-    small?: boolean,
-    large?: boolean,
-    inactiveColor?: ButtonColors,
-    activeColor?: ButtonColors,
-    onChange: (value: ValueType) => void,
+    disabled?: boolean
+    options: FormSelectOptionsList<ValueType>
+    buttonsProps?: Omit<ButtonProps, 'color' | 'onChange' | 'small' | 'large' | 'disabled'>
+    small?: boolean
+    large?: boolean
+    inactiveColor?: ButtonColors
+    activeColor?: ButtonColors
+    onChange: (value: ValueType) => void
 }
 
 // Выбор одной или нескольких опций из вариантов в виде кнопок.
@@ -33,7 +43,7 @@ export function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<Valu
     } = props
 
     // Кнопки.
-    const buttons: React.ReactNode[] = []
+    const buttons: ReactNode[] = []
     const values: ValueType[] = Array.isArray(value) ? value : [value as ValueType]
     for (let i = 0; i < options.length; i++) {
         const option: FormSelectOption<ValueType> = options[i]

@@ -1,5 +1,5 @@
-import React from 'react'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import {MouseEvent} from 'react'
+import {ComponentPropsWithModifiableTag} from '../../types'
 import {useFilePickerContext} from './FilePickerContext'
 
 type Props = ComponentPropsWithModifiableTag
@@ -22,7 +22,7 @@ export function FilePickerTrigger<TagProps = unknown>(
     return (
         <Tag
             {...otherProps}
-            onClick={(e: React.MouseEvent<HTMLElement>) => {
+            onClick={(e: MouseEvent<HTMLElement>) => {
                 e.preventDefault()
                 onClick?.(e)
                 pickFile()

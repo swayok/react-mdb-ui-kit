@@ -1,5 +1,6 @@
 import type {ReactNode} from 'react'
 import type {
+    FormSelectOptionsList,
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
@@ -10,7 +11,35 @@ import type {
     DropdownDropDirection,
     DropdownProps,
 } from '../../Dropdown/DropdownTypes'
-import type {InputProps} from '../Input'
+import type {InputProps} from '../InputTypes'
+
+// Свойства компонента SelectInputBasic.
+export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
+    children: ReactNode | ReactNode[]
+    // Режим отображения.
+    // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода,
+    // подходит для вставки в текст или в панель навигации.
+    // Если input: внешний вид соответствует полю ввода c {chevron} в конце блока.
+    mode?: 'inline' | 'input'
+    // Настройки выпадающего меню.
+    dropdownMenuClassName?: string
+    dropdownToggleClassName?: string
+    // Добавить white-space: nowrap ко всем опция выпадающего меню?
+    textNowrapOnOptions?: boolean
+    dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
+    drop?: DropdownDropDirection
+    // Максимальная высота выпадающего меню.
+    maxHeight?: number | null
+    // Минимальная ширина выпадающего меню.
+    minWidth?: null | number | string
+    // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.
+    // Если false: ширина выпадающего меню зависит от ширины опций.
+    dropdownFluidWidth?: boolean
+    // Нужно ли закрывать выпадающее меню при выборе опции.
+    closeDropdownOnSelect?: boolean
+    // Дополнительные элементы, которые нужно вставить после поля ввода.
+    addon?: ReactNode | ReactNode[]
+}
 
 // Свойства компонента SelectInput.
 export interface SelectInputProps<
@@ -75,32 +104,54 @@ export interface SelectInputProps<
     trackBehaviorAs?: string
 }
 
-// Свойства компонента SelectInputBasic.
-export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
-    children: ReactNode | ReactNode[]
-    // Режим отображения.
-    // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода,
-    // подходит для вставки в текст или в панель навигации.
-    // Если input: внешний вид соответствует полю ввода c {chevron} в конце блока.
-    mode?: 'inline' | 'input'
-    // Настройки выпадающего меню.
-    dropdownMenuClassName?: string
-    dropdownToggleClassName?: string
-    // Добавить white-space: nowrap ко всем опция выпадающего меню?
-    textNowrapOnOptions?: boolean
-    dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
-    drop?: DropdownDropDirection
-    // Максимальная высота выпадающего меню.
-    maxHeight?: number | null
-    // Минимальная ширина выпадающего меню.
-    minWidth?: null | number | string
-    // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.
-    // Если false: ширина выпадающего меню зависит от ширины опций.
-    dropdownFluidWidth?: boolean
-    // Нужно ли закрывать выпадающее меню при выборе опции.
-    closeDropdownOnSelect?: boolean
-    // Дополнительные элементы, которые нужно вставить после поля ввода.
-    addon?: ReactNode | ReactNode[]
+// Свойства компонента MultiSelectInput.
+export interface MultiSelectInputProps<
+    OptionValueType = string,
+    OptionExtrasType extends AnyObject = AnyObject,
+> extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
+    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
+    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
+    values?: OptionValueType[]
+    // Требуется ли выбрать хотя бы одно значение?
+    required?: boolean
+    // Конвертация выбранных опций для отображения в поле ввода.
+    // По умолчанию отображается список из FormSelectOption['label'].
+    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string
+    // Текст для отображения в случае, если ни одной опции не выбрано.
+    nothingSelectedPlaceholder?: string
+    // Отключить возможность выбрать указанные опции.
+    disableOptions?: OptionValueType[]
+    // Нужно ли перемещать выбранные опции в начало списка опций?
+    stickSelectedOptionsToTop?: boolean
+    // Отрисовка подписи для опции или группы опций в выпадающем меню.
+    renderOptionLabel?: (
+        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
+        isGroup: boolean
+    ) => string | ReactNode
+    // Todo: Вкл/Выкл поиска по опциям.
+    search?: boolean
+    // Пояснение для поля ввода ключевых слов поиска по опциям.
+    searchPlaceholder?: string
+    // Todo: Виртуализация списка опций для экономии памяти.
+    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
+    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
+    virtualizationConfig?: {
+        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
+        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
+        enabled: boolean | 'auto'
+        // Обязательное, если не указан maxHeight
+        // т.к. автоматически высота выпадающего меню не вычисляется.
+        // По умолчанию: 500.
+        // Если также указано значение SelectInputProps.maxHeight,
+        // то будет выбрано меньшее из значений:
+        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
+        dropdownHeight?: number
+    }
+}
+
+// Данные в option.extra для списка опций компонента MultiSelectInput.
+export interface MultiSelectInputOptionExtras extends AnyObject {
+    radios?: boolean
 }
 
 // Свойства компонента SelectInputOption.

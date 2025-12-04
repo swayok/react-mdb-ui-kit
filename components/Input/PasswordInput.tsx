@@ -1,17 +1,16 @@
-import {mdiEye, mdiEyeOff} from '@mdi/js'
+import {
+    mdiEye,
+    mdiEyeOff,
+} from '@mdi/js'
 import clsx from 'clsx'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {IconButton} from '../IconButton'
-import Input, {InputProps} from './Input'
-import InputAddonText from './InputAddonText'
-import {withStable} from '../../helpers/withStable'
-
-export interface PasswordInputProps extends Omit<InputProps, 'type'> {
-    withUnmaskToggler?: boolean
-}
+import {Input} from './Input'
+import {InputAddonText} from './InputAddonText'
+import {PasswordInputProps} from './InputTypes'
 
 // Поле ввода значения.
-function PasswordInput(props: PasswordInputProps) {
+export function PasswordInput(props: PasswordInputProps) {
     const {
         withUnmaskToggler = false,
         wrapperClass = 'mb-4',
@@ -46,7 +45,5 @@ function PasswordInput(props: PasswordInputProps) {
     )
 }
 
-export default withStable<PasswordInputProps>(
-    ['onChange', 'onFocus', 'onBlur', 'onKeyDown', 'onBeforeInput', 'onPaste', 'onClick'],
-    PasswordInput
-)
+/** @deprecated */
+export default PasswordInput

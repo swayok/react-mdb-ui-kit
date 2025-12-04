@@ -1,5 +1,4 @@
-import React from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../../../types'
 import {HtmlContent} from '../../HtmlContent'
 import {SelectInputOptionLabelProps} from './SelectInputTypes'
 

@@ -4,8 +4,8 @@ import {
     AsyncDataGridDefaultLayoutProps,
     AsyncDataGridFooterProps,
     AsyncDataGridTableProps,
-} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+} from './AsyncDataGridTypes'
+import {AnyObject} from '../../types'
 import {AsyncDataGridEvents} from './AsyncDataGridEvents'
 import {AsyncDataGridFooter} from './AsyncDataGridFooter'
 import {AsyncDataGridTable} from './AsyncDataGridTable'

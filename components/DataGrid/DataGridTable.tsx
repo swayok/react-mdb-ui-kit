@@ -1,9 +1,8 @@
-import React from 'react'
 import clsx from 'clsx'
 import {DataGridNoItems} from './DataGridNoItems'
 import {useDataGridContext} from './DataGridContext'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {DataGridTableProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {AnyObject} from '../../types'
+import {DataGridTableProps} from './DataGridTypes'
 import {FadeSwitch} from '../FadeSwitch'
 
 // Таблица с данными (<table>).

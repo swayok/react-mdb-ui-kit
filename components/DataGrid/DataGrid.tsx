@@ -1,4 +1,4 @@
-import React, {
+import {
     useCallback,
     useEffect,
     useState,
@@ -9,8 +9,8 @@ import {
     DataGridOrdering,
     DataGridOrderingDirection,
     DataGridProps,
-} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+} from './DataGridTypes'
+import {AnyObject} from '../../types'
 import {
     DataGridContext,
     dataGridDefaultLimit,

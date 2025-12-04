@@ -3,8 +3,8 @@ import {
     mdiClose,
 } from '@mdi/js'
 import clsx from 'clsx'
-import React from 'react'
-import {DataGridFiltersPanelButtonsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {ReactNode} from 'react'
+import {DataGridFiltersPanelButtonsProps} from './DataGridTypes'
 import {Button} from '../Button'
 import {IconButton} from '../IconButton'
 import {useDataGridContext} from './DataGridContext'
@@ -32,7 +32,7 @@ export function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsPr
         return null
     }
 
-    const buttons: Record<'submit' | 'reset', null | React.ReactNode> = {
+    const buttons: Record<'submit' | 'reset', null | ReactNode> = {
         submit: null,
         reset: null,
     }

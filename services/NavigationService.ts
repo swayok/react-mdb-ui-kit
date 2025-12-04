@@ -1,11 +1,16 @@
 import {useEffect} from 'react'
-import {Location, NavigateFunction, useLocation, useNavigate} from 'react-router-dom'
+import {
+    Location,
+    NavigateFunction,
+    useLocation,
+    useNavigate,
+} from 'react-router-dom'
 import {makeUrl} from '../helpers/makeUrl'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../types'
 
 type ExtractRouteParam<Path, NextPart> = Path extends `:${infer Param}`
     ? Record<Param, string> & NextPart
-    : NextPart;
+    : NextPart
 
 export type ExtractRouteParams<Path> = Path extends `${infer Segment}/${infer Rest}`
     ? ExtractRouteParam<Segment, ExtractRouteParams<Rest>>
@@ -14,11 +19,11 @@ export type ExtractRouteParams<Path> = Path extends `${infer Segment}/${infer Re
 
 export interface NavigationServiceConfig {
     // URL без локали.
-    rootUrl: string,
+    rootUrl: string
     // URL с локалью.
-    baseUrl: string,
-    baseApiUrl: string,
-    defaultPrivateUrl: string | ((permissions?: object) => string),
+    baseUrl: string
+    baseApiUrl: string
+    defaultPrivateUrl: string | ((permissions?: object) => string)
 }
 
 export type NavigationCallback = (url: Location) => void
@@ -149,7 +154,10 @@ export class NavigationService {
             console.error('Navigation function not provided (go back action)')
             return
         }
-        if (window.history.state && window.history.state.idx > 0 || !fallbackUrl) {
+        if (
+            (window.history.state && window.history.state.idx > 0)
+            || !fallbackUrl
+        ) {
             void this.navigator(-1)
         } else {
             this.replace(fallbackUrl)

@@ -1,11 +1,11 @@
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../../types'
 import ExifStatic from 'exif-js/exif.d'
 
 // Данные прикрепленного файла.
 export type FileAPISelectedFileInfo = File & {
-    isImage: boolean,
-    previewDataUrl?: string,
-};
+    isImage: boolean
+    previewDataUrl?: string
+}
 
 // EXIF информация из прикрепленного файла-картинки.
 type ExifInfo = AnyObject & {
@@ -14,12 +14,12 @@ type ExifInfo = AnyObject & {
 }
 
 // Информация о прикрепленном файле-картинке.
-export type FileAPIImageFileInfo = {
-    width: number,
-    height: number,
-    imageElement: HTMLImageElement,
-    exif: null | ExifInfo,
-};
+export interface FileAPIImageFileInfo {
+    width: number
+    height: number
+    imageElement: HTMLImageElement
+    exif: null | ExifInfo
+}
 
 let exif: typeof ExifStatic
 

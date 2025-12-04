@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import clsx from 'clsx'
-import {ImagesPreviewerProps} from 'swayok-react-mdb-ui-kit/components/Images/ImagesPreviewerTypes'
+import {ImagesPreviewerProps} from './ImagesPreviewerTypes'
 import {ImagesCarouselModal} from './ImagesCarouselModal'
 import {FadeSwitch} from '../FadeSwitch'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'

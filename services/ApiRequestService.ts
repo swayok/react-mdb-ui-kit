@@ -1,57 +1,63 @@
 import {ApiRequestDebugService} from './ApiRequestDebugService'
-import {AnyObject, ApiResponseData} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    AnyObject,
+    ApiResponseData,
+} from '../types'
 
 export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.
-    baseApiUrl: string,
+    baseApiUrl: string
     // Максимальное время ожидания ответа от API.
-    timeout: number,
+    timeout: number
     // Можно ли выводить логи запросов?
-    allowRequestsLogs: boolean,
+    allowRequestsLogs: boolean
     // Список запросов, которые не нужно выводить в консоль.
     // Формат: pathname без baseApiUrl, точно такие же, какие передаются в
     // ApiRequestService.get(pathname) / ApiRequestService.post(pathname)
-    notLoggableRequests?: string[],
+    notLoggableRequests?: string[]
     // Добавить опции или заголовки к вопросу.
-    beforeSend?: (headers: Headers, request: RequestInit) => void,
+    beforeSend?: (headers: Headers, request: RequestInit) => void
 }
 
 export interface ValidationErrorsResponseData extends ApiResponseData {
-    errors: AnyObject<string | string[]>;
+    errors: AnyObject<string | string[]>
 }
 
 export interface HtmlErrorResponseData extends ApiResponseData {
-    html: string;
+    html: string
 }
 
 export interface OtherErrorResponseData extends ApiResponseData {
-    error: DOMException | SyntaxError | unknown;
+    error: DOMException | SyntaxError | unknown
 }
 
 export interface ApiResponse<T extends ApiResponseData = ApiResponseData> {
-    url: string;
-    request: ApiRequestOptions;
-    response: Response;
-    success: true;
-    status: number;
-    data: T;
+    url: string
+    request: ApiRequestOptions
+    response: Response
+    success: true
+    status: number
+    data: T
 }
 
 export interface ApiError<
-    T extends ApiResponseData = ApiResponseData | ValidationErrorsResponseData | HtmlErrorResponseData | OtherErrorResponseData
+    T extends ApiResponseData = ApiResponseData
+        | ValidationErrorsResponseData
+        | HtmlErrorResponseData
+        | OtherErrorResponseData,
 > extends Error, Omit<ApiResponse, 'data' | 'response' | 'success'> {
-    response: Response | null;
+    response: Response | null
     errorType: 'abort' | 'timeout' | 'network_error' | 'http_error' | 'parse_error' | 'js_error'
-    success: false;
-    status: number;
-    data: T;
+    success: false
+    status: number
+    data: T
 }
 
 export interface ApiRequestOptions extends Omit<
     RequestInit, 'signal' | 'body' | 'method'
 > {
     // Длительность ожидания ответа от сервера.
-    timeout?: number | false;
+    timeout?: number | false
 }
 
 export type ApiRequestMethod = 'get' | 'post' | 'put' | 'delete'
@@ -492,7 +498,7 @@ export class ApiRequestService {
         } else if (value instanceof Blob) {
             // Файл.
             // Имя файла не существует в Blob, но может существовать в обертке над Blob.
-            formData.append(key, value, (value as unknown as { name: string }).name)
+            formData.append(key, value, (value as unknown as {name: string;}).name)
         } else {
             formData.append(key, String(value as string | number))
         }

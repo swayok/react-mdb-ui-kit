@@ -1,4 +1,4 @@
-import {HttpErrorsTranslations} from 'swayok-react-mdb-ui-kit/types/Translations'
+import {HttpErrorsTranslations} from '../../types'
 
 const translations: HttpErrorsTranslations = {
     go_back: 'Вернуться',

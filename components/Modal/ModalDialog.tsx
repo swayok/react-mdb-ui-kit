@@ -1,6 +1,5 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ModalDialogProps} from 'swayok-react-mdb-ui-kit/components/Modal/ModalTypes'
+import {ModalDialogProps} from './ModalTypes'
 
 // Контейнер модального окна.
 // Отвечает за размеры и расположение.

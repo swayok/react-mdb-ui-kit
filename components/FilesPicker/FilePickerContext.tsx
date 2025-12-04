@@ -13,8 +13,8 @@ import {
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerTranslations,
-} from 'swayok-react-mdb-ui-kit/components/FilesPicker/FilePickerTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+} from './FilePickerTypes'
+import {AnyObject} from '../../types'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {mdiFilePdfOutline} from '../../helpers/icons'
 import file_picker from '../../locales/en/file_picker'

@@ -1,6 +1,6 @@
 import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
-import {CKEditorInstance} from 'swayok-react-mdb-ui-kit/types/Wysiwyg'
+import {CKEditorInstance} from '../types'
 
 // Получить стандартные настройки для CKEditor.
 export function getDefaultWysiwygConfig(
@@ -41,7 +41,7 @@ export function getDefaultWysiwygConfig(
             },
             {
                 name: 'insert',
-                items: ['base64image', /*'Image',*/ /*'Table',*/ 'HorizontalRule', 'SpecialChar'],
+                items: ['base64image', /* 'Image',*/ /* 'Table',*/ 'HorizontalRule', 'SpecialChar'],
             },
         ],
         versionCheck: false,

@@ -1,13 +1,8 @@
-import React from 'react'
 import clsx from 'clsx'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
-
-export interface InputGroupProps extends ComponentPropsWithModifiableTag {
-    noWrap?: boolean
-}
+import {InputGroupProps} from './InputTypes'
 
 // Группа для объединения поля ввода и дополнений к нему (кнопки, подписи, иконки).
-function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllCollection>) {
+export function InputGroup(props: InputGroupProps) {
     const {
         className = 'mb-4',
         children,
@@ -25,7 +20,6 @@ function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllColle
     return (
         <Tag
             className={classes}
-            ref={ref}
             {...otherProps}
         >
             {children}
@@ -33,4 +27,5 @@ function InputGroup(props: InputGroupProps, ref: React.ForwardedRef<HTMLAllColle
     )
 }
 
-export default React.memo(React.forwardRef<HTMLAllCollection, InputGroupProps>(InputGroup))
+/** @deprecated */
+export default InputGroup

@@ -1,34 +1,12 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes} from 'react'
+import {ButtonsSwitchInputProps} from './InputTypes'
 import {ButtonsSwitch} from '../ButtonsSwitch'
-import {withStable} from '../../helpers/withStable'
-import {ButtonColors, FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import {ButtonProps} from '../Button'
-import InputValidationError from './InputValidationError'
-
-export interface ButtonsSwitchInputProps<ValueType = string> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
-    label?: string | React.ReactNode,
-    labelClass?: string,
-    labelStyle?: React.CSSProperties,
-    value?: ValueType | ValueType[]
-    disabled?: boolean,
-    options: FormSelectOption<ValueType>[],
-    buttonsProps?: Omit<ButtonProps, 'color' | 'onChange' | 'small' | 'large' | 'disabled'>,
-    small?: boolean,
-    large?: boolean,
-    inactiveColor?: ButtonColors,
-    activeColor?: ButtonColors,
-    onChange: (value: ValueType) => void,
-    // Настройки валидности введенных данных.
-    invalid?: boolean,
-    validationMessage?: string | null,
-    validationMessageClassName?: string,
-    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean,
-}
+import {InputValidationError} from './InputValidationError'
 
 // Выбор одной или нескольких опций из вариантов в виде кнопок.
-function ButtonsSwitchInput<ValueType = string>(props: ButtonsSwitchInputProps<ValueType>) {
+export function ButtonsSwitchInput<ValueType = string>(
+    props: ButtonsSwitchInputProps<ValueType>
+) {
 
     const {
         label,
@@ -116,7 +94,5 @@ function ButtonsSwitchInput<ValueType = string>(props: ButtonsSwitchInputProps<V
     )
 }
 
-export default withStable<ButtonsSwitchInputProps>(
-    ['onChange'],
-    ButtonsSwitchInput
-) as unknown as typeof ButtonsSwitchInput
+/** @deprecated */
+export default ButtonsSwitchInput

@@ -1,14 +1,18 @@
 import * as React from 'react'
 import {ReactNode} from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../types'
 
 export interface ReusableSvgRepositoryConfig {
     containerClassName?: string
 }
 
-export type ReusableSvgRepositorySetSvgElementFn = (element: SVGSVGElement | null) => void
+export type ReusableSvgRepositorySetSvgElementFn = (
+    element: SVGSVGElement | null
+) => void
 
-type ReusableSvgRepositoryRememberFallbackFn = (resolve: ReusableSvgRepositorySetSvgElementFn) => ReactNode | ReactNode[]
+type ReusableSvgRepositoryRememberFallbackFn = (
+    resolve: ReusableSvgRepositorySetSvgElementFn
+) => ReactNode | ReactNode[]
 
 interface CachedSvgElement {
     uid: string | number
@@ -40,12 +44,12 @@ export abstract class ReusableSvgRepository {
         name: string,
         uid: string | number,
         fallback: ReusableSvgRepositoryRememberFallbackFn,
-        reusableItemContainerClass?: string,
+        reusableItemContainerClass?: string
     ): ReactNode | ReactNode[] {
         const reusableId = this.getSvgId(name)
         if (name in this.svgElements) {
-            return this.svgElements[name]!.uid === uid
-                ? this.svgElements[name]!.children
+            return this.svgElements[name].uid === uid
+                ? this.svgElements[name].children
                 : <use href={'#' + reusableId} />
         }
         // Запоминаем сразу uid, чтобы в дальнейшем для этого uid отдавать результат.
@@ -57,7 +61,7 @@ export abstract class ReusableSvgRepository {
                     element,
                     reusableItemContainerClass
                 )
-            )
+            ),
         }
         return this.svgElements[name].children
     }
@@ -66,7 +70,7 @@ export abstract class ReusableSvgRepository {
     private static rememberSvgElement(
         name: string,
         svgElement: SVGSVGElement | null,
-        reusableItemContainerClass?: string,
+        reusableItemContainerClass?: string
     ): void {
         if (!svgElement) {
             return

@@ -8,12 +8,12 @@ import {
     AsyncDataGridContextProps,
     AsyncDataGridProps,
     AsyncDataGridRows,
-} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+} from './AsyncDataGridTypes'
 import {
     DataGridContextProps,
     DataGridOrderingDirection,
-} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../DataGrid/DataGridTypes'
+import {AnyObject} from '../../types'
 import {handleErrorResponse} from '../../helpers/ApiRequestErrorHelpers'
 import {toggleValueInArray} from '../../helpers/toggleValueInArray'
 import {ApiError} from '../../services/ApiRequestService'

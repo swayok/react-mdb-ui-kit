@@ -1,20 +1,10 @@
-import React from 'react'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
 import clsx from 'clsx'
+import {InputInfoProps} from './InputTypes'
 import {HtmlContent} from '../HtmlContent'
-
-interface PropsForHtml extends Omit<ComponentPropsWithModifiableTag, 'dangerouslySetInnerHTML'> {
-    html: string;
-    children?: never;
-}
-
-interface Props extends Omit<ComponentPropsWithModifiableTag, 'dangerouslySetInnerHTML'> {
-    html?: never;
-}
 
 // Разъяснение к полю ввода.
 // Пример использования: <Input.../><InputInfo>text</InputInfo>.
-function InputInfo(props: Props | PropsForHtml) {
+export function InputInfo(props: InputInfoProps) {
 
     const {
         tag: Tag = 'div',
@@ -49,4 +39,5 @@ function InputInfo(props: Props | PropsForHtml) {
     )
 }
 
-export default React.memo(InputInfo)
+/** @deprecated */
+export default InputInfo

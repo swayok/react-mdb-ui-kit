@@ -1,8 +1,8 @@
-import React from 'react'
-import Checkbox, {CheckboxProps} from './Checkbox'
+import {Checkbox} from './Checkbox'
+import {CheckboxProps} from './InputTypes'
 
 // Аналог <input type="radio"/>.
-export default function Radio(props: Omit<CheckboxProps, 'type'>) {
+export function Radio(props: Omit<CheckboxProps, 'type'>) {
     return (
         <Checkbox
             type="radio"
@@ -10,3 +10,6 @@ export default function Radio(props: Omit<CheckboxProps, 'type'>) {
         />
     )
 }
+
+/** @deprecated */
+export default Radio

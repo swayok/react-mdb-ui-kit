@@ -1,13 +1,12 @@
-import React from 'react'
 import {DataGridFooter} from './DataGridFooter'
 import {DataGridTable} from './DataGridTable'
 import clsx from 'clsx'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../../types'
 import {
     DataGridDefaultLayoutProps,
     DataGridFooterProps,
     DataGridTableProps,
-} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+} from './DataGridTypes'
 
 // Стандартная разметка таблицы с данными.
 // Сверху вниз:

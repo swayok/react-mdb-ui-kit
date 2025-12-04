@@ -2,7 +2,7 @@ import {
     AnyObject,
     FormSelectOption,
     NumericKeysObject,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../types'
 
 // Набор методов для конвертации различных типов объектов в опции для SelectInput.
 export abstract class OptionsHelper {

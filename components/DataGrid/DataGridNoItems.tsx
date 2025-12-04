@@ -1,6 +1,5 @@
-import React from 'react'
 import clsx from 'clsx'
-import {DataGridNoItemsProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridNoItemsProps} from './DataGridTypes'
 
 // Сообщение о том, что в таблице нет строк.
 export function DataGridNoItems(props: DataGridNoItemsProps) {

@@ -1,16 +1,19 @@
 import clsx from 'clsx'
-import React, {
+import {
     AllHTMLAttributes,
     useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react'
+import {
+    InputProps,
+    InputValidationErrorProps,
+} from './InputTypes'
+import {ReactComponentOrTagName} from '../../types'
 import {withStable} from '../../helpers/withStable'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
-import {TooltipProps} from '../Tooltip'
-import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
+import {InputValidationError} from './InputValidationError'
 
 const activeInputLabelSizeMultipliers = {
     normal: 0.9,
@@ -18,50 +21,8 @@ const activeInputLabelSizeMultipliers = {
     large: 0.9,
 }
 
-export interface InputProps extends AllHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-    textarea?: boolean
-    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
-    label?: string
-    labelId?: string
-    labelClass?: string
-    labelStyle?: React.CSSProperties
-    labelRef?: React.RefObject<HTMLLabelElement>
-    // Мультипликаторы размера label в активном состоянии.
-    activeInputLabelSizeMultiplier?: number | {
-        normal?: number
-        small?: number
-        large?: number
-    }
-    wrapperTag?: ReactComponentOrTagName
-    wrapperProps?: AllHTMLAttributes<HTMLElement> | TooltipProps
-    wrapperClass?: string
-    wrapperStyle?: React.CSSProperties
-    value?: string
-    disabled?: boolean
-    small?: boolean
-    large?: boolean
-    contrast?: boolean
-    // Настройки валидности введенных данных.
-    invalid?: boolean
-    validationMessage?: string | null
-    validationMessageClassName?: string
-    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean
-    // Указать true, если label должен быть как будто поле ввода в активном состоянии.
-    active?: boolean
-    // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
-    grouped?: boolean | 'first' | 'center' | 'last'
-    // Указать true, если поле ввода используется в качестве <DropdownToggle>.
-    isDropdownToggle?: boolean
-    // Регулярное выражение для фильтрации вводимых символов.
-    allowedChars?: RegExp
-    // Отслеживать поведение пользователя в этом поле ввода.
-    // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string
-}
-
 // Поле ввода значения.
-function Input(props: InputProps) {
+function _Input(props: InputProps) {
     const {
         className,
         small,
@@ -270,7 +231,7 @@ function Input(props: InputProps) {
         [trackBehaviorAs, onKeyDown]
     )
 
-    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> = {}
+    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
     let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {
@@ -279,13 +240,13 @@ function Input(props: InputProps) {
                 {props}
             )
         }
-        WrapperTag = InputValidationError;
-        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid ?? false;
-        (additionalWrapperProps as InputValidationErrorProps).error = validationMessage
+        WrapperTag = InputValidationError
+        additionalWrapperProps.invalid = invalid ?? false
+        additionalWrapperProps.error = validationMessage
         if (validationMessageClassName) {
-            (additionalWrapperProps as InputValidationErrorProps).errorClassName = validationMessageClassName
+            additionalWrapperProps.errorClassName = validationMessageClassName
         }
-        (additionalWrapperProps as InputValidationErrorProps).inputContainerClassName = wrapperClasses
+        additionalWrapperProps.inputContainerClassName = wrapperClasses
         additionalWrapperProps.className = clsx(
             grouped ? 'flex-1' : wrapperClass,
             typeof grouped === 'string' ? 'input-group-item ' + grouped : null
@@ -380,7 +341,10 @@ function Input(props: InputProps) {
     )
 }
 
-export default withStable<InputProps>(
+export const Input = withStable<InputProps>(
     ['onChange', 'onFocus', 'onBlur', 'onKeyDown', 'onBeforeInput', 'onPaste', 'onClick'],
-    Input
+    _Input
 )
+
+/** @deprecated */
+export default Input

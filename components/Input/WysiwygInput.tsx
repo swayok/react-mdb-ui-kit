@@ -1,14 +1,28 @@
-import clsx from 'clsx'
-import React, {AllHTMLAttributes, Suspense, useCallback, useEffect, useRef, useState} from 'react'
 import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
-import {CKEditorInstance} from 'swayok-react-mdb-ui-kit/types/Wysiwyg'
-import {AnyObject, ReactComponentOrTagName} from 'swayok-react-mdb-ui-kit/types/Common'
-import InputValidationError, {InputValidationErrorProps} from './InputValidationError'
-import {withStable} from '../../helpers/withStable'
+import clsx from 'clsx'
+import {
+    AllHTMLAttributes,
+    lazy,
+    Suspense,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
+import {withStable} from '../../helpers/withStable'
+import {
+    CKEditorInstance,
+    ReactComponentOrTagName,
+} from '../../types'
+import {
+    InputValidationErrorProps,
+    WysiwygInputProps,
+} from './InputTypes'
+import {InputValidationError} from './InputValidationError'
 
-const CKEditorReact = React.lazy(async () => ({
+const CKEditorReact = lazy(async () => ({
     default: (await import('ckeditor4-react')).CKEditor,
 }))
 
@@ -18,46 +32,8 @@ const activeInputLabelSizeMultipliers = {
     large: 0.9,
 }
 
-export interface WysiwygInputProps extends AllHTMLAttributes<HTMLTextAreaElement> {
-    // Контейнер CKEditor'а.
-    editorRef?: React.RefObject<HTMLDivElement>,
-    // Поле ввода внутри CKEditor'а.
-    textareaRef?: React.RefObject<HTMLTextAreaElement>,
-    config?: CKEditorConfig
-    label?: string,
-    labelId?: string,
-    labelClass?: string,
-    labelStyle?: React.CSSProperties,
-    labelRef?: React.RefObject<HTMLLabelElement>,
-    // Мультипликаторы размера label в активном состоянии.
-    activeInputLabelSizeMultiplier?: number | {
-        normal?: number,
-        small?: number,
-        large?: number
-    },
-    wrapperTag?: ReactComponentOrTagName,
-    wrapperProps?: AnyObject,
-    wrapperClass?: string,
-    wrapperStyle?: React.CSSProperties,
-    value?: string
-    disabled?: boolean,
-    small?: boolean,
-    large?: boolean,
-    contrast?: boolean,
-    // Настройки валидности введенных данных.
-    invalid?: boolean,
-    validationMessage?: string | null,
-    validationMessageClassName?: string,
-    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean,
-    // Указать true, если label должен быть как будто поле ввода в активном состоянии.
-    active?: boolean,
-    // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
-    grouped?: boolean | 'first' | 'center' | 'last',
-}
-
 // Редактор HTML.
-function WysiwygInput(props: WysiwygInputProps) {
+function _WysiwygInput(props: WysiwygInputProps) {
     const {
         config = getDefaultWysiwygConfig(),
         className,
@@ -108,7 +84,10 @@ function WysiwygInput(props: WysiwygInputProps) {
         setCkEditorInstance,
     ] = useState<CKEditorInstance | null>(null)
 
-    const wrapperIsValidationMessageContainer = !withoutValidationMessage && (invalid !== undefined || validationMessage)
+    const wrapperIsValidationMessageContainer = (
+        !withoutValidationMessage
+        && (invalid !== undefined || validationMessage)
+    )
 
     const wrapperClasses = clsx(
         'form-outline',
@@ -140,7 +119,7 @@ function WysiwygInput(props: WysiwygInputProps) {
                     if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
                         multiplier = activeInputLabelSizeMultiplier[size]!
                     }
-                    setLabelNotchWidth(labelReference.current.clientWidth * multiplier + 8)
+                    setLabelNotchWidth((labelReference.current.clientWidth * multiplier) + 8)
                 } else if (labelNotchWidth === 0) {
                     setLabelNotchWidth('80%')
                     setTimeout(updateLabelWidth, 500)
@@ -178,7 +157,7 @@ function WysiwygInput(props: WysiwygInputProps) {
         [onChange]
     )
 
-    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> = {}
+    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
     let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {
@@ -187,13 +166,13 @@ function WysiwygInput(props: WysiwygInputProps) {
                 {props}
             )
         }
-        WrapperTag = InputValidationError;
-        (additionalWrapperProps as InputValidationErrorProps).invalid = invalid ?? false;
-        (additionalWrapperProps as InputValidationErrorProps).error = validationMessage
+        WrapperTag = InputValidationError
+        additionalWrapperProps.invalid = invalid ?? false
+        additionalWrapperProps.error = validationMessage
         if (validationMessageClassName) {
-            (additionalWrapperProps as InputValidationErrorProps).errorClassName = validationMessageClassName
+            additionalWrapperProps.errorClassName = validationMessageClassName
         }
-        (additionalWrapperProps as InputValidationErrorProps).inputContainerClassName = wrapperClasses
+        additionalWrapperProps.inputContainerClassName = wrapperClasses
         additionalWrapperProps.className = clsx(grouped ? 'flex-1' : wrapperClass)
     } else {
         additionalWrapperProps.className = wrapperClasses
@@ -295,7 +274,10 @@ function WysiwygInput(props: WysiwygInputProps) {
     )
 }
 
-export default withStable<WysiwygInputProps>(
+export const WysiwygInput = withStable<WysiwygInputProps>(
     ['onChange', 'onFocus', 'onBlur', 'onKeyDown', 'onBeforeInput', 'onPaste', 'onClick'],
-    WysiwygInput
+    _WysiwygInput
 )
+
+/** @deprecated */
+export default WysiwygInput

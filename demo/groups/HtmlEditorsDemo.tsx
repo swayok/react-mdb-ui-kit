@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import WysiwygInput from '../../components/Input/WysiwygInput'
+import {WysiwygInput} from '../../components/Input/WysiwygInput'
 
 export function HtmlEditorsDemo() {
 
@@ -11,14 +11,14 @@ export function HtmlEditorsDemo() {
     return (
         <>
             <WysiwygInput
-                label={'HTML Editor'}
+                label="HTML Editor"
                 value={text}
                 onChange={e => {
                     setText(e.currentTarget.value)
                 }}
             />
             <WysiwygInput
-                label={'HTML Editor disabled'}
+                label="HTML Editor disabled"
                 value={text}
                 onChange={e => {
                     setText(e.currentTarget.value)
@@ -26,7 +26,7 @@ export function HtmlEditorsDemo() {
                 disabled
             />
             <WysiwygInput
-                label={'HTML Editor invalid'}
+                label="HTML Editor invalid"
                 value={text}
                 onChange={e => {
                     setText(e.currentTarget.value)

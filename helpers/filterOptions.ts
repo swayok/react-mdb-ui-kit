@@ -1,4 +1,4 @@
-import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
+import {FormSelectOption} from '../types'
 
 // Фильтрация опций по ключевым словам.
 export function filterOptions<T = unknown>(

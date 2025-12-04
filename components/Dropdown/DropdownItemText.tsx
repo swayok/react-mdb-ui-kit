@@ -1,6 +1,5 @@
-import React from 'react'
 import clsx from 'clsx'
-import {DropdownItemTextProps} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
+import {DropdownItemTextProps} from './DropdownTypes'
 
 export function DropdownItemText(props: DropdownItemTextProps) {
 

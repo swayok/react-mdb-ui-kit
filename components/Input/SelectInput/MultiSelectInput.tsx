@@ -6,75 +6,27 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import React, {HTMLProps} from 'react'
-import {DropdownItemProps} from '../Dropdown/DropdownTypes'
-import {withStable} from '../../helpers/withStable'
+import {DropdownHeader} from '../../Dropdown/DropdownHeader'
+import {DropdownItem} from '../../Dropdown/DropdownItem'
+import {DropdownItemProps} from '../../Dropdown/DropdownTypes'
+import {Icon} from '../../Icon'
+import {SelectInputBasic} from './SelectInputBasic'
+import {
+    MultiSelectInputOptionExtras,
+    MultiSelectInputProps,
+} from './SelectInputTypes'
+import {IconProps} from '../../MDIIcon'
 import {
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
-    FormSelectOptionOrGroup,
-    FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
-} from '../../types'
-import {DropdownHeader} from '../Dropdown/DropdownHeader'
-import {DropdownItem} from '../Dropdown/DropdownItem'
-import {Icon} from '../Icon'
-import {IconProps} from '../MDIIcon'
-import {SelectInputBasic} from './SelectInput/SelectInputBasic'
-import {SelectInputBasicProps} from './SelectInput/SelectInputTypes'
-
-export interface MultiSelectInputProps<
-    OptionValueType = string,
-    OptionExtrasType extends AnyObject = AnyObject,
-> extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
-    options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
-    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
-    values?: OptionValueType[]
-    // Требуется ли выбрать хотя бы одно значение?
-    required?: boolean
-    // Конвертация выбранных опций для отображения в поле ввода.
-    // По умолчанию отображается список из FormSelectOption['label'].
-    selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string
-    // Текст для отображения в случае, если ни одной опции не выбрано.
-    nothingSelectedPlaceholder?: string
-    // Отключить возможность выбрать указанные опции.
-    disableOptions?: OptionValueType[]
-    // Нужно ли перемещать выбранные опции в начало списка опций?
-    stickSelectedOptionsToTop?: boolean
-    // Отрисовка подписи для опции или группы опций в выпадающем меню.
-    renderOptionLabel?: (
-        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
-        isGroup: boolean
-    ) => string | React.ReactNode
-    // Todo: Вкл/Выкл поиска по опциям.
-    search?: boolean
-    // Пояснение для поля ввода ключевых слов поиска по опциям.
-    searchPlaceholder?: string
-    // Todo: Виртуализация списка опций для экономии памяти.
-    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
-    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
-    virtualizationConfig?: {
-        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
-        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
-        enabled: boolean | 'auto'
-        // Обязательное, если не указан SelectInputProps.maxHeight,
-        // т.к. автоматически высота выпадающего меню не вычисляется.
-        // По умолчанию: 500.
-        // Если также указано значение SelectInputProps.maxHeight,
-        // то будет выбрано меньшее из значений:
-        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
-        dropdownHeight?: number
-    }
-}
-
-export interface MultiSelectInputOptionExtras extends AnyObject {
-    radios?: boolean
-}
+} from '../../../types'
 
 // Выбор одного или нескольких из вариантов.
 // Список опций автоматически генерируется на основе props.options.
 // Todo: добавить поиск по опциям.
-class MultiSelectInput<
+export class MultiSelectInput<
     OptionValueType = string,
     OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras,
 > extends React.Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
@@ -368,7 +320,5 @@ class MultiSelectInput<
     }
 }
 
-export default withStable<MultiSelectInputProps>(
-    ['onChange'],
-    props => <MultiSelectInput {...props} />
-) as unknown as typeof MultiSelectInput
+/** @deprecated */
+export default MultiSelectInput

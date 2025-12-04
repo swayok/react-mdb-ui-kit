@@ -1,6 +1,5 @@
 import clsx from 'clsx'
-import React from 'react'
-import {DataGridFiltersPanelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridFiltersPanelProps} from './DataGridTypes'
 import {DataGridFiltersPanelButtons} from './DataGridFiltersPanelButtons'
 import {DataGridFiltersPanelLabel} from './DataGridFiltersPanelLabel'
 

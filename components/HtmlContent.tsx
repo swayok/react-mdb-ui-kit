@@ -1,12 +1,12 @@
 import React from 'react'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import {ComponentPropsWithModifiableTag} from '../types'
 import DOMPurify from 'dompurify'
 
 interface Props extends Omit<ComponentPropsWithModifiableTag, 'children' | 'dangerouslySetInnerHTML'> {
     // Результат выполнения {trans().path.to.html}.
-    html: string,
+    html: string
     // Если tag не указан, то когда true - оборачивается в <div>, а когда false - в <span>.
-    block?: boolean,
+    block?: boolean
 }
 
 /**

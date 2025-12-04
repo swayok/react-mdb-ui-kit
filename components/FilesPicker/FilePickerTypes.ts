@@ -6,12 +6,12 @@ import type {
 import type {
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
-} from 'swayok-react-mdb-ui-kit/helpers/FileAPI/FileAPI'
-import type {ApiRequestMethod} from 'swayok-react-mdb-ui-kit/services/ApiRequestService'
+} from '../../helpers/FileAPI/FileAPI'
+import type {ApiRequestMethod} from '../../services/ApiRequestService'
 import type {
     AnyObject,
     CssGridColumnsConfig,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 
 // Рендерер предпросмотра файла.
 export type FilePickerContextMimeTypePreviewRenderer = (

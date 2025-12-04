@@ -5,8 +5,8 @@ import {Dropdown} from '../../Dropdown/Dropdown'
 import {DropdownMenu} from '../../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../Dropdown/DropdownToggle'
 import {Icon} from '../../Icon'
-import Input from '../Input'
-import InputValidationError from '../InputValidationError'
+import {Input} from '../Input'
+import {InputValidationError} from '../InputValidationError'
 import {SelectInputBasicProps} from './SelectInputTypes'
 
 // Выбор одного из вариантов.

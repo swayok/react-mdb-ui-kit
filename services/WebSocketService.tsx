@@ -4,7 +4,7 @@ import React, {
     useEffect,
     useRef,
 } from 'react'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../types'
 
 interface WebSocketServiceAuthInfo {
     userId: number
@@ -31,12 +31,17 @@ export interface LaravelEchoConfigType {
 }
 
 export type WebsocketEventData = AnyObject
-export type WebsocketEventHandler<EventData extends WebsocketEventData = WebsocketEventData> = (eventData: EventData) => void
-export type WebsocketUnsubscribeHandler = () => void;
+
+export type WebsocketEventHandler<
+    EventData extends WebsocketEventData = WebsocketEventData,
+> = (eventData: EventData) => void
+
+export type WebsocketUnsubscribeHandler = () => void
 
 interface WebsocketSubscription {
     id: string
     event: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handler: WebsocketEventHandler<any>
     channels: string[] | null
 }
@@ -101,7 +106,7 @@ export abstract class WebSocketService {
             if (authToken) {
                 laravelEchoConfig.auth = {
                     headers: {
-                        'Authorization': `Bearer ${authToken}`,
+                        Authorization: `Bearer ${authToken}`,
                     },
                 }
             } // else: то авторизация не требуется или происходит через cookies.
@@ -184,7 +189,7 @@ export abstract class WebSocketService {
         this.subscriptions[id] = {
             id,
             event,
-            handler: eventData => handlerRef.current(eventData),
+            handler: (eventData: EventType) => handlerRef.current(eventData),
             channels: channels ?? null,
         }
         this.activateSubscription(this.subscriptions[id])
@@ -280,12 +285,12 @@ export abstract class WebSocketService {
 export default WebSocketService
 
 export interface WebSocketConnectorProps {
-    key: string,
-    userId: number,
-    authToken?: string | null,
+    key: string
+    userId: number
+    authToken?: string | null
     // Ключ: псевдоним канала, значение: полное название канала.
-    channels: AnyObject<string>,
-    children?: React.ReactNode | React.ReactNode[],
+    channels: AnyObject<string>
+    children?: React.ReactNode | React.ReactNode[]
 }
 
 // Компонент для контроля соединения с WebSocket каналом пользователя.
@@ -325,7 +330,7 @@ export interface WebSocketEventsHandlerProps<EventData extends WebsocketEventDat
 // Важно: Свойство channels должно быть стабильным, чтобы не запускать переподключения постоянно.
 // Плохо: <WebSocketEventsHandlerBase channels={['public']} />, ['public'] нужно вынести в константу вне компонента.
 export function WebSocketEventsHandler<
-    EventData extends WebsocketEventData = WebsocketEventData
+    EventData extends WebsocketEventData = WebsocketEventData,
 >(props: WebSocketEventsHandlerProps<EventData>): null {
 
     const {

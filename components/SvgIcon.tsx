@@ -1,17 +1,20 @@
-import * as React from 'react'
-import {AllHTMLAttributes, CSSProperties} from 'react'
+import {
+    AllHTMLAttributes,
+    CSSProperties,
+    RefObject,
+} from 'react'
 import clsx from 'clsx'
-import {SvgIconInfo} from 'swayok-react-mdb-ui-kit/types/Common'
+import {SvgIconInfo} from '../types'
 
 export interface SvgIconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
-    id?: string;
-    iconInfo: SvgIconInfo;
-    ref?: React.RefObject<SVGSVGElement>;
-    horizontal?: boolean;
-    vertical?: boolean;
-    rotate?: number;
-    style?: CSSProperties;
-    size?: number | null;
+    id?: string
+    iconInfo: SvgIconInfo
+    ref?: RefObject<SVGSVGElement>
+    horizontal?: boolean
+    vertical?: boolean
+    rotate?: number
+    style?: CSSProperties
+    size?: number | null
 }
 
 // Отображение не оптимизированной SVG иконки по примеру <MDIIcon>.

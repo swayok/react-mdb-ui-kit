@@ -2,8 +2,8 @@ import {
     useEffect,
     useMemo,
 } from 'react'
-import {TabSheetStateToUrlQueryHandlerProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {TabSheetStateToUrlQueryHandlerProps} from './TabSheetTypes'
+import {AnyObject} from '../../types'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {useTabSheetContext} from './TabSheetContext'
 

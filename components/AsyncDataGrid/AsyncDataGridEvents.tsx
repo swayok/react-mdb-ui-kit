@@ -3,8 +3,8 @@ import {
     useRef,
 } from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
-import {AsyncDataGridEventsProps} from 'swayok-react-mdb-ui-kit/components/AsyncDataGrid/AsyncDataGridTypes'
+import {AnyObject} from '../../types'
+import {AsyncDataGridEventsProps} from './AsyncDataGridTypes'
 
 // Выполняет заданные функции, когда происходят определенные события с таблицей.
 export function AsyncDataGridEvents<

@@ -1,29 +1,41 @@
-import React, {AnchorHTMLAttributes, CSSProperties} from 'react'
+import {
+    AnchorHTMLAttributes,
+    CSSProperties,
+    MouseEvent,
+} from 'react'
 import {Icon} from './Icon'
 import clsx from 'clsx'
-import {Tooltip, TooltipProps} from './Tooltip'
-import {AnyObject, ReactComponentOrTagName, SvgIconInfo, TextColors} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    Tooltip,
+    TooltipProps,
+} from './Tooltip'
+import {
+    AnyObject,
+    ReactComponentOrTagName,
+    SvgIconInfo,
+    TextColors,
+} from '../types'
 import {Link} from 'react-router-dom'
 import {withStable} from '../helpers/withStable'
 import {IconProps} from './MDIIcon'
 
 export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-    href: string,
-    external?: boolean,
-    color?: TextColors | 'link',
-    tooltip: string,
-    tooltipProps?: Pick<TooltipProps, 'placement' | 'options' | 'tooltipClassName' | 'tooltipStyle' | 'containsInteractiveElements'>,
-    iconProps?: Omit<IconProps, 'onClick' | 'path' | 'size' | 'className'>,
-    path: string | SvgIconInfo,
-    size?: number | null,
-    iconClassName?: string,
-    iconStyle?: CSSProperties,
-    disabled?: boolean,
-    visible?: boolean,
+    href: string
+    external?: boolean
+    color?: TextColors | 'link'
+    tooltip: string
+    tooltipProps?: Pick<TooltipProps, 'placement' | 'options' | 'tooltipClassName' | 'tooltipStyle' | 'containsInteractiveElements'>
+    iconProps?: Omit<IconProps, 'onClick' | 'path' | 'size' | 'className'>
+    path: string | SvgIconInfo
+    size?: number | null
+    iconClassName?: string
+    iconStyle?: CSSProperties
+    disabled?: boolean
+    visible?: boolean
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
     // Если false: использовать CSS класс 'with-icon-flex' для центрирования иконки по вертикали.
     // По умолчанию: false.
-    inline?: boolean,
+    inline?: boolean
 }
 
 // Ссылка в виде иконки без подписи
@@ -77,7 +89,7 @@ function _IconHref(props: IconHrefProps) {
             {...tooltipProps}
             disableClickHandler
             {...linkProps}
-            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
                 if (disabled) {
                     event.preventDefault()
                 }

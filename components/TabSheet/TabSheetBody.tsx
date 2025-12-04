@@ -1,5 +1,4 @@
-import React from 'react'
-import {TabSheetBodyProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {TabSheetBodyProps} from './TabSheetTypes'
 import clsx from 'clsx'
 
 // Контейнер с блоками содержимого вкладок (<TabSheetTabContent>).

@@ -1,18 +1,13 @@
-import React, {AllHTMLAttributes, CSSProperties, useEffect, useState} from 'react'
 import clsx from 'clsx'
-import {AnyObject, NumericKeysObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {
+    useEffect,
+    useState,
+} from 'react'
+import {InputValidationErrorProps} from './InputTypes'
 import {Collapse} from '../Collapse'
 
-export interface InputValidationErrorProps extends AllHTMLAttributes<HTMLDivElement> {
-    invalid: boolean,
-    error?: string | string[] | AnyObject<string> | NumericKeysObject<string> | null,
-    errorClassName?: string,
-    inputContainerClassName?: string,
-    inputContainerStyle?: CSSProperties,
-}
-
 // Отображение ошибки валидации для поля ввода.
-function InputValidationError(props: InputValidationErrorProps) {
+export function InputValidationError(props: InputValidationErrorProps) {
 
     const {
         className,
@@ -25,8 +20,14 @@ function InputValidationError(props: InputValidationErrorProps) {
         ...otherProps
     } = props
 
-    const [errorMessage, setErrorMessage] = useState<string | null>(normalizeErrorMessage(error))
-    const [isInvalid, setIsInvalid] = useState<boolean>(!!(invalid && errorMessage))
+    const [
+        errorMessage,
+        setErrorMessage,
+    ] = useState<string | null>(normalizeErrorMessage(error))
+    const [
+        isInvalid,
+        setIsInvalid,
+    ] = useState<boolean>(!!(invalid && errorMessage))
 
     useEffect(() => {
         const normalizedError = normalizeErrorMessage(error)
@@ -60,7 +61,10 @@ function InputValidationError(props: InputValidationErrorProps) {
             >
                 {children}
             </div>
-            <Collapse show={isInvalid} className={'form-validation-error-container'}>
+            <Collapse
+                show={isInvalid}
+                className="form-validation-error-container"
+            >
                 <div className={clsx('invalid-feedback', errorClassName)}>
                     {errorMessage}
                 </div>
@@ -83,4 +87,5 @@ function normalizeErrorMessage(error: InputValidationErrorProps['error']): strin
     return errors.length === 0 ? null : errors.join('; ')
 }
 
-export default React.memo(InputValidationError)
+/** @deprecated */
+export default InputValidationError

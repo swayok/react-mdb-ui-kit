@@ -1,11 +1,10 @@
-import React from 'react'
-import DateInput from '../../components/Input/DateInput'
+import {DateInput} from '../../components/Input/DateInput'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function DateInputsDemo() {
 
     const today = new Date()
-    const range: [Date, Date] = [new Date(),  new Date()]
+    const range: [Date, Date] = [new Date(), new Date()]
     range[0].setDate(1)
     range[1].setDate(12)
 
@@ -52,7 +51,7 @@ export function DateInputsDemo() {
                 validationMessage="This field is required"
             />
 
-            <SectionDivider label="Small"/>
+            <SectionDivider label="Small" />
 
             <DateInput
                 label="Date input small"

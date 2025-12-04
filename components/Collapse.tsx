@@ -6,7 +6,7 @@ import {
     useMemo,
     useRef,
 } from 'react'
-import {ComponentPropsWithModifiableTag} from 'swayok-react-mdb-ui-kit/types/Common'
+import {ComponentPropsWithModifiableTag} from '../types'
 import {getCssTransitionDuration} from '../helpers/getCssTransitionDuration'
 
 export interface CollapseProps extends Omit<ComponentPropsWithModifiableTag, 'onTransitionEnd'> {
@@ -56,7 +56,7 @@ export function Collapse(props: CollapseProps) {
     const onTransitionEnd = useEffectEvent(
         (opened: boolean, ref: null | HTMLElement) => {
             propsOnTransitionEnd?.(opened, ref)
-        },
+        }
     )
 
     // Подписываемся на отслеживание размеров содержимого.
@@ -169,7 +169,7 @@ export function Collapse(props: CollapseProps) {
         horizontal ? 'horizontal' : 'vertical',
         navbar ? 'navbar-collapse' : null,
         alwaysMounted ? 'd-block' : null,
-        className,
+        className
     ), [className, horizontal, navbar, alwaysMounted])
 
     return (

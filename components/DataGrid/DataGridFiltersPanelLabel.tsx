@@ -1,6 +1,5 @@
-import React from 'react'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFiltersPanelLabelProps} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridTypes'
+import {DataGridFiltersPanelLabelProps} from './DataGridTypes'
 
 // Заголовок панели фильтрации.
 export function DataGridFiltersPanelLabel(props: DataGridFiltersPanelLabelProps) {

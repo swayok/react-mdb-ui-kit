@@ -3,16 +3,17 @@ import {
     mdiEarth,
 } from '@mdi/js'
 import clsx from 'clsx'
-import React from 'react'
-import {DropdownPlacement} from 'swayok-react-mdb-ui-kit/components/Dropdown/DropdownTypes'
-import {FormSelectOption} from 'swayok-react-mdb-ui-kit/types/Common'
-import {BasicRegionConfig} from 'swayok-react-mdb-ui-kit/types/Locale'
 import {LanguagesManager} from '../../helpers/LanguagesManager'
 import {RegionsManager} from '../../helpers/RegionsManager'
+import {
+    BasicRegionConfig,
+    FormSelectOption,
+} from '../../types'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
+import {DropdownPlacement} from '../Dropdown/DropdownTypes'
 import {Icon} from '../Icon'
 import {IconProps} from '../MDIIcon'
 

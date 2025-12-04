@@ -1,17 +1,9 @@
-import React, {AllHTMLAttributes, useId} from 'react'
-import {Button, ButtonProps} from '../Button'
-
-interface Props extends
-    Omit<ButtonProps, 'onChange' | 'onClick' | 'labelFor' | 'id' | 'ref'>,
-    Pick<AllHTMLAttributes<HTMLInputElement>, 'accept' | 'onChange' | 'id' | 'children'>
-{
-    ref?: React.Ref<HTMLInputElement>
-    buttonRef?: React.RefObject<HTMLLabelElement>
-    inputProps?: Omit<AllHTMLAttributes<HTMLInputElement>, 'type' | 'className' | 'id' | 'ref'>
-}
+import {useId} from 'react'
+import {FileInputAsButtonProps} from './InputTypes'
+import {Button} from '../Button'
 
 // Поле выбора файла в виде кнопки.
-export function FileInputAsButton(props: Props) {
+export function FileInputAsButton(props: FileInputAsButtonProps) {
 
     const fallbackId = useId()
 

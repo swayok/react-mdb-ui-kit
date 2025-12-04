@@ -1,5 +1,5 @@
 import {DateTimeService} from './DateTimeService'
-import {AnyObject} from 'swayok-react-mdb-ui-kit/types/Common'
+import {AnyObject} from '../types'
 
 // Сервис кэширования данных в window.localStorage или this.sessionStorage.
 export class CacheServiceClass<NameT extends string = string> {
@@ -117,9 +117,12 @@ export class CacheServiceClass<NameT extends string = string> {
      * Получить актуальные данные из кеша, загрузив их через loader(), если потребуется.
      * @param {string} name Имя ключа в кэше.
      * @param {function} loader Загрузчик данных для кеширования.
-     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута. По умолчанию: this.defaultLifetimeMinutes.
-     * @param {string} regionOrLang Регион или язык, для которого актуален кэш. При несовпадении, кеш сбрасывается.
-     * @param {boolean} useSessionStorage Если true, то нужно сохранить данные в this.sessionStorage, а не в window.localStorage.
+     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута.
+     * По умолчанию: this.defaultLifetimeMinutes.
+     * @param {string} regionOrLang Регион или язык, для которого актуален кэш.
+     * При несовпадении, кеш сбрасывается.
+     * @param {boolean} useSessionStorage Если true, то нужно сохранить данные в this.sessionStorage,
+     * а не в window.localStorage.
      * @param {boolean} refresh Если true, то нужно обновить данные в кеше (вызвать loader() и сохранить результат).
      * @returns {Promise<Type>} Актуальные данные из кеша.
      */
@@ -145,7 +148,8 @@ export class CacheServiceClass<NameT extends string = string> {
      *
      * @param {string} name Имя ключа в кэше.
      * @param {function} loader Загрузчик данных для кеширования.
-     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута. По умолчанию: this.defaultLifetimeMinutes.
+     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута.
+     * По умолчанию: this.defaultLifetimeMinutes.
      * @param {string} regionOrLang Регион или язык, для которого актуален кэш. При несовпадении, кеш сбрасывается.
      * @param {boolean} refresh Если true, то нужно обновить данные в кеше (вызвать loader() и сохранить результат).
      * @returns {Promise<Type>} Актуальные данные из кеша.
@@ -171,7 +175,8 @@ export class CacheServiceClass<NameT extends string = string> {
      *
      * @param {string} name Имя ключа в кэше.
      * @param {function} loader Загрузчик данных для кеширования.
-     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута. По умолчанию: this.defaultLifetimeMinutes.
+     * @param {number} lifetimeMinutes Срок жизни кеша в минутах. Минимум: 1 минута.
+     * По умолчанию: this.defaultLifetimeMinutes.
      * @param {string} regionOrLang Регион или язык, для которого актуален кэш. При несовпадении, кеш сбрасывается.
      * @param {boolean} refresh Если true, то нужно обновить данные в кеше (вызвать loader() и сохранить результат).
      * @returns {Promise<Type>} Актуальные данные из кеша.
@@ -219,12 +224,12 @@ export class CacheServiceClass<NameT extends string = string> {
 
     // Получить идентификатор кеша.
     private getCacheUid(regionOrLang: string) {
-        return regionOrLang + '_' + this.appVersion();
+        return regionOrLang + '_' + this.appVersion()
     }
 }
 
 interface CacheItem<Type> {
-    uid: string;
-    data: Type;
-    exp: number;
+    uid: string
+    data: Type
+    exp: number
 }

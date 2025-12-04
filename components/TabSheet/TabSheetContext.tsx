@@ -1,8 +1,12 @@
-import React, {useContext} from 'react'
-import {TabSheetContextProps} from 'swayok-react-mdb-ui-kit/components/TabSheet/TabSheetTypes'
+import {
+    Context,
+    createContext,
+    useContext,
+} from 'react'
+import {TabSheetContextProps} from './TabSheetTypes'
 
 // Контекст для компонентов Tabsheet.
-const TabSheetContextInstance = React.createContext<
+const TabSheetContextInstance = createContext<
     TabSheetContextProps
 >({
     defaultTab: '',
@@ -13,8 +17,8 @@ const TabSheetContextInstance = React.createContext<
 // Правильная типизация контекста.
 export function TabSheetContext<
     TabName extends string = string,
->(): React.Context<TabSheetContextProps<TabName>> {
-    return TabSheetContextInstance as unknown as React.Context<TabSheetContextProps<TabName>>
+>(): Context<TabSheetContextProps<TabName>> {
+    return TabSheetContextInstance as unknown as Context<TabSheetContextProps<TabName>>
 }
 
 // Хук для получения контекста.

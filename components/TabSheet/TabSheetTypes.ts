@@ -4,11 +4,11 @@ import type {
     MouseEvent,
     ReactNode,
 } from 'react'
-import type {RippleProps} from 'swayok-react-mdb-ui-kit/components/Ripple/RippleTypes'
+import type {RippleProps} from '../Ripple/RippleTypes'
 import type {
     ButtonColors,
     ComponentPropsWithModifiableTag,
-} from 'swayok-react-mdb-ui-kit/types/Common'
+} from '../../types'
 
 // Свойства контекста.
 export interface TabSheetContextProps<TabName extends string = string> {
