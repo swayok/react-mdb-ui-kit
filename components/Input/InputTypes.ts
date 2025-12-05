@@ -12,7 +12,6 @@ import type {
     Ref,
     RefObject,
 } from 'react'
-import type {CalendarProps} from 'react-calendar/dist/Calendar'
 import type {IconProps} from '../MDIIcon'
 import type {
     AnyObject,
@@ -33,6 +32,7 @@ import type {
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
 import type {TooltipProps} from '../Tooltip'
+import type {CalendarProps} from 'react-calendar'
 
 // Свойства компонента ButtonsSwitchInput.
 export interface ButtonsSwitchInputProps<

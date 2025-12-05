@@ -9,6 +9,7 @@
         "lib": [
             "es2022",
             "dom",
+            "webworker",
         ], /* Specify library files to be included in the compilation. */
         "allowJs": false,         /* Allow javascript files to be compiled. */
         //"checkJs": true,                             /* Report errors in .js files. */
