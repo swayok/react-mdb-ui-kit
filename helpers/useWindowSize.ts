@@ -1,13 +1,17 @@
-import {useEffect, useState} from 'react'
+import {
+    useEffect,
+    useState,
+} from 'react'
 
-export type WindowSize = {
-    width?: number,
-    height?: number,
+export interface WindowSize {
+    width?: number
+    height?: number
 }
 
 // Хук для получения размеров окна
 export function useWindowSize(): WindowSize {
-    const [windowSize, setWindowSize] = useState<WindowSize>({
+    const [windowSize,
+        setWindowSize] = useState<WindowSize>({
         width: undefined,
         height: undefined,
     })

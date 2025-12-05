@@ -1,4 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react'
 import {ApiError} from '../services/ApiRequestService'
 
 // Настройки хука.
@@ -37,11 +43,11 @@ export interface UseApiGetRequestWithPaginationHookReturn<RecordType> {
     // Список элементов списка.
     records: RecordType[]
     // Задание списка элементов
-    setRecords: React.Dispatch<React.SetStateAction<RecordType[]>>
+    setRecords: Dispatch<SetStateAction<RecordType[]>>
     // Общее количество элементов в списке.
     totalCount?: number
     // Задание общего количества элементов в списке.
-    setTotalCount: React.Dispatch<React.SetStateAction<number | undefined>>
+    setTotalCount: Dispatch<SetStateAction<number | undefined>>
     // Количество элементов на страницу списка.
     limit: number
     // Текущая страница списка.
@@ -51,11 +57,11 @@ export interface UseApiGetRequestWithPaginationHookReturn<RecordType> {
     // Последняя страница?
     isLastPage: boolean
     // Задание количества элементов на страницу списка.
-    setLimit: React.Dispatch<React.SetStateAction<number>>
+    setLimit: Dispatch<SetStateAction<number>>
     // Смещение списка.
     offset: number
     // Задание смещения списка.
-    setOffset: React.Dispatch<React.SetStateAction<number>>
+    setOffset: Dispatch<SetStateAction<number>>
     // Состояние отправки запроса в API.
     // Устанавливается в true при каждой отправке запроса в API.
     isLoading: boolean
@@ -65,7 +71,7 @@ export interface UseApiGetRequestWithPaginationHookReturn<RecordType> {
     // Ошибка при загрузке данных.
     error: ApiError | null
     // Задание ошибка загрузки данных.
-    setError: React.Dispatch<React.SetStateAction<ApiError | null>>
+    setError: Dispatch<SetStateAction<ApiError | null>>
     // Загрузить список для указанной страницы.
     // Если silent === true, то loading не переводится в true.
     // Список элементов будет перезаписан новым спискам, полученным из API.
@@ -191,7 +197,7 @@ export function useApiGetRequestWithPagination<RecordType>(
                         case 'append':
                             return [...records, ...data.records]
                         case 'prepend':
-                            return [...data.records,...records]
+                            return [...data.records, ...records]
                         default:
                             return data.records
                     }

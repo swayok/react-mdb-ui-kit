@@ -1,6 +1,15 @@
-import {useEffect, useMemo} from 'react'
-import {CancelSubscriptionFn, CustomEventEmitter} from './CustomEventEmitter'
-import {useSyncTaskQueue, SyncQueueTask} from './useSyncTaskQueue'
+import {
+    useEffect,
+    useMemo,
+} from 'react'
+import {
+    CancelSubscriptionFn,
+    CustomEventEmitter,
+} from './CustomEventEmitter'
+import {
+    useSyncTaskQueue,
+    SyncQueueTask,
+} from './useSyncTaskQueue'
 
 // Функции и данные, возвращаемые из хука useCustomEventEmitterWithSyncQueue()
 export interface CustomEventEmitterWithSyncQueueHookReturn<Payload = undefined> {
@@ -18,8 +27,7 @@ export interface CustomEventEmitterWithSyncQueueHookParams {
     onQueueFinished?: () => void
 }
 
-const defaultParams: CustomEventEmitterWithSyncQueueHookParams = {
-}
+const defaultParams: CustomEventEmitterWithSyncQueueHookParams = {}
 
 /**
  * Получить CustomEventEmitter для компонента.
@@ -33,31 +41,29 @@ export function useCustomEventEmitterWithSyncQueue<Payload = undefined>(
 ): CustomEventEmitterWithSyncQueueHookReturn<Payload> {
 
     const {
-        onQueueFinished
+        onQueueFinished,
     } = params
 
     const emitter = useMemo(() => new CustomEventEmitter<Payload>(), [])
     const queue = useSyncTaskQueue({
         shouldProcess: true,
-        onFinished: onQueueFinished
+        onFinished: onQueueFinished,
     })
 
     // Сброс всех подписок при демонтаже компонента.
     useEffect(() => () => {
         emitter.reset()
-        queue.tasks
+        queue.reset()
     }, [])
 
     const api: Omit<CustomEventEmitterWithSyncQueueHookReturn<Payload>, 'isProcessing' | 'tasks'> = useMemo(
-        () => {
-            return {
-                emit: emitter.emit,
-                unsubscribeAll: emitter.reset,
-                subscribe: (task, once = false) => emitter.subscribe(() => queue.addTask(task), once),
-                once: task => emitter.once(() => queue.addTask(task)),
-                resetQueue: queue.reset,
-            }
-        },
+        () => ({
+            emit: emitter.emit,
+            unsubscribeAll: emitter.reset,
+            subscribe: (task, once = false) => emitter.subscribe(() => queue.addTask(task), once),
+            once: task => emitter.once(() => queue.addTask(task)),
+            resetQueue: queue.reset,
+        }),
         []
     )
 

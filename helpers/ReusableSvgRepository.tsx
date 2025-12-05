@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {ReactNode} from 'react'
 import {AnyObject} from '../types'
 

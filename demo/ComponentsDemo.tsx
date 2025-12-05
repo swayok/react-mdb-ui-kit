@@ -1,4 +1,3 @@
-import React from 'react'
 import {TabSheet} from '../components/TabSheet/TabSheet'
 import {TabSheetBody} from '../components/TabSheet/TabSheetBody'
 import {TabSheetHeader} from '../components/TabSheet/TabSheetHeader'

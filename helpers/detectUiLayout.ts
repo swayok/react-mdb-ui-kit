@@ -50,4 +50,5 @@ export function detectUiLayout(): UILayout {
     return layout
 }
 
+/** @deprecated */
 export default detectUiLayout

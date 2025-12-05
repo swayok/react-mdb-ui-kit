@@ -1,4 +1,7 @@
-import React, {AllHTMLAttributes} from 'react'
+import {
+    AllHTMLAttributes,
+    ReactNode,
+} from 'react'
 import clsx from 'clsx'
 
 interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
@@ -10,7 +13,7 @@ interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
     flex?: boolean | 'with-icon'
     // true: без отступа после элемента. При inline=true, всегда noMargin=true.
     noMargin?: boolean
-    children?: React.ReactNode | string
+    children?: ReactNode | string
     labelClassName?: string
     valueClassName?: string
     // Обернуть содержимое в круглые скобки.

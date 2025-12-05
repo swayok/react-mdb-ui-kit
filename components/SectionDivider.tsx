@@ -1,14 +1,17 @@
-import React from 'react'
 import clsx from 'clsx'
+import {
+    CSSProperties,
+    ReactNode,
+} from 'react'
 
 export interface SectionDividerProps {
-    label?: string | null | React.ReactNode
+    label?: string | null | ReactNode
     labelClassName?: string
     // Color of the divider line.
     color?: 'default' | 'darker' | 'lighter'
     margins?: 'normal' | 'large' | 'small' | 'none' | string
     className?: string
-    style?: React.CSSProperties
+    style?: CSSProperties
 }
 
 // Разделитель с подписью.
@@ -35,7 +38,7 @@ export function SectionDivider(props: SectionDividerProps) {
     const noLabel: boolean = (
         !props.label
         || (
-            typeof props.label ==='string'
+            typeof props.label === 'string'
             && props.label.trim().length === 0
         )
     )

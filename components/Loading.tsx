@@ -1,16 +1,22 @@
-import React, {CSSProperties, useEffect, useState} from 'react'
+import {
+    CSSProperties,
+    ReactNode,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {CSSTransition} from 'react-transition-group'
 import clsx from 'clsx'
 
 export interface LoadingProps {
-    loading: boolean,
-    overlayColor?: 'solid-default' | 'solid-white' | 'semitransparent-default' | 'semitransparent-white',
-    overlayFillsParent?: boolean,
-    className?: string,
-    indicatorClassName?: string,
-    floating?: boolean,
-    style?: CSSProperties,
-    label?: string | React.ReactNode,
+    loading: boolean
+    overlayColor?: 'solid-default' | 'solid-white' | 'semitransparent-default' | 'semitransparent-white'
+    overlayFillsParent?: boolean
+    className?: string
+    indicatorClassName?: string
+    floating?: boolean
+    style?: CSSProperties
+    label?: string | ReactNode
     // Отложить отображение анимации на указанное кол-во миллисекунд.
     showDelay?: number | null
 }
@@ -31,8 +37,8 @@ export function Loading(props: LoadingProps) {
         setSpinnerTimeoutId,
     ] = useState<number | null>(null)
 
-    const outerTransitionRef = React.useRef<HTMLDivElement>(null)
-    const innerTransitionRef = React.useRef<HTMLDivElement>(null)
+    const outerTransitionRef = useRef<HTMLDivElement>(null)
+    const innerTransitionRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setShowOverlay(props.loading)
@@ -95,7 +101,7 @@ export function Loading(props: LoadingProps) {
                         )}
                     >
                         <div className="loading-indicator-spinner-container">
-                            <div className="loading-indicator-spinner"/>
+                            <div className="loading-indicator-spinner" />
                         </div>
                         {props.label && (
                             <div className="loading-indicator-label">

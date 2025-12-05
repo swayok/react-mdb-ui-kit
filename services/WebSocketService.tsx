@@ -1,5 +1,6 @@
 import Echo, {Channel} from 'laravel-echo'
-import React, {
+import {
+    ReactNode,
     RefObject,
     useEffect,
     useRef,
@@ -290,7 +291,7 @@ export interface WebSocketConnectorProps {
     authToken?: string | null
     // Ключ: псевдоним канала, значение: полное название канала.
     channels: AnyObject<string>
-    children?: React.ReactNode | React.ReactNode[]
+    children?: ReactNode | ReactNode[]
 }
 
 // Компонент для контроля соединения с WebSocket каналом пользователя.

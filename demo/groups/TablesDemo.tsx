@@ -1,42 +1,41 @@
 import clsx from 'clsx'
-import React from 'react'
 import {SectionDivider} from '../../components/SectionDivider'
 
 export function TablesDemo() {
 
     return (
         <>
-            <SectionDivider label="Table default + hover"/>
+            <SectionDivider label="Table default + hover" />
             <table className="table table-hover">
-                <TableContent/>
+                <TableContent />
             </table>
-            <SectionDivider label="Table bordered striped hover"/>
+            <SectionDivider label="Table bordered striped hover" />
             <table className="table table-bordered table-striped table-hover">
-                <TableContent/>
+                <TableContent />
             </table>
-            <SectionDivider label="Table borderless"/>
+            <SectionDivider label="Table borderless" />
             <table className="table table-borderless">
-                <TableContent/>
+                <TableContent />
             </table>
-            <SectionDivider label="Table small no last border"/>
+            <SectionDivider label="Table small no last border" />
             <table className="table table-sm table-no-border-for-last-row">
-                <TableContent footer={false}/>
+                <TableContent footer={false} />
             </table>
-            <SectionDivider label="Table striped manually"/>
+            <SectionDivider label="Table striped manually" />
             <table className="table">
-                <TableContent evenOdd/>
+                <TableContent evenOdd />
             </table>
-            <SectionDivider label="Table with highlighted cells and rows"/>
+            <SectionDivider label="Table with highlighted cells and rows" />
             <table className="table">
-                <TableContent highlights/>
+                <TableContent highlights />
             </table>
         </>
     )
 }
 
 function TableContent(props: {
-    evenOdd?: boolean,
-    footer?: boolean,
+    evenOdd?: boolean
+    footer?: boolean
     highlights?: boolean
 } = {footer: true}) {
     return (
@@ -90,10 +89,12 @@ function TableContent(props: {
                     </td>
                     <td>Value 4</td>
                 </tr>
-                <tr className={clsx(
-                    props.evenOdd ? 'even' : null,
-                    props.highlights ? 'table-highlight-green' : ''
-                )}>
+                <tr
+                    className={clsx(
+                        props.evenOdd ? 'even' : null,
+                        props.highlights ? 'table-highlight-green' : ''
+                    )}
+                >
                     <td>Value 1</td>
                     <td>Value 2</td>
                     <td>Value 3</td>

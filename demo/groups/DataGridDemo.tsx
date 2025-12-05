@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {DataGrid} from '../../components/DataGrid/DataGrid'
 import {DataGridCell} from '../../components/DataGrid/DataGridCell'
 import {DataGridDefaultLayout} from '../../components/DataGrid/DataGridDefaultLayout'

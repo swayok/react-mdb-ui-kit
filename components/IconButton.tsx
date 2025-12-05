@@ -3,7 +3,6 @@ import {
     CSSProperties,
     MouseEvent,
 } from 'react'
-import {withStable} from '../helpers/withStable'
 import {TextColors} from '../types'
 import {
     AppIconProps,
@@ -25,7 +24,7 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
 }
 
 // Иконка-кнопка со всплывающей подсказкой при наведении
-function _IconButton(props: IconButtonProps) {
+export function IconButton(props: IconButtonProps) {
 
     const {
         tooltipProps,
@@ -89,8 +88,6 @@ function _IconButton(props: IconButtonProps) {
         )
     }
 }
-
-export const IconButton = withStable<IconButtonProps>(['onClick'], _IconButton)
 
 /** @deprecated */
 export default IconButton

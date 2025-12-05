@@ -54,7 +54,7 @@ export interface BasicLanguageConfig<
     // Настройки форматирования чисел.
     numeral: {
         // Настройки currency относятся к региону, а не к языку.
-        localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>,
+        localeConfig: Pick<NumeralJSLocale, 'ordinal' | 'abbreviations' | 'delimiters'>
     }
     // Настройки форматирования даты и времени.
     dateTime: {
@@ -79,17 +79,17 @@ export interface BasicRegionConfig<
     LanguageCode extends string = string,
 > {
     // Код региона: vn, ru, ...
-    region: RegionCode,
+    region: RegionCode
     // Языка региона по умолчанию: vi, ru, ...
-    defaultLanguage: LanguageCode;
+    defaultLanguage: LanguageCode
     // Название локали для выпадающего меню смены локали.
-    label: string;
+    label: string
     // Вариации локали в нижнем регистре.
-    variations: string[];
+    variations: string[]
     // Настройки форматирования чисел.
     numeral: {
         // Остальные настройки относятся к языку, а не к региону.
-        localeConfig: Pick<NumeralJSLocale, 'currency'>,
-        defaultFormat: string,
-    },
+        localeConfig: Pick<NumeralJSLocale, 'currency'>
+        defaultFormat: string
+    }
 }

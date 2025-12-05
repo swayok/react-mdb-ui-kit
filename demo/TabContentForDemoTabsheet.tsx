@@ -1,11 +1,11 @@
-import React from 'react'
+import {ReactNode} from 'react'
 import {Card} from '../components/Card/Card'
 import {CardBody} from '../components/Card/CardBody'
 import {TabSheetTabContent} from '../components/TabSheet/TabSheetTabContent'
 
 interface Props {
     name: string
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
     single?: boolean
 }
 

@@ -1,27 +1,35 @@
-import {FunctionComponent, MouseEvent, useCallback, useEffect, useState} from 'react'
-import {withStable} from '../helpers/withStable'
-import {Collapse, CollapseProps} from './Collapse'
+import {
+    FunctionComponent,
+    MouseEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react'
+import {
+    Collapse,
+    CollapseProps,
+} from './Collapse'
 
 // Свойства кнопки открытия/закрытия для компонента <CollapsedContent>.
 export interface CollapsedContentTogglerProps {
     // Текущее состояние видимости содержимого.
-    opened: boolean,
+    opened: boolean
     // Обработчик открытия/закрытия содержимого.
-    onClick: (event?: MouseEvent<HTMLElement>) => void,
+    onClick: (event?: MouseEvent<HTMLElement>) => void
 }
 
 // Свойства компонента <CollapsedContent>.
 export interface CollapsedContentProps extends Omit<CollapseProps, 'show'> {
     // Начальное состояние видимости содержимого.
-    opened?: boolean;
+    opened?: boolean
     // Компонент кнопки открытия/закрытия содержимого.
-    Toggler: FunctionComponent<CollapsedContentTogglerProps>,
+    Toggler: FunctionComponent<CollapsedContentTogglerProps>
 }
 
 // Скрываемое содержимое с кнопкой открытия/закрытия (свойство Toggler).
 // Полезно использовать в древовидных меню, чтобы не нужно было выносить открытые ветки
 // в состояние, при изменении которого, перерисовывались бы все компоненты в меню.
-function CollapsedContent(props: CollapsedContentProps) {
+export function CollapsedContent(props: CollapsedContentProps) {
 
     const {
         Toggler,
@@ -65,4 +73,5 @@ function CollapsedContent(props: CollapsedContentProps) {
     )
 }
 
-export default withStable<CollapsedContentProps>(['onTransitionEnd'], CollapsedContent)
+/** @deprecated */
+export default CollapsedContent

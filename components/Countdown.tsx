@@ -2,30 +2,31 @@ import {
     ReactNode,
     useCallback,
     useEffect,
+    useEffectEvent,
     useState,
 } from 'react'
-import {withStable} from '../helpers/withStable'
 
-interface Props {
+export interface CountdownProps {
     // Секунд до 0.
-    seconds: number,
+    seconds: number
     // Вызывается при достижении 0.
-    onZero?: () => void,
+    onZero?: () => void
     // Как часто вызывать onTick.
-    tick?: 'second' | 'minute' | 'hour' | 'day',
+    tick?: 'second' | 'minute' | 'hour' | 'day'
     // Вызывается на каждый tick.
-    onTick?: (seconds: number) => void,
+    onTick?: (seconds: number) => void
     // Замена отображения.
-    formatter?: ((seconds: number) => string | ReactNode),
+    formatter?: ((seconds: number) => string | ReactNode)
     // Дополнительные CSS классы для <span> элемента.
-    className?: string,
+    className?: string
     // Перезапуск отсчета при достижении 0.
     // Если число, то оно будет использовано для задания нового значения seconds.
-    restartOnZero?: boolean | number,
+    restartOnZero?: boolean | number
 }
 
 // Обратный отсчет.
-function _Countdown(props: Props) {
+// Перезапуск извне не предусмотрен: используйте key для пересоздания компонента.
+export function Countdown(props: CountdownProps) {
 
     const {
         seconds: startingSeconds,
@@ -42,51 +43,60 @@ function _Countdown(props: Props) {
         setSeconds,
     ] = useState<number>(startingSeconds)
 
+    // Возвращает true пока значение не опустилось до 0.
+    const tickHandler = useEffectEvent((): boolean => {
+        let remainingSeconds: number = seconds
+        if (seconds === 0) {
+            if (restartOnZero) {
+                remainingSeconds = startingSeconds + 1
+            } else {
+                return false
+            }
+        }
+        remainingSeconds--
+        setSeconds(Math.max(0, remainingSeconds))
+        if (remainingSeconds === 1 && onZero) {
+            window.setTimeout(onZero, 1000)
+        }
+        if (tick && onTick) {
+            switch (tick) {
+                case 'second':
+                    onTick(remainingSeconds)
+                    break
+                case 'minute':
+                    if (remainingSeconds % 60 === 0) {
+                        onTick(remainingSeconds)
+                    }
+                    break
+                case 'hour':
+                    if (remainingSeconds % 3600 === 0) {
+                        onTick(remainingSeconds)
+                    }
+                    break
+                case 'day':
+                    if (remainingSeconds % 86400 === 0) {
+                        onTick(remainingSeconds)
+                    }
+                    break
+            }
+        }
+        return true
+    })
+
+    // Запускаем отсчет при монтировании или при изменении startingSeconds.
     useEffect(() => {
         if (startingSeconds === 0) {
             return
         }
-        let seconds = startingSeconds
         const interval = window.setInterval(() => {
-            if (seconds === 0) {
-                if (restartOnZero) {
-                    seconds = startingSeconds + 1
-                } else {
-                    return
-                }
-            }
-            seconds--
-            setSeconds(Math.max(0, seconds))
-            if (seconds === 1 && onZero) {
-                window.setTimeout(onZero, 1000)
-            }
-            if (tick && onTick) {
-                switch (tick) {
-                    case 'second':
-                        onTick(seconds)
-                        break
-                    case 'minute':
-                        if (seconds % 60 === 0) {
-                            onTick(seconds)
-                        }
-                        break
-                    case 'hour':
-                        if (seconds % 3600 === 0) {
-                            onTick(seconds)
-                        }
-                        break
-                    case 'day':
-                        if (seconds % 86400 === 0) {
-                            onTick(seconds)
-                        }
-                        break
-                }
+            if (!tickHandler()) {
+                window.clearInterval(interval)
             }
         }, 1000)
         return () => {
             window.clearInterval(interval)
         }
-    }, [onZero, startingSeconds, tick, onTick])
+    }, [startingSeconds])
 
     const formatter = useCallback(
         (seconds: number): string | ReactNode => {
@@ -105,8 +115,6 @@ function _Countdown(props: Props) {
         </span>
     )
 }
-
-export const Countdown = withStable<Props>(['onTick', 'formatter', 'onZero'], _Countdown)
 
 /** @deprecated */
 export default Countdown

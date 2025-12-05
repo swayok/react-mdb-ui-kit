@@ -6,7 +6,6 @@ import {
     FormSelectOptionGroup,
     FormSelectOptionsAndGroupsList,
 } from '../../../types'
-import {withStable} from '../../../helpers/withStable'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
@@ -14,7 +13,7 @@ import {SelectInputOptionsProps} from './SelectInputTypes'
 import {shouldDisplaySelectInputOption} from './shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput.
-function _SelectInputOptions<
+export function SelectInputOptions<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 >(props: SelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
@@ -173,8 +172,3 @@ function _SelectInputOptions<
         return content
     }
 }
-
-export const SelectInputOptions = withStable<SelectInputOptionsProps>(
-    ['onChange', 'renderOptionLabel'],
-    _SelectInputOptions
-) as typeof _SelectInputOptions

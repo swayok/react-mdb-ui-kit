@@ -1,23 +1,22 @@
+import clsx from 'clsx'
 import {
     AnchorHTMLAttributes,
     CSSProperties,
     MouseEvent,
 } from 'react'
-import {Icon} from './Icon'
-import clsx from 'clsx'
-import {
-    Tooltip,
-    TooltipProps,
-} from './Tooltip'
+import {Link} from 'react-router-dom'
 import {
     AnyObject,
     ReactComponentOrTagName,
     SvgIconInfo,
     TextColors,
 } from '../types'
-import {Link} from 'react-router-dom'
-import {withStable} from '../helpers/withStable'
+import {Icon} from './Icon'
 import {IconProps} from './MDIIcon'
+import {
+    Tooltip,
+    TooltipProps,
+} from './Tooltip'
 
 export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string
@@ -39,7 +38,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 // Ссылка в виде иконки без подписи
-function _IconHref(props: IconHrefProps) {
+export function IconHref(props: IconHrefProps) {
 
     const {
         tooltip,
@@ -107,11 +106,6 @@ function _IconHref(props: IconHrefProps) {
         </Tooltip>
     )
 }
-
-export const IconHref = withStable<IconHrefProps>(
-    ['onClick', 'iconProps', 'tooltipProps'],
-    _IconHref
-)
 
 /** @deprecated */
 export default IconHref

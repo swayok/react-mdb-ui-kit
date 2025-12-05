@@ -6,13 +6,12 @@ import {
     useRef,
     useState,
 } from 'react'
+import {UserBehaviorService} from '../../services/UserBehaviorService'
+import {ReactComponentOrTagName} from '../../types'
 import {
     InputProps,
     InputValidationErrorProps,
 } from './InputTypes'
-import {ReactComponentOrTagName} from '../../types'
-import {withStable} from '../../helpers/withStable'
-import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {InputValidationError} from './InputValidationError'
 
 const activeInputLabelSizeMultipliers = {
@@ -22,7 +21,7 @@ const activeInputLabelSizeMultipliers = {
 }
 
 // Поле ввода значения.
-function _Input(props: InputProps) {
+export function Input(props: InputProps) {
     const {
         className,
         small,
@@ -340,11 +339,6 @@ function _Input(props: InputProps) {
         </WrapperTag>
     )
 }
-
-export const Input = withStable<InputProps>(
-    ['onChange', 'onFocus', 'onBlur', 'onKeyDown', 'onBeforeInput', 'onPaste', 'onClick'],
-    _Input
-)
 
 /** @deprecated */
 export default Input

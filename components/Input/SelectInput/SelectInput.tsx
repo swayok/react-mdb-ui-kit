@@ -7,12 +7,11 @@ import React, {
     useState,
 } from 'react'
 import {AnyObject} from '../../../types'
-import {Input} from '../../../components/Input/Input'
-import VirtualizedSelectInputOptions from './VirtualizedSelectInputOptions'
+import {Input} from '../Input'
+import {VirtualizedSelectInputOptions} from './VirtualizedSelectInputOptions'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
 import {stripTags} from '../../../helpers/stripTags'
-import {withStable} from '../../../helpers/withStable'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {SelectInputBasic} from './SelectInputBasic'
 import {SelectInputOptions} from './SelectInputOptions'
@@ -31,7 +30,7 @@ interface KeywordsState {
  * Конвертация различных типов объектов в опции:
  * @see OptionsHelper
  */
-function _SelectInput<
+export function SelectInput<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 >(props: SelectInputProps<OptionValueType, OptionExtrasType>) {
@@ -251,11 +250,6 @@ function _SelectInput<
         </SelectInputBasic>
     )
 }
-
-export const SelectInput: typeof _SelectInput = withStable<SelectInputProps>(
-    ['onChange', 'renderOptionLabel', 'valueToString'],
-    _SelectInput
-) as unknown as typeof _SelectInput
 
 /** @deprecated */
 export default SelectInput

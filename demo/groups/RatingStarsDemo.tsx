@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {RatingStars} from '../../components/RatingStars'
 
 export function RatingStarsDemo() {
@@ -14,13 +14,16 @@ export function RatingStarsDemo() {
                 {values.map(value => (
                     <div key={value}>
                         Rating {value}:
-                        <RatingStars rating={value}/>
+                        <RatingStars rating={value} />
                     </div>
                 ))}
             </div>
             <div className="mt-3">
                 Interactive Rating:
-                <RatingStars rating={rating} onClick={setRating} />
+                <RatingStars
+                    rating={rating}
+                    onClick={setRating}
+                />
             </div>
         </>
     )

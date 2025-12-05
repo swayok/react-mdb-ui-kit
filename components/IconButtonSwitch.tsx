@@ -1,4 +1,3 @@
-import React from 'react'
 import {TextColors} from '../types'
 import {
     IconButton,

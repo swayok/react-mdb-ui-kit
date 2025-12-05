@@ -1,8 +1,10 @@
 import React, {
-    useEffect, useState,
+    useEffect,
+    useState,
 } from 'react'
 import {
-    Note, NoteProps,
+    Note,
+    NoteProps,
 } from './Note'
 import {ModalHeaderCloseButton} from './Modal/ModalHeaderCloseButton'
 import {Collapse} from './Collapse'

@@ -138,4 +138,5 @@ export class FileAPI {
     }
 }
 
+/** @deprecated */
 export default FileAPI

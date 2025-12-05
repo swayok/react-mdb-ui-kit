@@ -45,13 +45,13 @@ export function ColorPaletteDemo(props: Props) {
                     <div className={clsx('color-suffix', suffix === '500' ? 'fw-800' : null)}>
                         {suffix}
                     </div>
-                    <div className="color-in-bg"/>
-                    <div className="color-in-text"/>
-                    <div className="color-in-text light-bg"/>
-                    <div className="color-in-text gray-bg"/>
-                    <div className="color-in-text dark-bg"/>
-                    <div className="color-in-text black-bg"/>
-                    <div className="color-variable"/>
+                    <div className="color-in-bg" />
+                    <div className="color-in-text" />
+                    <div className="color-in-text light-bg" />
+                    <div className="color-in-text gray-bg" />
+                    <div className="color-in-text dark-bg" />
+                    <div className="color-in-text black-bg" />
+                    <div className="color-variable" />
                 </div>
             ))}
         </div>

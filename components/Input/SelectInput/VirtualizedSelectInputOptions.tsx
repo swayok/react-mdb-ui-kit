@@ -1,9 +1,8 @@
-import React, {
+import {
     useCallback,
     useMemo,
 } from 'react'
 import {useVirtuosoLibAsync} from '../../../helpers/useVirtuosoLibAsync'
-import {withStable} from '../../../helpers/withStable'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {
     AnyObject,
@@ -20,7 +19,7 @@ import {
 import {shouldDisplaySelectInputOption} from './shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput с виртуализацией.
-function VirtualizedSelectInputOptions<
+export function VirtualizedSelectInputOptions<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 >(props: VirtualizedSelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
@@ -160,7 +159,5 @@ function VirtualizedSelectInputOptions<
     )
 }
 
-export default withStable<VirtualizedSelectInputOptionsProps>(
-    ['onChange', 'renderOptionLabel'],
-    VirtualizedSelectInputOptions
-) as typeof VirtualizedSelectInputOptions
+/** @deprecated */
+export default VirtualizedSelectInputOptions

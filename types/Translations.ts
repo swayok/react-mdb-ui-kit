@@ -1,71 +1,71 @@
 // Переводы ошибок
 export interface HttpErrorsTranslations {
-    go_back: string,
+    go_back: string
     code401: {
-        toast: string,
-    },
+        toast: string
+    }
     code403: {
-        title: string,
-        message: string,
-        toast: string,
-    },
+        title: string
+        message: string
+        toast: string
+    }
     code404: {
-        title: string,
-        message: string,
-        toast: string,
-    },
+        title: string
+        message: string
+        toast: string
+    }
     code408: {
-        toast: string,
-    },
+        toast: string
+    }
     code419: {
-        toast: string,
-    },
+        toast: string
+    }
     code422: {
-        toast: string,
-    },
+        toast: string
+    }
     code426: {
-        toast: string,
-    },
+        toast: string
+    }
     code429: {
-        toast: string,
-    },
+        toast: string
+    }
     code4xx: {
-        toast: string,
-    },
+        toast: string
+    }
     code500: {
-        title: string,
-        message: string,
-        toast: string,
-    },
+        title: string
+        message: string
+        toast: string
+    }
     unknown: {
-        toast: string,
-    },
+        toast: string
+    }
     js_error: {
-        title: string,
-        message: string,
-        toast: string,
-    },
+        title: string
+        message: string
+        toast: string
+    }
     code503: {
-        title: string,
-        message: string,
-        toast: string,
-    },
+        title: string
+        message: string
+        toast: string
+    }
     code501: {
-        toast: string,
-    },
+        toast: string
+    }
     code502: {
-        toast: string,
-    },
+        toast: string
+    }
     code504: {
-        toast: string,
-    },
+        toast: string
+    }
     code5xx: {
-        toast: string,
-    },
+        toast: string
+    }
     axios: {
-        toast: string,
-    },
+        toast: string
+    }
     response_parsing: {
-        toast: string,
-    },
+        toast: string
+    }
 }

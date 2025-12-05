@@ -10,15 +10,15 @@ export interface WysiwygGlobalConfigType {
 
 // Часть методов и свойств CKEditor.
 export interface CKEditorInstance {
-    getData: (rawValue?: string) => string,
-    setData: (rawValue?: string) => string,
-    setReadOnly: (value: boolean) => void,
+    getData: (rawValue?: string) => string
+    setData: (rawValue?: string) => string
+    setReadOnly: (value: boolean) => void
     element: {
-        $: HTMLTextAreaElement,
-    },
+        $: HTMLTextAreaElement
+    }
     container: {
-        $: HTMLDivElement,
-    },
+        $: HTMLDivElement
+    }
 }
 
 // Настройки CKEditor, передаваемые через window.CKEDITOR.

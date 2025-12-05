@@ -3,18 +3,19 @@ import {
     ReactNode,
 } from 'react'
 
-type Props = {
-    children: ReactNode | ReactNode[],
-    silent?: boolean,
-};
+interface Props {
+    children: ReactNode | ReactNode[]
+    silent?: boolean
+}
 
-type State = {
+interface State {
     hasError: boolean
-};
+}
 
 // Ограничитель глубины отрабатывания ошибок в JS/JSX.
 // Если ошибка произошла внутри этого компонента, то отображается страница с ошибкой.
-// Ошибка так же не будет влиять на всё приложение (т.е. интерфейс вне компонента продолжит работать вместо полного отказа).
+// Ошибка так же не будет влиять на всё приложение
+// (т.е. интерфейс вне компонента продолжит работать вместо полного отказа).
 export class ErrorBoundary extends Component<Props, State> {
 
     state: State = {

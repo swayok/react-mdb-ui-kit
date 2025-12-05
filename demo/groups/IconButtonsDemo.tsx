@@ -1,5 +1,8 @@
-import {mdiCloseBoxOutline, mdiPencilBoxOutline, mdiPlusBoxOutline} from '@mdi/js'
-import React from 'react'
+import {
+    mdiCloseBoxOutline,
+    mdiPencilBoxOutline,
+    mdiPlusBoxOutline,
+} from '@mdi/js'
 import {IconButton} from '../../components/IconButton'
 import {buttonColors} from './ButtonsDemo'
 
@@ -8,7 +11,10 @@ export function IconButtonsDemo() {
     return (
         <div className="d-grid grid-columns-2 grid-columns-gap-3">
             {colors.map((color, index) => (
-                <div key={index} className="d-flex flex-row">
+                <div
+                    key={index}
+                    className="d-flex flex-row"
+                >
                     <div className="">
                         <IconButton
                             path={mdiPencilBoxOutline}

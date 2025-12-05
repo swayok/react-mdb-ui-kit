@@ -1,11 +1,16 @@
-import * as React from 'react'
-import {AllHTMLAttributes, CSSProperties, SVGAttributes, useId} from 'react'
+import {
+    AllHTMLAttributes,
+    CSSProperties,
+    RefObject,
+    SVGAttributes,
+    useId,
+} from 'react'
 import {ReusableSvg} from './ReusableSvg'
 
 export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string
     path: string
-    ref?: React.RefObject<SVGSVGElement>
+    ref?: RefObject<SVGSVGElement>
     title?: string
     description?: string | null
     horizontal?: boolean
@@ -24,7 +29,7 @@ export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size'
     reuse?: string
     // CSS класс контейнера, в котором будет сохранён оригинал иконки.
     // Класс нужно задавать, если стиль иконки зависит от CSS-класса родительского DOM элемента.
-    reusableItemContainerClass?: string;
+    reusableItemContainerClass?: string
 }
 
 // Иконка.
@@ -127,7 +132,7 @@ export function MDIIcon(props: IconProps) {
             role,
             viewBox: '0 0 24 24',
             style: collectStyles(),
-            ...otherProps
+            ...otherProps,
         }
     }
 

@@ -1,23 +1,26 @@
 import React from 'react'
-import {CSSTransition, SwitchTransition} from 'react-transition-group'
+import {
+    CSSTransition,
+    SwitchTransition,
+} from 'react-transition-group'
 import clsx from 'clsx'
 
-type Props = {
-    transitionKey: string | boolean | number,
-    transitionRef?: React.RefObject<HTMLElement>,
+interface Props {
+    transitionKey: string | boolean | number
+    transitionRef?: React.RefObject<HTMLElement>
     // Длительность анимации.
     // По умолчанию: в зависимости от значения свойства animation.
-    animationTimeout?: number,
-    unmountOnExit?: boolean,
-    mountOnEnter?: boolean,
-    children: React.ReactNode | React.ReactNode[],
+    animationTimeout?: number
+    unmountOnExit?: boolean
+    mountOnEnter?: boolean
+    children: React.ReactNode | React.ReactNode[]
     // Тип анимации.
     // По умолчанию: fade.
     // Длительность анимаций по умолчанию: 300 | 200 | 100.
-    animation?: 'fade' | 'fade-switch' | 'page-switch',
+    animation?: 'fade' | 'fade-switch' | 'page-switch'
     // CSS класс для контейнера.
     // Используется только при отсутствии transitionRef.
-    className?: string,
+    className?: string
 }
 
 // Анимированная смена children.

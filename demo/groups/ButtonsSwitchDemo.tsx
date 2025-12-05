@@ -1,4 +1,3 @@
-import React from 'react'
 import {ButtonsSwitch} from '../../components/ButtonsSwitch'
 import {ButtonsSwitchInput} from '../../components/Input/ButtonsSwitchInput'
 import {SectionDivider} from '../../components/SectionDivider'

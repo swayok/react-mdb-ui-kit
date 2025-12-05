@@ -1,4 +1,3 @@
-import React from 'react'
 import {ComponentPropsWithModifiableTag} from '../types'
 import DOMPurify from 'dompurify'
 

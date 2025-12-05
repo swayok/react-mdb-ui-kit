@@ -1,21 +1,27 @@
-import {useCallback, useEffect, useEffectEvent, useRef, useState} from 'react'
+import {
+    useCallback,
+    useEffect,
+    useEffectEvent,
+    useRef,
+    useState,
+} from 'react'
 import {flushSync} from 'react-dom'
 
 export type SyncQueueTask = () => Promise<void> | void
 
-export type SyncQueueOptions = {
+export interface SyncQueueOptions {
     shouldProcess: boolean
     onFinished?: () => void
 }
 
-export type SyncQueue = {
+export interface SyncQueue {
     tasks: ReadonlyArray<SyncQueueTask>
     isProcessing: boolean
     addTask: (task: SyncQueueTask) => void
     reset: () => void
 }
 
-type QueueState = {
+interface QueueState {
     isProcessing: boolean
     tasks: SyncQueueTask[]
 }
@@ -29,10 +35,11 @@ export function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): Syn
 
     const {
         shouldProcess,
-        onFinished
+        onFinished,
     } = params
 
-    const [queue, setQueue] = useState<QueueState>({
+    const [queue,
+        setQueue] = useState<QueueState>({
         isProcessing: false,
         tasks: [],
     })
@@ -67,12 +74,10 @@ export function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): Syn
                 // Нужно отключить batching т.к. при быстрых задачах будет
                 // потенциальная проблема: "Maximum update depth exceeded".
                 flushSync(() => {
-                    setQueue(prev => {
-                        return {
-                            isProcessing: false,
-                            tasks: prev.tasks,
-                        }
-                    })
+                    setQueue(prev => ({
+                        isProcessing: false,
+                        tasks: prev.tasks,
+                    }))
                 })
             })
     }, [queue, shouldProcess])
@@ -91,7 +96,7 @@ export function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): Syn
                 isProcessing: false,
                 tasks: [],
             })
-        }, [])
+        }, []),
     }
 }
 

@@ -1,12 +1,16 @@
-import * as React from 'react'
-import {AllHTMLAttributes, useEffect, useRef} from 'react'
+import {
+    AllHTMLAttributes,
+    RefObject,
+    useEffect,
+    useRef,
+} from 'react'
 import {
     ReusableSvgRepository,
-    ReusableSvgRepositorySetSvgElementFn
+    ReusableSvgRepositorySetSvgElementFn,
 } from '../helpers/ReusableSvgRepository'
 
 export interface ReusableSvgProps extends AllHTMLAttributes<SVGSVGElement> {
-    ref?: React.RefObject<SVGSVGElement>
+    ref?: RefObject<SVGSVGElement>
     // HTML ID для переиспользования. Допустимые символы: a-z, A-Z, 0-9, -, _.
     // Если на странице большое количество одинаковых иконок, то браузер будет
     // довольно сильно тормозить из-за этого.
@@ -21,7 +25,7 @@ export interface ReusableSvgProps extends AllHTMLAttributes<SVGSVGElement> {
     uid: string | number
     // CSS класс контейнера, в котором будет сохранён оригинал иконки.
     // Класс нужно задавать, если стиль иконки зависит от CSS-класса родительского DOM элемента.
-    reusableItemContainerClass?: string;
+    reusableItemContainerClass?: string
 }
 
 // Переиспользуемый <svg> элемент.
@@ -59,7 +63,7 @@ export function ReusableSvg(props: ReusableSvgProps) {
                     resolverRef.current = resolve
                     return children
                 },
-                reusableItemContainerClass,
+                reusableItemContainerClass
             )}
         </svg>
     )

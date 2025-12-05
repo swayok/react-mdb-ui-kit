@@ -12,6 +12,7 @@ import type {
     Ref,
     RefObject,
 } from 'react'
+import {AppIconProps} from '../Icon'
 import type {IconProps} from '../MDIIcon'
 import type {
     AnyObject,
@@ -33,6 +34,8 @@ import type {
 } from '../Dropdown/DropdownTypes'
 import type {TooltipProps} from '../Tooltip'
 import type {CalendarProps} from 'react-calendar'
+
+export type * from './SelectInput/SelectInputTypes'
 
 // Свойства компонента ButtonsSwitchInput.
 export interface ButtonsSwitchInputProps<
@@ -281,6 +284,21 @@ export interface InputGroupTextProps extends ComponentPropsWithModifiableTagAndR
     noBorder?: boolean
     small?: boolean
     large?: boolean
+}
+
+// Свойства компонента InputGroupText.
+export interface InputGroupIconProps extends Omit<ComponentPropsWithModifiableTagAndRef, 'size' | 'onClick' | 'label'>,
+    Pick<
+        AppIconProps,
+        'path' | 'color' | 'rotate' | 'vertical' | 'spin' | 'size' | 'label'
+        | 'reuse' | 'reusableItemContainerClass' | 'onClick'
+        | 'tooltip' | 'tooltipProps' | 'tooltipMaxWidth' | 'centerIconInTooltip'
+    >
+{
+    noBorder?: boolean
+    small?: boolean
+    large?: boolean
+    iconClassName?: string
 }
 
 // Свойства компонента InputInfo для HTML контента.

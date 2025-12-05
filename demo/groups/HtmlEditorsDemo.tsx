@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {WysiwygInput} from '../../components/Input/WysiwygInput'
 
 export function HtmlEditorsDemo() {

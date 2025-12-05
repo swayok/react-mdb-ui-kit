@@ -1,4 +1,7 @@
-import {generatePath, PathParam} from 'react-router-dom'
+import {
+    generatePath,
+    PathParam,
+} from 'react-router-dom'
 
 // Сборка URL из частей.
 export function makeUrl<QueryArgsType extends object, Path extends string = string>(

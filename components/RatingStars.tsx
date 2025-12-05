@@ -1,8 +1,11 @@
-import React from 'react'
 import {IconProps} from './MDIIcon'
 import {Icon} from './Icon'
 import clsx from 'clsx'
-import {mdiStar, mdiStarHalfFull, mdiStarOutline} from '@mdi/js'
+import {
+    mdiStar,
+    mdiStarHalfFull,
+    mdiStarOutline,
+} from '@mdi/js'
 
 interface Props {
     rating: number

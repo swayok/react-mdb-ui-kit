@@ -31,4 +31,5 @@ export function filterOptions<T = unknown>(
     return filtered
 }
 
+/** @deprecated */
 export default filterOptions

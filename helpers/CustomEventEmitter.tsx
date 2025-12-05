@@ -1,5 +1,6 @@
 // Функция, которая будет вызвана при совершении события.
 export type SubscriptionCallbackFn<Payload = undefined> = (payload?: Payload) => unknown
+
 // Функция отписки от события.
 export type CancelSubscriptionFn = () => void
 
@@ -31,10 +32,10 @@ export class CustomEventEmitter<Payload = undefined> {
         }
         this.subscriptions.push({
             callback,
-            unsubscribeAfterEmit: once ? unsubscribe : undefined
-        });
+            unsubscribeAfterEmit: once ? unsubscribe : undefined,
+        })
 
-        return unsubscribe;
+        return unsubscribe
     }
 
     // Подписаться на событие только один раз.
@@ -47,11 +48,11 @@ export class CustomEventEmitter<Payload = undefined> {
         this.subscriptions.slice().forEach(subscription => {
             subscription.callback(payload)
             subscription.unsubscribeAfterEmit?.()
-        });
+        })
     }
 
     // Удалить все обработчики событий
     reset = () => {
-        this.subscriptions = [];
+        this.subscriptions = []
     }
 }

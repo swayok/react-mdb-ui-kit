@@ -3,11 +3,11 @@ import {Button} from './Button'
 import clsx from 'clsx'
 
 export interface AsyncDataLoadingErrorProps {
-    className?: string,
-    style?: CSSProperties,
-    errorMessage: string,
-    retryButtonTitle: string,
-    onReload?: () => void,
+    className?: string
+    style?: CSSProperties
+    errorMessage: string
+    retryButtonTitle: string
+    onReload?: () => void
 }
 
 // Ошибка загрузки данных с сервера.

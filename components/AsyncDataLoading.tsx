@@ -40,9 +40,9 @@ export function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingPr
                 />
             )
         } else if (props.loading === false && !props.error && canShowContent()) {
-            return props.render(props.loadedData as DataType) ?? <div/>
+            return props.render(props.loadedData as DataType) ?? <div />
         } else {
-            return <div/>
+            return <div />
         }
     }
 

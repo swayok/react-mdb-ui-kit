@@ -1,7 +1,7 @@
 import {
-    mdiAccount, mdiTranslate,
+    mdiAccount,
+    mdiTranslate,
 } from '@mdi/js'
-import React from 'react'
 import {Button} from '../../components/Button'
 import {Icon} from '../../components/Icon'
 import {Input} from '../../components/Input/Input'

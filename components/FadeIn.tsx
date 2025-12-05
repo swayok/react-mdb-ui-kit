@@ -1,20 +1,24 @@
-import React from 'react'
+import {
+    ReactNode,
+    RefObject,
+    useRef,
+} from 'react'
 import {CSSTransition} from 'react-transition-group'
 
-type Props = {
+interface Props {
     visible?: boolean
     long?: boolean
-    transitionRef?: React.RefObject<HTMLElement | null>
+    transitionRef?: RefObject<HTMLElement | null>
     animationTimeout?: number
     unmountOnExit?: boolean
     mountOnEnter?: boolean
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
 }
 
 // Анимированное отображение children (fade-in).
 export function FadeIn(props: Props) {
 
-    const containerRef = React.useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
 
     const {
         visible = true,
@@ -41,7 +45,7 @@ export function FadeIn(props: Props) {
             ) : (
                 <div
                     className="animated-content-container"
-                    ref={transitionRef as React.RefObject<HTMLDivElement>}
+                    ref={transitionRef as RefObject<HTMLDivElement>}
                 >
                     {children}
                 </div>

@@ -1,4 +1,7 @@
-import {useEffect, useMemo} from 'react'
+import {
+    useEffect,
+    useMemo,
+} from 'react'
 import {CustomEventEmitter} from './CustomEventEmitter'
 
 // Получить CustomEventEmitter для компонента.

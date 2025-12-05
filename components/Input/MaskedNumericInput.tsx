@@ -8,7 +8,6 @@ import {
     useState,
 } from 'react'
 import {MaskedNumericInputProps} from './InputTypes'
-import {withStable} from '../../helpers/withStable'
 import {Input} from './Input'
 
 const isHardcodedCharacterRegexp = /[ ()-]/
@@ -16,7 +15,7 @@ const rtrimRegexp = /[)_ -]+$/
 
 // Поле ввода для числового значения в соответствии с маской.
 // Примеры: номер телефона, номер банковской карты, номер паспорта.
-function _MaskedNumericInput(props: MaskedNumericInputProps) {
+export function MaskedNumericInput(props: MaskedNumericInputProps) {
     const {
         template,
         valueCleaner = value => value.replace(/[^+0-9]+/g, ''),
@@ -416,11 +415,6 @@ function handleKeyboardArrow(
 function isHardcodedCharacter(char: string): boolean {
     return String(char || '').match(isHardcodedCharacterRegexp) !== null
 }
-
-export const MaskedNumericInput = withStable<MaskedNumericInputProps>(
-    ['onChange', 'onFocus', 'onBlur', 'valueCleaner'],
-    _MaskedNumericInput
-)
 
 /** @deprecated */
 export default MaskedNumericInput

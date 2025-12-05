@@ -11,7 +11,6 @@ import {
     useState,
 } from 'react'
 import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
-import {withStable} from '../../helpers/withStable'
 import {
     CKEditorInstance,
     ReactComponentOrTagName,
@@ -33,7 +32,7 @@ const activeInputLabelSizeMultipliers = {
 }
 
 // Редактор HTML.
-function _WysiwygInput(props: WysiwygInputProps) {
+export function WysiwygInput(props: WysiwygInputProps) {
     const {
         config = getDefaultWysiwygConfig(),
         className,
@@ -273,11 +272,6 @@ function _WysiwygInput(props: WysiwygInputProps) {
         </WrapperTag>
     )
 }
-
-export const WysiwygInput = withStable<WysiwygInputProps>(
-    ['onChange', 'onFocus', 'onBlur', 'onKeyDown', 'onBeforeInput', 'onPaste', 'onClick'],
-    _WysiwygInput
-)
 
 /** @deprecated */
 export default WysiwygInput

@@ -1,9 +1,16 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import {ApiError} from '../services/ApiRequestService'
 
 export interface UseApiGetRequestHookConfig<
     ApiDataType,
-    ModifiedDataType = ApiDataType | undefined
+    ModifiedDataType = ApiDataType | undefined,
 > {
     // Запустить загрузку сразу же при монтировании компонента?
     // По умолчанию: true.
@@ -22,7 +29,7 @@ export interface UseApiGetRequestHookConfig<
     // Вызов modifyLoadedData() не выполняется.
     onSuccess?: (
         responseData: ApiDataType,
-        hookState: Readonly<UseApiGetRequestHookState<ApiDataType, ModifiedDataType>>,
+        hookState: Readonly<UseApiGetRequestHookState<ApiDataType, ModifiedDataType>>
     ) => void
     // Обработка ошибки загрузки данных.
     onError?: (error: ApiError, silent: boolean) => void
@@ -30,20 +37,20 @@ export interface UseApiGetRequestHookConfig<
 
 export interface UseApiGetRequestHookReturn<
     ApiDataType,
-    ModifiedDataType = ApiDataType | undefined
+    ModifiedDataType = ApiDataType | undefined,
 > {
     data: ModifiedDataType
     loading: boolean
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: Dispatch<SetStateAction<boolean>>
     error: ApiError | null
-    setError: React.Dispatch<React.SetStateAction<ApiError | null>>
+    setError: Dispatch<SetStateAction<ApiError | null>>
     reload: (silent?: boolean) => Promise<ApiDataType>
-    setData: React.Dispatch<React.SetStateAction<ModifiedDataType | undefined>>
+    setData: Dispatch<SetStateAction<ModifiedDataType | undefined>>
 }
 
 export interface UseApiGetRequestHookState<
     ApiDataType,
-    ModifiedDataType = ApiDataType | undefined
+    ModifiedDataType = ApiDataType | undefined,
 > extends Omit<UseApiGetRequestHookReturn<ApiDataType, ModifiedDataType>, 'reload'> {
     sendRequest: () => Promise<ApiDataType>
     defaultOnSuccess: (data: ApiDataType) => void
@@ -58,7 +65,7 @@ export interface UseApiGetRequestHookState<
 // Не поддерживает AbortSignal, поэтому при включенном Strict Mode отрабатывает 2 раза.
 export function useApiGetRequest<
     ApiDataType,
-    ModifiedDataType = ApiDataType | undefined
+    ModifiedDataType = ApiDataType | undefined,
 >(
     sendRequest: () => Promise<ApiDataType>,
     options?: UseApiGetRequestHookConfig<ApiDataType, ModifiedDataType>,

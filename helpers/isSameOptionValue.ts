@@ -1,5 +1,8 @@
 // Проверка, что искомое значение совпадает со значением опции.
-export function isSameOptionValue(expectedValue: unknown, optionValue: unknown): boolean {
+export function isSameOptionValue(
+    expectedValue: unknown,
+    optionValue: unknown
+): boolean {
     if (expectedValue === optionValue) {
         return true
     }
