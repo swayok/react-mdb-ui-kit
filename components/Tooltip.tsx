@@ -1,18 +1,16 @@
 import * as PopperJS from '@popperjs/core'
-import clsx from 'clsx'
 import {
     AbstractView,
     CSSProperties,
-    ReactNode,
     MouseEvent as ReactMouseEvent,
+    ReactNode,
     TouchEvent,
     useEffect,
     useRef,
     useState,
 } from 'react'
-import ReactDOM from 'react-dom'
-import {usePopper} from 'react-popper'
 import {ComponentPropsWithModifiableTag} from '../types'
+import {TooltipContent} from './TooltipContent'
 
 export interface TooltipProps extends Omit<ComponentPropsWithModifiableTag, 'title'> {
     placement?: PopperJS.Placement
@@ -49,69 +47,19 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         ...otherProps
     } = props
 
-    // < do not use useRef() because props.tag can be functional component with forwarded ref
-    const [
-        referenceElement,
-        setReferenceElement,
-    ] = useState<HTMLElement | null>(null)
-    const [
-        popperElement,
-        setPopperElement,
-    ] = useState<HTMLDivElement | null>(null)
+    const wrapperRef = useRef<HTMLElement>(null)
 
     const [
         isOpenState,
-        setIsOpenState,
+        setIsOpened,
     ] = useState(false)
     const [
         isClicked,
         setIsClicked,
     ] = useState(false)
-    const [
-        isFaded,
-        setIsFaded,
-    ] = useState(false)
-    const [
-        isReadyToHide,
-        setIsReadyToHide,
-    ] = useState(false)
 
     // Было ли последнее взаимодействие осуществлено с помощью touch screen?
     const isTouchEvent = useRef<boolean>(false)
-
-    const tooltipClasses = clsx(
-        'tooltip fade',
-        isFaded ? 'show' : null,
-        `bs-tooltip-${placement}`,
-        tooltipClassName
-    )
-
-    const {styles, attributes} = usePopper(referenceElement, popperElement, {
-        placement,
-        ...options,
-    })
-
-    useEffect(() => {
-        let timer: ReturnType<typeof setTimeout>
-        let secondTimer: ReturnType<typeof setTimeout>
-
-        if (isOpenState || isClicked) {
-            setIsReadyToHide(true)
-            timer = setTimeout(() => {
-                setIsFaded(true)
-            }, 4)
-        } else {
-            setIsFaded(false)
-
-            secondTimer = setTimeout(() => {
-                setIsReadyToHide(false)
-            }, 300)
-        }
-        return () => {
-            clearTimeout(timer)
-            clearTimeout(secondTimer)
-        }
-    }, [isOpenState, isClicked])
 
     // Catch touch events and remember it.
     const handleTouchStart = (e: TouchEvent<HTMLElement>) => {
@@ -131,7 +79,7 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         }
 
         isTouchEvent.current = false
-        setIsOpenState(true)
+        setIsOpened(true)
         onMouseEnter?.(e)
     }
 
@@ -140,22 +88,23 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         if (disableHover) {
             return
         }
-        setIsOpenState(false)
+        setIsOpened(false)
         onMouseLeave?.(e)
     }
 
+    // Подписка на события mouseleave.
     useEffect(() => {
-        if (disableClickHandler) {
+        if (disableClickHandler || !title) {
             return
         }
         const abortController = new AbortController()
-        if (containsInteractiveElements && referenceElement) {
+        if (containsInteractiveElements && wrapperRef.current) {
             const handleOnMouseLeave = (e: MouseEvent) => {
                 if (disableHover) {
                     return
                 }
 
-                setIsOpenState(false)
+                setIsOpened(false)
                 const event: ReactMouseEvent<HTMLElement> = {
                     ...e,
                     nativeEvent: e,
@@ -173,12 +122,12 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
                 }
                 onMouseLeave?.(event)
             }
-            referenceElement.parentElement?.addEventListener(
+            wrapperRef.current.parentElement?.addEventListener(
                 'mouseleave',
                 handleOnMouseLeave,
                 {signal: abortController.signal}
             )
-            referenceElement.parentElement?.parentElement?.addEventListener(
+            wrapperRef.current.parentElement?.parentElement?.addEventListener(
                 'mouseleave',
                 handleOnMouseLeave,
                 {signal: abortController.signal}
@@ -187,11 +136,11 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         document.addEventListener(
             'mousedown',
             (e: MouseEvent) => {
-                if (e.target === referenceElement) {
+                if (e.target === wrapperRef.current) {
                     setIsClicked(true)
                 } else {
                     setIsClicked(false)
-                    setIsOpenState(false)
+                    setIsOpened(false)
                 }
             },
             {signal: abortController.signal}
@@ -199,21 +148,17 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
         return () => {
             abortController.abort()
         }
-    }, [referenceElement, containsInteractiveElements])
+    }, [wrapperRef.current, containsInteractiveElements])
 
     if (!title) {
         return (
             <Tag
-                ref={referenceElement}
+                ref={wrapperRef}
                 {...otherProps}
             >
                 {children}
             </Tag>
         )
-    }
-
-    if (tooltipMaxWidth) {
-        tooltipStyle.maxWidth = tooltipMaxWidth
     }
 
     return (
@@ -223,29 +168,23 @@ export function Tooltip<PropsType>(props: TooltipProps & PropsType) {
                 onMouseLeave={handleOnMouseLeave}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchStart}
-                ref={setReferenceElement}
+                ref={wrapperRef}
                 {...otherProps}
             >
                 {children}
             </Tag>
 
-            {isReadyToHide && ReactDOM.createPortal(
-                <div
-                    ref={setPopperElement}
-                    className={tooltipClasses}
-                    style={{...styles.popper}}
-                    {...attributes.popper}
-                    role="tooltip"
-                >
-                    <div
-                        className={clsx('tooltip-inner', tooltipTextClassName)}
-                        style={tooltipStyle}
-                    >
-                        {title}
-                    </div>
-                </div>,
-                document.body
-            )}
+            <TooltipContent
+                show={isOpenState || isClicked}
+                containerRef={wrapperRef}
+                title={title}
+                placement={placement}
+                options={options}
+                className={tooltipClassName}
+                textClassName={tooltipTextClassName}
+                textStyle={tooltipStyle}
+                maxWidth={tooltipMaxWidth}
+            />
         </>
     )
 }
