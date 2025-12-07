@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import {DropdownHeaderProps} from './DropdownTypes'
 
+// Заголовок группы элементов в выпадающем меню.
 export function DropdownHeader(props: DropdownHeaderProps) {
 
     const {

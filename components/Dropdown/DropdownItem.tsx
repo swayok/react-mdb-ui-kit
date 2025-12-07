@@ -2,9 +2,13 @@ import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
 import clsx from 'clsx'
 import {
+    MouseEvent, useMemo,
+} from 'react'
+import {
     Link,
     LinkProps,
 } from 'react-router-dom'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {useDropdownContext} from './DropdownContext'
 import {
     AnyObject,
@@ -36,27 +40,45 @@ export function DropdownItem<
         disableAllItems,
     } = useDropdownContext()
 
-    const [dropdownItemProps,
-        meta] = useDropdownItem({
+    const handleClick = useEventCallback(
+        (e: MouseEvent<HTMLElement>) => {
+            if (disabled || disableAllItems) {
+                e.preventDefault()
+                return
+            }
+            onClick?.(e)
+        }
+    )
+
+    const [
+        dropdownItemProps,
+        meta,
+    ] = useDropdownItem({
         key: eventKey,
         href,
-        disabled,
-        onClick: disableAllItems
-            ? e => e.preventDefault()
-            : onClick,
+        disabled: disabled || disableAllItems,
+        onClick: handleClick,
         active,
     })
 
     const {
         Component,
         componentProps,
-    } = getComponentAndProps(
-        tag,
-        href,
-        target,
-        external,
-        LinkComponent,
-        disableAllItems
+    } = useMemo(
+        () => getComponentAndProps(
+            tag,
+            href,
+            target,
+            external,
+            LinkComponent
+        ),
+        [
+            tag,
+            href,
+            target,
+            external,
+            LinkComponent,
+        ]
     )
 
     return (
@@ -64,6 +86,7 @@ export function DropdownItem<
             {...otherProps}
             {...dropdownItemProps}
             {...componentProps}
+            disabled={disableAllItems}
             ref={ref}
             className={clsx(
                 'dropdown-item',
@@ -82,8 +105,7 @@ function getComponentAndProps(
     href: DropdownItemProps['href'],
     target: DropdownItemProps['target'],
     external: DropdownItemProps['external'],
-    LinkComponent: DropdownItemProps['LinkComponent'],
-    disableAllItems: boolean
+    LinkComponent: DropdownItemProps['LinkComponent']
 ): {
     Component: ReactComponentOrTagName
     componentProps: AnyObject
@@ -115,9 +137,6 @@ function getComponentAndProps(
             componentProps.href = href
             Component = Anchor
         }
-    }
-    if (disableAllItems) {
-        componentProps.disabled = true
     }
     return {
         Component,

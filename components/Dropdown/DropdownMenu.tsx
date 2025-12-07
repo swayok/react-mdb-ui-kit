@@ -1,5 +1,4 @@
 import useIsomorphicEffect from '@restart/hooks/useIsomorphicEffect'
-import useMergedRefs from '@restart/hooks/useMergedRefs'
 import {useDropdownMenu} from '@restart/ui/DropdownMenu'
 import clsx from 'clsx'
 import {
@@ -9,6 +8,7 @@ import {
     useRef,
 } from 'react'
 import warning from 'warning'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {AnyObject} from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {
@@ -58,8 +58,10 @@ export function DropdownMenu(props: DropdownMenuProps) {
     } = getPlacementAndAlignClasses(align, drop, isRTL)
 
     // noinspection SuspiciousTypeOfGuard
-    const [menuProps,
-        {hasShown, popper, show, toggle}] = useDropdownMenu({
+    const [
+        menuProps,
+        {hasShown, popper, show, toggle},
+    ] = useDropdownMenu({
         flip,
         rootCloseEvent,
         show: showFromProps,

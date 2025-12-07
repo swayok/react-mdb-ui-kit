@@ -1,10 +1,12 @@
-import useEventCallback from '@restart/hooks/useEventCallback'
 import BaseDropdown from '@restart/ui/Dropdown'
 import clsx from 'clsx'
 import React, {
-    useImperativeHandle, useMemo, useState,
+    useImperativeHandle,
+    useMemo,
+    useState,
 } from 'react'
 import {useUncontrolled} from 'uncontrollable'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {DropdownContext} from './DropdownContext'
 import {
     DropdownApi,
@@ -14,6 +16,15 @@ import {
     DropdownToggleEventMetadata,
 } from './DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
+
+const directionClasses = {
+    down: 'dropdown',
+    'down-centered': 'dropdown-center',
+    up: 'dropup',
+    'up-centered': 'dropup-center dropup',
+    end: 'dropend',
+    start: 'dropstart',
+} as const
 
 // Обёртка и контекст выпадающего меню.
 export function Dropdown(props: DropdownProps) {
@@ -26,7 +37,7 @@ export function Dropdown(props: DropdownProps) {
         onSelect,
         onToggle,
         focusFirstItemOnShow,
-        tag: Component = 'div',
+        tag: Tag = 'div',
         autoClose = true,
         ref,
         isRTL,
@@ -38,30 +49,6 @@ export function Dropdown(props: DropdownProps) {
         disableAllItems,
         setDisableAllItems,
     ] = useState<boolean>(false)
-
-    // Проверить, разрешено ли закрытие Dropdown?
-    const isClosingPermitted = (source: string): boolean => {
-        // autoClose === false разрешает закрытие только при нажатии на DropdownToggle.
-        // Такое событие помечается source === 'click'.
-        if (!autoClose) {
-            return source === 'click'
-        }
-
-        // autoClose === inside разрешает закрытие при клике внутри DropdownMenu,
-        // но не при клике вне DropdownMenu.
-        if (autoClose === 'inside') {
-            return source !== 'rootClose'
-        }
-
-        // autoClose === outside разрешает закрытие при клике вне DropdownMenu,
-        // но не при клике внутри DropdownMenu.
-        if (autoClose === 'outside') {
-            return source !== 'select'
-        }
-
-        // Закрытие разрешено при любом source.
-        return true
-    }
 
     // Обработка переключения состояния Dropdown.
     const handleToggle = useEventCallback(
@@ -90,7 +77,7 @@ export function Dropdown(props: DropdownProps) {
                 meta.source = 'rootClose'
             }
 
-            if (isClosingPermitted(meta.source!)) {
+            if (isClosingPermitted(meta.source!, autoClose)) {
                 onToggle?.(nextShow, meta)
             }
         }
@@ -103,24 +90,25 @@ export function Dropdown(props: DropdownProps) {
 
     // Вычисление расположения выпадающего меню относительно DropdownToggle.
     // Не работает, если нет компонента DropdownToggle внутри Dropdown.
-    const placement = getDropdownMenuPlacement(
-        align === 'end',
-        drop,
-        isRTL
+    const placement = useMemo(
+        () => getDropdownMenuPlacement(
+            align === 'end',
+            drop,
+            isRTL
+        ),
+        [align, drop, isRTL]
     )
 
-    // Вычисление смещения выпадающего меню относительно DropdownToggle или контейнера.
-    const normalizedOffset: DropdownMenuOffset | undefined = typeof offset === 'number'
-        ? [0, offset] as DropdownMenuOffset
-        : offset
-
     // Контекст.
-    const contextValue: DropdownContextProps = useMemo(
+    const contextProps: DropdownContextProps = useMemo(
         (): DropdownContextProps => ({
             align,
             drop,
             isRTL,
-            offset: normalizedOffset,
+            // Смещение выпадающего меню относительно DropdownToggle или контейнера.
+            offset: typeof offset === 'number'
+                ? [0, offset] as DropdownMenuOffset
+                : offset,
             disableAllItems,
             setDisableAllItems,
         }),
@@ -128,24 +116,13 @@ export function Dropdown(props: DropdownProps) {
             align,
             drop,
             isRTL,
-            (Array.isArray(normalizedOffset)
-                ? normalizedOffset.join(',')
-                : normalizedOffset),
+            (Array.isArray(offset) ? offset.join(',') : offset),
             disableAllItems,
         ]
     )
 
-    const directionClasses = {
-        down: 'dropdown',
-        'down-centered': 'dropdown-center',
-        up: 'dropup',
-        'up-centered': 'dropup-center dropup',
-        end: 'dropend',
-        start: 'dropstart',
-    }
-
     return (
-        <DropdownContext.Provider value={contextValue}>
+        <DropdownContext.Provider value={contextProps}>
             <BaseDropdown
                 placement={placement}
                 show={show}
@@ -155,7 +132,7 @@ export function Dropdown(props: DropdownProps) {
                 focusFirstItemOnShow={focusFirstItemOnShow}
                 itemSelector=".dropdown-item:not(.disabled):not(:disabled)"
             >
-                <Component
+                <Tag
                     {...otherProps}
                     ref={ref}
                     className={clsx(
@@ -167,4 +144,28 @@ export function Dropdown(props: DropdownProps) {
             </BaseDropdown>
         </DropdownContext.Provider>
     )
+}
+
+// Проверить, разрешено ли закрытие Dropdown?
+function isClosingPermitted(source: string, autoClose: DropdownProps['autoClose']): boolean {
+    // autoClose === false разрешает закрытие только при нажатии на DropdownToggle.
+    // Такое событие помечается source === 'click'.
+    if (!autoClose) {
+        return source === 'click'
+    }
+
+    // autoClose === inside разрешает закрытие при клике внутри DropdownMenu,
+    // но не при клике вне DropdownMenu.
+    if (autoClose === 'inside') {
+        return source !== 'rootClose'
+    }
+
+    // autoClose === outside разрешает закрытие при клике вне DropdownMenu,
+    // но не при клике внутри DropdownMenu.
+    if (autoClose === 'outside') {
+        return source !== 'select'
+    }
+
+    // Закрытие разрешено при любом source.
+    return true
 }

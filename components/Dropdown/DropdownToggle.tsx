@@ -1,4 +1,3 @@
-import useMergedRefs from '@restart/hooks/useMergedRefs'
 import DropdownContext from '@restart/ui/DropdownContext'
 import {useDropdownToggle} from '@restart/ui/DropdownToggle'
 import clsx from 'clsx'
@@ -6,6 +5,7 @@ import {
     RefObject,
     useContext,
 } from 'react'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {
     Button,
     ButtonProps,
@@ -22,15 +22,17 @@ export function DropdownToggle<
     const {
         split,
         className,
-        tag: Component = Button,
+        tag: Tag = Button,
         ref,
         render,
         children,
         ...otherProps
     } = props
 
-    const [toggleProps,
-        toggleMetadata] = useDropdownToggle()
+    const [
+        toggleProps,
+        toggleMetadata,
+    ] = useDropdownToggle()
 
     toggleProps.ref = useMergedRefs(
         toggleProps.ref,
@@ -40,7 +42,7 @@ export function DropdownToggle<
     // This intentionally forwards size and variant (if set) to the
     // underlying component to allow it to render size and style variants.
     return (
-        <Component
+        <Tag
             className={clsx(
                 className,
                 'dropdown-toggle',
@@ -51,6 +53,6 @@ export function DropdownToggle<
             {...otherProps}
         >
             {typeof render === 'function' ? render(toggleMetadata) : children}
-        </Component>
+        </Tag>
     )
 }
