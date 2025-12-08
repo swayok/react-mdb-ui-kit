@@ -1,17 +1,19 @@
 import clsx from 'clsx'
 import {
-    AllHTMLAttributes,
     useCallback,
     useEffect,
     useId,
 } from 'react'
+import {UserBehaviorService} from '../../services/UserBehaviorService'
+import {
+    HtmlComponentProps,
+    ReactComponentOrTagName,
+} from '../../types'
+import {HtmlContent} from '../HtmlContent'
 import {
     CheckboxProps,
     InputValidationErrorProps,
 } from './InputTypes'
-import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {ReactComponentOrTagName} from '../../types'
-import {HtmlContent} from '../HtmlContent'
 import {InputValidationError} from './InputValidationError'
 
 // Аналог <input type="radio"/> или <input type="checkbox"/>.
@@ -144,7 +146,7 @@ export function Checkbox(props: CheckboxProps) {
     if (disableWrapper) {
         return contents
     } else {
-        const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
+        const additionalWrapperProps: HtmlComponentProps<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
         let WrapperTag: ReactComponentOrTagName = wrapperTag
         if (wrapperIsValidationMessageContainer) {
             if (WrapperTag !== 'div') {

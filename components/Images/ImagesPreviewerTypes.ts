@@ -1,8 +1,10 @@
-import type {AllHTMLAttributes} from 'react'
-import type {CssGridColumnsConfig} from '../../types'
+import type {
+    CssGridColumnsConfig,
+    HtmlComponentProps,
+} from '../../types'
 
 // Свойства предпросмотрщика изображений.
-export interface ImagesPreviewerProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface ImagesPreviewerProps extends HtmlComponentProps<HTMLDivElement> {
     images: string[]
     alt?: string
     // Настройка количества колонок в списке миниатюр для каждого размера экрана.

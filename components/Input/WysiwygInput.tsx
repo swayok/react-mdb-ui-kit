@@ -2,7 +2,6 @@ import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
 import clsx from 'clsx'
 import {
-    AllHTMLAttributes,
     lazy,
     Suspense,
     useCallback,
@@ -13,6 +12,7 @@ import {
 import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
 import {
     CKEditorInstance,
+    HtmlComponentProps,
     ReactComponentOrTagName,
 } from '../../types'
 import {
@@ -156,7 +156,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
         [onChange]
     )
 
-    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
+    const additionalWrapperProps: HtmlComponentProps<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
     let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {

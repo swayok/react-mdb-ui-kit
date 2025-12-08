@@ -4,7 +4,7 @@ import type {
     ComponentProps,
     ForwardedRef,
     HTMLProps,
-    MutableRefObject,
+    RefCallback,
     RefObject,
 } from 'react'
 import type {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
@@ -37,13 +37,18 @@ export type NumericKeysObject<
     ValuesType = any,
 > = Record<number, ValuesType>
 
-// Ref любого вида.
+// RefObject любого вида с API или без.
 export type AnyRefObject<
     RefType = any,
     ApiType = any,
 > = RefObject<RefType & ApiType>
-    | MutableRefObject<RefType & ApiType>
     | ForwardedRef<RefType & ApiType>
+
+// Ref любого вида с API или без.
+export type AnyRef<
+    RefType = any,
+    ApiType = any,
+> = RefCallback<RefType & ApiType> | AnyRefObject<RefType, ApiType>
 
 /**
  * Базовый тип URL параметров для хука useParams<UrlParams>().
@@ -114,7 +119,7 @@ export interface ApiResponseData extends AnyObject {
 export interface FormSelectOption<Value = string, Extras = AnyObject> extends AnyObject {
     label: string
     value: Value
-    attributes?: DropdownItemProps | AllHTMLAttributes<unknown>
+    attributes?: DropdownItemProps | HtmlComponentProps<unknown>
     disabled?: boolean
     extra?: Extras
 }
@@ -144,16 +149,76 @@ export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject>
 // Свойство этого типа может быть React компонентом или реальным HTML тегом (строкой).
 export type ReactComponentOrTagName = ComponentProps<any>
 
-// Компонент имеет свойство tag, которое может быть React компонентом или реальным HTML тегом (строкой).
-export interface ComponentPropsWithModifiableTag extends AllHTMLAttributes<HTMLElement> {
+/**
+ * Компонент, который принимает свойства любого HTML элемента.
+ */
+export type HtmlComponentProps<T = HTMLElement> = AllHTMLAttributes<T>
+
+/**
+ * Компонент имеет свойство tag, которое может быть React компонентом
+ * или реальным HTML тегом (строкой).
+ * Также компонент имеет свойство ref.
+ *
+ * Лучше использовать в паре с:
+ * @see MergedComponentProps
+ */
+export interface MorphingComponentProps<
+    RefType = any,
+    RefApi = any,
+> {
     tag?: ReactComponentOrTagName
+    ref?: AnyRef<RefType, RefApi>
 }
 
-// Компонент имеет свойство tag, которое может быть React компонентом или реальным HTML тегом (строкой).
-// Также компонент имеет свойство ref.
-export interface ComponentPropsWithModifiableTagAndRef extends ComponentPropsWithModifiableTag {
-    ref?: AnyRefObject
+/**
+ * Компонент имеет свойство tag, которое может быть React компонентом
+ * или реальным HTML тегом (строкой).
+ *
+ * Лучше использовать в паре с:
+ * @see MergedComponentProps
+ */
+export interface MorphingHtmlComponentPropsWithoutRef extends HtmlComponentProps,
+    Omit<MorphingComponentProps, 'ref'> {
 }
+
+/**
+ * Компонент имеет свойство tag, которое может быть React компонентом
+ * или реальным HTML тегом (строкой).
+ * Также компонент имеет свойство ref.
+ *
+ * Лучше использовать в паре с:
+ * @see MergedComponentProps
+ */
+export interface MorphingHtmlComponentProps<
+    RefType = any,
+    RefApi = any,
+> extends HtmlComponentProps, MorphingComponentProps {
+    ref?: AnyRef<RefType, RefApi>
+}
+
+/**
+ * Объединение свойств 2х компонентов для ситуации, когда один компонент может
+ * использовать другой компонент внутри себя как основной.
+ * При этом нужно иметь возможность передать часть свойств во внедряемый компонент.
+ *
+ * Подходит только для 1 варианта использования:
+ * MorphingComponentProps<BaseComponentProps, InjectedComponentProps>.
+ * В этом случае из InjectedComponentProps будут удалены свойства,
+ * описанные в BaseComponentProps.
+ * Это не всегда подходит, если BaseComponentProps, например
+ * расширяет AllHTMLAttributes<HTMLElement> или HtmlComponentProps.
+ *
+ * Для решения этой проблемы можно использовать, например:
+ * Omit<InjectedComponentProps, 'onClick' | 'children' | 'tag'> & BaseComponentProps
+ *
+ * Пример свойств базового компонента, где свойство tag может быть компонентом
+ * со свойствами InjectedComponentProps:
+ * @see MorphingHtmlComponentPropsWithoutRef
+ */
+export type MergedComponentProps<
+    BaseComponentProps extends object,
+    InjectedComponentProps extends object,
+> = BaseComponentProps & Omit<InjectedComponentProps, keyof BaseComponentProps>
 
 // Информация о не оптимизированной SVG иконке.
 // Иконка может быть нестандартного размера и иметь сложную структуру.

@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import {
-    AllHTMLAttributes,
     ComponentType,
     Ref,
     RefObject,
@@ -12,12 +11,14 @@ import {
 import {
     AnyObject,
     ButtonColors,
+    HtmlComponentProps,
+    MergedComponentProps,
     ReactComponentOrTagName,
 } from '../types'
 import {Ripple} from './Ripple/Ripple'
 import {RippleProps} from './Ripple/RippleTypes'
 
-export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
+export interface ButtonProps extends Omit<HtmlComponentProps<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
     LinkComponent?: ComponentType
     hidden?: boolean
     visible?: boolean
@@ -42,8 +43,8 @@ export interface ButtonProps extends Omit<AllHTMLAttributes<HTMLButtonElement | 
 
 // Стилизованная кнопка.
 export function Button<
-    LinkPropsType = LinkProps,
->(props: ButtonProps & Omit<LinkPropsType, 'to' | keyof ButtonProps>) {
+    LinkComponentProps extends object = LinkProps,
+>(props: MergedComponentProps<ButtonProps, Omit<LinkComponentProps, 'to'>>) {
 
     if (props.hidden || props.visible === false) {
         return null

@@ -1,13 +1,13 @@
 import type {
-    AllHTMLAttributes,
     ReactNode,
     RefObject,
 } from 'react'
-import type {ButtonProps} from '../Button'
 import type {
-    AnyRefObject,
-    ComponentPropsWithModifiableTagAndRef,
+    AnyRef,
+    HtmlComponentProps,
+    MorphingHtmlComponentProps,
 } from '../../types'
+import type {ButtonProps} from '../Button'
 
 // Стандартная структура:
 // Modal
@@ -21,7 +21,7 @@ import type {
 //              ModalFooter
 //                  Button
 //                  ModalFooterCloseButton
-export interface ModalProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'size'> {
+export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size'> {
     // Показать окно или нет. Когда null - окно демонтируется.
     // Полезно, чтобы не засорять страницу кучей закрытых окон.
     // Это так же позволяет использовать окна в таблицах данных без необходимости
@@ -78,8 +78,8 @@ export interface ModalProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'siz
     container?: HTMLElement | string
 }
 
-export interface ModalDialogProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'size'> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ModalDialogProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size'> {
+    ref?: AnyRef<HTMLDivElement>
     // true (default): Отцентрировать модальное окно в окне браузера.
     centered?: boolean
     // Размер окна
@@ -91,12 +91,12 @@ export interface ModalDialogProps extends Omit<AllHTMLAttributes<HTMLDivElement>
     scrollable?: boolean
 }
 
-export interface ModalContentProps extends AllHTMLAttributes<HTMLDivElement> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ModalContentProps extends HtmlComponentProps<HTMLDivElement> {
+    ref?: AnyRef<HTMLDivElement>
 }
 
-export interface ModalHeaderProps extends Omit<AllHTMLAttributes<HTMLDivElement>, 'title'> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ModalHeaderProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'> {
+    ref?: AnyRef<HTMLDivElement>
     // Если задано, то автоматически добавляет компонент
     // ModalTitle с указанным title.
     title?: string | null
@@ -111,7 +111,7 @@ export interface ModalHeaderProps extends Omit<AllHTMLAttributes<HTMLDivElement>
     border?: boolean
 }
 
-export type ModalTitleProps = ComponentPropsWithModifiableTagAndRef
+export type ModalTitleProps = MorphingHtmlComponentProps
 
 export interface ModalHeaderCloseButtonProps extends Omit<ButtonProps, 'onClick'> {
     // true: Кнопка находится вне <ModalHeader>.
@@ -122,12 +122,12 @@ export interface ModalHeaderCloseButtonProps extends Omit<ButtonProps, 'onClick'
     white?: boolean
 }
 
-export interface ModalBodyProps extends AllHTMLAttributes<HTMLDivElement> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ModalBodyProps extends HtmlComponentProps<HTMLDivElement> {
+    ref?: AnyRef<HTMLDivElement>
 }
 
-export interface ModalFooterProps extends AllHTMLAttributes<HTMLDivElement> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ModalFooterProps extends HtmlComponentProps<HTMLDivElement> {
+    ref?: AnyRef<HTMLDivElement>
     // true (default): Добавить верхний border.
     border?: boolean
     // true: Добавить CSS класс justify-content-between flex-nowrap.

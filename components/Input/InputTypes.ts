@@ -1,6 +1,5 @@
 import type {CKEditorConfig} from 'ckeditor4-react'
 import type {
-    AllHTMLAttributes,
     ChangeEvent,
     ClipboardEvent,
     CSSProperties,
@@ -12,17 +11,17 @@ import type {
     Ref,
     RefObject,
 } from 'react'
-import {AppIconProps} from '../Icon'
-import type {IconProps} from '../MDIIcon'
+import type {CalendarProps} from 'react-calendar'
 import type {
     AnyObject,
     ButtonColors,
     CheckboxColors,
-    ComponentPropsWithModifiableTag,
-    ComponentPropsWithModifiableTagAndRef,
     FormSelectOption,
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
+    HtmlComponentProps,
+    MorphingHtmlComponentProps,
+    MorphingHtmlComponentPropsWithoutRef,
     NumericKeysObject,
     ReactComponentOrTagName,
 } from '../../types'
@@ -32,15 +31,16 @@ import type {
     DropdownDropDirection,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
-import type {TooltipProps} from '../Tooltip'
-import type {CalendarProps} from 'react-calendar'
+import {AppIconProps} from '../Icon'
+import type {IconProps} from '../MDIIcon'
+import type {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
 
 export type * from './SelectInput/SelectInputTypes'
 
 // Свойства компонента ButtonsSwitchInput.
 export interface ButtonsSwitchInputProps<
     ValueType = string,
-> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
+> extends Omit<HtmlComponentProps<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
     label?: string | ReactNode
     labelClass?: string
     labelStyle?: CSSProperties
@@ -62,12 +62,12 @@ export interface ButtonsSwitchInputProps<
 }
 
 // Свойства компонента Checkbox.
-export interface CheckboxProps extends Omit<AllHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>, 'type'> {
     type?: 'checkbox' | 'radio' | 'switch'
     // Обертка.
     wrapperTag?: ReactComponentOrTagName
     wrapperClass?: string
-    wrapperProps?: AllHTMLAttributes<HTMLElement>
+    wrapperProps?: HtmlComponentProps
     wrapperStyle?: CSSProperties
     // Не оборачивать в props.wrapperTag.
     disableWrapper?: boolean
@@ -142,7 +142,7 @@ export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {
     checkboxStyle?: CSSProperties
     // Свойства одного чекбокса.
     checkboxProps?: Omit<
-        AllHTMLAttributes<HTMLInputElement>,
+        HtmlComponentProps<HTMLInputElement>,
         'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly' | 'type' | 'color'
     >
     // CSS класс для подписи чекбокса (<input><label className>).
@@ -185,7 +185,7 @@ export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
 }
 
 // Свойства компонента Input.
-export interface InputProps extends AllHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+export interface InputProps extends HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement> {
     textarea?: boolean
     inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>
     label?: string
@@ -200,7 +200,7 @@ export interface InputProps extends AllHTMLAttributes<HTMLInputElement | HTMLTex
         large?: number
     }
     wrapperTag?: ReactComponentOrTagName
-    wrapperProps?: AllHTMLAttributes<HTMLElement> | TooltipProps
+    wrapperProps?: HtmlComponentProps | DefaultTooltipProps
     wrapperClass?: string
     wrapperStyle?: CSSProperties
     value?: string
@@ -258,10 +258,10 @@ export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange'
 
 // Свойства компонента FileInputAsButton.
 export interface FileInputAsButtonProps extends Omit<ButtonProps, 'onChange' | 'onClick' | 'labelFor' | 'id' | 'ref'>,
-    Pick<AllHTMLAttributes<HTMLInputElement>, 'accept' | 'onChange' | 'id' | 'children'> {
+    Pick<HtmlComponentProps<HTMLInputElement>, 'accept' | 'onChange' | 'id' | 'children'> {
     ref?: Ref<HTMLInputElement>
     buttonRef?: RefObject<HTMLLabelElement>
-    inputProps?: Omit<AllHTMLAttributes<HTMLInputElement>, 'type' | 'className' | 'id' | 'ref'>
+    inputProps?: Omit<HtmlComponentProps<HTMLInputElement>, 'type' | 'className' | 'id' | 'ref'>
 }
 
 // Свойства компонента InputAddonIcon.
@@ -270,24 +270,24 @@ export interface InputAddonIconProps extends IconProps {
 }
 
 // Свойства компонента InputAddonText.
-export interface InputAddonTextProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface InputAddonTextProps extends HtmlComponentProps<HTMLDivElement> {
     contentClassName?: string
 }
 
 // Свойства компонента InputGroup.
-export interface InputGroupProps extends ComponentPropsWithModifiableTagAndRef {
+export interface InputGroupProps extends MorphingHtmlComponentProps {
     noWrap?: boolean
 }
 
 // Свойства компонента InputGroupText.
-export interface InputGroupTextProps extends ComponentPropsWithModifiableTagAndRef {
+export interface InputGroupTextProps extends MorphingHtmlComponentProps {
     noBorder?: boolean
     small?: boolean
     large?: boolean
 }
 
 // Свойства компонента InputGroupText.
-export interface InputGroupIconProps extends Omit<ComponentPropsWithModifiableTagAndRef, 'size' | 'onClick' | 'label'>,
+export interface InputGroupIconProps extends Omit<MorphingHtmlComponentProps, 'size' | 'onClick' | 'label'>,
     Pick<
         AppIconProps,
         'path' | 'color' | 'rotate' | 'vertical' | 'spin' | 'size' | 'label'
@@ -302,13 +302,13 @@ export interface InputGroupIconProps extends Omit<ComponentPropsWithModifiableTa
 }
 
 // Свойства компонента InputInfo для HTML контента.
-export interface InputInfoPropsForHtml extends Omit<ComponentPropsWithModifiableTag, 'dangerouslySetInnerHTML'> {
+export interface InputInfoPropsForHtml extends Omit<MorphingHtmlComponentPropsWithoutRef, 'dangerouslySetInnerHTML'> {
     html: string
     children?: never
 }
 
 // Свойства компонента InputInfo для не HTML контента.
-export interface InputInfoPropsForText extends Omit<ComponentPropsWithModifiableTag, 'dangerouslySetInnerHTML'> {
+export interface InputInfoPropsForText extends Omit<MorphingHtmlComponentPropsWithoutRef, 'dangerouslySetInnerHTML'> {
     html?: never
 }
 
@@ -316,7 +316,7 @@ export interface InputInfoPropsForText extends Omit<ComponentPropsWithModifiable
 export type InputInfoProps = InputInfoPropsForHtml | InputInfoPropsForText
 
 // Свойства компонента InputValidationError.
-export interface InputValidationErrorProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface InputValidationErrorProps extends HtmlComponentProps<HTMLDivElement> {
     invalid: boolean
     error?: string | string[] | AnyObject<string> | NumericKeysObject<string> | null
     errorClassName?: string
@@ -390,7 +390,7 @@ export interface NumericInputProps extends Omit<
 export interface OptionsSliderInputProps<
     OptionValueType = number,
     OptionExtrasType = AnyObject,
-> extends Omit<AllHTMLAttributes<HTMLInputElement>, 'value' | 'label' | 'onChange' | 'type'> {
+> extends Omit<HtmlComponentProps<HTMLInputElement>, 'value' | 'label' | 'onChange' | 'type'> {
     label?: string | ReactNode
     options: FormSelectOptionsList<OptionValueType, OptionExtrasType>
     value?: OptionValueType
@@ -448,7 +448,7 @@ export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
     radioStyle?: CSSProperties
     // Свойства одного чекбокса.
     radioProps?: Omit<
-        AllHTMLAttributes<HTMLInputElement>,
+        HtmlComponentProps<HTMLInputElement>,
         'label' | 'value' | 'className' | 'style' | 'checked' | 'disabled' | 'readOnly' | 'type'
     >
     // CSS класс для подписи чекбокса (<input><label className>).
@@ -478,7 +478,7 @@ export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
 }
 
 // Свойства компонента WysiwygInput.
-export interface WysiwygInputProps extends AllHTMLAttributes<HTMLTextAreaElement> {
+export interface WysiwygInputProps extends HtmlComponentProps<HTMLTextAreaElement> {
     // Контейнер CKEditor'а.
     editorRef?: RefObject<HTMLDivElement>
     // Поле ввода внутри CKEditor'а.

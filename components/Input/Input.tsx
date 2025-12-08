@@ -1,13 +1,15 @@
 import clsx from 'clsx'
 import {
-    AllHTMLAttributes,
     useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {ReactComponentOrTagName} from '../../types'
+import {
+    HtmlComponentProps,
+    ReactComponentOrTagName,
+} from '../../types'
 import {
     InputProps,
     InputValidationErrorProps,
@@ -230,7 +232,7 @@ export function Input(props: InputProps) {
         [trackBehaviorAs, onKeyDown]
     )
 
-    const additionalWrapperProps: AllHTMLAttributes<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
+    const additionalWrapperProps: HtmlComponentProps<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
     let WrapperTag: ReactComponentOrTagName = wrapperTag
     if (wrapperIsValidationMessageContainer) {
         if (WrapperTag !== 'div') {

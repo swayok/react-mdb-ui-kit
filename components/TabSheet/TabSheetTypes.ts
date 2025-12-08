@@ -1,14 +1,14 @@
 import type {
-    AllHTMLAttributes,
     ComponentType,
     MouseEvent,
     ReactNode,
 } from 'react'
-import type {RippleProps} from '../Ripple/RippleTypes'
 import type {
     ButtonColors,
-    ComponentPropsWithModifiableTag,
+    HtmlComponentProps,
+    MorphingHtmlComponentPropsWithoutRef,
 } from '../../types'
+import type {RippleProps} from '../Ripple/RippleTypes'
 
 // Свойства контекста.
 export interface TabSheetContextProps<TabName extends string = string> {
@@ -20,7 +20,7 @@ export interface TabSheetContextProps<TabName extends string = string> {
 // Свойства обертки для TabSheet компонентов.
 export interface TabSheetProps<
     TabName extends string = string,
-> extends ComponentPropsWithModifiableTag {
+> extends MorphingHtmlComponentPropsWithoutRef {
     // Либо вкладка по-умолчанию, либо внешний контроль за текущей вкладкой.
     defaultTab: TabName
     savesStateToUrlQuery?: boolean
@@ -36,28 +36,28 @@ export interface TabSheetStateToUrlQueryHandlerProps {
 }
 
 // Свойства контейнера кнопок переключения вкладок.
-export interface TabSheetHeaderProps extends ComponentPropsWithModifiableTag {
-    ulProps?: AllHTMLAttributes<HTMLUListElement>
+export interface TabSheetHeaderProps extends MorphingHtmlComponentPropsWithoutRef {
+    ulProps?: HtmlComponentProps<HTMLUListElement>
 }
 
 // Свойства кнопки переключения на вкладку.
 export interface TabSheetTabButtonProps<
     TabName extends string = string,
-> extends Omit<AllHTMLAttributes<HTMLLIElement>, 'onClick'> {
+> extends Omit<HtmlComponentProps<HTMLLIElement>, 'onClick'> {
     name: TabName
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-    buttonProps?: Omit<AllHTMLAttributes<HTMLButtonElement>, 'role' | 'aria-selected' | 'type' | 'onClick'>
+    buttonProps?: Omit<HtmlComponentProps<HTMLButtonElement>, 'role' | 'aria-selected' | 'type' | 'onClick'>
     ripple?: ButtonColors | RippleProps
     noRipple?: boolean
 }
 
 // Свойства контейнера с блоками содержимого вкладок.
-export type TabSheetBodyProps = ComponentPropsWithModifiableTag
+export type TabSheetBodyProps = MorphingHtmlComponentPropsWithoutRef
 
 // Свойства обертки содержимого вкладки.
 export interface TabSheetTabContentProps<
     TabName extends string = string,
-> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'role'> {
+> extends Omit<HtmlComponentProps<HTMLDivElement>, 'role'> {
     name: TabName
     lazy?: boolean
     ErrorBoundary?: ComponentType<{children: ReactNode | ReactNode[];}>

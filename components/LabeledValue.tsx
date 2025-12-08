@@ -1,10 +1,8 @@
-import {
-    AllHTMLAttributes,
-    ReactNode,
-} from 'react'
 import clsx from 'clsx'
+import {ReactNode} from 'react'
+import {HtmlComponentProps} from '../types'
 
-interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value'> {
+interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'value'> {
     label: string
     // true: обернуть в <span>, false: обернуть в <div>
     inline?: boolean

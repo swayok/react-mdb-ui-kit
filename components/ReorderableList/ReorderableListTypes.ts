@@ -2,7 +2,7 @@ import type {
     ReactNode,
     RefObject,
 } from 'react'
-import type {ComponentPropsWithModifiableTag} from '../../types'
+import type {MorphingHtmlComponentPropsWithoutRef} from '../../types'
 
 // Свойства контекста для ReorderableList.
 export interface ReorderableListContextProps<T = unknown> {
@@ -38,7 +38,7 @@ export interface ReorderableListProps<PayloadType> {
 }
 
 // Свойства компонента ReorderableListItem.
-export interface ReorderableListItemItemProps<PayloadType = unknown> extends Omit<ComponentPropsWithModifiableTag, 'draggable'> {
+export interface ReorderableListItemItemProps<PayloadType = unknown> extends Omit<MorphingHtmlComponentPropsWithoutRef, 'draggable'> {
     position: number
     disabled?: boolean
     payload?: PayloadType

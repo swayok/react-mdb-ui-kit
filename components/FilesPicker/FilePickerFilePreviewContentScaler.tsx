@@ -1,8 +1,8 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes} from 'react'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {HtmlComponentProps} from '../../types'
 
-interface Props extends AllHTMLAttributes<HTMLAnchorElement> {
+interface Props extends HtmlComponentProps<HTMLAnchorElement> {
     file: FileAPISelectedFileInfo
     scaleImageOnHover?: boolean
 }

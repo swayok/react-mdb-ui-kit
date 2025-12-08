@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import {
-    ComponentPropsWithModifiableTagAndRef,
+    MorphingHtmlComponentProps,
     NoteColors,
 } from '../types'
 
-export interface NoteProps extends ComponentPropsWithModifiableTagAndRef {
+export interface NoteProps extends MorphingHtmlComponentProps {
     color?: NoteColors
 }
 

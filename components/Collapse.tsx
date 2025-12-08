@@ -6,10 +6,10 @@ import {
     useMemo,
     useRef,
 } from 'react'
-import {ComponentPropsWithModifiableTag} from '../types'
+import {MorphingHtmlComponentPropsWithoutRef} from '../types'
 import {getCssTransitionDuration} from '../helpers/getCssTransitionDuration'
 
-export interface CollapseProps extends Omit<ComponentPropsWithModifiableTag, 'onTransitionEnd'> {
+export interface CollapseProps extends Omit<MorphingHtmlComponentPropsWithoutRef, 'onTransitionEnd'> {
     navbar?: boolean
     show: boolean
     // Использовать горизонтальное скрытие?

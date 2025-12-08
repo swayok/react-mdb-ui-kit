@@ -1,19 +1,17 @@
-import {
-    AllHTMLAttributes,
-    ReactNode,
-} from 'react'
 import clsx from 'clsx'
+import {ReactNode} from 'react'
 import {
     ButtonColors,
     FormSelectOption,
     FormSelectOptionsList,
+    HtmlComponentProps,
 } from '../types'
 import {
     Button,
     ButtonProps,
 } from './Button'
 
-export interface ButtonsSwitchProps<ValueType = string> extends Omit<AllHTMLAttributes<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
+export interface ButtonsSwitchProps<ValueType = string> extends Omit<HtmlComponentProps<HTMLDivElement>, 'value' | 'label' | 'onChange'> {
     value?: ValueType | ValueType[]
     disabled?: boolean
     options: FormSelectOptionsList<ValueType>

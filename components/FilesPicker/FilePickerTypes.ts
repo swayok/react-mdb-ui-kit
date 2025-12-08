@@ -1,5 +1,4 @@
 import type {
-    AllHTMLAttributes,
     ReactNode,
     RefObject,
 } from 'react'
@@ -11,6 +10,7 @@ import type {ApiRequestMethod} from '../../services/ApiRequestService'
 import type {
     AnyObject,
     CssGridColumnsConfig,
+    HtmlComponentProps,
 } from '../../types'
 
 // Рендерер предпросмотра файла.
@@ -234,7 +234,7 @@ export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps
  * Свойства компонента, который отображает список прикрепленных файлов с информацией
  * о прикрепленных файлах (имя, размер и т.п.).
  */
-export interface FilePickerPreviewsProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface FilePickerPreviewsProps extends HtmlComponentProps<HTMLDivElement> {
     // Размер предпросмотра.
     previewSize?: number
     // Показывать этот блок всегда или только когда есть прикрепленные файлы?
@@ -271,7 +271,7 @@ export interface FilePickerPreviewSizes {
  * Свойства компонента, который отображает список прикрепленных файлов в виде
  * небольших preview-блоков.
  */
-export interface FilePickerPreviewsWithoutInfoProps extends AllHTMLAttributes<HTMLDivElement> {
+export interface FilePickerPreviewsWithoutInfoProps extends HtmlComponentProps<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.
     previewSize?: number | FilePickerPreviewSizes
     // Размер предпросмотра картинки.
@@ -384,7 +384,7 @@ export interface FilePickerWithUploaderFileInfo extends FilePickerFileInfo {
 // Свойства компонента, показывающего предпросмотр файла.
 export interface FilePickerFilePreviewProps<
     T extends FilePickerFileInfo = FilePickerFileInfo,
-> extends AllHTMLAttributes<HTMLElement> {
+> extends HtmlComponentProps {
     key: string
     file: T
     // Размер контейнера предпросмотра прикрепленного файла.

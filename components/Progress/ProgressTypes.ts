@@ -1,17 +1,17 @@
-import type {AllHTMLAttributes} from 'react'
 import type {
-    AnyRefObject,
     BackgroundColors,
+    AnyRef,
+    HtmlComponentProps,
 } from '../../types'
 
-export interface ProgressProps extends AllHTMLAttributes<HTMLDivElement> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ProgressProps extends HtmlComponentProps<HTMLDivElement> {
+    ref?: AnyRef<HTMLDivElement>
     // Высота полосы
     height?: number | string
 }
 
-export interface ProgressBarProps extends AllHTMLAttributes<HTMLDivElement> {
-    ref?: AnyRefObject<HTMLDivElement>
+export interface ProgressBarProps extends HtmlComponentProps<HTMLDivElement> {
+    ref?: AnyRef<HTMLDivElement>
     // Анимация.
     animated?: boolean
     // Цвет.

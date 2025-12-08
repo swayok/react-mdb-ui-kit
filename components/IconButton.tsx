@@ -3,18 +3,19 @@ import {
     CSSProperties,
     MouseEvent,
 } from 'react'
+import {useEventCallback} from '../helpers/useEventCallback'
 import {TextColors} from '../types'
 import {
     AppIconProps,
     Icon,
 } from './Icon'
-import {TooltipProps} from './Tooltip'
+import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 
 export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     tooltip?: string
     color?: TextColors | 'link'
     onClick: (event: MouseEvent<HTMLDivElement>) => void
-    tooltipProps?: Omit<TooltipProps, 'onClick' | 'title' | 'disableClickHandler'>
+    tooltipProps?: Omit<DefaultTooltipProps, 'onClick' | 'title' | 'disableClickHandler'>
     iconClassName?: string
     iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
@@ -43,16 +44,18 @@ export function IconButton(props: IconButtonProps) {
     const wrapperClass: string = clsx(
         'clickable',
         inline ? 'd-inline-block with-icon' : 'with-icon-flex',
-        color ? 'link-' + props.color : null,
+        color ? 'link-' + color : null,
         disabled ? 'disabled' : null,
         className
     )
 
-    const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-        if (!disabled) {
-            onClick(event)
+    const handleClick = useEventCallback(
+        (event: MouseEvent<HTMLDivElement>) => {
+            if (!disabled) {
+                onClick(event)
+            }
         }
-    }
+    )
 
     if (props.tooltip) {
         return (

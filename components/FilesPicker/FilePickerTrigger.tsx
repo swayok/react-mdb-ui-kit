@@ -1,12 +1,14 @@
 import {MouseEvent} from 'react'
-import {ComponentPropsWithModifiableTag} from '../../types'
+import {
+    MorphingHtmlComponentPropsWithoutRef,
+} from '../../types'
 import {useFilePickerContext} from './FilePickerContext'
 
-type Props = ComponentPropsWithModifiableTag
+type Props = MorphingHtmlComponentPropsWithoutRef
 
 // Элемент, при нажатии на который запускается выбор файла для прикрепления.
-export function FilePickerTrigger<TagProps = unknown>(
-    props: Props & Omit<TagProps, 'onClick'>
+export function FilePickerTrigger<InjectedComponentProps extends object = object>(
+    props: Omit<InjectedComponentProps, 'onClick' | 'children' | 'tag'> & Props
 ) {
     const {
         onClick,

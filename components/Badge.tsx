@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import React from 'react'
 import {
     BackgroundColors,
-    ComponentPropsWithModifiableTagAndRef,
+    MorphingHtmlComponentProps,
 } from '../types'
 
-export interface BadgeProps extends ComponentPropsWithModifiableTagAndRef {
+export interface BadgeProps extends MorphingHtmlComponentProps {
     pill?: boolean
     dot?: boolean
     notification?: boolean

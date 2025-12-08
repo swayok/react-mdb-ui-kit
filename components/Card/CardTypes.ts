@@ -1,11 +1,11 @@
 import type {
     BackgroundColors,
     BorderColors,
-    ComponentPropsWithModifiableTagAndRef,
+    MorphingHtmlComponentProps,
 } from '../../types'
 
 // Свойства компонента Card.
-export interface CardProps extends ComponentPropsWithModifiableTagAndRef {
+export interface CardProps extends MorphingHtmlComponentProps {
     // Толщина границы: 0, 1, 2, 3, 4, 5.
     border?: number
     // Цвет границы.
@@ -20,10 +20,10 @@ export interface CardProps extends ComponentPropsWithModifiableTagAndRef {
 }
 
 // Свойства компонента CardBody.
-export type CardBodyProps = ComponentPropsWithModifiableTagAndRef
+export type CardBodyProps = MorphingHtmlComponentProps
 
 // Свойства компонента CardFooter.
-export interface CardFooterProps extends ComponentPropsWithModifiableTagAndRef {
+export interface CardFooterProps extends MorphingHtmlComponentProps {
     // Толщина верхней границы: 0, 1, 2, 3, 4, 5.
     border?: number
     // Цвет границы.
@@ -33,7 +33,7 @@ export interface CardFooterProps extends ComponentPropsWithModifiableTagAndRef {
 }
 
 // Свойства компонента CardHeader.
-export interface CardHeaderProps extends ComponentPropsWithModifiableTagAndRef {
+export interface CardHeaderProps extends MorphingHtmlComponentProps {
     // Толщина нижней границы: 0, 1, 2, 3, 4, 5.
     border?: number
     // Цвет границы.
@@ -43,4 +43,4 @@ export interface CardHeaderProps extends ComponentPropsWithModifiableTagAndRef {
 }
 
 // Свойства компонента CardTitle.
-export type CardTitleProps = ComponentPropsWithModifiableTagAndRef
+export type CardTitleProps = MorphingHtmlComponentProps

@@ -1,27 +1,25 @@
 import clsx from 'clsx'
 import {
-    Tooltip,
-    TooltipProps,
-} from './Tooltip'
-import {
-    MDIIcon,
-    IconProps,
-} from './MDIIcon'
-import {
     SvgIconInfo,
     TextColors,
 } from '../types'
 import {
+    IconProps,
+    MDIIcon,
+} from './MDIIcon'
+import {
     SvgIcon,
     SvgIconProps,
 } from './SvgIcon'
+import {Tooltip} from './Tooltip/Tooltip'
+import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 
 export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
     path: IconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
     tooltip?: string
-    tooltipProps?: Omit<TooltipProps, 'title'>
+    tooltipProps?: Omit<DefaultTooltipProps, 'title'>
     centerIconInTooltip?: boolean
     tooltipMaxWidth?: number
 }
@@ -81,7 +79,7 @@ export function Icon(props: AppIconProps) {
             tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
             ...otherTooltipProps
         } = tooltipProps
-        const commonTooltipProps: Partial<TooltipProps> = {
+        const commonTooltipProps: Partial<DefaultTooltipProps> = {
             title: tooltip,
             disableClickHandler: tooltipDisableClickHandler,
             tooltipMaxWidth: tooltipMaxWidthFromProps,

@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import React, {
-    AllHTMLAttributes,
+import {
     useCallback,
     useState,
 } from 'react'
+import {HtmlComponentProps} from '../../types'
 import {useReorderableListContext} from './ReorderableListContext'
 import {ReorderableListItemContext} from './ReorderableListItemContext'
 import {ReorderableListItemItemProps} from './ReorderableListTypes'
@@ -46,7 +46,7 @@ export function ReorderableListItem<PayloadType = unknown>(
         setChildTogglerDragStarted,
     ] = useState<boolean>(false)
 
-    const calculatedProps: AllHTMLAttributes<unknown> = {}
+    const calculatedProps: HtmlComponentProps<unknown> = {}
     const isDisabled = disabled || isDisabledByContext
     if (!isDisabled) {
         calculatedProps.draggable = !hasChildToggler || childTogglerDragStarted

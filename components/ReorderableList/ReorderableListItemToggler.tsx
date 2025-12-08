@@ -6,11 +6,11 @@ import {
 } from 'react'
 import {
     AnyObject,
-    ComponentPropsWithModifiableTag,
+    MorphingHtmlComponentPropsWithoutRef,
 } from '../../types'
 import {ReorderableListItemContext} from './ReorderableListItemContext'
 
-export interface DragAndDropTogglerProps extends Omit<ComponentPropsWithModifiableTag, 'onMouseDown' | 'disabled' | 'draggable'> {
+export interface DragAndDropTogglerProps extends Omit<MorphingHtmlComponentPropsWithoutRef, 'onMouseDown' | 'disabled' | 'draggable'> {
     payload?: AnyObject | null
 }
 

@@ -5,7 +5,7 @@ import {
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from './FilePickerTypes'
-import {Tooltip} from '../Tooltip'
+import {Tooltip} from '../Tooltip/Tooltip'
 import {FilePickerHelpers} from './FilePickerHelpers'
 
 interface Props {

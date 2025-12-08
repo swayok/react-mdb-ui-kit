@@ -1,12 +1,14 @@
+import clsx from 'clsx'
 import {
-    AllHTMLAttributes,
     CSSProperties,
     RefObject,
 } from 'react'
-import clsx from 'clsx'
-import {SvgIconInfo} from '../types'
+import {
+    HtmlComponentProps,
+    SvgIconInfo,
+} from '../types'
 
-export interface SvgIconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
+export interface SvgIconProps extends Omit<HtmlComponentProps<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string
     iconInfo: SvgIconInfo
     ref?: RefObject<SVGSVGElement>

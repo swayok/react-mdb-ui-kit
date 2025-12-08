@@ -1,7 +1,7 @@
-import {ComponentPropsWithModifiableTag} from '../types'
+import {MorphingHtmlComponentPropsWithoutRef} from '../types'
 import DOMPurify from 'dompurify'
 
-interface Props extends Omit<ComponentPropsWithModifiableTag, 'children' | 'dangerouslySetInnerHTML'> {
+interface Props extends Omit<MorphingHtmlComponentPropsWithoutRef, 'children' | 'dangerouslySetInnerHTML'> {
     // Результат выполнения {trans().path.to.html}.
     html: string
     // Если tag не указан, то когда true - оборачивается в <div>, а когда false - в <span>.

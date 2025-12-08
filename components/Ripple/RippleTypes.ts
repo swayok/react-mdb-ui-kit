@@ -1,14 +1,12 @@
-import type {
-    AllHTMLAttributes,
-    RefObject,
-} from 'react'
+import type {RefObject} from 'react'
 import type {
     ButtonColors,
-    ComponentPropsWithModifiableTag,
+    HtmlComponentProps,
+    MorphingHtmlComponentPropsWithoutRef,
 } from '../../types'
 
 // Свойства компонента Ripple.
-export interface RippleProps extends ComponentPropsWithModifiableTag {
+export interface RippleProps extends MorphingHtmlComponentPropsWithoutRef {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref?: RefObject<any>
     // Может ли волна выйти за границы нажатого элемента?
@@ -47,4 +45,4 @@ export interface RipplePositionAndDimensions {
 }
 
 // Свойства компонента RippleWave.
-export type RippleWaveProps = AllHTMLAttributes<HTMLDivElement>
+export type RippleWaveProps = HtmlComponentProps<HTMLDivElement>

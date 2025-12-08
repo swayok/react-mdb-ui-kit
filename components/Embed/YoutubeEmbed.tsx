@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import React, {AllHTMLAttributes} from 'react'
+import {HtmlComponentProps} from '../../types'
 
-interface Props extends Omit<AllHTMLAttributes<HTMLDivElement>, 'children'> {
+interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'children'> {
     embedUrl: string
 }
 

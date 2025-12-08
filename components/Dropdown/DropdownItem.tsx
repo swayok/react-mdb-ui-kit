@@ -1,25 +1,27 @@
-import {useDropdownItem} from '@restart/ui/DropdownItem'
 import Anchor from '@restart/ui/Anchor'
+import {useDropdownItem} from '@restart/ui/DropdownItem'
 import clsx from 'clsx'
 import {
-    MouseEvent, useMemo,
+    MouseEvent,
+    useMemo,
 } from 'react'
 import {
     Link,
     LinkProps,
 } from 'react-router-dom'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {useDropdownContext} from './DropdownContext'
 import {
     AnyObject,
+    MergedComponentProps,
     ReactComponentOrTagName,
 } from '../../types'
+import {useDropdownContext} from './DropdownContext'
 import {DropdownItemProps} from './DropdownTypes'
 
 // Элемент выпадающего меню.
 export function DropdownItem<
-    ComponentProps = LinkProps,
->(props: DropdownItemProps & Omit<ComponentProps, 'to' | keyof DropdownItemProps>) {
+    InjectedComponentProps extends object = LinkProps,
+>(props: MergedComponentProps<DropdownItemProps, Omit<InjectedComponentProps, 'to'>>) {
 
     const {
         className,

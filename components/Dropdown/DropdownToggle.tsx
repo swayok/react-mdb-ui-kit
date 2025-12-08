@@ -6,6 +6,7 @@ import {
     useContext,
 } from 'react'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
+import {MergedComponentProps} from '../../types'
 import {
     Button,
     ButtonProps,
@@ -14,8 +15,13 @@ import {DropdownToggleProps} from './DropdownTypes'
 
 // Кнопка открытия выпадающего меню.
 export function DropdownToggle<
-    T = ButtonProps,
->(props: DropdownToggleProps & Omit<T, 'ref' | keyof DropdownToggleProps>) {
+    InjectedComponentProps extends object = ButtonProps,
+>(
+    props: MergedComponentProps<
+        DropdownToggleProps,
+        Omit<InjectedComponentProps, 'split' | 'className' | 'tag' | 'ref' | 'render' | 'children'>
+    >
+) {
 
     const dropdownContext = useContext(DropdownContext)
 

@@ -13,17 +13,15 @@ import {
 } from '../types'
 import {Icon} from './Icon'
 import {IconProps} from './MDIIcon'
-import {
-    Tooltip,
-    TooltipProps,
-} from './Tooltip'
+import {Tooltip} from './Tooltip/Tooltip'
+import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 
 export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string
     external?: boolean
     color?: TextColors | 'link'
     tooltip: string
-    tooltipProps?: Pick<TooltipProps, 'placement' | 'options' | 'tooltipClassName' | 'tooltipStyle' | 'containsInteractiveElements'>
+    tooltipProps?: Pick<DefaultTooltipProps, 'placement' | 'tooltipClassName' | 'tooltipStyle'>
     iconProps?: Omit<IconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
     size?: number | null

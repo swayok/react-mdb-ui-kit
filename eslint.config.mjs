@@ -126,6 +126,7 @@ const rules = {
         'error',
         {
             code: 120,
+            ignoreComments: true,
             ignoreUrls: true,
             ignoreStrings: true,
             ignoreTemplateLiterals: true,

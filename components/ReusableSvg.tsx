@@ -1,5 +1,4 @@
 import {
-    AllHTMLAttributes,
     RefObject,
     useEffect,
     useRef,
@@ -8,8 +7,9 @@ import {
     ReusableSvgRepository,
     ReusableSvgRepositorySetSvgElementFn,
 } from '../helpers/ReusableSvgRepository'
+import {HtmlComponentProps} from '../types'
 
-export interface ReusableSvgProps extends AllHTMLAttributes<SVGSVGElement> {
+export interface ReusableSvgProps extends HtmlComponentProps<SVGSVGElement> {
     ref?: RefObject<SVGSVGElement>
     // HTML ID для переиспользования. Допустимые символы: a-z, A-Z, 0-9, -, _.
     // Если на странице большое количество одинаковых иконок, то браузер будет

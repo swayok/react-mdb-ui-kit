@@ -12,10 +12,13 @@ import type {
     SyntheticEvent,
 } from 'react'
 import type {
-    AnyRefObject,
-    ComponentPropsWithModifiableTag,
-    ComponentPropsWithModifiableTagAndRef,
+    AnyRef,
+    MorphingHtmlComponentPropsWithoutRef,
+    MorphingHtmlComponentProps,
     ReactComponentOrTagName,
+    MorphingComponentProps,
+    HtmlComponentProps,
+    MergedComponentProps,
 } from '../../types'
 
 export interface DropdownContextProps {
@@ -29,11 +32,11 @@ export interface DropdownContextProps {
 }
 
 export interface DropdownProps extends Omit<
-    ComponentPropsWithModifiableTag,
+    MorphingHtmlComponentPropsWithoutRef,
     'onSelect' | 'onToggle' | 'open'
 > {
     // Ссылка на обертку и API выпадающего меню.
-    ref?: AnyRefObject<any, DropdownApi>
+    ref?: AnyRef<any, DropdownApi>
     // Начальное состояние выпадающего меню.
     defaultShow?: boolean
     /**
@@ -83,7 +86,9 @@ export interface DropdownToggleEventMetadata {
     originalEvent?: SyntheticEvent | KeyboardEvent | MouseEvent
 }
 
-export interface DropdownToggleProps extends ComponentPropsWithModifiableTagAndRef {
+// Свойства компонента, открывающего выпадающее меню по нажатию.
+export interface DropdownToggleProps extends MorphingComponentProps {
+    // Нужно ли добавить CSS класс 'dropdown-toggle-split'?
     split?: boolean
     /**
      * A render prop that returns a Toggle element. The `props`
@@ -91,11 +96,17 @@ export interface DropdownToggleProps extends ComponentPropsWithModifiableTagAndR
      * the `onToggle` argument to toggle the menu open or closed
      */
     render?: (meta: DropdownToggleMetadata) => ReactNode
+    className?: string
+    children?: ReactNode | ReactNode[]
 }
+
+// Свойства компонента DropdownToggle и свойства компонента, передаваемого через tag по умолчанию (div).
+// Для использования в других компонентах со свойством типа dropdownToggleProps.
+export type DefaultDropdownToggleProps = MergedComponentProps<DropdownToggleProps, HtmlComponentProps>
 
 export type DropdownToggleMetadata = UseDropdownToggleMetadata
 
-export interface DropdownMenuProps extends ComponentPropsWithModifiableTagAndRef {
+export interface DropdownMenuProps extends MorphingHtmlComponentProps {
     show?: boolean
     renderOnMount?: boolean
     flip?: boolean
@@ -118,14 +129,14 @@ export interface DropdownItemProps extends Omit<BaseDropdownItemProps, 'as'> {
     target?: HTMLAttributeAnchorTarget
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean
-    ref?: AnyRefObject
+    ref?: AnyRef
 }
 
-export type DropdownItemTextProps = ComponentPropsWithModifiableTagAndRef
+export type DropdownItemTextProps = MorphingHtmlComponentProps
 
-export type DropdownDividerProps = ComponentPropsWithModifiableTagAndRef
+export type DropdownDividerProps = MorphingHtmlComponentProps
 
-export type DropdownHeaderProps = ComponentPropsWithModifiableTagAndRef
+export type DropdownHeaderProps = MorphingHtmlComponentProps
 
 export type DropdownMenuOffset = Offset
 

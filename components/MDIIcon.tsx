@@ -1,13 +1,13 @@
 import {
-    AllHTMLAttributes,
     CSSProperties,
     RefObject,
     SVGAttributes,
     useId,
 } from 'react'
+import {HtmlComponentProps} from '../types'
 import {ReusableSvg} from './ReusableSvg'
 
-export interface IconProps extends Omit<AllHTMLAttributes<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
+export interface IconProps extends Omit<HtmlComponentProps<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string
     path: string
     ref?: RefObject<SVGSVGElement>
