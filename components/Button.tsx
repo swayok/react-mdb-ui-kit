@@ -51,8 +51,6 @@ export function Button<
     }
 
     const {
-        noRipple,
-        ripple,
         children,
         hidden,
         visible,
@@ -64,6 +62,8 @@ export function Button<
         target,
         external,
         color = 'primary',
+        ripple,
+        noRipple = !ripple && (color === 'none' || color === 'link' || color === 'icon'),
         outline,
         rounded,
         block,
