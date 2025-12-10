@@ -8,7 +8,9 @@ import clsx from 'clsx'
 import React, {HTMLProps} from 'react'
 import {DropdownHeader} from '../../Dropdown/DropdownHeader'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
-import {DropdownItemProps} from '../../Dropdown/DropdownTypes'
+import {
+    DropdownHeaderProps,
+} from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
 import {SelectInputBasic} from './SelectInputBasic'
 import {
@@ -87,7 +89,7 @@ export class MultiSelectInput<
                     continue
                 }
 
-                const groupHeaderAttributes: DropdownItemProps = option.groupHeaderAttributes ?? {}
+                const groupHeaderAttributes: DropdownHeaderProps = option.groupHeaderAttributes ?? {}
                 const optionsContainerAttributes: HTMLProps<HTMLDivElement> = option.optionsContainerAttributes ?? {}
 
                 ret.push(

@@ -1,8 +1,12 @@
-import Anchor from '@restart/ui/Anchor'
-import {useDropdownItem} from '@restart/ui/DropdownItem'
+import {
+    useFloatingTree,
+    useListItem,
+} from '@floating-ui/react'
 import clsx from 'clsx'
+import * as React from 'react'
 import {
     MouseEvent,
+    FocusEvent,
     useMemo,
 } from 'react'
 import {
@@ -10,6 +14,7 @@ import {
     LinkProps,
 } from 'react-router-dom'
 import {useEventCallback} from '../../helpers/useEventCallback'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {
     AnyObject,
     MergedComponentProps,
@@ -24,10 +29,11 @@ export function DropdownItem<
 >(props: MergedComponentProps<DropdownItemProps, Omit<InjectedComponentProps, 'to'>>) {
 
     const {
+        label,
         className,
-        eventKey,
         disabled = false,
-        onClick,
+        onClick: propsOnClick,
+        onFocus: propsOnFocus,
         active,
         external,
         tag,
@@ -36,32 +42,38 @@ export function DropdownItem<
         href,
         ref,
         ...otherProps
-    } = props
+    } = props as MergedComponentProps<DropdownItemProps, Omit<LinkProps, 'to'>>
 
     const {
         disableAllItems,
+        activeIndex,
+        getItemProps,
+        setHasFocusInside,
     } = useDropdownContext()
 
-    const handleClick = useEventCallback(
+    const item = useListItem({
+        label: disabled ? null : label,
+    })
+    const tree = useFloatingTree()
+    const isActive = item.index === activeIndex
+
+    const onClick = useEventCallback(
         (e: MouseEvent<HTMLElement>) => {
             if (disabled || disableAllItems) {
                 e.preventDefault()
                 return
             }
-            onClick?.(e)
+            propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
+            tree?.events.emit('click')
         }
     )
 
-    const [
-        dropdownItemProps,
-        meta,
-    ] = useDropdownItem({
-        key: eventKey,
-        href,
-        disabled: disabled || disableAllItems,
-        onClick: handleClick,
-        active,
-    })
+    const onFocus = useEventCallback(
+        (e: FocusEvent<HTMLElement>) => {
+            propsOnFocus?.(e as FocusEvent<HTMLAnchorElement>)
+            setHasFocusInside(true)
+        }
+    )
 
     const {
         Component,
@@ -83,16 +95,26 @@ export function DropdownItem<
         ]
     )
 
+    const mergedRef = useMergedRefs(
+        ref,
+        item.ref
+    )
+
     return (
         <Component
             {...otherProps}
-            {...dropdownItemProps}
+            ref={mergedRef}
+            tabIndex={isActive ? 0 : -1}
+            role="menuitem"
             {...componentProps}
-            disabled={disableAllItems}
-            ref={ref}
+            {...getItemProps({
+                onClick,
+                onFocus,
+            })}
+            disabled={disableAllItems || disabled}
             className={clsx(
                 'dropdown-item',
-                meta.isActive ? 'active' : null,
+                isActive ? 'active' : null,
                 disabled ? 'disabled' : null,
                 componentProps.className as string,
                 className
@@ -137,7 +159,7 @@ function getComponentAndProps(
         } else {
             // Если указан target или external, то ссылку считаем внешней (не должна идти через роутер)
             componentProps.href = href
-            Component = Anchor
+            Component = 'a'
         }
     }
     return {

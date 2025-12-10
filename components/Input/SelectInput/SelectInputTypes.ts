@@ -1,20 +1,32 @@
 import type {ReactNode} from 'react'
 import type {
-    FormSelectOptionsList,
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
     FormSelectOptionOrGroup,
     FormSelectOptionsAndGroupsList,
+    FormSelectOptionsList,
 } from '../../../types'
 import type {
-    DropdownDropDirection,
+    DropdownMenuProps,
     DropdownProps,
 } from '../../Dropdown/DropdownTypes'
 import type {InputProps} from '../InputTypes'
 
+export type SelectInputDropdownProps = Pick<
+    DropdownProps,
+    'focusFirstItemOnShow' | 'closeOnScrollOutside' | 'onToggle'
+>
+
+export type SelectInputDropdownMenuProps = Pick<
+    DropdownMenuProps,
+    'offset' | 'drop' | 'align' | 'flip' | 'shift' | 'shadow' | 'isRTL' | 'maxHeight'
+>
+
 // Свойства компонента SelectInputBasic.
-export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'> {
+export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag' | 'onToggle'>,
+    SelectInputDropdownProps,
+    SelectInputDropdownMenuProps {
     children: ReactNode | ReactNode[]
     // Режим отображения.
     // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода,
@@ -26,10 +38,6 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
     dropdownToggleClassName?: string
     // Добавить white-space: nowrap ко всем опция выпадающего меню?
     textNowrapOnOptions?: boolean
-    dropdownProps?: Omit<DropdownProps, 'drop' | 'className' | 'disabled' | 'children'>
-    drop?: DropdownDropDirection
-    // Максимальная высота выпадающего меню.
-    maxHeight?: number | null
     // Минимальная ширина выпадающего меню.
     minWidth?: null | number | string
     // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.

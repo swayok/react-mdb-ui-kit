@@ -27,8 +27,7 @@ import type {
 } from '../../types'
 import type {ButtonProps} from '../Button'
 import type {
-    DropdownAlign,
-    DropdownDropDirection,
+    DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
 import {AppIconProps} from '../Icon'
@@ -236,8 +235,20 @@ export type DateInputDateRangeValue = [Date | null, Date | null]
 // Значение поля ввода DateInput.
 export type DateInputValue = DateInputSingleDateValue | DateInputDateRangeValue
 
+export type DateInputDropdownProps = Pick<
+    DropdownProps,
+    'closeOnScrollOutside' | 'onToggle'
+>
+
+export type DateInputDropdownMenuProps = Pick<
+    DropdownMenuProps,
+    'offset' | 'drop' | 'align' | 'flip' | 'shift' | 'shadow' | 'isRTL'
+>
+
 // Свойства компонента DateInput.
-export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value'> {
+export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value' | 'onToggle'>,
+    DateInputDropdownProps,
+    DateInputDropdownMenuProps {
     value: DateInputValue
     // Конвертация даты или периода для отображения в поле ввода.
     valueToString?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => string
@@ -247,13 +258,12 @@ export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange'
     // Настройки выпадающего меню.
     dropdownMenuClassName?: string
     dropdownToggleClassName?: string
-    dropdownProps?: Omit<DropdownProps, 'drop' | 'align' | 'className' | 'disabled'>
-    drop?: DropdownDropDirection
-    align?: DropdownAlign
     onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
     calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
     // Показать иконку календаря? По умолчанию: true.
     showCalendarIcon?: boolean
+    // Нужно ли закрывать выпадающее меню при выборе опции.
+    closeDropdownOnSelect?: boolean
 }
 
 // Свойства компонента FileInputAsButton.

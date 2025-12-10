@@ -59,62 +59,63 @@ export function RegionSwitcherDropdown(props: Props) {
     } = props
 
     return (
-        <Dropdown
-            drop={dropdownPlacement.drop}
-            align={dropdownPlacement.align}
-            className={className}
-            focusFirstItemOnShow="keyboard"
-        >
-            <DropdownToggle
-                color="link"
-                className={clsx(
-                    'text-decoration-none',
-                    iconColor ? 'link-' + iconColor : null,
-                    iconClassName
-                )}
+        <div className={className}>
+            <Dropdown
+                focusFirstItemOnShow="auto"
             >
-                <Icon
-                    path={mdiEarth}
-                    size={iconSize}
-                />
-                <Icon
-                    path={mdiChevronUp}
-                    color={chevronColor}
+                <DropdownToggle
+                    color="link"
                     className={clsx(
-                        'ms-n1 mt-n2',
-                        chevronClassName
+                        'text-decoration-none',
+                        iconColor ? 'link-' + iconColor : null,
+                        iconClassName
                     )}
-                    size={iconSize - 4}
-                    rotate={chevronRotate}
-                />
-            </DropdownToggle>
-            <DropdownMenu
-                className="shadow-2-strong"
-                offset={offset}
-            >
-                {options.map(option => (
-                    <DropdownItem
-                        key={'locale-' + option.value}
-                        active={option.value === currentRegion.region}
-                        href={
-                            url
-                            + `?${RegionsManager.getUrlQueryArgName()}=${option.value}`
-                            + `&${LanguagesManager.getUrlQueryArgName()}=${option.extra?.defaultLanguage ?? option.value}`
-                        }
-                        external
-                        rel={noFollow ? 'nofollow' : undefined}
-                        onClick={event => {
-                            if (onSwitch) {
-                                event.preventDefault()
-                                onSwitch(option)
+                >
+                    <Icon
+                        path={mdiEarth}
+                        size={iconSize}
+                    />
+                    <Icon
+                        path={mdiChevronUp}
+                        color={chevronColor}
+                        className={clsx(
+                            'ms-n1 mt-n2',
+                            chevronClassName
+                        )}
+                        size={iconSize - 4}
+                        rotate={chevronRotate}
+                    />
+                </DropdownToggle>
+                <DropdownMenu
+                    shadow="2-strong"
+                    drop={dropdownPlacement.drop}
+                    align={dropdownPlacement.align}
+                    offset={offset}
+                >
+                    {options.map(option => (
+                        <DropdownItem
+                            key={'locale-' + option.value}
+                            active={option.value === currentRegion.region}
+                            href={
+                                url
+                                + `?${RegionsManager.getUrlQueryArgName()}=${option.value}`
+                                + `&${LanguagesManager.getUrlQueryArgName()}=${option.extra?.defaultLanguage ?? option.value}`
                             }
-                        }}
-                    >
-                        {option.label}
-                    </DropdownItem>
-                ))}
-            </DropdownMenu>
-        </Dropdown>
+                            external
+                            rel={noFollow ? 'nofollow' : undefined}
+                            onClick={event => {
+                                if (onSwitch) {
+                                    event.preventDefault()
+                                    onSwitch(option)
+                                }
+                            }}
+                        >
+                            {option.label}
+                        </DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+        </div>
     )
 }
 

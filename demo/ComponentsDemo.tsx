@@ -4,6 +4,7 @@ import {TabSheetHeader} from '../components/TabSheet/TabSheetHeader'
 import {TabSheetTabButton} from '../components/TabSheet/TabSheetTabButton'
 import {BadgesDemo} from './groups/BadgesDemo'
 import {DataGridDemo} from './groups/DataGridDemo'
+import {DropdownsDemo} from './groups/DropdownsDemo'
 import {ImagesPreviewDemo} from './groups/ImagesPreviewDemo'
 import {RatingStarsDemo} from './groups/RatingStarsDemo'
 import {TablesDemo} from './groups/TablesDemo'
@@ -39,6 +40,9 @@ export function ComponentsDemo() {
                 <TabSheetTabButton name="data-grid">
                     Data Grid
                 </TabSheetTabButton>
+                <TabSheetTabButton name="dropdowns">
+                    Dropdowns
+                </TabSheetTabButton>
             </TabSheetHeader>
             <TabSheetBody>
                 <TabContentForDemoTabsheet name="rating-stars">
@@ -61,6 +65,9 @@ export function ComponentsDemo() {
                 </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="data-grid">
                     <DataGridDemo />
+                </TabContentForDemoTabsheet>
+                <TabContentForDemoTabsheet name="dropdowns">
+                    <DropdownsDemo />
                 </TabContentForDemoTabsheet>
             </TabSheetBody>
         </TabSheet>

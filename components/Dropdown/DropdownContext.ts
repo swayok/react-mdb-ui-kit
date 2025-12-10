@@ -1,5 +1,7 @@
+import {FloatingRootContext} from '@floating-ui/react'
 import {
     createContext,
+    HTMLProps,
     useContext,
 } from 'react'
 import {DropdownContextProps} from './DropdownTypes'
@@ -9,6 +11,38 @@ export const DropdownContext = createContext<DropdownContextProps>({
     disableAllItems: false,
     setDisableAllItems() {
     },
+    getReferenceProps(userProps?: HTMLProps<Element>) {
+        return (userProps ?? {}) as Record<string, unknown>
+    },
+    getFloatingProps(userProps?: HTMLProps<HTMLElement>) {
+        return (userProps ?? {}) as Record<string, unknown>
+    },
+    getItemProps(userProps?: HTMLProps<HTMLElement>) {
+        return (userProps ?? {}) as Record<string, unknown>
+    },
+    activeIndex: null,
+    setActiveIndex() {
+    },
+    hasFocusInside: false,
+    setHasFocusInside() {
+    },
+    isOpen: false,
+    setIsOpen() {
+    },
+    setToggleElement() {
+    },
+    setMenuElement() {
+    },
+    isNested: false,
+    itemForParent: {
+        ref() {
+        },
+        index: 0,
+    },
+    parentContext: null,
+    rootContext: {} as FloatingRootContext,
+    elementsRef: {current: []},
+    labelsRef: {current: []},
 })
 
 // Контекст выпадающего меню.

@@ -6,16 +6,18 @@ import React, {
     useRef,
     useState,
 } from 'react'
-import {AnyObject} from '../../../types'
-import {Input} from '../Input'
-import {VirtualizedSelectInputOptions} from './VirtualizedSelectInputOptions'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
 import {stripTags} from '../../../helpers/stripTags'
+import {useEventCallback} from '../../../helpers/useEventCallback'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
+import {AnyObject} from '../../../types'
+import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
+import {Input} from '../Input'
 import {SelectInputBasic} from './SelectInputBasic'
 import {SelectInputOptions} from './SelectInputOptions'
 import {SelectInputProps} from './SelectInputTypes'
+import {VirtualizedSelectInputOptions} from './VirtualizedSelectInputOptions'
 
 interface KeywordsState {
     value: string
@@ -42,7 +44,6 @@ export function SelectInput<
         search,
         searchPlaceholder,
         onChange,
-        dropdownProps,
         maxHeight = 500,
         labelsContainHtml,
         hideEmptyOptionInDropdown,
@@ -51,10 +52,11 @@ export function SelectInput<
         disableOptions = [],
         renderOptionLabel,
         trackBehaviorAs,
-        dropdownFluidWidth = true,
         selectFirstIfNotFound = true,
         virtualizationConfig = {enabled: false},
-        ...attributes
+        // Dropdown
+        onToggle: propsOnToggle,
+        ...basicSelectInputProps
     } = props
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -107,6 +109,31 @@ export function SelectInput<
         }
     }, [selectedOption, valueToString, labelsContainHtml])
 
+    const onDropdownToggle = useEventCallback<DropdownContextProps['setIsOpen']>((
+        open: boolean,
+        event,
+        reason
+    ): void => {
+        if (open && trackBehaviorAs && inputRef.current) {
+            UserBehaviorService.onFocus(
+                inputRef.current,
+                trackBehaviorAs,
+                (value as string) || null
+            )
+        }
+        if (open) {
+            setTimeout(() => {
+                keywordsInputRef.current?.focus()
+            }, 100)
+        } else {
+            setKeywords({
+                value: '',
+                regexp: null,
+            })
+        }
+        propsOnToggle?.(open, event, reason)
+    })
+
     // Обработка ситуации, когда значение props.value отсутствует в списке options.
     useEffect(
         () => {
@@ -152,32 +179,9 @@ export function SelectInput<
                 className
             )}
             isDropdownToggle
-            dropdownFluidWidth={dropdownFluidWidth}
-            {...attributes}
+            {...basicSelectInputProps}
             value={selectedValueForTextInput}
-            dropdownProps={{
-                ...dropdownProps,
-                onToggle(nextShow: boolean, meta) {
-                    if (nextShow && trackBehaviorAs && inputRef.current) {
-                        UserBehaviorService.onFocus(
-                            inputRef.current,
-                            trackBehaviorAs,
-                            (value as string) || null
-                        )
-                    }
-                    if (nextShow) {
-                        setTimeout(() => {
-                            keywordsInputRef.current?.focus()
-                        }, 100)
-                    } else {
-                        setKeywords({
-                            value: '',
-                            regexp: null,
-                        })
-                    }
-                    dropdownProps?.onToggle?.(nextShow, meta)
-                },
-            }}
+            onToggle={onDropdownToggle}
             maxHeight={null}
         >
             {search && (

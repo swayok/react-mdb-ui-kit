@@ -3,17 +3,10 @@ import {
     useCallback,
     useMemo,
 } from 'react'
-import {DataGridItemsCountProps} from './DataGridTypes'
-import {DropdownProps} from '../Dropdown/DropdownTypes'
 import {FormSelectOption} from '../../types'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
-
-const dropdownProps: Partial<DropdownProps> = {
-    offset: 6,
-    // positioningContainer: 'wrapper',
-    drop: 'up',
-}
+import {DataGridItemsCountProps} from './DataGridTypes'
 
 // Количество строк в таблице, диапазон отображаемых строк и выбор лимита строк на странице.
 export function DataGridItemsCount(props: DataGridItemsCountProps) {
@@ -91,9 +84,9 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
                         options={limitsOptions}
                         value={limit}
                         small
-                        dropdownProps={dropdownProps}
                         mode="inline"
                         drop="up"
+                        offset={6}
                         wrapperClass="m-0 data-grid-footer-items-limit-select"
                         valueToString={valueToString}
                         onChange={handleLimitChange}

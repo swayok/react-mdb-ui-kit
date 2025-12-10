@@ -28,7 +28,7 @@ export function DataGridPaginationPagesListFillerDropdown(
         className,
         DropdownToggle,
         onSelect,
-        ...dropdownProps
+        ...wrapperProps
     } = props
 
     const dropdownRef = useRef<DropdownApi>(null)
@@ -53,6 +53,9 @@ export function DataGridPaginationPagesListFillerDropdown(
     if (showPageNumberInputInFiller) {
         content = (
             <DropdownMenu
+                ref={dropdownRef}
+                offset={6}
+                drop="up"
                 maxHeight={300}
                 className="data-grid-pagination-filler-page-number-input"
                 align="start"
@@ -67,9 +70,10 @@ export function DataGridPaginationPagesListFillerDropdown(
                         )
                         if (value) {
                             pageNumberInputRef.current?.blur()
-                            dropdownRef.current?.toggle(
+                            dropdownRef.current?.setIsOpen(
                                 false,
-                                {source: 'select', originalEvent: e}
+                                e.nativeEvent,
+                                'click'
                             )
                             onSelect(value)
                         }
@@ -97,10 +101,11 @@ export function DataGridPaginationPagesListFillerDropdown(
                         onKeyDown={e => {
                             if (e.key === 'Esc') {
                                 e.preventDefault()
-                                dropdownRef.current?.toggle(false, {
-                                    source: 'keydown',
-                                    originalEvent: e,
-                                })
+                                dropdownRef.current?.setIsOpen(
+                                    false,
+                                    e.nativeEvent,
+                                    'escape-key'
+                                )
                             }
                         }}
                     />
@@ -171,19 +176,19 @@ export function DataGridPaginationPagesListFillerDropdown(
 
 
     return (
-        <Dropdown
-            ref={dropdownRef}
-            focusFirstItemOnShow={false}
-            offset={[0, 6]}
-            drop="up"
-            autoClose={true}
+        <div
+            {...wrapperProps}
             className={className}
-            onToggle={onMenuToggle}
-            {...dropdownProps}
         >
-            {DropdownToggle}
-            {content}
-        </Dropdown>
+            <Dropdown
+                focusFirstItemOnShow={false}
+                autoClose={true}
+                onToggle={onMenuToggle}
+            >
+                {DropdownToggle}
+                {content}
+            </Dropdown>
+        </div>
     )
 }
 

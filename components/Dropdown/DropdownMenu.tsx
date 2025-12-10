@@ -1,22 +1,25 @@
-import useIsomorphicEffect from '@restart/hooks/useIsomorphicEffect'
-import {useDropdownMenu} from '@restart/ui/DropdownMenu'
+import {
+    autoUpdate,
+    flip,
+    FloatingFocusManager,
+    FloatingList,
+    FloatingPortal,
+    offset,
+    shift,
+    useFloating,
+} from '@floating-ui/react'
 import clsx from 'clsx'
+import * as React from 'react'
 import {
     CSSProperties,
-    RefObject,
-    useEffect,
-    useRef,
+    useImperativeHandle,
+    useMemo,
 } from 'react'
-import warning from 'warning'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {AnyObject} from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {
-    DropdownAlign,
-    DropdownAlignDirection,
-    DropdownDropDirection,
+    DropdownApi,
     DropdownMenuProps,
-    DropdownResponsiveAlign,
 } from './DropdownTypes'
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
@@ -24,185 +27,116 @@ import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 export function DropdownMenu(props: DropdownMenuProps) {
 
     const {
-        align: contextAlign,
-        drop,
-        isRTL,
-        offset: contextOffset,
-    } = useDropdownContext()
-
-    const {
         className,
-        align = contextAlign,
-        rootCloseEvent,
-        flip = true,
-        show: showFromProps,
+        shadow,
+        drop = 'down',
+        align = 'start',
+        isRTL = false,
+        flip: shouldFlip = true,
+        shift: shouldShift = false,
         renderOnMount,
-        tag: Component = 'div',
-        popperConfig,
+        tag: Tag = 'div',
         variant,
-        isNavbar,
         ref,
-        offset = contextOffset ?? [0, 2],
-        closeOnScrollOutside = false,
+        offset: propsOffset = 2,
         maxHeight,
         textNowrapOnItems,
         style = {},
         fillContainer,
+        children,
         ...otherProps
     } = props
 
     const {
-        placement,
-        alignClasses,
-        alignEnd,
-    } = getPlacementAndAlignClasses(align, drop, isRTL)
+        isOpen,
+        setIsOpen,
+        isNested,
+        setMenuElement,
+        rootContext,
+        getFloatingProps,
+        elementsRef,
+        labelsRef,
+    } = useDropdownContext()
 
-    // noinspection SuspiciousTypeOfGuard
-    const [
-        menuProps,
-        {hasShown, popper, show, toggle},
-    ] = useDropdownMenu({
-        flip,
-        rootCloseEvent,
-        show: showFromProps,
-        usePopper: !isNavbar && alignClasses.length === 0,
-        offset: typeof offset === 'number' ? [0, offset] : offset,
-        popperConfig,
+    // API компонента для использования во внешних компонентах.
+    useImperativeHandle(ref, (): DropdownApi => ({
+        setIsOpen,
+    }))
+
+    // Вычисление расположения выпадающего меню относительно DropdownToggle.
+    // Не работает, если нет компонента DropdownToggle внутри Dropdown.
+    const placement = useMemo(
+        () => (
+            isNested ? 'right-start' : getDropdownMenuPlacement(
+                align === 'end',
+                drop,
+                isRTL
+            )
+        ),
+        [align, drop, isRTL, isNested]
+    )
+
+    const mergedRef = useMergedRefs(
+        ref,
+        setMenuElement
+    )
+
+    const {floatingStyles, context} = useFloating<HTMLButtonElement>({
+        rootContext,
         placement,
+        middleware: [
+            offset({
+                mainAxis: isNested ? 0 : propsOffset,
+                alignmentAxis: isNested ? -1 * propsOffset : 0,
+            }),
+            shouldFlip ? flip(typeof shouldFlip === 'object' ? shouldFlip : undefined) : null,
+            shouldShift ? shift(typeof shouldShift === 'object' ? shouldShift : undefined) : null,
+        ],
+        whileElementsMounted: autoUpdate,
     })
 
-    menuProps.ref = useMergedRefs(
-        ref as RefObject<HTMLElement>,
-        menuProps.ref
-    )
-
-    const menuRef = useRef<HTMLElement>(null)
-    menuProps.ref = useMergedRefs(
-        element => {
-            menuRef.current = element
-        },
-        menuProps.ref
-    )
-
-    // Обработка глобального события скроллинга для закрытия меню при
-    // срабатывании события вне меню.
-    useEffect(() => {
-        if (closeOnScrollOutside && show) {
-            const abortController = new AbortController()
-            document.addEventListener(
-                'scroll',
-                event => {
-                    if (!menuRef.current?.contains(event.target as Node)) {
-                        abortController.abort()
-                        toggle?.(false)
-                    }
-                },
-                {
-                    passive: true,
-                    signal: abortController.signal,
-                    capture: true,
-                }
-            )
-            return () => {
-                abortController.abort()
-            }
-        }
-        return () => {
-        }
-    }, [closeOnScrollOutside, toggle, show])
-
-    // Popper's initial position for the menu is incorrect when
-    // renderOnMount=true. Need to call update() to correct it.
-    useIsomorphicEffect(() => {
-        if (show) {
-            popper?.update()
-        }
-    }, [show])
-
-    if (!hasShown && !renderOnMount) {
-        return null
-    }
-
-    // For custom components provide additional, non-DOM, props;
-    // noinspection SuspiciousTypeOfGuard
-    if (typeof Component !== 'string') {
-        menuProps.show = show
-        menuProps.close = () => toggle?.(false)
-        menuProps.align = align
-    }
-
     const additionalStyles: CSSProperties = {}
-    if (maxHeight !== undefined) {
+    if (maxHeight) {
         additionalStyles.maxHeight = maxHeight
     }
 
-    const bsProps: AnyObject = {
-        'x-placement': popper?.placement,
-    }
-    if (alignClasses.length || isNavbar) {
-        // Bootstrap css requires this data attrib to style responsive menus.
-        bsProps['data-bs-popper'] = 'static'
-    }
-
     return (
-        <Component
-            {...otherProps}
-            {...menuProps}
-            {...bsProps}
-            style={{
-                ...additionalStyles,
-                ...style,
-                // Так надо.
-                ...(popper?.placement ? menuProps.style : {}),
-            }}
-            className={clsx(
-                className,
-                'dropdown-menu',
-                show && 'show',
-                alignEnd && 'dropdown-menu-end',
-                variant && `dropdown-menu-${variant}`,
-                fillContainer ? 'full-width' : null,
-                textNowrapOnItems ? 'text-nowrap-on-items' : null,
-                ...alignClasses
+        <FloatingList
+            elementsRef={elementsRef}
+            labelsRef={labelsRef}
+        >
+            {(isOpen || renderOnMount) && (
+                <FloatingPortal>
+                    <FloatingFocusManager
+                        context={context}
+                        modal={false}
+                        initialFocus={isNested ? -1 : 0}
+                        returnFocus={!isNested}
+                    >
+                        <Tag
+                            ref={mergedRef}
+                            {...getFloatingProps(otherProps)}
+                            className={clsx(
+                                className,
+                                'dropdown-menu',
+                                shadow ? `shadow-${shadow}` : null,
+                                isOpen ? 'show' : null,
+                                variant ? `dropdown-menu-${variant}` : null,
+                                fillContainer ? 'full-width' : null,
+                                textNowrapOnItems ? 'text-nowrap-on-items' : null
+                            )}
+                            style={{
+                                ...style,
+                                ...floatingStyles,
+                                ...(maxHeight ? {maxHeight} : {}),
+                            }}
+                        >
+                            {children}
+                        </Tag>
+                    </FloatingFocusManager>
+                </FloatingPortal>
             )}
-        />
+        </FloatingList>
     )
 }
 
-function getPlacementAndAlignClasses(
-    align?: DropdownAlign,
-    drop?: DropdownDropDirection,
-    isRTL?: boolean
-) {
-    let alignEnd = false
-
-    const alignClasses: string[] = []
-    if (align) {
-        if (typeof align === 'object') {
-            const keys = Object.keys(align)
-
-            warning(
-                keys.length === 1,
-                'There should only be 1 breakpoint when passing an object to `align`'
-            )
-
-            if (keys.length) {
-                const brkPoint = keys[0] as keyof DropdownResponsiveAlign
-                const direction: DropdownAlignDirection = align[brkPoint]
-
-                // .dropdown-menu-end is required for responsively aligning
-                // left in addition to align left classes.
-                alignEnd = direction === 'start'
-                alignClasses.push(`dropdown-menu-${brkPoint as string}-${direction as string}`)
-            }
-        } else if (align === 'end') {
-            alignEnd = true
-        }
-    }
-
-    return {
-        placement: getDropdownMenuPlacement(alignEnd, drop, isRTL),
-        alignClasses,
-        alignEnd,
-    }
-}

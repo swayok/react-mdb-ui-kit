@@ -11,9 +11,12 @@ import {
     useRef,
 } from 'react'
 import {CalendarProps} from 'react-calendar'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {
     DropdownApi,
     DropdownDropDirection,
+    DropdownMenuProps,
+    DropdownProps,
 } from '../Dropdown/DropdownTypes'
 import {DateTimeService} from '../../services/DateTimeService'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
@@ -42,12 +45,7 @@ export function DateInput(props: DateInputProps) {
         dateFormat = DateTimeService.defaultFormat,
         allowEmptyValue,
         className,
-        dropdownToggleClassName,
-        dropdownMenuClassName,
         wrapperClass = 'mb-4',
-        dropdownProps,
-        drop,
-        align,
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
@@ -61,14 +59,57 @@ export function DateInput(props: DateInputProps) {
             tag: 'div',
         },
         showCalendarIcon = true,
+        invalid,
+        // Dropdown
+        closeDropdownOnSelect = false,
+        closeOnScrollOutside,
+        onToggle,
+        // DropdownToggle
+        dropdownToggleClassName,
+        // DropdownMenu
+        offset,
+        drop,
+        align,
+        flip,
+        shift,
+        shadow,
+        isRTL,
+        dropdownMenuClassName,
         ...inputProps
     } = props
 
     // Управление выпадающим меню.
     const dropdownApiRef = useRef<DropdownApi | null>(null)
 
+    const dropdownProps: DropdownProps = {
+        closeOnScrollOutside,
+        autoClose: closeDropdownOnSelect ? true : 'outside',
+        onToggle,
+        focusFirstItemOnShow: false,
+        disabled: inputProps.disabled,
+    }
+
+    const dropdownMenuProps: DropdownMenuProps = {
+        className: clsx(
+            'shadow-2-strong',
+            drop && ([] as DropdownDropDirection[]).includes(drop) && inputProps.label
+                ? 'form-date-input-dropdown-menu-dropup-offset'
+                : null,
+            dropdownMenuClassName
+        ),
+        offset,
+        drop,
+        align,
+        shadow,
+        isRTL,
+        flip,
+        shift,
+    }
+
     // Обработка выбора новой даты или периода.
-    const handleChange = (value: DateInputValue): void => {
+    const handleChange = useEventCallback((
+        value: DateInputValue
+    ): void => {
         let from: DateInputSingleDateValue
         let to: DateInputSingleDateValue = null
         if (Array.isArray(value)) {
@@ -83,13 +124,13 @@ export function DateInput(props: DateInputProps) {
             || !calendarProps.allowPartialRange
             || (from && to)
         ) {
-            dropdownApiRef.current?.toggle(false)
+            dropdownApiRef.current?.setIsOpen(false)
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur(convertDateInputValueToString(value, dateFormat, valueToString))
             }
         }
         onChange(from, to)
-    }
+    })
 
     // Конвертирование даты или периода в строку для отображения в поле ввода.
     const inputValue: string = useMemo(
@@ -113,13 +154,14 @@ export function DateInput(props: DateInputProps) {
             className={clsx(
                 dropdownToggleClassName,
                 className,
-                props.disabled ? null : 'cursor'
+                inputProps.disabled ? null : 'cursor'
             )}
             wrapperClass="m-0"
             wrapperTag={DropdownToggle}
             wrapperProps={wrapperProps}
             active={inputValue !== ''}
             readOnly
+            invalid={invalid}
             withoutValidationMessage
             onFocus={event => {
                 if (trackBehaviorAs) {
@@ -140,11 +182,11 @@ export function DateInput(props: DateInputProps) {
                                 'clean-value-icon',
                                 showCalendarIcon ? 'me-2' : null
                             )}
-                            disabled={props.disabled}
+                            disabled={inputProps.disabled}
                             onClick={e => {
                                 e.preventDefault()
                                 e.stopPropagation()
-                                if (!props.disabled) {
+                                if (!inputProps.disabled) {
                                     handleChange(null)
                                 }
                             }}
@@ -165,11 +207,11 @@ export function DateInput(props: DateInputProps) {
 
     if (
         !withoutValidationMessage
-        && (props.invalid !== undefined || !!validationMessage)
+        && (invalid !== undefined || !!validationMessage)
     ) {
         dropdownToggle = (
             <InputValidationError
-                invalid={!!props.invalid}
+                invalid={!!invalid}
                 error={validationMessage}
                 errorClassName={validationMessageClassName}
             >
@@ -179,40 +221,30 @@ export function DateInput(props: DateInputProps) {
     }
 
     return (
-        <Dropdown
-            {...dropdownProps}
+        <div
             className={clsx(
                 'form-date-input form-outline',
                 inputProps.small && !inputProps.large ? 'form-date-input-sm' : null,
                 inputProps.large && !inputProps.small ? 'form-date-input-lg' : null,
                 wrapperClass
             )} // < form-outline here needed to apply .input-group styles
-            drop={drop}
-            align={align}
-            disabled={props.disabled}
-            focusFirstItemOnShow={false}
-            autoClose="outside"
-            ref={dropdownApiRef}
         >
-            {dropdownToggle}
-            <DropdownMenu
-                className={clsx(
-                    'shadow-2-strong',
-                    drop && ([] as DropdownDropDirection[]).includes(drop) && props.label
-                        ? 'form-date-input-dropdown-menu-dropup-offset'
-                        : null,
-                    dropdownMenuClassName
-                )}
-            >
-                <Suspense>
-                    <Calendar
-                        onChange={handleChange}
-                        value={value}
-                        {...calendarProps}
-                    />
-                </Suspense>
-            </DropdownMenu>
-        </Dropdown>
+            <Dropdown {...dropdownProps}>
+                {dropdownToggle}
+                <DropdownMenu
+                    ref={dropdownApiRef}
+                    {...dropdownMenuProps}
+                >
+                    <Suspense>
+                        <Calendar
+                            onChange={handleChange}
+                            value={value}
+                            {...calendarProps}
+                        />
+                    </Suspense>
+                </DropdownMenu>
+            </Dropdown>
+        </div>
     )
 }
 

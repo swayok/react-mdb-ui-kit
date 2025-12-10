@@ -1,16 +1,14 @@
-import DropdownContext from '@restart/ui/DropdownContext'
-import {useDropdownToggle} from '@restart/ui/DropdownToggle'
 import clsx from 'clsx'
-import {
-    RefObject,
-    useContext,
-} from 'react'
+import * as React from 'react'
+import {FocusEvent} from 'react'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {MergedComponentProps} from '../../types'
 import {
     Button,
     ButtonProps,
 } from '../Button'
+import {useDropdownContext} from './DropdownContext'
 import {DropdownToggleProps} from './DropdownTypes'
 
 // Кнопка открытия выпадающего меню.
@@ -19,46 +17,81 @@ export function DropdownToggle<
 >(
     props: MergedComponentProps<
         DropdownToggleProps,
-        Omit<InjectedComponentProps, 'split' | 'className' | 'tag' | 'ref' | 'render' | 'children'>
+        Omit<InjectedComponentProps, 'onFocus'>
     >
 ) {
-
-    const dropdownContext = useContext(DropdownContext)
-
     const {
         split,
         className,
         tag: Tag = Button,
-        ref,
-        render,
+        ref: propsRef,
+        renderContent,
         children,
+        onFocus: propsOnFocus,
         ...otherProps
     } = props
 
-    const [
-        toggleProps,
-        toggleMetadata,
-    ] = useDropdownToggle()
+    const {
+        isOpen,
+        setToggleElement,
+        isNested,
+        hasFocusInside,
+        parentContext,
+        getReferenceProps,
+        itemForParent,
+        setIsOpen,
+        setHasFocusInside,
+    } = useDropdownContext()
 
-    toggleProps.ref = useMergedRefs(
-        toggleProps.ref,
-        ref as RefObject<HTMLElement>
+    const mergedRefs = useMergedRefs(
+        propsRef,
+        setToggleElement
     )
 
-    // This intentionally forwards size and variant (if set) to the
-    // underlying component to allow it to render size and style variants.
+    const tabIndex = isNested && parentContext && itemForParent
+        ? parentContext.activeIndex === itemForParent.index ? 0 : -1
+        : undefined
+
+    // @ts-ignore Ругается на задание otherProps.onFocus.
+    otherProps.onFocus = useEventCallback(
+        (event: FocusEvent<HTMLElement>): void => {
+            propsOnFocus?.(event)
+            setHasFocusInside(false)
+            parentContext?.setHasFocusInside(true)
+        }
+    )
+
+    const mergedProps = getReferenceProps(
+        isNested && parentContext
+            ? parentContext.getItemProps(otherProps)
+            : otherProps
+    )
+
     return (
         <Tag
             className={clsx(
                 className,
                 'dropdown-toggle',
                 split ? 'dropdown-toggle-split' : null,
-                dropdownContext?.show && 'show'
+                isOpen ? 'show' : null,
+                isNested ? 'nested' : null,
+                hasFocusInside ? 'focused' : null
             )}
-            {...toggleProps}
-            {...otherProps}
+            ref={mergedRefs}
+            tabIndex={tabIndex}
+            role={isNested ? 'menuitem' : undefined}
+            {...mergedProps}
         >
-            {typeof render === 'function' ? render(toggleMetadata) : children}
+            {
+                typeof renderContent === 'function'
+                    ? renderContent({
+                        isOpen,
+                        isNested,
+                        hasFocusInside,
+                        setIsOpen,
+                    })
+                    : children
+            }
         </Tag>
     )
 }

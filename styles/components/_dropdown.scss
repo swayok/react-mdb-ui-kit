@@ -246,7 +246,7 @@
     }
 
     // Dropdown text
-    .dropdown-item-text {
+    .dropdown-text {
         display: block;
         padding: dropdown.$dropdown-item-padding-y dropdown.$dropdown-item-padding-x;
         color: dropdown.$dropdown-item-color;
@@ -284,7 +284,7 @@
             border-color: dropdown.$dropdown-dark-divider-bg;
         }
 
-        .dropdown-item-text {
+        .dropdown-text {
             color: dropdown.$dropdown-dark-link-color;
         }
 

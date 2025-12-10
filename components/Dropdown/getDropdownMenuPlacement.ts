@@ -1,5 +1,5 @@
+import {Placement} from '@floating-ui/react'
 import {DropdownDropDirection} from './DropdownTypes'
-import {Placement} from '@popperjs/core'
 
 // Получить позицию выпадающего меню.
 export function getDropdownMenuPlacement(

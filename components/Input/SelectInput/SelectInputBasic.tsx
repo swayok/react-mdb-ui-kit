@@ -4,6 +4,10 @@ import {CSSProperties} from 'react'
 import {Dropdown} from '../../Dropdown/Dropdown'
 import {DropdownMenu} from '../../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../Dropdown/DropdownToggle'
+import {
+    DropdownMenuProps,
+    DropdownProps,
+} from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
 import {Input} from '../Input'
 import {InputValidationError} from '../InputValidationError'
@@ -17,24 +21,36 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
 
     const {
         className,
-        dropdownToggleClassName,
-        dropdownMenuClassName,
-        textNowrapOnOptions = false,
         wrapperClass = 'mb-4',
         wrapperStyle,
-        dropdownProps,
         children,
-        drop = 'down',
-        maxHeight = 500,
-        minWidth = '100%',
-        dropdownFluidWidth = true,
         mode = 'input',
+        invalid,
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
         addon,
-        closeDropdownOnSelect = true,
         hidden,
+        // Dropdown.
+        closeDropdownOnSelect = true,
+        focusFirstItemOnShow = 'auto',
+        closeOnScrollOutside = false,
+        onToggle,
+        // DropdownToggle.
+        dropdownToggleClassName,
+        // DropdownMenu.
+        maxHeight = 500,
+        minWidth = '100%',
+        offset,
+        drop = 'down',
+        align,
+        shadow,
+        isRTL,
+        flip = true,
+        shift = true,
+        dropdownMenuClassName,
+        dropdownFluidWidth = true,
+        textNowrapOnOptions: textNowrapOnItems = false,
         ...inputProps
     } = props
 
@@ -44,6 +60,14 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
 
     const dropdownMenuStyle: CSSProperties = {}
 
+    const dropdownProps: DropdownProps = {
+        closeOnScrollOutside,
+        autoClose: closeDropdownOnSelect ? true : 'outside',
+        focusFirstItemOnShow,
+        disabled: inputProps.disabled,
+        onToggle,
+    }
+
     if (maxHeight) {
         dropdownMenuStyle.maxHeight = maxHeight
     }
@@ -52,6 +76,26 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
     }
 
     const isDropUp: boolean = ['up', 'up-centered'].includes(drop)
+
+    const dropdownMenuProps: DropdownMenuProps = {
+        className: clsx(
+            'shadow-2-strong',
+            isDropUp && inputProps.label ? 'form-dropdown-select-menu-dropup-offset' : null,
+            dropdownFluidWidth ? 'full-width' : null,
+            dropdownMenuClassName
+        ),
+        style: dropdownMenuStyle,
+        offset,
+        drop,
+        align,
+        shadow,
+        isRTL,
+        flip,
+        shift,
+        fillContainer: dropdownFluidWidth,
+        textNowrapOnItems,
+    }
+
     const chevron = (
         <Icon
             path={mdiChevronDown}
@@ -82,7 +126,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                     className={clsx(
                         dropdownToggleClassName,
                         className,
-                        props.disabled ? null : 'cursor'
+                        inputProps.disabled ? null : 'cursor'
                     )}
                     wrapperClass="m-0"
                     wrapperTag={DropdownToggle}
@@ -92,6 +136,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                     active={inputProps.value !== null && inputProps.value !== ''}
                     readOnly
                     withoutValidationMessage
+                    invalid={invalid}
                     onFocus={e => {
                         e.currentTarget?.setSelectionRange(0, 0)
                     }}
@@ -105,11 +150,11 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
 
     if (
         !withoutValidationMessage
-        && (props.invalid !== undefined || !!validationMessage)
+        && (invalid !== undefined || !!validationMessage)
     ) {
         dropdownToggle = (
             <InputValidationError
-                invalid={!!props.invalid}
+                invalid={!!invalid}
                 error={validationMessage}
                 errorClassName={validationMessageClassName}
             >
@@ -119,8 +164,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
     }
 
     return (
-        <Dropdown
-            {...dropdownProps}
+        <div
             className={clsx(
                 'form-dropdown-select form-outline',
                 'mode-' + mode,
@@ -129,25 +173,14 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                 wrapperClass
             )} // < form-outline here needed to apply .input-group styles
             style={wrapperStyle}
-            drop={drop}
-            disabled={props.disabled}
-            autoClose={closeDropdownOnSelect ? true : 'outside'}
-            focusFirstItemOnShow={true}
         >
-            {dropdownToggle}
-            <DropdownMenu
-                className={clsx(
-                    'shadow-2-strong',
-                    isDropUp && props.label ? 'form-dropdown-select-menu-dropup-offset' : null,
-                    dropdownFluidWidth ? 'full-width' : null,
-                    dropdownMenuClassName
-                )}
-                style={dropdownMenuStyle}
-                textNowrapOnItems={textNowrapOnOptions}
-            >
-                {children}
-            </DropdownMenu>
-            {addon}
-        </Dropdown>
+            <Dropdown {...dropdownProps}>
+                {dropdownToggle}
+                <DropdownMenu {...dropdownMenuProps}>
+                    {children}
+                </DropdownMenu>
+                {addon}
+            </Dropdown>
+        </div>
     )
 }

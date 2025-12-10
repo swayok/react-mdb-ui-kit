@@ -7,7 +7,10 @@ import type {
     RefCallback,
     RefObject,
 } from 'react'
-import type {DropdownItemProps} from '../components/Dropdown/DropdownTypes'
+import type {
+    DropdownHeaderProps,
+    DropdownItemProps,
+} from '../components/Dropdown/DropdownTypes'
 
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
@@ -119,7 +122,7 @@ export interface ApiResponseData extends AnyObject {
 export interface FormSelectOption<Value = string, Extras = AnyObject> extends AnyObject {
     label: string
     value: Value
-    attributes?: DropdownItemProps | HtmlComponentProps<unknown>
+    attributes?: DropdownItemProps & HtmlComponentProps<unknown>
     disabled?: boolean
     extra?: Extras
 }
@@ -128,7 +131,7 @@ export interface FormSelectOption<Value = string, Extras = AnyObject> extends An
 export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> extends AnyObject {
     label: string
     options: FormSelectOption<Value, Extras>[]
-    groupHeaderAttributes?: DropdownItemProps
+    groupHeaderAttributes?: DropdownHeaderProps
     optionsContainerAttributes?: HTMLProps<HTMLDivElement>
     extra?: Extras
 }
@@ -177,7 +180,7 @@ export interface MorphingComponentProps<
  * Лучше использовать в паре с:
  * @see MergedComponentProps
  */
-export interface MorphingHtmlComponentPropsWithoutRef extends HtmlComponentProps,
+export interface MorphingHtmlComponentPropsWithoutRef<T = any> extends HtmlComponentProps<T>,
     Omit<MorphingComponentProps, 'ref'> {
 }
 
@@ -192,8 +195,7 @@ export interface MorphingHtmlComponentPropsWithoutRef extends HtmlComponentProps
 export interface MorphingHtmlComponentProps<
     RefType = any,
     RefApi = any,
-> extends HtmlComponentProps, MorphingComponentProps {
-    ref?: AnyRef<RefType, RefApi>
+> extends HtmlComponentProps<RefType>, MorphingComponentProps<RefType, RefApi> {
 }
 
 /**

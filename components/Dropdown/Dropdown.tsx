@@ -1,171 +1,213 @@
-import BaseDropdown from '@restart/ui/Dropdown'
-import clsx from 'clsx'
-import React, {
-    useImperativeHandle,
-    useMemo,
+import {
+    FloatingNode,
+    FloatingTree,
+    OpenChangeReason,
+    safePolygon,
+    useClick,
+    useDismiss,
+    useFloatingNodeId,
+    useFloatingParentNodeId,
+    useFloatingRootContext,
+    useHover,
+    useInteractions,
+    useListItem,
+    useListNavigation,
+    useRole,
+    useTypeahead,
+} from '@floating-ui/react'
+import * as React from 'react'
+import {
+    useRef,
     useState,
 } from 'react'
 import {useUncontrolled} from 'uncontrollable'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {DropdownContext} from './DropdownContext'
 import {
-    DropdownApi,
+    DropdownContext,
+    useDropdownContext,
+} from './DropdownContext'
+import {DropdownEventHandlers} from './DropdownEventHandlers'
+import {
     DropdownContextProps,
-    DropdownMenuOffset,
     DropdownProps,
-    DropdownToggleEventMetadata,
 } from './DropdownTypes'
-import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
-
-const directionClasses = {
-    down: 'dropdown',
-    'down-centered': 'dropdown-center',
-    up: 'dropup',
-    'up-centered': 'dropup-center dropup',
-    end: 'dropend',
-    start: 'dropstart',
-} as const
 
 // Обёртка и контекст выпадающего меню.
+// Структура:
+// Dropdown
+//   DropdownToggle
+//   DropdownMenu
+//      DropdownHeader
+//      DropdownItem
+//      DropdownText
+//      DropdownDivider
 export function Dropdown(props: DropdownProps) {
+    const parentId = useFloatingParentNodeId()
+
+    if (parentId === null) {
+        return (
+            <FloatingTree>
+                <DropdownWrapper {...props} />
+            </FloatingTree>
+        )
+    }
+
+    return (
+        <DropdownWrapper {...props} />
+    )
+}
+
+// Обёртка и контекст выпадающего меню.
+function DropdownWrapper(props: DropdownProps) {
     const {
-        defaultShow,
-        show,
-        drop = 'down',
-        align = 'start',
-        className,
-        onSelect,
-        onToggle,
-        focusFirstItemOnShow,
-        tag: Tag = 'div',
+        show = false,
+        onToggle = useEventCallback(() => {
+        }),
+        focusFirstItemOnShow = false,
         autoClose = true,
-        ref,
-        isRTL,
-        offset,
-        ...otherProps
+        closeOnScrollOutside = false,
+        disabled,
+        children,
     } = useUncontrolled(props, {show: 'onToggle'})
+
+    const [
+        hasFocusInside,
+        setHasFocusInside,
+    ] = useState(false)
+
+    const [
+        activeIndex,
+        setActiveIndex,
+    ] = useState<number | null>(null)
 
     const [
         disableAllItems,
         setDisableAllItems,
     ] = useState<boolean>(false)
 
-    // Обработка переключения состояния Dropdown.
-    const handleToggle = useEventCallback(
-        (nextShow: boolean, meta: DropdownToggleEventMetadata = {}) => {
-            /**
-             * Является ли элемент события компонентом DropdownToggle.
-             */
-            const isToggleButton = (
-                meta.originalEvent?.target as HTMLElement
-            )?.classList.contains('dropdown-toggle')
+    const [
+        toggleElement,
+        setToggleElement,
+    ] = useState<HTMLElement | null>(null)
+    const [
+        menuElement,
+        setMenuElement,
+    ] = useState<HTMLElement | null>(null)
 
-            // Если элемент события - DropdownToggle, и meta.source === 'mousedown',
-            // то нужно прекратить выполнение, чтобы метод не выполнялся дважды при срабатывании
-            // события "click outside" при нажатии на DropdownToggle.
-            if (isToggleButton && meta.source === 'mousedown') {
-                return
-            }
+    const elementsRef = useRef<(HTMLElement | null)[]>([])
+    const labelsRef = useRef<(string | null)[]>([])
+    const parentContext = useDropdownContext()
 
-            if (
-                meta.originalEvent?.currentTarget === document
-                && (
-                    meta.source !== 'keydown'
-                    || (meta.originalEvent as KeyboardEvent)?.key === 'Escape'
-                )
-            ) {
-                meta.source = 'rootClose'
-            }
+    const nodeId = useFloatingNodeId()
+    const parentId = useFloatingParentNodeId()
+    const itemForParent = useListItem()
 
-            if (isClosingPermitted(meta.source!, autoClose)) {
-                onToggle?.(nextShow, meta)
+    const isNested = parentId != null
+
+    const setIsOpen = useEventCallback(
+        (open: boolean, event?: Event, reason?: OpenChangeReason) => {
+            onToggle(open, event, reason)
+            if (open && focusFirstItemOnShow) {
+                setActiveIndex(0)
             }
         }
     )
 
-    // API компонента для использования во внешних компонентах.
-    useImperativeHandle(ref, (): DropdownApi => ({
-        toggle: handleToggle,
-    }))
+    const rootContext = useFloatingRootContext({
+        open: show,
+        onOpenChange: setIsOpen,
+        elements: {
+            reference: toggleElement,
+            floating: menuElement,
+        },
+    })
 
-    // Вычисление расположения выпадающего меню относительно DropdownToggle.
-    // Не работает, если нет компонента DropdownToggle внутри Dropdown.
-    const placement = useMemo(
-        () => getDropdownMenuPlacement(
-            align === 'end',
-            drop,
-            isRTL
-        ),
-        [align, drop, isRTL]
-    )
+    // Настройка взаимодействий с выпадающим меню.
+    const hover = useHover(rootContext, {
+        enabled: isNested,
+        delay: {open: 75},
+        handleClose: safePolygon({
+            blockPointerEvents: true,
+        }),
+    })
+    const click = useClick(rootContext, {
+        enabled: !disabled,
+        event: 'mousedown',
+        toggle: !isNested,
+        ignoreMouse: isNested,
+    })
+    const role = useRole(rootContext, {role: 'menu'})
+    // noinspection PointlessBooleanExpressionJS
+    const dismiss = useDismiss(rootContext, {
+        bubbles: true,
+        ancestorScroll: closeOnScrollOutside,
+        outsidePress: autoClose === true || autoClose === 'outside',
+    })
+    const listNavigation = useListNavigation(rootContext, {
+        listRef: elementsRef,
+        activeIndex,
+        nested: isNested,
+        onNavigate: setActiveIndex,
+        focusItemOnOpen: focusFirstItemOnShow,
+    })
+    // todo: возможно typeahead тут не нужен или должен быть опциональным.
+    const typeahead = useTypeahead(rootContext, {
+        listRef: labelsRef,
+        onMatch: show ? setActiveIndex : undefined,
+        activeIndex,
+    })
+
+    const {
+        getReferenceProps,
+        getFloatingProps,
+        getItemProps,
+    } = useInteractions([
+        hover,
+        click,
+        role,
+        dismiss,
+        listNavigation,
+        typeahead,
+    ])
 
     // Контекст.
-    const contextProps: DropdownContextProps = useMemo(
-        (): DropdownContextProps => ({
-            align,
-            drop,
-            isRTL,
-            // Смещение выпадающего меню относительно DropdownToggle или контейнера.
-            offset: typeof offset === 'number'
-                ? [0, offset] as DropdownMenuOffset
-                : offset,
-            disableAllItems,
-            setDisableAllItems,
-        }),
-        [
-            align,
-            drop,
-            isRTL,
-            (Array.isArray(offset) ? offset.join(',') : offset),
-            disableAllItems,
-        ]
-    )
+    const contextProps: DropdownContextProps = {
+        rootContext,
+        disableAllItems,
+        setDisableAllItems,
+        getItemProps,
+        getReferenceProps,
+        getFloatingProps,
+        activeIndex,
+        setActiveIndex,
+        hasFocusInside,
+        setHasFocusInside,
+        isOpen: show,
+        setIsOpen,
+        parentContext: isNested ? parentContext : null,
+        setToggleElement,
+        setMenuElement,
+        isNested,
+        itemForParent: isNested ? itemForParent : null,
+        elementsRef,
+        labelsRef,
+    }
 
+    // noinspection PointlessBooleanExpressionJS
     return (
-        <DropdownContext.Provider value={contextProps}>
-            <BaseDropdown
-                placement={placement}
-                show={show}
-                defaultShow={defaultShow}
-                onSelect={onSelect}
-                onToggle={handleToggle}
-                focusFirstItemOnShow={focusFirstItemOnShow}
-                itemSelector=".dropdown-item:not(.disabled):not(:disabled)"
-            >
-                <Tag
-                    {...otherProps}
-                    ref={ref}
-                    className={clsx(
-                        className,
-                        show && 'show',
-                        directionClasses[drop]
-                    )}
-                />
-            </BaseDropdown>
-        </DropdownContext.Provider>
+        <>
+            <DropdownEventHandlers
+                closeOnItemClick={autoClose === true || autoClose === 'inside'}
+                isOpen={show}
+                setIsOpen={setIsOpen}
+                parentId={parentId}
+                nodeId={nodeId}
+            />
+            <FloatingNode id={nodeId}>
+                <DropdownContext.Provider value={contextProps}>
+                    {children}
+                </DropdownContext.Provider>
+            </FloatingNode>
+        </>
     )
-}
-
-// Проверить, разрешено ли закрытие Dropdown?
-function isClosingPermitted(source: string, autoClose: DropdownProps['autoClose']): boolean {
-    // autoClose === false разрешает закрытие только при нажатии на DropdownToggle.
-    // Такое событие помечается source === 'click'.
-    if (!autoClose) {
-        return source === 'click'
-    }
-
-    // autoClose === inside разрешает закрытие при клике внутри DropdownMenu,
-    // но не при клике вне DropdownMenu.
-    if (autoClose === 'inside') {
-        return source !== 'rootClose'
-    }
-
-    // autoClose === outside разрешает закрытие при клике вне DropdownMenu,
-    // но не при клике внутри DropdownMenu.
-    if (autoClose === 'outside') {
-        return source !== 'select'
-    }
-
-    // Закрытие разрешено при любом source.
-    return true
 }
