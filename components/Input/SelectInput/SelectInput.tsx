@@ -55,7 +55,7 @@ export function SelectInput<
         selectFirstIfNotFound = true,
         virtualizationConfig = {enabled: false},
         // Dropdown
-        onToggle: propsOnToggle,
+        onOpenChange: propsOnToggle,
         ...basicSelectInputProps
     } = props
 
@@ -181,7 +181,7 @@ export function SelectInput<
             isDropdownToggle
             {...basicSelectInputProps}
             value={selectedValueForTextInput}
-            onToggle={onDropdownToggle}
+            onOpenChange={onDropdownToggle}
             maxHeight={null}
         >
             {search && (

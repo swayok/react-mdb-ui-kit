@@ -6,13 +6,12 @@ export function DropdownDivider(props: DropdownDividerProps) {
 
     const {
         className,
-        tag: Component = 'hr',
         role = 'separator',
         ...otherProps
     } = props
 
     return (
-        <Component
+        <hr
             className={clsx(className, 'dropdown-divider')}
             role={role}
             {...otherProps}

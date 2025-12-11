@@ -237,7 +237,7 @@ export type DateInputValue = DateInputSingleDateValue | DateInputDateRangeValue
 
 export type DateInputDropdownProps = Pick<
     DropdownProps,
-    'closeOnScrollOutside' | 'onToggle'
+    'closeOnScrollOutside' | 'onOpenChange'
 >
 
 export type DateInputDropdownMenuProps = Pick<
@@ -246,7 +246,7 @@ export type DateInputDropdownMenuProps = Pick<
 >
 
 // Свойства компонента DateInput.
-export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value' | 'onToggle'>,
+export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value'>,
     DateInputDropdownProps,
     DateInputDropdownMenuProps {
     value: DateInputValue

@@ -60,7 +60,7 @@ export function LanguageSwitcherDropdown(props: Props) {
     return (
         <div className={className}>
             <Dropdown
-                focusFirstItemOnShow="auto"
+                focusFirstItemOnOpen="auto"
             >
                 <DropdownToggle
                     color="link"

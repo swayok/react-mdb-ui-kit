@@ -6,14 +6,11 @@ export function DropdownText(props: DropdownTextProps) {
 
     const {
         className,
-        tag: Component = 'span',
-        ref,
         ...otherProps
     } = props
 
     return (
-        <Component
-            ref={ref}
+        <div
             className={clsx(className, 'dropdown-text')}
             {...otherProps}
         />

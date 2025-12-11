@@ -4,6 +4,7 @@ import type {
     ComponentProps,
     ForwardedRef,
     HTMLProps,
+    RefAttributes,
     RefCallback,
     RefObject,
 } from 'react'
@@ -158,6 +159,11 @@ export type ReactComponentOrTagName = ComponentProps<any>
 export type HtmlComponentProps<T = HTMLElement> = AllHTMLAttributes<T>
 
 /**
+ * Компонент, который принимает свойства любого HTML элемента.
+ */
+export type HtmlComponentPropsWithRef<T = HTMLElement> = AllHTMLAttributes<T> & RefAttributes<T>
+
+/**
  * Компонент имеет свойство tag, которое может быть React компонентом
  * или реальным HTML тегом (строкой).
  * Также компонент имеет свойство ref.
@@ -199,7 +205,7 @@ export interface MorphingHtmlComponentProps<
 }
 
 /**
- * Объединение свойств 2х компонентов для ситуации, когда один компонент может
+ * Объединение свойств 2-х компонентов для ситуации, когда один компонент может
  * использовать другой компонент внутри себя как основной.
  * При этом нужно иметь возможность передать часть свойств во внедряемый компонент.
  *

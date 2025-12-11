@@ -128,9 +128,9 @@ export function ComboboxInput(props: ComboboxInputProps) {
         >
             {hasOptions && (
                 <Dropdown
-                    show={showDropdown}
+                    open={showDropdown}
                     autoClose={false}
-                    focusFirstItemOnShow={false}
+                    focusFirstItemOnOpen={false}
                 >
                     <DropdownMenu
                         fillContainer

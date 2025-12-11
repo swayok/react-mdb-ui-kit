@@ -27,7 +27,7 @@ export function DataGridPaginationPagesListFillerDropdown(
         disabled,
         className,
         DropdownToggle,
-        onSelect,
+        onPageSelect,
         ...wrapperProps
     } = props
 
@@ -75,7 +75,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                                 e.nativeEvent,
                                 'click'
                             )
-                            onSelect(value)
+                            onPageSelect(value)
                         }
                     }}
                 >
@@ -146,7 +146,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                             className="page-link"
                             onClick={() => {
                                 if (!disabled) {
-                                    onSelect(pageNumber)
+                                    onPageSelect(pageNumber)
                                 }
                             }}
                         >
@@ -181,9 +181,9 @@ export function DataGridPaginationPagesListFillerDropdown(
             className={className}
         >
             <Dropdown
-                focusFirstItemOnShow={false}
+                focusFirstItemOnOpen={false}
                 autoClose={true}
-                onToggle={onMenuToggle}
+                onOpenChange={onMenuToggle}
             >
                 {DropdownToggle}
                 {content}

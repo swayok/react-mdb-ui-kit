@@ -6,15 +6,12 @@ export function DropdownHeader(props: DropdownHeaderProps) {
 
     const {
         className,
-        tag: Component = 'div',
         role = 'heading',
-        ref,
         ...otherProps
     } = props
 
     return (
-        <Component
-            ref={ref}
+        <div
             className={clsx(className, 'dropdown-header')}
             role={role}
             {...otherProps}

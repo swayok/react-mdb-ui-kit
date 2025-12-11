@@ -9,13 +9,17 @@ import {
     useFloating,
 } from '@floating-ui/react'
 import clsx from 'clsx'
-import * as React from 'react'
 import {
     CSSProperties,
+    Fragment,
     useImperativeHandle,
     useMemo,
 } from 'react'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
+import {
+    HtmlComponentProps,
+    MergedComponentProps,
+} from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {
     DropdownApi,
@@ -24,7 +28,9 @@ import {
 import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 // Выпадающее меню (отображение).
-export function DropdownMenu(props: DropdownMenuProps) {
+export function DropdownMenu<
+    InjectedComponentProps extends object = HtmlComponentProps<HTMLDivElement>,
+>(props: MergedComponentProps<DropdownMenuProps, InjectedComponentProps>) {
 
     const {
         className,
@@ -42,6 +48,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
         maxHeight,
         textNowrapOnItems,
         style = {},
+        inline,
         fillContainer,
         children,
         ...otherProps
@@ -81,14 +88,19 @@ export function DropdownMenu(props: DropdownMenuProps) {
         setMenuElement
     )
 
+    // noinspection SuspiciousTypeOfGuard
     const {floatingStyles, context} = useFloating<HTMLButtonElement>({
         rootContext,
         placement,
         middleware: [
-            offset({
-                mainAxis: isNested ? 0 : propsOffset,
-                alignmentAxis: isNested ? -1 * propsOffset : 0,
-            }),
+            offset(
+                typeof propsOffset === 'number'
+                    ? {
+                        mainAxis: isNested ? 0 : propsOffset,
+                        alignmentAxis: isNested ? -1 * propsOffset : 0,
+                    }
+                    : propsOffset
+            ),
             shouldFlip ? flip(typeof shouldFlip === 'object' ? shouldFlip : undefined) : null,
             shouldShift ? shift(typeof shouldShift === 'object' ? shouldShift : undefined) : null,
         ],
@@ -100,13 +112,15 @@ export function DropdownMenu(props: DropdownMenuProps) {
         additionalStyles.maxHeight = maxHeight
     }
 
+    const Portal = inline ? Fragment : FloatingPortal
+
     return (
         <FloatingList
             elementsRef={elementsRef}
             labelsRef={labelsRef}
         >
             {(isOpen || renderOnMount) && (
-                <FloatingPortal>
+                <Portal>
                     <FloatingFocusManager
                         context={context}
                         modal={false}
@@ -134,7 +148,7 @@ export function DropdownMenu(props: DropdownMenuProps) {
                             {children}
                         </Tag>
                     </FloatingFocusManager>
-                </FloatingPortal>
+                </Portal>
             )}
         </FloatingList>
     )

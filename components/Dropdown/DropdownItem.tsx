@@ -3,7 +3,6 @@ import {
     useListItem,
 } from '@floating-ui/react'
 import clsx from 'clsx'
-import * as React from 'react'
 import {
     MouseEvent,
     FocusEvent,
@@ -36,6 +35,7 @@ export function DropdownItem<
         onFocus: propsOnFocus,
         active,
         external,
+        submenu,
         tag,
         LinkComponent = Link,
         target,
@@ -54,8 +54,8 @@ export function DropdownItem<
     const item = useListItem({
         label: disabled ? null : label,
     })
-    const tree = useFloatingTree()
     const isActive = item.index === activeIndex
+    const tree = useFloatingTree()
 
     const onClick = useEventCallback(
         (e: MouseEvent<HTMLElement>) => {
@@ -114,6 +114,7 @@ export function DropdownItem<
             disabled={disableAllItems || disabled}
             className={clsx(
                 'dropdown-item',
+                submenu ? 'submenu' : null,
                 isActive ? 'active' : null,
                 disabled ? 'disabled' : null,
                 componentProps.className as string,

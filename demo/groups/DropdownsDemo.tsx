@@ -1,11 +1,18 @@
+import {
+    mdiMenu,
+    mdiMenuClose,
+} from '@mdi/js'
 import {Dropdown} from '../../components/Dropdown/Dropdown'
 import {DropdownItem} from '../../components/Dropdown/DropdownItem'
 import {DropdownMenu} from '../../components/Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../components/Dropdown/DropdownToggle'
-import {Dropdown as Dropdown2} from '../../components/DropdownOld/Dropdown'
-import {DropdownItem as DropdownItem2} from '../../components/DropdownOld/DropdownItem'
-import {DropdownMenu as DropdownMenu2} from '../../components/DropdownOld/DropdownMenu'
-import {DropdownToggle as DropdownToggle2} from '../../components/DropdownOld/DropdownToggle'
+import {SubmenuDropdownToggle} from '../../components/Dropdown/SubmenuDropdownToggle'
+import {
+    IconButton,
+    IconButtonProps,
+} from '../../components/IconButton'
+import {DateInput} from '../../components/Input/DateInput'
+import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
 
 // Демонстрация выпадающих меню.
 export function DropdownsDemo() {
@@ -14,14 +21,14 @@ export function DropdownsDemo() {
     // todo: add icon menu dropdown / context menu dropdown / data grid pagination filler
 
     return (
-        <div className="d-flex flex-column gap-3">
-            <div className="flex-1">
+        <div className="d-flex flex-column gap-4">
+            <div className="flex-1 d-flex flex-row gap-4">
                 <Dropdown>
                     <DropdownToggle
                         color="gray"
                         small
                     >
-                        Click to show menu
+                        Menu
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
@@ -35,27 +42,128 @@ export function DropdownsDemo() {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-            </div>
-            <div className="flex-1">
-                <Dropdown2>
-                    <DropdownToggle2
+
+                <Dropdown focusFirstItemOnOpen>
+                    <DropdownToggle
                         color="gray"
                         small
                     >
-                        Click to show menu
-                    </DropdownToggle2>
-                    <DropdownMenu2>
-                        <DropdownItem2>
+                        Select first on open
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem>
                             Item 1
-                        </DropdownItem2>
-                        <DropdownItem2>
+                        </DropdownItem>
+                        <DropdownItem>
                             Item 2
-                        </DropdownItem2>
-                        <DropdownItem2>
+                        </DropdownItem>
+                        <DropdownItem>
                             Item 3
-                        </DropdownItem2>
-                    </DropdownMenu2>
-                </Dropdown2>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+                <Dropdown>
+                    <DropdownToggle
+                        color="gray"
+                        small
+                    >
+                        Nested
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem>
+                            Item 1
+                        </DropdownItem>
+                        <DropdownItem>
+                            Item 2
+                        </DropdownItem>
+                        <DropdownItem submenu>
+                            <Dropdown>
+                                <SubmenuDropdownToggle>
+                                    Select first on open
+                                </SubmenuDropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem>
+                                        Item 1
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        Item 2
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        Item 3
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+                <Dropdown focusFirstItemOnOpen>
+                    <DropdownToggle<IconButtonProps>
+                        tag={IconButton}
+                        color="gray"
+                        path={mdiMenu}
+                        tooltip="Click to toggle menu"
+                    />
+                    <DropdownMenu>
+                        <DropdownItem>
+                            Item 1
+                        </DropdownItem>
+                        <DropdownItem>
+                            Item 2
+                        </DropdownItem>
+                        <DropdownItem>
+                            Item 3
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+                <Dropdown focusFirstItemOnOpen>
+                    <DropdownToggle<IconButtonProps>
+                        tag={IconButton}
+                        color="gray"
+                        path={mdiMenu}
+                        modifyProps={metadata => ({
+                            path: metadata.isOpen ? mdiMenuClose : mdiMenu,
+                        })}
+                    />
+                    <DropdownMenu drop="end">
+                        <DropdownItem>
+                            Item 1
+                        </DropdownItem>
+                        <DropdownItem>
+                            Item 2
+                        </DropdownItem>
+                        <DropdownItem>
+                            Item 3
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+            <div className="flex-1 d-flex flex-row gap-4">
+                <SelectInput
+                    label="Select value"
+                    options={[
+                        {label: 'Option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                    ]}
+                    onChange={() => {
+                    }}
+                />
+                <DateInput
+                    label="Date input"
+                    value={new Date()}
+                    onChange={() => {
+                    }}
+                />
+                <DateInput
+                    label="Date range input"
+                    value={[null, null]}
+                    onChange={() => {
+                    }}
+                />
             </div>
         </div>
     )

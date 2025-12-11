@@ -2,6 +2,7 @@
 import type {
     FlipOptions,
     FloatingRootContext,
+    OffsetOptions,
     OpenChangeReason,
     ShiftOptions,
     UseInteractionsReturn,
@@ -17,12 +18,14 @@ import type {
     SetStateAction,
     SyntheticEvent,
 } from 'react'
+import type {LinkProps} from 'react-router-dom'
 import type {
-    HtmlComponentProps,
+    HtmlComponentPropsWithRef,
     MergedComponentProps,
     MorphingComponentProps,
     MorphingHtmlComponentProps,
 } from '../../types'
+import type {ButtonProps} from '../Button'
 
 // Свойства контекста для Dropdown.
 export interface DropdownContextProps extends UseInteractionsReturn {
@@ -36,7 +39,9 @@ export interface DropdownContextProps extends UseInteractionsReturn {
     isOpen: boolean
     setIsOpen: (open: boolean, event?: Event, reason?: OpenChangeReason) => void
     parentContext: DropdownContextProps | null
+    toggleElement: HTMLElement | null
     setToggleElement: Dispatch<SetStateAction<HTMLElement | null>>
+    menuElement: HTMLElement | null
     setMenuElement: Dispatch<SetStateAction<HTMLElement | null>>
     isNested: boolean
     itemForParent: {
@@ -52,30 +57,30 @@ export interface DropdownContextProps extends UseInteractionsReturn {
 export interface DropdownProps {
     ref?: never
     // Начальное состояние выпадающего меню.
-    defaultShow?: boolean
+    defaultOpen?: boolean
     /**
      * Состояние выпадающего меню.
      * Если задано, то компонент будет работать в режиме внешнего управления видимостью.
      * Если не задано, то компонент будет работать в режиме самоуправления видимостью.
      *
-     * @controllable onToggle
+     * @controllable onOpenChange
      */
-    show?: boolean
+    open?: boolean
+    /**
+     * Функция вызывается при изменении видимости выпадающего меню.
+     *
+     * @controllable open
+     */
+    onOpenChange?: DropdownContextProps['setIsOpen']
     // Нужно ли подсветить первый DropdownItem элемент при открытии меню?
     // Если 'keyboard', то подсветка будет работать только при открытии меню с клавиатуры.
-    focusFirstItemOnShow?: boolean | 'auto'
+    focusFirstItemOnOpen?: boolean | 'auto'
     // По умолчанию: true.
     autoClose?: boolean | 'outside' | 'inside'
     // Закрывать меню при скролле родительского контейнера?
     closeOnScrollOutside?: boolean
     // Заблокировать взаимодействие с меню.
     disabled?: boolean
-    /**
-     * Функция вызывается при изменении видимости выпадающего меню.
-     *
-     * @controllable show
-     */
-    onToggle?: DropdownContextProps['setIsOpen']
     children?: ReactNode | ReactNode[]
 }
 
@@ -107,7 +112,10 @@ export type DropdownToggleRenderFnMetadata = Pick<
 >
 
 // Свойства компонента, открывающего выпадающее меню по нажатию.
-export interface DropdownToggleProps extends MorphingComponentProps {
+export interface DropdownToggleProps<
+    RefType = any,
+    InjectedComponentPropsType = any,
+> extends MorphingComponentProps<RefType> {
     className?: string
     // Нужно ли добавить CSS класс 'dropdown-toggle-split'?
     split?: boolean
@@ -116,14 +124,36 @@ export interface DropdownToggleProps extends MorphingComponentProps {
      * Получает частичное состояние и функцию setIsOpen из контекста DropdownContextProps.
      */
     renderContent?: (metadata: DropdownToggleRenderFnMetadata) => ReactNode | ReactNode[]
+    /**
+     * Модификация свойств компонента в зависимости от состояния из metadata
+     * @param metadata
+     */
+    modifyProps?: (
+        metadata: Omit<DropdownToggleRenderFnMetadata, 'setIsOpen'>
+    ) => Partial<InjectedComponentPropsType>
     // Не используется, если указано свойство renderContent().
     children?: ReactNode | ReactNode[]
-    onFocus?: (event: FocusEvent<HTMLElement>) => void
+    onFocus?: (event: FocusEvent<any>) => void
+}
+
+// Свойства компонента, открывающего вложенное выпадающее меню по нажатию.
+export interface SubmenuDropdownToggleProps<
+    InjectedComponentPropsType = any,
+> extends Omit<DropdownToggleProps<HTMLDivElement, InjectedComponentPropsType>, 'tag'> {
+    // Добавить иконку "стрелка вправо"?
+    // По умолчанию: true.
+    // Также добавляет flexbox стили.
+    chevron?: boolean
+    // Размер иконки.
+    chevronSize?: number
 }
 
 // Свойства компонента DropdownToggle и свойства компонента, передаваемого через tag по умолчанию (div).
 // Для использования в других компонентах со свойством типа dropdownToggleProps.
-export type DefaultDropdownToggleProps = MergedComponentProps<DropdownToggleProps, HtmlComponentProps>
+export type DefaultDropdownToggleProps = MergedComponentProps<
+    Omit<DropdownToggleProps, 'tag' | 'ref'>,
+    ButtonProps
+>
 
 type ShadowValue = '0' | '1' | '2' | '3' | '4' | '5' | '6'
 
@@ -156,7 +186,7 @@ export interface DropdownMenuProps extends MorphingHtmlComponentProps<any, Dropd
     // Режим Right-To-Left.
     isRTL?: boolean
     // Смещение выпадающего меню относительно DropdownToggle.
-    offset?: number
+    offset?: OffsetOptions
     // Вариант стилизации меню.
     variant?: DropdownMenuVariant
     // Максимальная высота меню.
@@ -165,7 +195,17 @@ export interface DropdownMenuProps extends MorphingHtmlComponentProps<any, Dropd
     fillContainer?: boolean
     // Добавить white-space: nowrap ко всем .dropdown-item?
     textNowrapOnItems?: boolean
+    // Нужно ли размещать меню в том родительском элементе (true) или в FloatingPortal (false)?
+    // По умолчанию: false.
+    inline?: boolean
 }
+
+// Свойства компонента DropdownMenu по умолчанию.
+// Для использования в других компонентах со свойством типа dropdownMenuProps.
+export type DefaultDropdownMenuProps = MergedComponentProps<
+    Omit<DropdownMenuProps, 'tag' | 'ref'>,
+    HtmlComponentPropsWithRef<HTMLDivElement>
+>
 
 // Свойства компонента DropdownItem.
 export interface DropdownItemProps extends MorphingComponentProps {
@@ -178,16 +218,49 @@ export interface DropdownItemProps extends MorphingComponentProps {
     // Активный элемент (управление подсветкой извне)?
     active?: boolean
     disabled?: boolean
+    /**
+     * Элемент содержит подменю?
+     * Пример:
+     * <Dropdown>
+     *     <DropdownToggle>Menu</DropdownToggle>
+     *     <DropdownMenu>
+     *          <DropdownItem>Root menu item</DropdownItem>
+     *          ...
+     *          <DropdownItem submenu>
+     *              <Dropdown>
+     *                  <SubmenuDropdownToggle>
+     *                      Open Submenu
+     *                  </SubmenuDropdownToggle>
+     *                  <DropdownMenu>
+     *                      <DropdownItem>Submenu item</DropdownItem>
+     *                      ...
+     *                  </DropdownMenu>
+     *              </Dropdown>
+     *          </DropdownItem>
+     *          ...
+     *      </DropdownMenu>
+     * </Dropdown>
+     * В этом случае <DropdownItem dropdownToggle> работает как <DropdownToggle>
+     * для вложенного меню.
+     */
+    submenu?: boolean
 }
 
+// Свойства компонента DropdownItem по умолчанию.
+// Для использования в других компонентах со свойством типа dropdownItemProps.
+export type DefaultDropdownItemProps = MergedComponentProps<
+    Omit<DropdownItemProps, 'tag' | 'ref'>,
+    Omit<LinkProps, 'to'>
+>
+
 // Свойства компонента DropdownText.
-export type DropdownTextProps = MorphingHtmlComponentProps
+export type DropdownTextProps = HtmlComponentPropsWithRef<HTMLDivElement>
 
 // Свойства компонента DropdownDivider.
-export type DropdownDividerProps = MorphingHtmlComponentProps
+export type DropdownDividerProps = HtmlComponentPropsWithRef<HTMLHRElement>
 
 // Свойства компонента DropdownHeader.
-export type DropdownHeaderProps = MorphingHtmlComponentProps
+export type DropdownHeaderProps = HtmlComponentPropsWithRef<HTMLDivElement>
 
 export type DropdownDropDirection
     = | 'up'

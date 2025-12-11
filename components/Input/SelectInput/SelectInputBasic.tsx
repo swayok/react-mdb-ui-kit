@@ -33,9 +33,9 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
         hidden,
         // Dropdown.
         closeDropdownOnSelect = true,
-        focusFirstItemOnShow = 'auto',
+        focusFirstItemOnOpen = 'auto',
         closeOnScrollOutside = false,
-        onToggle,
+        onOpenChange,
         // DropdownToggle.
         dropdownToggleClassName,
         // DropdownMenu.
@@ -63,9 +63,9 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
     const dropdownProps: DropdownProps = {
         closeOnScrollOutside,
         autoClose: closeDropdownOnSelect ? true : 'outside',
-        focusFirstItemOnShow,
+        focusFirstItemOnOpen,
         disabled: inputProps.disabled,
-        onToggle,
+        onOpenChange,
     }
 
     if (maxHeight) {
@@ -94,6 +94,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
         shift,
         fillContainer: dropdownFluidWidth,
         textNowrapOnItems,
+        inline: true,
     }
 
     const chevron = (

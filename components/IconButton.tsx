@@ -14,7 +14,7 @@ import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     tooltip?: string
     color?: TextColors | 'link'
-    onClick: (event: MouseEvent<HTMLDivElement>) => void
+    onClick?: (event: MouseEvent<HTMLDivElement>) => void
     tooltipProps?: Omit<DefaultTooltipProps, 'onClick' | 'title' | 'disableClickHandler'>
     iconClassName?: string
     iconStyle?: CSSProperties
@@ -52,7 +52,7 @@ export function IconButton(props: IconButtonProps) {
     const handleClick = useEventCallback(
         (event: MouseEvent<HTMLDivElement>) => {
             if (!disabled) {
-                onClick(event)
+                onClick?.(event)
             }
         }
     )

@@ -1,9 +1,10 @@
 import clsx from 'clsx'
-import * as React from 'react'
 import {FocusEvent} from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {MergedComponentProps} from '../../types'
+import {
+    MergedComponentProps,
+} from '../../types'
 import {
     Button,
     ButtonProps,
@@ -14,23 +15,13 @@ import {DropdownToggleProps} from './DropdownTypes'
 // Кнопка открытия выпадающего меню.
 export function DropdownToggle<
     InjectedComponentProps extends object = ButtonProps,
+    RefType = HTMLElement,
 >(
     props: MergedComponentProps<
-        DropdownToggleProps,
+        DropdownToggleProps<RefType, InjectedComponentProps>,
         Omit<InjectedComponentProps, 'onFocus'>
     >
 ) {
-    const {
-        split,
-        className,
-        tag: Tag = Button,
-        ref: propsRef,
-        renderContent,
-        children,
-        onFocus: propsOnFocus,
-        ...otherProps
-    } = props
-
     const {
         isOpen,
         setToggleElement,
@@ -42,6 +33,18 @@ export function DropdownToggle<
         setIsOpen,
         setHasFocusInside,
     } = useDropdownContext()
+
+    const {
+        split,
+        className,
+        tag: Tag = isNested ? 'div' : Button,
+        ref: propsRef,
+        renderContent,
+        modifyProps,
+        children,
+        onFocus: propsOnFocus,
+        ...otherProps
+    } = props
 
     const mergedRefs = useMergedRefs(
         propsRef,
@@ -81,6 +84,11 @@ export function DropdownToggle<
             tabIndex={tabIndex}
             role={isNested ? 'menuitem' : undefined}
             {...mergedProps}
+            {...(modifyProps ? modifyProps({
+                isOpen,
+                isNested,
+                hasFocusInside,
+            }) : {})}
         >
             {
                 typeof renderContent === 'function'

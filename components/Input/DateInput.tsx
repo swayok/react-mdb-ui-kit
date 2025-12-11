@@ -63,7 +63,7 @@ export function DateInput(props: DateInputProps) {
         // Dropdown
         closeDropdownOnSelect = false,
         closeOnScrollOutside,
-        onToggle,
+        onOpenChange,
         // DropdownToggle
         dropdownToggleClassName,
         // DropdownMenu
@@ -84,8 +84,8 @@ export function DateInput(props: DateInputProps) {
     const dropdownProps: DropdownProps = {
         closeOnScrollOutside,
         autoClose: closeDropdownOnSelect ? true : 'outside',
-        onToggle,
-        focusFirstItemOnShow: false,
+        onOpenChange,
+        focusFirstItemOnOpen: false,
         disabled: inputProps.disabled,
     }
 

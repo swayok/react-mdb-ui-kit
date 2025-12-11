@@ -29,8 +29,10 @@ export const DropdownContext = createContext<DropdownContextProps>({
     isOpen: false,
     setIsOpen() {
     },
+    toggleElement: null,
     setToggleElement() {
     },
+    menuElement: null,
     setMenuElement() {
     },
     isNested: false,

@@ -1,5 +1,6 @@
 // Dropdown menu, toggle and contents.
 @use "sass:map";
+@use "sass:math";
 @use "../mixins/transition";
 @use "../mixins/caret";
 @use "../mixins/rfs";
@@ -76,6 +77,11 @@
             .dropdown-item {
                 white-space: nowrap;
             }
+        }
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: dropdown.$dropdown-focus-visible-box-shadow;
         }
     }
 
@@ -175,8 +181,8 @@
     // Links, buttons, and more within the dropdown menu
     //
     // `<button>`-specific styles are denoted with `// For <button>s`
-    .dropdown-item {
-        display: block;
+    .dropdown-item:not(.submenu),
+    .dropdown-toggle.nested {
         width: 100%; // For `<button>`s
         padding: dropdown.$dropdown-item-padding-y dropdown.$dropdown-item-padding-x;
         clear: both;
@@ -201,8 +207,16 @@
             }
         }
 
+        .chevron {
+            margin-right: -0.75 * dropdown.$dropdown-item-padding-x;
+        }
+    }
+
+    .dropdown-item {
         &:hover,
-        &:focus {
+        &:focus,
+        &:focus-visible {
+            outline: none !important;
             color: dropdown.$dropdown-item-hover-color;
             text-decoration: dropdown.$dropdown-item-hover-text-decoration;
             @include gradients.gradient-bg(dropdown.$dropdown-item-hover-bg);
@@ -227,6 +241,7 @@
     }
 
     a.dropdown-item {
+        display: block;
         white-space: nowrap; // prevent links from randomly breaking onto new lines
     }
 

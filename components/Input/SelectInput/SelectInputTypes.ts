@@ -15,7 +15,7 @@ import type {InputProps} from '../InputTypes'
 
 export type SelectInputDropdownProps = Pick<
     DropdownProps,
-    'focusFirstItemOnShow' | 'closeOnScrollOutside' | 'onToggle'
+    'focusFirstItemOnOpen' | 'closeOnScrollOutside' | 'onOpenChange'
 >
 
 export type SelectInputDropdownMenuProps = Pick<
@@ -24,7 +24,7 @@ export type SelectInputDropdownMenuProps = Pick<
 >
 
 // Свойства компонента SelectInputBasic.
-export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag' | 'onToggle'>,
+export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'>,
     SelectInputDropdownProps,
     SelectInputDropdownMenuProps {
     children: ReactNode | ReactNode[]
@@ -36,6 +36,8 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
     // Настройки выпадающего меню.
     dropdownMenuClassName?: string
     dropdownToggleClassName?: string
+    // Внешний контроль состояния открытости выпадающего меню (DropdownProps.show).
+    open?: boolean
     // Добавить white-space: nowrap ко всем опция выпадающего меню?
     textNowrapOnOptions?: boolean
     // Минимальная ширина выпадающего меню.

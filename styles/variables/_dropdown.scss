@@ -27,6 +27,7 @@ $dropdown-inner-border-radius: calc-utils.subtract($dropdown-border-radius, $dro
 $dropdown-divider-bg: $dropdown-border-color !default;
 $dropdown-divider-margin-y: math.div(spacers.$spacer, 2) !default;
 $dropdown-box-shadow: shadows.$box-shadow-4 !default;
+$dropdown-focus-visible-box-shadow: shadows.$box-shadow-1-strong !default;
 
 $dropdown-chevron-margin-left: 0.25rem !default;
 $dropdown-chevron-margin-right: -0.5rem !default;

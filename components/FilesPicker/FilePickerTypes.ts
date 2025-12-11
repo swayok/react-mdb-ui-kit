@@ -7,10 +7,11 @@ import type {
     FileAPISelectedFileInfo,
 } from '../../helpers/FileAPI/FileAPI'
 import type {ApiRequestMethod} from '../../services/ApiRequestService'
-import type {
+import {
     AnyObject,
     CssGridColumnsConfig,
     HtmlComponentProps,
+    MorphingComponentProps,
 } from '../../types'
 
 // Рендерер предпросмотра файла.
@@ -228,6 +229,10 @@ export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps
     deleteUrl?: string | null
     // HTTP метод удаления файлов с сервера, по умолчанию: delete.
     deleteMethod: ApiRequestMethod
+}
+
+// Свойства компонента FilePickerTrigger.
+export interface FilePickerTriggerProps extends MorphingComponentProps, Pick<HtmlComponentProps, 'onClick' | 'children'> {
 }
 
 /**

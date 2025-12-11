@@ -327,10 +327,7 @@ export interface DataGridPaginationProps extends Omit<
 
 // Свойства кнопки, открывающей выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.
-export interface DataGridPaginationPagesListProps extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    'onSelect' | 'onToggle'
-> {
+export interface DataGridPaginationPagesListProps extends HTMLAttributes<HTMLDivElement> {
     totalCount: number
     offset: number
     limit: number
@@ -342,13 +339,13 @@ export interface DataGridPaginationPagesListProps extends Omit<
 // Свойства выпадающего меню со списком всех номеров страниц для пагинатора.
 export interface DataGridPaginationPagesListFillerDropdownProps extends Omit<
     HTMLAttributes<HTMLDivElement>,
-    'onSelect' | 'onToggle'
+    'onSelect'
 > {
     DropdownToggle: ReactNode
     pagesCount: number
     currentPage: number
     disabled?: boolean
-    onSelect: (pageNumber: number) => void
+    onPageSelect: (pageNumber: number) => void
 }
 
 // Свойства обертки строки таблицы (<tr>).

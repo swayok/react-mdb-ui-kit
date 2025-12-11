@@ -15,7 +15,6 @@ import {
     useRole,
     useTypeahead,
 } from '@floating-ui/react'
-import * as React from 'react'
 import {
     useRef,
     useState,
@@ -60,15 +59,15 @@ export function Dropdown(props: DropdownProps) {
 // Обёртка и контекст выпадающего меню.
 function DropdownWrapper(props: DropdownProps) {
     const {
-        show = false,
-        onToggle = useEventCallback(() => {
+        open = false,
+        onOpenChange = useEventCallback(() => {
         }),
-        focusFirstItemOnShow = false,
+        focusFirstItemOnOpen = false,
         autoClose = true,
         closeOnScrollOutside = false,
         disabled,
         children,
-    } = useUncontrolled(props, {show: 'onToggle'})
+    } = useUncontrolled(props, {open: 'onOpenChange'})
 
     const [
         hasFocusInside,
@@ -106,15 +105,15 @@ function DropdownWrapper(props: DropdownProps) {
 
     const setIsOpen = useEventCallback(
         (open: boolean, event?: Event, reason?: OpenChangeReason) => {
-            onToggle(open, event, reason)
-            if (open && focusFirstItemOnShow) {
+            onOpenChange(open, event, reason)
+            if (open && focusFirstItemOnOpen) {
                 setActiveIndex(0)
             }
         }
     )
 
     const rootContext = useFloatingRootContext({
-        open: show,
+        open,
         onOpenChange: setIsOpen,
         elements: {
             reference: toggleElement,
@@ -148,12 +147,12 @@ function DropdownWrapper(props: DropdownProps) {
         activeIndex,
         nested: isNested,
         onNavigate: setActiveIndex,
-        focusItemOnOpen: focusFirstItemOnShow,
+        focusItemOnOpen: focusFirstItemOnOpen,
     })
     // todo: возможно typeahead тут не нужен или должен быть опциональным.
     const typeahead = useTypeahead(rootContext, {
         listRef: labelsRef,
-        onMatch: show ? setActiveIndex : undefined,
+        onMatch: open ? setActiveIndex : undefined,
         activeIndex,
     })
 
@@ -182,10 +181,12 @@ function DropdownWrapper(props: DropdownProps) {
         setActiveIndex,
         hasFocusInside,
         setHasFocusInside,
-        isOpen: show,
+        isOpen: open,
         setIsOpen,
         parentContext: isNested ? parentContext : null,
+        toggleElement,
         setToggleElement,
+        menuElement,
         setMenuElement,
         isNested,
         itemForParent: isNested ? itemForParent : null,
@@ -198,7 +199,7 @@ function DropdownWrapper(props: DropdownProps) {
         <>
             <DropdownEventHandlers
                 closeOnItemClick={autoClose === true || autoClose === 'inside'}
-                isOpen={show}
+                isOpen={open}
                 setIsOpen={setIsOpen}
                 parentId={parentId}
                 nodeId={nodeId}

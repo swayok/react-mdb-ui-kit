@@ -86,7 +86,7 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
                 currentPage={currentPage}
                 className={className}
                 disabled={disabled}
-                onSelect={onPageChange}
+                onPageSelect={onPageChange}
                 {...otherProps}
             />
         )
