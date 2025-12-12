@@ -28,7 +28,6 @@ export function DropdownItem<
 >(props: MergedComponentProps<DropdownItemProps, Omit<InjectedComponentProps, 'to'>>) {
 
     const {
-        label,
         className,
         disabled = false,
         onClick: propsOnClick,
@@ -51,10 +50,9 @@ export function DropdownItem<
         setHasFocusInside,
     } = useDropdownContext()
 
-    const item = useListItem({
-        label: disabled ? null : label,
-    })
-    const isActive = item.index === activeIndex
+    const item = useListItem()
+    const isActive = active || item.index === activeIndex
+    console.log({active, activeIndex})
     const tree = useFloatingTree()
 
     const onClick = useEventCallback(
@@ -102,15 +100,15 @@ export function DropdownItem<
 
     return (
         <Component
-            {...otherProps}
+            {...getItemProps({
+                ...otherProps,
+                onClick,
+                onFocus,
+            })}
             ref={mergedRef}
             tabIndex={isActive ? 0 : -1}
             role="menuitem"
             {...componentProps}
-            {...getItemProps({
-                onClick,
-                onFocus,
-            })}
             disabled={disableAllItems || disabled}
             className={clsx(
                 'dropdown-item',

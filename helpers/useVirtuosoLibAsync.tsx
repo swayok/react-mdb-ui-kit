@@ -24,7 +24,7 @@ function Placeholder() {
     )
 }
 
-interface HookReturn<ItemData = AnyObject, Context = AnyObject | undefined | null> {
+interface UseVirtuosoLibAsyncHookReturn<ItemData = AnyObject, Context = AnyObject | undefined | null> {
     Virtuoso: ComponentType<_VirtuosoProps<ItemData, Context> & {
         ref?: Ref<_VirtuosoHandle>
     }>
@@ -47,12 +47,12 @@ interface HookReturn<ItemData = AnyObject, Context = AnyObject | undefined | nul
 export function useVirtuosoLibAsync<
     ItemData = AnyObject,
     Context = AnyObject | undefined | null,
->(): HookReturn<ItemData, Context> {
+>(): UseVirtuosoLibAsyncHookReturn<ItemData, Context> {
 
     const [
         virtuoso,
         setVirtuoso,
-    ] = useState<HookReturn<ItemData, Context>>(() => ({
+    ] = useState<UseVirtuosoLibAsyncHookReturn<ItemData, Context>>(() => ({
         Virtuoso: Placeholder,
         GroupedVirtuoso: Placeholder,
         TableVirtuoso: Placeholder,

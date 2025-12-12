@@ -25,7 +25,7 @@ export function SubmenuDropdownToggle(
     } = props
 
     return (
-        <DropdownToggle<HtmlComponentProps<HTMLDivElement>>
+        <DropdownToggle<HtmlComponentProps<HTMLDivElement>, HTMLDivElement>
             tag="div"
             {...otherProps}
             className={className}

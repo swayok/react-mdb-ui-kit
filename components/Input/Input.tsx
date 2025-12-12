@@ -4,7 +4,14 @@ import {
     useEffect,
     useRef,
     useState,
+    ClipboardEvent,
+    InputEvent,
+    FocusEvent,
+    KeyboardEvent,
+    ChangeEvent,
+    ReactNode,
 } from 'react'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {
     HtmlComponentProps,
@@ -40,9 +47,9 @@ export function Input(props: InputProps) {
         wrapperProps,
         onChange,
         children,
-        labelRef,
+        labelRef: propsLabelRef,
         labelStyle,
-        inputRef,
+        inputRef: propsInputRef,
         textarea,
         validationMessage,
         validationMessageClassName,
@@ -63,12 +70,17 @@ export function Input(props: InputProps) {
         ...otherProps
     } = props
 
-    const labelEl = useRef<HTMLLabelElement>(null)
-    const inputEl = useRef<HTMLInputElement>(null)
-    const textareaEl = useRef<HTMLTextAreaElement>(null)
+    const labelRef = useRef<HTMLLabelElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
 
-    const labelReference = labelRef ?? labelEl
-    const inputReference = inputRef ?? (textarea ? textareaEl : inputEl)
+    const mergedLabelRef = useMergedRefs(
+        propsLabelRef,
+        labelRef
+    )
+    const mergedInputRef = useMergedRefs(
+        propsInputRef,
+        inputRef
+    )
 
     const [
         labelNotchWidth,
@@ -123,12 +135,12 @@ export function Input(props: InputProps) {
     const updateWidth = useCallback(
         () => {
             if (label?.length) {
-                if (labelReference.current && labelReference.current.clientWidth !== 0) {
+                if (labelRef.current && labelRef.current.clientWidth !== 0) {
                     let multiplier: number = activeInputLabelSizeMultipliers[size]
                     if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
                         multiplier = activeInputLabelSizeMultiplier[size]!
                     }
-                    setLabelNotchWidth((labelReference.current.clientWidth * multiplier) + 8)
+                    setLabelNotchWidth((labelRef.current.clientWidth * multiplier) + 8)
                 } else if (labelNotchWidth === 0) {
                     setLabelNotchWidth('80%')
                     setTimeout(updateWidth, 500)
@@ -139,8 +151,7 @@ export function Input(props: InputProps) {
         },
         [
             label,
-            labelReference.current,
-            labelReference.current?.clientWidth,
+            labelRef.current?.clientWidth,
             activeInputLabelSizeMultiplier,
         ]
     )
@@ -148,14 +159,14 @@ export function Input(props: InputProps) {
     useEffect(updateWidth, [updateWidth])
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             onChange?.(e)
         },
         [onChange]
     )
 
     const handlePaste = useCallback(
-        (e: React.ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (trackBehaviorAs) {
                 UserBehaviorService.onPaste()
             }
@@ -185,7 +196,7 @@ export function Input(props: InputProps) {
     )
 
     const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur()
             }
@@ -196,7 +207,7 @@ export function Input(props: InputProps) {
     )
 
     const handleFocus = useCallback(
-        (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (trackBehaviorAs) {
                 UserBehaviorService.onFocus(e.currentTarget, trackBehaviorAs)
             }
@@ -208,7 +219,7 @@ export function Input(props: InputProps) {
     )
 
     const handleOnBeforeInput = useCallback(
-        (e: React.InputEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: InputEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (allowedChars) {
                 const char: string = e.data
                 // Отменяем введенный символ, если он не разрешен
@@ -223,7 +234,7 @@ export function Input(props: InputProps) {
     )
 
     const handleOnKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (trackBehaviorAs) {
                 UserBehaviorService.onKeyDown(e)
             }
@@ -256,7 +267,7 @@ export function Input(props: InputProps) {
         additionalWrapperProps.className = wrapperClasses
     }
 
-    let notch: null | React.ReactNode = (
+    let notch: null | ReactNode = (
         <div className="form-notch">
             <div className="form-notch-leading" />
             <div
@@ -292,7 +303,7 @@ export function Input(props: InputProps) {
                     value={value}
                     id={id}
                     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-                    ref={inputReference as any}
+                    ref={mergedInputRef as any}
                     {...otherProps}
                 />
                 {notch}
@@ -312,7 +323,7 @@ export function Input(props: InputProps) {
                 value={value}
                 id={id}
                 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-                ref={inputReference as any}
+                ref={mergedInputRef as any}
                 {...otherProps}
             />
         )
@@ -331,7 +342,7 @@ export function Input(props: InputProps) {
                     style={labelStyle}
                     id={labelId}
                     htmlFor={id}
-                    ref={labelReference}
+                    ref={mergedLabelRef}
                 >
                     {label}
                 </label>

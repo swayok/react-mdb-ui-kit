@@ -13,7 +13,6 @@ import {
     useListItem,
     useListNavigation,
     useRole,
-    useTypeahead,
 } from '@floating-ui/react'
 import {
     useRef,
@@ -94,7 +93,6 @@ function DropdownWrapper(props: DropdownProps) {
     ] = useState<HTMLElement | null>(null)
 
     const elementsRef = useRef<(HTMLElement | null)[]>([])
-    const labelsRef = useRef<(string | null)[]>([])
     const parentContext = useDropdownContext()
 
     const nodeId = useFloatingNodeId()
@@ -148,12 +146,7 @@ function DropdownWrapper(props: DropdownProps) {
         nested: isNested,
         onNavigate: setActiveIndex,
         focusItemOnOpen: focusFirstItemOnOpen,
-    })
-    // todo: возможно typeahead тут не нужен или должен быть опциональным.
-    const typeahead = useTypeahead(rootContext, {
-        listRef: labelsRef,
-        onMatch: open ? setActiveIndex : undefined,
-        activeIndex,
+        virtual: true,
     })
 
     const {
@@ -163,10 +156,9 @@ function DropdownWrapper(props: DropdownProps) {
     } = useInteractions([
         hover,
         click,
-        role,
         dismiss,
+        role,
         listNavigation,
-        typeahead,
     ])
 
     // Контекст.
@@ -191,7 +183,6 @@ function DropdownWrapper(props: DropdownProps) {
         isNested,
         itemForParent: isNested ? itemForParent : null,
         elementsRef,
-        labelsRef,
     }
 
     // noinspection PointlessBooleanExpressionJS

@@ -61,11 +61,16 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
     const dropdownMenuStyle: CSSProperties = {}
 
     const dropdownProps: DropdownProps = {
+        // open: isOpen,
         closeOnScrollOutside,
         autoClose: closeDropdownOnSelect ? true : 'outside',
         focusFirstItemOnOpen,
         disabled: inputProps.disabled,
         onOpenChange,
+        // onOpenChange(nextOpen: boolean, event, reason) {
+        //     setIsOpen(nextOpen)
+        //     onOpenChange?.(nextOpen, event, reason)
+        // },
     }
 
     if (maxHeight) {
@@ -133,6 +138,9 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                     wrapperTag={DropdownToggle}
                     wrapperProps={{
                         tag: 'div',
+                        // onClick() {
+                        //     setIsOpen(state => !state)
+                        // },
                     }}
                     active={inputProps.value !== null && inputProps.value !== ''}
                     readOnly

@@ -186,12 +186,12 @@ export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
 // Свойства компонента Input.
 export interface InputProps extends HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement> {
     textarea?: boolean
-    inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>
+    inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement | null>
     label?: string
     labelId?: string
     labelClass?: string
     labelStyle?: CSSProperties
-    labelRef?: RefObject<HTMLLabelElement>
+    labelRef?: Ref<HTMLLabelElement>
     // Мультипликаторы размера label в активном состоянии.
     activeInputLabelSizeMultiplier?: number | {
         normal?: number

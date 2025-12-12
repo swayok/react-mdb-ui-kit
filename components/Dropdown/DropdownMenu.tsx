@@ -8,9 +8,7 @@ import {
     shift,
     useFloating,
 } from '@floating-ui/react'
-import clsx from 'clsx'
 import {
-    CSSProperties,
     Fragment,
     useImperativeHandle,
     useMemo,
@@ -21,6 +19,7 @@ import {
     MergedComponentProps,
 } from '../../types'
 import {useDropdownContext} from './DropdownContext'
+import {DropdownMenuContent} from './DropdownMenuContent'
 import {
     DropdownApi,
     DropdownMenuProps,
@@ -33,23 +32,16 @@ export function DropdownMenu<
 >(props: MergedComponentProps<DropdownMenuProps, InjectedComponentProps>) {
 
     const {
-        className,
-        shadow,
         drop = 'down',
         align = 'start',
         isRTL = false,
         flip: shouldFlip = true,
         shift: shouldShift = false,
-        renderOnMount,
-        tag: Tag = 'div',
-        variant,
-        ref,
         offset: propsOffset = 2,
-        maxHeight,
-        textNowrapOnItems,
+        renderOnMount,
+        ref,
         style = {},
         inline,
-        fillContainer,
         children,
         ...otherProps
     } = props
@@ -62,7 +54,6 @@ export function DropdownMenu<
         rootContext,
         getFloatingProps,
         elementsRef,
-        labelsRef,
     } = useDropdownContext()
 
     // API компонента для использования во внешних компонентах.
@@ -107,17 +98,11 @@ export function DropdownMenu<
         whileElementsMounted: autoUpdate,
     })
 
-    const additionalStyles: CSSProperties = {}
-    if (maxHeight) {
-        additionalStyles.maxHeight = maxHeight
-    }
-
     const Portal = inline ? Fragment : FloatingPortal
 
     return (
         <FloatingList
             elementsRef={elementsRef}
-            labelsRef={labelsRef}
         >
             {(isOpen || renderOnMount) && (
                 <Portal>
@@ -127,26 +112,17 @@ export function DropdownMenu<
                         initialFocus={isNested ? -1 : 0}
                         returnFocus={!isNested}
                     >
-                        <Tag
+                        <DropdownMenuContent
                             ref={mergedRef}
+                            isOpen={isOpen}
                             {...getFloatingProps(otherProps)}
-                            className={clsx(
-                                className,
-                                'dropdown-menu',
-                                shadow ? `shadow-${shadow}` : null,
-                                isOpen ? 'show' : null,
-                                variant ? `dropdown-menu-${variant}` : null,
-                                fillContainer ? 'full-width' : null,
-                                textNowrapOnItems ? 'text-nowrap-on-items' : null
-                            )}
                             style={{
                                 ...style,
                                 ...floatingStyles,
-                                ...(maxHeight ? {maxHeight} : {}),
                             }}
                         >
                             {children}
-                        </Tag>
+                        </DropdownMenuContent>
                     </FloatingFocusManager>
                 </Portal>
             )}

@@ -49,8 +49,8 @@ export interface DropdownContextProps extends UseInteractionsReturn {
         index: number
     } | null
     rootContext: FloatingRootContext
+    // useListNavigation(rootContext, {listRef: elementsRef})
     elementsRef: RefObject<(HTMLElement | null)[]>
-    labelsRef: RefObject<(string | null)[]>
 }
 
 // Свойства компонента Dropdown.
@@ -133,7 +133,7 @@ export interface DropdownToggleProps<
     ) => Partial<InjectedComponentPropsType>
     // Не используется, если указано свойство renderContent().
     children?: ReactNode | ReactNode[]
-    onFocus?: (event: FocusEvent<any>) => void
+    onFocus?: (event: FocusEvent<RefType>) => void
 }
 
 // Свойства компонента, открывающего вложенное выпадающее меню по нажатию.
@@ -207,9 +207,16 @@ export type DefaultDropdownMenuProps = MergedComponentProps<
     HtmlComponentPropsWithRef<HTMLDivElement>
 >
 
+export interface DropdownMenuContentProps extends Pick<
+    DropdownMenuProps,
+    'className' | 'style' | 'shadow' | 'tag' | 'variant' | 'ref' | 'maxHeight'
+    | 'textNowrapOnItems' | 'fillContainer' | 'children'
+> {
+    isOpen: boolean
+}
+
 // Свойства компонента DropdownItem.
 export interface DropdownItemProps extends MorphingComponentProps {
-    label?: string
     LinkComponent?: ComponentProps<any>
     target?: HTMLAttributeAnchorTarget
     href?: string

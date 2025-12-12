@@ -57,7 +57,7 @@ export function DropdownToggle<
 
     // @ts-ignore Ругается на задание otherProps.onFocus.
     otherProps.onFocus = useEventCallback(
-        (event: FocusEvent<HTMLElement>): void => {
+        (event: FocusEvent<RefType>): void => {
             propsOnFocus?.(event)
             setHasFocusInside(false)
             parentContext?.setHasFocusInside(true)

@@ -7,6 +7,7 @@ import {
     useRef,
     useState,
 } from 'react'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {MaskedNumericInputProps} from './InputTypes'
 import {Input} from './Input'
 
@@ -27,46 +28,49 @@ export function MaskedNumericInput(props: MaskedNumericInputProps) {
         onBlur,
         onClick,
         onKeyDown,
-        inputRef,
+        inputRef: propsInputRef,
         value,
         ...otherProps
     } = props
 
     const maxCursorPosition: number = template.length
-    const fallbackInputRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
     const [
         focused,
         setFocused,
     ] = useState<boolean>(false)
     const cursorPositionRef = useRef<number | null>(null)
 
-    const inputReference = inputRef ?? fallbackInputRef
+    const mergedInputRef = useMergedRefs(
+        propsInputRef,
+        inputRef
+    )
 
     useEffect(() => {
-        if (inputReference.current && focused) {
+        if (inputRef.current && focused) {
             if (cursorPositionRef.current !== null) {
-                inputReference.current.setSelectionRange(
+                inputRef.current.setSelectionRange(
                     cursorPositionRef.current,
                     cursorPositionRef.current
                 )
                 cursorPositionRef.current = null
             } else {
-                if (inputReference.current.value === '') {
-                    inputReference.current.value = template
+                if (inputRef.current.value === '') {
+                    inputRef.current.value = template
                 }
                 updateCursorPositionOnFocus(
-                    inputReference.current,
+                    inputRef.current,
                     template,
                     minCursorPosition,
                     true
                 )
             }
         }
-    }, [inputReference.current, value, focused, template, minCursorPosition])
+    }, [inputRef.current, value, focused, template, minCursorPosition])
 
     return (
         <Input
-            inputRef={inputReference}
+            inputRef={mergedInputRef}
             placeholder={placeholder}
             {...otherProps}
             value={value ? formatValueForMask(value, template, focused) : ''}

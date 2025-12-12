@@ -44,7 +44,6 @@ export const DropdownContext = createContext<DropdownContextProps>({
     parentContext: null,
     rootContext: {} as FloatingRootContext,
     elementsRef: {current: []},
-    labelsRef: {current: []},
 })
 
 // Контекст выпадающего меню.
