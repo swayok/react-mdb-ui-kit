@@ -7,16 +7,34 @@ import {DropdownItem} from '../../components/Dropdown/DropdownItem'
 import {DropdownMenu} from '../../components/Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../components/Dropdown/DropdownToggle'
 import {SubmenuDropdownToggle} from '../../components/Dropdown/SubmenuDropdownToggle'
-import Icon from '../../components/Icon'
+import {Icon} from '../../components/Icon'
 import {ComboboxInput} from '../../components/Input/ComboboxInput'
 import {DateInput} from '../../components/Input/DateInput'
 import {MultiSelectInput} from '../../components/Input/SelectInput/MultiSelectInput'
 import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
+import {useFormValues} from '../../helpers/useFormValues'
 
 // Демонстрация выпадающих меню.
 export function DropdownsDemo() {
 
     // todo: data grid pagination filler
+
+    const {
+        formValues,
+        setFormValue,
+    } = useFormValues<{
+        select1: string
+        date1: Date | null
+        dateRange1: [Date | null, Date | null]
+        multiSelect1: string[]
+        combobox1: string
+    }>({
+        select1: 'option1',
+        date1: null,
+        dateRange1: [null, null],
+        multiSelect1: [],
+        combobox1: '',
+    })
 
     return (
         <div className="d-flex flex-column gap-4">
@@ -163,31 +181,36 @@ export function DropdownsDemo() {
             <div className="flex-1 d-flex flex-row align-items-center gap-4">
                 <SelectInput
                     label="Select value"
+                    value={formValues.select1}
                     options={[
                         {label: 'Option 1', value: 'option1'},
                         {label: 'Option 2', value: 'option2'},
                         {label: 'Option 3', value: 'option3'},
                         {label: 'Option 4', value: 'option4'},
                     ]}
-                    onChange={() => {
+                    onChange={value => {
+                        setFormValue('select1', value)
                     }}
                 />
                 <DateInput
                     label="Date input"
-                    value={new Date()}
-                    onChange={() => {
+                    value={formValues.date1}
+                    onChange={value => {
+                        setFormValue('date1', value)
                     }}
                 />
                 <DateInput
                     label="Date range input"
-                    value={[null, null]}
-                    onChange={() => {
+                    value={formValues.dateRange1}
+                    onChange={(value1, value2) => {
+                        setFormValue('dateRange1', [value1, value2])
                     }}
                 />
             </div>
             <div className="flex-1 d-flex flex-row align-items-center gap-4">
                 <MultiSelectInput
                     label="Select values"
+                    values={formValues.multiSelect1}
                     options={[
                         {label: 'Option 1', value: 'option1'},
                         {label: 'Option 2', value: 'option2'},
@@ -195,19 +218,23 @@ export function DropdownsDemo() {
                         {label: 'Option 4', value: 'option4'},
                         {label: 'Option 5', value: 'option5'},
                     ]}
-                    onChange={() => {
+                    onChange={values => {
+                        setFormValue('multiSelect1', values)
                     }}
                 />
                 <ComboboxInput
                     label="Typeahead search"
+                    value={formValues.combobox1}
                     options={[
-                        {label: 'Option 1', value: 'option1'},
-                        {label: 'Option 2', value: 'option2'},
-                        {label: 'Option 3', value: 'option3'},
-                        {label: 'Option 4', value: 'option4'},
-                        {label: 'Option 5', value: 'option5'},
+                        'Option 1',
+                        'Option 2',
+                        'Option 3',
+                        'Option 4',
+                        'Option 5',
+                        'Option 1-2',
                     ]}
-                    onChange={() => {
+                    onChange={value => {
+                        setFormValue('combobox1', value)
                     }}
                 />
             </div>

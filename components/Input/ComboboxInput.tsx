@@ -5,12 +5,18 @@ import {
 import {
     ChangeEvent,
     FormEvent,
+    MouseEvent,
+    FocusEvent,
+    KeyboardEvent,
     useEffect,
     useState,
 } from 'react'
 import {filterOptions} from '../../helpers/filterOptions'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {FormSelectOptionsList} from '../../types'
+import {
+    FormSelectOption,
+    FormSelectOptionsList,
+} from '../../types'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
 import {Input} from './Input'
@@ -26,10 +32,10 @@ export function ComboboxInput(props: ComboboxInputProps) {
         inputRef,
         value,
         active,
-        // onBlur,
-        // onFocus,
-        // onKeyDown,
+        onFocus,
+        onClick,
         onChange,
+        onKeyDown,
         ...inputProps
     } = props
 
@@ -37,21 +43,18 @@ export function ComboboxInput(props: ComboboxInputProps) {
     const [
         filteredOptions,
         setFilteredOptions,
-    ] = useState<FormSelectOptionsList<string>>(
+    ] = useState<FormSelectOptionsList<string> | string[]>(
         options as FormSelectOptionsList<string>
     )
-    // Выбранный элемент в выпадающем меню быстрого поиска.
-    // const [
-    //     dropdownSelectedItem,
-    //     setDropdownSelectedItem,
-    // ] = useState<number | null>(null)
 
     // Обновление списка опций.
     useEffect(() => {
         setFilteredOptions(
             filterOptions(
                 value ?? '',
-                options as FormSelectOptionsList<string>
+                options as FormSelectOptionsList<string>,
+                false,
+                true
             )
         )
     }, [options, value])
@@ -67,9 +70,9 @@ export function ComboboxInput(props: ComboboxInputProps) {
         getFloatingProps,
         setIsOpen,
         getItemProps,
-        activeIndex,
         rememberListItem,
         isActiveListItem,
+        activeIndex,
     } = useComboboxDropdown({
         inputRef,
         onSearch: useEventCallback((
@@ -129,9 +132,51 @@ export function ComboboxInput(props: ComboboxInputProps) {
     //     onKeyDown?.(event)
     // }
 
-    const hasOptions: boolean = filteredOptions.length > 0
+    const onItemClick = (
+        option: FormSelectOption | string,
+        event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+    ) => {
+        onChange(
+            typeof option === 'string' ? option : String(option.value ?? ''),
+            event
+        )
+        setIsOpen(false)
+    }
 
-    console.log(inputProps.label, {activeIndex})
+    const onSearchKeyDown = useEventCallback((
+        event: KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (
+            isOpen
+            && activeIndex !== null
+            && event.key === 'Enter'
+            && filteredOptions.length > activeIndex
+        ) {
+            onItemClick(filteredOptions[activeIndex], event)
+            event.preventDefault()
+        }
+        onKeyDown?.(event)
+    })
+
+    const onSearchFocus = useEventCallback((
+        event: FocusEvent<HTMLInputElement>
+    ) => {
+        if (hasOptions && !isOpen && event.relatedTarget !== null) {
+            setIsOpen(true)
+        }
+        onFocus?.(event)
+    })
+
+    const onSearchClick = useEventCallback((
+        event: MouseEvent<HTMLInputElement>
+    ) => {
+        if (hasOptions && !isOpen) {
+            setIsOpen(true)
+        }
+        onClick?.(event)
+    })
+
+    const hasOptions: boolean = filteredOptions.length > 0
 
     return (
         <>
@@ -141,23 +186,11 @@ export function ComboboxInput(props: ComboboxInputProps) {
                     ...inputProps,
                     value,
                     onChange: onSearch,
-                    onFocus() {
-                        setIsOpen(true)
-                    },
+                    onFocus: onSearchFocus,
+                    onClick: onSearchClick,
+                    onKeyDown: onSearchKeyDown,
                 })}
                 active={active ?? (value ?? '').length > 0}
-                // onChange={onSearch}
-                // onBlur={onBlur}
-                // onBlur={event => {
-                //     // Тайм-аут требуется, чтобы успел отработать клик на кнопку в выпадающем меню.
-                //     setTimeout(() => setShowDropdown(false), 150)
-                //     onBlur?.(event)
-                // }}
-                // onFocus={event => {
-                //     setShowDropdown(true)
-                //     onFocus?.(event as FocusEvent<HTMLInputElement>)
-                // }}
-                // onKeyDown={onSearchInputKeyDown}
             />
             {isOpen && hasOptions && (
                 <FloatingPortal>
@@ -174,14 +207,10 @@ export function ComboboxInput(props: ComboboxInputProps) {
                         >
                             {filteredOptions.map((option, index) => (
                                 <DropdownItem
-                                    key={option.value}
+                                    key={typeof option === 'string' ? option : option.value}
                                     {...getItemProps({
                                         onClick(event) {
-                                            onChange(
-                                                option.value ? String(option.value) : '',
-                                                event
-                                            )
-                                            setIsOpen(false)
+                                            onItemClick(option, event)
                                         },
                                         ref(item) {
                                             rememberListItem(item, index)
@@ -189,31 +218,13 @@ export function ComboboxInput(props: ComboboxInputProps) {
                                     })}
                                     active={isActiveListItem(index)}
                                 >
-                                    {option.label}
+                                    {typeof option === 'string' ? option : option.label}
                                 </DropdownItem>
                             ))}
                         </DropdownMenuContent>
                     </FloatingFocusManager>
                 </FloatingPortal>
             )}
-            {/* <DropdownMenu*/}
-            {/*    fillContainer*/}
-            {/*    className="shadow-2-strong"*/}
-            {/*    inline*/}
-            {/* >*/}
-            {/*    {filteredOptions.map((option, index) => (*/}
-            {/*        <DropdownItem*/}
-            {/*            key={option.value}*/}
-            {/*            active={index === dropdownSelectedItem}*/}
-            {/*            onClick={event => onChange(*/}
-            {/*                option.value ? String(option.value) : '',*/}
-            {/*                event*/}
-            {/*            )}*/}
-            {/*        >*/}
-            {/*            {option.label}*/}
-            {/*        </DropdownItem>*/}
-            {/*    ))}*/}
-            {/* </DropdownMenu>*/}
         </>
     )
 }

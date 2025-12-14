@@ -179,8 +179,11 @@ export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {
 
 // Свойства компонента ComboboxInput.
 export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
-    options?: FormSelectOptionsList<string | number | null>
-    onChange: (value: string, event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement>) => void
+    options?: FormSelectOptionsList<string | number | null> | string[]
+    onChange: (
+        value: string,
+        event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+    ) => void
 }
 
 // Свойства компонента Input.

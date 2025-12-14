@@ -52,7 +52,6 @@ export function DropdownItem<
 
     const item = useListItem()
     const isActive = active || item.index === activeIndex
-    console.log({active, activeIndex})
     const tree = useFloatingTree()
 
     const onClick = useEventCallback(
