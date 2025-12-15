@@ -65,7 +65,7 @@ function FiltersPanel() {
         >
             <Input
                 label="Keywords"
-                wrapperClass=""
+                wrapperClassName=""
                 value={keywords}
                 onChange={e => setKeywords(e.currentTarget.value)}
             />

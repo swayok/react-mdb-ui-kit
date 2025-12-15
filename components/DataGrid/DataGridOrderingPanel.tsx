@@ -72,7 +72,7 @@ export function DataGridOrderingPanel<
                 options={options}
                 small
                 mode="inline"
-                wrapperClass="m-0"
+                wrapperClassName="m-0"
                 dropdownFluidWidth={false}
                 disabled={isDisabled}
                 onChange={(value: SortableColumn): void => {

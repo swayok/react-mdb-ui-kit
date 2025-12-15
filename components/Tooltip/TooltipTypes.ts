@@ -12,10 +12,10 @@ import type {
 // Собственные свойства компонента Tooltip.
 export interface TooltipProps extends MorphingComponentProps {
     children?: ReactNode | ReactNode[]
-    placement?: Placement
+    tooltipPlacement?: Placement
     title?: string | ReactNode
-    disableClickHandler?: boolean
-    disableHover?: boolean
+    tooltipDisableClickHandler?: boolean
+    tooltipDisableHover?: boolean
     tooltipClassName?: string
     tooltipTextClassName?: string
     tooltipStyle?: CSSProperties

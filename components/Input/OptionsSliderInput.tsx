@@ -1,5 +1,8 @@
 import clsx from 'clsx'
-import {useId} from 'react'
+import {
+    useId,
+    ChangeEvent,
+} from 'react'
 import {OptionsSliderInputProps} from './InputTypes'
 import {AnyObject} from '../../types'
 import {findSelectedOption} from '../../helpers/findSelectedOption'
@@ -20,12 +23,12 @@ export function OptionsSliderInput<
         value,
         showValueInLabel = false,
         minMaxLabelPlacement = 'inline',
-        wrapperClass = 'mb-4',
-        labelClass = 'mb-3',
+        wrapperClassName = 'mb-4',
+        labelClassName = 'mb-3',
         className,
-        thumbClass,
-        thumbValueClass = 'text-nowrap',
-        optionLabelClass,
+        thumbClassName,
+        thumbValueClassName = 'text-nowrap',
+        optionLabelClassName,
         ...inputProps
     } = props
 
@@ -48,27 +51,28 @@ export function OptionsSliderInput<
                 'form-range',
                 showValueInLabel ? 'value-in-label' : 'value-in-thumb',
                 'min-max-value-label-' + minMaxLabelPlacement,
-                wrapperClass
+                wrapperClassName
             )}
         >
             {label && (
                 <label
                     htmlFor={id}
-                    className={clsx('form-range-label', labelClass)}
+                    className={clsx('form-range-label', labelClassName)}
                 >
                     {label}
                     {showValueInLabel && (
-                        <span className={clsx('selected-value ms-1', thumbValueClass)}>
+                        <span className={clsx('selected-value ms-1', thumbValueClassName)}>
                             {options[selectedOptionIndex]?.label ?? ''}
                         </span>
                     )}
                 </label>
             )}
             <div className="form-range-input-container d-flex flex-row align-items-center justify-content-between fs-7">
-                <div className={clsx(
-                    'me-1 text-muted form-range-min',
-                    optionLabelClass
-                )}
+                <div
+                    className={clsx(
+                        'me-1 text-muted form-range-min',
+                        optionLabelClassName
+                    )}
                 >
                     {options[min].label}
                 </div>
@@ -81,7 +85,7 @@ export function OptionsSliderInput<
                         type="range"
                         min={min}
                         max={max}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             const option = options[parseInt(e.target.value)]
                             onChange?.(option.value, option)
                         }}
@@ -91,22 +95,23 @@ export function OptionsSliderInput<
                             className={clsx(
                                 'range-thumb',
                                 props.disabled ? 'disabled' : null,
-                                thumbClass
+                                thumbClassName
                             )}
                             style={{
                                 left: `calc(${thumbPosition}% + (${thumbPosition <= 0 ? 8.5 : 7.5 - (thumbPosition * 0.155)}px))`,
                             }}
                         >
-                            <span className={clsx('thumb-value', thumbValueClass)}>
+                            <span className={clsx('thumb-value', thumbValueClassName)}>
                                 {options[selectedOptionIndex]?.label ?? ''}
                             </span>
                         </span>
                     )}
                 </div>
-                <div className={clsx(
-                    'ms-1 text-muted form-range-max',
-                    optionLabelClass
-                )}
+                <div
+                    className={clsx(
+                        'ms-1 text-muted form-range-max',
+                        optionLabelClassName
+                    )}
                 >
                     {options[max].label}
                 </div>

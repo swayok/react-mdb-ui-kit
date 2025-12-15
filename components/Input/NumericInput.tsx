@@ -2,6 +2,12 @@ import numeral from 'numeral'
 import {
     useMemo,
     useRef,
+    ChangeEvent,
+    ClipboardEvent,
+    FocusEvent,
+    MouseEvent,
+    FormEvent,
+    CompositionEvent,
 } from 'react'
 import {Input} from './Input'
 import {
@@ -51,7 +57,7 @@ export function NumericInput(props: NumericInputProps) {
         InputProps,
         'onChange' | 'onPaste' | 'onFocus' | 'onClick' | 'onBeforeInput'
     > = useMemo(() => ({
-        onChange(event: React.ChangeEvent<HTMLInputElement>) {
+        onChange(event: ChangeEvent<HTMLInputElement>) {
             const newValue = formatValue(event.currentTarget.value, utilityFnSettingsRef.current!)
             const nextCursorPosition = findCursorPosition(
                 newValue,
@@ -66,7 +72,7 @@ export function NumericInput(props: NumericInputProps) {
                 cleanValue(event.currentTarget.value)
             )
         },
-        onPaste(event: React.ClipboardEvent<HTMLInputElement>) {
+        onPaste(event: ClipboardEvent<HTMLInputElement>) {
             if (event.currentTarget.value === '') {
                 // Нет значения: разрешаем вставку.
                 return
@@ -81,13 +87,13 @@ export function NumericInput(props: NumericInputProps) {
             // В любом другом случае - запрещаем вставку.
             event.preventDefault()
         },
-        onFocus(event: React.FocusEvent<HTMLInputElement>) {
+        onFocus(event: FocusEvent<HTMLInputElement>) {
             if (event.currentTarget.value === '') {
                 propEventHandlersRef.current!.onChange(event, '', null)
             }
             propEventHandlersRef.current!.onFocus?.(event)
         },
-        onClick(event: React.MouseEvent<HTMLInputElement>) {
+        onClick(event: MouseEvent<HTMLInputElement>) {
             // Смещение курсора, если клик был на decimal separator.
             const input = event.currentTarget
             if (input.selectionStart === input.selectionEnd) {
@@ -101,8 +107,8 @@ export function NumericInput(props: NumericInputProps) {
             propEventHandlersRef.current!.onClick?.(event)
         },
         // Проверка лимита целой части.
-        onBeforeInput(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
-            const char: string = (event as React.CompositionEvent<HTMLInputElement>).data
+        onBeforeInput(event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
+            const char: string = (event as CompositionEvent<HTMLInputElement>).data
             switch (isValidCharacter(char, event.currentTarget, utilityFnSettingsRef.current!)) {
                 case 'valid':
                     // Валидация всего значения поля ввода не требуется.

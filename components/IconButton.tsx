@@ -15,7 +15,7 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
     tooltip?: string
     color?: TextColors | 'link'
     onClick?: (event: MouseEvent<HTMLDivElement>) => void
-    tooltipProps?: Omit<DefaultTooltipProps, 'onClick' | 'title' | 'disableClickHandler'>
+    tooltipProps?: Omit<DefaultTooltipProps, 'onClick' | 'title' | 'tooltipDisableClickHandler'>
     iconClassName?: string
     iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
@@ -41,7 +41,7 @@ export function IconButton(props: IconButtonProps) {
         ...otherProps
     } = props
 
-    const wrapperClass: string = clsx(
+    const wrapperClassName: string = clsx(
         'clickable',
         inline ? 'd-inline-block with-icon' : 'with-icon-flex',
         color ? 'link-' + color : null,
@@ -63,13 +63,13 @@ export function IconButton(props: IconButtonProps) {
                 tooltipProps={{
                     tag: 'div',
                     ...tooltipProps,
-                    className: wrapperClass,
-                    disableClickHandler: true,
+                    className: wrapperClassName,
+                    tooltipDisableClickHandler: true,
                     onClick: handleClick,
                     style,
                 }}
                 className={iconClassName}
-                reusableItemContainerClass={clsx(wrapperClass, reusableItemContainerClass)}
+                reusableItemContainerClass={clsx(wrapperClassName, reusableItemContainerClass)}
                 style={iconStyle}
                 {...otherProps}
             />
@@ -77,13 +77,13 @@ export function IconButton(props: IconButtonProps) {
     } else {
         return (
             <div
-                className={wrapperClass}
+                className={wrapperClassName}
                 onClick={handleClick}
                 style={style}
             >
                 <Icon
                     className={iconClassName}
-                    reusableItemContainerClass={clsx(wrapperClass, reusableItemContainerClass)}
+                    reusableItemContainerClass={clsx(wrapperClassName, reusableItemContainerClass)}
                     style={iconStyle}
                     {...otherProps}
                 />

@@ -1,5 +1,8 @@
 import clsx from 'clsx'
-import React from 'react'
+import {
+    Children,
+    isValidElement,
+} from 'react'
 import {ProgressBar} from './ProgressBar'
 import {ProgressProps} from './ProgressTypes'
 
@@ -23,8 +26,8 @@ export function Progress(props: ProgressProps) {
             }}
             {...otherProps}
         >
-            {React.Children.map(children, child => {
-                if (!React.isValidElement(child) || child.type !== ProgressBar) {
+            {Children.map(children, child => {
+                if (!isValidElement(child) || child.type !== ProgressBar) {
                     console.error('Progress component only allows ProgressBar as child')
                     return
                 } else {

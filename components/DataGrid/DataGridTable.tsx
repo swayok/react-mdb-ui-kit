@@ -21,7 +21,7 @@ export function DataGridTable<
         verticalAlign,
 
         className,
-        wrapperClass,
+        wrapperClassName,
         wrapperId,
         wrapperStyle,
 
@@ -53,7 +53,7 @@ export function DataGridTable<
             className={clsx(
                 'data-grid-table-container position-relative table-responsive',
                 flexFill ? 'data-grid-flex flex-1 overflow-y-scroll' : null,
-                wrapperClass
+                wrapperClassName
             )}
             id={wrapperId}
             style={wrapperStyle}

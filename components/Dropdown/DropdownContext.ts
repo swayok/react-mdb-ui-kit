@@ -47,6 +47,9 @@ export const DropdownContext = createContext<DropdownContextProps>({
 })
 
 // Контекст выпадающего меню.
-export function useDropdownContext(): DropdownContextProps {
-    return useContext(DropdownContext)
+export function useDropdownContext<
+    ToggleRefType extends HTMLElement = HTMLElement,
+    MenuRefType extends HTMLElement = HTMLDivElement,
+>(): DropdownContextProps<ToggleRefType, MenuRefType> {
+    return useContext(DropdownContext) as unknown as DropdownContextProps<ToggleRefType, MenuRefType>
 }

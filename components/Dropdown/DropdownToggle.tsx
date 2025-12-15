@@ -1,5 +1,8 @@
 import clsx from 'clsx'
-import {FocusEvent} from 'react'
+import {
+    FocusEvent,
+    RefCallback,
+} from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {
@@ -15,7 +18,7 @@ import {DropdownToggleProps} from './DropdownTypes'
 // Кнопка открытия выпадающего меню.
 export function DropdownToggle<
     InjectedComponentProps extends object = ButtonProps,
-    RefType = HTMLElement,
+    RefType extends HTMLElement = HTMLElement,
 >(
     props: MergedComponentProps<
         DropdownToggleProps<RefType, InjectedComponentProps>,
@@ -46,14 +49,10 @@ export function DropdownToggle<
         ...otherProps
     } = props
 
-    const mergedRefs = useMergedRefs(
+    const mergedRefs = useMergedRefs<RefType>(
         propsRef,
-        setToggleElement
+        setToggleElement as RefCallback<RefType>
     )
-
-    const tabIndex = isNested && parentContext && itemForParent
-        ? parentContext.activeIndex === itemForParent.index ? 0 : -1
-        : undefined
 
     // @ts-ignore Ругается на задание otherProps.onFocus.
     otherProps.onFocus = useEventCallback(
@@ -69,6 +68,10 @@ export function DropdownToggle<
             ? parentContext.getItemProps(otherProps)
             : otherProps
     )
+
+    const tabIndex = isNested && parentContext && itemForParent
+        ? parentContext.activeIndex === itemForParent.index ? 0 : -1
+        : undefined
 
     return (
         <Tag

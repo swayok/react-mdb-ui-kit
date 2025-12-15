@@ -3,11 +3,10 @@ import {
     RefObject,
     useEffectEvent,
     useLayoutEffect,
-    useMemo,
     useRef,
 } from 'react'
-import {MorphingHtmlComponentPropsWithoutRef} from '../types'
 import {getCssTransitionDuration} from '../helpers/getCssTransitionDuration'
+import {MorphingHtmlComponentPropsWithoutRef} from '../types'
 
 export interface CollapseProps extends Omit<MorphingHtmlComponentPropsWithoutRef, 'onTransitionEnd'> {
     navbar?: boolean
@@ -37,7 +36,7 @@ export function Collapse(props: CollapseProps) {
         id,
         navbar,
         wrapperRef,
-        onTransitionEnd: propsOnTransitionEnd,
+        onTransitionEnd,
         alwaysMounted,
         tag: Tag = 'div',
         ...otherProps
@@ -52,12 +51,6 @@ export function Collapse(props: CollapseProps) {
     const updateContentSize = (el: HTMLElement) => {
         el.style[cssProperty] = ((cssProperty === 'width' ? el.scrollWidth : el.scrollHeight) || '0') + 'px'
     }
-
-    const onTransitionEnd = useEffectEvent(
-        (opened: boolean, ref: null | HTMLElement) => {
-            propsOnTransitionEnd?.(opened, ref)
-        }
-    )
 
     // Подписываемся на отслеживание размеров содержимого.
     useLayoutEffect(() => {
@@ -79,7 +72,9 @@ export function Collapse(props: CollapseProps) {
     }, [containerRef.current])
 
     // Обработка изменения свойства show.
-    useLayoutEffect(() => {
+    const handleShowChange = useEffectEvent((
+        show: boolean
+    ): number | undefined => {
         if (!containerRef.current) {
             return
         }
@@ -102,7 +97,7 @@ export function Collapse(props: CollapseProps) {
                 container.classList.add('closed')
                 container.classList.remove('opened')
             }
-            onTransitionEnd(show, container)
+            onTransitionEnd?.(show, container)
             return
         }
 
@@ -131,7 +126,7 @@ export function Collapse(props: CollapseProps) {
             timeoutId = window.setTimeout(() => {
                 container.classList.remove('transition')
                 timeoutId = undefined
-                onTransitionEnd(true, container)
+                onTransitionEnd?.(true, container)
             }, cssTransitionDuration + 10)
             // Нужно высоту менять после изменения container.classList, а это невозможно
             // сделать без тайм-аута.
@@ -149,7 +144,7 @@ export function Collapse(props: CollapseProps) {
                 timeoutId = window.setTimeout(() => {
                     container.classList.remove('transition')
                     timeoutId = undefined
-                    onTransitionEnd(false, container)
+                    onTransitionEnd?.(false, container)
                 }, cssTransitionDuration + 10)
             }
             // Нужно высоту менять после изменения container.classList, а это невозможно
@@ -158,24 +153,28 @@ export function Collapse(props: CollapseProps) {
                 container.style[cssProperty] = '0'
             }, 0)
         }
+        return timeoutId
+    })
+
+    // Обработка изменения свойства show.
+    useLayoutEffect(() => {
+        const timeoutId = handleShowChange(show)
 
         return () => {
             clearTimeout(timeoutId)
         }
     }, [show])
 
-    const classNames = useMemo(() => clsx(
-        'collapsible',
-        horizontal ? 'horizontal' : 'vertical',
-        navbar ? 'navbar-collapse' : null,
-        alwaysMounted ? 'd-block' : null,
-        className
-    ), [className, horizontal, navbar, alwaysMounted])
-
     return (
         <Tag
             id={id}
-            className={classNames}
+            className={clsx(
+                'collapsible',
+                horizontal ? 'horizontal' : 'vertical',
+                navbar ? 'navbar-collapse' : null,
+                alwaysMounted ? 'd-block' : null,
+                className
+            )}
             {...otherProps}
             ref={containerRef}
         >

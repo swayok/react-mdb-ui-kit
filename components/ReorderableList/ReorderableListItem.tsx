@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import {
     useCallback,
     useState,
+    DragEvent,
 } from 'react'
 import {HtmlComponentProps} from '../../types'
 import {useReorderableListContext} from './ReorderableListContext'
@@ -46,7 +47,7 @@ export function ReorderableListItem<PayloadType = unknown>(
         setChildTogglerDragStarted,
     ] = useState<boolean>(false)
 
-    const calculatedProps: HtmlComponentProps<unknown> = {}
+    const calculatedProps: HtmlComponentProps<HTMLElement> = {}
     const isDisabled = disabled || isDisabledByContext
     if (!isDisabled) {
         calculatedProps.draggable = !hasChildToggler || childTogglerDragStarted
@@ -54,7 +55,7 @@ export function ReorderableListItem<PayloadType = unknown>(
         calculatedProps.onDragEnter = () => {
             onDragEnter(position, payload)
         }
-        calculatedProps.onDragOver = (event: React.DragEvent<HTMLElement>) => {
+        calculatedProps.onDragOver = (event: DragEvent<HTMLElement>) => {
             // Ищем ближайший элемент с классом drag-and-drop-item.
             let item: HTMLElement | null = null
             let eventTarget: HTMLElement = event.currentTarget

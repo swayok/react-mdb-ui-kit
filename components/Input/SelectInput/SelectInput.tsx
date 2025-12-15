@@ -1,10 +1,11 @@
 import clsx from 'clsx'
-import React, {
+import {
     useDeferredValue,
     useEffect,
     useMemo,
     useRef,
     useState,
+    ChangeEvent,
 } from 'react'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
@@ -14,7 +15,7 @@ import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {AnyObject} from '../../../types'
 import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
 import {Input} from '../Input'
-import {SelectInputBasic} from './SelectInputBasic'
+import {SelectInputBase} from './SelectInputBase'
 import {SelectInputOptions} from './SelectInputOptions'
 import {SelectInputProps} from './SelectInputTypes'
 import {VirtualizedSelectInputOptions} from './VirtualizedSelectInputOptions'
@@ -171,14 +172,13 @@ export function SelectInput<
     }
 
     return (
-        <SelectInputBasic
+        <SelectInputBase
             inputRef={inputRef}
             className={clsx(
                 search ? 'with-search' : null,
                 value === null || value === '' ? 'empty-option-selected' : null,
                 className
             )}
-            isDropdownToggle
             {...basicSelectInputProps}
             value={selectedValueForTextInput}
             onOpenChange={onDropdownToggle}
@@ -196,8 +196,8 @@ export function SelectInput<
                         label={searchPlaceholder}
                         active
                         value={keywords.value}
-                        wrapperClass="m-0"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        wrapperClassName="m-0"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             setKeywords({
                                 value: e.target.value,
                                 regexp: e.target.value.trim().length > 0
@@ -251,7 +251,7 @@ export function SelectInput<
                     onChange={onChange}
                 />
             )}
-        </SelectInputBasic>
+        </SelectInputBase>
     )
 }
 

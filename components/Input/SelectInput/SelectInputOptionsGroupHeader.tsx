@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import {AnyObject} from '../../../types'
 import {DropdownHeader} from '../../Dropdown/DropdownHeader'
 import {SelectInputOptionLabel} from './SelectInputOptionLabel'

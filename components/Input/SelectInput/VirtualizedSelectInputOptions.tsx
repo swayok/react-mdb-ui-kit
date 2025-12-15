@@ -9,14 +9,14 @@ import {
     FormSelectOption,
     FormSelectOptionGroup,
 } from '../../../types'
-import {flattenOptions} from './flattenOptions'
+import {flattenOptions} from '../helpers/flattenOptions'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
 import {
     FlattenedOptionOrGroup,
     VirtualizedSelectInputOptionsProps,
 } from './SelectInputTypes'
-import {shouldDisplaySelectInputOption} from './shouldDisplaySelectInputOption'
+import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput с виртуализацией.
 export function VirtualizedSelectInputOptions<

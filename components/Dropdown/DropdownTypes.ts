@@ -20,6 +20,7 @@ import type {
 } from 'react'
 import type {LinkProps} from 'react-router-dom'
 import type {
+    ApiRef,
     HtmlComponentPropsWithRef,
     MergedComponentProps,
     MorphingComponentProps,
@@ -28,7 +29,10 @@ import type {
 import type {ButtonProps} from '../Button'
 
 // Свойства контекста для Dropdown.
-export interface DropdownContextProps extends UseInteractionsReturn {
+export interface DropdownContextProps<
+    ToggleRefType extends HTMLElement = HTMLElement,
+    MenuRefType extends HTMLElement = HTMLDivElement,
+> extends UseInteractionsReturn {
     // Индикатор того, что все DropdownItem внутри этого Dropdown должны быть disabled.
     disableAllItems: boolean
     setDisableAllItems: (disabled: boolean) => void
@@ -39,10 +43,10 @@ export interface DropdownContextProps extends UseInteractionsReturn {
     isOpen: boolean
     setIsOpen: (open: boolean, event?: Event, reason?: OpenChangeReason) => void
     parentContext: DropdownContextProps | null
-    toggleElement: HTMLElement | null
-    setToggleElement: Dispatch<SetStateAction<HTMLElement | null>>
-    menuElement: HTMLElement | null
-    setMenuElement: Dispatch<SetStateAction<HTMLElement | null>>
+    toggleElement: ToggleRefType | null
+    setToggleElement: Dispatch<SetStateAction<ToggleRefType | null>>
+    menuElement: MenuRefType | null
+    setMenuElement: Dispatch<SetStateAction<MenuRefType | null>>
     isNested: boolean
     itemForParent: {
         ref: RefCallback<HTMLElement>
@@ -113,7 +117,7 @@ export type DropdownToggleRenderFnMetadata = Pick<
 
 // Свойства компонента, открывающего выпадающее меню по нажатию.
 export interface DropdownToggleProps<
-    RefType = any,
+    RefType extends HTMLElement = any,
     InjectedComponentPropsType = any,
 > extends MorphingComponentProps<RefType> {
     className?: string
@@ -160,7 +164,11 @@ type ShadowValue = '0' | '1' | '2' | '3' | '4' | '5' | '6'
 type ShadowStrength = 'strong' | 'soft'
 
 // Ссылка на обертку и API выпадающего меню.
-export interface DropdownMenuProps extends MorphingHtmlComponentProps<any, DropdownApi> {
+export interface DropdownMenuProps<
+    RefType extends HTMLElement = HTMLElement,
+> extends MorphingHtmlComponentProps<RefType> {
+    // API выпадающего меню.
+    apiRef?: ApiRef<DropdownApi>
     // Нужно ли рендерить меню при монтировании компонента?
     renderOnMount?: boolean
     /**

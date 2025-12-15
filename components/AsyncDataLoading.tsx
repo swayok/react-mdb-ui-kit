@@ -1,4 +1,7 @@
-import React, {CSSProperties} from 'react'
+import {
+    CSSProperties,
+    ReactNode,
+} from 'react'
 import clsx from 'clsx'
 import {AsyncDataLoadingError} from './AsyncDataLoadingError'
 import {Loading} from './Loading'
@@ -6,7 +9,7 @@ import {FadeSwitch} from './FadeSwitch'
 
 export interface AsyncDataLoadingProps<DataType = undefined> {
     loading: boolean | null
-    loadingLabel?: string | React.ReactNode
+    loadingLabel?: string | ReactNode
     // Отложить отображение индикатора загрузки на указанное кол-во миллисекунд.
     loadingShowDelay?: number | null
     error?: boolean | number
@@ -17,7 +20,7 @@ export interface AsyncDataLoadingProps<DataType = undefined> {
     className?: string
     style?: CSSProperties
     loadedData?: DataType | null
-    render: (loadedData: DataType) => React.ReactNode
+    render: (loadedData: DataType) => ReactNode
 }
 
 // Показывает индикатор загрузки данных пока не загрузятся данные.

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, {useCallback} from 'react'
+import {useCallback} from 'react'
 import {
     AnyObject,
     FormSelectOption,
@@ -10,7 +10,7 @@ import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
 import {SelectInputOptionsProps} from './SelectInputTypes'
-import {shouldDisplaySelectInputOption} from './shouldDisplaySelectInputOption'
+import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput.
 export function SelectInputOptions<

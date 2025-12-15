@@ -87,7 +87,7 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
                         mode="inline"
                         drop="up"
                         offset={6}
-                        wrapperClass="m-0 data-grid-footer-items-limit-select"
+                        wrapperClassName="m-0 data-grid-footer-items-limit-select"
                         valueToString={valueToString}
                         onChange={handleLimitChange}
                         disabled={disabled}

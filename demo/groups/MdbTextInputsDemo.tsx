@@ -12,8 +12,20 @@ import {InputGroupText} from '../../components/Input/InputGroupText'
 import {InputInfo} from '../../components/Input/InputInfo'
 import {PasswordInput} from '../../components/Input/PasswordInput'
 import {SectionDivider} from '../../components/SectionDivider'
+import {useFormValues} from '../../helpers/useFormValues'
 
 export function MdbTextInputsDemo() {
+
+    const {
+        formValues,
+        setFormValue,
+        formErrors,
+        setFormError,
+    } = useFormValues<{
+        validationTest: string
+    }>({
+        validationTest: '',
+    })
 
     return (
         <>
@@ -43,6 +55,12 @@ export function MdbTextInputsDemo() {
             />
 
             <Input
+                label="Input with tooltip"
+                value="Value"
+                title="Some information here"
+            />
+
+            <Input
                 label="Input readonly"
                 value="Value"
                 readOnly
@@ -65,6 +83,33 @@ export function MdbTextInputsDemo() {
                 value="Value"
                 invalid
                 validationMessage="Validation error"
+            />
+
+            <Input
+                label="Input invalid with tooltip"
+                value="Value"
+                invalid
+                validationMessage="Validation error"
+                title="Some information here"
+            />
+
+            <Input
+                label="Validation message testing"
+                placeholder="Type to trigger error on odd length"
+                value={formValues.validationTest}
+                invalid={!!formErrors.validationTest}
+                validationMessage={formErrors.validationTest}
+                onChange={e => {
+                    setFormValue(
+                        'validationTest',
+                        e.currentTarget.value,
+                        false
+                    )
+                    setFormError(
+                        'validationTest',
+                        e.currentTarget.value.length % 2 ? 'Validation error' : null
+                    )
+                }}
             />
 
             <Input
@@ -160,7 +205,7 @@ export function MdbTextInputsDemo() {
                     label="Input grouped normal"
                     invalid
                     validationMessage="Validation error"
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                 />
                 <Button color="blue">Action</Button>
             </InputGroup>
@@ -171,7 +216,7 @@ export function MdbTextInputsDemo() {
                     invalid
                     grouped="center"
                     validationMessage="Validation error"
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                 />
                 <Button color="blue">Action</Button>
             </InputGroup>
@@ -287,14 +332,14 @@ export function MdbTextInputsDemo() {
             <div className="form-inline mb-4">
                 <Input
                     label="Inline form"
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                 />
                 <Button color="blue">Action</Button>
             </div>
             <div className="form-inline mb-4">
                 <Input
                     label="Inline form"
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                     invalid
                     validationMessage="Validation error"
                 />
@@ -304,7 +349,7 @@ export function MdbTextInputsDemo() {
                 <Input
                     label="Inline form sm"
                     small
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                 />
                 <Button
                     color="blue"
@@ -317,7 +362,7 @@ export function MdbTextInputsDemo() {
                 <Input
                     label="Inline form sm"
                     small
-                    wrapperClass="m-0"
+                    wrapperClassName="m-0"
                     invalid
                     validationMessage="Validation error"
                 />

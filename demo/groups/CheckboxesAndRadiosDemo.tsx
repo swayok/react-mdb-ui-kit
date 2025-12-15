@@ -102,7 +102,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
             <Checkbox
                 {...props}
                 label="Checkbox & Radio comparison"
-                wrapperClass="mb-1"
+                wrapperClassName="mb-1"
             />
             <Radio
                 {...props}
@@ -112,7 +112,7 @@ export function CheckboxesAndRadiosDemo(props: Partial<CheckboxProps>) {
             <Checkbox
                 {...props}
                 label="Checkbox & Radio comparison"
-                wrapperClass="mb-1"
+                wrapperClassName="mb-1"
                 labelBeforeInput
             />
             <Radio

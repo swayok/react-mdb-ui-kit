@@ -21,7 +21,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     external?: boolean
     color?: TextColors | 'link'
     tooltip: string
-    tooltipProps?: Pick<DefaultTooltipProps, 'placement' | 'tooltipClassName' | 'tooltipStyle'>
+    tooltipProps?: Pick<DefaultTooltipProps, 'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'>
     iconProps?: Omit<IconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
     size?: number | null
@@ -84,7 +84,7 @@ export function IconHref(props: IconHrefProps) {
                 className
             )}
             {...tooltipProps}
-            disableClickHandler
+            tooltipDisableClickHandler
             {...linkProps}
             onClick={(event: MouseEvent<HTMLAnchorElement>) => {
                 if (disabled) {

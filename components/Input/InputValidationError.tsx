@@ -3,6 +3,8 @@ import {
     useEffect,
     useState,
 } from 'react'
+import {Tooltip} from '../Tooltip/Tooltip'
+import {TooltipProps} from '../Tooltip/TooltipTypes'
 import {InputValidationErrorProps} from './InputTypes'
 import {Collapse} from '../Collapse'
 
@@ -17,58 +19,75 @@ export function InputValidationError(props: InputValidationErrorProps) {
         inputContainerClassName,
         inputContainerStyle,
         children,
+        // Tooltip:
+        title,
+        tooltipPlacement,
+        tooltipMaxWidth,
+        tooltipOffset,
+        tooltipTextClassName,
+        tooltipDisableClickHandler,
+        tooltipDisableHover,
         ...otherProps
     } = props
+
+    const normalizedErrorMessage = normalizeErrorMessage(error)
+    const show: boolean = !!(invalid && normalizedErrorMessage)
 
     const [
         errorMessage,
         setErrorMessage,
-    ] = useState<string | null>(normalizeErrorMessage(error))
-    const [
-        isInvalid,
-        setIsInvalid,
-    ] = useState<boolean>(!!(invalid && errorMessage))
+    ] = useState<string | null>(normalizedErrorMessage)
 
+    // Отслеживание изменения ошибки.
     useEffect(() => {
-        const normalizedError = normalizeErrorMessage(error)
-        const isInvalid = !!(invalid && normalizedError)
-        setIsInvalid(isInvalid)
-        if (isInvalid) {
-            setErrorMessage(normalizedError)
+        if (show) {
+            setErrorMessage(normalizedErrorMessage)
             return
-        } else {
-            const timer = setTimeout(() => {
-                setErrorMessage(null)
-            }, 300)
-            return () => {
-                clearTimeout(timer)
-            }
         }
-    }, [invalid, error])
+    }, [show, normalizedErrorMessage])
+
+    // Свойства всплывающей подсказки.
+    const tooltipProps: TooltipProps = {
+        title,
+        tooltipPlacement,
+        tooltipMaxWidth,
+        tooltipOffset,
+        tooltipTextClassName,
+        tooltipDisableClickHandler,
+        tooltipDisableHover,
+    }
 
     return (
         <div
             className={clsx(
                 'form-validation-container',
                 className,
-                isInvalid ? 'is-invalid' : null
+                show ? 'is-invalid' : null
             )}
             {...otherProps}
         >
-            <div
+            <Tooltip
                 className={clsx('form-validation-input', inputContainerClassName)}
                 style={inputContainerStyle}
+                {...tooltipProps}
             >
                 {children}
-            </div>
-            <Collapse
-                show={isInvalid}
-                className="form-validation-error-container"
-            >
-                <div className={clsx('invalid-feedback', errorClassName)}>
-                    {errorMessage}
-                </div>
-            </Collapse>
+            </Tooltip>
+            {errorMessage !== null && (
+                <Collapse
+                    show={show}
+                    className="form-validation-error-container"
+                    onTransitionEnd={opened => {
+                        if (!opened) {
+                            setErrorMessage(null)
+                        }
+                    }}
+                >
+                    <div className={clsx('invalid-feedback', errorClassName)}>
+                        {errorMessage}
+                    </div>
+                </Collapse>
+            )}
         </div>
     )
 }

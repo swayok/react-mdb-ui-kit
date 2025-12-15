@@ -1,4 +1,3 @@
-import React from 'react'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
     AppIconProps,

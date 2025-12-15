@@ -1,10 +1,11 @@
 import clsx from 'clsx'
-import React, {
+import {
     useCallback,
     useEffect,
     useMemo,
     useRef,
     useState,
+    MouseEvent,
 } from 'react'
 import {
     getRippleColor,
@@ -62,7 +63,7 @@ export function Ripple(props: RippleProps) {
 
     // Нажатие на элемент: запуск проигрывания анимации волны.
     const handleClick = useCallback(
-        (event: React.MouseEvent<HTMLElement>) => {
+        (event: MouseEvent<HTMLElement>) => {
             if (!noRipple) {
                 setRippleWaves(rippleWaves => rippleWaves.concat(
                     getRippleWaveStyles(

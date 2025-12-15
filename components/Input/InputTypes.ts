@@ -2,6 +2,7 @@ import type {CKEditorConfig} from 'ckeditor4-react'
 import type {
     ChangeEvent,
     ClipboardEvent,
+    ComponentType,
     CSSProperties,
     FocusEvent,
     FormEvent,
@@ -14,12 +15,15 @@ import type {
 import type {CalendarProps} from 'react-calendar'
 import type {
     AnyObject,
+    AnyRef,
+    ApiRef,
     ButtonColors,
     CheckboxColors,
     FormSelectOption,
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
     HtmlComponentProps,
+    HtmlComponentPropsWithRef,
     MorphingHtmlComponentProps,
     MorphingHtmlComponentPropsWithoutRef,
     NumericKeysObject,
@@ -30,9 +34,11 @@ import type {
     DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
-import {AppIconProps} from '../Icon'
+import type {AppIconProps} from '../Icon'
 import type {IconProps} from '../MDIIcon'
-import type {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
+import type {
+    TooltipProps,
+} from '../Tooltip/TooltipTypes'
 
 export type * from './SelectInput/SelectInputTypes'
 
@@ -65,7 +71,7 @@ export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>
     type?: 'checkbox' | 'radio' | 'switch'
     // Обертка.
     wrapperTag?: ReactComponentOrTagName
-    wrapperClass?: string
+    wrapperClassName?: string
     wrapperProps?: HtmlComponentProps
     wrapperStyle?: CSSProperties
     // Не оборачивать в props.wrapperTag.
@@ -75,7 +81,7 @@ export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>
     // Подпись.
     label?: string
     labelId?: string
-    labelClass?: string
+    labelClassName?: string
     labelStyle?: CSSProperties
     labelBeforeInput?: boolean
     labelIsHtml?: boolean
@@ -186,13 +192,21 @@ export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
     ) => void
 }
 
+// Свойства обертки для отображения всплывающей подсказки.
+type InputTooltipProps = Pick<
+    TooltipProps,
+    'title' | 'tooltipMaxWidth' | 'tooltipOffset' | 'tooltipTextClassName'
+    | 'tooltipDisableClickHandler' | 'tooltipDisableHover' | 'tooltipPlacement'
+>
+
 // Свойства компонента Input.
-export interface InputProps extends HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement> {
+export interface InputProps extends Omit<HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement>, 'title'>,
+    InputTooltipProps {
     textarea?: boolean
     inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement | null>
     label?: string
     labelId?: string
-    labelClass?: string
+    labelClassName?: string
     labelStyle?: CSSProperties
     labelRef?: Ref<HTMLLabelElement>
     // Мультипликаторы размера label в активном состоянии.
@@ -201,9 +215,8 @@ export interface InputProps extends HtmlComponentProps<HTMLInputElement | HTMLTe
         small?: number
         large?: number
     }
-    wrapperTag?: ReactComponentOrTagName
-    wrapperProps?: HtmlComponentProps | DefaultTooltipProps
-    wrapperClass?: string
+    wrapperProps?: Omit<InputWrapperProps, InputWrapperPropsFromInput | 'className' | 'style'>
+    wrapperClassName?: string
     wrapperStyle?: CSSProperties
     value?: string
     disabled?: boolean
@@ -220,13 +233,70 @@ export interface InputProps extends HtmlComponentProps<HTMLInputElement | HTMLTe
     active?: boolean
     // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
     grouped?: boolean | 'first' | 'center' | 'last'
-    // Указать true, если поле ввода используется в качестве <DropdownToggle>.
-    isDropdownToggle?: boolean
     // Регулярное выражение для фильтрации вводимых символов.
     allowedChars?: RegExp
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
     trackBehaviorAs?: string
+    /**
+     * Компонент оформления поля ввода.
+     * По умолчанию: InputUi
+     * @see InputUi
+     */
+    UiComponent?: ComponentType<InputUiProps>
+    /**
+     * Компонент Отображения подписи для поля ввода.
+     * По умолчанию: InputLabel
+     * @see InputLabel
+     */
+    LabelComponent?: ComponentType<InputLabelProps>
+    /**
+     * Компонент обертки поля ввода и подписи с возможностью вывода ошибки.
+     * По умолчанию: InputWrapper
+     * @see InputWrapper
+     */
+    WrapperComponent?: ComponentType<InputWrapperProps>
+}
+
+// Размер поля ввода.
+export type InputSize = 'small' | 'normal' | 'large'
+
+// Свойства обертки, передаваемые из свойств поля ввода.
+type InputWrapperPropsFromInput = 'invalid' | 'validationMessage'
+    | 'validationMessageClassName' | 'withoutValidationMessage'
+    | 'contrast' | 'grouped'
+
+// Свойства компонента InputWrapper.
+export interface InputWrapperProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'>,
+    Pick<InputProps, InputWrapperPropsFromInput>,
+    InputTooltipProps {
+    children: ReactNode | ReactNode[]
+}
+
+// API компонента InputUi.
+export interface InputUiApi {
+    updateWidth: () => void
+}
+
+// Свойства компонента InputUi.
+export interface InputUiProps {
+    ref?: AnyRef<HTMLDivElement>
+    apiRef?: ApiRef<InputUiApi>
+    labelRef: RefObject<HTMLLabelElement | null>
+    size: InputSize
+    className?: string
+    activeInputLabelSizeMultiplier?: InputProps['activeInputLabelSizeMultiplier']
+    invalid: InputProps['invalid']
+}
+
+// Свойства компонента InputLabel.
+export interface InputLabelProps extends Omit<
+    HtmlComponentPropsWithRef<HTMLLabelElement>,
+    'label' | 'htmlFor'
+> {
+    label: InputProps['label']
+    inputId?: string
+    invalid: InputProps['invalid']
 }
 
 // Одна дата.
@@ -329,7 +399,8 @@ export interface InputInfoPropsForText extends Omit<MorphingHtmlComponentPropsWi
 export type InputInfoProps = InputInfoPropsForHtml | InputInfoPropsForText
 
 // Свойства компонента InputValidationError.
-export interface InputValidationErrorProps extends HtmlComponentProps<HTMLDivElement> {
+export interface InputValidationErrorProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'>,
+    InputTooltipProps {
     invalid: boolean
     error?: string | string[] | AnyObject<string> | NumericKeysObject<string> | null
     errorClassName?: string
@@ -407,11 +478,11 @@ export interface OptionsSliderInputProps<
     label?: string | ReactNode
     options: FormSelectOptionsList<OptionValueType, OptionExtrasType>
     value?: OptionValueType
-    wrapperClass?: string
-    labelClass?: string
-    thumbClass?: string
-    thumbValueClass?: string
-    optionLabelClass?: string
+    wrapperClassName?: string
+    labelClassName?: string
+    thumbClassName?: string
+    thumbValueClassName?: string
+    optionLabelClassName?: string
     showValueInLabel?: boolean
     minMaxLabelPlacement?: 'inline' | 'below'
     onChange: (
@@ -499,7 +570,7 @@ export interface WysiwygInputProps extends HtmlComponentProps<HTMLTextAreaElemen
     config?: CKEditorConfig
     label?: string
     labelId?: string
-    labelClass?: string
+    labelClassName?: string
     labelStyle?: CSSProperties
     labelRef?: RefObject<HTMLLabelElement>
     // Мультипликаторы размера label в активном состоянии.
@@ -510,7 +581,7 @@ export interface WysiwygInputProps extends HtmlComponentProps<HTMLTextAreaElemen
     }
     wrapperTag?: ReactComponentOrTagName
     wrapperProps?: AnyObject
-    wrapperClass?: string
+    wrapperClassName?: string
     wrapperStyle?: CSSProperties
     value?: string
     disabled?: boolean

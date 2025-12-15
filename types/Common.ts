@@ -41,18 +41,22 @@ export type NumericKeysObject<
     ValuesType = any,
 > = Record<number, ValuesType>
 
-// RefObject любого вида с API или без.
+// RefObject любого вида.
 export type AnyRefObject<
     RefType = any,
-    ApiType = any,
-> = RefObject<RefType & ApiType>
-    | ForwardedRef<RefType & ApiType>
+> = RefObject<RefType>
+    | ForwardedRef<RefType>
 
-// Ref любого вида с API или без.
+// Ref любого вида.
 export type AnyRef<
     RefType = any,
-    ApiType = any,
-> = RefCallback<RefType & ApiType> | AnyRefObject<RefType, ApiType>
+> = RefCallback<RefType> | AnyRefObject<RefType>
+
+// Ref любого вида для API компонента.
+// Пример для свойства apiRef: useImperativeHandle(apiRef, (): ApiType => {...}).
+export type ApiRef<ApiType> = RefObject<ApiType>
+    | ForwardedRef<ApiType>
+    | RefCallback<ApiType>
 
 /**
  * Базовый тип URL параметров для хука useParams<UrlParams>().
@@ -123,7 +127,7 @@ export interface ApiResponseData extends AnyObject {
 export interface FormSelectOption<Value = string, Extras = AnyObject> extends AnyObject {
     label: string
     value: Value
-    attributes?: DropdownItemProps & HtmlComponentProps<unknown>
+    attributes?: DropdownItemProps & HtmlComponentProps<HTMLElement>
     disabled?: boolean
     extra?: Extras
 }
@@ -156,12 +160,16 @@ export type ReactComponentOrTagName = ComponentProps<any>
 /**
  * Компонент, который принимает свойства любого HTML элемента.
  */
-export type HtmlComponentProps<T = HTMLElement> = AllHTMLAttributes<T>
+export type HtmlComponentProps<
+    T extends HTMLElement | SVGElement = HTMLElement,
+> = AllHTMLAttributes<T>
 
 /**
  * Компонент, который принимает свойства любого HTML элемента.
  */
-export type HtmlComponentPropsWithRef<T = HTMLElement> = AllHTMLAttributes<T> & RefAttributes<T>
+export type HtmlComponentPropsWithRef<
+    T extends HTMLElement | SVGElement = HTMLElement,
+> = AllHTMLAttributes<T> & RefAttributes<T>
 
 /**
  * Компонент имеет свойство tag, которое может быть React компонентом
@@ -172,11 +180,10 @@ export type HtmlComponentPropsWithRef<T = HTMLElement> = AllHTMLAttributes<T> & 
  * @see MergedComponentProps
  */
 export interface MorphingComponentProps<
-    RefType = any,
-    RefApi = any,
+    RefType extends HTMLElement | SVGElement = any,
 > {
     tag?: ReactComponentOrTagName
-    ref?: AnyRef<RefType, RefApi>
+    ref?: AnyRef<RefType>
 }
 
 /**
@@ -186,7 +193,9 @@ export interface MorphingComponentProps<
  * Лучше использовать в паре с:
  * @see MergedComponentProps
  */
-export interface MorphingHtmlComponentPropsWithoutRef<T = any> extends HtmlComponentProps<T>,
+export interface MorphingHtmlComponentPropsWithoutRef<
+    T extends HTMLElement | SVGElement = any,
+> extends HtmlComponentProps<T>,
     Omit<MorphingComponentProps, 'ref'> {
 }
 
@@ -199,9 +208,8 @@ export interface MorphingHtmlComponentPropsWithoutRef<T = any> extends HtmlCompo
  * @see MergedComponentProps
  */
 export interface MorphingHtmlComponentProps<
-    RefType = any,
-    RefApi = any,
-> extends HtmlComponentProps<RefType>, MorphingComponentProps<RefType, RefApi> {
+    RefType extends HTMLElement | SVGElement = any,
+> extends HtmlComponentProps<RefType>, MorphingComponentProps<RefType> {
 }
 
 /**

@@ -224,7 +224,7 @@ export interface AsyncDataGridTableProps<
     // true: заполнить контейнер по высоте, прокрутка в этом случае будет
     // работать только на строки таблицы, не трогая элементы вне таблицы.
     fillHeight?: boolean
-    wrapperClass?: string
+    wrapperClassName?: string
     wrapperId?: string
     verticalAlign?: 'top' | 'middle' | 'bottom'
 

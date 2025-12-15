@@ -1,7 +1,8 @@
-import React, {
+import {
     useCallback,
     useEffect,
     useState,
+    MouseEvent,
 } from 'react'
 import {
     AsyncDataGridContextMenuProps,
@@ -153,7 +154,7 @@ export function AsyncDataGrid<
     // Открыть контекстное меню для строки.
     const openContextMenu: AsyncDataGridContextProps<RowDataType>['openContextMenu'] = useCallback(
         (
-            event: React.MouseEvent<HTMLTableRowElement>,
+            event: MouseEvent<HTMLTableRowElement>,
             rowData: RowDataType,
             rowIndex: number,
             setIsProcessing: (isProcessing: boolean) => void

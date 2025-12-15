@@ -8,6 +8,7 @@ import {
     useEffect,
     useRef,
     useState,
+    ChangeEvent,
 } from 'react'
 import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
 import {
@@ -42,9 +43,9 @@ export function WysiwygInput(props: WysiwygInputProps) {
         value,
         id,
         labelId,
-        labelClass,
+        labelClassName,
         wrapperTag = 'div',
-        wrapperClass = 'mb-4',
+        wrapperClassName = 'mb-4',
         wrapperStyle,
         wrapperProps,
         label,
@@ -92,7 +93,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
         'form-outline',
         contrast ? 'form-white' : null,
         !wrapperIsValidationMessageContainer && grouped ? 'flex-1' : null,
-        wrapperIsValidationMessageContainer ? null : wrapperClass
+        wrapperIsValidationMessageContainer ? null : wrapperClassName
     )
     let size: 'normal' | 'small' | 'large' = 'normal'
     if (small && !large) {
@@ -108,7 +109,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
         invalid ? 'is-invalid' : null,
         className
     )
-    const labelClasses = clsx('form-label', labelClass)
+    const labelClasses = clsx('form-label', labelClassName)
 
     const updateLabelWidth = useCallback(
         () => {
@@ -150,7 +151,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
     }, [disabled, ckeditorInstance])
 
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        (e: ChangeEvent<HTMLTextAreaElement>) => {
             onChange?.(e)
         },
         [onChange]
@@ -172,7 +173,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
             additionalWrapperProps.errorClassName = validationMessageClassName
         }
         additionalWrapperProps.inputContainerClassName = wrapperClasses
-        additionalWrapperProps.className = clsx(grouped ? 'flex-1' : wrapperClass)
+        additionalWrapperProps.className = clsx(grouped ? 'flex-1' : wrapperClassName)
     } else {
         additionalWrapperProps.className = wrapperClasses
     }
@@ -211,7 +212,7 @@ export function WysiwygInput(props: WysiwygInputProps) {
                     onChange={(e: CKEditorEventPayload<'change'>) => {
                         const editor: CKEditorInstance = e.editor as CKEditorInstance
                         editor.element.$.value = editor.getData()
-                        const fakeEvent: React.ChangeEvent<HTMLTextAreaElement> = {
+                        const fakeEvent: ChangeEvent<HTMLTextAreaElement> = {
                             bubbles: false,
                             cancelable: false,
                             currentTarget: editor.element.$,

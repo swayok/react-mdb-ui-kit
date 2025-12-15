@@ -104,11 +104,11 @@ export function CheckboxesGroup<
                         || values.includes(String(option.value) as Value)
                     }
                     small={small}
-                    wrapperClass={checkboxWrapperClassName}
+                    wrapperClassName={checkboxWrapperClassName}
                     wrapperStyle={checkboxWrapperStyle}
                     className={checkboxClassName}
                     style={checkboxStyle}
-                    labelClass={checkboxLabelClassName}
+                    labelClassName={checkboxLabelClassName}
                     labelStyle={checkboxLabelStyle}
                     withoutValidationMessage
                     trackBehaviorAs={trackBehaviorAs}

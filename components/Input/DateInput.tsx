@@ -12,17 +12,16 @@ import {
 } from 'react'
 import {CalendarProps} from 'react-calendar'
 import {useEventCallback} from '../../helpers/useEventCallback'
+import {DateTimeService} from '../../services/DateTimeService'
+import {UserBehaviorService} from '../../services/UserBehaviorService'
+import {Dropdown} from '../Dropdown/Dropdown'
+import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {
     DropdownApi,
     DropdownDropDirection,
     DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
-import {DateTimeService} from '../../services/DateTimeService'
-import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {Icon} from '../Icon'
 import {IconButton} from '../IconButton'
 import {Input} from './Input'
@@ -45,7 +44,7 @@ export function DateInput(props: DateInputProps) {
         dateFormat = DateTimeService.defaultFormat,
         allowEmptyValue,
         className,
-        wrapperClass = 'mb-4',
+        wrapperClassName = 'mb-4',
         validationMessage,
         validationMessageClassName,
         withoutValidationMessage,
@@ -55,9 +54,7 @@ export function DateInput(props: DateInputProps) {
             selectRange: Array.isArray(value),
         },
         trackBehaviorAs,
-        wrapperProps = {
-            tag: 'div',
-        },
+        wrapperProps,
         showCalendarIcon = true,
         invalid,
         // Dropdown
@@ -156,8 +153,7 @@ export function DateInput(props: DateInputProps) {
                 className,
                 inputProps.disabled ? null : 'cursor'
             )}
-            wrapperClass="m-0"
-            wrapperTag={DropdownToggle}
+            wrapperClassName="m-0"
             wrapperProps={wrapperProps}
             active={inputValue !== ''}
             readOnly
@@ -226,13 +222,13 @@ export function DateInput(props: DateInputProps) {
                 'form-date-input form-outline',
                 inputProps.small && !inputProps.large ? 'form-date-input-sm' : null,
                 inputProps.large && !inputProps.small ? 'form-date-input-lg' : null,
-                wrapperClass
+                wrapperClassName
             )} // < form-outline here needed to apply .input-group styles
         >
             <Dropdown {...dropdownProps}>
                 {dropdownToggle}
                 <DropdownMenu
-                    ref={dropdownApiRef}
+                    apiRef={dropdownApiRef}
                     {...dropdownMenuProps}
                 >
                     <Suspense>

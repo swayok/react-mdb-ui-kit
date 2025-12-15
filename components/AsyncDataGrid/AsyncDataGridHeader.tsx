@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import {useCallback} from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
 import {AsyncDataGridHeaderProps} from './AsyncDataGridTypes'

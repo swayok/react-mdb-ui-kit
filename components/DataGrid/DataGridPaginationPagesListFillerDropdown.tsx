@@ -31,7 +31,7 @@ export function DataGridPaginationPagesListFillerDropdown(
         ...wrapperProps
     } = props
 
-    const dropdownRef = useRef<DropdownApi>(null)
+    const dropdownApiRef = useRef<DropdownApi>(null)
     const pageNumberInputRef = useRef<HTMLInputElement>(null)
 
     const showPageNumberInputInFiller: boolean = pagesCount > 100
@@ -53,7 +53,7 @@ export function DataGridPaginationPagesListFillerDropdown(
     if (showPageNumberInputInFiller) {
         content = (
             <DropdownMenu
-                ref={dropdownRef}
+                apiRef={dropdownApiRef}
                 offset={6}
                 drop="up"
                 maxHeight={300}
@@ -70,7 +70,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                         )
                         if (value) {
                             pageNumberInputRef.current?.blur()
-                            dropdownRef.current?.setIsOpen(
+                            dropdownApiRef.current?.setIsOpen(
                                 false,
                                 e.nativeEvent,
                                 'click'
@@ -83,7 +83,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                         allowedChars={/[0-9]/}
                         label={`1 - ${pagesCount}`}
                         inputRef={pageNumberInputRef}
-                        wrapperClass="m-0"
+                        wrapperClassName="m-0"
                         maxLength={pagesCount.toString().length}
                         disabled={disabled}
                         onBlur={e => {
@@ -101,7 +101,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                         onKeyDown={e => {
                             if (e.key === 'Esc') {
                                 e.preventDefault()
-                                dropdownRef.current?.setIsOpen(
+                                dropdownApiRef.current?.setIsOpen(
                                     false,
                                     e.nativeEvent,
                                     'escape-key'

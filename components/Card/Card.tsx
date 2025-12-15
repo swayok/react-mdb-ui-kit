@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import {CardProps} from './CardTypes'
 
 // Контейнер каточки (блок с белым фоном, скругленными углами и тенью).

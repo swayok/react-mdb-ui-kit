@@ -21,7 +21,7 @@ import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
 import {Input} from './Input'
 import {ComboboxInputProps} from './InputTypes'
-import {useComboboxDropdown} from './SelectInput/useComboboxDropdown'
+import {useComboboxDropdown} from './helpers/useComboboxDropdown'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.
@@ -31,6 +31,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         options = [],
         inputRef,
         value,
+        title,
         active,
         onFocus,
         onClick,
@@ -190,6 +191,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                     onClick: onSearchClick,
                     onKeyDown: onSearchKeyDown,
                 })}
+                title={title}
                 active={active ?? (value ?? '').length > 0}
             />
             {isOpen && hasOptions && (

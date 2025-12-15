@@ -17,11 +17,11 @@ import {SelectInputBasicProps} from './SelectInputTypes'
 // Список опций задается через props.children.
 // Опции - список элементов <DropdownItem><DropdownLink>...</DropdownLink></DropdownItem>.
 // Более удобный компонент: FormSelect.
-export function SelectInputBasic(props: SelectInputBasicProps) {
+export function SelectInputBase(props: SelectInputBasicProps) {
 
     const {
         className,
-        wrapperClass = 'mb-4',
+        wrapperClassName = 'mb-4',
         wrapperStyle,
         children,
         mode = 'input',
@@ -134,14 +134,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                         className,
                         inputProps.disabled ? null : 'cursor'
                     )}
-                    wrapperClass="m-0"
-                    wrapperTag={DropdownToggle}
-                    wrapperProps={{
-                        tag: 'div',
-                        // onClick() {
-                        //     setIsOpen(state => !state)
-                        // },
-                    }}
+                    wrapperClassName="m-0"
                     active={inputProps.value !== null && inputProps.value !== ''}
                     readOnly
                     withoutValidationMessage
@@ -179,7 +172,7 @@ export function SelectInputBasic(props: SelectInputBasicProps) {
                 'mode-' + mode,
                 inputProps.small && !inputProps.large ? 'form-dropdown-select-sm' : null,
                 inputProps.large && !inputProps.small ? 'form-dropdown-select-lg' : null,
-                wrapperClass
+                wrapperClassName
             )} // < form-outline here needed to apply .input-group styles
             style={wrapperStyle}
         >

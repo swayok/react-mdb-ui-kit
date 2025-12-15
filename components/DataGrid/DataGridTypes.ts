@@ -381,7 +381,7 @@ export interface DataGridTableProps<
     small?: boolean
     bordered?: boolean
     flexFill?: boolean
-    wrapperClass?: string
+    wrapperClassName?: string
     wrapperId?: string
     wrapperStyle?: CSSProperties
     verticalAlign?: 'top' | 'middle' | 'bottom'

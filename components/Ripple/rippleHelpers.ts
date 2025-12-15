@@ -1,4 +1,4 @@
-import React from 'react'
+import {MouseEvent} from 'react'
 import {
     RipplePositionAndDimensions,
     RippleWaveStyle,
@@ -95,7 +95,7 @@ export function getRippleDiameter(data: RipplePositionAndDimensions) {
 
 // Стили для волны.
 export function getRippleWaveStyles(
-    e: React.MouseEvent,
+    e: MouseEvent,
     element: HTMLElement | null,
     radius: number,
     minRadius: number,

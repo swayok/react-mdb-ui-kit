@@ -22,7 +22,7 @@ export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
         verticalAlign,
 
         className,
-        wrapperClass,
+        wrapperClassName,
         wrapperId,
 
         Headers,
@@ -47,7 +47,7 @@ export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
             className={clsx(
                 'data-grid-table-container position-relative table-responsive',
                 fillHeight ? 'data-grid-flex full-height overflow-y-scroll' : null,
-                wrapperClass
+                wrapperClassName
             )}
             id={wrapperId}
         >

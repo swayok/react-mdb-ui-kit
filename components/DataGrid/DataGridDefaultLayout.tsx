@@ -57,7 +57,7 @@ export function DataGridDefaultLayout<
                 Headers={Headers}
                 renderRow={renderRow}
                 TotalsRow={renderTotalsRow}
-                wrapperClass={clsx(
+                wrapperClassName={clsx(
                     border || border === undefined ? 'border' : null,
                     footerProps.border ? 'border-bottom-0' : null,
                     tableClassName

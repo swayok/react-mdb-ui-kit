@@ -38,10 +38,10 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
     const {
         children,
         tag: Tag = 'div',
-        placement = 'top',
+        tooltipPlacement = 'top',
         title,
-        disableClickHandler,
-        disableHover,
+        tooltipDisableClickHandler,
+        tooltipDisableHover,
         ref,
         // Свойства для подсказки.
         tooltipClassName,
@@ -78,7 +78,7 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
         },
         middleware: [offset(tooltipOffset), flip(), shift()],
         whileElementsMounted: autoUpdate,
-        placement,
+        placement: tooltipPlacement,
     })
 
     // Ref для компонента-триггера.
@@ -89,12 +89,12 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
 
     // Настройка взаимодействий.
     const hover = useHover(context, {
-        enabled: !disableHover,
+        enabled: !tooltipDisableHover,
         move: false,
     })
     const focus = useFocus(context)
     const click = useClick(context, {
-        enabled: !disableClickHandler,
+        enabled: !tooltipDisableClickHandler,
     })
     const dismiss = useDismiss(context)
     const role = useRole(context, {role: tooltipRole})
@@ -150,7 +150,7 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
                             onTransitionEnd: onCssTransitionEnd,
                             className: clsx(
                                 'tooltip fade',
-                                `bs-tooltip-${placement}`
+                                `bs-tooltip-${tooltipPlacement}`
                             ),
                         })}
                     >

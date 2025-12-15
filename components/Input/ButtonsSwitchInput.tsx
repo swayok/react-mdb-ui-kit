@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import {ReactNode} from 'react'
 import {ButtonsSwitchInputProps} from './InputTypes'
 import {ButtonsSwitch} from '../ButtonsSwitch'
 import {InputValidationError} from './InputValidationError'
@@ -47,7 +48,7 @@ export function ButtonsSwitchInput<ValueType = string>(
     }
 
     // Кнопки.
-    const buttonsWrapped: React.ReactNode = (
+    const buttonsWrapped: ReactNode = (
         <ButtonsSwitch
             options={options}
             value={value}

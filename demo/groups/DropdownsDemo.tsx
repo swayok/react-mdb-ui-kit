@@ -24,21 +24,27 @@ export function DropdownsDemo() {
         setFormValue,
     } = useFormValues<{
         select1: string
+        select2: string
+        multiSelect1: string[]
+        multiSelect2: string[]
+        combobox1: string
+        combobox2: string
         date1: Date | null
         dateRange1: [Date | null, Date | null]
-        multiSelect1: string[]
-        combobox1: string
     }>({
         select1: 'option1',
+        select2: 'option1',
+        multiSelect1: [],
+        multiSelect2: [],
+        combobox1: '',
+        combobox2: '',
         date1: null,
         dateRange1: [null, null],
-        multiSelect1: [],
-        combobox1: '',
     })
 
     return (
-        <div className="d-flex flex-column gap-4">
-            <div className="flex-1 d-flex flex-row align-items-center gap-4">
+        <div className="d-flex flex-column">
+            <div className="mb-4 flex-1 d-flex flex-row align-items-center gap-4">
                 <Dropdown>
                     <DropdownToggle
                         color="gray"
@@ -192,18 +198,28 @@ export function DropdownsDemo() {
                         setFormValue('select1', value)
                     }}
                 />
-                <DateInput
-                    label="Date input"
-                    value={formValues.date1}
+                <SelectInput
+                    label="Select value (scrollable)"
+                    value={formValues.select2}
+                    options={[
+                        {label: 'Option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                        {label: 'Option 5', value: 'option5'},
+                        {label: 'Option 6', value: 'option6'},
+                        {label: 'Option 7', value: 'option7'},
+                        {label: 'Option 8', value: 'option8'},
+                        {label: 'Option 9', value: 'option9'},
+                        {label: 'Option 10', value: 'option10'},
+                        {label: 'Option 11', value: 'option11'},
+                        {label: 'Option 12', value: 'option12'},
+                        {label: 'Option 13', value: 'option13'},
+                        {label: 'Option 14', value: 'option14'},
+                        {label: 'Option 15', value: 'option15'},
+                    ]}
                     onChange={value => {
-                        setFormValue('date1', value)
-                    }}
-                />
-                <DateInput
-                    label="Date range input"
-                    value={formValues.dateRange1}
-                    onChange={(value1, value2) => {
-                        setFormValue('dateRange1', [value1, value2])
+                        setFormValue('select2', value)
                     }}
                 />
             </div>
@@ -222,6 +238,32 @@ export function DropdownsDemo() {
                         setFormValue('multiSelect1', values)
                     }}
                 />
+                <MultiSelectInput
+                    label="Select values (scrollable)"
+                    values={formValues.multiSelect2}
+                    options={[
+                        {label: 'Option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                        {label: 'Option 5', value: 'option5'},
+                        {label: 'Option 6', value: 'option6'},
+                        {label: 'Option 7', value: 'option7'},
+                        {label: 'Option 8', value: 'option8'},
+                        {label: 'Option 9', value: 'option9'},
+                        {label: 'Option 10', value: 'option10'},
+                        {label: 'Option 11', value: 'option11'},
+                        {label: 'Option 12', value: 'option12'},
+                        {label: 'Option 13', value: 'option13'},
+                        {label: 'Option 14', value: 'option14'},
+                        {label: 'Option 15', value: 'option15'},
+                    ]}
+                    onChange={values => {
+                        setFormValue('multiSelect2', values)
+                    }}
+                />
+            </div>
+            <div className="flex-1 d-flex flex-row align-items-center gap-4">
                 <ComboboxInput
                     label="Typeahead search"
                     value={formValues.combobox1}
@@ -235,6 +277,46 @@ export function DropdownsDemo() {
                     ]}
                     onChange={value => {
                         setFormValue('combobox1', value)
+                    }}
+                />
+                <ComboboxInput
+                    label="Typeahead search (scrollable)"
+                    value={formValues.combobox2}
+                    options={[
+                        'Option 1',
+                        'Option 2',
+                        'Option 3',
+                        'Option 4',
+                        'Option 5',
+                        'Option 6',
+                        'Option 7',
+                        'Option 8',
+                        'Option 9',
+                        'Option 10',
+                        'Option 11',
+                        'Option 12',
+                        'Option 13',
+                        'Option 14',
+                        'Option 15',
+                    ]}
+                    onChange={value => {
+                        setFormValue('combobox2', value)
+                    }}
+                />
+            </div>
+            <div className="flex-1 d-flex flex-row align-items-center gap-4">
+                <DateInput
+                    label="Date input"
+                    value={formValues.date1}
+                    onChange={value => {
+                        setFormValue('date1', value)
+                    }}
+                />
+                <DateInput
+                    label="Date range input"
+                    value={formValues.dateRange1}
+                    onChange={(value1, value2) => {
+                        setFormValue('dateRange1', [value1, value2])
                     }}
                 />
             </div>

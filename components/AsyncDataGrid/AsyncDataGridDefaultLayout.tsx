@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import {
     AsyncDataGridDefaultLayoutProps,
     AsyncDataGridFooterProps,
@@ -62,7 +61,7 @@ export function AsyncDataGridDefaultLayout<
                 bordered={bordered}
                 small={small}
                 verticalAlign="top"
-                wrapperClass={tableWrapperClassName}
+                wrapperClassName={tableWrapperClassName}
                 fillHeight={fillHeight}
                 {...tableProps}
                 Headers={Headers}

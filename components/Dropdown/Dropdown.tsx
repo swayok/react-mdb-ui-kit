@@ -90,7 +90,7 @@ function DropdownWrapper(props: DropdownProps) {
     const [
         menuElement,
         setMenuElement,
-    ] = useState<HTMLElement | null>(null)
+    ] = useState<HTMLDivElement | null>(null)
 
     const elementsRef = useRef<(HTMLElement | null)[]>([])
     const parentContext = useDropdownContext()
@@ -162,7 +162,7 @@ function DropdownWrapper(props: DropdownProps) {
     ])
 
     // Контекст.
-    const contextProps: DropdownContextProps = {
+    const contextProps: DropdownContextProps<HTMLElement, HTMLDivElement> = {
         rootContext,
         disableAllItems,
         setDisableAllItems,

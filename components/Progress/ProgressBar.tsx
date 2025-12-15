@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import {ProgressBarProps} from './ProgressTypes'
 
 // Индикатор прогресса (внутренний компонент, отображает прогресс в %).

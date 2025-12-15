@@ -73,11 +73,11 @@ export function RadiosGroup<
             }
             small={small}
             color={color}
-            wrapperClass={radioWrapperClassName}
+            wrapperClassName={radioWrapperClassName}
             wrapperStyle={radioWrapperStyle}
             className={radioClassName}
             style={radioStyle}
-            labelClass={radioLabelClassName}
+            labelClassName={radioLabelClassName}
             labelStyle={radioLabelStyle}
             withoutValidationMessage
             trackBehaviorAs={trackBehaviorAs}

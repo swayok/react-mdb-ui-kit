@@ -13,7 +13,7 @@ import {PasswordInputProps} from './InputTypes'
 export function PasswordInput(props: PasswordInputProps) {
     const {
         withUnmaskToggler = false,
-        wrapperClass = 'mb-4',
+        wrapperClassName = 'mb-4',
         children,
         ...otherProps
     } = props
@@ -26,7 +26,7 @@ export function PasswordInput(props: PasswordInputProps) {
     return (
         <Input
             type={masked ? 'password' : 'text'}
-            wrapperClass={clsx('password-input-wrapper', wrapperClass)}
+            wrapperClassName={clsx('password-input-wrapper', wrapperClassName)}
             {...otherProps}
         >
             {children}

@@ -3,6 +3,7 @@ import {
     useCallback,
     useEffect,
     useId,
+    ChangeEvent,
 } from 'react'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {
@@ -23,12 +24,12 @@ export function Checkbox(props: CheckboxProps) {
         label,
         labelIsHtml,
         labelId,
-        labelClass,
+        labelClassName,
         labelStyle,
         labelBeforeInput = false,
         className,
         wrapperTag = 'div',
-        wrapperClass = 'mb-4',
+        wrapperClassName = 'mb-4',
         wrapperProps,
         wrapperStyle,
         inline,
@@ -82,11 +83,11 @@ export function Checkbox(props: CheckboxProps) {
         inline ? 'form-check-inline' : null,
         label ? (labelBeforeInput ? 'label-before-input' : 'label-after-input') : null,
         invalid ? 'is-invalid' : null,
-        wrapperIsValidationMessageContainer ? null : wrapperClass
+        wrapperIsValidationMessageContainer ? null : wrapperClassName
     )
 
     const handleOnChange = useCallback((
-        e: React.ChangeEvent<HTMLInputElement>
+        e: ChangeEvent<HTMLInputElement>
     ) => {
         onChange?.(e)
         if (trackBehaviorAs) {
@@ -104,7 +105,7 @@ export function Checkbox(props: CheckboxProps) {
     if (label) {
         labelEl = (
             <label
-                className={clsx('form-check-label', labelClass)}
+                className={clsx('form-check-label', labelClassName)}
                 id={labelId}
                 style={labelStyle}
                 htmlFor={inputId}
@@ -162,7 +163,7 @@ export function Checkbox(props: CheckboxProps) {
                 additionalWrapperProps.errorClassName = validationMessageClassName
             }
             additionalWrapperProps.inputContainerClassName = wrapperClasses
-            additionalWrapperProps.className = wrapperClass
+            additionalWrapperProps.className = wrapperClassName
         } else {
             additionalWrapperProps.className = wrapperClasses
         }

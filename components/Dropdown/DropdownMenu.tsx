@@ -10,6 +10,7 @@ import {
 } from '@floating-ui/react'
 import {
     Fragment,
+    HTMLProps,
     useImperativeHandle,
     useMemo,
 } from 'react'
@@ -28,8 +29,9 @@ import {getDropdownMenuPlacement} from './getDropdownMenuPlacement'
 
 // Выпадающее меню (отображение).
 export function DropdownMenu<
-    InjectedComponentProps extends object = HtmlComponentProps<HTMLDivElement>,
->(props: MergedComponentProps<DropdownMenuProps, InjectedComponentProps>) {
+    RefType extends HTMLElement = HTMLDivElement,
+    InjectedComponentProps extends object = HtmlComponentProps<RefType>,
+>(props: MergedComponentProps<DropdownMenuProps<RefType>, InjectedComponentProps>) {
 
     const {
         drop = 'down',
@@ -40,6 +42,7 @@ export function DropdownMenu<
         offset: propsOffset = 2,
         renderOnMount,
         ref,
+        apiRef,
         style = {},
         inline,
         children,
@@ -54,10 +57,10 @@ export function DropdownMenu<
         rootContext,
         getFloatingProps,
         elementsRef,
-    } = useDropdownContext()
+    } = useDropdownContext<HTMLElement, RefType>()
 
     // API компонента для использования во внешних компонентах.
-    useImperativeHandle(ref, (): DropdownApi => ({
+    useImperativeHandle(apiRef, (): DropdownApi => ({
         setIsOpen,
     }))
 
@@ -74,7 +77,7 @@ export function DropdownMenu<
         [align, drop, isRTL, isNested]
     )
 
-    const mergedRef = useMergedRefs(
+    const mergedRef = useMergedRefs<RefType>(
         ref,
         setMenuElement
     )
@@ -115,7 +118,9 @@ export function DropdownMenu<
                         <DropdownMenuContent
                             ref={mergedRef}
                             isOpen={isOpen}
-                            {...getFloatingProps(otherProps)}
+                            {...getFloatingProps(
+                                otherProps as HTMLProps<HTMLElement>
+                            )}
                             style={{
                                 ...style,
                                 ...floatingStyles,

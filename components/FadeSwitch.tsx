@@ -1,4 +1,8 @@
-import React from 'react'
+import {
+    ReactNode,
+    RefObject,
+    useRef,
+} from 'react'
 import {
     CSSTransition,
     SwitchTransition,
@@ -7,13 +11,13 @@ import clsx from 'clsx'
 
 interface Props {
     transitionKey: string | boolean | number
-    transitionRef?: React.RefObject<HTMLElement>
+    transitionRef?: RefObject<HTMLElement>
     // Длительность анимации.
     // По умолчанию: в зависимости от значения свойства animation.
     animationTimeout?: number
     unmountOnExit?: boolean
     mountOnEnter?: boolean
-    children: React.ReactNode | React.ReactNode[]
+    children: ReactNode | ReactNode[]
     // Тип анимации.
     // По умолчанию: fade.
     // Длительность анимаций по умолчанию: 300 | 200 | 100.
@@ -26,7 +30,7 @@ interface Props {
 // Анимированная смена children.
 export function FadeSwitch(props: Props) {
 
-    const containerRef = React.useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
 
     const {
         transitionKey,
@@ -65,7 +69,7 @@ export function FadeSwitch(props: Props) {
                 ) : (
                     <div
                         className={clsx('animated-content-container', className)}
-                        ref={transitionRef as React.RefObject<HTMLDivElement>}
+                        ref={transitionRef as RefObject<HTMLDivElement>}
                     >
                         {children}
                     </div>

@@ -5,14 +5,18 @@ import {
     mdiCheckboxMarkedOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
-import React, {HTMLProps} from 'react'
+import {
+    Component,
+    HTMLProps,
+    MouseEvent,
+} from 'react'
 import {DropdownHeader} from '../../Dropdown/DropdownHeader'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
 import {
     DropdownHeaderProps,
 } from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
-import {SelectInputBasic} from './SelectInputBasic'
+import {SelectInputBase} from './SelectInputBase'
 import {
     MultiSelectInputOptionExtras,
     MultiSelectInputProps,
@@ -31,7 +35,7 @@ import {
 export class MultiSelectInput<
     OptionValueType = string,
     OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras,
-> extends React.Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
+> extends Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
 
     render() {
         const {
@@ -51,7 +55,7 @@ export class MultiSelectInput<
         } = this.props
 
         return (
-            <SelectInputBasic
+            <SelectInputBase
                 className={clsx(
                     'with-search form-multiselect',
                     this.getSelectedOptions().length > 0 ? null : 'empty-option-selected',
@@ -68,7 +72,7 @@ export class MultiSelectInput<
                 closeDropdownOnSelect={false}
             >
                 {this.renderOptions(this.props.options)}
-            </SelectInputBasic>
+            </SelectInputBase>
         )
     }
 
@@ -157,7 +161,7 @@ export class MultiSelectInput<
                         key={'option-' + i}
                         {...attributes}
                         active={selected}
-                        onClick={(e: React.MouseEvent) => {
+                        onClick={(e: MouseEvent) => {
                             e.preventDefault()
                             if (!disabled) {
                                 if (radiosGroup) {

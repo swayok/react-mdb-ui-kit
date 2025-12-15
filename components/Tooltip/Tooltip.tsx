@@ -15,10 +15,10 @@ export function Tooltip<InjectedComponentProps extends object = HtmlComponentPro
         const {
             children,
             tag: Tag = 'div',
-            placement,
+            tooltipPlacement,
             title,
-            disableClickHandler,
-            disableHover,
+            tooltipDisableClickHandler,
+            tooltipDisableHover,
             // Свойства для подсказки.
             tooltipClassName,
             tooltipTextClassName,

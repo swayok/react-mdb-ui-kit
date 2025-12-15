@@ -1,4 +1,3 @@
-import React from 'react'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import clsx from 'clsx'
 import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'

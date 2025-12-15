@@ -96,6 +96,7 @@
             &:focus ~ .form-label,
             &.active ~ .form-label {
                 transform: form-outline-input.$form-outline-active-label-transform;
+                transition: form-outline-input.$form-outline-active-label-transition;
             }
 
             &:focus ~ .form-label {

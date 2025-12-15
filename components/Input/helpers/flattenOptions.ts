@@ -3,7 +3,7 @@ import {
     FormSelectOption,
     FormSelectOptionsAndGroupsList,
 } from '../../../types'
-import {FlattenedOptionOrGroup} from './SelectInputTypes'
+import {FlattenedOptionOrGroup} from '../SelectInput/SelectInputTypes'
 
 // Преобразование многомерного списка опций в плоский массив.
 export function flattenOptions<

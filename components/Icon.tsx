@@ -75,13 +75,13 @@ export function Icon(props: AppIconProps) {
         const {
             className: tooltipWrapperClassName,
             tag: tooltipTag = 'span',
-            disableClickHandler: tooltipDisableClickHandler = true,
+            tooltipDisableClickHandler = true,
             tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
             ...otherTooltipProps
         } = tooltipProps
         const commonTooltipProps: Partial<DefaultTooltipProps> = {
             title: tooltip,
-            disableClickHandler: tooltipDisableClickHandler,
+            tooltipDisableClickHandler,
             tooltipMaxWidth: tooltipMaxWidthFromProps,
         }
         if (label !== undefined) {
