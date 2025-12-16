@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import {
+    ChangeEvent,
     useDeferredValue,
     useEffect,
     useMemo,
     useRef,
     useState,
-    ChangeEvent,
 } from 'react'
 import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'

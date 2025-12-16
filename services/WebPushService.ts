@@ -1,5 +1,5 @@
-import {ApiRequestService} from './ApiRequestService'
 import {ApiResponseData} from '../types'
+import {ApiRequestService} from './ApiRequestService'
 
 // Настройки WebPushService.
 export interface WebPushServiceConfig {

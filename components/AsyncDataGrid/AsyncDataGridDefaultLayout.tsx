@@ -1,13 +1,13 @@
 import clsx from 'clsx'
+import {AnyObject} from '../../types'
+import {AsyncDataGridEvents} from './AsyncDataGridEvents'
+import {AsyncDataGridFooter} from './AsyncDataGridFooter'
+import {AsyncDataGridTable} from './AsyncDataGridTable'
 import {
     AsyncDataGridDefaultLayoutProps,
     AsyncDataGridFooterProps,
     AsyncDataGridTableProps,
 } from './AsyncDataGridTypes'
-import {AnyObject} from '../../types'
-import {AsyncDataGridEvents} from './AsyncDataGridEvents'
-import {AsyncDataGridFooter} from './AsyncDataGridFooter'
-import {AsyncDataGridTable} from './AsyncDataGridTable'
 
 // Стандартная разметка таблицы с данными, получаемыми с сервера.
 // Сверху вниз:

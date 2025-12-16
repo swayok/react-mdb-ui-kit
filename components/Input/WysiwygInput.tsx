@@ -2,13 +2,13 @@ import {CKEditorConfig} from 'ckeditor4-react'
 import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
 import clsx from 'clsx'
 import {
+    ChangeEvent,
     lazy,
     Suspense,
     useCallback,
     useEffect,
     useRef,
     useState,
-    ChangeEvent,
 } from 'react'
 import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
 import {

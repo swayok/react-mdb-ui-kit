@@ -3,9 +3,9 @@ import {FilePickerHelpers} from '../../components/FilesPicker/FilePickerHelpers'
 import {FilePickerInput} from '../../components/FilesPicker/FilePickerInput'
 import {FilePickerPreviews} from '../../components/FilesPicker/FilePickerPreviews'
 import {FilePickerPreviewsWithoutInfo} from '../../components/FilesPicker/FilePickerPreviewsWithoutInfo'
+import {FilePickerFileInfo} from '../../components/FilesPicker/FilePickerTypes'
 import {SectionDivider} from '../../components/SectionDivider'
 import file_picker from '../../locales/en/file_picker'
-import {FilePickerFileInfo} from '../../components/FilesPicker/FilePickerTypes'
 
 export function FilePickersDemo() {
 

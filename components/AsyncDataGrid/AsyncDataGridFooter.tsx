@@ -1,10 +1,10 @@
-import {useAsyncDataGridContext} from './AsyncDataGridContext'
+import {mdiRefresh} from '@mdi/js'
 import clsx from 'clsx'
+import {DataGridFooterWrapper} from '../DataGrid/DataGridFooterWrapper'
 import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'
 import {DataGridPagination} from '../DataGrid/DataGridPagination'
 import {Icon} from '../Icon'
-import {mdiRefresh} from '@mdi/js'
-import {DataGridFooterWrapper} from '../DataGrid/DataGridFooterWrapper'
+import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AsyncDataGridFooterProps} from './AsyncDataGridTypes'
 
 // Подвал таблицы с данными.

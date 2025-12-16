@@ -1,13 +1,13 @@
+import {
+    mdiCheckboxBlankCircleOutline,
+    mdiCheckboxMarkedCircle,
+} from '@mdi/js'
+import clsx from 'clsx'
 import {TextColors} from '../types'
 import {
     IconButton,
     IconButtonProps,
 } from './IconButton'
-import clsx from 'clsx'
-import {
-    mdiCheckboxBlankCircleOutline,
-    mdiCheckboxMarkedCircle,
-} from '@mdi/js'
 
 interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {
     active: boolean

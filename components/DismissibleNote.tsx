@@ -2,12 +2,12 @@ import {
     useEffect,
     useState,
 } from 'react'
+import {Collapse} from './Collapse'
+import {ModalHeaderCloseButton} from './Modal/ModalHeaderCloseButton'
 import {
     Note,
     NoteProps,
 } from './Note'
-import {ModalHeaderCloseButton} from './Modal/ModalHeaderCloseButton'
-import {Collapse} from './Collapse'
 
 interface Props extends NoteProps {
     onDismissed?: () => void

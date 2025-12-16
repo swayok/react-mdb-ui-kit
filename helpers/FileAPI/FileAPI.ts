@@ -1,5 +1,5 @@
-import {AnyObject} from '../../types'
 import ExifStatic from 'exif-js/exif.d'
+import {AnyObject} from '../../types'
 
 // Данные прикрепленного файла.
 export type FileAPISelectedFileInfo = File & {

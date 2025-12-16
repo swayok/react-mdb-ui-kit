@@ -1,8 +1,8 @@
 import {
-    RefObject,
-    useMemo,
     Ref,
     RefCallback,
+    RefObject,
+    useMemo,
 } from 'react'
 
 export type PossibleRef<T> = Ref<T> | undefined

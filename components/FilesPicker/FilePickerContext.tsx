@@ -8,18 +8,18 @@ import {
     createContext,
     useContext,
 } from 'react'
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {mdiFilePdfOutline} from '../../helpers/icons'
+import file_picker from '../../locales/en/file_picker'
+import {AnyObject} from '../../types'
+import {FilePickerAudioFilePreview} from './FilePickerAudioFilePreview'
+import {FilePickerFilePreviewAsIcon} from './FilePickerFilePreviewAsIcon'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerTranslations,
 } from './FilePickerTypes'
-import {AnyObject} from '../../types'
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
-import {mdiFilePdfOutline} from '../../helpers/icons'
-import file_picker from '../../locales/en/file_picker'
-import {FilePickerAudioFilePreview} from './FilePickerAudioFilePreview'
-import {FilePickerFilePreviewAsIcon} from './FilePickerFilePreviewAsIcon'
 
 // Стандартная локализация таблицы.
 export const filePickerDefaultTranslations: FilePickerTranslations = file_picker

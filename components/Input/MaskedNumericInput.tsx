@@ -1,15 +1,15 @@
 import {
     ChangeEvent,
-    FocusEvent,
     ClipboardEvent,
+    FocusEvent,
     KeyboardEvent,
     useEffect,
     useRef,
     useState,
 } from 'react'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {MaskedNumericInputProps} from './InputTypes'
 import {Input} from './Input'
+import {MaskedNumericInputProps} from './InputTypes'
 
 const isHardcodedCharacterRegexp = /[ ()-]/
 const rtrimRegexp = /[)_ -]+$/

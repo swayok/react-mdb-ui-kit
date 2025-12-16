@@ -1,5 +1,6 @@
 import {
-    useCallback, useRef,
+    useCallback,
+    useRef,
 } from 'react'
 import {useIsomorphicLayoutEffect} from './useIsomorphicLayoutEffect'
 

@@ -6,12 +6,6 @@ import {
 import clsx from 'clsx'
 import {useRef} from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {
-    FilePickerFileInfo,
-    FilePickerFilePreviewProps,
-    FilePickerPreviewSizes,
-    FilePickerWithUploaderFileInfo,
-} from './FilePickerTypes'
 import {ToastService} from '../../services/ToastService'
 import {Card} from '../Card/Card'
 import {CardBody} from '../Card/CardBody'
@@ -23,6 +17,12 @@ import {FilePickerFilePreviewContent} from './FilePickerFilePreviewContent'
 import {FilePickerFilePreviewContentScaler} from './FilePickerFilePreviewContentScaler'
 import {FilePickerFilePreviewFileInfo} from './FilePickerFilePreviewFileInfo'
 import {FilePickerHelpers} from './FilePickerHelpers'
+import {
+    FilePickerFileInfo,
+    FilePickerFilePreviewProps,
+    FilePickerPreviewSizes,
+    FilePickerWithUploaderFileInfo,
+} from './FilePickerTypes'
 
 // Компонент предпросмотра прикрепленного файла с информацией о файле (название, размер).
 export function FilePickerFilePreview(

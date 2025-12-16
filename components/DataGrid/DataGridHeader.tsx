@@ -1,9 +1,9 @@
 import {useDataGridContext} from './DataGridContext'
+import {DataGridHeaderWrapper} from './DataGridHeaderWrapper'
 import {
     DataGridHeaderProps,
     DataGridOrderingDirection,
 } from './DataGridTypes'
-import {DataGridHeaderWrapper} from './DataGridHeaderWrapper'
 
 // Заголовок колонки таблицы (<th>).
 export function DataGridHeader<

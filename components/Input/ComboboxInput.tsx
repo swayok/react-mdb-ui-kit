@@ -1,13 +1,10 @@
-import {
-    FloatingFocusManager,
-    FloatingPortal,
-} from '@floating-ui/react'
+import {FloatingFocusManager} from '@floating-ui/react'
 import {
     ChangeEvent,
-    FormEvent,
-    MouseEvent,
     FocusEvent,
+    FormEvent,
     KeyboardEvent,
+    MouseEvent,
     useEffect,
     useState,
 } from 'react'
@@ -19,9 +16,9 @@ import {
 } from '../../types'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
+import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 import {Input} from './Input'
 import {ComboboxInputProps} from './InputTypes'
-import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.
@@ -167,7 +164,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                                         rememberListItem(item, index)
                                     },
                                 })}
-                                active={isActiveListItem(index)}
+                                hover={isActiveListItem(index)}
                             >
                                 {typeof option === 'string' ? option : option.label}
                             </DropdownItem>

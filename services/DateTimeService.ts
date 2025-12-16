@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
-import {BasicLanguageConfig} from '../types'
-import utc from 'dayjs/plugin/utc'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
+import utc from 'dayjs/plugin/utc'
+import {BasicLanguageConfig} from '../types'
 
 // Тип объекта для манипуляций с датой и временем.
 export type DateTimeInstance = dayjs.Dayjs

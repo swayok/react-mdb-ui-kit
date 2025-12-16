@@ -43,16 +43,19 @@ export function SelectInputOption<
                     e.preventDefault()
                     onSelect(option, index, groupIndex)
                 },
+                ref(item) {
+                    api.current?.rememberOptionElement(item, index)
+                },
             })}
             href={undefined}
-            active={false}
+            active={isActive}
+            disabled={disabled}
+            hover={api.current?.isActiveOption(index)}
             data-value={String(value)}
             tag="div"
             className={clsx(
                 'cursor',
                 isEmptyOption ? 'empty-option' : null,
-                isActive ? 'active' : null,
-                disabled ? 'disabled' : null,
                 attributes?.className as string
             )}
         >

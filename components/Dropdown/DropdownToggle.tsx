@@ -5,9 +5,7 @@ import {
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {
-    MergedComponentProps,
-} from '../../types'
+import {MergedComponentProps} from '../../types'
 import {
     Button,
     ButtonProps,

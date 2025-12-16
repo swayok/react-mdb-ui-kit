@@ -1,19 +1,16 @@
-import clsx from 'clsx'
 import {useCallback} from 'react'
+import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {
     AnyObject,
     FormSelectOption,
-    FormSelectOptionGroup,
-    FormSelectOptionsAndGroupsList,
 } from '../../../types'
-import {UserBehaviorService} from '../../../services/UserBehaviorService'
+import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
 import {
     FlattenedOptionOrGroup,
     SelectInputOptionsProps,
 } from './SelectInputTypes'
-import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput.
 export function SelectInputOptions<
@@ -53,12 +50,14 @@ export function SelectInputOptions<
 
     // Рекурсивная отрисовка опций.
     const renderOption = (
-        option: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>
+        option: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>,
+        index: number
     ) => {
         if (option.isGroup) {
             // Группа опций.
             return (
                 <SelectInputOptionsGroupHeader
+                    key={'group-' + index}
                     group={option.data}
                     index={option.index}
                     renderOptionLabel={renderOptionLabel}
@@ -78,6 +77,7 @@ export function SelectInputOptions<
             }
             return (
                 <SelectInputOption
+                    key={'input-' + index}
                     api={api}
                     option={option.data}
                     index={option.index}

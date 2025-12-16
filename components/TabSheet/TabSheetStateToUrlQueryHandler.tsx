@@ -2,10 +2,10 @@ import {
     useEffect,
     useMemo,
 } from 'react'
-import {TabSheetStateToUrlQueryHandlerProps} from './TabSheetTypes'
-import {AnyObject} from '../../types'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
+import {AnyObject} from '../../types'
 import {useTabSheetContext} from './TabSheetContext'
+import {TabSheetStateToUrlQueryHandlerProps} from './TabSheetTypes'
 
 // Контроль сохранения и восстановления текущей вкладки из URL Query.
 export function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerProps) {

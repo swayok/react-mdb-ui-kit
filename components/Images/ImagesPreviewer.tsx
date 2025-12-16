@@ -1,9 +1,9 @@
-import {useState} from 'react'
 import clsx from 'clsx'
-import {ImagesPreviewerProps} from './ImagesPreviewerTypes'
-import {ImagesCarouselModal} from './ImagesCarouselModal'
-import {FadeSwitch} from '../FadeSwitch'
+import {useState} from 'react'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
+import {FadeSwitch} from '../FadeSwitch'
+import {ImagesCarouselModal} from './ImagesCarouselModal'
+import {ImagesPreviewerProps} from './ImagesPreviewerTypes'
 
 // Отображение фотографий с просмотром "на весь экран" по клику.
 export function ImagesPreviewer(props: ImagesPreviewerProps) {

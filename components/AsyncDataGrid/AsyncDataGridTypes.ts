@@ -1,4 +1,11 @@
 import type {
+    CSSProperties,
+    FunctionComponent,
+    MouseEvent,
+    ReactNode,
+    TableHTMLAttributes,
+} from 'react'
+import type {
     AnyObject,
     ApiResponseData,
 } from '../../types'
@@ -8,13 +15,6 @@ import type {
     DataGridOrderingDirection,
     DataGridTranslations,
 } from '../DataGrid/DataGridTypes'
-import type {
-    CSSProperties,
-    TableHTMLAttributes,
-    MouseEvent,
-    ReactNode,
-    FunctionComponent,
-} from 'react'
 
 // Контекст таблицы с данными, получаемыми с сервера.
 export interface AsyncDataGridContextProps<

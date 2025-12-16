@@ -1,11 +1,3 @@
-import clsx from 'clsx'
-import {
-    DataGridOrderingPanelOptionType,
-    DataGridOrderingPanelProps,
-} from './DataGridTypes'
-import {DataGridOrderingPanelLabel} from './DataGridOrderingPanelLabel'
-import {SelectInput} from '../Input/SelectInput/SelectInput'
-import {IconButton} from '../IconButton'
 import {
     mdiSortAlphabeticalAscending,
     mdiSortAlphabeticalDescending,
@@ -16,7 +8,15 @@ import {
     mdiSortNumericAscending,
     mdiSortNumericDescending,
 } from '@mdi/js'
+import clsx from 'clsx'
+import {IconButton} from '../IconButton'
+import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
+import {DataGridOrderingPanelLabel} from './DataGridOrderingPanelLabel'
+import {
+    DataGridOrderingPanelOptionType,
+    DataGridOrderingPanelProps,
+} from './DataGridTypes'
 
 interface OrderingDirectionIcons {
     asc: string

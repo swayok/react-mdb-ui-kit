@@ -83,7 +83,6 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
                     <SelectInput<number>
                         options={limitsOptions}
                         value={limit}
-                        small
                         mode="inline"
                         drop="up"
                         offset={6}

@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import {AsyncDataGridTableProps} from './AsyncDataGridTypes'
 import {AnyObject} from '../../types'
 import {DataGridNoItems} from '../DataGrid/DataGridNoItems'
 import {FadeIn} from '../FadeIn'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AsyncDataGridLoading} from './AsyncDataGridLoading'
+import {AsyncDataGridTableProps} from './AsyncDataGridTypes'
 
 // Таблица с данными, получаемыми с сервера (<table>).
 export function AsyncDataGridTable<RowDataType extends object = AnyObject>(

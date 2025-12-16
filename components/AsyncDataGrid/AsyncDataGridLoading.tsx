@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
 import {AsyncDataLoadingError} from '../AsyncDataLoadingError'
 import {FadeIn} from '../FadeIn'
 import {Loading} from '../Loading'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
+import {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
 
 // Индикатор загрузки данных для таблицы с сервера.
 export function AsyncDataGridLoading(props: AsyncDataGridLoadingProps) {

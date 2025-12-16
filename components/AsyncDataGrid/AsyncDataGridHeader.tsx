@@ -1,8 +1,8 @@
 import {useCallback} from 'react'
-import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
-import {AsyncDataGridHeaderProps} from './AsyncDataGridTypes'
 import {DataGridHeaderWrapper} from '../DataGrid/DataGridHeaderWrapper'
+import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
+import {useAsyncDataGridContext} from './AsyncDataGridContext'
+import {AsyncDataGridHeaderProps} from './AsyncDataGridTypes'
 
 // Заголовок колонки таблицы с данными, получаемыми с сервера (<th>).
 export function AsyncDataGridHeader<

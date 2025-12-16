@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import {CSSProperties} from 'react'
 import {Button} from './Button'
-import clsx from 'clsx'
 
 export interface AsyncDataLoadingErrorProps {
     className?: string

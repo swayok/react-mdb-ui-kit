@@ -1,7 +1,7 @@
-import {INotyfOptions} from 'notyf/notyf.options'
 import Notyf from 'notyf/notyf.d'
+import {INotyfOptions} from 'notyf/notyf.options'
 
-export type ToastType = 'info' | 'success' | 'error';
+export type ToastType = 'info' | 'success' | 'error'
 
 export const defaultToastServiceConfig: Partial<INotyfOptions> = {
     position: {

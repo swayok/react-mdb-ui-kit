@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
     ReactNode,
     RefObject,
@@ -7,7 +8,6 @@ import {
     CSSTransition,
     SwitchTransition,
 } from 'react-transition-group'
-import clsx from 'clsx'
 
 interface Props {
     transitionKey: string | boolean | number

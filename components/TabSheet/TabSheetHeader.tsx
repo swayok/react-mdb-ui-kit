@@ -1,6 +1,6 @@
-import {TabSheetHeaderProps} from './TabSheetTypes'
-import {CardHeader} from '../Card/CardHeader'
 import clsx from 'clsx'
+import {CardHeader} from '../Card/CardHeader'
+import {TabSheetHeaderProps} from './TabSheetTypes'
 
 // Контейнер кнопок переключения вкладок (<TabSheetTabButton>).
 export function TabSheetHeader(props: TabSheetHeaderProps) {

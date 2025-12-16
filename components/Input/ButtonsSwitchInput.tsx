@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {ReactNode} from 'react'
-import {ButtonsSwitchInputProps} from './InputTypes'
 import {ButtonsSwitch} from '../ButtonsSwitch'
+import {ButtonsSwitchInputProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 
 // Выбор одной или нескольких опций из вариантов в виде кнопок.

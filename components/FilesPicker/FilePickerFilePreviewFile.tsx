@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import {CSSProperties} from 'react'
+import {Tooltip} from '../Tooltip/Tooltip'
+import {FilePickerHelpers} from './FilePickerHelpers'
 import {
     FilePickerContextMimeTypePreviewRenderer,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from './FilePickerTypes'
-import {Tooltip} from '../Tooltip/Tooltip'
-import {FilePickerHelpers} from './FilePickerHelpers'
 
 interface Props {
     file: FilePickerFileInfo

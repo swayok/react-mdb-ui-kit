@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import {
-    useId,
     ChangeEvent,
+    useId,
 } from 'react'
-import {OptionsSliderInputProps} from './InputTypes'
-import {AnyObject} from '../../types'
 import {findSelectedOption} from '../../helpers/findSelectedOption'
+import {AnyObject} from '../../types'
+import {OptionsSliderInputProps} from './InputTypes'
 
 // Слайдер по списку опций.
 export function OptionsSliderInput<

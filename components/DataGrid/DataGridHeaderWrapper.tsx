@@ -1,5 +1,7 @@
-import {CSSProperties} from 'react'
 import clsx from 'clsx'
+import {CSSProperties} from 'react'
+import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
+import {Ripple} from '../Ripple/Ripple'
 import {
     normalizeDimensionForReactStyles,
     renderSortingIcon,
@@ -8,8 +10,6 @@ import {
     DataGridHeaderWrapperProps,
     DataGridOrderingDirection,
 } from './DataGridTypes'
-import {Ripple} from '../Ripple/Ripple'
-import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
 
 // Обертка заголовка колонки таблицы (<th>).
 export function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {

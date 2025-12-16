@@ -1,16 +1,16 @@
 import {mdiPlus} from '@mdi/js'
 import clsx from 'clsx'
 import {MouseEvent} from 'react'
-import {
-    FilePickerFileInfo,
-    FilePickerPreviewsProps,
-} from './FilePickerTypes'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
 import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse'
 import {Icon} from '../Icon'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreview} from './FilePickerFilePreview'
+import {
+    FilePickerFileInfo,
+    FilePickerPreviewsProps,
+} from './FilePickerTypes'
 
 // Блок со списком предпросмотров прикрепленных картинок.
 export function FilePickerPreviews(props: FilePickerPreviewsProps) {

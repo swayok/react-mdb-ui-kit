@@ -36,9 +36,7 @@ import type {
 } from '../Dropdown/DropdownTypes'
 import type {AppIconProps} from '../Icon'
 import type {IconProps} from '../MDIIcon'
-import type {
-    TooltipProps,
-} from '../Tooltip/TooltipTypes'
+import type {TooltipProps} from '../Tooltip/TooltipTypes'
 
 export type * from './SelectInput/SelectInputTypes'
 

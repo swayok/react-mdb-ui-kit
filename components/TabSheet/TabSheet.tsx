@@ -2,11 +2,11 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {TabSheetProps} from './TabSheetTypes'
+import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
 import {Card} from '../Card/Card'
 import {TabSheetContext} from './TabSheetContext'
 import {TabSheetStateToUrlQueryHandler} from './TabSheetStateToUrlQueryHandler'
-import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
+import {TabSheetProps} from './TabSheetTypes'
 
 // Обертка вкладок и их содержимого.
 // Обычная структура:

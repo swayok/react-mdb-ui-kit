@@ -1,8 +1,9 @@
 import {useMemo} from 'react'
-import {
-    Icon, AppIconProps,
-} from '../Icon'
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {
+    AppIconProps,
+    Icon,
+} from '../Icon'
 
 interface Props extends Omit<AppIconProps, 'label'> {
     // Размер предпросмотра для определения размера иконки (1/3 от previewSize, максимум 50).

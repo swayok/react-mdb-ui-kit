@@ -4,8 +4,8 @@ import {
 } from '@floating-ui/react'
 import clsx from 'clsx'
 import {
-    MouseEvent,
     FocusEvent,
+    MouseEvent,
     useMemo,
 } from 'react'
 import {
@@ -33,6 +33,7 @@ export function DropdownItem<
         onClick: propsOnClick,
         onFocus: propsOnFocus,
         active,
+        hover,
         external,
         submenu,
         tag,
@@ -51,7 +52,7 @@ export function DropdownItem<
     } = useDropdownContext()
 
     const item = useListItem()
-    const isActive = active || item.index === activeIndex
+    const isHovered: boolean = hover || item.index === activeIndex
     const tree = useFloatingTree()
 
     const onClick = useEventCallback(
@@ -105,14 +106,15 @@ export function DropdownItem<
                 onFocus,
             })}
             ref={mergedRef}
-            tabIndex={isActive ? 0 : -1}
+            tabIndex={isHovered ? 0 : -1}
             role="menuitem"
             {...componentProps}
             disabled={disableAllItems || disabled}
             className={clsx(
                 'dropdown-item',
                 submenu ? 'submenu' : null,
-                isActive ? 'active' : null,
+                active ? 'active' : null,
+                isHovered ? 'hover' : null,
                 disabled ? 'disabled' : null,
                 componentProps.className as string,
                 className

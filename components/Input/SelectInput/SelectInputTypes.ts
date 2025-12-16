@@ -1,9 +1,9 @@
 import {UseInteractionsReturn} from '@floating-ui/react'
 import type {
-    ReactNode,
-    RefObject,
     KeyboardEvent,
+    ReactNode,
     Ref,
+    RefObject,
 } from 'react'
 import type {
     AnyObject,

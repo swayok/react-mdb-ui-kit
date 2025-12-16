@@ -3,9 +3,7 @@ import {
     SVGAttributes,
     useId,
 } from 'react'
-import {
-    HtmlComponentPropsWithRef,
-} from '../types'
+import {HtmlComponentPropsWithRef} from '../types'
 import {ReusableSvg} from './ReusableSvg'
 
 export interface IconProps extends Omit<

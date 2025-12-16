@@ -10,24 +10,22 @@ import {
     HTMLProps,
     MouseEvent,
 } from 'react'
-import {DropdownHeader} from '../../Dropdown/DropdownHeader'
-import {DropdownItem} from '../../Dropdown/DropdownItem'
-import {
-    DropdownHeaderProps,
-} from '../../Dropdown/DropdownTypes'
-import {Icon} from '../../Icon'
-import {SelectInputBase} from './SelectInputBase'
-import {
-    MultiSelectInputOptionExtras,
-    MultiSelectInputProps,
-} from './SelectInputTypes'
-import {IconProps} from '../../MDIIcon'
 import {
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
     FormSelectOptionsList,
 } from '../../../types'
+import {DropdownHeader} from '../../Dropdown/DropdownHeader'
+import {DropdownItem} from '../../Dropdown/DropdownItem'
+import {DropdownHeaderProps} from '../../Dropdown/DropdownTypes'
+import {Icon} from '../../Icon'
+import {IconProps} from '../../MDIIcon'
+import {SelectInputBase} from './SelectInputBase'
+import {
+    MultiSelectInputOptionExtras,
+    MultiSelectInputProps,
+} from './SelectInputTypes'
 
 // Выбор одного или нескольких из вариантов.
 // Список опций автоматически генерируется на основе props.options.

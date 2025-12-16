@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import {
+    ChangeEvent,
     useCallback,
     useEffect,
     useId,
-    ChangeEvent,
 } from 'react'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {

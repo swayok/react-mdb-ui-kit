@@ -214,6 +214,7 @@
 
     .dropdown-item {
         &:hover,
+        &.hover,
         &:focus,
         &:focus-visible {
             outline: none !important;

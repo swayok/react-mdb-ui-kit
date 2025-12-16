@@ -1,12 +1,12 @@
-import {useCallback} from 'react'
-import clsx from 'clsx'
-import {Icon} from '../Icon'
 import {
     mdiChevronLeft,
     mdiChevronRight,
     mdiPageFirst,
     mdiPageLast,
 } from '@mdi/js'
+import clsx from 'clsx'
+import {useCallback} from 'react'
+import {Icon} from '../Icon'
 import {DataGridPaginationPagesList} from './DataGridPaginationPagesList'
 import {DataGridPaginationProps} from './DataGridTypes'
 

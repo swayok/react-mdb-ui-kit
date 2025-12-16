@@ -130,7 +130,7 @@ export function DropdownsDemo() {
                     >
                         <Icon
                             path={mdiMenu}
-                            tooltip="Click to toggle menu"
+                            tooltip="Click to toggle menu (focus on first)"
                         />
                     </DropdownToggle>
                     <DropdownMenu>
@@ -146,13 +146,13 @@ export function DropdownsDemo() {
                     </DropdownMenu>
                 </Dropdown>
 
-                <Dropdown focusFirstItemOnOpen>
+                <Dropdown>
                     <DropdownToggle
                         color="link"
                         renderContent={metadata => (
                             <Icon
                                 path={metadata.isOpen ? mdiMenuClose : mdiMenu}
-                                tooltip="Click to toggle menu"
+                                tooltip="Click to toggle menu (focus on first)"
                             />
                         )}
                     />

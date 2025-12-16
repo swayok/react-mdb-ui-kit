@@ -236,6 +236,8 @@ export interface DropdownItemProps extends MorphingComponentProps {
     external?: boolean
     // Активный элемент (управление подсветкой извне)?
     active?: boolean
+    // Нужно ли отобразить подсветку как при наведении?
+    hover?: boolean
     disabled?: boolean
     /**
      * Элемент содержит подменю?

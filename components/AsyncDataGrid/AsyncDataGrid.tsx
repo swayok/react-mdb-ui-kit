@@ -1,34 +1,34 @@
 import {
+    MouseEvent,
     useCallback,
     useEffect,
     useState,
-    MouseEvent,
 } from 'react'
-import {
-    AsyncDataGridContextMenuProps,
-    AsyncDataGridContextProps,
-    AsyncDataGridProps,
-    AsyncDataGridRows,
-} from './AsyncDataGridTypes'
-import {
-    DataGridContextProps,
-    DataGridOrderingDirection,
-} from '../DataGrid/DataGridTypes'
-import {AnyObject} from '../../types'
 import {handleErrorResponse} from '../../helpers/ApiRequestErrorHelpers'
 import {toggleValueInArray} from '../../helpers/toggleValueInArray'
 import {ApiError} from '../../services/ApiRequestService'
+import {AnyObject} from '../../types'
 import {
     DataGridContext,
     dataGridDefaultTranslations,
 } from '../DataGrid/DataGridContext'
 import {normalizeOffset} from '../DataGrid/dataGridHelpers'
+import {
+    DataGridContextProps,
+    DataGridOrderingDirection,
+} from '../DataGrid/DataGridTypes'
 import {AsyncDataGridApi} from './AsyncDataGridApi'
 import {
     AsyncDataGridContext,
     asyncDataGridDefaultLimit,
     asyncDataGridDefaultLimits,
 } from './AsyncDataGridContext'
+import {
+    AsyncDataGridContextMenuProps,
+    AsyncDataGridContextProps,
+    AsyncDataGridProps,
+    AsyncDataGridRows,
+} from './AsyncDataGridTypes'
 import {AsyncDataGridUrlQueryManager} from './AsyncDataGridUrlQueryManager'
 
 // Обертка таблицы с данными, получаемыми с сервера (настройка контекста).

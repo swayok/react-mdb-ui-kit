@@ -1,5 +1,5 @@
-import {DataGridRowProps} from './DataGridTypes'
 import clsx from 'clsx'
+import {DataGridRowProps} from './DataGridTypes'
 
 // Обертка строки таблицы (<tr>).
 export function DataGridRow(props: DataGridRowProps) {

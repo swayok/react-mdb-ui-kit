@@ -1,5 +1,5 @@
-import {DateTimeService} from './DateTimeService'
 import {AnyObject} from '../types'
+import {DateTimeService} from './DateTimeService'
 
 // Сервис кэширования данных в window.localStorage или this.sessionStorage.
 export class CacheServiceClass<NameT extends string = string> {

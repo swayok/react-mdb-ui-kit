@@ -1,7 +1,10 @@
-import {
-    useCallback, useEffect, useRef, useState,
-} from 'react'
 import clsx from 'clsx'
+import {
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react'
 import ReactDOM from 'react-dom'
 import {ModalDialog} from './ModalDialog'
 import {ModalProps} from './ModalTypes'

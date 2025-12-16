@@ -61,7 +61,7 @@ export function RegionSwitcherDropdown(props: Props) {
     return (
         <div className={className}>
             <Dropdown
-                focusFirstItemOnOpen="auto"
+                focusFirstItemOnOpen={false}
             >
                 <DropdownToggle
                     color="link"

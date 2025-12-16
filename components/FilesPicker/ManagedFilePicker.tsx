@@ -7,22 +7,15 @@ import {
     useState,
 } from 'react'
 import {
-    FilePickerContextMimeTypeInfo,
-    FilePickerContextProps,
-    FilePickerFileInfo,
-    FilePickerUploadInfo,
-    ManagedFilePickerProps,
-} from './FilePickerTypes'
-import {
-    AnyObject,
-    MinMax,
-} from '../../types'
-import {
     FileAPI,
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
 } from '../../helpers/FileAPI/FileAPI'
 import {ToastService} from '../../services/ToastService'
+import {
+    AnyObject,
+    MinMax,
+} from '../../types'
 import {ErrorBoundary} from '../ErrorBoundary'
 import {ReorderableList} from '../ReorderableList/ReorderableList'
 import {
@@ -32,6 +25,13 @@ import {
     filePickerFallbackPreview,
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
+import {
+    FilePickerContextMimeTypeInfo,
+    FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerUploadInfo,
+    ManagedFilePickerProps,
+} from './FilePickerTypes'
 
 // Добавляется к максимальной позиции при прикреплении нового файла.
 const positionDelta: number = 1

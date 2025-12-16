@@ -2,13 +2,13 @@ import {
     mdiRayStartArrow,
     mdiSwapVertical,
 } from '@mdi/js'
+import {AnyObject} from '../../types'
 import {Icon} from '../Icon'
 import {
     DataGridContextProps,
     DataGridOrderByValuesType,
     DataGridOrderingDirection,
 } from './DataGridTypes'
-import {AnyObject} from '../../types'
 
 // Стандартные отступы для полей ввода панели фильтрации,
 export const dataGridFiltersPanelInputMargins: string = ''

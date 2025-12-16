@@ -91,11 +91,11 @@ export abstract class PollingService {
     }
 }
 
-export type DataPollingProps = {
-    condition: boolean,
-    name: string,
-    interval: number,
-    handler: PollingServiceHandlerFn,
+export interface DataPollingProps {
+    condition: boolean
+    name: string
+    interval: number
+    handler: PollingServiceHandlerFn
     immediate?: boolean
 }
 

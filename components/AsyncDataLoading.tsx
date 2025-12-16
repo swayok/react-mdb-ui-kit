@@ -1,11 +1,11 @@
+import clsx from 'clsx'
 import {
     CSSProperties,
     ReactNode,
 } from 'react'
-import clsx from 'clsx'
 import {AsyncDataLoadingError} from './AsyncDataLoadingError'
-import {Loading} from './Loading'
 import {FadeSwitch} from './FadeSwitch'
+import {Loading} from './Loading'
 
 export interface AsyncDataLoadingProps<DataType = undefined> {
     loading: boolean | null

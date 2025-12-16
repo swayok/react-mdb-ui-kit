@@ -7,8 +7,8 @@ import {
     CustomEventEmitter,
 } from './CustomEventEmitter'
 import {
-    useSyncTaskQueue,
     SyncQueueTask,
+    useSyncTaskQueue,
 } from './useSyncTaskQueue'
 
 // Функции и данные, возвращаемые из хука useCustomEventEmitterWithSyncQueue()

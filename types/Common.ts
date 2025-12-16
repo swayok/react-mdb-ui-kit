@@ -3,7 +3,6 @@ import type {
     AllHTMLAttributes,
     ComponentProps,
     ForwardedRef,
-    HTMLProps,
     RefAttributes,
     RefCallback,
     RefObject,

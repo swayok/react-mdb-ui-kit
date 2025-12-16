@@ -4,10 +4,10 @@ import {
     useCallback,
     useMemo,
 } from 'react'
-import {TabSheetTabButtonProps} from './TabSheetTypes'
 import {Ripple} from '../Ripple/Ripple'
 import {RippleProps} from '../Ripple/RippleTypes'
 import {useTabSheetContext} from './TabSheetContext'
+import {TabSheetTabButtonProps} from './TabSheetTypes'
 
 // Кнопка переключения на вкладку.
 export function TabSheetTabButton<TabName extends string = string>(

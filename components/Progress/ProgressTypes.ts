@@ -1,6 +1,6 @@
 import type {
-    BackgroundColors,
     AnyRef,
+    BackgroundColors,
     HtmlComponentProps,
 } from '../../types'
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {ModalTitle} from './ModalTitle'
 import {ModalHeaderCloseButton} from './ModalHeaderCloseButton'
+import {ModalTitle} from './ModalTitle'
 import {ModalHeaderProps} from './ModalTypes'
 
 // Шапка модального окна.

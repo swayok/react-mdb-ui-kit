@@ -3,10 +3,10 @@ import {
     useEffect,
     useState,
 } from 'react'
+import {Collapse} from '../Collapse'
 import {Tooltip} from '../Tooltip/Tooltip'
 import {TooltipProps} from '../Tooltip/TooltipTypes'
 import {InputValidationErrorProps} from './InputTypes'
-import {Collapse} from '../Collapse'
 
 // Отображение ошибки валидации для поля ввода.
 export function InputValidationError(props: InputValidationErrorProps) {

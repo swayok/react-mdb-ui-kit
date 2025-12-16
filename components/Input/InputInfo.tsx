@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {InputInfoProps} from './InputTypes'
 import {HtmlContent} from '../HtmlContent'
+import {InputInfoProps} from './InputTypes'
 
 // Разъяснение к полю ввода.
 // Пример использования: <Input.../><InputInfo>text</InputInfo>.

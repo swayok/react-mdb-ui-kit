@@ -1,8 +1,8 @@
+import {useDataGridContext} from './DataGridContext'
+import {DataGridFooterWrapper} from './DataGridFooterWrapper'
 import {DataGridItemsCount} from './DataGridItemsCount'
 import {DataGridPagination} from './DataGridPagination'
-import {useDataGridContext} from './DataGridContext'
 import {DataGridFooterProps} from './DataGridTypes'
-import {DataGridFooterWrapper} from './DataGridFooterWrapper'
 
 // Подвал таблицы с данными.
 // Слева:

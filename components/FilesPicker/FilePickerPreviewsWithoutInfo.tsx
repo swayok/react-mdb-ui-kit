@@ -4,15 +4,15 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {MouseEvent} from 'react'
-import {
-    FilePickerPreviewSizes,
-    FilePickerPreviewsWithoutInfoProps,
-} from './FilePickerTypes'
 import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse'
 import {Icon} from '../Icon'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewWithoutInfo} from './FilePickerFilePreviewWithoutInfo'
+import {
+    FilePickerPreviewSizes,
+    FilePickerPreviewsWithoutInfoProps,
+} from './FilePickerTypes'
 
 // Блок со списком предпросмотров прикрепленных картинок.
 export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutInfoProps) {

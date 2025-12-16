@@ -1,3 +1,6 @@
+import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
+import {MinMax} from '../../types'
 import {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
@@ -7,9 +10,6 @@ import {
     FilePickerWithUploaderFileInfo,
     ManagedFilePickerProps,
 } from './FilePickerTypes'
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
-import {MinMax} from '../../types'
-import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
 
 // Функции-помощники для FilePicker и FilePickerWithUploader.
 export abstract class FilePickerHelpers {

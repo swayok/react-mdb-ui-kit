@@ -1,8 +1,8 @@
-import {ApiRequestDebugService} from './ApiRequestDebugService'
 import {
     AnyObject,
     ApiResponseData,
 } from '../types'
+import {ApiRequestDebugService} from './ApiRequestDebugService'
 
 export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.

@@ -5,18 +5,6 @@ import {
     RefObject,
 } from 'react'
 import {
-    FilePickerContextMimeTypeInfo,
-    FilePickerContextProps,
-    FilePickerFileInfo,
-    FilePickerUploadInfo,
-    FilePickerWithUploaderFileInfo,
-    FilePickerWithUploaderProps,
-} from './FilePickerTypes'
-import {
-    AnyObject,
-    MinMax,
-} from '../../types'
-import {
     extractAndNormalizeValidationErrorsFromResponseData,
     UnauthorisedErrorHttpCode,
     ValidationErrorHttpCode,
@@ -29,6 +17,10 @@ import {
 import {getCookieValue} from '../../helpers/getCookieValue'
 import {NavigationService} from '../../services/NavigationService'
 import {ToastService} from '../../services/ToastService'
+import {
+    AnyObject,
+    MinMax,
+} from '../../types'
 import {ErrorBoundary} from '../ErrorBoundary'
 import {ReorderableList} from '../ReorderableList/ReorderableList'
 import {
@@ -38,6 +30,14 @@ import {
     filePickerFallbackPreview,
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
+import {
+    FilePickerContextMimeTypeInfo,
+    FilePickerContextProps,
+    FilePickerFileInfo,
+    FilePickerUploadInfo,
+    FilePickerWithUploaderFileInfo,
+    FilePickerWithUploaderProps,
+} from './FilePickerTypes'
 
 interface State {
     // Новые прикрепленные файлы.

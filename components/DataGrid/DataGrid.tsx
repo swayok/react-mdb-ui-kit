@@ -3,13 +3,6 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {
-    DataGridContextProps,
-    DataGridOrderByValuesType,
-    DataGridOrdering,
-    DataGridOrderingDirection,
-    DataGridProps,
-} from './DataGridTypes'
 import {AnyObject} from '../../types'
 import {
     DataGridContext,
@@ -21,6 +14,13 @@ import {
     normalizeOffset,
     reorderDataGridRows,
 } from './dataGridHelpers'
+import {
+    DataGridContextProps,
+    DataGridOrderByValuesType,
+    DataGridOrdering,
+    DataGridOrderingDirection,
+    DataGridProps,
+} from './DataGridTypes'
 
 // Обертка таблицы с данными (настройка контекста).
 export function DataGrid<
