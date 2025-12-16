@@ -11,18 +11,18 @@
     // <FormSelect> и <FormSelectBasic> - выбор значения из выпадающего списка.
     .form-dropdown-select {
 
-        .dropdown-toggle {
+        .dropdown-toggle input.form-control {
             position: relative;
 
-            input,
-            input[readonly] {
+            &,
+            &[readonly] {
                 background-color: form-input-base.$input-bg;
                 cursor: pointer;
                 padding-right: form-dropdown-select.$form-dropdown-select-padding-right;
                 user-select: none;
             }
 
-            input[disabled] {
+            &[disabled] {
                 cursor: not-allowed;
                 background-color: form-input-base.$input-disabled-bg;
             }

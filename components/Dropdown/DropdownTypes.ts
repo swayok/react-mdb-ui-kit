@@ -197,8 +197,10 @@ export interface DropdownMenuProps<
     offset?: OffsetOptions
     // Вариант стилизации меню.
     variant?: DropdownMenuVariant
-    // Максимальная высота меню.
+    // Максимальная высота меню в пикселях.
     maxHeight?: number | null
+    // Минимальная ширина меню.
+    minWidth?: string | number | null
     // Меню должно заполнять контейнер, в котором находится.
     fillContainer?: boolean
     // Добавить white-space: nowrap ко всем .dropdown-item?
@@ -217,13 +219,13 @@ export type DefaultDropdownMenuProps = MergedComponentProps<
     HtmlComponentPropsWithRef<HTMLDivElement>
 >
 
-export interface DropdownMenuContentProps extends Pick<
+// Свойства компонента DropdownMenuContent.
+export type DropdownMenuContentProps = Pick<
     DropdownMenuProps,
-    'className' | 'style' | 'shadow' | 'tag' | 'variant' | 'ref' | 'maxHeight'
+    'className' | 'style' | 'shadow' | 'tag' | 'variant' | 'ref'
+    | 'maxHeight' | 'minWidth'
     | 'textNowrapOnItems' | 'fillContainer' | 'children'
-> {
-    isOpen: boolean
-}
+>
 
 // Свойства компонента DropdownItem.
 export interface DropdownItemProps extends MorphingComponentProps {

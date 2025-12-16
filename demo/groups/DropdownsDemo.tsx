@@ -25,6 +25,8 @@ export function DropdownsDemo() {
     } = useFormValues<{
         select1: string
         select2: string
+        selectInline1: string
+        selectAutoDropdown1: string
         multiSelect1: string[]
         multiSelect2: string[]
         combobox1: string
@@ -34,6 +36,8 @@ export function DropdownsDemo() {
     }>({
         select1: 'option1',
         select2: 'option1',
+        selectInline1: 'option1',
+        selectAutoDropdown1: 'option1',
         multiSelect1: [],
         multiSelect2: [],
         combobox1: '',
@@ -301,6 +305,56 @@ export function DropdownsDemo() {
                     ]}
                     onChange={value => {
                         setFormValue('combobox2', value)
+                    }}
+                />
+            </div>
+            <div className="flex-1 d-flex flex-row align-items-center gap-4">
+                <SelectInput
+                    label="Inline select"
+                    mode="inline"
+                    value={formValues.selectInline1}
+                    options={[
+                        {label: 'Option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                    ]}
+                    onChange={value => {
+                        setFormValue('selectInline1', value)
+                    }}
+                />
+                <SelectInput
+                    label="Select long value"
+                    value={formValues.selectAutoDropdown1}
+                    dropdownWidth="fit-items"
+                    textNowrapOnOptions
+                    options={[
+                        {label: 'This is a very long option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                    ]}
+                    style={{
+                        width: 160,
+                    }}
+                    onChange={value => {
+                        setFormValue('selectAutoDropdown1', value)
+                    }}
+                />
+                <SelectInput
+                    label="Select long value"
+                    value={formValues.selectAutoDropdown1}
+                    options={[
+                        {label: 'Option 1', value: 'option1'},
+                        {label: 'Option 2', value: 'option2'},
+                        {label: 'Option 3', value: 'option3'},
+                        {label: 'Option 4', value: 'option4'},
+                    ]}
+                    style={{
+                        width: 160,
+                    }}
+                    onChange={value => {
+                        setFormValue('selectAutoDropdown1', value)
                     }}
                 />
             </div>

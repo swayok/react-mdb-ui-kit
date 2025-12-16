@@ -74,7 +74,7 @@ export function DataGridOrderingPanel<
                 mode="inline"
                 textNowrapOnOptions
                 wrapperClassName="m-0"
-                dropdownFluidWidth={false}
+                dropdownWidth="fit-items"
                 disabled={isDisabled}
                 onChange={(value: SortableColumn): void => {
                     setOrder(value, orderDirection, !!resetOffset)

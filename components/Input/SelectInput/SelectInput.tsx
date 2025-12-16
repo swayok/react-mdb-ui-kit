@@ -11,13 +11,19 @@ import {findSelectedOption} from '../../../helpers/findSelectedOption'
 import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
 import {stripTags} from '../../../helpers/stripTags'
 import {useEventCallback} from '../../../helpers/useEventCallback'
+import {useMergedRefs} from '../../../helpers/useMergedRefs'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {AnyObject} from '../../../types'
 import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
+import {flattenOptions} from '../helpers/flattenOptions'
 import {Input} from '../Input'
 import {SelectInputBase} from './SelectInputBase'
 import {SelectInputOptions} from './SelectInputOptions'
-import {SelectInputProps} from './SelectInputTypes'
+import {
+    FlattenedOptionOrGroup,
+    SelectInputBasicApi,
+    SelectInputProps,
+} from './SelectInputTypes'
 import {VirtualizedSelectInputOptions} from './VirtualizedSelectInputOptions'
 
 interface KeywordsState {
@@ -38,13 +44,15 @@ export function SelectInput<
     OptionExtrasType = AnyObject,
 >(props: SelectInputProps<OptionValueType, OptionExtrasType>) {
     const {
+        apiRef: propsApiRef,
+        inputRef: propsInputRef,
         className,
-        options = [],
+        options: propsOptions = [],
         valueToString,
         value,
         search,
         searchPlaceholder,
-        onChange,
+        onChange: propsOnChange,
         maxHeight = 500,
         labelsContainHtml,
         hideEmptyOptionInDropdown,
@@ -55,13 +63,24 @@ export function SelectInput<
         trackBehaviorAs,
         selectFirstIfNotFound = true,
         virtualizationConfig = {enabled: false},
+        closeDropdownOnSelect = true,
         // Dropdown
-        onOpenChange: propsOnToggle,
+        onOpenChange: propsOnOpenChange,
         ...basicSelectInputProps
     } = props
 
     const inputRef = useRef<HTMLInputElement>(null)
+    const apiRef = useRef<SelectInputBasicApi>(null)
     const keywordsInputRef = useRef<HTMLInputElement>(null)
+
+    const mergedApiRef = useMergedRefs(
+        propsApiRef,
+        apiRef
+    )
+    const mergedInputRef = useMergedRefs(
+        propsInputRef,
+        inputRef
+    )
 
     const [
         keywords,
@@ -75,17 +94,52 @@ export function SelectInput<
         keywords.regexp
     )
 
+    // Конвертация дерева опций в плоский массив.
+    const options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[] = useMemo(
+        () => {
+            const initial: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[] = []
+            if (withEmptyOption && !hideEmptyOptionInDropdown) {
+                initial.push({
+                    isGroup: false,
+                    data: withEmptyOption,
+                    index: -1,
+                    groupIndex: null,
+                })
+            }
+            const ret = flattenOptions<OptionValueType, OptionExtrasType>(
+                propsOptions,
+                initial
+            )
+            if (withPermanentOption) {
+                ret.push({
+                    isGroup: false,
+                    data: withPermanentOption,
+                    index: -2,
+                    groupIndex: null,
+                })
+            }
+            return ret
+        },
+        [
+            propsOptions,
+            withEmptyOption?.label,
+            withEmptyOption?.value,
+            withPermanentOption?.label,
+            withPermanentOption?.value,
+        ]
+    )
+
     // Поиск выбранной опции.
     const selectedOption = useMemo(
         () => findSelectedOption<OptionValueType, OptionExtrasType>(
-            options,
+            propsOptions,
             value,
             withEmptyOption,
             withPermanentOption,
             selectFirstIfNotFound
         ),
         [
-            options,
+            propsOptions,
             value,
             withEmptyOption?.value,
             withPermanentOption?.value,
@@ -132,7 +186,53 @@ export function SelectInput<
                 regexp: null,
             })
         }
-        propsOnToggle?.(open, event, reason)
+        propsOnOpenChange?.(open, event, reason)
+    })
+
+    const onSearchInputChange = useEventCallback((
+        event: ChangeEvent<HTMLInputElement>
+    ) => {
+        setKeywords({
+            value: event.target.value,
+            regexp: event.target.value.trim().length > 0
+                ? new RegExp(
+                    event.target.value.trim()
+                        .replace(/[{}\][*?:'"()!@#$^%&+,;`<>/\\]/, '')
+                        .replace(/[её]/igu, '[её]')
+                        .replace(/\./, '\\.')
+                        .replace(/\s+/, '.*'),
+                    'igu'
+                )
+                : null,
+        })
+    })
+
+    const onOptionSelected = useEventCallback((
+        value: OptionValueType,
+        label: string,
+        index: number,
+        groupIndex: number | null,
+        extra?: OptionExtrasType
+    ) => {
+        propsOnChange(value, label, index, groupIndex, extra)
+        if (closeDropdownOnSelect) {
+            apiRef.current?.setIsOpen(false)
+        }
+    })
+
+    const onOptionSelectByIndex = useEventCallback((
+        index: number
+    ) => {
+        // Todo: test this on groups.
+        if (options[index] && !options[index].isGroup) {
+            onOptionSelected(
+                options[index].data.value,
+                options[index].data.label,
+                options[index].index,
+                options[index].groupIndex,
+                options[index].data.extra
+            )
+        }
     })
 
     // Обработка ситуации, когда значение props.value отсутствует в списке options.
@@ -151,7 +251,7 @@ export function SelectInput<
                 // Так же это может произойти, если опция, соответствующая значению
                 // props.value, была удалена из списка опций.
                 // В этих случаях нужно вызвать onChange со значением selectedOption.option.value.
-                props.onChange(
+                propsOnChange(
                     selectedOption.option.value,
                     selectedOption.option.label,
                     selectedOption.index,
@@ -173,7 +273,8 @@ export function SelectInput<
 
     return (
         <SelectInputBase
-            inputRef={inputRef}
+            inputRef={mergedInputRef}
+            apiRef={mergedApiRef}
             className={clsx(
                 search ? 'with-search' : null,
                 value === null || value === '' ? 'empty-option-selected' : null,
@@ -183,6 +284,7 @@ export function SelectInput<
             value={selectedValueForTextInput}
             onOpenChange={onDropdownToggle}
             maxHeight={null}
+            onOptionSelect={onOptionSelectByIndex}
         >
             {search && (
                 <div
@@ -197,33 +299,18 @@ export function SelectInput<
                         active
                         value={keywords.value}
                         wrapperClassName="m-0"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                            setKeywords({
-                                value: e.target.value,
-                                regexp: e.target.value.trim().length > 0
-                                    ? new RegExp(
-                                        e.target.value.trim()
-                                            .replace(/[{}\][*?:'"()!@#$^%&+,;`<>/\\]/, '')
-                                            .replace(/[её]/igu, '[её]')
-                                            .replace(/\./, '\\.')
-                                            .replace(/\s+/, '.*'),
-                                        'igu'
-                                    )
-                                    : null,
-                            })
-                        }}
+                        onChange={onSearchInputChange}
                     />
                 </div>
             )}
             {virtualizationEnabled ? (
                 <VirtualizedSelectInputOptions<OptionValueType, OptionExtrasType>
+                    api={apiRef}
                     options={options}
                     selectedOption={selectedOption?.option}
                     trackBehaviorAs={trackBehaviorAs}
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
-                    withEmptyOption={withEmptyOption}
-                    withPermanentOption={withPermanentOption}
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
@@ -232,23 +319,22 @@ export function SelectInput<
                         maxHeight ?? 500
                     )}
                     disableOptions={disableOptions}
-                    onChange={onChange}
+                    onChange={onOptionSelected}
                 />
             ) : (
                 <SelectInputOptions<OptionValueType, OptionExtrasType>
+                    api={apiRef}
                     options={options}
                     selectedOption={selectedOption?.option}
                     trackBehaviorAs={trackBehaviorAs}
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
-                    withEmptyOption={withEmptyOption}
-                    withPermanentOption={withPermanentOption}
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
                     maxHeight={maxHeight}
                     disableOptions={disableOptions}
-                    onChange={onChange}
+                    onChange={onOptionSelected}
                 />
             )}
         </SelectInputBase>

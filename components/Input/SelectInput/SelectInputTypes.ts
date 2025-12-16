@@ -1,4 +1,10 @@
-import type {ReactNode} from 'react'
+import {UseInteractionsReturn} from '@floating-ui/react'
+import type {
+    ReactNode,
+    RefObject,
+    KeyboardEvent,
+    Ref,
+} from 'react'
 import type {
     AnyObject,
     FormSelectOption,
@@ -8,6 +14,7 @@ import type {
     FormSelectOptionsList,
 } from '../../../types'
 import type {
+    DropdownMenuContentProps,
     DropdownMenuProps,
     DropdownProps,
 } from '../../Dropdown/DropdownTypes'
@@ -23,10 +30,23 @@ export type SelectInputDropdownMenuProps = Pick<
     'offset' | 'drop' | 'align' | 'flip' | 'shift' | 'shadow' | 'isRTL' | 'maxHeight'
 >
 
+// Api компонента SelectInputBasic.
+export interface SelectInputBasicApi {
+    setIsOpen: (value: boolean) => void
+    rememberOptionElement: (
+        item: HTMLElement | null,
+        index: number
+    ) => void
+    isActiveOption: (index: number) => boolean
+    getOptionProps: UseInteractionsReturn['getItemProps']
+}
+
 // Свойства компонента SelectInputBasic.
 export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'>,
     SelectInputDropdownProps,
     SelectInputDropdownMenuProps {
+    apiRef?: Ref<SelectInputBasicApi>
+    // Содержимое выпадающего меню (опции / DropdownItem).
     children: ReactNode | ReactNode[]
     // Режим отображения.
     // Если inline: внешний вид: {текст} {chevron}, без оформления в виде поля ввода,
@@ -35,20 +55,24 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
     mode?: 'inline' | 'input'
     // Настройки выпадающего меню.
     dropdownMenuClassName?: string
-    dropdownToggleClassName?: string
+    // Тень выпадающего меню.
+    dropdownShadow?: DropdownMenuContentProps['shadow']
     // Внешний контроль состояния открытости выпадающего меню (DropdownProps.show).
     open?: boolean
     // Добавить white-space: nowrap ко всем опция выпадающего меню?
     textNowrapOnOptions?: boolean
     // Минимальная ширина выпадающего меню.
     minWidth?: null | number | string
-    // Если true: адаптировать ширину выпадающего меню под ширину поля ввода.
-    // Если false: ширина выпадающего меню зависит от ширины опций.
-    dropdownFluidWidth?: boolean
-    // Нужно ли закрывать выпадающее меню при выборе опции.
-    closeDropdownOnSelect?: boolean
-    // Дополнительные элементы, которые нужно вставить после поля ввода.
-    addon?: ReactNode | ReactNode[]
+    /**
+     * Способ определения ширины выпадающего меню:
+     * - fit-input - размер меню = размеру поля ввода.
+     * - fill-container - размер меню = размеру контейнера поля ввода (width = 100%).
+     * - fit-items - размер меню определяется размерами элементов в нем (авто-ширина по сути).
+     * По умолчанию: 'fit-input'
+     */
+    dropdownWidth?: 'fit-input' | 'fill-container' | 'fit-items'
+    // Выбор опции по нажатию Enter на клавиатуре.
+    onOptionSelect?: (activeIndex: number, e: KeyboardEvent<HTMLInputElement>) => void
 }
 
 // Свойства компонента SelectInput.
@@ -76,7 +100,7 @@ export interface SelectInputProps<
     valueToString?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string
     // Отрисовка подписи для опции или группы опций в выпадающем меню.
     renderOptionLabel?: (
-        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
+        option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>,
         isGroup: boolean
     ) => string | ReactNode
     // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
@@ -112,6 +136,8 @@ export interface SelectInputProps<
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
     trackBehaviorAs?: string
+    // Нужно ли закрывать выпадающее меню при выборе опции.
+    closeDropdownOnSelect?: boolean
 }
 
 // Свойства компонента MultiSelectInput.
@@ -169,6 +195,7 @@ export interface SelectInputOptionProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 > {
+    api: RefObject<SelectInputBasicApi | null>
     visible?: boolean
     option: FormSelectOption<OptionValueType, OptionExtrasType>
     index: number
@@ -189,7 +216,7 @@ export interface SelectInputOptionLabelProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 > {
-    option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>
+    option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
     labelContainsHtml?: boolean
 }
@@ -200,10 +227,12 @@ export interface SelectInputOptionsProps<
     OptionExtrasType = AnyObject,
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
-        'options' | 'withEmptyOption' | 'withPermanentOption' | 'hideEmptyOptionInDropdown'
+        'hideEmptyOptionInDropdown'
         | 'maxHeight' | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
         | 'disableOptions' | 'onChange' | 'trackBehaviorAs'
     > {
+    api: RefObject<SelectInputBasicApi | null>
+    options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]
     selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>
     keywordsRegexp: RegExp | null
 }
@@ -214,7 +243,7 @@ export interface SelectInputOptionsGroupHeaderProps<
     OptionExtrasType = AnyObject,
 > {
     visible?: boolean
-    group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
+    group: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
     index: number
     isActive?: boolean
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
@@ -227,10 +256,12 @@ export interface VirtualizedSelectInputOptionsProps<
     OptionExtrasType = AnyObject,
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
-        'options' | 'withEmptyOption' | 'withPermanentOption' | 'hideEmptyOptionInDropdown' | 'search'
+        'hideEmptyOptionInDropdown' | 'search'
         | 'renderOptionLabel' | 'labelsContainHtml' | 'disableOptions'
         | 'onChange' | 'trackBehaviorAs'
     > {
+    api: RefObject<SelectInputBasicApi | null>
+    options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]
     selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>
     keywordsRegexp: RegExp | null
     height: number
@@ -243,6 +274,7 @@ export interface FlattenedOption<
 > {
     isGroup: false
     data: FormSelectOption<OptionValueType, OptionExtrasType>
+    index: number
     groupIndex: number | null
 }
 
@@ -253,6 +285,7 @@ export interface FlattenedOptionsGroup<
 > {
     isGroup: true
     data: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
+    index: number
 }
 
 // Результат преобразования дерева опций в одномерный список.

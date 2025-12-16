@@ -84,7 +84,10 @@ export function DropdownMenu<
     )
 
     // noinspection SuspiciousTypeOfGuard
-    const {floatingStyles, context} = useFloating<HTMLButtonElement>({
+    const {
+        floatingStyles,
+        context,
+    } = useFloating<HTMLButtonElement>({
         rootContext,
         placement,
         middleware: [
@@ -119,7 +122,6 @@ export function DropdownMenu<
                     >
                         <DropdownMenuContent
                             ref={mergedRef}
-                            isOpen={isOpen}
                             {...getFloatingProps(
                                 otherProps as HTMLProps<HTMLElement>
                             )}

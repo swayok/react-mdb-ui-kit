@@ -1,22 +1,17 @@
-import {
-    useCallback,
-    useMemo,
-} from 'react'
+import {useCallback} from 'react'
 import {useVirtuosoLibAsync} from '../../../helpers/useVirtuosoLibAsync'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {
     AnyObject,
     FormSelectOption,
-    FormSelectOptionGroup,
 } from '../../../types'
-import {flattenOptions} from '../helpers/flattenOptions'
+import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
 import {
     FlattenedOptionOrGroup,
     VirtualizedSelectInputOptionsProps,
 } from './SelectInputTypes'
-import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput с виртуализацией.
 export function VirtualizedSelectInputOptions<
@@ -25,10 +20,9 @@ export function VirtualizedSelectInputOptions<
 >(props: VirtualizedSelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
+        api,
         options,
         selectedOption,
-        withEmptyOption,
-        withPermanentOption,
         height,
         hideEmptyOptionInDropdown,
         search,
@@ -45,35 +39,6 @@ export function VirtualizedSelectInputOptions<
         OptionValueType | null
     >()
 
-    // Конвертация дерева опций в плоский массив.
-    const flatOptions: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[] = useMemo(
-        () => {
-            const initial: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[] = []
-            if (withEmptyOption && !hideEmptyOptionInDropdown) {
-                initial.push({
-                    isGroup: false,
-                    data: withEmptyOption,
-                    groupIndex: null,
-                })
-            }
-            const ret = flattenOptions<OptionValueType, OptionExtrasType>(options, initial)
-            if (withPermanentOption) {
-                ret.push({
-                    isGroup: false,
-                    data: withPermanentOption,
-                    groupIndex: null,
-                })
-            }
-            return ret
-        },
-        [
-            options,
-            withEmptyOption?.label,
-            withEmptyOption?.value,
-            withPermanentOption?.label,
-            withPermanentOption?.value,
-        ]
-    )
 
     // Обработчик выбора опции.
     const onSelect = useCallback(
@@ -91,7 +56,7 @@ export function VirtualizedSelectInputOptions<
     )
 
     const data: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[] = search && keywordsRegexp
-        ? flatOptions.filter(option => (
+        ? options.filter(option => (
             option.isGroup
             || shouldDisplaySelectInputOption(
                 option.data.label,
@@ -102,7 +67,7 @@ export function VirtualizedSelectInputOptions<
                 labelsContainHtml
             )
         ))
-        : flatOptions
+        : options
 
     const itemContent = (
         index: number,
@@ -113,7 +78,7 @@ export function VirtualizedSelectInputOptions<
             return (
                 <SelectInputOptionsGroupHeader
                     key={'group-' + index}
-                    group={option.data as FormSelectOptionGroup<OptionValueType, OptionExtrasType>}
+                    group={option.data}
                     index={index}
                     renderOptionLabel={renderOptionLabel}
                     labelContainsHtml={labelsContainHtml}
@@ -128,8 +93,9 @@ export function VirtualizedSelectInputOptions<
             labelsContainHtml
         )) {
             return (
-                <SelectInputOption
+                <SelectInputOption<OptionValueType, OptionExtrasType>
                     key={'option-' + index}
+                    api={api}
                     option={option.data}
                     index={index}
                     groupIndex={option.groupIndex}

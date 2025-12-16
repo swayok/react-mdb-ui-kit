@@ -9,7 +9,10 @@ import {
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
-import {SelectInputOptionsProps} from './SelectInputTypes'
+import {
+    FlattenedOptionOrGroup,
+    SelectInputOptionsProps,
+} from './SelectInputTypes'
 import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 
 // Отрисовка списка опций для SelectInput.
@@ -19,10 +22,9 @@ export function SelectInputOptions<
 >(props: SelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
+        api,
         options,
         selectedOption,
-        withEmptyOption,
-        withPermanentOption,
         maxHeight,
         hideEmptyOptionInDropdown,
         search,
@@ -50,112 +52,49 @@ export function SelectInputOptions<
     )
 
     // Рекурсивная отрисовка опций.
-    const renderOptions = (
-        options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType> = [],
-        groupIndex: null | number = null,
-        depth: number = 0
+    const renderOption = (
+        option: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>
     ) => {
-        const ret = []
-
-        for (let i = 0; i < options.length; i++) {
-            if ('options' in options[i]) {
-                const group = options[i] as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                // Группа опций.
-                const {
-                    className: containerClassName,
-                    ...optionsContainerAttributes
-                } = (group.optionsContainerAttributes ?? {})
-
-                if (group.options.length === 0) {
-                    // Пропускаем пустую группу.
-                    continue
-                }
-
-                const groupChildren = renderOptions(group.options, i, depth + 1)
-                if (groupChildren.length === 0) {
-                    continue
-                }
-
-                ret.push(
-                    <SelectInputOptionsGroupHeader
-                        key={'group-' + i}
-                        group={group}
-                        index={i}
-                        renderOptionLabel={renderOptionLabel}
-                        labelContainsHtml={labelsContainHtml}
-                    />,
-                    <div
-                        key={'group-options-' + i}
-                        {...optionsContainerAttributes}
-                        className={clsx(
-                            'form-dropdown-select-options-in-group ps-3',
-                            'depth-' + (depth + 1),
-                            containerClassName
-                        )}
-                    >
-                        {groupChildren}
-                    </div>
-                )
-            } else {
-                const option: FormSelectOption<
-                    OptionValueType,
-                    OptionExtrasType
-                > = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
-                if (!shouldDisplaySelectInputOption(
-                    option.label,
-                    option.value,
-                    hideEmptyOptionInDropdown,
-                    search,
-                    keywordsRegexp,
-                    labelsContainHtml
-                )) {
-                    continue
-                }
-                ret.push(
-                    <SelectInputOption
-                        key={'option-' + i}
-                        option={option}
-                        index={i}
-                        groupIndex={groupIndex}
-                        isActive={selectedOption?.value === option.value}
-                        renderOptionLabel={renderOptionLabel}
-                        labelContainsHtml={labelsContainHtml}
-                        disabled={option.disabled ?? disableOptions?.includes(option.value)}
-                        onSelect={onSelect}
-                    />
-                )
+        if (option.isGroup) {
+            // Группа опций.
+            return (
+                <SelectInputOptionsGroupHeader
+                    group={option.data}
+                    index={option.index}
+                    renderOptionLabel={renderOptionLabel}
+                    labelContainsHtml={labelsContainHtml}
+                />
+            )
+        } else {
+            if (!shouldDisplaySelectInputOption(
+                option.data.label,
+                option.data.value,
+                hideEmptyOptionInDropdown,
+                search,
+                keywordsRegexp,
+                labelsContainHtml
+            )) {
+                return null
             }
+            return (
+                <SelectInputOption
+                    api={api}
+                    option={option.data}
+                    index={option.index}
+                    groupIndex={option.groupIndex}
+                    isActive={selectedOption?.value === option.data.value}
+                    renderOptionLabel={renderOptionLabel}
+                    labelContainsHtml={labelsContainHtml}
+                    disabled={option.data.disabled ?? disableOptions?.includes(option.data.value)}
+                    onSelect={onSelect}
+                />
+            )
         }
-        return ret
     }
 
     const content = (
         <>
-            {withEmptyOption && !hideEmptyOptionInDropdown && (
-                <SelectInputOption
-                    key="option-empty"
-                    option={withEmptyOption}
-                    index={-1}
-                    groupIndex={null}
-                    isActive={selectedOption?.value === withEmptyOption.value}
-                    renderOptionLabel={renderOptionLabel}
-                    labelContainsHtml={labelsContainHtml}
-                    onSelect={onSelect}
-                />
-            )}
-            {renderOptions(options)}
-            {withPermanentOption && (
-                <SelectInputOption
-                    key="option-permanent"
-                    option={withPermanentOption}
-                    index={-1}
-                    groupIndex={null}
-                    isActive={selectedOption?.value === withPermanentOption.value}
-                    renderOptionLabel={renderOptionLabel}
-                    labelContainsHtml={labelsContainHtml}
-                    onSelect={onSelect}
-                />
-            )}
+            {options.map(renderOption)}
         </>
     )
 

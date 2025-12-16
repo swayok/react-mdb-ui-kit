@@ -21,7 +21,7 @@ import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
 import {Input} from './Input'
 import {ComboboxInputProps} from './InputTypes'
-import {useComboboxDropdown} from './helpers/useComboboxDropdown'
+import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.
@@ -74,7 +74,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         rememberListItem,
         isActiveListItem,
         activeIndex,
-    } = useComboboxDropdown({
+    } = useSelectInputDropdown({
         inputRef,
         onSearch: useEventCallback((
             event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -146,37 +146,34 @@ export function ComboboxInput(props: ComboboxInputProps) {
                 active={active ?? (value ?? '').length > 0}
             />
             {isOpen && hasOptions && (
-                <FloatingPortal>
-                    <FloatingFocusManager
-                        context={context}
-                        initialFocus={-1}
-                        visuallyHiddenDismiss
+                <FloatingFocusManager
+                    context={context}
+                    initialFocus={-1}
+                    visuallyHiddenDismiss
+                >
+                    <DropdownMenuContent
+                        ref={setMenuRef}
+                        {...getFloatingProps()}
+                        style={floatingStyles}
                     >
-                        <DropdownMenuContent
-                            isOpen={isOpen}
-                            ref={setMenuRef}
-                            {...getFloatingProps()}
-                            style={floatingStyles}
-                        >
-                            {filteredOptions.map((option, index) => (
-                                <DropdownItem
-                                    key={typeof option === 'string' ? option : option.value}
-                                    {...getItemProps({
-                                        onClick(event) {
-                                            onItemClick(option, event)
-                                        },
-                                        ref(item) {
-                                            rememberListItem(item, index)
-                                        },
-                                    })}
-                                    active={isActiveListItem(index)}
-                                >
-                                    {typeof option === 'string' ? option : option.label}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenuContent>
-                    </FloatingFocusManager>
-                </FloatingPortal>
+                        {filteredOptions.map((option, index) => (
+                            <DropdownItem
+                                key={typeof option === 'string' ? option : option.value}
+                                {...getItemProps({
+                                    onClick(event) {
+                                        onItemClick(option, event)
+                                    },
+                                    ref(item) {
+                                        rememberListItem(item, index)
+                                    },
+                                })}
+                                active={isActiveListItem(index)}
+                            >
+                                {typeof option === 'string' ? option : option.label}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenuContent>
+                </FloatingFocusManager>
             )}
         </>
     )

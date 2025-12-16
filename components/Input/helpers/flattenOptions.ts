@@ -25,6 +25,7 @@ export function flattenOptions<
             flat.push({
                 isGroup: true,
                 data: groupOption,
+                index: i,
             })
             // Нам нужно модифицировать массив flat, не перезаписывая его.
             // Это позволит использовать всего 1 массив во всех рекурсиях.
@@ -37,6 +38,7 @@ export function flattenOptions<
             flat.push({
                 isGroup: false,
                 data: options[i] as FormSelectOption<OptionValueType, OptionExtrasType>,
+                index: i,
                 groupIndex,
             })
         }

@@ -12,6 +12,7 @@ export function SelectInputOption<
 >(props: SelectInputOptionProps<OptionValueType, OptionExtrasType>) {
 
     const {
+        api,
         option,
         isActive = true,
         index,
@@ -36,15 +37,17 @@ export function SelectInputOption<
 
     return (
         <DropdownItem
-            {...attributes}
+            {...api.current?.getOptionProps({
+                ...attributes,
+                onClick(e: MouseEvent) {
+                    e.preventDefault()
+                    onSelect(option, index, groupIndex)
+                },
+            })}
             href={undefined}
             active={false}
             data-value={String(value)}
             tag="div"
-            onClick={(e: MouseEvent) => {
-                e.preventDefault()
-                onSelect(option, index, groupIndex)
-            }}
             className={clsx(
                 'cursor',
                 isEmptyOption ? 'empty-option' : null,

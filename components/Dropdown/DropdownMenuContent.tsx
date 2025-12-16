@@ -11,12 +11,12 @@ export function DropdownMenuContent<
 >(props: MergedComponentProps<DropdownMenuContentProps, InjectedComponentProps>) {
 
     const {
-        isOpen,
         className,
         shadow,
         tag: Tag = 'div',
         variant,
         maxHeight,
+        minWidth,
         textNowrapOnItems,
         style = {},
         fillContainer,
@@ -29,16 +29,16 @@ export function DropdownMenuContent<
             {...otherProps}
             className={clsx(
                 className,
-                'dropdown-menu',
+                'dropdown-menu show',
                 shadow ? `shadow-${shadow}` : null,
-                isOpen ? 'show' : null,
                 variant ? `dropdown-menu-${variant}` : null,
                 fillContainer ? 'full-width' : null,
                 textNowrapOnItems ? 'text-nowrap-on-items' : null
             )}
             style={{
+                maxHeight,
+                minWidth,
                 ...style,
-                ...(maxHeight ? {maxHeight} : {}),
             }}
         >
             {children}

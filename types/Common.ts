@@ -137,7 +137,7 @@ export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> exten
     label: string
     options: FormSelectOption<Value, Extras>[]
     groupHeaderAttributes?: DropdownHeaderProps
-    optionsContainerAttributes?: HTMLProps<HTMLDivElement>
+    // optionsContainerAttributes?: HTMLProps<HTMLDivElement>
     extra?: Extras
 }
 

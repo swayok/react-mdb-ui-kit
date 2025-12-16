@@ -44,7 +44,6 @@ export class MultiSelectInput<
             disableOptions,
             selectedOptionsToString,
             values,
-            dropdownFluidWidth = true,
             dropdownMenuClassName,
             stickSelectedOptionsToTop = false,
             onChange,
@@ -62,14 +61,12 @@ export class MultiSelectInput<
                     this.props.className
                 )}
                 {...attributes}
-                dropdownFluidWidth={dropdownFluidWidth}
                 value={this.getSelectedValuesForTextInput()}
                 dropdownMenuClassName={clsx(
                     'form-multiselect-dropdown',
                     dropdownMenuClassName,
                     stickSelectedOptionsToTop ? 'stick-selected-options-to-top' : null
                 )}
-                closeDropdownOnSelect={false}
             >
                 {this.renderOptions(this.props.options)}
             </SelectInputBase>
