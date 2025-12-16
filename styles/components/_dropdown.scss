@@ -60,12 +60,6 @@
         @include border-radius.border-radius(dropdown.$dropdown-border-radius);
         @include rfs.font-size(dropdown.$dropdown-font-size);
 
-        &[data-mdb-popper] {
-            top: 100%;
-            left: 0;
-            margin-top: dropdown.$dropdown-spacer;
-        }
-
         &.animation {
             display: block;
             /* Speed up animations */
@@ -85,64 +79,15 @@
         }
     }
 
-    // scss-docs-start responsive-breakpoints
-    // We deliberately hardcode the `bs-` prefix because we check
-    // this custom property in JS to determine Popper's positioning
-
-    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
-        @include breakpoints.media-breakpoint-up($breakpoint) {
-            $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
-
-            .dropdown-menu#{$infix}-start {
-                --bs-position: start;
-
-                &[data-mdb-popper] {
-                    /*!rtl:ignore*/
-                    right: auto;
-                    /*!rtl:ignore*/
-                    left: 0;
-                }
-            }
-
-            .dropdown-menu#{$infix}-end {
-                --bs-position: end;
-
-                &[data-mdb-popper] {
-                    /*!rtl:ignore*/
-                    right: 0;
-                    /*!rtl:ignore*/
-                    left: auto;
-                }
-            }
-        }
-    }
-
-    // scss-docs-end responsive-breakpoints
-
     // Allow for dropdowns to go bottom up (aka, dropup-menu)
     // Just add .dropup after the standard .dropdown class and you're set.
     .dropup {
-        .dropdown-menu[data-mdb-popper] {
-            top: auto;
-            bottom: 100%;
-            margin-top: 0;
-            margin-bottom: dropdown.$dropdown-spacer;
-        }
-
         .dropdown-toggle {
             @include caret.caret(up);
         }
     }
 
     .dropend {
-        .dropdown-menu[data-mdb-popper] {
-            top: 0;
-            right: auto;
-            left: 100%;
-            margin-top: 0;
-            margin-left: dropdown.$dropdown-spacer;
-        }
-
         .dropdown-toggle {
             @include caret.caret(end);
 
@@ -153,14 +98,6 @@
     }
 
     .dropstart {
-        .dropdown-menu[data-mdb-popper] {
-            top: 0;
-            right: 100%;
-            left: auto;
-            margin-top: 0;
-            margin-right: dropdown.$dropdown-spacer;
-        }
-
         .dropdown-toggle {
             @include caret.caret(start);
 

@@ -70,7 +70,6 @@ export function DataGridOrderingPanel<
             <SelectInput<SortableColumn>
                 value={(orderBy ?? '') as SortableColumn}
                 options={options}
-                small
                 mode="inline"
                 textNowrapOnOptions
                 wrapperClassName="m-0"
