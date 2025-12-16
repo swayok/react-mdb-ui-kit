@@ -1,9 +1,11 @@
 // Buttons
+@use "sass:map";
 @use "../mixins/buttons" as buttons-mixins;
 @use "../mixins/box-shadow";
 @use "../mixins/border-radius";
 @use "../mixins/transition";
 @use "../mixins/rfs";
+@use "../variables/spacers";
 @use "../variables/colors";
 @use "../variables/color-lists";
 @use "../variables/body";
@@ -44,9 +46,18 @@
             align-items: center;
             justify-content: center;
 
-            .mdi-icon,
-            .custom-icon {
-                margin-right: 0.5em;
+            &.icon-before {
+                .mdi-icon,
+                .custom-icon {
+                    margin-right: map.get(spacers.$spacers, 1);
+                }
+            }
+
+            &.icon-after {
+                .mdi-icon,
+                .custom-icon {
+                    margin-left: map.get(spacers.$spacers, 1);
+                }
             }
         }
 

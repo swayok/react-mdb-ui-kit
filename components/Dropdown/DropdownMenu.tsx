@@ -45,6 +45,7 @@ export function DropdownMenu<
         apiRef,
         style = {},
         inline,
+        noFocus,
         children,
         ...otherProps
     } = props
@@ -114,6 +115,7 @@ export function DropdownMenu<
                         modal={false}
                         initialFocus={isNested ? -1 : 0}
                         returnFocus={!isNested}
+                        disabled={noFocus}
                     >
                         <DropdownMenuContent
                             ref={mergedRef}

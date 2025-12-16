@@ -33,7 +33,8 @@ export interface ButtonProps extends Omit<HtmlComponentProps<HTMLButtonElement |
     labelFor?: string
     block?: boolean
     active?: boolean
-    hasIcon?: boolean
+    // Наличие иконки внутри кнопки и ее расположение.
+    hasIcon?: 'before' | 'after' | 'somewhere' | boolean
     // Внешняя ссылка (запрет использования компонента <Link> вместо <a>).
     external?: boolean
     ref?: RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement | null>
@@ -105,7 +106,8 @@ export function Button<
 
     const classes = clsx(
         color !== 'none' ? 'btn' : null,
-        color === 'link' || color === 'icon' ? 'clickable' : null, // Требуется для активации стилей "ссылки"
+        // Требуется для активации стилей "ссылки"
+        color === 'link' || color === 'icon' ? 'clickable' : null,
         btnColor,
         rounded ? 'btn-rounded' : null,
         large && !small ? 'btn-lg' : null,
@@ -113,7 +115,7 @@ export function Button<
         Tag !== 'button' && disabled ? 'disabled' : null,
         block ? 'btn-block' : null,
         active ? 'active' : null,
-        hasIcon ? 'btn-with-icon' : null,
+        hasIcon ? `btn-with-icon icon-${hasIcon === true ? 'somewhere' : hasIcon}` : null,
         className
     )
 

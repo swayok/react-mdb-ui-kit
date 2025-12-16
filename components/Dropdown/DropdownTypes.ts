@@ -206,6 +206,8 @@ export interface DropdownMenuProps<
     // Нужно ли размещать меню в том родительском элементе (true) или в FloatingPortal (false)?
     // По умолчанию: false.
     inline?: boolean
+    // Отключить автофокус на меню при открытии?
+    noFocus?: boolean
 }
 
 // Свойства компонента DropdownMenu по умолчанию.

@@ -72,6 +72,7 @@ export function DataGridOrderingPanel<
                 options={options}
                 small
                 mode="inline"
+                textNowrapOnOptions
                 wrapperClassName="m-0"
                 dropdownFluidWidth={false}
                 disabled={isDisabled}

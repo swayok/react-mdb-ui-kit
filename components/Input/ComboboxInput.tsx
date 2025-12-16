@@ -84,55 +84,6 @@ export function ComboboxInput(props: ComboboxInputProps) {
         )),
     })
 
-    // Обработка нажатия клавиши на клавиатуре.
-    // const onSearchInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     if (filteredOptions.length === 0) {
-    //         return
-    //     }
-    //     if (event.key === 'Enter') {
-    //         if (dropdownSelectedItem !== null && filteredOptions[dropdownSelectedItem]) {
-    //             event.preventDefault()
-    //             const value: string | number | null = filteredOptions[dropdownSelectedItem].value
-    //             onChange?.(value ? String(value) : '', event)
-    //             setFilteredOptions(options as FormSelectOptionsList<string>)
-    //             setShowDropdown(false)
-    //         }
-    //         return
-    //     }
-    //     // Если меню скрыто, то нужно его открыть при нажатии кнопки.
-    //     if (!showDropdown) {
-    //         // Некоторые нажатия нужно игнорировать.
-    //         const ignoredKeysForMenuOpener: string[] = ['Control', 'Alt', 'Shift', 'Meta']
-    //         if (!ignoredKeysForMenuOpener.includes(event.key)) {
-    //             setShowDropdown(true)
-    //             if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    //                 // Предотвращаем изменение позиции курсора в меню, если меню было закрыто.
-    //                 event.preventDefault()
-    //             }
-    //             return
-    //         }
-    //     }
-    //     if (event.key === 'ArrowUp') {
-    //         event.preventDefault()
-    //         setDropdownSelectedItem(
-    //             dropdownSelectedItem !== null && dropdownSelectedItem > 0
-    //                 ? dropdownSelectedItem - 1
-    //                 : filteredOptions.length - 1
-    //         )
-    //         return
-    //     }
-    //     if (event.key === 'ArrowDown') {
-    //         event.preventDefault()
-    //         setDropdownSelectedItem(
-    //             dropdownSelectedItem === null
-    //                 ? 0
-    //                 : (dropdownSelectedItem + 1) % filteredOptions.length
-    //         )
-    //         return
-    //     }
-    //     onKeyDown?.(event)
-    // }
-
     const onItemClick = (
         option: FormSelectOption | string,
         event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>

@@ -118,7 +118,6 @@ export function DataGridPaginationPagesListFillerDropdown(
                         <Icon
                             path={mdiCheck}
                             color="green"
-                            className="m-0"
                         />
                     </Button>
                 </form>
