@@ -30,7 +30,6 @@
         "@types/image-blob-reduce": ">=4.1.4",
         "@types/numeral": ">=2.0.5",
         "@types/react-transition-group": ">=4.4.11",
-        "@restart/ui": ">=1.9.4",
         "@mdi/js": ">=7.4.47",
         "ckeditor4": "4.22.1",
         "ckeditor4-react": "4.3.0",
