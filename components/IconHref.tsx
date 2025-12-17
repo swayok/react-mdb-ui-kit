@@ -12,7 +12,7 @@ import {
     TextColors,
 } from '../types'
 import {Icon} from './Icon'
-import {IconProps} from './MDIIcon'
+import {MdiIconProps} from './MDIIcon'
 import {Tooltip} from './Tooltip/Tooltip'
 import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 
@@ -22,7 +22,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     color?: TextColors | 'link'
     tooltip: string
     tooltipProps?: Pick<DefaultTooltipProps, 'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'>
-    iconProps?: Omit<IconProps, 'onClick' | 'path' | 'size' | 'className'>
+    iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
     size?: number | null
     iconClassName?: string

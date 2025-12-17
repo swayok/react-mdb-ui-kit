@@ -155,7 +155,10 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
                         })}
                     >
                         <div
-                            className={clsx('tooltip-inner', tooltipTextClassName)}
+                            className={clsx(
+                                'tooltip-inner',
+                                tooltipTextClassName
+                            )}
                             style={{
                                 ...tooltipStyle,
                                 ...(tooltipMaxWidth ? {maxWidth: tooltipMaxWidth} : {}),

@@ -1,4 +1,4 @@
-import {FloatingFocusManager} from '@floating-ui/react'
+import {FloatingList} from '@floating-ui/react'
 import {
     ChangeEvent,
     FocusEvent,
@@ -34,6 +34,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onClick,
         onChange,
         onKeyDown,
+        maxHeight = 500,
         ...inputProps
     } = props
 
@@ -45,8 +46,36 @@ export function ComboboxInput(props: ComboboxInputProps) {
         options as FormSelectOptionsList<string>
     )
 
+    const {
+        isOpen,
+        onSearch,
+        getReferenceProps,
+        setInputRef,
+        setMenuRef,
+        floatingStyles,
+        getFloatingProps,
+        setIsOpen,
+        getItemProps,
+        listItemsRef,
+        isActiveListItem,
+        activeIndex,
+        setActiveIndex,
+    } = useSelectInputDropdown({
+        inputRef,
+        focusFirstItemOnOpen: true,
+        onSearch: useEventCallback((
+            event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+            onChange(
+                event.currentTarget.value,
+                event as FormEvent<HTMLInputElement>
+            )
+        }),
+    })
+
     // Обновление списка опций.
     useEffect(() => {
+        setActiveIndex(0)
         setFilteredOptions(
             filterOptions(
                 value ?? '',
@@ -56,30 +85,6 @@ export function ComboboxInput(props: ComboboxInputProps) {
             )
         )
     }, [options, value])
-
-    const {
-        isOpen,
-        onSearch,
-        getReferenceProps,
-        setInputRef,
-        setMenuRef,
-        context,
-        floatingStyles,
-        getFloatingProps,
-        setIsOpen,
-        getItemProps,
-        rememberListItem,
-        isActiveListItem,
-        activeIndex,
-    } = useSelectInputDropdown({
-        inputRef,
-        onSearch: useEventCallback((
-            event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-        ) => onChange(
-            event.currentTarget.value,
-            event as FormEvent<HTMLInputElement>
-        )),
-    })
 
     const onItemClick = (
         option: FormSelectOption | string,
@@ -98,7 +103,10 @@ export function ComboboxInput(props: ComboboxInputProps) {
         if (
             isOpen
             && activeIndex !== null
-            && event.key === 'Enter'
+            && (event.key === 'Enter' || event.key === 'Tab')
+            && !event.shiftKey
+            && !event.altKey
+            && !event.ctrlKey
             && filteredOptions.length > activeIndex
         ) {
             onItemClick(filteredOptions[activeIndex], event)
@@ -125,6 +133,9 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onClick?.(event)
     })
 
+    if (inputProps.label === 'Combobox') {
+        console.log(inputProps.label, {filteredOptions, isOpen})
+    }
     const hasOptions: boolean = filteredOptions.length > 0
 
     return (
@@ -142,36 +153,32 @@ export function ComboboxInput(props: ComboboxInputProps) {
                 title={title}
                 active={active ?? (value ?? '').length > 0}
             />
-            {isOpen && hasOptions && (
-                <FloatingFocusManager
-                    context={context}
-                    initialFocus={-1}
-                    visuallyHiddenDismiss
-                >
+            <FloatingList elementsRef={listItemsRef}>
+                {isOpen && hasOptions && (
                     <DropdownMenuContent
                         ref={setMenuRef}
                         {...getFloatingProps()}
                         style={floatingStyles}
+                        maxHeight={maxHeight}
                     >
-                        {filteredOptions.map((option, index) => (
-                            <DropdownItem
-                                key={typeof option === 'string' ? option : option.value}
-                                {...getItemProps({
-                                    onClick(event) {
-                                        onItemClick(option, event)
-                                    },
-                                    ref(item) {
-                                        rememberListItem(item, index)
-                                    },
-                                })}
-                                hover={isActiveListItem(index)}
-                            >
-                                {typeof option === 'string' ? option : option.label}
-                            </DropdownItem>
-                        ))}
+                        <div className="dropdown-menu-scrollable">
+                            {filteredOptions.map((option, index) => (
+                                <DropdownItem
+                                    key={typeof option === 'string' ? option : option.value}
+                                    {...getItemProps({
+                                        onClick(event) {
+                                            onItemClick(option, event)
+                                        },
+                                    })}
+                                    hover={isActiveListItem(index)}
+                                >
+                                    {typeof option === 'string' ? option : option.label}
+                                </DropdownItem>
+                            ))}
+                        </div>
                     </DropdownMenuContent>
-                </FloatingFocusManager>
-            )}
+                )}
+            </FloatingList>
         </>
     )
 }

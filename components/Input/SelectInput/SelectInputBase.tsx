@@ -1,4 +1,7 @@
-import {FloatingFocusManager} from '@floating-ui/react'
+import {
+    FloatingList,
+    FloatingRootContext,
+} from '@floating-ui/react'
 import {mdiChevronDown} from '@mdi/js'
 import clsx from 'clsx'
 import {
@@ -6,11 +9,15 @@ import {
     KeyboardEvent,
     MouseEvent,
     useImperativeHandle,
+    useMemo,
     useRef,
 } from 'react'
 import {useEventCallback} from '../../../helpers/useEventCallback'
+import {AnyObject} from '../../../types'
 import {Button} from '../../Button'
+import {DropdownContext} from '../../Dropdown/DropdownContext'
 import {DropdownMenuContent} from '../../Dropdown/DropdownMenuContent'
+import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
 import {useSelectInputDropdown} from '../helpers/useSelectInputDropdown'
 import {Input} from '../Input'
@@ -67,13 +74,11 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         getReferenceProps,
         setInputRef,
         setMenuRef,
-        context,
         floatingStyles,
         getFloatingProps,
         setIsOpen,
         getItemProps,
-        rememberListItem,
-        isActiveListItem,
+        listItemsRef,
         activeIndex,
         isDropUp,
     } = useSelectInputDropdown({
@@ -87,6 +92,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         drop,
         focusFirstItemOnOpen,
         closeOnScrollOutside,
+        maxHeight,
     })
 
     // Заблокировать выполнение setIsOpen(!isOpen) в onTogglerClick() один раз.
@@ -134,9 +140,6 @@ export function SelectInputBase(props: SelectInputBasicProps) {
     // API.
     useImperativeHandle(apiRef, (): SelectInputBasicApi => ({
         setIsOpen,
-        rememberOptionElement: rememberListItem,
-        isActiveOption: isActiveListItem,
-        getOptionProps: getItemProps,
     }))
 
     if (hidden) {
@@ -226,57 +229,68 @@ export function SelectInputBase(props: SelectInputBasicProps) {
             break
     }
 
+    const contextProviderProps = useMemo(
+        (): DropdownContextProps => ({
+            // Реально изменяемые данные, необходимые для DropdownItem.
+            setIsOpen,
+            activeIndex,
+            getItemProps,
+            // Неизменные данные.
+            disableAllItems: false,
+            setDisableAllItems() {
+            },
+            setActiveIndex() {
+            },
+            hasFocusInside: false,
+            setHasFocusInside() {
+            },
+            isOpen: false,
+            parentContext: null,
+            toggleElement: null,
+            setToggleElement() {
+            },
+            menuElement: null,
+            setMenuElement() {
+            },
+            isNested: false,
+            itemForParent: null,
+            rootContext: {} as FloatingRootContext,
+            elementsRef: listItemsRef,
+            getReferenceProps: props => props as AnyObject,
+            getFloatingProps: props => props as AnyObject,
+        }),
+        [activeIndex, getItemProps, setIsOpen]
+    )
+
     return (
         <div className={wrapperClasses}>
             {dropdownToggle}
-            {isOpen && (
-                <FloatingFocusManager
-                    context={context}
-                    initialFocus={-1}
-                    visuallyHiddenDismiss
-                >
-                    <DropdownMenuContent
-                        ref={setMenuRef}
-                        {...getFloatingProps({
-                            className: clsx(
-                                isDropUp && inputProps.label
-                                    ? 'form-dropdown-select-menu-dropup-offset'
-                                    : null,
-                                dropdownMenuClassName
-                            ),
-                        })}
-                        shadow={dropdownShadow}
-                        style={floatingStyles}
-                        maxHeight={maxHeight}
-                        minWidth={minWidth}
-                        textNowrapOnItems={textNowrapOnOptions}
-                    >
-                        {children}
-                    </DropdownMenuContent>
-                </FloatingFocusManager>
-            )}
+            <FloatingList
+                elementsRef={listItemsRef}
+            >
+                <DropdownContext.Provider value={contextProviderProps}>
+                    {isOpen && (
+                        <DropdownMenuContent
+                            ref={setMenuRef}
+                            {...getFloatingProps({
+                                className: clsx(
+                                    isDropUp && inputProps.label
+                                        ? 'form-dropdown-select-menu-dropup-offset'
+                                        : null,
+                                    dropdownMenuClassName
+                                ),
+                            })}
+                            shadow={dropdownShadow}
+                            style={floatingStyles}
+                            maxHeight={maxHeight}
+                            minWidth={minWidth}
+                            textNowrapOnItems={textNowrapOnOptions}
+                        >
+                            {children}
+                        </DropdownMenuContent>
+                    )}
+                </DropdownContext.Provider>
+            </FloatingList>
         </div>
     )
-
-    // return (
-    //     <div
-    //         className={clsx(
-    //             // form-outline here needed to apply .input-group styles
-    //             'form-dropdown-select form-outline',
-    //             'mode-' + mode,
-    //             inputProps.small && !inputProps.large ? 'form-dropdown-select-sm' : null,
-    //             inputProps.large && !inputProps.small ? 'form-dropdown-select-lg' : null,
-    //             wrapperClassName
-    //         )}
-    //         style={wrapperStyle}
-    //     >
-    //         <Dropdown {...dropdownProps}>
-    //             {dropdownToggle}
-    //             <DropdownMenu {...dropdownMenuProps}>
-    //                 {children}
-    //             </DropdownMenu>
-    //             {addon}
-    //         </Dropdown>
-    //     </div>
-    // )
 }

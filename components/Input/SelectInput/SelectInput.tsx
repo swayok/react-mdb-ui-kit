@@ -53,6 +53,7 @@ export function SelectInput<
         search,
         searchPlaceholder,
         onChange: propsOnChange,
+        enableVirtualization = false,
         maxHeight = 500,
         labelsContainHtml,
         hideEmptyOptionInDropdown,
@@ -62,7 +63,6 @@ export function SelectInput<
         renderOptionLabel,
         trackBehaviorAs,
         selectFirstIfNotFound = true,
-        virtualizationConfig = {enabled: false},
         closeDropdownOnSelect = true,
         // Dropdown
         onOpenChange: propsOnOpenChange,
@@ -264,12 +264,9 @@ export function SelectInput<
         [options]
     )
 
-    let virtualizationEnabled: boolean = false
-    if (virtualizationConfig.enabled) {
-        if (virtualizationConfig.enabled === 'auto') {
-            virtualizationEnabled = options.length > 50
-        }
-    }
+    const virtualizationEnabled: boolean = enableVirtualization === 'auto'
+        ? options.length > 50
+        : enableVirtualization
 
     return (
         <SelectInputBase
@@ -283,7 +280,7 @@ export function SelectInput<
             {...basicSelectInputProps}
             value={selectedValueForTextInput}
             onOpenChange={onDropdownToggle}
-            maxHeight={null}
+            maxHeight={maxHeight}
             onOptionSelect={onOptionSelectByIndex}
         >
             {search && (
@@ -305,7 +302,6 @@ export function SelectInput<
             )}
             {virtualizationEnabled ? (
                 <VirtualizedSelectInputOptions<OptionValueType, OptionExtrasType>
-                    api={apiRef}
                     options={options}
                     selectedOption={selectedOption?.option}
                     trackBehaviorAs={trackBehaviorAs}
@@ -314,16 +310,12 @@ export function SelectInput<
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
-                    height={Math.min(
-                        virtualizationConfig.dropdownHeight ?? maxHeight ?? 500,
-                        maxHeight ?? 500
-                    )}
+                    height={maxHeight}
                     disableOptions={disableOptions}
                     onChange={onOptionSelected}
                 />
             ) : (
                 <SelectInputOptions<OptionValueType, OptionExtrasType>
-                    api={apiRef}
                     options={options}
                     selectedOption={selectedOption?.option}
                     trackBehaviorAs={trackBehaviorAs}
@@ -332,7 +324,6 @@ export function SelectInput<
                     renderOptionLabel={renderOptionLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
-                    maxHeight={maxHeight}
                     disableOptions={disableOptions}
                     onChange={onOptionSelected}
                 />

@@ -20,7 +20,6 @@ export function VirtualizedSelectInputOptions<
 >(props: VirtualizedSelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
-        api,
         options,
         selectedOption,
         height,
@@ -95,7 +94,6 @@ export function VirtualizedSelectInputOptions<
             return (
                 <SelectInputOption<OptionValueType, OptionExtrasType>
                     key={'option-' + index}
-                    api={api}
                     option={option.data}
                     index={index}
                     groupIndex={option.groupIndex}
@@ -121,6 +119,7 @@ export function VirtualizedSelectInputOptions<
             }}
             context={selectedOption?.value ?? null}
             itemContent={itemContent}
+            className="dropdown-menu-scrollable"
         />
     )
 }

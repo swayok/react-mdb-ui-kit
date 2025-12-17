@@ -1,10 +1,10 @@
 import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
 import {
-    AppIconProps,
+    IconProps,
     Icon,
 } from '../Icon'
 
-interface Props extends Omit<AppIconProps, 'label'> {
+interface Props extends Omit<IconProps, 'label'> {
     // Размер предпросмотра для определения размера иконки (1/3 от previewSize, максимум 50).
     previewSize: number
     fileData?: FileAPISelectedFileInfo

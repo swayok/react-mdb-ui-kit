@@ -1,9 +1,9 @@
-import {UseInteractionsReturn} from '@floating-ui/react'
 import type {
+    FormEvent,
     KeyboardEvent,
+    MouseEvent,
     ReactNode,
     Ref,
-    RefObject,
 } from 'react'
 import type {
     AnyObject,
@@ -33,12 +33,6 @@ export type SelectInputDropdownMenuProps = Pick<
 // Api компонента SelectInputBasic.
 export interface SelectInputBasicApi {
     setIsOpen: (value: boolean) => void
-    rememberOptionElement: (
-        item: HTMLElement | null,
-        index: number
-    ) => void
-    isActiveOption: (index: number) => boolean
-    getOptionProps: UseInteractionsReturn['getItemProps']
 }
 
 // Свойства компонента SelectInputBasic.
@@ -119,25 +113,26 @@ export interface SelectInputProps<
     // Отключить возможность выбрать указанные опции.
     disableOptions?: OptionValueType[]
     // Виртуализация списка опций для экономии памяти.
-    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
-    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
-    virtualizationConfig?: {
-        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
-        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
-        enabled: boolean | 'auto'
-        // Обязательное, если не указан SelectInputProps.maxHeight,
-        // т.к. автоматически высота выпадающего меню не вычисляется.
-        // По умолчанию: 500.
-        // Если также указано значение SelectInputProps.maxHeight,
-        // то будет выбрано меньшее из значений:
-        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
-        dropdownHeight?: number
-    }
+    // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
+    // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
+    // Проблема: если в опции суммарно занимают меньшую высоту, чем maxHeight,
+    // то выпадающее меню всё-равно будет иметь высоту maxHeight, т.е. не уменьшится.
+    enableVirtualization?: boolean | 'auto'
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
     trackBehaviorAs?: string
     // Нужно ли закрывать выпадающее меню при выборе опции.
     closeDropdownOnSelect?: boolean
+}
+
+// Свойства компонента ComboboxInput.
+export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
+    options?: FormSelectOptionsList<string | number | null> | string[]
+    maxHeight?: SelectInputBasicProps['maxHeight']
+    onChange: (
+        value: string,
+        event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+    ) => void
 }
 
 // Свойства компонента MultiSelectInput.
@@ -169,20 +164,11 @@ export interface MultiSelectInputProps<
     // Пояснение для поля ввода ключевых слов поиска по опциям.
     searchPlaceholder?: string
     // Todo: Виртуализация списка опций для экономии памяти.
-    // Проблема: если в опции суммарно занимают меньшую высоту, чем dropdownHeight,
-    // то выпадающее меню всё-равно будет иметь высоту dropdownHeight, т.е. не уменьшится.
-    virtualizationConfig?: {
-        // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
-        // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
-        enabled: boolean | 'auto'
-        // Обязательное, если не указан maxHeight
-        // т.к. автоматически высота выпадающего меню не вычисляется.
-        // По умолчанию: 500.
-        // Если также указано значение SelectInputProps.maxHeight,
-        // то будет выбрано меньшее из значений:
-        // Math.min(props.maxHeight, props.virtualizeOptionsList.dropdownHeight).
-        dropdownHeight?: number
-    }
+    // Можно опционально включать виртуализацию в зависимости от кол-ва опций.
+    // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
+    // Проблема: если в опции суммарно занимают меньшую высоту, чем maxHeight,
+    // то выпадающее меню всё-равно будет иметь высоту maxHeight, т.е. не уменьшится.
+    enableVirtualization?: SelectInputProps['enableVirtualization']
 }
 
 // Данные в option.extra для списка опций компонента MultiSelectInput.
@@ -195,7 +181,6 @@ export interface SelectInputOptionProps<
     OptionValueType = string,
     OptionExtrasType = AnyObject,
 > {
-    api: RefObject<SelectInputBasicApi | null>
     visible?: boolean
     option: FormSelectOption<OptionValueType, OptionExtrasType>
     index: number
@@ -228,10 +213,9 @@ export interface SelectInputOptionsProps<
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
         'hideEmptyOptionInDropdown'
-        | 'maxHeight' | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
+        | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
         | 'disableOptions' | 'onChange' | 'trackBehaviorAs'
     > {
-    api: RefObject<SelectInputBasicApi | null>
     options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]
     selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>
     keywordsRegexp: RegExp | null
@@ -260,7 +244,6 @@ export interface VirtualizedSelectInputOptionsProps<
         | 'renderOptionLabel' | 'labelsContainHtml' | 'disableOptions'
         | 'onChange' | 'trackBehaviorAs'
     > {
-    api: RefObject<SelectInputBasicApi | null>
     options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]
     selectedOption?: FormSelectOption<OptionValueType, OptionExtrasType>
     keywordsRegexp: RegExp | null

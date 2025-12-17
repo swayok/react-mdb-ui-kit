@@ -5,14 +5,14 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {Icon} from './Icon'
-import {IconProps} from './MDIIcon'
+import {MdiIconProps} from './MDIIcon'
 
 interface Props {
     rating: number
     className?: string
     starSize?: number
     onClick?: (value: number) => void
-    inactiveIconColor?: IconProps['color']
+    inactiveIconColor?: MdiIconProps['color']
     inactiveIconClassName?: string
 }
 

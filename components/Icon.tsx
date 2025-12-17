@@ -4,7 +4,7 @@ import {
     TextColors,
 } from '../types'
 import {
-    IconProps,
+    MdiIconProps,
     MDIIcon,
 } from './MDIIcon'
 import {
@@ -12,20 +12,32 @@ import {
     SvgIconProps,
 } from './SvgIcon'
 import {Tooltip} from './Tooltip/Tooltip'
-import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
+import {
+    DefaultTooltipProps,
+    TooltipProps,
+} from './Tooltip/TooltipTypes'
 
-export interface AppIconProps extends Omit<IconProps, 'path' | 'color'> {
-    path: IconProps['path'] | SvgIconInfo
+export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'> {
+    path: MdiIconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
     tooltip?: string
-    tooltipProps?: Omit<DefaultTooltipProps, 'title'>
+    tooltipProps?: Omit<
+        DefaultTooltipProps,
+        'title' | 'className' | 'tooltipMaxWidth' | 'tooltipDisableClickHandler'
+        | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement'
+    >
+    tooltipDisableClickHandler?: boolean
+    tooltipToggleTag?: string
+    tooltipToggleClassName?: string
     centerIconInTooltip?: boolean
     tooltipMaxWidth?: number
+    tooltipTextClassName?: string
+    tooltipPlacement?: TooltipProps['tooltipPlacement']
 }
 
 // SVG-иконка с дополнительными функциями (всплывающая подсказка, подпись).
-export function Icon(props: AppIconProps) {
+export function Icon(props: IconProps) {
     const {
         className,
         label,
@@ -33,6 +45,11 @@ export function Icon(props: AppIconProps) {
         tooltipProps = {},
         centerIconInTooltip,
         tooltipMaxWidth,
+        tooltipToggleClassName,
+        tooltipDisableClickHandler = true,
+        tooltipToggleTag = label ? 'div' : 'span',
+        tooltipTextClassName,
+        tooltipPlacement,
         path,
         color,
         ...otherProps
@@ -55,7 +72,6 @@ export function Icon(props: AppIconProps) {
         )
     } else {
         const {
-            title,
             description,
             spin,
             ...customIconProps
@@ -72,26 +88,21 @@ export function Icon(props: AppIconProps) {
         )
     }
     if (tooltip) {
-        const {
-            className: tooltipWrapperClassName,
-            tag: tooltipTag = 'span',
-            tooltipDisableClickHandler = true,
-            tooltipMaxWidth: tooltipMaxWidthFromProps = tooltipMaxWidth,
-            ...otherTooltipProps
-        } = tooltipProps
         const commonTooltipProps: Partial<DefaultTooltipProps> = {
+            tag: tooltipToggleTag,
             title: tooltip,
             tooltipDisableClickHandler,
-            tooltipMaxWidth: tooltipMaxWidthFromProps,
+            tooltipMaxWidth,
+            tooltipTextClassName,
+            tooltipPlacement,
         }
         if (label !== undefined) {
             return (
                 <Tooltip
-                    tag="div"
-                    {...otherTooltipProps}
+                    {...tooltipProps}
                     className={clsx(
                         'mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start',
-                        tooltipWrapperClassName
+                        tooltipToggleClassName
                     )}
                     {...commonTooltipProps}
                 >
@@ -103,10 +114,9 @@ export function Icon(props: AppIconProps) {
             return (
                 <Tooltip
                     {...tooltipProps}
-                    tag={tooltipTag}
                     className={clsx(
                         centerIconInTooltip ? 'd-flex flex-row align-items-center' : null,
-                        tooltipWrapperClassName
+                        tooltipToggleClassName
                     )}
                     {...commonTooltipProps}
                 >

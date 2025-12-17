@@ -14,7 +14,7 @@ import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {DropdownPlacement} from '../Dropdown/DropdownTypes'
 import {Icon} from '../Icon'
-import {IconProps} from '../MDIIcon'
+import {MdiIconProps} from '../MDIIcon'
 
 interface Props {
     currentLanguage: BasicLanguageConfig
@@ -23,9 +23,9 @@ interface Props {
     // Запрет роботам преходить по ссылке. По умолчанию: true.
     noFollow?: boolean
     className?: string
-    iconColor?: IconProps['color']
+    iconColor?: MdiIconProps['color']
     iconClassName?: string
-    chevronColor?: IconProps['color']
+    chevronColor?: MdiIconProps['color']
     chevronClassName?: string
     chevronRotate?: number
     iconSize?: number

@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import {MouseEvent} from 'react'
+import {useEventCallback} from '../../../helpers/useEventCallback'
 import {AnyObject} from '../../../types'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
 import {SelectInputOptionLabel} from './SelectInputOptionLabel'
@@ -12,7 +13,6 @@ export function SelectInputOption<
 >(props: SelectInputOptionProps<OptionValueType, OptionExtrasType>) {
 
     const {
-        api,
         option,
         isActive = true,
         index,
@@ -35,22 +35,18 @@ export function SelectInputOption<
 
     const isEmptyOption = value === null || value === ''
 
+    const onClick = useEventCallback((e: MouseEvent) => {
+        e.preventDefault()
+        onSelect(option, index, groupIndex)
+    })
+
     return (
         <DropdownItem
-            {...api.current?.getOptionProps({
-                ...attributes,
-                onClick(e: MouseEvent) {
-                    e.preventDefault()
-                    onSelect(option, index, groupIndex)
-                },
-                ref(item) {
-                    api.current?.rememberOptionElement(item, index)
-                },
-            })}
+            {...attributes}
+            onClick={onClick}
             href={undefined}
             active={isActive}
             disabled={disabled}
-            hover={api.current?.isActiveOption(index)}
             data-value={String(value)}
             tag="div"
             className={clsx(

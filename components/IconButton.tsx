@@ -6,16 +6,18 @@ import {
 import {useEventCallback} from '../helpers/useEventCallback'
 import {TextColors} from '../types'
 import {
-    AppIconProps,
+    IconProps,
     Icon,
 } from './Icon'
-import {DefaultTooltipProps} from './Tooltip/TooltipTypes'
 
-export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
+export interface IconButtonProps extends Omit<
+    IconProps,
+    'onClick' | 'tooltipDisableClickHandler' | 'tooltipToggleClassName' | 'tooltipProps'
+> {
     tooltip?: string
     color?: TextColors | 'link'
     onClick?: (event: MouseEvent<HTMLDivElement>) => void
-    tooltipProps?: Omit<DefaultTooltipProps, 'onClick' | 'title' | 'tooltipDisableClickHandler'>
+    tooltipProps?: Omit<IconProps['tooltipProps'], 'onClick'>
     iconClassName?: string
     iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
@@ -28,16 +30,23 @@ export interface IconButtonProps extends Omit<AppIconProps, 'onClick'> {
 export function IconButton(props: IconButtonProps) {
 
     const {
-        tooltipProps,
         color,
         onClick,
         disabled,
         className,
         iconClassName,
-        reusableItemContainerClass,
+        reusableItemContainerClassName,
         style,
         iconStyle,
         inline = false,
+        // Tooltip props:
+        tooltip,
+        tooltipToggleTag = 'div',
+        tooltipMaxWidth,
+        tooltipTextClassName,
+        tooltipPlacement,
+        centerIconInTooltip,
+        tooltipProps,
         ...otherProps
     } = props
 
@@ -57,19 +66,30 @@ export function IconButton(props: IconButtonProps) {
         }
     )
 
-    if (props.tooltip) {
+    if (tooltip) {
+        const iconTooltipProps: Partial<IconProps> = {
+            tooltip,
+            tooltipToggleTag,
+            tooltipMaxWidth,
+            tooltipTextClassName,
+            tooltipPlacement,
+            centerIconInTooltip,
+        }
         return (
             <Icon
+                {...iconTooltipProps}
+                tooltipToggleClassName={wrapperClassName}
+                tooltipDisableClickHandler
                 tooltipProps={{
-                    tag: 'div',
                     ...tooltipProps,
-                    className: wrapperClassName,
-                    tooltipDisableClickHandler: true,
                     onClick: handleClick,
                     style,
                 }}
                 className={iconClassName}
-                reusableItemContainerClass={clsx(wrapperClassName, reusableItemContainerClass)}
+                reusableItemContainerClassName={clsx(
+                    wrapperClassName,
+                    reusableItemContainerClassName
+                )}
                 style={iconStyle}
                 {...otherProps}
             />
@@ -83,7 +103,7 @@ export function IconButton(props: IconButtonProps) {
             >
                 <Icon
                     className={iconClassName}
-                    reusableItemContainerClass={clsx(wrapperClassName, reusableItemContainerClass)}
+                    reusableItemContainerClassName={clsx(wrapperClassName, reusableItemContainerClassName)}
                     style={iconStyle}
                     {...otherProps}
                 />

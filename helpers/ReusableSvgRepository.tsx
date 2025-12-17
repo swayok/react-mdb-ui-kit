@@ -43,7 +43,7 @@ export abstract class ReusableSvgRepository {
         name: string,
         uid: string | number,
         fallback: ReusableSvgRepositoryRememberFallbackFn,
-        reusableItemContainerClass?: string
+        reusableItemContainerClassName?: string
     ): ReactNode | ReactNode[] {
         const reusableId = this.getSvgId(name)
         if (name in this.svgElements) {
@@ -58,7 +58,7 @@ export abstract class ReusableSvgRepository {
                 element => this.rememberSvgElement(
                     name,
                     element,
-                    reusableItemContainerClass
+                    reusableItemContainerClassName
                 )
             ),
         }
@@ -69,7 +69,7 @@ export abstract class ReusableSvgRepository {
     private static rememberSvgElement(
         name: string,
         svgElement: SVGSVGElement | null,
-        reusableItemContainerClass?: string
+        reusableItemContainerClassName?: string
     ): void {
         if (!svgElement) {
             return
@@ -82,8 +82,8 @@ export abstract class ReusableSvgRepository {
         // Создаем контейнер для хранения оригинала иконки.
         const iconContainer: HTMLDivElement = document.createElement('div')
         iconContainer.style.display = 'none'
-        if (reusableItemContainerClass) {
-            iconContainer.className = reusableItemContainerClass
+        if (reusableItemContainerClassName) {
+            iconContainer.className = reusableItemContainerClassName
         }
         // Клонируем иконку и добавляем ее в невидимый контейнер.
         const clone: SVGSVGElement = svgElement.cloneNode(true) as SVGSVGElement

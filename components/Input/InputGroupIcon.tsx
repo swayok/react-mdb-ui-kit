@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    AppIconProps,
+    IconProps,
     Icon,
 } from '../Icon'
 import {InputGroupIconProps} from './InputTypes'
@@ -17,12 +17,18 @@ export function InputGroupIcon(props: InputGroupIconProps) {
         size,
         label,
         reuse,
-        reusableItemContainerClass,
+        reusableItemContainerClassName,
         onClick,
         iconClassName,
-        tooltip,
+        // Tooltip props:
         tooltipProps,
+        tooltipToggleTag,
+        tooltip,
+        tooltipToggleClassName,
+        tooltipDisableClickHandler,
+        tooltipTextClassName,
         tooltipMaxWidth,
+        tooltipPlacement,
         centerIconInTooltip,
         // Wrapper props:
         className,
@@ -41,7 +47,7 @@ export function InputGroupIcon(props: InputGroupIconProps) {
         className
     )
 
-    const iconProps: AppIconProps = {
+    const iconProps: IconProps = {
         path,
         color,
         rotate,
@@ -50,13 +56,19 @@ export function InputGroupIcon(props: InputGroupIconProps) {
         size,
         label,
         reuse,
-        reusableItemContainerClass,
-        tooltip,
-        tooltipProps,
-        tooltipMaxWidth,
-        centerIconInTooltip,
         className: iconClassName,
+        reusableItemContainerClassName,
         onClick,
+        // Tooltip props:
+        tooltipProps,
+        tooltipToggleTag,
+        tooltip,
+        tooltipToggleClassName,
+        tooltipDisableClickHandler,
+        tooltipTextClassName,
+        tooltipMaxWidth,
+        tooltipPlacement,
+        centerIconInTooltip,
     }
 
     return (

@@ -19,10 +19,8 @@ export function SelectInputOptions<
 >(props: SelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
-        api,
         options,
         selectedOption,
-        maxHeight,
         hideEmptyOptionInDropdown,
         search,
         keywordsRegexp,
@@ -78,7 +76,6 @@ export function SelectInputOptions<
             return (
                 <SelectInputOption
                     key={'input-' + index}
-                    api={api}
                     option={option.data}
                     index={option.index}
                     groupIndex={option.groupIndex}
@@ -92,22 +89,9 @@ export function SelectInputOptions<
         }
     }
 
-    const content = (
-        <>
+    return (
+        <div className="dropdown-menu-scrollable">
             {options.map(renderOption)}
-        </>
+        </div>
     )
-
-    if (maxHeight && maxHeight > 0) {
-        return (
-            <div
-                className="overflow-y-auto"
-                style={{maxHeight}}
-            >
-                {content}
-            </div>
-        )
-    } else {
-        return content
-    }
 }

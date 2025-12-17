@@ -198,7 +198,7 @@ export interface DropdownMenuProps<
     // Вариант стилизации меню.
     variant?: DropdownMenuVariant
     // Максимальная высота меню в пикселях.
-    maxHeight?: number | null
+    maxHeight?: number
     // Минимальная ширина меню.
     minWidth?: string | number | null
     // Меню должно заполнять контейнер, в котором находится.

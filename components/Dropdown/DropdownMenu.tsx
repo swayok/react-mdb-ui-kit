@@ -130,7 +130,9 @@ export function DropdownMenu<
                                 ...floatingStyles,
                             }}
                         >
-                            {children}
+                            <div className="dropdown-menu-scrollable">
+                                {children}
+                            </div>
                         </DropdownMenuContent>
                     </FloatingFocusManager>
                 </Portal>

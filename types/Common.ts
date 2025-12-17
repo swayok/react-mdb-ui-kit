@@ -12,6 +12,11 @@ import type {
     DropdownItemProps,
 } from '../components/Dropdown/DropdownTypes'
 
+// Выбрать только ключи, которые начинаются с 'Dropdown'
+export type PickByPrefix<T, P extends string> = {
+    [K in keyof T as K extends `${P}${string}` ? K : never]: T[K];
+}
+
 // Объект, который может содержать любые ключи.
 // Также можно указать набор ключей (Keys), которые, возможно, могут быть в объекте.
 // Это удобно для абстрактных объектов получаемых извне и для подсказок в IDE.

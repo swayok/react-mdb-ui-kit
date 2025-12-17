@@ -5,6 +5,7 @@ import {
     OpenChangeReason,
     shift,
     size,
+    useClick,
     useDismiss,
     useFloating,
     UseFloatingReturn,
@@ -28,10 +29,7 @@ import {
 import {useEventCallback} from '../../../helpers/useEventCallback'
 import {useMergedRefs} from '../../../helpers/useMergedRefs'
 import {getDropdownMenuPlacement} from '../../Dropdown/getDropdownMenuPlacement'
-import {
-    SelectInputBasicApi,
-    SelectInputBasicProps,
-} from '../SelectInput/SelectInputTypes'
+import {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
 
 interface UseComboboxDropdownHookOptions extends Pick<
     SelectInputBasicProps,
@@ -40,6 +38,7 @@ interface UseComboboxDropdownHookOptions extends Pick<
 > {
     menuRef?: Ref<HTMLDivElement>
     onSearch?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    maxHeight?: number
 }
 
 interface UseComboboxDropdownHookReturn extends UseInteractionsReturn,
@@ -53,9 +52,8 @@ interface UseComboboxDropdownHookReturn extends UseInteractionsReturn,
     inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement | null>
     setMenuRef: RefCallback<HTMLDivElement>
     menuRef: RefObject<HTMLDivElement | null>
-    listRef: RefObject<(HTMLElement | null)[]>
-    rememberListItem: SelectInputBasicApi['rememberOptionElement']
-    isActiveListItem: SelectInputBasicApi['isActiveOption']
+    listItemsRef: RefObject<(HTMLElement | null)[]>
+    isActiveListItem: (index: number) => boolean
     isDropUp: boolean
 }
 
@@ -87,6 +85,7 @@ export function useSelectInputDropdown(
         onSearch: optionsOnSearch,
         onOpenChange: optionsOnOpenChange,
         open: managedOpen,
+        maxHeight,
     } = options
 
     const [
@@ -154,26 +153,46 @@ export function useSelectInputDropdown(
             shouldShift ? shift(typeof shouldShift === 'object' ? shouldShift : undefined) : null,
             size({
                 apply({rects, availableHeight, elements}) {
-                    let width
                     switch (dropdownWidth) {
                         case 'fit-input':
-                            width = `${rects.reference.width}px`
+                            elements.floating.style.width = `${rects.reference.width}px`
                             break
                         case 'fill-container':
-                            width = '100%'
+                            elements.floating.style.width = '100%'
                             break
                     }
-                    Object.assign(elements.floating.style, {
-                        width,
-                        maxHeight: `${availableHeight}px`,
-                    })
+                    let height = availableHeight
+                    if (maxHeight) {
+                        height = Math.min(maxHeight, availableHeight)
+                    }
+                    elements.floating.style.maxHeight = `${height}px`
+                    // Ищем внутренний scrollable.
+                    const scrollable = Array.from(elements.floating.children)
+                        .find(
+                            element => element.classList.contains('dropdown-menu-scrollable')
+                        ) as HTMLElement | null
+                    if (scrollable) {
+                        // Если scrollable не первый отображаемый элемент, то нужно
+                        // уменьшить высоту на размер элементов сверху (offsetTop).
+                        // Сверху может быть поле ввода для фильтрации опций.
+                        height -= scrollable.offsetTop
+                        scrollable.style.maxHeight = `${height}px`
+                    }
                 },
                 padding: 10,
-            }, [dropdownWidth]),
+            }, [dropdownWidth, maxHeight]),
         ],
     })
 
-    const role = useRole(context, {role: 'listbox'})
+    const click = useClick(context, {
+        event: 'click',
+        toggle: false,
+        ignoreMouse: false,
+        keyboardHandlers: true,
+    })
+    const role = useRole(context, {
+        role: 'listbox',
+    })
     const dismiss = useDismiss(context, {
         ancestorScroll: closeOnScrollOutside,
     })
@@ -191,7 +210,12 @@ export function useSelectInputDropdown(
         getFloatingProps,
         getItemProps,
     } = useInteractions(
-        [role, dismiss, listNav]
+        [
+            click,
+            role,
+            dismiss,
+            listNav,
+        ]
     )
 
     const onSearch = useEventCallback((
@@ -199,12 +223,11 @@ export function useSelectInputDropdown(
     ) => {
         optionsOnSearch?.(event)
 
-        if (event.currentTarget.value) {
-            setIsOpen(true, event.nativeEvent, 'reference-press')
-            setActiveIndex(0)
-        } else {
-            setIsOpen(false, event.nativeEvent, 'escape-key')
-        }
+        // if (event.currentTarget.value) {
+        setIsOpen(true, event.nativeEvent, 'reference-press')
+        // } else {
+        //     setIsOpen(false, event.nativeEvent, 'escape-key')
+        // }
     })
 
     const setInputRef = useMergedRefs(
@@ -217,13 +240,6 @@ export function useSelectInputDropdown(
         refs.setFloating
     )
 
-    const rememberListItem = useCallback((
-        item: HTMLElement | null,
-        index: number
-    ) => {
-        listRef.current[index] = item
-    }, [])
-
     const isActiveListItem = useCallback(
         (index: number) => activeIndex === index,
         [activeIndex]
@@ -235,7 +251,7 @@ export function useSelectInputDropdown(
         setMenuRef,
         inputRef: refs.reference as UseComboboxDropdownHookReturn['inputRef'],
         menuRef: refs.floating as UseComboboxDropdownHookReturn['menuRef'],
-        listRef,
+        listItemsRef: listRef,
         getReferenceProps,
         getFloatingProps,
         getItemProps,
@@ -245,7 +261,6 @@ export function useSelectInputDropdown(
         setIsOpen,
         activeIndex,
         setActiveIndex,
-        rememberListItem,
         isActiveListItem,
         isDropUp: ['up', 'up-centered'].includes(drop),
     }

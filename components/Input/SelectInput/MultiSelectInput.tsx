@@ -20,7 +20,7 @@ import {DropdownHeader} from '../../Dropdown/DropdownHeader'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
 import {DropdownHeaderProps} from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon'
-import {IconProps} from '../../MDIIcon'
+import {MdiIconProps} from '../../MDIIcon'
 import {SelectInputBase} from './SelectInputBase'
 import {
     MultiSelectInputOptionExtras,
@@ -136,7 +136,7 @@ export class MultiSelectInput<
                 } = option
                 const selected = selectedValues.includes(value)
                 let icon: string
-                let iconColor: IconProps['color']
+                let iconColor: MdiIconProps['color']
                 if (selected) {
                     icon = radiosGroup ? mdiCheckboxMarkedCircleOutline : mdiCheckboxMarkedOutline
                     iconColor = 'blue'

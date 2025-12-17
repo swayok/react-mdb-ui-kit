@@ -56,9 +56,14 @@
         background-clip: padding-box;
         border: dropdown.$dropdown-border-width solid dropdown.$dropdown-border-color;
         box-shadow: dropdown.$dropdown-box-shadow;
-        overflow-y: auto;
+        overflow-y: hidden;
         @include border-radius.border-radius(dropdown.$dropdown-border-radius);
         @include rfs.font-size(dropdown.$dropdown-font-size);
+
+        .dropdown-menu-scrollable {
+            overflow: auto;
+            scrollbar-width: thin;
+        }
 
         &.animation {
             display: block;
@@ -131,18 +136,6 @@
         border: 0; // For `<button>`s
         cursor: pointer;
         @include transition.transition(dropdown.$dropdown-item-transition);
-
-        // Prevent dropdown overflow if there's no padding
-        // See https://github.com/twbs/bootstrap/pull/27703
-        @if dropdown.$dropdown-padding-y == 0 {
-            &:first-child {
-                @include border-radius.border-top-radius(dropdown.$dropdown-inner-border-radius);
-            }
-
-            &:last-child {
-                @include border-radius.border-bottom-radius(dropdown.$dropdown-inner-border-radius);
-            }
-        }
 
         .chevron {
             margin-right: -0.75 * dropdown.$dropdown-item-padding-x;

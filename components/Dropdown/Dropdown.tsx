@@ -1,7 +1,6 @@
 import {
     FloatingNode,
     FloatingTree,
-    OpenChangeReason,
     safePolygon,
     useClick,
     useDismiss,
@@ -101,14 +100,7 @@ function DropdownWrapper(props: DropdownProps) {
 
     const isNested = parentId != null
 
-    const setIsOpen = useEventCallback(
-        (open: boolean, event?: Event, reason?: OpenChangeReason) => {
-            onOpenChange(open, event, reason)
-            if (open && focusFirstItemOnOpen) {
-                setActiveIndex(0)
-            }
-        }
-    )
+    const setIsOpen = onOpenChange
 
     const rootContext = useFloatingRootContext({
         open,
@@ -132,6 +124,7 @@ function DropdownWrapper(props: DropdownProps) {
         event: 'mousedown',
         toggle: !isNested,
         ignoreMouse: isNested,
+        keyboardHandlers: true,
     })
     const role = useRole(rootContext, {role: 'menu'})
     // noinspection PointlessBooleanExpressionJS

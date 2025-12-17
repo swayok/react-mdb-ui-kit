@@ -5,9 +5,7 @@ import type {
     ComponentType,
     CSSProperties,
     FocusEvent,
-    FormEvent,
     KeyboardEvent,
-    MouseEvent,
     ReactNode,
     Ref,
     RefObject,
@@ -27,6 +25,7 @@ import type {
     MorphingHtmlComponentProps,
     MorphingHtmlComponentPropsWithoutRef,
     NumericKeysObject,
+    PickByPrefix,
     ReactComponentOrTagName,
 } from '../../types'
 import type {ButtonProps} from '../Button'
@@ -34,8 +33,8 @@ import type {
     DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
-import type {AppIconProps} from '../Icon'
-import type {IconProps} from '../MDIIcon'
+import type {IconProps} from '../Icon'
+import type {MdiIconProps} from '../MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
 
 export type * from './SelectInput/SelectInputTypes'
@@ -179,15 +178,6 @@ export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {
     disabled?: boolean
     // Запрет изменения значений.
     readOnly?: boolean
-}
-
-// Свойства компонента ComboboxInput.
-export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
-    options?: FormSelectOptionsList<string | number | null> | string[]
-    onChange: (
-        value: string,
-        event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
-    ) => void
 }
 
 // Свойства обертки для отображения всплывающей подсказки.
@@ -346,7 +336,7 @@ export interface FileInputAsButtonProps extends Omit<ButtonProps, 'onChange' | '
 }
 
 // Свойства компонента InputAddonIcon.
-export interface InputAddonIconProps extends IconProps {
+export interface InputAddonIconProps extends MdiIconProps {
     iconClassName?: string
 }
 
@@ -367,14 +357,15 @@ export interface InputGroupTextProps extends MorphingHtmlComponentProps {
     large?: boolean
 }
 
-// Свойства компонента InputGroupText.
+// Свойства компонента InputGroupIcon.
 export interface InputGroupIconProps extends Omit<MorphingHtmlComponentProps, 'size' | 'onClick' | 'label'>,
     Pick<
-        AppIconProps,
+        IconProps,
         'path' | 'color' | 'rotate' | 'vertical' | 'spin' | 'size' | 'label'
-        | 'reuse' | 'reusableItemContainerClass' | 'onClick'
-        | 'tooltip' | 'tooltipProps' | 'tooltipMaxWidth' | 'centerIconInTooltip'
-    >
+        | 'reuse' | 'reusableItemContainerClassName' | 'onClick'
+        | 'tooltip' | 'centerIconInTooltip'
+    >,
+    PickByPrefix<IconProps, 'tooltip'>
 {
     noBorder?: boolean
     small?: boolean

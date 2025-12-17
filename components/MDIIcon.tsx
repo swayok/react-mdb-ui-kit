@@ -6,7 +6,7 @@ import {
 import {HtmlComponentPropsWithRef} from '../types'
 import {ReusableSvg} from './ReusableSvg'
 
-export interface IconProps extends Omit<
+export interface MdiIconProps extends Omit<
     HtmlComponentPropsWithRef<SVGSVGElement>,
     'size' | 'label' | 'width' | 'height'
 > {
@@ -30,11 +30,11 @@ export interface IconProps extends Omit<
     reuse?: string
     // CSS класс контейнера, в котором будет сохранён оригинал иконки.
     // Класс нужно задавать, если стиль иконки зависит от CSS-класса родительского DOM элемента.
-    reusableItemContainerClass?: string
+    reusableItemContainerClassName?: string
 }
 
 // Иконка.
-export function MDIIcon(props: IconProps) {
+export function MDIIcon(props: MdiIconProps) {
     const {
         path,
         title,
@@ -46,7 +46,7 @@ export function MDIIcon(props: IconProps) {
         spin = false,
         style: propsStyle = {},
         reuse,
-        reusableItemContainerClass,
+        reusableItemContainerClassName,
         ...otherProps
     } = props
 
@@ -151,7 +151,7 @@ export function MDIIcon(props: IconProps) {
             <ReusableSvg
                 {...commonProps}
                 reuse={'icon-' + reuse}
-                reusableItemContainerClass={reusableItemContainerClass}
+                reusableItemContainerClass={reusableItemContainerClassName}
                 uid={index}
             >
                 {content}
