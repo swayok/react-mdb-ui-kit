@@ -30,12 +30,16 @@ import type {
 } from '../../types'
 import type {ButtonProps} from '../Button'
 import type {
+    DropdownMenuContentProps,
     DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
 import type {IconProps} from '../Icon'
 import type {MdiIconProps} from '../MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
+import type {
+    InputWithDropdownApi,
+} from './SelectInput/SelectInputTypes'
 
 export type * from './SelectInput/SelectInputTypes'
 
@@ -315,6 +319,7 @@ export type DateInputDropdownMenuProps = Pick<
 export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange' | 'value'>,
     DateInputDropdownProps,
     DateInputDropdownMenuProps {
+    apiRef?: Ref<InputWithDropdownApi>
     value: DateInputValue
     // Конвертация даты или периода для отображения в поле ввода.
     valueToString?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => string
@@ -323,7 +328,11 @@ export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange'
     allowEmptyValue?: boolean
     // Настройки выпадающего меню.
     dropdownMenuClassName?: string
-    dropdownToggleClassName?: string
+    // Тень выпадающего меню.
+    dropdownShadow?: DropdownMenuContentProps['shadow']
+    // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
+    // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
+    dropUpOffset?: number
     onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
     calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
     // Показать иконку календаря? По умолчанию: true.

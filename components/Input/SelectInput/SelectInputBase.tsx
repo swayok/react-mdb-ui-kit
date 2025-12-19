@@ -144,7 +144,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         }
     })
 
-    const onInputKeyDown = useEventCallback((
+    const onTogglerKeyDown = useEventCallback((
         event: KeyboardEvent<HTMLInputElement>
     ) => {
         onSearchInputKeyDown(event)
@@ -230,6 +230,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                             ref: setInputRef,
                             onClick: onTogglerClick,
                             onFocus: onTogglerFocus,
+                            onKeyDown: onTogglerKeyDown,
                             onBlur(e) {
                                 setIsOpen(false, e.nativeEvent, 'focus-out')
                             },
@@ -254,7 +255,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                         ...inputProps,
                         onClick: onTogglerClick,
                         onFocus: onTogglerFocus,
-                        onKeyDown: onInputKeyDown,
+                        onKeyDown: onTogglerKeyDown,
                     })}
                     inputRef={setInputRef}
                     type="text"
@@ -263,6 +264,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                     readOnly
                     active={inputProps.value !== null && inputProps.value !== ''}
                     title={title}
+                    WrapperComponent={WrapperComponent}
                 >
                     {chevron}
                 </Input>

@@ -20,6 +20,10 @@
                 cursor: not-allowed;
                 background-color: form-input-base.$input-disabled-bg;
             }
+
+            .calendar-icon {
+                pointer-events: none;
+            }
         }
 
         .dropdown-menu {
@@ -29,10 +33,6 @@
 
             &.fade-in {
                 animation-duration: 0.4s;
-            }
-
-            &.form-date-input-dropdown-menu-dropup-offset {
-                inset: auto auto 10px 0 !important;
             }
 
             .react-calendar {

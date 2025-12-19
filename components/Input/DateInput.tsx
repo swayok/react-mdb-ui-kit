@@ -5,8 +5,11 @@ import {
 import clsx from 'clsx'
 import {
     ComponentType,
+    FocusEvent,
     lazy,
+    MouseEvent,
     Suspense,
+    useImperativeHandle,
     useMemo,
     useRef,
 } from 'react'
@@ -14,24 +17,18 @@ import {CalendarProps} from 'react-calendar'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {DateTimeService} from '../../services/DateTimeService'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {Dropdown} from '../Dropdown/Dropdown'
-import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import {
-    DropdownApi,
-    DropdownDropDirection,
-    DropdownMenuProps,
-    DropdownProps,
-} from '../Dropdown/DropdownTypes'
+import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
 import {Icon} from '../Icon'
 import {IconButton} from '../IconButton'
+import {useInputDropdown} from './helpers/useInputDropdown'
 import {Input} from './Input'
 import {InputAddonText} from './InputAddonText'
 import {
     DateInputProps,
     DateInputSingleDateValue,
     DateInputValue,
+    InputWithDropdownApi,
 } from './InputTypes'
-import {InputValidationError} from './InputValidationError'
 
 const Calendar = lazy<ComponentType<CalendarProps>>(() => import('react-calendar'))
 
@@ -45,66 +42,62 @@ export function DateInput(props: DateInputProps) {
         allowEmptyValue,
         className,
         wrapperClassName = 'mb-4',
-        validationMessage,
-        validationMessageClassName,
-        withoutValidationMessage,
-        onChange,
-        onFocus,
         calendarProps = {
             selectRange: Array.isArray(value),
         },
         trackBehaviorAs,
-        wrapperProps,
         showCalendarIcon = true,
-        invalid,
+        title,
+        hidden,
+        apiRef,
+        onChange: propsOnChange,
+        onFocus,
+        onClick,
         // Dropdown
-        closeDropdownOnSelect = false,
+        closeDropdownOnSelect = true,
         closeOnScrollOutside,
         onOpenChange,
-        // DropdownToggle
-        dropdownToggleClassName,
-        // DropdownMenu
         offset,
         drop,
         align,
+        dropdownShadow = '2-strong',
         flip,
         shift,
         shadow,
         isRTL,
+        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
         dropdownMenuClassName,
+        inputRef,
         ...inputProps
     } = props
 
-    // Управление выпадающим меню.
-    const dropdownApiRef = useRef<DropdownApi | null>(null)
-
-    const dropdownProps: DropdownProps = {
-        closeOnScrollOutside,
-        autoClose: closeDropdownOnSelect ? true : 'outside',
-        onOpenChange,
-        focusFirstItemOnOpen: false,
-        disabled: inputProps.disabled,
-    }
-
-    const dropdownMenuProps: DropdownMenuProps = {
-        className: clsx(
-            'shadow-2-strong',
-            drop && ([] as DropdownDropDirection[]).includes(drop) && inputProps.label
-                ? 'form-date-input-dropdown-menu-dropup-offset'
-                : null,
-            dropdownMenuClassName
-        ),
-        offset,
-        drop,
-        align,
-        shadow,
-        isRTL,
+    const {
+        isOpen,
+        getReferenceProps,
+        setInputRef,
+        setMenuRef,
+        floatingStyles,
+        getFloatingProps,
+        setIsOpen,
+    } = useInputDropdown({
+        inputRef,
+        dropdownWidth: 'fit-items',
         flip,
+        align,
+        offset,
+        isRTL,
         shift,
-    }
+        drop,
+        closeOnScrollOutside,
+        dropUpOffset,
+    })
+
+    // Заблокировать выполнение setIsOpen(!isOpen) в onTogglerClick() один раз.
+    // Исправляет ошибку при одновременном срабатывании focus и click событий.
+    const disableOnClickOpenToggleRef = useRef<boolean>(false)
 
     // Обработка выбора новой даты или периода.
-    const handleChange = useEventCallback((
+    const onChange = useEventCallback((
         value: DateInputValue
     ): void => {
         let from: DateInputSingleDateValue
@@ -121,12 +114,23 @@ export function DateInput(props: DateInputProps) {
             || !calendarProps.allowPartialRange
             || (from && to)
         ) {
-            dropdownApiRef.current?.setIsOpen(false)
+            // Единичное значение.
+            if (closeDropdownOnSelect) {
+                setIsOpen(false)
+            }
+            if (trackBehaviorAs) {
+                UserBehaviorService.onBlur(convertDateInputValueToString(value, dateFormat, valueToString))
+            }
+        } else if (from && to) {
+            // Период дат и выбраны оба значения.
+            if (closeDropdownOnSelect) {
+                setIsOpen(false)
+            }
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur(convertDateInputValueToString(value, dateFormat, valueToString))
             }
         }
-        onChange(from, to)
+        propsOnChange(from, to)
     })
 
     // Конвертирование даты или периода в строку для отображения в поле ввода.
@@ -134,6 +138,38 @@ export function DateInput(props: DateInputProps) {
         () => convertDateInputValueToString(value, dateFormat, valueToString),
         [value, dateFormat, valueToString]
     )
+
+    const onTogglerFocus = useEventCallback((
+        event: FocusEvent<HTMLInputElement>
+    ) => {
+        if (trackBehaviorAs) {
+            UserBehaviorService.onFocus(event.currentTarget, trackBehaviorAs)
+        }
+        if (!isOpen) {
+            setIsOpen(true, event.nativeEvent, 'focus')
+            disableOnClickOpenToggleRef.current = true
+        }
+        onFocus?.(event)
+    })
+
+    const onTogglerClick = useEventCallback((
+        event: MouseEvent<HTMLInputElement>
+    ) => {
+        if (!disableOnClickOpenToggleRef.current) {
+            setIsOpen(!isOpen, event.nativeEvent, 'click')
+        }
+        disableOnClickOpenToggleRef.current = false
+        onClick?.(event)
+    })
+
+    // API.
+    useImperativeHandle(apiRef, (): InputWithDropdownApi => ({
+        setIsOpen,
+    }))
+
+    if (hidden) {
+        return null
+    }
 
     let hasValue: boolean
     if (Array.isArray(value)) {
@@ -144,78 +180,6 @@ export function DateInput(props: DateInputProps) {
 
     const showCleanValueButton = allowEmptyValue && hasValue
 
-    let dropdownToggle = (
-        <Input
-            type="text"
-            value={inputValue}
-            className={clsx(
-                dropdownToggleClassName,
-                className,
-                inputProps.disabled ? null : 'cursor'
-            )}
-            wrapperClassName="m-0"
-            wrapperProps={wrapperProps}
-            active={inputValue !== ''}
-            readOnly
-            invalid={invalid}
-            withoutValidationMessage
-            onFocus={event => {
-                if (trackBehaviorAs) {
-                    UserBehaviorService.onFocus(event.currentTarget, trackBehaviorAs)
-                }
-                onFocus?.(event)
-            }}
-            {...inputProps}
-            tabIndex={-1}
-        >
-            {(!!showCleanValueButton || showCalendarIcon) && (
-                <InputAddonText>
-                    {showCleanValueButton && (
-                        <IconButton
-                            path={mdiClose}
-                            size={24}
-                            className={clsx(
-                                'clean-value-icon',
-                                showCalendarIcon ? 'me-2' : null
-                            )}
-                            disabled={inputProps.disabled}
-                            onClick={e => {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                if (!inputProps.disabled) {
-                                    handleChange(null)
-                                }
-                            }}
-                        />
-                    )}
-                    {showCalendarIcon && (
-                        <Icon
-                            path={mdiCalendarMonthOutline}
-                            size={24}
-                            color="muted"
-                            className="calendar-icon"
-                        />
-                    )}
-                </InputAddonText>
-            )}
-        </Input>
-    )
-
-    if (
-        !withoutValidationMessage
-        && (invalid !== undefined || !!validationMessage)
-    ) {
-        dropdownToggle = (
-            <InputValidationError
-                invalid={!!invalid}
-                error={validationMessage}
-                errorClassName={validationMessageClassName}
-            >
-                {dropdownToggle}
-            </InputValidationError>
-        )
-    }
-
     return (
         <div
             className={clsx(
@@ -225,21 +189,73 @@ export function DateInput(props: DateInputProps) {
                 wrapperClassName
             )} // < form-outline here needed to apply .input-group styles
         >
-            <Dropdown {...dropdownProps}>
-                {dropdownToggle}
-                <DropdownMenu
-                    apiRef={dropdownApiRef}
-                    {...dropdownMenuProps}
-                >
-                    <Suspense>
+            <Input
+                {...getReferenceProps({
+                    ...inputProps,
+                    onClick: onTogglerClick,
+                    onFocus: onTogglerFocus,
+                })}
+                inputRef={setInputRef}
+                type="text"
+                title={title}
+                value={inputValue}
+                className={clsx(
+                    className,
+                    inputProps.disabled ? null : 'cursor'
+                )}
+                wrapperClassName="m-0 dropdown-toggle"
+                active={inputValue !== ''}
+                readOnly
+            >
+                {(!!showCleanValueButton || showCalendarIcon) && (
+                    <InputAddonText>
+                        {showCleanValueButton && (
+                            <IconButton
+                                path={mdiClose}
+                                size={24}
+                                className={clsx(
+                                    'clean-value-icon',
+                                    showCalendarIcon ? 'me-2' : null
+                                )}
+                                disabled={inputProps.disabled}
+                                onClick={e => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    if (!inputProps.disabled) {
+                                        onChange(null)
+                                    }
+                                }}
+                            />
+                        )}
+                        {showCalendarIcon && (
+                            <Icon
+                                path={mdiCalendarMonthOutline}
+                                size={24}
+                                color="muted"
+                                className="calendar-icon"
+                            />
+                        )}
+                    </InputAddonText>
+                )}
+            </Input>
+            {isOpen && (
+                <Suspense>
+                    <DropdownMenuContent
+                        ref={setMenuRef}
+                        {...getFloatingProps({
+                            className: dropdownMenuClassName,
+                        })}
+                        shadow={dropdownShadow}
+                        style={floatingStyles}
+                    >
                         <Calendar
-                            onChange={handleChange}
+                            onChange={onChange}
                             value={value}
                             {...calendarProps}
                         />
-                    </Suspense>
-                </DropdownMenu>
-            </Dropdown>
+                    </DropdownMenuContent>
+                </Suspense>
+            )}
         </div>
     )
 }

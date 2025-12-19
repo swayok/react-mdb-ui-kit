@@ -31,14 +31,18 @@ export type SelectInputDropdownMenuProps = Pick<
     'offset' | 'drop' | 'align' | 'flip' | 'shift' | 'shadow' | 'isRTL' | 'maxHeight'
 >
 
-// Api компонента SelectInputBasic.
-export interface SelectInputBasicApi {
+// API компонента, в котором используется выпадающее меню.
+export interface InputWithDropdownApi {
     // Изменение видимости выпадающего меню.
     setIsOpen: (
         open: boolean | ((prevState: boolean) => boolean),
         event?: Event,
         reason?: OpenChangeReason
     ) => void
+}
+
+// API компонента SelectInputBasic.
+export interface SelectInputBasicApi extends InputWithDropdownApi {
     // Обработчик события нажатия кнопки на клавиатуре для поля фильтрации опций.
     // При нажатии Enter или Tab на клавиатуре, вызывается SelectInputBasicProps.onOptionSelect().
     // Функция нельзя использовать вот так:
@@ -49,6 +53,9 @@ export interface SelectInputBasicApi {
         event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => void
 }
+
+// Стратегия вычисления ширины выпадающего меню для поля ввода.
+export type InputDropdownWidthCalculationStrategy = 'fit-input' | 'fill-container' | 'fit-items'
 
 // Свойства компонента SelectInputBasic.
 export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' | 'wrapperTag'>,
@@ -79,7 +86,7 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
      * - fit-items - размер меню определяется размерами элементов в нем (авто-ширина по сути).
      * По умолчанию: 'fit-input'
      */
-    dropdownWidth?: 'fit-input' | 'fill-container' | 'fit-items'
+    dropdownWidth?: InputDropdownWidthCalculationStrategy
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
     // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
     dropUpOffset?: number
