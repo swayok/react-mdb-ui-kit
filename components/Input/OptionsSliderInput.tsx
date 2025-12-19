@@ -10,7 +10,7 @@ import {OptionsSliderInputProps} from './InputTypes'
 // Слайдер по списку опций.
 export function OptionsSliderInput<
     OptionValueType = number,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: OptionsSliderInputProps<OptionValueType, OptionExtrasType>) {
 
     const defaultId: string = useId()

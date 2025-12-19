@@ -21,6 +21,7 @@ import {
 } from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {DropdownMenuContent} from './DropdownMenuContent'
+import {DropdownMenuScrollableContainer} from './DropdownMenuScrollableContainer'
 import {
     DropdownApi,
     DropdownMenuProps,
@@ -130,9 +131,9 @@ export function DropdownMenu<
                                 ...floatingStyles,
                             }}
                         >
-                            <div className="dropdown-menu-scrollable">
+                            <DropdownMenuScrollableContainer>
                                 {children}
-                            </div>
+                            </DropdownMenuScrollableContainer>
                         </DropdownMenuContent>
                     </FloatingFocusManager>
                 </Portal>

@@ -7,12 +7,13 @@ import {SelectInputOptionsGroupHeaderProps} from './SelectInputTypes'
 // Отображение заголовка группы опций в выпадающем меню.
 export function SelectInputOptionsGroupHeader<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: SelectInputOptionsGroupHeaderProps<OptionValueType, OptionExtrasType>) {
 
     const {
         group,
         index,
+        depth,
         renderOptionLabel,
         labelContainsHtml,
         visible = true,
@@ -31,7 +32,11 @@ export function SelectInputOptionsGroupHeader<
         <DropdownHeader
             key={'group-' + index}
             {...groupHeaderAttributes}
-            className={clsx('form-dropdown-select-group-header', className as string)}
+            className={clsx(
+                'form-dropdown-select-group-header',
+                'item-offset-' + depth,
+                className as string
+            )}
         >
             <SelectInputOptionLabel
                 option={group}

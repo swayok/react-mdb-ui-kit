@@ -20,6 +20,7 @@ import {Input} from '../Input'
 import {SelectInputBase} from './SelectInputBase'
 import {SelectInputOptions} from './SelectInputOptions'
 import {
+    FlattenedOption,
     FlattenedOptionOrGroup,
     SelectInputBasicApi,
     SelectInputProps,
@@ -41,7 +42,7 @@ interface KeywordsState {
  */
 export function SelectInput<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: SelectInputProps<OptionValueType, OptionExtrasType>) {
     const {
         apiRef: propsApiRef,
@@ -104,6 +105,7 @@ export function SelectInput<
                     data: withEmptyOption,
                     index: -1,
                     groupIndex: null,
+                    depth: 0,
                 })
             }
             const ret = flattenOptions<OptionValueType, OptionExtrasType>(
@@ -116,6 +118,7 @@ export function SelectInput<
                     data: withPermanentOption,
                     index: -2,
                     groupIndex: null,
+                    depth: 0,
                 })
             }
             return ret
@@ -164,6 +167,7 @@ export function SelectInput<
         }
     }, [selectedOption, valueToString, labelsContainHtml])
 
+    // Отслеживание открытия/закрытия выпадающего меню.
     const onDropdownToggle = useEventCallback<DropdownContextProps['setIsOpen']>((
         open: boolean,
         event,
@@ -176,11 +180,7 @@ export function SelectInput<
                 (value as string) || null
             )
         }
-        if (open) {
-            setTimeout(() => {
-                keywordsInputRef.current?.focus()
-            }, 100)
-        } else {
+        if (!open) {
             setKeywords({
                 value: '',
                 regexp: null,
@@ -189,6 +189,7 @@ export function SelectInput<
         propsOnOpenChange?.(open, event, reason)
     })
 
+    // Фильтрация опций по ключевым словам.
     const onSearchInputChange = useEventCallback((
         event: ChangeEvent<HTMLInputElement>
     ) => {
@@ -207,6 +208,7 @@ export function SelectInput<
         })
     })
 
+    // Выбор опции нажатием.
     const onOptionSelected = useEventCallback((
         value: OptionValueType,
         label: string,
@@ -220,17 +222,19 @@ export function SelectInput<
         }
     })
 
+    // Выбор опции с клавиатуры.
     const onOptionSelectByIndex = useEventCallback((
         index: number
     ) => {
-        // Todo: test this on groups.
         if (options[index] && !options[index].isGroup) {
+            const option: FlattenedOption<OptionValueType, OptionExtrasType>
+                = options[index]
             onOptionSelected(
-                options[index].data.value,
-                options[index].data.label,
-                options[index].index,
-                options[index].groupIndex,
-                options[index].data.extra
+                option.data.value,
+                option.data.label,
+                option.index,
+                option.groupIndex,
+                option.data.extra
             )
         }
     })
@@ -260,7 +264,7 @@ export function SelectInput<
                 )
             }
         },
-        // Только при изменении списка опций, т.к. иначе будут незапланированные вызовы onChange.
+        // Только при изменении списка опций, иначе будут незапланированные вызовы onChange.
         [options]
     )
 
@@ -270,14 +274,20 @@ export function SelectInput<
 
     return (
         <SelectInputBase
+            activeOnFocus={false}
+            {...basicSelectInputProps}
             inputRef={mergedInputRef}
             apiRef={mergedApiRef}
             className={clsx(
                 search ? 'with-search' : null,
-                value === null || value === '' ? 'empty-option-selected' : null,
+                (value === null || value === '') && selectedValueForTextInput.length > 0
+                    ? 'empty-option-selected'
+                    : null,
+                (value === null || value === '') && selectedValueForTextInput.length === 0
+                    ? 'empty-value'
+                    : null,
                 className
             )}
-            {...basicSelectInputProps}
             value={selectedValueForTextInput}
             onOpenChange={onDropdownToggle}
             maxHeight={maxHeight}
@@ -295,8 +305,10 @@ export function SelectInput<
                         label={searchPlaceholder}
                         active
                         value={keywords.value}
+                        autoFocus
                         wrapperClassName="m-0"
                         onChange={onSearchInputChange}
+                        onKeyDown={e => apiRef.current?.onSearchInputKeyDown(e)}
                     />
                 </div>
             )}

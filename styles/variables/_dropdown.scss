@@ -48,6 +48,13 @@ $dropdown-item-padding-x: 1rem !default;
 $dropdown-item-transition: background-color 0.2s linear !default;
 $dropdown-item-hover-text-decoration: if(links.$link-hover-decoration == underline, none, null) !default;
 
+// Настройки для классов .item-offset-1, .item-offset-2 и т.п.
+// Эти классы добавляют дополнительный padding-left к элементу .dropdown-item.
+// Шаг смещения слева для элементов выпадающего меню.
+$dropdown-item-offset-step: 1rem !default;
+// Лимит смещений слева для элементов выпадающего меню.
+$dropdown-item-offsets-limit: 5 !default;
+
 $dropdown-header-color: colors.$primary !default;
 $dropdown-header-font-weight: 500 !default;
 $dropdown-header-font-size: typography.$font-size-sm !default;

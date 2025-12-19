@@ -16,7 +16,7 @@ import {Radio} from './Radio'
  */
 export function RadiosGroup<
     Value = unknown,
-    Extras = AnyObject,
+    Extras extends AnyObject = AnyObject,
 >(props: RadiosGroupProps<Value, Extras>) {
 
     const defaultName = useId()

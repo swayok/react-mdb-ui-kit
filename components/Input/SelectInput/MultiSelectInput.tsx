@@ -1,324 +1,255 @@
-import {
-    mdiCheckboxBlankCircleOutline,
-    mdiCheckboxBlankOutline,
-    mdiCheckboxMarkedCircleOutline,
-    mdiCheckboxMarkedOutline,
-} from '@mdi/js'
 import clsx from 'clsx'
 import {
-    Component,
-    HTMLProps,
-    MouseEvent,
+    useEffect,
+    useMemo,
 } from 'react'
+import {useEventCallback} from '../../../helpers/useEventCallback'
 import {
     AnyObject,
     FormSelectOption,
-    FormSelectOptionGroup,
     FormSelectOptionsList,
 } from '../../../types'
-import {DropdownHeader} from '../../Dropdown/DropdownHeader'
-import {DropdownItem} from '../../Dropdown/DropdownItem'
-import {DropdownHeaderProps} from '../../Dropdown/DropdownTypes'
-import {Icon} from '../../Icon'
-import {MdiIconProps} from '../../MDIIcon'
+import {flattenOptions} from '../helpers/flattenOptions'
+import {MultiSelectInputOptions} from './MultiSelectInputOptions'
 import {SelectInputBase} from './SelectInputBase'
 import {
+    FlattenedOptionOrGroup,
     MultiSelectInputOptionExtras,
+    MultiSelectInputOptionsGroupInfo,
     MultiSelectInputProps,
 } from './SelectInputTypes'
 
 // Выбор одного или нескольких из вариантов.
 // Список опций автоматически генерируется на основе props.options.
 // Todo: добавить поиск по опциям.
-export class MultiSelectInput<
+export function MultiSelectInput<
     OptionValueType = string,
     OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras,
-> extends Component<MultiSelectInputProps<OptionValueType, OptionExtrasType>> {
+>(props: MultiSelectInputProps<OptionValueType, OptionExtrasType>) {
 
-    render() {
-        const {
-            className,
-            options,
-            disableOptions,
+    const {
+        options: propsOptions,
+        disableOptions,
+        selectedOptionsToString,
+        values,
+        className,
+        wrapperClassName = 'mb-4',
+        dropdownMenuClassName,
+        stickSelectedOptionsToTop = false,
+        onChange,
+        nothingSelectedPlaceholder,
+        renderOptionLabel,
+        labelsContainHtml,
+        search = false,
+        searchPlaceholder,
+        ...otherProps
+    } = props
+
+    // Конвертация дерева опций в плоский массив.
+    const options: FlattenedOptionOrGroup<
+        OptionValueType,
+        OptionExtrasType,
+        MultiSelectInputOptionsGroupInfo<OptionValueType>
+    >[] = useMemo(
+        () => flattenOptions<
+            OptionValueType,
+            OptionExtrasType,
+            MultiSelectInputOptionsGroupInfo<OptionValueType>
+        >(
+            propsOptions,
+            [],
+            null,
+            0,
+            group => {
+                if ((group.extra as MultiSelectInputOptionExtras | null)?.radios) {
+                    return {
+                        isRadios: true,
+                        optionValues: group.options.map(
+                            option => option.value
+                        ),
+                    }
+                }
+                return
+            }
+        ),
+        [propsOptions]
+    )
+
+    // Собираем выбранные опции в виде массива значений.
+    const selectedOptions = useMemo(
+        (): FormSelectOptionsList<OptionValueType, OptionExtrasType> => {
+            const ret = []
+            if (Array.isArray(values) && values.length > 0) {
+                // Значения заданы: ищем опции для них.
+                for (const optionOrGroup of options) {
+                    if (optionOrGroup.isGroup) {
+                        continue
+                    }
+                    if (values.includes(optionOrGroup.data.value)) {
+                        ret.push(optionOrGroup.data)
+                    }
+                }
+            }
+            return ret
+        },
+        [values, options]
+    )
+
+    // Подпись выбранной опции для отображения в поле ввода.
+    const selectedValuesForTextInput = useMemo(
+        (): string => {
+            if (selectedOptions.length === 0) {
+                return nothingSelectedPlaceholder ?? ''
+            }
+
+            if (selectedOptionsToString) {
+                return selectedOptionsToString(selectedOptions)
+            } else {
+                return selectedOptions.map(
+                    option => option.label || String(option.value)
+                )
+                    .join(', ')
+            }
+        },
+        [
+            selectedOptions,
             selectedOptionsToString,
-            values,
-            dropdownMenuClassName,
-            stickSelectedOptionsToTop = false,
-            onChange,
-            required,
             nothingSelectedPlaceholder,
-            renderOptionLabel,
-            ...attributes
-        } = this.props
+        ]
+    )
 
-        return (
-            <SelectInputBase
-                className={clsx(
-                    'with-search form-multiselect',
-                    this.getSelectedOptions().length > 0 ? null : 'empty-option-selected',
-                    this.props.className
-                )}
-                {...attributes}
-                value={this.getSelectedValuesForTextInput()}
-                dropdownMenuClassName={clsx(
-                    'form-multiselect-dropdown',
-                    dropdownMenuClassName,
-                    stickSelectedOptionsToTop ? 'stick-selected-options-to-top' : null
-                )}
-            >
-                {this.renderOptions(this.props.options)}
-            </SelectInputBase>
-        )
-    }
+    // Выбор опции нажатием на неё мышью.
+    const onSelect = useEventCallback((
+        option: FormSelectOption<OptionValueType, OptionExtrasType>,
+        _index: number,
+        _groupIndex: number | null,
+        isRadios: boolean,
+        groupValues: OptionValueType[] | null
+    ) => {
+        const newSelectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
+        const values: OptionValueType[] = []
+        let unselected: boolean = false
 
-    // Рекурсивная отрисовка опций.
-    private renderOptions(
-        options: MultiSelectInputProps<OptionValueType, OptionExtrasType>['options'],
-        radiosGroup?: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-    ) {
-        const ret = []
-        const selectedValues: OptionValueType[] = this.getSelectedValues()
-        for (let i = 0; i < options.length; i++) {
-            if ('options' in options[i]) {
-                // Группа опций.
-                const option: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                    = options[i] as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                if (!Array.isArray(option.options) || option.options.length === 0) {
-                    // Не массив или пустой массив: игнорируем.
+        if (isRadios) {
+            // Только одно значение в группе может быть выбрано.
+            const unselectedValues = (groupValues ?? [])
+                .filter(value => value !== option.value)
+            for (const selectedOption of selectedOptions) {
+                if (unselectedValues.includes(selectedOption.value)) {
+                    // Опция входит в эту группу, но не выбрана: пропускаем.
                     continue
                 }
-
-                const groupHeaderAttributes: DropdownHeaderProps = option.groupHeaderAttributes ?? {}
-                const optionsContainerAttributes: HTMLProps<HTMLDivElement> = option.optionsContainerAttributes ?? {}
-
-                ret.push(
-                    <DropdownHeader
-                        key={'group-' + i}
-                        {...groupHeaderAttributes}
-                        className={clsx(
-                            'form-dropdown-select-group-header',
-                            groupHeaderAttributes?.className
-                        )}
-                    >
-                        {
-                            this.props.renderOptionLabel
-                                ? this.props.renderOptionLabel(option, true)
-                                : option.label
-                        }
-                    </DropdownHeader>
-                )
-
-                ret.push(
-                    <div
-                        key={'option-' + i}
-                        {...optionsContainerAttributes}
-                        className={clsx(
-                            'form-dropdown-select-options-in-group ps-3',
-                            optionsContainerAttributes?.className
-                        )}
-                    >
-                        {this.renderOptions(
-                            option.options,
-                            option.extra?.radios ? option : undefined
-                        )}
-                    </div>
-                )
-            } else {
-                // Обычная опция.
-                const option: FormSelectOption<
-                    OptionValueType,
-                    OptionExtrasType
-                > = options[i] as FormSelectOption<OptionValueType, OptionExtrasType>
-                const {
-                    label,
-                    value,
-                    attributes,
-                } = option
-                const selected = selectedValues.includes(value)
-                let icon: string
-                let iconColor: MdiIconProps['color']
-                if (selected) {
-                    icon = radiosGroup ? mdiCheckboxMarkedCircleOutline : mdiCheckboxMarkedOutline
-                    iconColor = 'blue'
+                if (selectedOption.value === option.value) {
+                    // Опция уже выбрана: отменяем выбор.
+                    // Валидация через API, чтобы не усложнять.
+                    unselected = true
                 } else {
-                    icon = radiosGroup ? mdiCheckboxBlankCircleOutline : mdiCheckboxBlankOutline
-                    iconColor = 'gray'
+                    // Опция не входит в эту группу или была выбрана: добавляем.
+                    values.push(selectedOption.value)
+                    newSelectedOptions.push(selectedOption)
                 }
-                const disabled: boolean = (
-                    !!option.disabled
-                    || !!this.props.disableOptions?.includes(value)
-                )
-                if (disabled) {
-                    iconColor = 'muted'
-                }
-                ret.push(
-                    <DropdownItem
-                        key={'option-' + i}
-                        {...attributes}
-                        active={selected}
-                        onClick={(e: MouseEvent) => {
-                            e.preventDefault()
-                            if (!disabled) {
-                                if (radiosGroup) {
-                                    this.onRadioClick(option, radiosGroup)
-                                } else {
-                                    this.onCheckboxClick(option)
-                                }
-                            }
-                        }}
-                        className={clsx(
-                            'form-multiselect-dropdown-option with-icon-flex',
-                            disabled ? 'disabled' : null
-                        )}
-                    >
-                        <Icon
-                            path={icon}
-                            color={iconColor}
-                            className="me-1"
-                        />
-                        {
-                            this.props.renderOptionLabel
-                                ? this.props.renderOptionLabel(option, false)
-                                : (
-                                    <span>{label}</span>
-                                )
-                        }
-                    </DropdownItem>
-                )
             }
-        }
-        return ret
-    }
-
-    // Получить текстовое представление списка выбранных значений.
-    private getSelectedValuesForTextInput(): string {
-        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
-        if (selectedOptions.length === 0) {
-            return this.props.nothingSelectedPlaceholder ?? ''
-        }
-
-        if (this.props.selectedOptionsToString) {
-            return this.props.selectedOptionsToString(selectedOptions)
         } else {
-            return selectedOptions.map(option => option.label || String(option.value))
-                .join(', ')
-        }
-    }
-
-    // Получить список выбранных значений.
-    private getSelectedValues(): OptionValueType[] {
-        const options: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
-        const values: OptionValueType[] = []
-        for (const option of options) {
-            values.push(option.value)
-        }
-        return values
-    }
-
-    // Получить список выбранных опций.
-    private getSelectedOptions(): FormSelectOptionsList<OptionValueType, OptionExtrasType> {
-        const ret: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
-        if (Array.isArray(this.props.values) && this.props.values.length > 0) {
-            // Значения заданы: ищем опции для них.
-            for (const optionOrGroup of this.props.options) {
-                if ('options' in optionOrGroup) {
-                    // Группа опций.
-                    const group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                        = optionOrGroup as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                    // Группа опций.
-                    if (!Array.isArray(group.options) || group.options.length === 0) {
-                        // Не массив или пустой массив: игнорируем.
-                        continue
-                    }
-                    for (const option of group.options) {
-                        if (this.props.values.includes(option.value)) {
-                            ret.push(option)
-                        }
-                    }
+            // Добавить или убрать значение из списка.
+            for (const selectedOption of selectedOptions) {
+                if (selectedOption.value === option.value) {
+                    unselected = true
                 } else {
-                    if (this.props.values.includes(optionOrGroup.value)) {
-                        ret.push(optionOrGroup)
-                    }
+                    values.push(selectedOption.value)
+                    newSelectedOptions.push(selectedOption)
                 }
             }
         }
-        if (ret.length > 0) {
-            return ret
-        }
-        // Значения не заданы или не найдены.
-        if (this.props.required) {
-            // Требуется выбрать хотя бы одно значение: используем первую опцию в списке.
-            for (const optionOrGroup of this.props.options) {
-                if ('options' in optionOrGroup) {
-                    const group: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                        = optionOrGroup as FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-                    // Группа опций.
-                    if (!Array.isArray(group.options) || group.options.length === 0) {
-                        // Не массив или пустой массив: игнорируем.
-                        continue
-                    }
-                    if (group.options[0].value && group.options[0].value) {
-                        return [group.options[0]]
-                    }
-                } else {
-                    return [optionOrGroup]
-                }
-            }
-        }
-        return []
-    }
 
-    // Добавление/удаление опции из списка выбранных.
-    private onCheckboxClick(option: FormSelectOption<OptionValueType, OptionExtrasType>): void {
-        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
-        const values: OptionValueType[] = []
-        const newSelectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
-        let unselected: boolean = false
-        for (const selectedOption of selectedOptions) {
-            if (selectedOption.value === option.value) {
-                unselected = true
-            } else {
-                values.push(selectedOption.value)
-                newSelectedOptions.push(selectedOption)
-            }
-        }
         if (!unselected) {
+            // Выбрано новое значение: добавляем в список.
             values.push(option.value)
             newSelectedOptions.push(option)
         }
-        this.props.onChange(values, newSelectedOptions)
-    }
+        onChange(values, newSelectedOptions)
+    })
 
-    // Добавление/удаление опции из списка выбранных (режим: разрешена только одна опция из группы).
-    private onRadioClick(
-        option: FormSelectOption<OptionValueType, OptionExtrasType>,
-        radiosGroup?: FormSelectOptionGroup<OptionValueType, OptionExtrasType>
-    ): void {
-        const selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = this.getSelectedOptions()
-        const unselectedValues = (radiosGroup?.options ?? [])
-            .filter(groupOption => option.value !== groupOption.value)
-            .map(groupOption => groupOption.value)
-        const newSelectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType> = []
-        const values: OptionValueType[] = []
-        let unselected: boolean = false
-        for (const selectedOption of selectedOptions) {
-            if (unselectedValues.includes(selectedOption.value)) {
-                // Опция из группы, которую не выбрана.
-                continue
-            }
-            if (selectedOption.value === option.value) {
-                unselected = true
-                continue
-            }
-            values.push(selectedOption.value)
+    // Выбор опции с клавиатуры.
+    const onSelectFromKeyboard = useEventCallback((
+        optionIndex: number
+    ) => {
+        const option = options[optionIndex]
+        if (option.isGroup) {
+            return
         }
+        onSelect(
+            option.data,
+            option.index,
+            option.groupIndex,
+            !!option.groupInfo?.isRadios,
+            option.groupInfo?.optionValues ?? []
+        )
+    })
 
-        if (!unselected) {
-            values.push(option.value)
-            selectedOptions.push(option)
-        }
-        this.props.onChange(values, newSelectedOptions)
-    }
+    // Обработка ситуации, когда значение из props.values отсутствует в списке options.
+    useEffect(
+        () => {
+            if (
+                !otherProps.disabled
+                && !otherProps.readOnly
+                // Разная длина списка опций.
+                && selectedOptions.length !== (values?.length ?? 0)
+            ) {
+                // Ситуация, когда selectedOptions отличаются от props.values.
+                // Это может произойти, если опция, соответствующая значению
+                // props.values, была удалена из списка опций.
+                // В этих случаях нужно вызвать onChange со значением selectedOptions.
+                onChange(
+                    selectedOptions.map(option => option.value),
+                    selectedOptions
+                )
+            }
+        },
+        // Только при изменении списка опций, иначе будут незапланированные вызовы onChange.
+        [options]
+    )
+
+    return (
+        <SelectInputBase
+            activeOnFocus={false}
+            {...otherProps}
+            value={selectedValuesForTextInput}
+            selectOptionOnSpaceKey={true}
+            wrapperClassName={clsx(
+                'form-dropdown-multiselect',
+                wrapperClassName
+            )}
+            className={clsx(
+                'form-multiselect',
+                search ? 'with-search' : null,
+                selectedOptions.length === 0 && selectedValuesForTextInput.length > 0
+                    ? 'empty-option-selected'
+                    : null,
+                selectedOptions.length === 0 && selectedValuesForTextInput.length === 0
+                    ? 'empty-value'
+                    : null,
+                className
+            )}
+            dropdownMenuClassName={clsx(
+                'form-multiselect-dropdown',
+                dropdownMenuClassName,
+                stickSelectedOptionsToTop ? 'stick-selected-options-to-top' : null
+            )}
+            onOptionSelect={onSelectFromKeyboard}
+        >
+            <MultiSelectInputOptions<OptionValueType, OptionExtrasType>
+                options={options}
+                selectedValues={values ?? []}
+                search={search}
+                keywordsRegexp={null}
+                renderOptionLabel={renderOptionLabel}
+                labelsContainHtml={labelsContainHtml}
+                disableOptions={disableOptions}
+                trackBehaviorAs={otherProps.trackBehaviorAs}
+                onSelect={onSelect}
+            />
+        </SelectInputBase>
+    )
 }
 
 /** @deprecated */

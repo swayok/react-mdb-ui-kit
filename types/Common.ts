@@ -128,7 +128,10 @@ export interface ApiResponseData extends AnyObject {
 }
 
 // Опция для SelectInput.
-export interface FormSelectOption<Value = string, Extras = AnyObject> extends AnyObject {
+export interface FormSelectOption<
+    Value = string,
+    Extras extends AnyObject = AnyObject,
+> extends AnyObject {
     label: string
     value: Value
     attributes?: DropdownItemProps & HtmlComponentProps<HTMLElement>
@@ -137,7 +140,10 @@ export interface FormSelectOption<Value = string, Extras = AnyObject> extends An
 }
 
 // Группа опций для SelectInput.
-export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> extends AnyObject {
+export interface FormSelectOptionGroup<
+    Value = string,
+    Extras extends AnyObject = AnyObject,
+> extends AnyObject {
     label: string
     options: FormSelectOption<Value, Extras>[]
     groupHeaderAttributes?: DropdownHeaderProps
@@ -146,17 +152,24 @@ export interface FormSelectOptionGroup<Value = string, Extras = AnyObject> exten
 }
 
 // Список, содержащий только опции для SelectInput.
-export type FormSelectOptionsList<Value = string, Extras = AnyObject> = FormSelectOption<Value, Extras>[]
+export type FormSelectOptionsList<
+    Value = string,
+    Extras extends AnyObject = AnyObject,
+> = FormSelectOption<Value, Extras>[]
 
 // Опция или группа опция для SelectInput.
-export type FormSelectOptionOrGroup<Value = string, Extras = AnyObject>
-    = FormSelectOption<Value, Extras>
-        | FormSelectOptionGroup<Value, Extras>
+export type FormSelectOptionOrGroup<
+    Value = string,
+    Extras extends AnyObject = AnyObject,
+> = FormSelectOption<Value, Extras>
+    | FormSelectOptionGroup<Value, Extras>
 
 // Список содержащий и опции и группы опций для SelectInput.
-export type FormSelectOptionsAndGroupsList<Value = string, Extras = AnyObject>
-    = FormSelectOptionOrGroup<Value, Extras>[]
-        | FormSelectOptionGroup<Value, Extras>[]
+export type FormSelectOptionsAndGroupsList<
+    Value = string,
+    Extras extends AnyObject = AnyObject,
+> = FormSelectOptionOrGroup<Value, Extras>[]
+    | FormSelectOptionGroup<Value, Extras>[]
 
 // Свойство этого типа может быть React компонентом или реальным HTML тегом (строкой).
 export type ReactComponentOrTagName = ComponentProps<any>

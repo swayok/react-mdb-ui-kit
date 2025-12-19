@@ -121,7 +121,7 @@ function DropdownWrapper(props: DropdownProps) {
     })
     const click = useClick(rootContext, {
         enabled: !disabled,
-        event: 'mousedown',
+        event: 'click',
         toggle: !isNested,
         ignoreMouse: isNested,
         keyboardHandlers: true,

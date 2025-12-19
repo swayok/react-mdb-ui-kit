@@ -143,6 +143,13 @@
     }
 
     .dropdown-item {
+
+        @for $i from 1 through dropdown.$dropdown-item-offsets-limit {
+            &.item-offset-#{$i} {
+                padding-left: dropdown.$dropdown-item-padding-x + dropdown.$dropdown-item-offset-step * $i;
+            }
+        }
+
         &:hover,
         &.hover,
         &:focus,

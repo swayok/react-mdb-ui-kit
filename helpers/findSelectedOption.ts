@@ -8,7 +8,7 @@ import {isSameOptionValue} from './isSameOptionValue'
 
 export interface SelectedOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > {
     expectedValue?: OptionValueType | null
     option: FormSelectOption<OptionValueType, OptionExtrasType>
@@ -27,7 +27,7 @@ export interface SelectedOption<
  */
 export function findSelectedOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>,
     value?: OptionValueType | null,

@@ -16,6 +16,7 @@ import {
 } from '../../types'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
+import {DropdownMenuScrollableContainer} from '../Dropdown/DropdownMenuScrollableContainer'
 import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 import {Input} from './Input'
 import {ComboboxInputProps} from './InputTypes'
@@ -35,6 +36,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onChange,
         onKeyDown,
         maxHeight = 500,
+        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
         ...inputProps
     } = props
 
@@ -71,6 +73,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                 event as FormEvent<HTMLInputElement>
             )
         }),
+        dropUpOffset,
     })
 
     // Обновление списка опций.
@@ -133,9 +136,6 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onClick?.(event)
     })
 
-    if (inputProps.label === 'Combobox') {
-        console.log(inputProps.label, {filteredOptions, isOpen})
-    }
     const hasOptions: boolean = filteredOptions.length > 0
 
     return (
@@ -161,7 +161,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                         style={floatingStyles}
                         maxHeight={maxHeight}
                     >
-                        <div className="dropdown-menu-scrollable">
+                        <DropdownMenuScrollableContainer>
                             {filteredOptions.map((option, index) => (
                                 <DropdownItem
                                     key={typeof option === 'string' ? option : option.value}
@@ -175,7 +175,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                                     {typeof option === 'string' ? option : option.label}
                                 </DropdownItem>
                             ))}
-                        </div>
+                        </DropdownMenuScrollableContainer>
                     </DropdownMenuContent>
                 )}
             </FloatingList>

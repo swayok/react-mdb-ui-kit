@@ -5,7 +5,7 @@ import {SelectInputOptionLabelProps} from './SelectInputTypes'
 // Подпись для опции или группы опций в выпадающем меню.
 export function SelectInputOptionLabel<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: SelectInputOptionLabelProps<OptionValueType, OptionExtrasType>) {
 
     const {

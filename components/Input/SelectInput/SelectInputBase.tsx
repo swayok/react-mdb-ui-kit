@@ -41,6 +41,8 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         mode = 'input',
         hidden,
         title,
+        selectOptionOnTabKey = true,
+        selectOptionOnSpaceKey = false,
         onOptionSelect,
         apiRef,
         onClick,
@@ -56,6 +58,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         dropdownShadow = '2-strong',
         offset,
         drop,
+        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
         align,
         shadow,
         isRTL,
@@ -93,24 +96,58 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         focusFirstItemOnOpen,
         closeOnScrollOutside,
         maxHeight,
+        dropUpOffset,
     })
 
     // Заблокировать выполнение setIsOpen(!isOpen) в onTogglerClick() один раз.
     // Исправляет ошибку при одновременном срабатывании focus и click событий.
     const disableOnClickOpenToggleRef = useRef<boolean>(false)
 
-    const onInputKeyDown = useEventCallback((
-        event: KeyboardEvent<HTMLInputElement>
+    const onSearchInputKeyDown = useEventCallback((
+        event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         if (
             isOpen
             && activeIndex !== null
-            && event.key === 'Enter'
+            && !event.shiftKey
+            && !event.ctrlKey
+            && !event.altKey
+            && (
+                event.key === 'Enter'
+                || (selectOptionOnTabKey && event.key === 'Tab')
+                || (selectOptionOnSpaceKey && event.key === ' ')
+            )
             && onOptionSelect
         ) {
-            onOptionSelect(activeIndex, event)
-            event.preventDefault()
+            let optionIndex: number = activeIndex
+            const item = listItemsRef.current[activeIndex] ?? null
+            if (item) {
+                // Получаем индекс опции из атрибута data-flat-index в item.
+                // Проблема в том, что activeIndex не может не соответствовать
+                // реальному индексу опции, когда среди опций есть группы.
+                // Поэтому в SelectInputOption задается атрибут data-flat-index,
+                // который и должен отражать реальный индекс опции.
+                const flatIndex = item.getAttribute('data-flat-index')
+                if (flatIndex !== null && parseInt(flatIndex) >= 0) {
+                    optionIndex = parseInt(flatIndex)
+                }
+            }
+            onOptionSelect(optionIndex, item, event)
+            if (event.key !== 'Tab') {
+                event.preventDefault()
+            }
+            return
         }
+        // Закрываем меню при нажатии на клавишу Tab.
+        if (isOpen && event.key === 'Tab') {
+            setIsOpen(false, event.nativeEvent, 'focus-out')
+        }
+    })
+
+    const onInputKeyDown = useEventCallback((
+        event: KeyboardEvent<HTMLInputElement>
+    ) => {
+        onSearchInputKeyDown(event)
         onKeyDown?.(event)
     })
 
@@ -120,8 +157,8 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         if (mode === 'input') {
             event.currentTarget?.setSelectionRange(0, 0)
         }
-        if (!isOpen && event.relatedTarget !== null) {
-            setIsOpen(true)
+        if (!isOpen) {
+            setIsOpen(true, event.nativeEvent, 'focus')
             disableOnClickOpenToggleRef.current = true
         }
         onFocus?.(event)
@@ -131,7 +168,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         event: MouseEvent<HTMLInputElement>
     ) => {
         if (!disableOnClickOpenToggleRef.current) {
-            setIsOpen(!isOpen)
+            setIsOpen(!isOpen, event.nativeEvent, 'click')
         }
         disableOnClickOpenToggleRef.current = false
         onClick?.(event)
@@ -140,6 +177,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
     // API.
     useImperativeHandle(apiRef, (): SelectInputBasicApi => ({
         setIsOpen,
+        onSearchInputKeyDown,
     }))
 
     if (hidden) {
@@ -192,6 +230,9 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                             ref: setInputRef,
                             onClick: onTogglerClick,
                             onFocus: onTogglerFocus,
+                            onBlur(e) {
+                                setIsOpen(false, e.nativeEvent, 'focus-out')
+                            },
                         })}
                         color="link"
                         hasIcon="after"
@@ -273,12 +314,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                         <DropdownMenuContent
                             ref={setMenuRef}
                             {...getFloatingProps({
-                                className: clsx(
-                                    isDropUp && inputProps.label
-                                        ? 'form-dropdown-select-menu-dropup-offset'
-                                        : null,
-                                    dropdownMenuClassName
-                                ),
+                                className: dropdownMenuClassName,
                             })}
                             shadow={dropdownShadow}
                             style={floatingStyles}

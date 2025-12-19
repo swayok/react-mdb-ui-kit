@@ -37,6 +37,7 @@ export function DropdownsDemo() {
         selectAutoDropdown1: string
         multiSelect1: string[]
         multiSelect2: string[]
+        multiSelect3: string[]
         combobox1: string
         combobox2: string
         date1: Date | null
@@ -52,6 +53,7 @@ export function DropdownsDemo() {
         selectAutoDropdown1: 'option1',
         multiSelect1: [],
         multiSelect2: [],
+        multiSelect3: [],
         combobox1: '',
         combobox2: '',
         date1: null,
@@ -99,7 +101,7 @@ export function DropdownsDemo() {
         },
         {
             label: 'Option outside group 2',
-            value: 'outside1',
+            value: 'outside2',
         },
         {
             label: 'Group 2',
@@ -108,10 +110,13 @@ export function DropdownsDemo() {
                 {label: 'Option 5', value: 'option5'},
                 {label: 'Option 6', value: 'option6'},
             ],
+            extra: {
+                radios: true,
+            },
         },
         {
             label: 'Option outside group 3',
-            value: 'outside1',
+            value: 'outside3',
         },
     ]
 
@@ -354,6 +359,16 @@ export function DropdownsDemo() {
                     options={optionsMany}
                     onChange={values => {
                         setFormValue('multiSelect2', values)
+                    }}
+                />
+            </div>
+            <div className="flex-1 d-flex flex-row align-items-center gap-4">
+                <MultiSelectInput
+                    label="Multiselect grouped"
+                    values={formValues.multiSelect3}
+                    options={optionsGrouped}
+                    onChange={values => {
+                        setFormValue('multiSelect3', values)
                     }}
                 />
             </div>

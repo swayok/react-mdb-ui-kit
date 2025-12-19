@@ -16,7 +16,7 @@ import {
 // Отрисовка списка опций для SelectInput с виртуализацией.
 export function VirtualizedSelectInputOptions<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: VirtualizedSelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -79,6 +79,7 @@ export function VirtualizedSelectInputOptions<
                     key={'group-' + index}
                     group={option.data}
                     index={index}
+                    depth={option.depth}
                     renderOptionLabel={renderOptionLabel}
                     labelContainsHtml={labelsContainHtml}
                 />
@@ -95,8 +96,10 @@ export function VirtualizedSelectInputOptions<
                 <SelectInputOption<OptionValueType, OptionExtrasType>
                     key={'option-' + index}
                     option={option.data}
-                    index={index}
+                    flatIndex={index}
+                    index={option.index}
                     groupIndex={option.groupIndex}
+                    depth={option.depth}
                     isActive={selectedValue === option.data.value}
                     renderOptionLabel={renderOptionLabel}
                     labelContainsHtml={labelsContainHtml}
@@ -120,9 +123,7 @@ export function VirtualizedSelectInputOptions<
             context={selectedOption?.value ?? null}
             itemContent={itemContent}
             className="dropdown-menu-scrollable"
+            tabIndex={-1}
         />
     )
 }
-
-/** @deprecated */
-export default VirtualizedSelectInputOptions

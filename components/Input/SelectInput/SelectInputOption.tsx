@@ -9,7 +9,7 @@ import {SelectInputOptionProps} from './SelectInputTypes'
 // Отображение одной опции в выпадающем меню.
 export function SelectInputOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: SelectInputOptionProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -17,16 +17,21 @@ export function SelectInputOption<
         isActive = true,
         index,
         groupIndex = null,
+        flatIndex,
+        depth,
         renderOptionLabel,
         labelContainsHtml,
         visible = true,
         disabled = false,
+        className,
         onSelect,
+        beforeLabel,
+        afterLabel,
     } = props
 
     const {
         value,
-        attributes,
+        attributes: optionProps,
     } = option
 
     if (!visible) {
@@ -37,29 +42,36 @@ export function SelectInputOption<
 
     const onClick = useEventCallback((e: MouseEvent) => {
         e.preventDefault()
-        onSelect(option, index, groupIndex)
+        if (!disabled) {
+            onSelect(option, index, groupIndex)
+        }
     })
 
     return (
         <DropdownItem
-            {...attributes}
+            {...optionProps}
             onClick={onClick}
             href={undefined}
             active={isActive}
             disabled={disabled}
             data-value={String(value)}
+            data-flat-index={flatIndex}
             tag="div"
             className={clsx(
                 'cursor',
+                'item-offset-' + depth,
                 isEmptyOption ? 'empty-option' : null,
-                attributes?.className as string
+                className,
+                optionProps?.className as string
             )}
         >
+            {beforeLabel}
             <SelectInputOptionLabel
                 option={option}
                 labelContainsHtml={labelContainsHtml}
                 renderOptionLabel={renderOptionLabel}
             />
+            {afterLabel}
         </DropdownItem>
     )
 }

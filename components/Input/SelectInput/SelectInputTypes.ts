@@ -1,3 +1,4 @@
+import type {OpenChangeReason} from '@floating-ui/react'
 import type {
     FormEvent,
     KeyboardEvent,
@@ -32,7 +33,21 @@ export type SelectInputDropdownMenuProps = Pick<
 
 // Api компонента SelectInputBasic.
 export interface SelectInputBasicApi {
-    setIsOpen: (value: boolean) => void
+    // Изменение видимости выпадающего меню.
+    setIsOpen: (
+        open: boolean | ((prevState: boolean) => boolean),
+        event?: Event,
+        reason?: OpenChangeReason
+    ) => void
+    // Обработчик события нажатия кнопки на клавиатуре для поля фильтрации опций.
+    // При нажатии Enter или Tab на клавиатуре, вызывается SelectInputBasicProps.onOptionSelect().
+    // Функция нельзя использовать вот так:
+    // onKeyDown={apiRef.current?.onSearchInputKeyDown}.
+    // Правильно:
+    // onKeyDown={e => apiRef.current?.onSearchInputKeyDown(e)}.
+    onSearchInputKeyDown: (
+        event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => void
 }
 
 // Свойства компонента SelectInputBasic.
@@ -65,14 +80,27 @@ export interface SelectInputBasicProps extends Omit<InputProps, 'wrapperProps' |
      * По умолчанию: 'fit-input'
      */
     dropdownWidth?: 'fit-input' | 'fill-container' | 'fit-items'
-    // Выбор опции по нажатию Enter на клавиатуре.
-    onOptionSelect?: (activeIndex: number, e: KeyboardEvent<HTMLInputElement>) => void
+    // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
+    // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
+    dropUpOffset?: number
+    // Вызвать onOptionSelect при нажатии Tab на клавиатуре?
+    // По умолчанию: true.
+    selectOptionOnTabKey?: boolean
+    // Вызвать onOptionSelect при нажатии Space на клавиатуре?
+    // По умолчанию: false.
+    selectOptionOnSpaceKey?: boolean
+    // Выбор опции по нажатию Enter, Tab или Space на клавиатуре.
+    onOptionSelect?: (
+        optionIndex: number,
+        optionElement: HTMLElement | null,
+        event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => void
 }
 
 // Свойства компонента SelectInput.
 export interface SelectInputProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
     // Набор опций.
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
@@ -129,6 +157,9 @@ export interface SelectInputProps<
 export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
     options?: FormSelectOptionsList<string | number | null> | string[]
     maxHeight?: SelectInputBasicProps['maxHeight']
+    // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
+    // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
+    dropUpOffset?: number
     onChange: (
         value: string,
         event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
@@ -143,8 +174,6 @@ export interface MultiSelectInputProps<
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
     onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
     values?: OptionValueType[]
-    // Требуется ли выбрать хотя бы одно значение?
-    required?: boolean
     // Конвертация выбранных опций для отображения в поле ввода.
     // По умолчанию отображается список из FormSelectOption['label'].
     selectedOptionsToString?: (selectedOptions: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => string
@@ -156,9 +185,11 @@ export interface MultiSelectInputProps<
     stickSelectedOptionsToTop?: boolean
     // Отрисовка подписи для опции или группы опций в выпадающем меню.
     renderOptionLabel?: (
-        option: FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>,
+        option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>,
         isGroup: boolean
     ) => string | ReactNode
+    // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
+    labelsContainHtml?: boolean
     // Todo: Вкл/Выкл поиска по опциям.
     search?: boolean
     // Пояснение для поля ввода ключевых слов поиска по опциям.
@@ -179,16 +210,25 @@ export interface MultiSelectInputOptionExtras extends AnyObject {
 // Свойства компонента SelectInputOption.
 export interface SelectInputOptionProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > {
     visible?: boolean
     option: FormSelectOption<OptionValueType, OptionExtrasType>
+    // Индекс в одномерном списке опций из flattenOptions().
+    flatIndex: number
+    // Индекс в группе опций.
     index: number
+    // Индекс группы опций.
     groupIndex?: number | null
+    // Глубина вложенности опции.
+    depth: number
     isActive?: boolean
     disabled?: boolean
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
     labelContainsHtml?: boolean
+    className?: string
+    beforeLabel?: ReactNode
+    afterLabel?: ReactNode
     onSelect: (
         option: FormSelectOption<OptionValueType, OptionExtrasType>,
         index: number,
@@ -199,7 +239,7 @@ export interface SelectInputOptionProps<
 // Свойства компонента SelectInputOptionLabel.
 export interface SelectInputOptionLabelProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > {
     option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
@@ -209,7 +249,7 @@ export interface SelectInputOptionLabelProps<
 // Свойства компонента SelectInputOptions.
 export interface SelectInputOptionsProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
         'hideEmptyOptionInDropdown'
@@ -221,14 +261,40 @@ export interface SelectInputOptionsProps<
     keywordsRegexp: RegExp | null
 }
 
+// Свойства компонента SelectInputOptions.
+export interface MultiSelectInputOptionsProps<
+    OptionValueType = string,
+    OptionExtrasType extends AnyObject = MultiSelectInputOptionExtras,
+    GroupInfoType extends MultiSelectInputOptionsGroupInfo<
+        OptionValueType
+    > = MultiSelectInputOptionsGroupInfo<OptionValueType>,
+> extends Pick<
+        MultiSelectInputProps<OptionValueType, OptionExtrasType>,
+        | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
+        | 'disableOptions' | 'trackBehaviorAs'
+    > {
+    options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType, GroupInfoType>[]
+    selectedValues: OptionValueType[]
+    keywordsRegexp: RegExp | null
+    onSelect: (
+        option: FormSelectOption<OptionValueType, OptionExtrasType>,
+        index: number,
+        groupIndex: number | null,
+        isRadios: boolean,
+        groupValues: OptionValueType[] | null
+    ) => void
+}
+
 // Свойства компонента SelectInputOptionsGroupHeader.
 export interface SelectInputOptionsGroupHeaderProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > {
     visible?: boolean
     group: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
     index: number
+    // Глубина вложенности опции.
+    depth: number
     isActive?: boolean
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
     labelContainsHtml?: boolean
@@ -237,7 +303,7 @@ export interface SelectInputOptionsGroupHeaderProps<
 // Свойства компонента VirtualizedSelectInputOptions.
 export interface VirtualizedSelectInputOptionsProps<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
         'hideEmptyOptionInDropdown' | 'search'
@@ -253,27 +319,40 @@ export interface VirtualizedSelectInputOptionsProps<
 // Результат преобразования дерева опций в одномерный список.
 export interface FlattenedOption<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
+    GroupInfoType extends AnyObject = AnyObject,
 > {
     isGroup: false
     data: FormSelectOption<OptionValueType, OptionExtrasType>
     index: number
+    depth: number
     groupIndex: number | null
+    groupInfo?: GroupInfoType | null
 }
 
 // Результат преобразования дерева опций в одномерный список.
 export interface FlattenedOptionsGroup<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > {
     isGroup: true
     data: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
     index: number
+    depth: number
 }
 
 // Результат преобразования дерева опций в одномерный список.
 export type FlattenedOptionOrGroup<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
-> = FlattenedOption<OptionValueType, OptionExtrasType>
+    OptionExtrasType extends AnyObject = AnyObject,
+    GroupInfoType extends AnyObject = AnyObject,
+> = FlattenedOption<OptionValueType, OptionExtrasType, GroupInfoType>
     | FlattenedOptionsGroup<OptionValueType, OptionExtrasType>
+
+// Информация о группе опций для компонента MultiSelectInputOptions.
+export interface MultiSelectInputOptionsGroupInfo<
+    OptionValueType = string,
+> {
+    isRadios: boolean
+    optionValues: OptionValueType[]
+}

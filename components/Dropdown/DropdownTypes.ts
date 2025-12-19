@@ -41,7 +41,11 @@ export interface DropdownContextProps<
     hasFocusInside: boolean
     setHasFocusInside: Dispatch<SetStateAction<boolean>>
     isOpen: boolean
-    setIsOpen: (open: boolean, event?: Event, reason?: OpenChangeReason) => void
+    setIsOpen: (
+        open: boolean,
+        event?: Event,
+        reason?: OpenChangeReason
+    ) => void
     parentContext: DropdownContextProps | null
     toggleElement: ToggleRefType | null
     setToggleElement: Dispatch<SetStateAction<ToggleRefType | null>>
@@ -218,6 +222,9 @@ export type DefaultDropdownMenuProps = MergedComponentProps<
     Omit<DropdownMenuProps, 'tag' | 'ref'>,
     HtmlComponentPropsWithRef<HTMLDivElement>
 >
+
+// Свойства компонента DropdownMenuScrollableContainerProps
+export type DropdownMenuScrollableContainerProps = HtmlComponentPropsWithRef<HTMLDivElement>
 
 // Свойства компонента DropdownMenuContent.
 export type DropdownMenuContentProps = Pick<

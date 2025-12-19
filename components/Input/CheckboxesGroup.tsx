@@ -16,7 +16,7 @@ import {InputValidationError} from './InputValidationError'
  */
 export function CheckboxesGroup<
     Value = unknown,
-    OptionExtras = AnyObject,
+    OptionExtras extends AnyObject = AnyObject,
 >(props: CheckboxesGroupProps<Value, OptionExtras>) {
 
     const {

@@ -1,6 +1,7 @@
 import {
     autoUpdate,
     flip,
+    FlipOptions,
     offset,
     OpenChangeReason,
     shift,
@@ -31,21 +32,26 @@ import {useMergedRefs} from '../../../helpers/useMergedRefs'
 import {getDropdownMenuPlacement} from '../../Dropdown/getDropdownMenuPlacement'
 import {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
 
-interface UseComboboxDropdownHookOptions extends Pick<
+interface UseSelectInputDropdownHookOptions extends Pick<
     SelectInputBasicProps,
     'inputRef' | 'dropdownWidth' | 'flip' | 'align' | 'offset' | 'isRTL' | 'shift' | 'drop'
     | 'closeOnScrollOutside' | 'focusFirstItemOnOpen' | 'onOpenChange' | 'open'
 > {
+    dropUpOffset?: number
     menuRef?: Ref<HTMLDivElement>
     onSearch?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     maxHeight?: number
 }
 
-interface UseComboboxDropdownHookReturn extends UseInteractionsReturn,
+interface UseSelectInputDropdownHookReturn extends UseInteractionsReturn,
     Pick<UseFloatingReturn<HTMLInputElement | HTMLTextAreaElement>, 'floatingStyles' | 'context'> {
     onSearch: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     isOpen: boolean
-    setIsOpen: Dispatch<SetStateAction<boolean>>
+    setIsOpen: (
+        nextIsOpen: boolean | ((prevState: boolean) => boolean),
+        event?: Event,
+        reason?: OpenChangeReason
+    ) => void
     activeIndex: number | null
     setActiveIndex: Dispatch<SetStateAction<number | null>>
     setInputRef: RefCallback<HTMLInputElement | HTMLTextAreaElement>
@@ -60,16 +66,17 @@ interface UseComboboxDropdownHookReturn extends UseInteractionsReturn,
 // Настройка floating-ui для выпадающих меню в полях выбора значения:
 // Select, MultiSelect, Combobox.
 export function useSelectInputDropdown(
-    options: UseComboboxDropdownHookOptions
-): UseComboboxDropdownHookReturn {
+    options: UseSelectInputDropdownHookOptions
+): UseSelectInputDropdownHookReturn {
 
     const {
         inputRef,
         menuRef,
         align,
         drop = 'down',
+        dropUpOffset,
         isRTL,
-        flip: shouldFlip = {padding: 10},
+        flip: shouldFlip = {padding: 10} as FlipOptions,
         offset: optionsOffset = 2,
         shift: shouldShift = false,
         /**
@@ -120,7 +127,7 @@ export function useSelectInputDropdown(
 
     // Вычисление расположения выпадающего меню относительно DropdownToggle.
     // Не работает, если нет компонента DropdownToggle внутри Dropdown.
-    const placement = useMemo(
+    const defaultPlacement = useMemo(
         () => getDropdownMenuPlacement(
             align === 'end',
             drop,
@@ -128,6 +135,47 @@ export function useSelectInputDropdown(
         ),
         [align, drop, isRTL]
     )
+
+    const sizeMiddleware = size({
+        apply(info) {
+            const {
+                rects,
+                availableHeight,
+                elements,
+                placement,
+            } = info
+            switch (dropdownWidth) {
+                case 'fit-input':
+                    elements.floating.style.width = `${rects.reference.width}px`
+                    break
+                case 'fill-container':
+                    elements.floating.style.width = '100%'
+                    break
+            }
+            let height: number = availableHeight
+            if (dropUpOffset && placement.startsWith('top')) {
+                height -= dropUpOffset
+                elements.floating.style.top = `${-1 * dropUpOffset}px`
+            }
+            if (maxHeight) {
+                height = Math.min(maxHeight, height)
+            }
+            elements.floating.style.maxHeight = `${height}px`
+            // Ищем внутренний scrollable.
+            const scrollable = Array.from(elements.floating.children)
+                .find(
+                    element => element.classList.contains('dropdown-menu-scrollable')
+                ) as HTMLElement | null
+            if (scrollable) {
+                // Если scrollable не первый отображаемый элемент, то нужно
+                // уменьшить высоту на размер элементов сверху (offsetTop).
+                // Сверху может быть поле ввода для фильтрации опций.
+                height -= scrollable.offsetTop
+                scrollable.style.maxHeight = `${height}px`
+            }
+        },
+        padding: 10,
+    }, [dropdownWidth, maxHeight, dropUpOffset])
 
     // noinspection SuspiciousTypeOfGuard
     const {
@@ -138,7 +186,7 @@ export function useSelectInputDropdown(
         whileElementsMounted: autoUpdate,
         open: isOpen,
         onOpenChange: setIsOpen,
-        placement,
+        placement: defaultPlacement,
         middleware: [
             optionsOffset
                 ? offset(
@@ -151,36 +199,7 @@ export function useSelectInputDropdown(
                 : null,
             shouldFlip ? flip(typeof shouldFlip === 'object' ? shouldFlip : undefined) : null,
             shouldShift ? shift(typeof shouldShift === 'object' ? shouldShift : undefined) : null,
-            size({
-                apply({rects, availableHeight, elements}) {
-                    switch (dropdownWidth) {
-                        case 'fit-input':
-                            elements.floating.style.width = `${rects.reference.width}px`
-                            break
-                        case 'fill-container':
-                            elements.floating.style.width = '100%'
-                            break
-                    }
-                    let height = availableHeight
-                    if (maxHeight) {
-                        height = Math.min(maxHeight, availableHeight)
-                    }
-                    elements.floating.style.maxHeight = `${height}px`
-                    // Ищем внутренний scrollable.
-                    const scrollable = Array.from(elements.floating.children)
-                        .find(
-                            element => element.classList.contains('dropdown-menu-scrollable')
-                        ) as HTMLElement | null
-                    if (scrollable) {
-                        // Если scrollable не первый отображаемый элемент, то нужно
-                        // уменьшить высоту на размер элементов сверху (offsetTop).
-                        // Сверху может быть поле ввода для фильтрации опций.
-                        height -= scrollable.offsetTop
-                        scrollable.style.maxHeight = `${height}px`
-                    }
-                },
-                padding: 10,
-            }, [dropdownWidth, maxHeight]),
+            sizeMiddleware,
         ],
     })
 
@@ -222,12 +241,7 @@ export function useSelectInputDropdown(
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         optionsOnSearch?.(event)
-
-        // if (event.currentTarget.value) {
         setIsOpen(true, event.nativeEvent, 'reference-press')
-        // } else {
-        //     setIsOpen(false, event.nativeEvent, 'escape-key')
-        // }
     })
 
     const setInputRef = useMergedRefs(
@@ -249,8 +263,8 @@ export function useSelectInputDropdown(
         context,
         setInputRef,
         setMenuRef,
-        inputRef: refs.reference as UseComboboxDropdownHookReturn['inputRef'],
-        menuRef: refs.floating as UseComboboxDropdownHookReturn['menuRef'],
+        inputRef: refs.reference as UseSelectInputDropdownHookReturn['inputRef'],
+        menuRef: refs.floating as UseSelectInputDropdownHookReturn['menuRef'],
         listItemsRef: listRef,
         getReferenceProps,
         getFloatingProps,
@@ -262,6 +276,6 @@ export function useSelectInputDropdown(
         activeIndex,
         setActiveIndex,
         isActiveListItem,
-        isDropUp: ['up', 'up-centered'].includes(drop),
+        isDropUp: context.placement.startsWith('top'),
     }
 }

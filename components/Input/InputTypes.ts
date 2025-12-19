@@ -108,7 +108,10 @@ export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>
 }
 
 // Свойства компонента CheckboxesGroup.
-export interface CheckboxesGroupProps<Value = unknown, Extras = AnyObject> {
+export interface CheckboxesGroupProps<
+    Value = unknown,
+    Extras extends AnyObject = AnyObject,
+> {
     // Основная подпись.
     label?: string | null
     // Выбранные значения (опции).
@@ -219,6 +222,8 @@ export interface InputProps extends Omit<HtmlComponentProps<HTMLInputElement | H
     withoutValidationMessage?: boolean
     // Указать true, если label должен быть как будто поле ввода в активном состоянии.
     active?: boolean
+    // Перейти в режим активности при фокусировке внутри поля ввода.
+    activeOnFocus?: boolean
     // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
     grouped?: boolean | 'first' | 'center' | 'last'
     // Регулярное выражение для фильтрации вводимых символов.
@@ -462,7 +467,7 @@ export interface NumericInputProps extends Omit<
 // Свойства компонента OptionsSliderInput.
 export interface OptionsSliderInputProps<
     OptionValueType = number,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 > extends Omit<HtmlComponentProps<HTMLInputElement>, 'value' | 'label' | 'onChange' | 'type'> {
     label?: string | ReactNode
     options: FormSelectOptionsList<OptionValueType, OptionExtrasType>
@@ -486,7 +491,10 @@ export interface PasswordInputProps extends Omit<InputProps, 'type'> {
 }
 
 // Свойства компонента RadiosGroup.
-export interface RadiosGroupProps<Value = unknown, Extras = AnyObject> {
+export interface RadiosGroupProps<
+    Value = unknown,
+    Extras extends AnyObject = AnyObject,
+> {
     // Основная подпись.
     // Если false - не отображать <SectionDivider>.
     label?: string | null | false

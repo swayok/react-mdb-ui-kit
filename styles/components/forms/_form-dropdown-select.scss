@@ -1,6 +1,7 @@
 // Select input with dropdown (<Dropdown> component for options).
 @use "../../mixins/svg-icons";
 @use "../../variables/form-input-base";
+@use "../../variables/form-outline-input";
 @use "../../variables/form-label";
 @use "../../variables/form-dropdown-select";
 @use "../../variables/dropdown";
@@ -25,6 +26,18 @@
             &[disabled] {
                 cursor: not-allowed;
                 background-color: form-input-base.$input-disabled-bg;
+            }
+
+            &.empty-value:focus {
+                ~ .form-label {
+                    transform: none;
+                    color: form-outline-input.$form-outline-label-color;
+                }
+
+                ~ .form-notch .form-notch-middle {
+                    width: 0 !important;
+                    transition: none !important;
+                }
             }
         }
 
@@ -55,10 +68,6 @@
                     }
                 }
             }
-
-            &.form-dropdown-select-menu-dropup-offset {
-                inset: auto auto form-dropdown-select.$form-dropdown-select-dropup-offset 0 !important;
-            }
         }
 
         .dropdown-item {
@@ -82,6 +91,7 @@
                     background-color: transparent;
 
                     &:hover,
+                    &.hover,
                     &:focus {
                         background-color: dropdown.$dropdown-item-hover-bg;
                     }

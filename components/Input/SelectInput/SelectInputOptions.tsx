@@ -1,9 +1,10 @@
-import {useCallback} from 'react'
+import {useEventCallback} from '../../../helpers/useEventCallback'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {
     AnyObject,
     FormSelectOption,
 } from '../../../types'
+import {DropdownMenuScrollableContainer} from '../../Dropdown/DropdownMenuScrollableContainer'
 import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
@@ -15,7 +16,7 @@ import {
 // Отрисовка списка опций для SelectInput.
 export function SelectInputOptions<
     OptionValueType = string,
-    OptionExtrasType = AnyObject,
+    OptionExtrasType extends AnyObject = AnyObject,
 >(props: SelectInputOptionsProps<OptionValueType, OptionExtrasType>) {
 
     const {
@@ -32,7 +33,7 @@ export function SelectInputOptions<
     } = props
 
     // Обработчик выбора опции.
-    const onSelect = useCallback(
+    const onSelect = useEventCallback(
         (
             option: FormSelectOption<OptionValueType, OptionExtrasType>,
             index: number,
@@ -42,8 +43,7 @@ export function SelectInputOptions<
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur(String(option.value))
             }
-        },
-        [onChange, trackBehaviorAs]
+        }
     )
 
     // Рекурсивная отрисовка опций.
@@ -58,6 +58,7 @@ export function SelectInputOptions<
                     key={'group-' + index}
                     group={option.data}
                     index={option.index}
+                    depth={option.depth}
                     renderOptionLabel={renderOptionLabel}
                     labelContainsHtml={labelsContainHtml}
                 />
@@ -77,8 +78,10 @@ export function SelectInputOptions<
                 <SelectInputOption
                     key={'input-' + index}
                     option={option.data}
+                    flatIndex={index}
                     index={option.index}
                     groupIndex={option.groupIndex}
+                    depth={option.depth}
                     isActive={selectedOption?.value === option.data.value}
                     renderOptionLabel={renderOptionLabel}
                     labelContainsHtml={labelsContainHtml}
@@ -90,8 +93,8 @@ export function SelectInputOptions<
     }
 
     return (
-        <div className="dropdown-menu-scrollable">
+        <DropdownMenuScrollableContainer>
             {options.map(renderOption)}
-        </div>
+        </DropdownMenuScrollableContainer>
     )
 }
