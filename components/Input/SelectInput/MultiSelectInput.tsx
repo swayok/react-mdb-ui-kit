@@ -166,7 +166,7 @@ export function MultiSelectInput<
             values.push(option.value)
             newSelectedOptions.push(option)
         }
-        onChange(values, newSelectedOptions)
+        onChange?.(values, newSelectedOptions)
     })
 
     // Выбор опции с клавиатуры.
@@ -199,7 +199,7 @@ export function MultiSelectInput<
                 // Это может произойти, если опция, соответствующая значению
                 // props.values, была удалена из списка опций.
                 // В этих случаях нужно вызвать onChange со значением selectedOptions.
-                onChange(
+                onChange?.(
                     selectedOptions.map(option => option.value),
                     selectedOptions
                 )

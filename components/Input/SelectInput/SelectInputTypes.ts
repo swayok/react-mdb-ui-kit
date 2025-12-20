@@ -112,7 +112,7 @@ export interface SelectInputProps<
     // Набор опций.
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
     // Обработчик выбора опции.
-    onChange: (
+    onChange?: (
         value: OptionValueType,
         label: string,
         index: number,
@@ -167,7 +167,7 @@ export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
     // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
     dropUpOffset?: number
-    onChange: (
+    onChange?: (
         value: string,
         event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
     ) => void
@@ -179,7 +179,7 @@ export interface MultiSelectInputProps<
     OptionExtrasType extends AnyObject = AnyObject,
 > extends Omit<SelectInputBasicProps, 'value' | 'onChange' | 'children'> {
     options: FormSelectOptionsAndGroupsList<OptionValueType, OptionExtrasType>
-    onChange: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
+    onChange?: (values: OptionValueType[], options: FormSelectOptionsList<OptionValueType, OptionExtrasType>) => void
     values?: OptionValueType[]
     // Конвертация выбранных опций для отображения в поле ввода.
     // По умолчанию отображается список из FormSelectOption['label'].

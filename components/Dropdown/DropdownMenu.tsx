@@ -11,9 +11,11 @@ import {
 import {
     Fragment,
     HTMLProps,
+    KeyboardEvent,
     useImperativeHandle,
     useMemo,
 } from 'react'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {
     HtmlComponentProps,
@@ -47,6 +49,7 @@ export function DropdownMenu<
         style = {},
         inline,
         noFocus,
+        onKeyDown: propsOnKeyDown,
         children,
         ...otherProps
     } = props
@@ -59,6 +62,7 @@ export function DropdownMenu<
         rootContext,
         getFloatingProps,
         elementsRef,
+        activeIndex,
     } = useDropdownContext<HTMLElement, RefType>()
 
     // API компонента для использования во внешних компонентах.
@@ -106,6 +110,23 @@ export function DropdownMenu<
         whileElementsMounted: autoUpdate,
     })
 
+    const onKeyDown = useEventCallback((
+        event: KeyboardEvent<RefType>
+    ) => {
+        if (
+            activeIndex !== null
+            && elementsRef.current[activeIndex]
+            && (
+                event.key === 'Enter'
+                || event.key === ' '
+            )
+        ) {
+            (elementsRef.current[activeIndex])?.click()
+            event.preventDefault()
+        }
+        propsOnKeyDown?.(event)
+    })
+
     const Portal = inline ? Fragment : FloatingPortal
 
     return (
@@ -123,9 +144,10 @@ export function DropdownMenu<
                     >
                         <DropdownMenuContent
                             ref={mergedRef}
-                            {...getFloatingProps(
-                                otherProps as HTMLProps<HTMLElement>
-                            )}
+                            {...getFloatingProps({
+                                ...(otherProps as HTMLProps<HTMLElement>),
+                                onKeyDown,
+                            })}
                             style={{
                                 ...style,
                                 ...floatingStyles,

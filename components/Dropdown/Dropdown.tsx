@@ -7,6 +7,7 @@ import {
     useFloatingNodeId,
     useFloatingParentNodeId,
     useFloatingRootContext,
+    useFocus,
     useHover,
     useInteractions,
     useListItem,

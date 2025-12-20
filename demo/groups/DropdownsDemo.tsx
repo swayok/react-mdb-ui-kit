@@ -131,11 +131,14 @@ export function DropdownsDemo() {
                         Menu
                     </DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem>
-                            Item 1
+                        <DropdownItem onClick={() => alert('Test')}>
+                            On click Alert
                         </DropdownItem>
-                        <DropdownItem>
-                            Item 2
+                        <DropdownItem
+                            href="/"
+                            target="_blank"
+                        >
+                            Href (blank)
                         </DropdownItem>
                         <DropdownItem>
                             Item 3
@@ -459,31 +462,18 @@ export function DropdownsDemo() {
                     value="option1"
                     disabled
                     options={optionsMany}
-                    onChange={() => {
-                    }}
                 />
                 <MultiSelectInput
                     label="Multiselect disabled"
                     values={['option1']}
                     options={optionsSeveral}
                     disabled
-                    onChange={() => {
-                    }}
                 />
                 <ComboboxInput
                     label="Combobox disabled"
                     value="Option 1"
                     disabled
-                    options={[
-                        'Option 1',
-                        'Option 2',
-                        'Option 3',
-                        'Option 4',
-                        'Option 5',
-                        'Option 1-2',
-                    ]}
-                    onChange={() => {
-                    }}
+                    options={['Option 1']}
                 />
             </div>
             <div className="flex-1 d-flex flex-row align-items-center gap-4">
@@ -500,6 +490,13 @@ export function DropdownsDemo() {
                     onChange={(value1, value2) => {
                         setFormValue('dateRange1', [value1, value2])
                     }}
+                />
+            </div>
+            <div className="flex-1 d-flex flex-row align-items-center gap-4">
+                <DateInput
+                    label="Date input disabled"
+                    disabled
+                    value={new Date()}
                 />
             </div>
         </div>

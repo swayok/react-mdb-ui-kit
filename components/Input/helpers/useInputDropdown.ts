@@ -44,6 +44,10 @@ export function useInputDropdown(
 
     const click = useClick(floatingConfig.context, {
         event: 'click',
+        /**
+         * Контроль открытия при фокусе и нажатии в полях ввода осуществляется отдельно.
+         * @see SelectInputBase
+         */
         toggle: false,
         ignoreMouse: false,
         keyboardHandlers: true,

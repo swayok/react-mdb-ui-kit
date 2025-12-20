@@ -68,7 +68,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onSearch: useEventCallback((
             event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
-            onChange(
+            onChange?.(
                 event.currentTarget.value,
                 event as FormEvent<HTMLInputElement>
             )
@@ -93,7 +93,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         option: FormSelectOption | string,
         event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
     ) => {
-        onChange(
+        onChange?.(
             typeof option === 'string' ? option : String(option.value ?? ''),
             event
         )

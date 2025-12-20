@@ -39,7 +39,7 @@ export function SelectInputOptions<
             index: number,
             groupIndex: number | null
         ) => {
-            onChange(option.value, option.label, index, groupIndex, option.extra)
+            onChange?.(option.value, option.label, index, groupIndex, option.extra)
             if (trackBehaviorAs) {
                 UserBehaviorService.onBlur(String(option.value))
             }

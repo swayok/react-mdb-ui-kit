@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import {
     FocusEvent,
+    KeyboardEvent,
     RefCallback,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'

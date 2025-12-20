@@ -216,7 +216,7 @@ export function SelectInput<
         groupIndex: number | null,
         extra?: OptionExtrasType
     ) => {
-        propsOnChange(value, label, index, groupIndex, extra)
+        propsOnChange?.(value, label, index, groupIndex, extra)
         if (closeDropdownOnSelect) {
             apiRef.current?.setIsOpen(false)
         }
@@ -255,7 +255,7 @@ export function SelectInput<
                 // Так же это может произойти, если опция, соответствующая значению
                 // props.value, была удалена из списка опций.
                 // В этих случаях нужно вызвать onChange со значением selectedOption.option.value.
-                propsOnChange(
+                propsOnChange?.(
                     selectedOption.option.value,
                     selectedOption.option.label,
                     selectedOption.index,

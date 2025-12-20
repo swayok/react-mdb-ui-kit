@@ -1,5 +1,6 @@
 // Date input.
 @use "../../variables/form-input-base";
+@use "../../variables/form-outline-input";
 @use "../../variables/features";
 
 @if (features.$include-forms-and-inputs and features.$include-date-input) {
@@ -9,20 +10,30 @@
         .dropdown-toggle {
             position: relative;
 
-            input,
-            input[readonly] {
-                background-color: form-input-base.$input-bg;
-                cursor: pointer;
-                padding-right: 30px;
-            }
+            input.form-control {
+                &,
+                &[readonly]:not(:disabled) {
+                    background-color: form-input-base.$input-bg;
+                    cursor: pointer;
+                    padding-right: 30px;
+                }
 
-            input[disabled] {
-                cursor: not-allowed;
-                background-color: form-input-base.$input-disabled-bg;
-            }
+                &[disabled] {
+                    cursor: not-allowed;
+                    background-color: form-input-base.$input-disabled-bg;
+                }
 
-            .calendar-icon {
-                pointer-events: none;
+                &.empty-value:focus {
+                    ~ .form-label {
+                        transform: none;
+                        color: form-outline-input.$form-outline-label-color;
+                    }
+
+                    ~ .form-notch .form-notch-middle {
+                        width: 0 !important;
+                        transition: none !important;
+                    }
+                }
             }
         }
 

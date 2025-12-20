@@ -333,7 +333,7 @@ export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange'
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
     // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
     dropUpOffset?: number
-    onChange: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
+    onChange?: (from: DateInputSingleDateValue, to: DateInputSingleDateValue) => void
     calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
     // Показать иконку календаря? По умолчанию: true.
     showCalendarIcon?: boolean

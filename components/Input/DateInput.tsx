@@ -79,6 +79,7 @@ export function DateInput(props: DateInputProps) {
         floatingStyles,
         getFloatingProps,
         setIsOpen,
+        inputRef: inputRefObject,
     } = useInputDropdown({
         inputRef,
         dropdownWidth: 'fit-items',
@@ -130,7 +131,7 @@ export function DateInput(props: DateInputProps) {
                 UserBehaviorService.onBlur(convertDateInputValueToString(value, dateFormat, valueToString))
             }
         }
-        propsOnChange(from, to)
+        propsOnChange?.(from, to)
     })
 
     // Конвертирование даты или периода в строку для отображения в поле ввода.
@@ -201,7 +202,8 @@ export function DateInput(props: DateInputProps) {
                 value={inputValue}
                 className={clsx(
                     className,
-                    inputProps.disabled ? null : 'cursor'
+                    inputProps.disabled ? null : 'cursor',
+                    !valueToString || valueToString.length === 0 ? 'empty-value' : null,
                 )}
                 wrapperClassName="m-0 dropdown-toggle"
                 active={inputValue !== ''}
@@ -228,11 +230,13 @@ export function DateInput(props: DateInputProps) {
                             />
                         )}
                         {showCalendarIcon && (
-                            <Icon
+                            <IconButton
                                 path={mdiCalendarMonthOutline}
                                 size={24}
                                 color="muted"
                                 className="calendar-icon"
+                                disabled={inputProps.disabled}
+                                onClick={() => inputRefObject.current?.focus()}
                             />
                         )}
                     </InputAddonText>
