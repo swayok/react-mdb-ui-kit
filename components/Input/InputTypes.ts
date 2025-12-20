@@ -278,7 +278,6 @@ export interface InputUiApi {
 // Свойства компонента InputUi.
 export interface InputUiProps {
     ref?: AnyRef<HTMLDivElement>
-    apiRef?: ApiRef<InputUiApi>
     labelRef: RefObject<HTMLLabelElement | null>
     size: InputSize
     className?: string

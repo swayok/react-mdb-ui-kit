@@ -151,7 +151,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
                     onKeyDown: onSearchKeyDown,
                 })}
                 title={title}
-                active={active ?? (value ?? '').length > 0}
+                active={active || (value ?? '').length > 0}
             />
             <FloatingList elementsRef={listItemsRef}>
                 {isOpen && hasOptions && (

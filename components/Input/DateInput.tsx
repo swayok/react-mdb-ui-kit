@@ -48,6 +48,7 @@ export function DateInput(props: DateInputProps) {
         trackBehaviorAs,
         showCalendarIcon = true,
         title,
+        active,
         hidden,
         apiRef,
         onChange: propsOnChange,
@@ -203,10 +204,10 @@ export function DateInput(props: DateInputProps) {
                 className={clsx(
                     className,
                     inputProps.disabled ? null : 'cursor',
-                    !valueToString || valueToString.length === 0 ? 'empty-value' : null,
+                    !valueToString || valueToString.length === 0 ? 'empty-value' : null
                 )}
                 wrapperClassName="m-0 dropdown-toggle"
-                active={inputValue !== ''}
+                active={active || inputValue !== ''}
                 readOnly
             >
                 {(!!showCleanValueButton || showCalendarIcon) && (

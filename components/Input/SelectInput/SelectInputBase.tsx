@@ -44,6 +44,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         selectOptionOnTabKey = true,
         selectOptionOnSpaceKey = false,
         onOptionSelect,
+        active,
         apiRef,
         onClick,
         onKeyDown,
@@ -262,7 +263,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                     className={togglerClasses}
                     wrapperClassName="m-0 dropdown-toggle"
                     readOnly
-                    active={inputProps.value !== null && inputProps.value !== ''}
+                    active={active || (inputProps.value !== null && inputProps.value !== '')}
                     title={title}
                     WrapperComponent={WrapperComponent}
                 >

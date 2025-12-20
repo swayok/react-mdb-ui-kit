@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import {
     useEffect,
     useImperativeHandle,
+    useMemo,
+    useRef,
     useState,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
@@ -20,7 +22,6 @@ const activeInputLabelSizeMultipliers = {
 export function InputUi(props: InputUiProps) {
 
     const {
-        apiRef,
         ref,
         labelRef,
         activeInputLabelSizeMultiplier,
@@ -29,13 +30,10 @@ export function InputUi(props: InputUiProps) {
         invalid,
     } = props
 
-    const [
-        labelNotchWidth,
-        setLabelNotchWidth,
-    ] = useState<number | string>(0)
+    const middleNotchRef = useRef<HTMLDivElement>(null)
 
     const updateWidth = useEventCallback(() => {
-        if (labelRef.current) {
+        if (labelRef.current && middleNotchRef.current) {
             if (labelRef.current && labelRef.current.clientWidth !== 0) {
                 let multiplier: number = activeInputLabelSizeMultipliers[size]
                 if (
@@ -45,21 +43,34 @@ export function InputUi(props: InputUiProps) {
                 ) {
                     multiplier = activeInputLabelSizeMultiplier[size]!
                 }
-                setLabelNotchWidth((labelRef.current.clientWidth * multiplier) + 8)
-            } else if (labelNotchWidth === 0) {
-                setLabelNotchWidth('80%')
-                setTimeout(updateWidth, 500)
+                middleNotchRef.current.style.width = `${(labelRef.current.clientWidth * multiplier) + 8}px`
+                observer.disconnect()
+            } else {
+                middleNotchRef.current.style.width = '80%'
             }
-        } else {
-            setLabelNotchWidth(0)
         }
     })
 
-    useImperativeHandle(apiRef, (): InputUiApi => ({
-        updateWidth,
-    }))
+    const observer = useMemo(() => new IntersectionObserver(updateWidth, {
+        root: document.body,
+        threshold: 0,
+    }), [])
 
-    useEffect(updateWidth, [])
+    useEffect(() => {
+        updateWidth()
+    }, [labelRef.current?.clientWidth])
+
+    useEffect(() => {
+        if (middleNotchRef.current) {
+            const el = middleNotchRef.current
+            observer.observe(el)
+            return () => {
+                observer.unobserve(el)
+            }
+        }
+        return () => {
+        }
+    }, [middleNotchRef.current])
 
     return (
         <div
@@ -73,7 +84,7 @@ export function InputUi(props: InputUiProps) {
             <div className="form-notch-leading" />
             <div
                 className="form-notch-middle"
-                style={{width: labelNotchWidth}}
+                ref={middleNotchRef}
             />
             <div className="form-notch-trailing" />
         </div>

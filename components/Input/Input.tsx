@@ -75,7 +75,6 @@ export function Input(props: InputProps) {
 
     const labelRef = useRef<HTMLLabelElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
-    const notchApiRef = useRef<InputUiApi>(null)
 
     const mergedLabelRef = useMergedRefs(
         propsLabelRef,
@@ -143,7 +142,6 @@ export function Input(props: InputProps) {
             UserBehaviorService.onFocus(e.currentTarget, trackBehaviorAs)
         }
         setFocused(true)
-        notchApiRef.current?.updateWidth()
         onFocus?.(e)
     })
 
@@ -242,7 +240,6 @@ export function Input(props: InputProps) {
                 invalid={invalid}
             />
             <UiComponent
-                apiRef={notchApiRef}
                 labelRef={labelRef}
                 size={size}
                 activeInputLabelSizeMultiplier={activeInputLabelSizeMultiplier}
