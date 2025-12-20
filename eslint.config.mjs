@@ -5,12 +5,6 @@ import pluginReact from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 import tsEslint from 'typescript-eslint'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-// Convert import.meta.url to a proper file path
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 const rules = {
     // Arrays formatting.
@@ -22,12 +16,12 @@ const rules = {
     '@stylistic/array-element-newline': [
         'error',
         {
-            'ArrayExpression': {
+            ArrayExpression: {
                 consistent: true,
                 multiline: true,
             },
-            'ArrayPattern': 'always',
-        }
+            ArrayPattern: 'always',
+        },
     ],
     // Arrow functions formatting.
     '@stylistic/arrow-parens': ['error', 'as-needed'],
@@ -54,7 +48,7 @@ const rules = {
             enums: 'always-multiline',
             generics: 'always-multiline',
             tuples: 'always-multiline',
-        }
+        },
     ],
     '@stylistic/comma-spacing': 'error',
     '@stylistic/comma-style': ['error', 'last'],
@@ -83,7 +77,7 @@ const rules = {
             outerIIFEBody: 1,
             MemberExpression: 1,
             CallExpression: {
-                arguments: 1
+                arguments: 1,
             },
             ArrayExpression: 1,
             ObjectExpression: 1,
@@ -91,7 +85,7 @@ const rules = {
             flatTernaryExpressions: false,
             offsetTernaryExpressions: false,
             ignoreComments: false,
-        }
+        },
     ],
     '@stylistic/indent-binary-ops': ['error', 4],
 
@@ -102,7 +96,7 @@ const rules = {
             beforeColon: false,
             afterColon: true,
             mode: 'strict',
-        }
+        },
     ],
 
     // Which Line breaks to use.
@@ -123,8 +117,8 @@ const rules = {
                     prev: 'method',
                     next: 'field',
                 },
-            ]
-        }
+            ],
+        },
     ],
 
     // Maximum line length.
@@ -137,7 +131,7 @@ const rules = {
             ignoreStrings: true,
             ignoreTemplateLiterals: true,
             ignoreRegExpLiterals: true,
-        }
+        },
     ],
 
     // Forbid several statements in a single line.
@@ -145,23 +139,23 @@ const rules = {
         'error',
         {
             max: 1,
-        }
+        },
     ],
 
     // Members formatting in types and interfaces.
     '@stylistic/member-delimiter-style': [
         'error',
         {
-            'multiline': {
-                'delimiter': 'none',
-                'requireLast': false
+            multiline: {
+                delimiter: 'none',
+                requireLast: false,
             },
-            'singleline': {
-                'delimiter': 'semi',
-                'requireLast': true
+            singleline: {
+                delimiter: 'semi',
+                requireLast: true,
             },
-            'multilineDetection': 'brackets'
-        }
+            multilineDetection: 'brackets',
+        },
     ],
 
     // Multiline comments formatting: prefer block comments.
@@ -177,7 +171,7 @@ const rules = {
     '@stylistic/newline-per-chained-call': [
         'error',
         {
-            'ignoreChainWithDepth': 3
+            ignoreChainWithDepth: 3,
         },
     ],
 
@@ -197,8 +191,8 @@ const rules = {
             // Не больше 2-х внутри файла.
             max: 2,
             // Не больше 1 в конце файла.
-            maxEOF: 1
-        }
+            maxEOF: 1,
+        },
     ],
 
     // Запрет использования табуляции.
@@ -231,14 +225,14 @@ const rules = {
                 minProperties: 3,
                 consistent: true,
             },
-        }
+        },
     ],
     '@stylistic/object-curly-spacing': ['error', 'never'],
     '@stylistic/object-property-newline': [
         'error',
         {
-            allowAllPropertiesOnSameLine: true
-        }
+            allowAllPropertiesOnSameLine: true,
+        },
     ],
 
     // Forbid several var declarations in a single line.
@@ -253,7 +247,7 @@ const rules = {
         {
             switches: 'never',
             classes: 'start',
-        }
+        },
     ],
     // New lines between code blocks.
     '@stylistic/padding-line-between-statements': [
@@ -297,7 +291,7 @@ const rules = {
             named: 'never',
             asyncArrow: 'always',
             catch: 'always',
-        }
+        },
     ],
     '@stylistic/space-in-parens': ['error', 'never'],
     '@stylistic/space-infix-ops': 'error',
@@ -306,7 +300,7 @@ const rules = {
         {
             words: true,
             nonwords: false,
-        }
+        },
     ],
     '@stylistic/spaced-comment': ['error', 'always'],
     '@stylistic/switch-colon-spacing': 'error',
@@ -333,7 +327,7 @@ const rules = {
         'declaration',
         {
             allowArrowFunctions: true,
-        }
+        },
     ],
 
     'object-shorthand': [
@@ -341,7 +335,7 @@ const rules = {
         'always',
         {
             avoidExplicitReturnArrows: true,
-        }
+        },
     ],
 
     // Больше мешает чем помогает: this.method() короче чем
@@ -382,7 +376,7 @@ const rules = {
             destructuredArrayIgnorePattern: '^_',
             varsIgnorePattern: '^_',
             ignoreRestSiblings: true,
-        }
+        },
     ],
 
     // Правила для React
@@ -401,21 +395,21 @@ const rules = {
         {
             props: 'never',
             children: 'never',
-            propElementValues: 'always'
-        }
+            propElementValues: 'always',
+        },
     ],
     '@stylistic/jsx-curly-newline': [
         'error',
         {
             multiline: 'consistent',
-            singleline: 'forbid'
-        }
+            singleline: 'forbid',
+        },
     ],
     '@stylistic/jsx-curly-spacing': [
         'error',
         {
-            'when': 'never'
-        }
+            when: 'never',
+        },
     ],
     '@stylistic/jsx-equals-spacing': ['error', 'never'],
     '@stylistic/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
@@ -428,7 +422,7 @@ const rules = {
     '@stylistic/jsx-quotes': ['error', 'prefer-double'],
     '@stylistic/jsx-self-closing-comp': 'error',
     // JSX component props sorting. Not sure that this rule is really needed.
-    //'@stylistic/jsx-sort-props': "error"
+    // '@stylistic/jsx-sort-props': "error"
     '@stylistic/jsx-tag-spacing': [
         'error',
         {
@@ -436,7 +430,7 @@ const rules = {
             beforeSelfClosing: 'always',
             afterOpening: 'never',
             beforeClosing: 'never',
-        }
+        },
     ],
     '@stylistic/jsx-wrap-multilines': 'error',
 }
@@ -455,7 +449,7 @@ export default [
     importPlugin.flatConfigs.recommended,
     {
         plugins: {
-            '@stylistic': stylistic
+            '@stylistic': stylistic,
         },
     },
     // React and React Hooks.
@@ -482,8 +476,10 @@ export default [
                     jsx: true,
                 },
 
-                projectService: true,
-                tsconfigRootDir: __dirname,
+                projectService: {
+                    allowDefaultProject: ['*.config.mjs'],
+                },
+                tsconfigRootDir: import.meta.dirname,
             },
         },
 
@@ -512,7 +508,7 @@ export default [
                 {
                     property: 'forbidExtraProps',
                     exact: true,
-                }
+                },
             ],
 
             // The name of any function used to wrap components, e.g., Mobx `observer` function.
@@ -529,7 +525,7 @@ export default [
                 {
                     property: 'observer',
                     object: '<pragma>',
-                }
+                },
             ],
             // Components used as alternatives to <form> for forms, e.g. <Form endpoint={ url } />
             formComponents: [
@@ -537,7 +533,7 @@ export default [
                 {
                     name: 'Form',
                     formAttribute: 'endpoint',
-                }
+                },
             ],
             // Components used as alternatives to <a> for linking, e.g. <Link to={ url } />
             linkComponents: [
@@ -549,10 +545,10 @@ export default [
                 {
                     name: 'NavLink',
                     linkAttribute: 'to',
-                }
+                },
             ],
         },
 
         rules,
-    }
+    },
 ]
