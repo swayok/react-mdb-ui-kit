@@ -44,7 +44,7 @@
         "react-calendar": "^6.0.0",
         "react-transition-group": ">=4.4.5",
         "react-virtuoso": ">=4.15.0",
-        "uncontrollable": ">=9.0.0",
+        "uncontrollable": ">=9.0.0"
     },
     "peerDependencies": {
         "@types/react": ">=18.0.0",
