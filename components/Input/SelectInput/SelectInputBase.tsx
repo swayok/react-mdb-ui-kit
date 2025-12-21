@@ -238,7 +238,10 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                         })}
                         color="link"
                         hasIcon="after"
-                        className={togglerClasses}
+                        className={clsx(
+                            togglerClasses,
+                            'text-decoration-none text-decoration-hover-none'
+                        )}
                         small={inputProps.small}
                         large={inputProps.large}
                     >
