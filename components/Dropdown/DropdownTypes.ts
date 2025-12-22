@@ -26,7 +26,7 @@ import type {
     MorphingComponentProps,
     MorphingHtmlComponentProps,
 } from '../../types'
-import type {ButtonProps} from '../Button'
+import type {ButtonProps} from '../Button/Button'
 
 // Свойства контекста для Dropdown.
 export interface DropdownContextProps<

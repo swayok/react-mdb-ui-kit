@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {DataGridFooterWrapper} from '../DataGrid/DataGridFooterWrapper'
 import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'
 import {DataGridPagination} from '../DataGrid/DataGridPagination'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AsyncDataGridFooterProps} from './AsyncDataGridTypes'
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {AnyObject} from '../../types'
-import {FadeSwitch} from '../FadeSwitch'
+import {FadeSwitch} from '../Animation/FadeSwitch'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridNoItems} from './DataGridNoItems'
 import {DataGridTableProps} from './DataGridTypes'

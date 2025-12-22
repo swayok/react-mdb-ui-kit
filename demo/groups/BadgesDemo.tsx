@@ -1,5 +1,5 @@
-import {Badge} from '../../components/Badge'
-import {SectionDivider} from '../../components/SectionDivider'
+import {Badge} from '../../components/Typography/Badge'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 import {BackgroundColors} from '../../types'
 
 // Демонстрация компонента <Badge>.

@@ -3,7 +3,7 @@ import {
     ChangeEvent,
     useId,
 } from 'react'
-import {findSelectedOption} from '../../helpers/findSelectedOption'
+import {findSelectedOption} from '../../helpers/options_list/findSelectedOption'
 import {AnyObject} from '../../types'
 import {OptionsSliderInputProps} from './InputTypes'
 

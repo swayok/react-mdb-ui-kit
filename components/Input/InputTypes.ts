@@ -14,7 +14,6 @@ import type {CalendarProps} from 'react-calendar'
 import type {
     AnyObject,
     AnyRef,
-    ApiRef,
     ButtonColors,
     CheckboxColors,
     FormSelectOption,
@@ -28,18 +27,16 @@ import type {
     PickByPrefix,
     ReactComponentOrTagName,
 } from '../../types'
-import type {ButtonProps} from '../Button'
+import type {ButtonProps} from '../Button/Button'
 import type {
     DropdownMenuContentProps,
     DropdownMenuProps,
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
-import type {IconProps} from '../Icon'
-import type {MdiIconProps} from '../MDIIcon'
+import type {IconProps} from '../Icon/Icon'
+import type {MdiIconProps} from '../Icon/MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
-import type {
-    InputWithDropdownApi,
-} from './SelectInput/SelectInputTypes'
+import type {InputWithDropdownApi} from './SelectInput/SelectInputTypes'
 
 export type * from './SelectInput/SelectInputTypes'
 

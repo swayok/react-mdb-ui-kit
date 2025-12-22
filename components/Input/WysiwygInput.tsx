@@ -10,7 +10,7 @@ import {
     useRef,
     useState,
 } from 'react'
-import {getDefaultWysiwygConfig} from '../../helpers/getDefaultWysiwygConfig'
+import {getDefaultWysiwygConfig} from '../../helpers/vendor/getDefaultWysiwygConfig'
 import {
     CKEditorInstance,
     HtmlComponentProps,

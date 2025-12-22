@@ -4,8 +4,8 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {handleErrorResponse} from '../../helpers/ApiRequestErrorHelpers'
-import {toggleValueInArray} from '../../helpers/toggleValueInArray'
+import {handleErrorResponse} from '../../helpers/api/ApiRequestErrorHelpers'
+import {toggleValueInArray} from '../../helpers/form/toggleValueInArray'
 import {ApiError} from '../../services/ApiRequestService'
 import {AnyObject} from '../../types'
 import {

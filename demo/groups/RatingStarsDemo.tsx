@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {RatingStars} from '../../components/RatingStars'
+import {RatingStars} from '../../components/Icon/RatingStars'
 
 export function RatingStarsDemo() {
 

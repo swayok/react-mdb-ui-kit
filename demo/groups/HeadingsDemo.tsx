@@ -1,4 +1,4 @@
-import {SectionDivider} from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 // Демонстрация заголовков.
 export function HeadingsDemo() {

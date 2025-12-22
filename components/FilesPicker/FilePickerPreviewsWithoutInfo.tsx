@@ -5,8 +5,8 @@ import {
 import clsx from 'clsx'
 import {MouseEvent} from 'react'
 import {ToastService} from '../../services/ToastService'
-import {Collapse} from '../Collapse'
-import {Icon} from '../Icon'
+import {Collapse} from '../Collapse/Collapse'
+import {Icon} from '../Icon/Icon'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewWithoutInfo} from './FilePickerFilePreviewWithoutInfo'
 import {

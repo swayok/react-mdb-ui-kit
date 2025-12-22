@@ -1,6 +1,6 @@
-import {ButtonsSwitch} from '../../components/ButtonsSwitch'
+import {ButtonsSwitch} from '../../components/Button/ButtonsSwitch'
 import {ButtonsSwitchInput} from '../../components/Input/ButtonsSwitchInput'
-import {SectionDivider} from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 export function ButtonsSwitchDemo() {
 

@@ -1,5 +1,5 @@
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
-import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
+import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
+import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'
 import {MinMax} from '../../types'
 import {
     FilePickerContextMimeTypeInfo,

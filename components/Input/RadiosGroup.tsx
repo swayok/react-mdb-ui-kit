@@ -5,7 +5,7 @@ import {
     FormSelectOption,
     FormSelectOptionsList,
 } from '../../types'
-import {SectionDivider} from '../SectionDivider'
+import {SectionDivider} from '../Typography/SectionDivider'
 import {RadiosGroupProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 import {Radio} from './Radio'

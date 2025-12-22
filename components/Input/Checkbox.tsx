@@ -10,7 +10,7 @@ import {
     HtmlComponentProps,
     ReactComponentOrTagName,
 } from '../../types'
-import {HtmlContent} from '../HtmlContent'
+import {HtmlContent} from '../Typography/HtmlContent'
 import {
     CheckboxProps,
     InputValidationErrorProps,

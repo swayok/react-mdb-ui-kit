@@ -3,7 +3,7 @@ import {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {DropdownToggle} from './DropdownToggle'
 import {SubmenuDropdownToggleProps} from './DropdownTypes'
 

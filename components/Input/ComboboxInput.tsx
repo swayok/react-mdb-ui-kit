@@ -8,7 +8,7 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {filterOptions} from '../../helpers/filterOptions'
+import {filterOptions} from '../../helpers/options_list/filterOptions'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {
     FormSelectOption,

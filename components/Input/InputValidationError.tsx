@@ -3,7 +3,7 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {Collapse} from '../Collapse'
+import {Collapse} from '../Collapse/Collapse'
 import {Tooltip} from '../Tooltip/Tooltip'
 import {TooltipProps} from '../Tooltip/TooltipTypes'
 import {InputValidationErrorProps} from './InputTypes'

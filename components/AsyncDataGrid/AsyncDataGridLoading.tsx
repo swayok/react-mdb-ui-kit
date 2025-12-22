@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import {AsyncDataLoadingError} from '../AsyncDataLoadingError'
-import {FadeIn} from '../FadeIn'
-import {Loading} from '../Loading'
+import {AsyncDataLoadingError} from '../Loading/AsyncDataLoadingError'
+import {FadeIn} from '../Animation/FadeIn'
+import {Loading} from '../Loading/Loading'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
 

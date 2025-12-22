@@ -1,5 +1,5 @@
 import {AnyObject} from '../../../types'
-import {HtmlContent} from '../../HtmlContent'
+import {HtmlContent} from '../../Typography/HtmlContent'
 import {SelectInputOptionLabelProps} from './SelectInputTypes'
 
 // Подпись для опции или группы опций в выпадающем меню.

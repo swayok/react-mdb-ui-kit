@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {HtmlContent} from '../HtmlContent'
+import {HtmlContent} from '../Typography/HtmlContent'
 import {InputInfoProps} from './InputTypes'
 
 // Разъяснение к полю ввода.

@@ -3,7 +3,7 @@ import {
     mdiPencilBoxOutline,
     mdiPlusBoxOutline,
 } from '@mdi/js'
-import {IconButton} from '../../components/IconButton'
+import {IconButton} from '../../components/Icon/IconButton'
 import {buttonColors} from './ButtonsDemo'
 
 export function IconButtonsDemo() {

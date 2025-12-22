@@ -7,8 +7,8 @@ import {
 import clsx from 'clsx'
 import {AnyObject} from '../../../types'
 import {DropdownMenuScrollableContainer} from '../../Dropdown/DropdownMenuScrollableContainer'
-import {Icon} from '../../Icon'
-import {MdiIconProps} from '../../MDIIcon'
+import {Icon} from '../../Icon/Icon'
+import {MdiIconProps} from '../../Icon/MDIIcon'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
 import {

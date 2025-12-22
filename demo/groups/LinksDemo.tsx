@@ -1,6 +1,6 @@
 import {mdiPencilBoxOutline} from '@mdi/js'
-import {Icon} from '../../components/Icon'
-import {SectionDivider} from '../../components/SectionDivider'
+import {Icon} from '../../components/Icon/Icon'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 export function LinksDemo() {
     return (

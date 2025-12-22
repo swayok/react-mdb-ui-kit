@@ -6,7 +6,7 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {useCallback} from 'react'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {DataGridPaginationPagesList} from './DataGridPaginationPagesList'
 import {DataGridPaginationProps} from './DataGridTypes'
 

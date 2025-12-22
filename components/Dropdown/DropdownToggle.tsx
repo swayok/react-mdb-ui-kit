@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import {
     FocusEvent,
-    KeyboardEvent,
     RefCallback,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
@@ -10,7 +9,7 @@ import {MergedComponentProps} from '../../types'
 import {
     Button,
     ButtonProps,
-} from '../Button'
+} from '../Button/Button'
 import {useDropdownContext} from './DropdownContext'
 import {DropdownToggleProps} from './DropdownTypes'
 

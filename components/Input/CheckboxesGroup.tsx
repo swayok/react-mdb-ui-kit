@@ -5,7 +5,7 @@ import {
     FormSelectOption,
     FormSelectOptionGroup,
 } from '../../types'
-import {SectionDivider} from '../SectionDivider'
+import {SectionDivider} from '../Typography/SectionDivider'
 import {Checkbox} from './Checkbox'
 import {CheckboxesGroupProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'

@@ -3,7 +3,7 @@ import {
     mdiSwapVertical,
 } from '@mdi/js'
 import {AnyObject} from '../../types'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {
     DataGridContextProps,
     DataGridOrderByValuesType,

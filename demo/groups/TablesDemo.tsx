@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {SectionDivider} from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 export function TablesDemo() {
 

@@ -1,7 +1,7 @@
 import {mdiDotsHorizontal} from '@mdi/js'
 import clsx from 'clsx'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {DataGridPaginationPagesListFillerDropdown} from './DataGridPaginationPagesListFillerDropdown'
 import {DataGridPaginationPagesListProps} from './DataGridTypes'
 

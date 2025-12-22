@@ -4,7 +4,7 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {useState} from 'react'
-import {IconButton} from '../IconButton'
+import {IconButton} from '../Icon/IconButton'
 import {Input} from './Input'
 import {InputAddonText} from './InputAddonText'
 import {PasswordInputProps} from './InputTypes'

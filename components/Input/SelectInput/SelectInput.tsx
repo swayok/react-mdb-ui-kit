@@ -7,8 +7,8 @@ import {
     useRef,
     useState,
 } from 'react'
-import {findSelectedOption} from '../../../helpers/findSelectedOption'
-import {isSameOptionValue} from '../../../helpers/isSameOptionValue'
+import {findSelectedOption} from '../../../helpers/options_list/findSelectedOption'
+import {isSameOptionValue} from '../../../helpers/options_list/isSameOptionValue'
 import {stripTags} from '../../../helpers/stripTags'
 import {useEventCallback} from '../../../helpers/useEventCallback'
 import {useMergedRefs} from '../../../helpers/useMergedRefs'

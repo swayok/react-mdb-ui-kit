@@ -11,12 +11,12 @@ import {DropdownItem} from '../../components/Dropdown/DropdownItem'
 import {DropdownMenu} from '../../components/Dropdown/DropdownMenu'
 import {DropdownToggle} from '../../components/Dropdown/DropdownToggle'
 import {SubmenuDropdownToggle} from '../../components/Dropdown/SubmenuDropdownToggle'
-import {Icon} from '../../components/Icon'
+import {Icon} from '../../components/Icon/Icon'
 import {ComboboxInput} from '../../components/Input/ComboboxInput'
 import {DateInput} from '../../components/Input/DateInput'
 import {MultiSelectInput} from '../../components/Input/SelectInput/MultiSelectInput'
 import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
-import {useFormValues} from '../../helpers/useFormValues'
+import {useFormValues} from '../../helpers/form/useFormValues'
 
 // Демонстрация выпадающих меню.
 export function DropdownsDemo() {

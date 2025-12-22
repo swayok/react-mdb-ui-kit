@@ -4,8 +4,8 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {ReactNode} from 'react'
-import {Button} from '../Button'
-import {IconButton} from '../IconButton'
+import {Button} from '../Button/Button'
+import {IconButton} from '../Icon/IconButton'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridFiltersPanelButtonsProps} from './DataGridTypes'
 

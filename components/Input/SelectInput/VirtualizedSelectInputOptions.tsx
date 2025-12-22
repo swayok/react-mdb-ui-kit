@@ -1,5 +1,5 @@
 import {useCallback} from 'react'
-import {useVirtuosoLibAsync} from '../../../helpers/useVirtuosoLibAsync'
+import {useVirtuosoLibAsync} from '../../../helpers/vendor/useVirtuosoLibAsync'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
 import {
     AnyObject,

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
 import {HtmlComponentProps} from '../../types'
 
 interface Props extends HtmlComponentProps<HTMLAnchorElement> {

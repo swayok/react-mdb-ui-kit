@@ -5,12 +5,12 @@ import {
     useCallback,
     useRef,
 } from 'react'
-import {Button} from '../Button'
+import {Button} from '../Button/Button'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownApi} from '../Dropdown/DropdownTypes'
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {Input} from '../Input/Input'
 import {DataGridPaginationPagesListFillerDropdownProps} from './DataGridTypes'
 

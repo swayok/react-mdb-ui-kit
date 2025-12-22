@@ -10,7 +10,7 @@ import {
     FileAPI,
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
-} from '../../helpers/FileAPI/FileAPI'
+} from '../../helpers/file_api/FileAPI'
 import {ToastService} from '../../services/ToastService'
 import {
     AnyObject,

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import {
     IconProps,
     Icon,
-} from '../Icon'
+} from '../Icon/Icon'
 import {InputGroupIconProps} from './InputTypes'
 
 // Иконка для вставки в <InputGroup>.

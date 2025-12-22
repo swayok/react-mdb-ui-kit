@@ -1,0 +1,106 @@
+import clsx from 'clsx'
+import {
+    AnchorHTMLAttributes,
+    CSSProperties,
+    MouseEvent,
+} from 'react'
+import {Link} from 'react-router-dom'
+import {
+    AnyObject,
+    ReactComponentOrTagName,
+    SvgIconInfo,
+    TextColors,
+} from '../../types'
+import {Icon} from './Icon'
+import {MdiIconProps} from './MDIIcon'
+import {Tooltip} from '../Tooltip/Tooltip'
+import {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
+
+export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    href: string
+    external?: boolean
+    color?: TextColors | 'link'
+    tooltip: string
+    tooltipProps?: Pick<DefaultTooltipProps, 'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'>
+    iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
+    path: string | SvgIconInfo
+    size?: number | null
+    iconClassName?: string
+    iconStyle?: CSSProperties
+    disabled?: boolean
+    visible?: boolean
+    // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
+    // Если false: использовать CSS класс 'with-icon-flex' для центрирования иконки по вертикали.
+    // По умолчанию: false.
+    inline?: boolean
+}
+
+// Ссылка в виде иконки без подписи
+export function IconHref(props: IconHrefProps) {
+
+    const {
+        tooltip,
+        tooltipProps,
+        color,
+        disabled,
+        iconProps,
+        iconClassName,
+        iconStyle,
+        className,
+        onClick,
+        path,
+        size,
+        href,
+        target,
+        external,
+        visible,
+        children,
+        inline = false,
+        ...linkProps
+    } = props
+
+    // Если указан target или external, то ссылку считаем внешней (не должна идти через роутер)
+    const Tag: ReactComponentOrTagName = external ? 'a' : Link
+    const urlProps: AnyObject = Tag === 'a'
+        ? {href}
+        : {to: href}
+    if (target) {
+        urlProps.target = target
+    }
+
+    if (visible === false) {
+        return null
+    }
+
+    return (
+        <Tooltip
+            tag={Tag}
+            {...urlProps}
+            title={tooltip}
+            className={clsx(
+                inline ? 'd-inline-block with-icon' : 'with-icon-flex',
+                color ? 'link-' + props.color : null,
+                disabled ? 'disabled' : null,
+                className
+            )}
+            {...tooltipProps}
+            tooltipDisableClickHandler
+            {...linkProps}
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+                if (disabled) {
+                    event.preventDefault()
+                }
+                onClick?.(event)
+            }}
+        >
+            <Icon
+                size={size}
+                {...iconProps}
+                className={iconClassName}
+                style={iconStyle}
+                path={path}
+            />
+            {children}
+        </Tooltip>
+    )
+}

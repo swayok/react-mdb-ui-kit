@@ -8,12 +8,12 @@ import {
     extractAndNormalizeValidationErrorsFromResponseData,
     UnauthorisedErrorHttpCode,
     ValidationErrorHttpCode,
-} from '../../helpers/ApiRequestErrorHelpers'
+} from '../../helpers/api/ApiRequestErrorHelpers'
 import {
     FileAPI,
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
-} from '../../helpers/FileAPI/FileAPI'
+} from '../../helpers/file_api/FileAPI'
 import {getCookieValue} from '../../helpers/getCookieValue'
 import {NavigationService} from '../../services/NavigationService'
 import {ToastService} from '../../services/ToastService'

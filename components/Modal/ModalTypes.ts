@@ -7,7 +7,7 @@ import type {
     HtmlComponentProps,
     MorphingHtmlComponentProps,
 } from '../../types'
-import type {ButtonProps} from '../Button'
+import type {ButtonProps} from '../Button/Button'
 
 // Стандартная структура:
 // Modal

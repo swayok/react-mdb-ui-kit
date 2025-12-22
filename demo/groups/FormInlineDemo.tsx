@@ -1,8 +1,8 @@
-import {Button} from '../../components/Button'
+import {Button} from '../../components/Button/Button'
 import {Input} from '../../components/Input/Input'
 import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
-import {SectionDivider} from '../../components/SectionDivider'
-import {useFormValues} from '../../helpers/useFormValues'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
+import {useFormValues} from '../../helpers/form/useFormValues'
 
 // Демонстрация inline форм.
 export function FormInlineDemo() {

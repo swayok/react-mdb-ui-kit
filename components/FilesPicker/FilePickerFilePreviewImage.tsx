@@ -9,8 +9,8 @@ import {
     useRef,
     useState,
 } from 'react'
-import {FileApiImageManipulation} from '../../helpers/FileAPI/FileApiImageManipulation'
-import {Icon} from '../Icon'
+import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'
+import {Icon} from '../Icon/Icon'
 import {
     FilePickerFileInfo,
     FilePickerPreviewSizes,

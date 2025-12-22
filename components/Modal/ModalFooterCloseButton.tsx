@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {MouseEvent} from 'react'
-import {Button} from '../Button'
+import {Button} from '../Button/Button'
 import {ModalFooterCloseButtonProps} from './ModalTypes'
 
 // Кнопка закрытия модального окна для ModalFooter.

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {useState} from 'react'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
-import {FadeSwitch} from '../FadeSwitch'
+import {FadeSwitch} from '../Animation/FadeSwitch'
 import {ImagesCarouselModal} from './ImagesCarouselModal'
 import {ImagesPreviewerProps} from './ImagesPreviewerTypes'
 

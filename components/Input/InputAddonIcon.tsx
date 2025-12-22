@@ -1,4 +1,4 @@
-import {Icon} from '../Icon'
+import {Icon} from '../Icon/Icon'
 import {InputAddonText} from './InputAddonText'
 import {InputAddonIconProps} from './InputTypes'
 

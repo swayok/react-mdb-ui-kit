@@ -8,7 +8,7 @@ import {
     createContext,
     useContext,
 } from 'react'
-import {FileAPISelectedFileInfo} from '../../helpers/FileAPI/FileAPI'
+import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
 import {mdiFilePdfOutline} from '../../helpers/icons'
 import file_picker from '../../locales/en/file_picker'
 import {AnyObject} from '../../types'

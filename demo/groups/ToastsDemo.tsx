@@ -1,4 +1,4 @@
-import {Button} from '../../components/Button'
+import {Button} from '../../components/Button/Button'
 import {ToastService} from '../../services/ToastService'
 
 // Демонстрация всплывающих уведомлений.

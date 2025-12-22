@@ -5,7 +5,7 @@ import type {
 import type {
     FileAPIImageFileInfo,
     FileAPISelectedFileInfo,
-} from '../../helpers/FileAPI/FileAPI'
+} from '../../helpers/file_api/FileAPI'
 import type {ApiRequestMethod} from '../../services/ApiRequestService'
 import {
     AnyObject,

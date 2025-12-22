@@ -3,7 +3,7 @@ import {
     mdiTranslate,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {LanguagesManager} from '../../helpers/LanguagesManager'
+import {LanguagesManager} from '../../helpers/i18n/LanguagesManager'
 import {
     BasicLanguageConfig,
     FormSelectOption,
@@ -13,8 +13,8 @@ import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {DropdownPlacement} from '../Dropdown/DropdownTypes'
-import {Icon} from '../Icon'
-import {MdiIconProps} from '../MDIIcon'
+import {Icon} from '../Icon/Icon'
+import {MdiIconProps} from '../Icon/MDIIcon'
 
 interface Props {
     currentLanguage: BasicLanguageConfig

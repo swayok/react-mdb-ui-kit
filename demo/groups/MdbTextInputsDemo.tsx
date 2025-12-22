@@ -2,8 +2,8 @@ import {
     mdiAccount,
     mdiTranslate,
 } from '@mdi/js'
-import {Button} from '../../components/Button'
-import {Icon} from '../../components/Icon'
+import {Button} from '../../components/Button/Button'
+import {Icon} from '../../components/Icon/Icon'
 import {Input} from '../../components/Input/Input'
 import {InputAddonIcon} from '../../components/Input/InputAddonIcon'
 import {InputAddonText} from '../../components/Input/InputAddonText'
@@ -11,8 +11,8 @@ import {InputGroup} from '../../components/Input/InputGroup'
 import {InputGroupText} from '../../components/Input/InputGroupText'
 import {InputInfo} from '../../components/Input/InputInfo'
 import {PasswordInput} from '../../components/Input/PasswordInput'
-import {SectionDivider} from '../../components/SectionDivider'
-import {useFormValues} from '../../helpers/useFormValues'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
+import {useFormValues} from '../../helpers/form/useFormValues'
 
 export function MdbTextInputsDemo() {
 

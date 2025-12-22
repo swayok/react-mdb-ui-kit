@@ -1,5 +1,5 @@
 import {DateInput} from '../../components/Input/DateInput'
-import {SectionDivider} from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 export function DateInputsDemo() {
 

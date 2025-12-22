@@ -9,7 +9,7 @@ import {
     mdiSortNumericDescending,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {IconButton} from '../IconButton'
+import {IconButton} from '../Icon/IconButton'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridOrderingPanelLabel} from './DataGridOrderingPanelLabel'

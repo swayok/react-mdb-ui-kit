@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {ReactNode} from 'react'
-import {ButtonsSwitch} from '../ButtonsSwitch'
+import {ButtonsSwitch} from '../Button/ButtonsSwitch'
 import {ButtonsSwitchInputProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 

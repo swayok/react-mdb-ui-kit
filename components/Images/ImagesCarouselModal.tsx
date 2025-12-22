@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {FadeSwitch} from '../FadeSwitch'
+import {FadeSwitch} from '../Animation/FadeSwitch'
 import {Modal} from '../Modal/Modal'
 import {ModalContent} from '../Modal/ModalContent'
 import {ModalHeaderCloseButton} from '../Modal/ModalHeaderCloseButton'

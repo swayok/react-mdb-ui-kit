@@ -1,6 +1,6 @@
 import {MultiSelectInput} from '../../components/Input/SelectInput/MultiSelectInput'
 import {SelectInput} from '../../components/Input/SelectInput/SelectInput'
-import {SectionDivider} from '../../components/SectionDivider'
+import {SectionDivider} from '../../components/Typography/SectionDivider'
 
 export function SelectInputsDemo() {
 
