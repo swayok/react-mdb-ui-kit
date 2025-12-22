@@ -182,6 +182,3 @@ export function Collapse(props: CollapseProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default Collapse

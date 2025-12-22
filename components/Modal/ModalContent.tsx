@@ -19,6 +19,3 @@ export function ModalContent(props: ModalContentProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ModalContent

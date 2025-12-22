@@ -273,6 +273,3 @@ export function WysiwygInput(props: WysiwygInputProps) {
         </WrapperTag>
     )
 }
-
-/** @deprecated */
-export default WysiwygInput

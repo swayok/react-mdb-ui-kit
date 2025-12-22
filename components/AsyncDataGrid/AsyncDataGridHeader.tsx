@@ -33,6 +33,3 @@ export function AsyncDataGridHeader<
         />
     )
 }
-
-/** @deprecated */
-export default AsyncDataGridHeader

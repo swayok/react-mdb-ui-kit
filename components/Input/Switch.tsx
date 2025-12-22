@@ -10,6 +10,3 @@ export function Switch(props: Omit<CheckboxProps, 'type'>) {
         />
     )
 }
-
-/** @deprecated */
-export default Switch

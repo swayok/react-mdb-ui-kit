@@ -50,6 +50,3 @@ export function filterOptions<
     }
     return filtered
 }
-
-/** @deprecated */
-export default filterOptions

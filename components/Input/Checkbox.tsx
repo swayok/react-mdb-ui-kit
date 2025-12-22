@@ -178,6 +178,3 @@ export function Checkbox(props: CheckboxProps) {
         )
     }
 }
-
-/** @deprecated */
-export default Checkbox

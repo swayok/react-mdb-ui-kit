@@ -172,6 +172,3 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
         </Collapse>
     )
 }
-
-/** @deprecated */
-export default FilePickerPreviewsWithoutInfo

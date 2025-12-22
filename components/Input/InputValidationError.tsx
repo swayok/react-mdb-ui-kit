@@ -105,6 +105,3 @@ function normalizeErrorMessage(error: InputValidationErrorProps['error']): strin
     const errors = Object.values(error)
     return errors.length === 0 ? null : errors.join('; ')
 }
-
-/** @deprecated */
-export default InputValidationError

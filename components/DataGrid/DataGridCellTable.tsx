@@ -21,6 +21,3 @@ export function DataGridCellTable(props: TableHTMLAttributes<HTMLTableElement>) 
         </table>
     )
 }
-
-/** @deprecated */
-export default DataGridCellTable

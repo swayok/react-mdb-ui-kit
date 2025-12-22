@@ -35,6 +35,3 @@ export function Note(props: NoteProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default Note

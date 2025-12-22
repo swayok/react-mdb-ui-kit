@@ -137,6 +137,3 @@ export class FileAPI {
         return !!(file.type && file.type.match(/^image/) !== null)
     }
 }
-
-/** @deprecated */
-export default FileAPI

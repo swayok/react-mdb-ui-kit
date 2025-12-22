@@ -23,6 +23,3 @@ export function DataGridCell(props: DataGridCellProps) {
         </td>
     )
 }
-
-/** @deprecated */
-export default DataGridCell

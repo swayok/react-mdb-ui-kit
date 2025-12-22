@@ -78,6 +78,3 @@ export function TabSheetTabButton<TabName extends string = string>(
         </li>
     )
 }
-
-/** @deprecated */
-export default TabSheetTabButton

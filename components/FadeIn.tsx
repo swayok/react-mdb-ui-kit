@@ -53,6 +53,3 @@ export function FadeIn(props: Props) {
         </CSSTransition>
     )
 }
-
-/** @deprecated */
-export default FadeIn

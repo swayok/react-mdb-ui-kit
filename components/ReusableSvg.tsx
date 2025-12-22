@@ -68,6 +68,3 @@ export function ReusableSvg(props: ReusableSvgProps) {
         </svg>
     )
 }
-
-/** @deprecated */
-export default ReusableSvg

@@ -60,6 +60,3 @@ export function DataGridFooter(props: DataGridFooterProps) {
         </DataGridFooterWrapper>
     )
 }
-
-/** @deprecated */
-export default DataGridFooter

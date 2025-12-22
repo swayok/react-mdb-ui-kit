@@ -76,6 +76,3 @@ export function ButtonsSwitch<ValueType = string>(props: ButtonsSwitchProps<Valu
         </div>
     )
 }
-
-/** @deprecated */
-export default ButtonsSwitch

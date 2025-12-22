@@ -21,9 +21,6 @@ export function getCookieValue(key: string): string | null {
     return null
 }
 
-/** @deprecated */
-export default getCookieValue
-
 // Декодирование значения из cookie.
 function decodeCookieValue(value: string) {
     if (value[0] === '"') {

@@ -152,6 +152,3 @@ export class RegionsManager<
         return []
     }
 }
-
-/** @deprecated */
-export default RegionsManager

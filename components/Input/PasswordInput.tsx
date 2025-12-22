@@ -44,6 +44,3 @@ export function PasswordInput(props: PasswordInputProps) {
         </Input>
     )
 }
-
-/** @deprecated */
-export default PasswordInput

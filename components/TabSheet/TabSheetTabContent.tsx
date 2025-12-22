@@ -107,6 +107,3 @@ export function TabSheetTabContent<
         </div>
     )
 }
-
-/** @deprecated */
-export default TabSheetTabContent

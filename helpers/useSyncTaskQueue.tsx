@@ -99,6 +99,3 @@ export function useSyncTaskQueue(params: SyncQueueOptions = defaultOptions): Syn
         }, []),
     }
 }
-
-/** @deprecated */
-export default useSyncTaskQueue

@@ -45,6 +45,3 @@ export function IconButtonSwitch(props: IconButtonSwitchProps) {
         />
     )
 }
-
-/** @deprecated */
-export default IconButtonSwitch

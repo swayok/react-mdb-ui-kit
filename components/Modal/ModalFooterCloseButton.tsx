@@ -25,6 +25,3 @@ export function ModalFooterCloseButton(props: ModalFooterCloseButtonProps) {
         </Button>
     )
 }
-
-/** @deprecated */
-export default ModalFooterCloseButton

@@ -72,6 +72,3 @@ export function CollapsedContent(props: CollapsedContentProps) {
         </>
     )
 }
-
-/** @deprecated */
-export default CollapsedContent

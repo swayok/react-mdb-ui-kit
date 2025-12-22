@@ -30,6 +30,3 @@ export function CardHeader(props: CardHeaderProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default CardHeader

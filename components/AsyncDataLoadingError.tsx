@@ -42,6 +42,3 @@ export function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default AsyncDataLoadingError

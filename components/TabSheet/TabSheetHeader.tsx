@@ -28,6 +28,3 @@ export function TabSheetHeader(props: TabSheetHeaderProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default TabSheetHeader

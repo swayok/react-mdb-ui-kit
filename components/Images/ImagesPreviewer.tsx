@@ -108,6 +108,3 @@ export function ImagesPreviewer(props: ImagesPreviewerProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ImagesPreviewer

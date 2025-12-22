@@ -94,6 +94,3 @@ export function DataGridTable<
         </div>
     )
 }
-
-/** @deprecated */
-export default DataGridTable

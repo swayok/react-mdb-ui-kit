@@ -32,6 +32,3 @@ export function ModalHeaderCloseButton(props: ModalHeaderCloseButtonProps) {
         />
     )
 }
-
-/** @deprecated */
-export default ModalHeaderCloseButton

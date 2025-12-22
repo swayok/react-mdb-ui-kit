@@ -59,6 +59,3 @@ export function LabeledValue(props: Props) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default LabeledValue

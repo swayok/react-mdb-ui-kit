@@ -49,6 +49,3 @@ export function detectUiLayout(): UILayout {
     console.log(`[detectUiLayout] ${window.innerWidth}x${window.innerHeight} => ${JSON.stringify(layout)}`)
     return layout
 }
-
-/** @deprecated */
-export default detectUiLayout

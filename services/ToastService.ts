@@ -84,9 +84,3 @@ export abstract class ToastService {
         return this.toast
     }
 }
-
-/**
- * @deprecated
- * Use import {ToastService} from 'swayok-react-mdb-ui-kit/services/ToastService'
- */
-export default ToastService

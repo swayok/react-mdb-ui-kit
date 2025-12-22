@@ -24,9 +24,6 @@ export function useInputErrorSetter<
     }, [])
 }
 
-/** @deprecated */
-export default useInputErrorSetter
-
 // Добавить/удалить сообщение об ошибке для одного поля ввода.
 export function setInputError<
     FormErrors extends AnyObject<string | null> = AnyObject<string | null>,

@@ -121,9 +121,3 @@ export class DateTimeService {
         return dayjs.isDayjs(value)
     }
 }
-
-/**
- * @deprecated
- * Use import {DateTimeService} from 'swayok-react-mdb-ui-kit/services/DateTimeService'
- */
-export default DateTimeService

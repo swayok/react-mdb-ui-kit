@@ -48,9 +48,6 @@ export function getDefaultWysiwygConfig(
     }
 }
 
-/** @deprecated */
-export default getDefaultWysiwygConfig
-
 // Расширить стандартные настройки для CKEditor.
 export function extendDefaultWysiwygConfig(
     extender: (config: CKEditorConfig) => void,

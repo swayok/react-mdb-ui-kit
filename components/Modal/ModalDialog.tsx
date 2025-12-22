@@ -32,6 +32,3 @@ export function ModalDialog(props: ModalDialogProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ModalDialog

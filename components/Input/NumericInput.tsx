@@ -295,6 +295,3 @@ function isValidCharacter(
     }
     return 'continue'
 }
-
-/** @deprecated */
-export default NumericInput

@@ -78,6 +78,3 @@ export function FadeSwitch(props: Props) {
         </SwitchTransition>
     )
 }
-
-/** @deprecated */
-export default FadeSwitch

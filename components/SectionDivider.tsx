@@ -61,6 +61,3 @@ export function SectionDivider(props: SectionDividerProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default SectionDivider

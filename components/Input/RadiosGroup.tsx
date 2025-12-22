@@ -130,6 +130,3 @@ export function RadiosGroup<
         </InputValidationError>
     )
 }
-
-/** @deprecated */
-export default RadiosGroup

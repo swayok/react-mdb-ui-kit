@@ -1,10 +1,5 @@
 import Echo, {Channel} from 'laravel-echo'
-import {
-    ReactNode,
-    RefObject,
-    useEffect,
-    useRef,
-} from 'react'
+import {RefObject} from 'react'
 import {AnyObject} from '../types'
 
 interface WebSocketServiceAuthInfo {
@@ -277,81 +272,4 @@ export abstract class WebSocketService {
             return this.channels
         }
     }
-}
-
-/**
- * @deprecated
- * Use import {WebSocketService} from 'swayok-react-mdb-ui-kit/services/WebSocketService'
- */
-export default WebSocketService
-
-export interface WebSocketConnectorProps {
-    key: string
-    userId: number
-    authToken?: string | null
-    // Ключ: псевдоним канала, значение: полное название канала.
-    channels: AnyObject<string>
-    children?: ReactNode | ReactNode[]
-}
-
-// Компонент для контроля соединения с WebSocket каналом пользователя.
-// Соединение происходит при монтаже компонента.
-// Отсоединение - при демонтаже.
-// Можно размещать <WebSocketEventsHandler> внутри этого компонента для удобства.
-// Примечание: аналогичного смысла React-хук работает достаточно криво.
-export function WebSocketConnector(props: WebSocketConnectorProps) {
-
-    // Открыть/закрыть соединение.
-    useEffect(() => {
-        WebSocketService.connect(props.userId, props.authToken ?? null, props.channels)
-        return () => {
-            WebSocketService.disconnect()
-        }
-    }, [])
-
-    return (
-        <>
-            {props.children}
-        </>
-    )
-}
-
-export interface WebSocketEventsHandlerProps<EventData extends WebsocketEventData = WebsocketEventData> {
-    subscriptionId: string
-    event: string
-    handler: WebsocketEventHandler<EventData>
-    // Список каналов, на которые нужно подписаться.
-    // Если null: подписаться на все каналы.
-    // Можно использовать псевдонимы каналов, указанные при вызове WebSocketConnector (channels).
-    channels?: string[] | null
-}
-
-// React компонент для регистрации и остановки обработки событий указанного типа передаваемых через websocket.
-// Регистрация происходит при монтаже компонента, остановка - при демонтаже.
-// Важно: Свойство channels должно быть стабильным, чтобы не запускать переподключения постоянно.
-// Плохо: <WebSocketEventsHandlerBase channels={['public']} />, ['public'] нужно вынести в константу вне компонента.
-export function WebSocketEventsHandler<
-    EventData extends WebsocketEventData = WebsocketEventData,
->(props: WebSocketEventsHandlerProps<EventData>): null {
-
-    const {
-        subscriptionId,
-        event,
-        handler: propsHandler,
-        channels,
-    } = props
-
-    const handlerRef = useRef(propsHandler)
-    handlerRef.current = propsHandler
-
-    useEffect(
-        () => WebSocketService.subscribe<EventData>(
-            subscriptionId,
-            event,
-            handlerRef,
-            channels
-        ),
-        [subscriptionId, event, channels]
-    )
-    return null
 }

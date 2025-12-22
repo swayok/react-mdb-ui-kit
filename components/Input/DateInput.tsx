@@ -18,7 +18,6 @@ import {useEventCallback} from '../../helpers/useEventCallback'
 import {DateTimeService} from '../../services/DateTimeService'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
-import {Icon} from '../Icon'
 import {IconButton} from '../IconButton'
 import {useInputDropdown} from './helpers/useInputDropdown'
 import {Input} from './Input'
@@ -291,6 +290,3 @@ function convertDateInputValueToString(
     return DateTimeService.parse(from).format(dateFormat)
         + ' - ' + DateTimeService.parse(to).format(dateFormat)
 }
-
-/** @deprecated */
-export default DateInput

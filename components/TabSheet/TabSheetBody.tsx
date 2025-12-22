@@ -22,6 +22,3 @@ export function TabSheetBody(props: TabSheetBodyProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default TabSheetBody

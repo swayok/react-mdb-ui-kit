@@ -27,6 +27,3 @@ export function DataGridRow(props: DataGridRowProps) {
         </tr>
     )
 }
-
-/** @deprecated */
-export default DataGridRow

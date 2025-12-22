@@ -256,6 +256,3 @@ export function filterAndOrderRows<
         ordering.direction
     )
 }
-
-/** @deprecated */
-export default DataGrid

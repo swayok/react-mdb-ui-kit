@@ -46,6 +46,3 @@ export function SelectInputOptionsGroupHeader<
         </DropdownHeader>
     )
 }
-
-/** @deprecated */
-export default SelectInputOptionsGroupHeader

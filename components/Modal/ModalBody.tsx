@@ -18,6 +18,3 @@ export function ModalBody(props: ModalBodyProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ModalBody

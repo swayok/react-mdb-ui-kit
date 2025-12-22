@@ -23,6 +23,3 @@ export function InputAddonIcon(props: InputAddonIconProps) {
         </InputAddonText>
     )
 }
-
-/** @deprecated */
-export default InputAddonIcon

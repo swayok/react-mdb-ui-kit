@@ -188,6 +188,3 @@ export function useFormValues<
         setIsSubmitting,
     }
 }
-
-/** @deprecated */
-export default useFormValues

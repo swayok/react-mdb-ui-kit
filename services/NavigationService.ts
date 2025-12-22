@@ -288,12 +288,6 @@ export class NavigationService {
 }
 
 /**
- * @deprecated
- * Use import {NavigationService} from 'swayok-react-mdb-ui-kit/services/NavigationService'
- */
-export default NavigationService
-
-/**
  * Настройка NavigationService и отслеживание текущей локации.
  */
 export function useNavigationService() {

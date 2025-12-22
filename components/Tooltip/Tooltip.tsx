@@ -49,6 +49,3 @@ export function Tooltip<InjectedComponentProps extends object = HtmlComponentPro
         />
     )
 }
-
-/** @deprecated */
-export default Tooltip

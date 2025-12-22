@@ -165,6 +165,3 @@ export function MDIIcon(props: MdiIconProps) {
         )
     }
 }
-
-/** @deprecated */
-export default MDIIcon

@@ -114,6 +114,3 @@ export function Loading(props: LoadingProps) {
         </CSSTransition>
     )
 }
-
-/** @deprecated */
-export default Loading

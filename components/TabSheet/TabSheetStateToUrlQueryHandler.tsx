@@ -47,6 +47,3 @@ export function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHan
 
     return null
 }
-
-/** @deprecated */
-export default TabSheetStateToUrlQueryHandler

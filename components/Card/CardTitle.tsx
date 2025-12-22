@@ -19,6 +19,3 @@ export function CardTitle(props: CardTitleProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default CardTitle

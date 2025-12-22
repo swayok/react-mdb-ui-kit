@@ -74,6 +74,3 @@ export function TabSheet<TabName extends string = string>(
         </Tag>
     )
 }
-
-/** @deprecated */
-export default TabSheet

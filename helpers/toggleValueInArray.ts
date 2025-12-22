@@ -39,6 +39,3 @@ export function toggleValueInArray<T = unknown>(
     }
     return updatedArray
 }
-
-/** @deprecated */
-export default toggleValueInArray

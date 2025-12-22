@@ -456,6 +456,3 @@ export function FilePickerInput(props: FilePickerInputProps) {
         </FilePickerContext.Provider>
     )
 }
-
-/** @deprecated */
-export default FilePickerInput

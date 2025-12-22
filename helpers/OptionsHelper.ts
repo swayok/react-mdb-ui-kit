@@ -50,6 +50,3 @@ export abstract class OptionsHelper {
         return options
     }
 }
-
-/** @deprecated */
-export default OptionsHelper

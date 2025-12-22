@@ -163,9 +163,6 @@ export function Button<
     }
 }
 
-/** @deprecated */
-export default Button
-
 // Нормализация свойств анимации нажатия на кнопку.
 function normalizeRippleProps(
     ripple: ButtonProps['ripple'],

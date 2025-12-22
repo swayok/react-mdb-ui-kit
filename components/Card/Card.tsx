@@ -43,6 +43,3 @@ export function Card(props: CardProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default Card

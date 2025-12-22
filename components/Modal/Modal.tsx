@@ -256,6 +256,3 @@ export function Modal(props: ModalProps) {
         </>
     )
 }
-
-/** @deprecated */
-export default Modal

@@ -156,6 +156,3 @@ export abstract class NumbersService {
         return region ? language + '-' + region : language
     }
 }
-
-/** @deprecated */
-export default NumbersService

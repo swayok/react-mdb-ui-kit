@@ -28,6 +28,3 @@ export function ModalFooter(props: ModalFooterProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ModalFooter

@@ -23,6 +23,3 @@ export function ScrollToTop(props: Props) {
 
     return null
 }
-
-/** @deprecated */
-export default ScrollToTop

@@ -72,6 +72,3 @@ export function SvgIcon(props: SvgIconProps) {
         </svg>
     )
 }
-
-/** @deprecated */
-export default SvgIcon

@@ -10,6 +10,3 @@ export function Radio(props: Omit<CheckboxProps, 'type'>) {
         />
     )
 }
-
-/** @deprecated */
-export default Radio

@@ -94,6 +94,3 @@ export function ButtonsSwitchInput<ValueType = string>(
         </InputValidationError>
     )
 }
-
-/** @deprecated */
-export default ButtonsSwitchInput

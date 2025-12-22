@@ -188,6 +188,3 @@ export function CheckboxesGroup<
         </InputValidationError>
     )
 }
-
-/** @deprecated */
-export default CheckboxesGroup

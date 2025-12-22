@@ -76,6 +76,3 @@ export function DismissibleNote(props: Props) {
         </Collapse>
     )
 }
-
-/** @deprecated */
-export default DismissibleNote

@@ -118,6 +118,3 @@ export function RegionSwitcherDropdown(props: Props) {
         </div>
     )
 }
-
-/** @deprecated */
-export default RegionSwitcherDropdown

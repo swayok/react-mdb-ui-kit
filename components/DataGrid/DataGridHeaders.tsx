@@ -17,6 +17,3 @@ export function DataGridHeaders(props: DataGridHeadersProps) {
         </thead>
     )
 }
-
-/** @deprecated */
-export default DataGridHeaders

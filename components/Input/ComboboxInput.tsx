@@ -182,6 +182,3 @@ export function ComboboxInput(props: ComboboxInputProps) {
         </>
     )
 }
-
-/** @deprecated */
-export default ComboboxInput

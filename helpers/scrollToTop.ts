@@ -12,6 +12,3 @@ export function scrollToTop(
         behavior: behavior as never,
     })
 }
-
-/** @deprecated */
-export default scrollToTop

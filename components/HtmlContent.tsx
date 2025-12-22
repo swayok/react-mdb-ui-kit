@@ -32,6 +32,3 @@ export function HtmlContent(props: Props) {
         />
     )
 }
-
-/** @deprecated */
-export default HtmlContent

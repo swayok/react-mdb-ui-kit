@@ -63,6 +63,3 @@ export function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {
         </form>
     )
 }
-
-/** @deprecated */
-export default DataGridFiltersPanel

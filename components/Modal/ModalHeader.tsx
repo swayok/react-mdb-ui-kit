@@ -44,6 +44,3 @@ export function ModalHeader(props: ModalHeaderProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ModalHeader

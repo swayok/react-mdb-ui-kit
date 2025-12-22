@@ -17,7 +17,6 @@ import {InputLabel} from './InputLabel'
 import {
     InputProps,
     InputSize,
-    InputUiApi,
 } from './InputTypes'
 import {InputUi} from './InputUi'
 import {InputWrapper} from './InputWrapper'
@@ -249,6 +248,3 @@ export function Input(props: InputProps) {
         </WrapperComponent>
     )
 }
-
-/** @deprecated */
-export default Input

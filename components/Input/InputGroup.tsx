@@ -26,6 +26,3 @@ export function InputGroup(props: InputGroupProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default InputGroup

@@ -111,6 +111,3 @@ export function IconButton(props: IconButtonProps) {
         )
     }
 }
-
-/** @deprecated */
-export default IconButton

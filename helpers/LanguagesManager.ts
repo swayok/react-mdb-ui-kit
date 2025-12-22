@@ -222,6 +222,3 @@ export class LanguagesManager<
         return []
     }
 }
-
-/** @deprecated */
-export default LanguagesManager

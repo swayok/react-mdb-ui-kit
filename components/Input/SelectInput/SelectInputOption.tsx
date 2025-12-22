@@ -75,6 +75,3 @@ export function SelectInputOption<
         </DropdownItem>
     )
 }
-
-/** @deprecated */
-export default SelectInputOption

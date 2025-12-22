@@ -103,9 +103,6 @@ export function DataGridOrderingPanel<
     )
 }
 
-/** @deprecated */
-export default DataGridOrderingPanel
-
 // Иконки направления сортировки для разных типов данных.
 const orderingDirectionIcons: Record<DataGridOrderingPanelOptionType, OrderingDirectionIcons> = {
     numbers: {

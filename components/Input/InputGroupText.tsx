@@ -30,6 +30,3 @@ export function InputGroupText(props: InputGroupTextProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default InputGroupText

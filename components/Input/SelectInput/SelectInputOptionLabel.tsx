@@ -29,6 +29,3 @@ export function SelectInputOptionLabel<
     }
     return label
 }
-
-/** @deprecated */
-export default SelectInputOptionLabel

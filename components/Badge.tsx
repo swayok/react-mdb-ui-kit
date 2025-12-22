@@ -42,6 +42,3 @@ export function Badge(props: BadgeProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default Badge

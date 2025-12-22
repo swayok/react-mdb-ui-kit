@@ -119,6 +119,3 @@ export function Ripple(props: RippleProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default Ripple

@@ -251,6 +251,3 @@ export function MultiSelectInput<
         </SelectInputBase>
     )
 }
-
-/** @deprecated */
-export default MultiSelectInput

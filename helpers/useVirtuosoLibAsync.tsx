@@ -75,9 +75,6 @@ export function useVirtuosoLibAsync<
     return virtuoso
 }
 
-/** @deprecated */
-export default useVirtuosoLibAsync
-
 export type GroupedTableVirtuosoHandle = _GroupedTableVirtuosoHandle
 
 export type GroupedTableVirtuosoProps<

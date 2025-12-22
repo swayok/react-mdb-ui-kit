@@ -21,6 +21,3 @@ export function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProp
         </div>
     )
 }
-
-/** @deprecated */
-export default DataGridOrderingPanelLabel

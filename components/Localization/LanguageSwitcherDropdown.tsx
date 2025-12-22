@@ -113,6 +113,3 @@ export function LanguageSwitcherDropdown(props: Props) {
         </div>
     )
 }
-
-/** @deprecated */
-export default LanguageSwitcherDropdown

@@ -38,6 +38,3 @@ export function InputInfo(props: InputInfoProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default InputInfo

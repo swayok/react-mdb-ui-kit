@@ -115,6 +115,3 @@ export function Countdown(props: CountdownProps) {
         </span>
     )
 }
-
-/** @deprecated */
-export default Countdown

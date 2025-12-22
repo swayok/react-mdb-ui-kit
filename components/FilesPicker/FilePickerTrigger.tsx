@@ -34,6 +34,3 @@ export function FilePickerTrigger<
         </Tag>
     )
 }
-
-/** @deprecated */
-export default FilePickerTrigger

@@ -119,6 +119,3 @@ export function OptionsSliderInput<
         </div>
     )
 }
-
-/** @deprecated */
-export default OptionsSliderInput

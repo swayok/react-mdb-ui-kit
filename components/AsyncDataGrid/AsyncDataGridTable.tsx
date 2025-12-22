@@ -89,6 +89,3 @@ export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
         </div>
     )
 }
-
-/** @deprecated */
-export default AsyncDataGridTable

@@ -19,6 +19,3 @@ export function CardBody(props: CardBodyProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default CardBody

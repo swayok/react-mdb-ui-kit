@@ -137,6 +137,3 @@ export function Icon(props: IconProps) {
         }
     }
 }
-
-/** @deprecated */
-export default Icon

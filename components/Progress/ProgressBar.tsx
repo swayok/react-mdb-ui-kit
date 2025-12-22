@@ -51,6 +51,3 @@ export function ProgressBar(props: ProgressBarProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default ProgressBar

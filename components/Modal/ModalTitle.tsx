@@ -21,6 +21,3 @@ export function ModalTitle(props: ModalTitleProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default ModalTitle

@@ -113,6 +113,3 @@ export function ImagesCarouselModal(props: ImagesCarouselModalProps) {
         />
     )
 }
-
-/** @deprecated */
-export default ImagesCarouselModal

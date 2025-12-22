@@ -30,6 +30,3 @@ export function CardFooter(props: CardFooterProps) {
         </Tag>
     )
 }
-
-/** @deprecated */
-export default CardFooter

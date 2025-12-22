@@ -37,6 +37,3 @@ export function Progress(props: ProgressProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default Progress

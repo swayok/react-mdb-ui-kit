@@ -419,6 +419,3 @@ function handleKeyboardArrow(
 function isHardcodedCharacter(char: string): boolean {
     return String(char || '').match(isHardcodedCharacterRegexp) !== null
 }
-
-/** @deprecated */
-export default MaskedNumericInput

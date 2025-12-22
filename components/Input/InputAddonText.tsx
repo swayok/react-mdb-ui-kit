@@ -23,6 +23,3 @@ export function InputAddonText(props: InputAddonTextProps) {
         </div>
     )
 }
-
-/** @deprecated */
-export default InputAddonText

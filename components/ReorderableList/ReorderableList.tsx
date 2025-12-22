@@ -108,6 +108,3 @@ export function ReorderableList<PayloadType = unknown>(
         </ReorderableListContext.Provider>
     )
 }
-
-/** @deprecated */
-export default ReorderableList

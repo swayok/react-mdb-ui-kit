@@ -104,6 +104,3 @@ export function IconHref(props: IconHrefProps) {
         </Tooltip>
     )
 }
-
-/** @deprecated */
-export default IconHref

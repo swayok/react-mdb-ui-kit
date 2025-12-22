@@ -75,6 +75,3 @@ export function RatingStars(props: Props) {
         </div>
     )
 }
-
-/** @deprecated */
-export default RatingStars

@@ -343,6 +343,3 @@ export function SelectInput<
         </SelectInputBase>
     )
 }
-
-/** @deprecated */
-export default SelectInput

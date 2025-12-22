@@ -55,6 +55,3 @@ export function FormError(props: TextProps | HtmlProps) {
         </Collapse>
     )
 }
-
-/** @deprecated */
-export default FormError

@@ -45,6 +45,3 @@ export function DataGridHeader<
         </DataGridHeaderWrapper>
     )
 }
-
-/** @deprecated */
-export default DataGridHeader

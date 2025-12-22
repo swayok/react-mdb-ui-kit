@@ -501,6 +501,3 @@ export function AsyncDataGrid<
         </DataGridContext.Provider>
     )
 }
-
-/** @deprecated */
-export default AsyncDataGrid

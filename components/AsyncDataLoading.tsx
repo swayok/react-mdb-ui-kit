@@ -77,6 +77,3 @@ export function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingPr
         </div>
     )
 }
-
-/** @deprecated */
-export default AsyncDataLoading
