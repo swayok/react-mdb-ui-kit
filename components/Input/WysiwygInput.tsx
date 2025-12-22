@@ -5,139 +5,70 @@ import {
     ChangeEvent,
     lazy,
     Suspense,
-    useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react'
+import {useEventCallback} from '../../helpers/useEventCallback'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {getDefaultWysiwygConfig} from '../../helpers/vendor/getDefaultWysiwygConfig'
+import {CKEditorInstance} from '../../types'
+import {getInputClassName} from './helpers/getInputClassName'
+import {getInputSize} from './helpers/getInputSize'
+import {separateInputPropsAndLayoutProps} from './helpers/separateInputPropsAndLayoutProps'
+import {InputLayout} from './InputLayout'
 import {
-    CKEditorInstance,
-    HtmlComponentProps,
-    ReactComponentOrTagName,
-} from '../../types'
-import {
-    InputValidationErrorProps,
+    InputSize,
     WysiwygInputProps,
 } from './InputTypes'
-import {InputValidationError} from './InputValidationError'
 
 const CKEditorReact = lazy(async () => ({
     default: (await import('ckeditor4-react')).CKEditor,
 }))
 
-const activeInputLabelSizeMultipliers = {
-    normal: 0.9,
-    small: 0.9,
-    large: 0.9,
-}
-
 // Редактор HTML.
 export function WysiwygInput(props: WysiwygInputProps) {
+    const {
+        layoutProps,
+        inputProps,
+    } = separateInputPropsAndLayoutProps<WysiwygInputProps>(props)
+
     const {
         config = getDefaultWysiwygConfig(),
         className,
         small,
         large,
-        contrast,
         value,
         id,
-        labelId,
-        labelClassName,
-        wrapperTag = 'div',
-        wrapperClassName = 'mb-4',
-        wrapperStyle,
-        wrapperProps,
-        label,
         onChange,
         children,
-        labelRef,
-        labelStyle,
-        editorRef,
-        textareaRef,
-        validationMessage,
-        validationMessageClassName,
-        withoutValidationMessage,
-        invalid,
-        grouped,
-        active,
-        activeInputLabelSizeMultiplier,
+        editorRef: propsEditorRef,
+        inputRef: propsInputRef,
         disabled,
         ...otherProps
-    } = props
+    } = inputProps
 
-    const labelEl = useRef<HTMLLabelElement>(null)
-    const editorEl = useRef<HTMLDivElement>(null)
-    const textareaEl = useRef<HTMLTextAreaElement>(null)
+    const {
+        UiComponent = null,
+        ...otherLayoutProps
+    } = layoutProps
 
-    const labelReference = labelRef ?? labelEl
-    const editorReference = editorRef ?? editorEl
-    const textareaReference = textareaRef ?? textareaEl
+    const editorRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLTextAreaElement>(null)
 
-    const [
-        labelNotchWidth,
-        setLabelNotchWidth,
-    ] = useState<number | string>(0)
+    const mergedEditorRef = useMergedRefs(
+        editorRef,
+        propsEditorRef
+    )
+    const mergedInputRef = useMergedRefs(
+        propsInputRef,
+        inputRef
+    )
 
     const [
         ckeditorInstance,
         setCkEditorInstance,
     ] = useState<CKEditorInstance | null>(null)
-
-    const wrapperIsValidationMessageContainer = (
-        !withoutValidationMessage
-        && (invalid !== undefined || validationMessage)
-    )
-
-    const wrapperClasses = clsx(
-        'form-outline',
-        contrast ? 'form-white' : null,
-        !wrapperIsValidationMessageContainer && grouped ? 'flex-1' : null,
-        wrapperIsValidationMessageContainer ? null : wrapperClassName
-    )
-    let size: 'normal' | 'small' | 'large' = 'normal'
-    if (small && !large) {
-        size = 'small'
-    } else if (large && !small) {
-        size = 'large'
-    }
-    const inputClasses = clsx(
-        'form-control',
-        'active',
-        size === 'small' ? 'form-control-sm' : null,
-        size === 'large' ? 'form-control-lg' : null,
-        invalid ? 'is-invalid' : null,
-        className
-    )
-    const labelClasses = clsx('form-label', labelClassName)
-
-    const updateLabelWidth = useCallback(
-        () => {
-            if (label?.length) {
-                if (labelReference.current && labelReference.current.clientWidth !== 0) {
-                    let multiplier: number = activeInputLabelSizeMultipliers[size]
-                    if (activeInputLabelSizeMultiplier && typeof activeInputLabelSizeMultiplier === 'object' && activeInputLabelSizeMultiplier[size]) {
-                        multiplier = activeInputLabelSizeMultiplier[size]!
-                    }
-                    setLabelNotchWidth((labelReference.current.clientWidth * multiplier) + 8)
-                } else if (labelNotchWidth === 0) {
-                    setLabelNotchWidth('80%')
-                    setTimeout(updateLabelWidth, 500)
-                }
-            }
-        },
-        [
-            label,
-            labelReference.current,
-            labelReference.current?.clientWidth,
-            activeInputLabelSizeMultiplier,
-        ]
-    )
-
-    useEffect(
-        updateLabelWidth,
-        [updateLabelWidth]
-    )
 
     // value updater for ckeditor instance
     useEffect(() => {
@@ -150,50 +81,63 @@ export function WysiwygInput(props: WysiwygInputProps) {
         ckeditorInstance?.setReadOnly(!!disabled)
     }, [disabled, ckeditorInstance])
 
-    const handleChange = useCallback(
-        (e: ChangeEvent<HTMLTextAreaElement>) => {
-            onChange?.(e)
-        },
-        [onChange]
-    )
+    const handleChange = useEventCallback((
+        e: CKEditorEventPayload<'change'>
+    ) => {
+        const editor: CKEditorInstance = e.editor as CKEditorInstance
+        editor.element.$.value = editor.getData()
+        const fakeEvent: ChangeEvent<HTMLTextAreaElement> = {
+            bubbles: false,
+            cancelable: false,
+            currentTarget: editor.element.$,
+            defaultPrevented: false,
+            eventPhase: 0,
+            isTrusted: false,
+            nativeEvent: {} as Event,
+            target: editor.element.$,
+            timeStamp: Date.now(),
+            isDefaultPrevented(): boolean {
+                return false
+            },
+            isPropagationStopped(): boolean {
+                return false
+            },
+            persist(): void {
+            },
+            preventDefault(): void {
+            },
+            stopPropagation(): void {
+            },
+            type: 'change',
+        }
+        onChange?.(fakeEvent)
+    })
 
-    const additionalWrapperProps: HtmlComponentProps<HTMLDivElement> & Partial<InputValidationErrorProps> = {}
-    let WrapperTag: ReactComponentOrTagName = wrapperTag
-    if (wrapperIsValidationMessageContainer) {
-        if (WrapperTag !== 'div') {
-            console.warn(
-                'Input component with validationMessage prop or defined invalid prop uses InputValidationError wrapper and ignores wrapperTag prop',
-                {props}
-            )
-        }
-        WrapperTag = InputValidationError
-        additionalWrapperProps.invalid = invalid ?? false
-        additionalWrapperProps.error = validationMessage
-        if (validationMessageClassName) {
-            additionalWrapperProps.errorClassName = validationMessageClassName
-        }
-        additionalWrapperProps.inputContainerClassName = wrapperClasses
-        additionalWrapperProps.className = clsx(grouped ? 'flex-1' : wrapperClassName)
+    let hasNotEmptyValue: boolean
+    if (value === undefined) {
+        // Не managed поле ввода.
+        hasNotEmptyValue = (inputRef?.current?.value.length ?? 0) > 0
     } else {
-        additionalWrapperProps.className = wrapperClasses
+        // Managed поле ввода.
+        hasNotEmptyValue = (String(value ?? '').length ?? 0) > 0
     }
-
-    additionalWrapperProps.className = clsx(
-        additionalWrapperProps.className,
-        'ckeditor-container',
-        disabled ? 'disabled' : null,
-        invalid ? 'is-invalid' : null
-    )
+    const size: InputSize = getInputSize(small, large)
 
     const input = (
         <div
-            ref={editorReference}
+            ref={mergedEditorRef}
             className="input-ckeditor-wrapper"
         >
             <Suspense>
                 <CKEditorReact
-                    className={inputClasses}
-                    onFocus={updateLabelWidth}
+                    className={getInputClassName({
+                        size,
+                        active: true,
+                        hasNotEmptyValue,
+                        invalid: layoutProps.invalid,
+                        textarea: true,
+                        className,
+                    })}
                     onBeforeLoad={(config: CKEditorConfig) => {
                         // Меняем timestamp, чтобы CSS/JS файлы, загружаемые для редактора, были актуальными.
                         // @ts-ignore
@@ -207,37 +151,9 @@ export function WysiwygInput(props: WysiwygInputProps) {
                         setCkEditorInstance(editor)
                         // @ts-ignore - на самом деле так можно делать.
                         // noinspection JSConstantReassignment
-                        textareaReference.current = editor.element.$
+                        mergedInputRef(editor.element.$)
                     }}
-                    onChange={(e: CKEditorEventPayload<'change'>) => {
-                        const editor: CKEditorInstance = e.editor as CKEditorInstance
-                        editor.element.$.value = editor.getData()
-                        const fakeEvent: ChangeEvent<HTMLTextAreaElement> = {
-                            bubbles: false,
-                            cancelable: false,
-                            currentTarget: editor.element.$,
-                            defaultPrevented: false,
-                            eventPhase: 0,
-                            isTrusted: false,
-                            nativeEvent: {} as Event,
-                            target: editor.element.$,
-                            timeStamp: Date.now(),
-                            isDefaultPrevented(): boolean {
-                                return false
-                            },
-                            isPropagationStopped(): boolean {
-                                return false
-                            },
-                            persist(): void {
-                            },
-                            preventDefault(): void {
-                            },
-                            stopPropagation(): void {
-                            },
-                            type: 'change',
-                        }
-                        handleChange(fakeEvent)
-                    }}
+                    onChange={handleChange}
                     id={id}
                     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                     {...otherProps as any}
@@ -252,24 +168,24 @@ export function WysiwygInput(props: WysiwygInputProps) {
     )
 
     return (
-        <WrapperTag
-            style={{...wrapperStyle}}
-            {...additionalWrapperProps}
-            {...wrapperProps}
-        >
-            {input}
-            {label && (
-                <label
-                    className={labelClasses}
-                    style={labelStyle}
-                    id={labelId}
-                    htmlFor={id}
-                    ref={labelReference}
-                >
-                    {label}
-                </label>
+        <InputLayout
+            {...otherLayoutProps}
+            UiComponent={UiComponent}
+            wrapperClassName={clsx(
+                'ckeditor-container mb-4',
+                disabled ? 'disabled' : null,
+                layoutProps.invalid ? 'is-invalid' : null,
+                layoutProps.wrapperClassName
             )}
-            {children}
-        </WrapperTag>
+            size={size}
+            inputId={id}
+            // Чтобы <label> был перед Полем ввода.
+            addon={
+                <>
+                    {input}
+                    {children}
+                </>
+            }
+        />
     )
 }

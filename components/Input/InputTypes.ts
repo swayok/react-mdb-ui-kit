@@ -191,11 +191,8 @@ type InputTooltipProps = Pick<
     | 'tooltipDisableClickHandler' | 'tooltipDisableHover' | 'tooltipPlacement'
 >
 
-// Свойства компонента Input.
-export interface InputProps extends Omit<HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement>, 'title'>,
-    InputTooltipProps {
-    textarea?: boolean
-    inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement | null>
+// Часть свойств компонента InputLayout для расширения в других компонентах.
+export interface InputLayoutProps extends InputTooltipProps {
     label?: string
     labelId?: string
     labelClassName?: string
@@ -210,46 +207,65 @@ export interface InputProps extends Omit<HtmlComponentProps<HTMLInputElement | H
     wrapperProps?: Omit<InputWrapperProps, InputWrapperPropsFromInput | 'className' | 'style'>
     wrapperClassName?: string
     wrapperStyle?: CSSProperties
-    value?: string
-    disabled?: boolean
-    small?: boolean
-    large?: boolean
     contrast?: boolean
+    hidden?: boolean
     // Настройки валидности введенных данных.
     invalid?: boolean
     validationMessage?: string | null
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
-    // Указать true, если label должен быть как будто поле ввода в активном состоянии.
-    active?: boolean
-    // Перейти в режим активности при фокусировке внутри поля ввода.
-    activeOnFocus?: boolean
     // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
     grouped?: boolean | 'first' | 'center' | 'last'
-    // Регулярное выражение для фильтрации вводимых символов.
-    allowedChars?: RegExp
-    // Отслеживать поведение пользователя в этом поле ввода.
-    // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
-    trackBehaviorAs?: string
     /**
      * Компонент оформления поля ввода.
      * По умолчанию: InputUi
      * @see InputUi
      */
-    UiComponent?: ComponentType<InputUiProps>
+    UiComponent?: ComponentType<InputUiProps> | null
     /**
      * Компонент Отображения подписи для поля ввода.
      * По умолчанию: InputLabel
      * @see InputLabel
      */
-    LabelComponent?: ComponentType<InputLabelProps>
+    LabelComponent?: ComponentType<InputLabelProps> | null
     /**
      * Компонент обертки поля ввода и подписи с возможностью вывода ошибки.
      * По умолчанию: InputWrapper
      * @see InputWrapper
      */
     WrapperComponent?: ComponentType<InputWrapperProps>
+}
+
+// Свойства компонента InputLayout.
+export interface InputLayoutComponentProps extends InputLayoutProps {
+    // Поле ввода или заменитель.
+    children?: ReactNode | ReactNode[]
+    // ID поля ввода для <label>.
+    inputId?: string
+    // Размер для <label>.
+    size?: InputSize
+    // Дополнительные элементы типа InputAddonText, InputAddonIcon.
+    addon?: ReactNode | ReactNode[]
+}
+
+// Свойства компонента Input.
+export interface InputProps extends InputLayoutProps,
+    Omit<HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement>, 'title'> {
+    textarea?: boolean
+    inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement | null>
+    value?: string
+    // Указать true, если label должен быть как будто поле ввода в активном состоянии.
+    active?: boolean
+    // Перейти в режим активности при фокусировке внутри поля ввода.
+    activeOnFocus?: boolean
+    small?: boolean
+    large?: boolean
+    // Регулярное выражение для фильтрации вводимых символов.
+    allowedChars?: RegExp
+    // Отслеживать поведение пользователя в этом поле ввода.
+    // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
+    trackBehaviorAs?: string
 }
 
 // Размер поля ввода.
@@ -564,40 +580,14 @@ export interface RadiosGroupProps<
 }
 
 // Свойства компонента WysiwygInput.
-export interface WysiwygInputProps extends HtmlComponentProps<HTMLTextAreaElement> {
-    // Контейнер CKEditor'а.
+export interface WysiwygInputProps extends Omit<
+    InputProps,
+    'textarea' | 'inputRef' | 'active'
+> {
+    // Контейнер для CKEditor
     editorRef?: RefObject<HTMLDivElement>
-    // Поле ввода внутри CKEditor'а.
-    textareaRef?: RefObject<HTMLTextAreaElement>
+    // Поле ввода внутри CKEditor.
+    inputRef?: RefObject<HTMLTextAreaElement>
+    // Настройки CKEditor.
     config?: CKEditorConfig
-    label?: string
-    labelId?: string
-    labelClassName?: string
-    labelStyle?: CSSProperties
-    labelRef?: RefObject<HTMLLabelElement>
-    // Мультипликаторы размера label в активном состоянии.
-    activeInputLabelSizeMultiplier?: number | {
-        normal?: number
-        small?: number
-        large?: number
-    }
-    wrapperTag?: ReactComponentOrTagName
-    wrapperProps?: AnyObject
-    wrapperClassName?: string
-    wrapperStyle?: CSSProperties
-    value?: string
-    disabled?: boolean
-    small?: boolean
-    large?: boolean
-    contrast?: boolean
-    // Настройки валидности введенных данных.
-    invalid?: boolean
-    validationMessage?: string | null
-    validationMessageClassName?: string
-    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean
-    // Указать true, если label должен быть как будто поле ввода в активном состоянии.
-    active?: boolean
-    // Указать true, если поле ввода внутри <InputGroup> и должно занимать всё свободное пространство.
-    grouped?: boolean | 'first' | 'center' | 'last'
 }

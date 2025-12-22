@@ -10,75 +10,47 @@ import {
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {TooltipProps} from '../Tooltip/TooltipTypes'
 import {getInputClassName} from './helpers/getInputClassName'
 import {getInputSize} from './helpers/getInputSize'
-import {InputLabel} from './InputLabel'
+import {separateInputPropsAndLayoutProps} from './helpers/separateInputPropsAndLayoutProps'
+import {InputLayout} from './InputLayout'
 import {
     InputProps,
     InputSize,
 } from './InputTypes'
-import {InputUi} from './InputUi'
-import {InputWrapper} from './InputWrapper'
 
 // Поле ввода значения.
 export function Input(props: InputProps) {
+
+    const {
+        layoutProps,
+        inputProps,
+    } = separateInputPropsAndLayoutProps<InputProps>(props)
+
     const {
         className,
         small,
         large,
-        contrast,
         value,
         id,
-        label,
-        labelId,
-        labelClassName,
-        grouped,
-        wrapperClassName = grouped ? '' : 'mb-4',
-        wrapperStyle,
-        wrapperProps,
         onChange,
         children,
-        labelRef: propsLabelRef,
-        labelStyle,
         inputRef: propsInputRef,
         textarea,
-        validationMessage,
-        validationMessageClassName,
-        withoutValidationMessage,
-        invalid,
         onBlur,
         onFocus,
         active,
         activeOnFocus = !props.readOnly && !props.disabled,
-        activeInputLabelSizeMultiplier,
         onBeforeInput,
         onKeyDown,
         onPaste,
         allowedChars,
         trackBehaviorAs,
-        hidden,
-        UiComponent = InputUi,
-        LabelComponent = InputLabel,
-        WrapperComponent = InputWrapper,
-        // Tooltip:
-        title,
-        tooltipPlacement,
-        tooltipMaxWidth,
-        tooltipOffset,
-        tooltipTextClassName,
-        tooltipDisableClickHandler,
-        tooltipDisableHover,
         ...otherProps
-    } = props
+    } = inputProps
 
-    const labelRef = useRef<HTMLLabelElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const mergedLabelRef = useMergedRefs(
-        propsLabelRef,
-        labelRef
-    )
     const mergedInputRef = useMergedRefs(
         propsInputRef,
         inputRef
@@ -167,18 +139,8 @@ export function Input(props: InputProps) {
         onKeyDown?.(e)
     })
 
-    if (hidden) {
+    if (layoutProps.hidden) {
         return null
-    }
-
-    const tooltipProps: TooltipProps = {
-        title,
-        tooltipPlacement,
-        tooltipOffset,
-        tooltipMaxWidth,
-        tooltipTextClassName,
-        tooltipDisableClickHandler,
-        tooltipDisableHover,
     }
 
     let hasNotEmptyValue: boolean
@@ -194,17 +156,11 @@ export function Input(props: InputProps) {
     const InputTag = textarea ? 'textarea' : 'input'
 
     return (
-        <WrapperComponent
-            className={wrapperClassName}
-            style={wrapperStyle}
-            invalid={invalid}
-            validationMessage={validationMessage}
-            validationMessageClassName={validationMessageClassName}
-            withoutValidationMessage={withoutValidationMessage}
-            contrast={contrast}
-            grouped={grouped}
-            {...wrapperProps}
-            {...tooltipProps}
+        <InputLayout
+            {...layoutProps}
+            size={size}
+            inputId={id}
+            addon={children}
         >
             <InputTag
                 className={getInputClassName({
@@ -213,7 +169,7 @@ export function Input(props: InputProps) {
                     isFocused,
                     hasNotEmptyValue,
                     activeOnFocus,
-                    invalid,
+                    invalid: layoutProps.invalid,
                     textarea,
                     className,
                 })}
@@ -229,22 +185,6 @@ export function Input(props: InputProps) {
                 ref={mergedInputRef as any}
                 {...otherProps}
             />
-            <LabelComponent
-                ref={mergedLabelRef}
-                label={label}
-                className={labelClassName}
-                style={labelStyle}
-                id={labelId}
-                inputId={id}
-                invalid={invalid}
-            />
-            <UiComponent
-                labelRef={labelRef}
-                size={size}
-                activeInputLabelSizeMultiplier={activeInputLabelSizeMultiplier}
-                invalid={invalid}
-            />
-            {children}
-        </WrapperComponent>
+        </InputLayout>
     )
 }
