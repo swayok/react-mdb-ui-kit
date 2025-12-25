@@ -7,6 +7,7 @@ import {FormSelectOption} from '../../types'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridItemsCountProps} from './DataGridTypes'
+import {useEventCallback} from 'swayok-react-mdb-ui-kit/helpers/useEventCallback'
 
 // Количество строк в таблице, диапазон отображаемых строк и выбор лимита строк на странице.
 export function DataGridItemsCount(props: DataGridItemsCountProps) {
@@ -39,11 +40,11 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
         return options
     }, [limits])
 
-    const handleLimitChange = useCallback((value: number) => {
+    const handleLimitChange = useEventCallback((value: number) => {
         if (!disabled) {
             onLimitChange?.(value)
         }
-    }, [onLimitChange, disabled])
+    })
 
     const valueToString = useCallback(
         (option: FormSelectOption<number>) => translations.items_count.items_per_page(option.value),

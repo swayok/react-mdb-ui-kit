@@ -146,8 +146,8 @@ export interface DataGridDefaultLayoutProps<RowDataType extends object = AnyObje
     // Настройка таблицы.
     tableProps?: Partial<Omit<
         DataGridTableProps<RowDataType>,
-        'Headers' | 'renderRow' | 'flexFill'>
-    >
+        'Headers' | 'renderRow'
+    >>
     // Настройка подвала таблицы (<AsyncDataGridFooter>).
     footerProps?: Partial<DataGridFooterProps>
     // Отрисовка блока с заголовками колонок (<thead>, <DataGridHeaders>).

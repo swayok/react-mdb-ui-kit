@@ -31,6 +31,7 @@ export function DropdownItem<
         className,
         disabled = false,
         onClick: propsOnClick,
+        onMouseDown: propsOnMouseDown,
         onFocus: propsOnFocus,
         active,
         hover,
@@ -55,12 +56,13 @@ export function DropdownItem<
     const isHovered: boolean = hover || item.index === activeIndex
     const tree = useFloatingTree()
 
-    const onClick = useEventCallback(
+    const onMouseDown = useEventCallback(
         (e: MouseEvent<HTMLElement>) => {
             if (disabled || disableAllItems) {
                 e.preventDefault()
                 return
             }
+            propsOnMouseDown?.(e as MouseEvent<HTMLAnchorElement>)
             propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
             tree?.events.emit('click')
         }
@@ -102,8 +104,8 @@ export function DropdownItem<
         <Component
             {...getItemProps({
                 ...otherProps,
-                onClick,
                 onFocus,
+                onMouseDown,
             })}
             ref={mergedRef}
             tabIndex={isHovered ? 0 : -1}
