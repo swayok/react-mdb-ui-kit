@@ -56,7 +56,7 @@ export interface ApiError<
 export interface ApiRequestOptions extends Omit<
     RequestInit, 'signal' | 'body' | 'method'
 > {
-    // Длительность ожидания ответа от сервера.
+    // Длительность ожидания ответа от сервера, в миллисекундах.
     timeout?: number | false
 }
 
