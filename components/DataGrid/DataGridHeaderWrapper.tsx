@@ -10,16 +10,20 @@ import {
     DataGridHeaderWrapperProps,
     DataGridOrderingDirection,
 } from './DataGridTypes'
+import {useDataGridContext} from 'swayok-react-mdb-ui-kit/components/DataGrid/DataGridContext'
 
 // Обертка заголовка колонки таблицы (<th>).
 export function DataGridHeaderWrapper(props: DataGridHeaderWrapperProps) {
 
     const {
         loading,
+    } = useAsyncDataGridContext()
+
+    const {
         orderBy,
         orderDirection,
         setOrder,
-    } = useAsyncDataGridContext()
+    } = useDataGridContext()
 
     const {
         minWidth,

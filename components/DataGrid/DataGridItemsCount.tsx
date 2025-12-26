@@ -73,10 +73,12 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
             )}
             <span className="data-grid-vertical-separator" />
             <span>
-                {translations.items_count.items_shown(
-                    totalCount === 0 ? 0 : offset + 1,
-                    Math.min(totalCount, offset + limit)
-                )}
+                {
+                    translations.items_count.items_shown(
+                        totalCount === 0 ? 0 : offset + 1,
+                        Math.min(totalCount, filteredCount ?? 0, offset + limit)
+                    )
+                }
             </span>
             {limitsOptions.length > 1 && !!onLimitChange && (
                 <div className="d-flex flex-row align-items-center justify-content-start">

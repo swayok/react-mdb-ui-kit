@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import {
     CSSProperties,
     MouseEvent,
+    ReactNode,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {TextColors} from '../../types'
@@ -14,7 +15,7 @@ export interface IconButtonProps extends Omit<
     IconProps,
     'onClick' | 'tooltipDisableClickHandler' | 'tooltipToggleClassName' | 'tooltipProps'
 > {
-    tooltip?: string
+    tooltip?: string | ReactNode
     color?: TextColors | 'link'
     onClick?: (event: MouseEvent<HTMLDivElement>) => void
     tooltipProps?: Omit<IconProps['tooltipProps'], 'onClick'>

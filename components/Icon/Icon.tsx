@@ -16,12 +16,13 @@ import {
     DefaultTooltipProps,
     TooltipProps,
 } from '../Tooltip/TooltipTypes'
+import {ReactNode} from 'react'
 
 export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'> {
     path: MdiIconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
-    tooltip?: string
+    tooltip?: string | ReactNode
     tooltipProps?: Omit<
         DefaultTooltipProps,
         'title' | 'className' | 'tooltipMaxWidth' | 'tooltipDisableClickHandler'

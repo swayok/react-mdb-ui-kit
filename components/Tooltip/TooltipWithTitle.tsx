@@ -76,7 +76,11 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
                 setShouldMount(true)
             }
         },
-        middleware: [offset(tooltipOffset), flip(), shift()],
+        middleware: [
+            offset(tooltipOffset),
+            flip({padding: 10}),
+            shift({padding: 10}),
+        ],
         whileElementsMounted: autoUpdate,
         placement: tooltipPlacement,
     })

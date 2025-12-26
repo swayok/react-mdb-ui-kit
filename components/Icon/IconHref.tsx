@@ -3,6 +3,7 @@ import {
     AnchorHTMLAttributes,
     CSSProperties,
     MouseEvent,
+    ReactNode,
 } from 'react'
 import {Link} from 'react-router-dom'
 import {
@@ -20,7 +21,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string
     external?: boolean
     color?: TextColors | 'link'
-    tooltip: string
+    tooltip: string | ReactNode
     tooltipProps?: Pick<DefaultTooltipProps, 'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'>
     iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
