@@ -59,7 +59,12 @@ export function RegionSwitcherDropdown(props: Props) {
     } = props
 
     return (
-        <div className={className}>
+        <div
+            className={clsx(
+                'region-switcher',
+                className
+            )}
+        >
             <Dropdown
                 focusFirstItemOnOpen={false}
             >

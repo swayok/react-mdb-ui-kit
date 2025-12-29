@@ -58,7 +58,12 @@ export function LanguageSwitcherDropdown(props: Props) {
     } = props
 
     return (
-        <div className={className}>
+        <div
+            className={clsx(
+                'language-switcher',
+                className
+            )}
+        >
             <Dropdown
                 focusFirstItemOnOpen={false}
             >
