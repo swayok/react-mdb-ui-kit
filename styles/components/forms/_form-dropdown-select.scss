@@ -89,11 +89,13 @@
 
                 &.active {
                     background-color: transparent;
+                    color: dropdown.$dropdown-color;
 
                     &:hover,
                     &.hover,
                     &:focus {
                         background-color: dropdown.$dropdown-item-hover-bg;
+                        color: dropdown.$dropdown-color;
                     }
                 }
             }
