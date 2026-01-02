@@ -40,6 +40,7 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
         imagePreviewClassName,
         previewSize = 100,
         imagePreviewSize = previewSize,
+        pickerButtonSize = previewSize,
         alwaysVisible,
         scaleImageOnHover = true,
         adderIcon,
@@ -92,10 +93,12 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
 
     const adderPosition: number = getNextFilePosition() + 100000
 
-    // noinspection SuspiciousTypeOfGuard
     const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
         ? {width: previewSize, height: previewSize}
         : previewSize
+    const pickerButtonSizes: FilePickerPreviewSizes = typeof pickerButtonSize === 'number'
+        ? {width: pickerButtonSize, height: pickerButtonSize}
+        : pickerButtonSize
     const iconSize: number = Math.max(
         50,
         Math.round(
@@ -125,7 +128,7 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
                     pickerButtonClassName
                 )}
                 style={{
-                    ...previewSizes,
+                    ...pickerButtonSizes,
                     order: adderPosition,
                 }}
                 href="#"

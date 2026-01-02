@@ -279,6 +279,9 @@ export interface FilePickerPreviewSizes {
 export interface FilePickerPreviewsWithoutInfoProps extends HtmlComponentProps<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.
     previewSize?: number | FilePickerPreviewSizes
+    // Размер кнопрки пикрепления картинки.
+    // По умолчанию: previewSize.
+    pickerButtonSize?: number | FilePickerPreviewSizes
     // Размер предпросмотра картинки.
     // По умолчанию: previewSize.
     imagePreviewSize?: number
