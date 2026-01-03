@@ -41,6 +41,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         mode = 'input',
         hidden,
         title,
+        label,
         selectOptionOnTabKey = true,
         selectOptionOnSpaceKey = false,
         onOptionSelect,
@@ -59,7 +60,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         dropdownShadow = '2-strong',
         offset,
         drop,
-        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
+        dropUpOffset = label && label.length > 0 ? 8 : 0,
         align,
         shadow,
         isRTL,
@@ -262,6 +263,7 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                         onKeyDown: onTogglerKeyDown,
                     })}
                     inputRef={setInputRef}
+                    label={label}
                     type="text"
                     className={togglerClasses}
                     wrapperClassName="m-0 dropdown-toggle"

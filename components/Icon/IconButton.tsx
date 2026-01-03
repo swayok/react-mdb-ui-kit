@@ -13,12 +13,14 @@ import {
 
 export interface IconButtonProps extends Omit<
     IconProps,
-    'onClick' | 'tooltipDisableClickHandler' | 'tooltipToggleClassName' | 'tooltipProps'
+    'onClick' | 'onMouseDown'
+    | 'tooltipDisableClickHandler' | 'tooltipToggleClassName' | 'tooltipProps'
 > {
     tooltip?: string | ReactNode
     color?: TextColors | 'link'
     onClick?: (event: MouseEvent<HTMLDivElement>) => void
-    tooltipProps?: Omit<IconProps['tooltipProps'], 'onClick'>
+    onMouseDown?: (event: MouseEvent<HTMLDivElement>) => void
+    tooltipProps?: Omit<IconProps['tooltipProps'], 'onClick' | 'onMouseDown'>
     iconClassName?: string
     iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.
@@ -33,6 +35,7 @@ export function IconButton(props: IconButtonProps) {
     const {
         color,
         onClick,
+        onMouseDown,
         disabled,
         className,
         iconClassName,
@@ -67,6 +70,14 @@ export function IconButton(props: IconButtonProps) {
         }
     )
 
+    const handleMouseDown = useEventCallback(
+        (event: MouseEvent<HTMLDivElement>) => {
+            if (!disabled) {
+                onMouseDown?.(event)
+            }
+        }
+    )
+
     if (tooltip) {
         const iconTooltipProps: Partial<IconProps> = {
             tooltip,
@@ -84,6 +95,7 @@ export function IconButton(props: IconButtonProps) {
                 tooltipProps={{
                     ...tooltipProps,
                     onClick: handleClick,
+                    onMouseDown: handleMouseDown,
                     style,
                 }}
                 className={iconClassName}
@@ -100,6 +112,7 @@ export function IconButton(props: IconButtonProps) {
             <div
                 className={wrapperClassName}
                 onClick={handleClick}
+                onMouseDown={handleMouseDown}
                 style={style}
             >
                 <Icon

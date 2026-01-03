@@ -35,6 +35,7 @@ const Calendar = lazy<ComponentType<CalendarProps>>(() => import('react-calendar
 export function DateInput(props: DateInputProps) {
 
     const {
+        label,
         value,
         valueToString,
         dateFormat = DateTimeService.defaultFormat,
@@ -65,7 +66,7 @@ export function DateInput(props: DateInputProps) {
         shift,
         shadow,
         isRTL,
-        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
+        dropUpOffset = label && label.length > 0 ? 8 : 0,
         dropdownMenuClassName,
         inputRef,
         ...inputProps
@@ -197,6 +198,7 @@ export function DateInput(props: DateInputProps) {
                     onFocus: onTogglerFocus,
                 })}
                 inputRef={setInputRef}
+                label={label}
                 type="text"
                 title={title}
                 value={inputValue}

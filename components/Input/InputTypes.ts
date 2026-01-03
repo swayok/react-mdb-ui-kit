@@ -37,6 +37,7 @@ import type {IconProps} from '../Icon/Icon'
 import type {MdiIconProps} from '../Icon/MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
 import type {InputWithDropdownApi} from './SelectInput/SelectInputTypes'
+import {NormalizedNestedLaravelValidationErrors} from 'swayok-react-mdb-ui-kit/helpers/api/ApiRequestErrorHelpers'
 
 export type * from './SelectInput/SelectInputTypes'
 
@@ -65,22 +66,21 @@ export interface ButtonsSwitchInputProps<
 }
 
 // Свойства компонента Checkbox.
-export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>, 'type'> {
+export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>, 'type' | 'label'>,
+    Pick<
+        InputLayoutProps,
+        'wrapperClassName' | 'wrapperProps' | 'wrapperStyle'
+        | 'label' | 'labelId' | 'labelClassName' | 'labelStyle'
+        | 'invalid' | 'validationMessage' | 'validationMessageClassName' | 'withoutValidationMessage'
+    > {
     type?: 'checkbox' | 'radio' | 'switch'
     // Обертка.
     wrapperTag?: ReactComponentOrTagName
-    wrapperClassName?: string
-    wrapperProps?: HtmlComponentProps
-    wrapperStyle?: CSSProperties
     // Не оборачивать в props.wrapperTag.
     disableWrapper?: boolean
     // Добавить стиль .form-check-inline.
     inline?: boolean
     // Подпись.
-    label?: string
-    labelId?: string
-    labelClassName?: string
-    labelStyle?: CSSProperties
     labelBeforeInput?: boolean
     labelIsHtml?: boolean
     // Отмечен по умолчанию.
@@ -96,12 +96,6 @@ export interface CheckboxProps extends Omit<HtmlComponentProps<HTMLInputElement>
     // Применимо только к type = 'checkbox'.
     // По умолчанию: false.
     solid?: boolean
-    // Настройки валидности введенных данных.
-    invalid?: boolean
-    validationMessage?: string | null
-    validationMessageClassName?: string
-    // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
-    withoutValidationMessage?: boolean
     // Отслеживать поведение пользователя в этом поле ввода.
     // Указывается имя ключа, под которым будут записаны действия пользователя в этом поле ввода.
     trackBehaviorAs?: string
@@ -193,7 +187,7 @@ type InputTooltipProps = Pick<
 
 // Часть свойств компонента InputLayout для расширения в других компонентах.
 export interface InputLayoutProps extends InputTooltipProps {
-    label?: string
+    label?: string | null
     labelId?: string
     labelClassName?: string
     labelStyle?: CSSProperties
@@ -211,7 +205,7 @@ export interface InputLayoutProps extends InputTooltipProps {
     hidden?: boolean
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: string | null
+    validationMessage?: string | string[] | null | NormalizedNestedLaravelValidationErrors
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
@@ -251,7 +245,7 @@ export interface InputLayoutComponentProps extends InputLayoutProps {
 
 // Свойства компонента Input.
 export interface InputProps extends InputLayoutProps,
-    Omit<HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement>, 'title'> {
+    Omit<HtmlComponentProps<HTMLInputElement | HTMLTextAreaElement>, 'title' | 'label'> {
     textarea?: boolean
     inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement | null>
     value?: string
@@ -417,7 +411,7 @@ export type InputInfoProps = InputInfoPropsForHtml | InputInfoPropsForText
 export interface InputValidationErrorProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'>,
     InputTooltipProps {
     invalid: boolean
-    error?: string | string[] | AnyObject<string> | NumericKeysObject<string> | null
+    error?: null | string | string[] | AnyObject<string> | NumericKeysObject<string> | NormalizedNestedLaravelValidationErrors
     errorClassName?: string
     inputContainerClassName?: string
     inputContainerStyle?: CSSProperties
@@ -515,7 +509,12 @@ export interface PasswordInputProps extends Omit<InputProps, 'type'> {
 export interface RadiosGroupProps<
     Value = unknown,
     Extras extends AnyObject = AnyObject,
-> {
+> extends Pick<
+        InputLayoutProps,
+        'labelClassName' | 'labelStyle'
+        | 'wrapperClassName' | 'wrapperStyle'
+        | 'invalid' | 'validationMessage' | 'validationMessageClassName'
+    > {
     // Основная подпись.
     // Если false - не отображать <SectionDivider>.
     label?: string | null | false
@@ -534,14 +533,11 @@ export interface RadiosGroupProps<
     // Цвет переключателя.
     color?: CheckboxColors
     // CSS класс внешней обертки.
-    wrapperClassName?: string
-    wrapperStyle?: CSSProperties
+    // wrapperClassName?: string
+    // wrapperStyle?: CSSProperties
     // CSS класс обертки подписи и полей ввода содержимого.
     className?: string
     style?: CSSProperties
-    // CSS класс для основной подписи (radiosProps.label).
-    labelClassName?: string
-    labelStyle?: CSSProperties
     // CSS класс контейнера одного чекбокса (<div className><input></div>).
     radioWrapperClassName?: string
     radioWrapperStyle?: CSSProperties
@@ -561,10 +557,6 @@ export interface RadiosGroupProps<
     // 'd-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3'.
     radiosContainerClassName?: string
     radiosContainerStyle?: CSSProperties
-    // Настройки валидности введенных данных.
-    invalid?: boolean
-    validationMessage?: string | null
-    validationMessageClassName?: string
     // Обработчик изменения значения одного из чекбоксов.
     onChange?: (
         value: Value,

@@ -30,13 +30,14 @@ export function ComboboxInput(props: ComboboxInputProps) {
         inputRef,
         value,
         title,
+        label,
         active,
         onFocus,
         onClick,
         onChange,
         onKeyDown,
         maxHeight = 500,
-        dropUpOffset = props.label && props.label.length > 0 ? 8 : 0,
+        dropUpOffset = label && label.length > 0 ? 8 : 0,
         ...inputProps
     } = props
 
@@ -141,7 +142,6 @@ export function ComboboxInput(props: ComboboxInputProps) {
     return (
         <>
             <Input
-                inputRef={setInputRef}
                 {...getReferenceProps({
                     ...inputProps,
                     value,
@@ -150,6 +150,8 @@ export function ComboboxInput(props: ComboboxInputProps) {
                     onClick: onSearchClick,
                     onKeyDown: onSearchKeyDown,
                 })}
+                inputRef={setInputRef}
+                label={label}
                 title={title}
                 active={active || (value ?? '').length > 0}
             />

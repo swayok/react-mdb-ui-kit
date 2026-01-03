@@ -471,9 +471,9 @@ export interface NormalizedNestedLaravelValidationErrors {
  * Внимание! Вызывать только после extractAndNormalizeValidationErrorsFromResponseData().
  * @param errors
  */
-export function normalizeValidationErrorsKeysForArraysAndObjects<ErrorsType extends object = AnyObject<string>>(
-    errors: ErrorsType
-): NormalizedNestedLaravelValidationErrors {
+export function normalizeValidationErrorsKeysForArraysAndObjects<
+    ErrorsType extends object = AnyObject<string>,
+>(errors: ErrorsType): NormalizedNestedLaravelValidationErrors {
     const ret: AnyObject = {}
     for (const errorsKey in errors) {
         const parts: string[] = errorsKey.split('.')

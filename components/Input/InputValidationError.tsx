@@ -7,6 +7,7 @@ import {Collapse} from '../Collapse/Collapse'
 import {Tooltip} from '../Tooltip/Tooltip'
 import {TooltipProps} from '../Tooltip/TooltipTypes'
 import {InputValidationErrorProps} from './InputTypes'
+import {convertValidationErrorsToString} from 'swayok-react-mdb-ui-kit/helpers/form/convertValidationErrorsToString'
 
 // Отображение ошибки валидации для поля ввода.
 export function InputValidationError(props: InputValidationErrorProps) {
@@ -30,7 +31,7 @@ export function InputValidationError(props: InputValidationErrorProps) {
         ...otherProps
     } = props
 
-    const normalizedErrorMessage = normalizeErrorMessage(error)
+    const normalizedErrorMessage = convertValidationErrorsToString(error) ?? null
     const show: boolean = !!(invalid && normalizedErrorMessage)
 
     const [
@@ -90,18 +91,4 @@ export function InputValidationError(props: InputValidationErrorProps) {
             )}
         </div>
     )
-}
-
-function normalizeErrorMessage(error: InputValidationErrorProps['error']): string | null {
-    if (!error) {
-        return null
-    }
-    if (typeof error === 'string') {
-        return error.trim() === '' ? null : error
-    }
-    if (Array.isArray(error)) {
-        return error.length === 0 ? null : error.join('; ')
-    }
-    const errors = Object.values(error)
-    return errors.length === 0 ? null : errors.join('; ')
 }
