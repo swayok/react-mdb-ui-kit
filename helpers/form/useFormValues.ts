@@ -6,6 +6,7 @@ import {
 } from 'react'
 import {AnyObject} from '../../types'
 import {useInputErrorSetter} from './useInputErrorSetter'
+import {InputValidationErrorProps} from 'swayok-react-mdb-ui-kit/components/Input/InputTypes'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
@@ -20,7 +21,7 @@ export interface FormValuesHookReturn<
     formValues: Readonly<FormData>
     // Задать все значения формы.
     setFormValues: (
-        values: FormData | ((state: Readonly<FormData>) => FormData),
+        values: FormData | SetValueFn<FormData>,
         // Сбросить флаг formHasChanges в false.
         resetHasChangesFlag?: boolean
     ) => void
@@ -41,12 +42,15 @@ export interface FormValuesHookReturn<
     // Ошибки полей ввода.
     formErrors: Readonly<FormErrors>
     setFormErrors: (
-        values: Partial<FormErrors> | ((state: Readonly<FormErrors>) => FormErrors),
+        values: Partial<FormErrors> | SetValueFn<FormErrors>,
         // Объединить с существующими ошибками или заменить полностью?
         // Не работает, если values - функция.
         merge?: boolean
     ) => void
-    setFormError: (key: keyof FormErrors, message: string | null) => void
+    setFormError: <Key extends keyof FormErrors>(
+        key: Key,
+        message: FormErrors[Key] | null | SetValueFn<FormErrors[Key] | null>
+    ) => void
     // Состояние отправки данных в API.
     isSubmitting: Readonly<boolean>
     setIsSubmitting: (value: boolean | ((prevState: boolean) => boolean)) => void
@@ -56,11 +60,11 @@ export interface FormValuesHookReturn<
 // Дает возможность управления данными формы и ошибками.
 export function useFormValues<
     FormData extends AnyObject,
-    FormErrors extends AnyObject = Partial<Record<keyof FormData, string | null>>,
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, InputValidationErrorProps['error']>>,
 >(
     initialValues: FormData | (() => FormData),
     deps?: DependencyList,
-    errorCallback?: (key: keyof FormErrors, message?: string | null) => void
+    errorCallback?: (key: keyof FormErrors, message?: InputValidationErrorProps['error']) => void
 ): FormValuesHookReturn<FormData, FormErrors> {
 
     // Кеширование начальных значений.
@@ -120,7 +124,7 @@ export function useFormValues<
     // Обертка над setFormValuesState для отслеживания наличия изменений в данных формы.
     const setFormValues: FormValuesHookReturn<FormData, FormErrors>['setFormValues'] = useCallback(
         (
-            values: FormData | ((state: Readonly<FormData>) => FormData),
+            values: FormData | SetValueFn<FormData>,
             resetChangesFlag?: boolean
         ): void => {
             setFormValuesState(values)
@@ -141,7 +145,7 @@ export function useFormValues<
         setFormValues,
         setSomeFormValues: useCallback(
             (
-                values: Partial<FormData> | ((state: Readonly<FormData>) => FormData)
+                values: Partial<FormData> | SetValueFn<FormData>
             ): void => {
                 if (typeof values === 'function') {
                     setFormValues(values)
@@ -166,7 +170,7 @@ export function useFormValues<
         formErrors,
         setFormErrors: useCallback(
             (
-                values: Partial<FormErrors> | ((state: Readonly<FormErrors>) => FormErrors),
+                values: Partial<FormErrors> | SetValueFn<FormErrors>,
                 merge: boolean = false
             ): void => {
                 if (typeof values === 'function') {

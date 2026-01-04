@@ -59,7 +59,7 @@ export interface ButtonsSwitchInputProps<
     onChange: (value: ValueType) => void
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: string | null
+    validationMessage?: InputValidationErrorProps['error']
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
@@ -161,7 +161,7 @@ export interface CheckboxesGroupProps<
     groupItemsContainerStyle?: CSSProperties
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: string | null
+    validationMessage?: InputValidationErrorProps['error']
     validationMessageClassName?: string
     // Обработчик изменения значения одного из чекбоксов.
     onChange?: (
@@ -205,7 +205,7 @@ export interface InputLayoutProps extends InputTooltipProps {
     hidden?: boolean
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: string | string[] | null | NormalizedNestedLaravelValidationErrors
+    validationMessage?: InputValidationErrorProps['error']
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
@@ -411,7 +411,7 @@ export type InputInfoProps = InputInfoPropsForHtml | InputInfoPropsForText
 export interface InputValidationErrorProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'>,
     InputTooltipProps {
     invalid: boolean
-    error?: null | string | string[] | AnyObject<string> | NumericKeysObject<string> | NormalizedNestedLaravelValidationErrors
+    error?: null | string | (string | null | undefined)[] | AnyObject<string | null | undefined> | NumericKeysObject<string> | NormalizedNestedLaravelValidationErrors
     errorClassName?: string
     inputContainerClassName?: string
     inputContainerStyle?: CSSProperties

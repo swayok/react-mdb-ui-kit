@@ -1,5 +1,6 @@
 // Select input with dropdown (<Dropdown> component for options).
 @use "../../mixins/svg-icons";
+@use "../../variables/z-index";
 @use "../../variables/form-input-base";
 @use "../../variables/form-outline-input";
 @use "../../variables/form-label";
@@ -52,6 +53,8 @@
         }
 
         .dropdown-menu {
+            z-index: z-index.$z-index-select-input-dropdown;
+
             &.form-multiselect-dropdown.show {
                 display: flex;
                 flex-direction: column;

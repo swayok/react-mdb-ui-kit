@@ -14,8 +14,9 @@ export function convertValidationErrorsToString(
         return errors.length === 0
             ? undefined
             : errors.map(
-                message => message.replace(/[.,;]+$/, '')
+                message => message?.replace(/[.,;]+$/, '')
             )
+                .filter(message => !!message && message.trim() !== '')
                 .join('; ') + '.'
     }
     if (typeof errors === 'object') {

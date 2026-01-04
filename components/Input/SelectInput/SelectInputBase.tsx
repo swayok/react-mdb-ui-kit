@@ -99,6 +99,8 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         closeOnScrollOutside,
         maxHeight,
         dropUpOffset,
+        onOpenChange,
+        open,
     })
 
     // Заблокировать выполнение setIsOpen(!isOpen) в onTogglerClick() один раз.

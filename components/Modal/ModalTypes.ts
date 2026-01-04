@@ -88,7 +88,8 @@ export interface ModalDialogProps extends Omit<HtmlComponentProps<HTMLDivElement
         | 'fullscreen-xl-down' | 'fullscreen-xxl-down'
     // true: Настроить ModalBody для включения скроллинга,
     // если содержимое больше размера окна браузера.
-    scrollable?: boolean
+    // 'scrollbar-visible' применяет на .modal-body стиль overflow-y: scroll.
+    scrollable?: boolean | 'scrollbar-visible'
 }
 
 export interface ModalContentProps extends HtmlComponentProps<HTMLDivElement> {

@@ -95,6 +95,10 @@
         .modal-body {
             overflow-y: auto;
         }
+
+        &.modal-dialog-scrollbar-visible .modal-body {
+            overflow-y: scroll;
+        }
     }
 
     .modal-dialog-centered {
