@@ -4,9 +4,9 @@ import {
     useMemo,
     useState,
 } from 'react'
+import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
 import {AnyObject} from '../../types'
 import {useInputErrorSetter} from './useInputErrorSetter'
-import {InputValidationErrorProps} from 'swayok-react-mdb-ui-kit/components/Input/InputTypes'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
@@ -60,11 +60,11 @@ export interface FormValuesHookReturn<
 // Дает возможность управления данными формы и ошибками.
 export function useFormValues<
     FormData extends AnyObject,
-    FormErrors extends AnyObject = Partial<Record<keyof FormData, InputValidationErrorProps['error']>>,
+    FormErrors extends AnyObject = Partial<Record<keyof FormData, InputValidationErrorMessageType>>,
 >(
     initialValues: FormData | (() => FormData),
     deps?: DependencyList,
-    errorCallback?: (key: keyof FormErrors, message?: InputValidationErrorProps['error']) => void
+    errorCallback?: (key: keyof FormErrors, message?: InputValidationErrorMessageType) => void
 ): FormValuesHookReturn<FormData, FormErrors> {
 
     // Кеширование начальных значений.

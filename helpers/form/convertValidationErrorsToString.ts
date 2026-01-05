@@ -1,8 +1,8 @@
-import {InputValidationErrorProps} from 'swayok-react-mdb-ui-kit/components/Input/InputTypes'
+import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
 
 // Преобразование списка/объекта ошибок в одну строку.
 export function convertValidationErrorsToString(
-    errors?: InputValidationErrorProps['error']
+    errors?: InputValidationErrorMessageType
 ): string | undefined {
     if (!errors) {
         return undefined

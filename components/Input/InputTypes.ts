@@ -59,7 +59,7 @@ export interface ButtonsSwitchInputProps<
     onChange: (value: ValueType) => void
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: InputValidationErrorProps['error']
+    validationMessage?: InputValidationErrorMessageType
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
@@ -161,7 +161,7 @@ export interface CheckboxesGroupProps<
     groupItemsContainerStyle?: CSSProperties
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: InputValidationErrorProps['error']
+    validationMessage?: InputValidationErrorMessageType
     validationMessageClassName?: string
     // Обработчик изменения значения одного из чекбоксов.
     onChange?: (
@@ -205,7 +205,7 @@ export interface InputLayoutProps extends InputTooltipProps {
     hidden?: boolean
     // Настройки валидности введенных данных.
     invalid?: boolean
-    validationMessage?: InputValidationErrorProps['error']
+    validationMessage?: InputValidationErrorMessageType
     validationMessageClassName?: string
     // Указать true, если не нужно оборачивать поле ввода в <InputValidationError>.
     withoutValidationMessage?: boolean
@@ -407,11 +407,18 @@ export interface InputInfoPropsForText extends Omit<MorphingHtmlComponentPropsWi
 // Свойства компонента InputInfo.
 export type InputInfoProps = InputInfoPropsForHtml | InputInfoPropsForText
 
+// Тип сообщения ошибки валидации.
+export type InputValidationErrorMessageType = null | string | undefined
+    | (string | null | undefined)[]
+    | AnyObject<string | null | undefined>
+    | NumericKeysObject<string>
+    | NormalizedNestedLaravelValidationErrors
+
 // Свойства компонента InputValidationError.
 export interface InputValidationErrorProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'title'>,
     InputTooltipProps {
     invalid: boolean
-    error?: null | string | (string | null | undefined)[] | AnyObject<string | null | undefined> | NumericKeysObject<string> | NormalizedNestedLaravelValidationErrors
+    error?: InputValidationErrorMessageType
     errorClassName?: string
     inputContainerClassName?: string
     inputContainerStyle?: CSSProperties

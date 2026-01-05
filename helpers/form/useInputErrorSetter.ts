@@ -4,9 +4,9 @@ import {
     useCallback,
     useRef,
 } from 'react'
+import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
 import {AnyObject} from '../../types'
 import {setInputError} from './setInputError'
-import {InputValidationErrorProps} from 'swayok-react-mdb-ui-kit/components/Input/InputTypes'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
@@ -19,7 +19,7 @@ type HookReturnFn<FormErrors> = (
 
 // Хук для создания функции, изменяющей ошибку в поле ввода.
 export function useInputErrorSetter<
-    FormErrors extends AnyObject = AnyObject<InputValidationErrorProps['error']>,
+    FormErrors extends AnyObject = AnyObject<InputValidationErrorMessageType>,
 >(
     setErrors: Dispatch<SetStateAction<FormErrors>>,
     callback?: (

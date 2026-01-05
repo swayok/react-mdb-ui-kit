@@ -1,11 +1,11 @@
+import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
 import {AnyObject} from '../../types'
-import {InputValidationErrorProps} from 'swayok-react-mdb-ui-kit/components/Input/InputTypes'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 
 // Добавить/удалить сообщение об ошибке для одного поля ввода.
 export function setInputError<
-    FormErrors extends AnyObject = AnyObject<InputValidationErrorProps['error']>,
+    FormErrors extends AnyObject = AnyObject<InputValidationErrorMessageType>,
 >(
     errors: FormErrors,
     key: keyof FormErrors,
@@ -18,13 +18,12 @@ export function setInputError<
     errors = Object.assign({}, errors)
     if (!message) {
         delete errors[key]
-        callback?.(key, undefined)
+    } else if (typeof message === 'function') {
+        const fn: SetValueFn<FormErrors[keyof FormErrors] | null> = message
+        errors[key] = fn(errors[key]) as FormErrors[keyof FormErrors]
     } else {
-        errors[key] = typeof message === 'function'
-            // @ts-ignore
-            ? message(errors[key])
-            : message
-        callback?.(key, errors[key])
+        errors[key] = message
     }
+    callback?.(key, errors[key] ?? undefined)
     return errors
 }
