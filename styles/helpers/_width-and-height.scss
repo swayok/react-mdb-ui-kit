@@ -10,26 +10,82 @@
         }
     }
 
+    .full-width {
+        width: 100% !important;
+    }
+
+    .auto-width {
+        width: auto !important;
+    }
+
+    .full-height {
+        height: 100% !important;
+    }
+
+    .auto-height {
+        height: auto !important;
+    }
+
     @each $breakpoint in map.keys(grid.$grid-breakpoints) {
         $infix: breakpoints.breakpoint-infix($breakpoint, grid.$grid-breakpoints);
 
-        @include breakpoints.media-breakpoint-down($breakpoint) {
-            .full-width#{$infix} {
+        @if ($infix != "") {
+            @include breakpoints.media-breakpoint-down($breakpoint) {
+                .full-width#{$infix}-down {
+                    width: 100% !important;
+                }
+
+                .auto-width#{$infix}-down {
+                    width: auto !important;
+                }
+
+                .full-height#{$infix}-down {
+                    height: 100% !important;
+                }
+
+                .auto-height#{$infix}-down {
+                    height: auto !important;
+                }
+            }
+
+            @include breakpoints.media-breakpoint-up($breakpoint) {
+                .full-width#{$infix}-up {
+                    width: 100% !important;
+                }
+
+                .auto-width#{$infix}-up {
+                    width: auto !important;
+                }
+
+                .full-height#{$infix}-up {
+                    height: 100% !important;
+                }
+
+                .auto-height#{$infix}-up {
+                    height: auto !important;
+                }
+            }
+        }
+    }
+
+    // Тут нужны все метки из $grid-breakpoints,
+    // поэтому не используем breakpoints.breakpoint-infix().
+    @each $breakpoint in map.keys(grid.$grid-breakpoints) {
+        @include breakpoints.media-breakpoint-only($breakpoint) {
+            .full-width-#{$breakpoint}-only {
                 width: 100% !important;
             }
 
-            .auto-height#{$infix} {
-                height: auto !important;
-            }
-        }
-
-        @include breakpoints.media-breakpoint-up($breakpoint) {
-            .auto-width#{$infix} {
+            .auto-width-#{$breakpoint}-only {
                 width: auto !important;
             }
 
-            .full-height#{$infix} {
+            .full-height-#{$breakpoint}-only {
                 height: 100% !important;
+            }
+
+            .auto-height-#{$breakpoint}-only {
+                height: auto !important;
             }
         }
     }
