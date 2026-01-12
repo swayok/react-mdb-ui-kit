@@ -8,7 +8,6 @@ import {
     shift,
     useFloating,
 } from '@floating-ui/react'
-import clsx from 'clsx'
 import {
     Fragment,
     HTMLProps,
@@ -51,8 +50,9 @@ export function DropdownMenu<
         inline,
         noFocus,
         onKeyDown: propsOnKeyDown,
+        height,
+        maxHeight,
         children,
-        className,
         ...otherProps
     } = props
 
@@ -148,10 +148,6 @@ export function DropdownMenu<
                             ref={mergedRef}
                             {...getFloatingProps({
                                 ...(otherProps as HTMLProps<HTMLElement>),
-                                className: clsx(
-                                    className,
-                                    otherProps.maxHeight ? 'overflow-y-auto' : null
-                                ),
                                 onKeyDown,
                             })}
                             style={{
@@ -159,7 +155,12 @@ export function DropdownMenu<
                                 ...floatingStyles,
                             }}
                         >
-                            <DropdownMenuScrollableContainer>
+                            <DropdownMenuScrollableContainer
+                                style={{
+                                    height,
+                                    maxHeight,
+                                }}
+                            >
                                 {children}
                             </DropdownMenuScrollableContainer>
                         </DropdownMenuContent>

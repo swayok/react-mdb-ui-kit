@@ -127,6 +127,7 @@ export function DropdownsDemo() {
                     <DropdownToggle
                         color="gray"
                         small
+                        className="px-2"
                     >
                         Menu
                     </DropdownToggle>
@@ -146,12 +147,33 @@ export function DropdownsDemo() {
                     </DropdownMenu>
                 </Dropdown>
 
+                <Dropdown>
+                    <DropdownToggle
+                        color="gray"
+                        small
+                        className="px-2"
+                    >
+                        Scrollable
+                    </DropdownToggle>
+                    <DropdownMenu
+                        maxHeight={200}
+                        shadow="2-strong"
+                    >
+                        {optionsMany.map((option, index) => (
+                            <DropdownItem key={index}>
+                                {option.label}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenu>
+                </Dropdown>
+
                 <Dropdown focusFirstItemOnOpen>
                     <DropdownToggle
                         color="gray"
                         small
+                        className="px-2"
                     >
-                        Select first on open
+                        Select first
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
@@ -170,6 +192,7 @@ export function DropdownsDemo() {
                     <DropdownToggle
                         color="gray"
                         small
+                        className="px-2"
                     >
                         Nested
                     </DropdownToggle>
