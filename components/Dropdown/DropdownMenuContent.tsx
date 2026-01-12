@@ -16,7 +16,9 @@ export function DropdownMenuContent<
         tag: Tag = 'div',
         variant,
         maxHeight,
+        width,
         minWidth,
+        maxWidth,
         textNowrapOnItems,
         style = {},
         fillContainer,
@@ -37,7 +39,9 @@ export function DropdownMenuContent<
             )}
             style={{
                 maxHeight,
+                width,
                 minWidth,
+                maxWidth,
                 ...style,
             }}
         >

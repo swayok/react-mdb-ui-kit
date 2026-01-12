@@ -170,7 +170,7 @@ type ShadowStrength = 'strong' | 'soft'
 // Ссылка на обертку и API выпадающего меню.
 export interface DropdownMenuProps<
     RefType extends HTMLElement = HTMLElement,
-> extends MorphingHtmlComponentProps<RefType> {
+> extends Omit<MorphingHtmlComponentProps<RefType>, 'width'> {
     // API выпадающего меню.
     apiRef?: ApiRef<DropdownApi>
     // Нужно ли рендерить меню при монтировании компонента?
@@ -203,8 +203,12 @@ export interface DropdownMenuProps<
     variant?: DropdownMenuVariant
     // Максимальная высота меню в пикселях.
     maxHeight?: number
+    // Ширина меню.
+    width?: number | string | null
     // Минимальная ширина меню.
     minWidth?: string | number | null
+    // Максимальная ширина меню.
+    maxWidth?: string | number | null
     // Меню должно заполнять контейнер, в котором находится.
     fillContainer?: boolean
     // Добавить white-space: nowrap ко всем .dropdown-item?
@@ -230,7 +234,7 @@ export type DropdownMenuScrollableContainerProps = HtmlComponentPropsWithRef<HTM
 export type DropdownMenuContentProps = Pick<
     DropdownMenuProps,
     'className' | 'style' | 'shadow' | 'tag' | 'variant' | 'ref'
-    | 'maxHeight' | 'minWidth'
+    | 'maxHeight' | 'minWidth' | 'maxWidth' | 'width'
     | 'textNowrapOnItems' | 'fillContainer' | 'children'
 >
 
