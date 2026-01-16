@@ -69,7 +69,6 @@ export function AsyncDataGridUrlQueryManager<
     // Обрабатываем изменение состояния в AsyncDataGridContext
     // и обновляем состояние URL Query, если требуется.
     const onContextStateChange = () => {
-        console.log({drawsCount})
         if (
             drawsCount > 0
             && contextHash !== urlQueryParams.get(urlQueryParamName)
