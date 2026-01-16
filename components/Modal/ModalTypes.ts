@@ -29,7 +29,7 @@ export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'si
     // Процесс закрытия и демонтажа окна 2х-этапный:
     // 1. onClose = () => this.setState({modalVisible: false}) - запуск анимации закрытия окна;
     // 2. onClosed = () => this.setState({modalVisible: null}) - демонтаж окна.
-    show?: boolean | null
+    show: boolean | null
     // false: Не показывать.
     backdrop?: boolean
     // Z-index окна (можно открыть несколько окон поверх друг-друга).
@@ -66,7 +66,7 @@ export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'si
     // Если окно содержит вставку данных, которые нужно сначала получить извне,
     // то вместо использования children лучше использовать render,
     // чтобы не усложнять верстку проверками наличия данных.
-    render?: ReactNode | (() => ReactNode)
+    render?: ReactNode | ((onClose: ModalProps['onClose']) => ReactNode)
     // Ожидается только 1 элемент внутри.
     // Обычно ModalContent.
     // Не используется, если задан render.

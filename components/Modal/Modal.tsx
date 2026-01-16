@@ -54,14 +54,22 @@ export function Modal(props: ModalProps) {
         ...otherProps
     } = props
 
-    const [isOpenBackdrop,
-        setIsOpenBackdrop] = useState<boolean>(false)
-    const [isOpenModal,
-        setIsOpenModal] = useState<boolean | null>(null)
-    const [innerShow,
-        setInnerShow] = useState<boolean | null>(null)
-    const [staticModal,
-        setStaticModal] = useState<boolean>(false)
+    const [
+        isOpenBackdrop,
+        setIsOpenBackdrop,
+    ] = useState<boolean>(false)
+    const [
+        isOpenModal,
+        setIsOpenModal,
+    ] = useState<boolean | null>(null)
+    const [
+        innerShow,
+        setInnerShow,
+    ] = useState<boolean | null>(null)
+    const [
+        staticModal,
+        setStaticModal,
+    ] = useState<boolean>(false)
 
     const modalInnerRef = useRef<HTMLDivElement>(null)
     const modalReference = modalRef ?? modalInnerRef
@@ -207,12 +215,12 @@ export function Modal(props: ModalProps) {
             if (!render) {
                 return children
             }
-            return typeof render === 'function' ? render() : render
+            return typeof render === 'function' ? render(onClose) : render
         }
         let content = null
         if (innerShow !== null) {
             if (render) {
-                content = typeof render === 'function' ? render() : render
+                content = typeof render === 'function' ? render(onClose) : render
             } else {
                 content = children
             }
