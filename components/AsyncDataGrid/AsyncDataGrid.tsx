@@ -66,6 +66,11 @@ export function AsyncDataGrid<
         drawsCount,
         setDrawsCount,
     ] = useState<AsyncDataGridContextProps['drawsCount']>(0)
+    // Количество изменений свойств, приводящих к запуску запроса к API.
+    const [
+        changesCount,
+        setChangesCount,
+    ] = useState<number>(0)
     // Состояние загрузки данных из API.
     const [
         loading,
@@ -191,7 +196,7 @@ export function AsyncDataGrid<
         (newLimit: number): void => {
             setLimit(newLimit)
             setOffset(normalizeOffset(newLimit, offset))
-            setDrawsCount(drawsCount => drawsCount + 1)
+            setChangesCount(changesCount => changesCount + 1)
         },
         [offset]
     )
@@ -200,7 +205,7 @@ export function AsyncDataGrid<
     const onSetOffset = useCallback(
         (offset: number): void => {
             setOffset(offset)
-            setDrawsCount(drawsCount => drawsCount + 1)
+            setChangesCount(changesCount => changesCount + 1)
         },
         []
     )
@@ -217,7 +222,7 @@ export function AsyncDataGrid<
             }
             setOrderBy(column)
             setOrderDirection(direction)
-            setDrawsCount(drawsCount => drawsCount + 1)
+            setChangesCount(changesCount => changesCount + 1)
         },
         []
     )
@@ -232,7 +237,7 @@ export function AsyncDataGrid<
                 setOffset(0)
             }
             setFilters(filters)
-            setDrawsCount(drawsCount => drawsCount + 1)
+            setChangesCount(changesCount => changesCount + 1)
         },
         []
     )
@@ -311,6 +316,7 @@ export function AsyncDataGrid<
             setAbortController(newAbortController)
             setLoadingError(false)
             setValidationErrors(null)
+            setDrawsCount(drawsCount => drawsCount + 1)
             if (!silent) {
                 setIsLoading(true)
             }
@@ -362,7 +368,7 @@ export function AsyncDataGrid<
         if (initialized) {
             loadData()
         }
-    }, [apiUrl, filters, drawsCount, initialized])
+    }, [apiUrl, filters, changesCount, initialized])
 
     // Изменено общее количество строк или смещение.
     useEffect(() => {
@@ -370,7 +376,7 @@ export function AsyncDataGrid<
             // Общее количество строк в БД стало меньше чем смещение.
             // Нужно изменить смещение, чтобы отображалась последняя страница.
             setOffset((Math.ceil(totalCount / limit) - 1) * limit)
-            setDrawsCount(drawsCount + 1)
+            setChangesCount(changesCount => changesCount + 1)
         }
     }, [offset, totalCount])
 
