@@ -21,7 +21,7 @@ import type {ButtonProps} from '../Button/Button'
 //              ModalFooter
 //                  Button
 //                  ModalFooterCloseButton
-export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size'> {
+export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size' | 'width' | 'height'> {
     // Показать окно или нет. Когда null - окно демонтируется.
     // Полезно, чтобы не засорять страницу кучей закрытых окон.
     // Это так же позволяет использовать окна в таблицах данных без необходимости
@@ -78,7 +78,7 @@ export interface ModalProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'si
     container?: HTMLElement | string
 }
 
-export interface ModalDialogProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size'> {
+export interface ModalDialogProps extends Omit<HtmlComponentProps<HTMLDivElement>, 'size' | 'width' | 'height'> {
     ref?: AnyRef<HTMLDivElement>
     // true (default): Отцентрировать модальное окно в окне браузера.
     centered?: boolean
