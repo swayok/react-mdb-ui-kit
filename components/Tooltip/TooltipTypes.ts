@@ -28,6 +28,8 @@ export interface TooltipProps extends MorphingComponentProps {
      * По умолчанию: 'tooltip'.
      */
     tooltipRole?: 'tooltip' | 'label'
+    // Отключить анимацию скрытия подсказки.
+    noHideAnimation?: boolean
 }
 
 // Свойства компонента Tooltip и свойства компонента, передаваемого через tag по умолчанию (div).

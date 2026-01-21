@@ -93,6 +93,7 @@ export function IconButton(props: IconButtonProps) {
                 tooltipToggleClassName={wrapperClassName}
                 tooltipDisableClickHandler
                 tooltipProps={{
+                    tooltipRole: 'label',
                     ...tooltipProps,
                     onClick: handleClick,
                     onMouseDown: handleMouseDown,

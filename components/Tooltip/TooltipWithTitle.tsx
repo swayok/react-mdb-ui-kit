@@ -50,6 +50,7 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
         tooltipMaxWidth,
         tooltipOffset = 4,
         tooltipRole = 'tooltip',
+        noHideAnimation,
         ...otherProps
     } = props
 
@@ -133,6 +134,9 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
             tooltipRef.current.classList.add('show')
         } else {
             tooltipRef.current.classList.remove('show')
+            if (noHideAnimation) {
+                setShouldMount(false)
+            }
         }
     }, [tooltipRef.current, isOpened])
 
@@ -151,7 +155,7 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
                         ref={refs.setFloating}
                         style={floatingStyles}
                         {...getFloatingProps({
-                            onTransitionEnd: onCssTransitionEnd,
+                            onTransitionEnd: noHideAnimation ? undefined : onCssTransitionEnd,
                             className: clsx(
                                 'tooltip fade',
                                 `bs-tooltip-${tooltipPlacement}`
