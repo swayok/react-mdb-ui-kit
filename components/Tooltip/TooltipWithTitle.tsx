@@ -17,9 +17,9 @@ import {
     ReactNode,
     RefObject,
     useEffect,
-    useEffectEvent,
     useState,
 } from 'react'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {
     HtmlComponentProps,
@@ -116,7 +116,7 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
     // Настройка анимаций.
 
     // Обработчик окончания CSS анимации.
-    const onCssTransitionEnd = useEffectEvent(() => {
+    const onCssTransitionEnd = useEventCallback(() => {
         if (!isOpened) {
             // Демонтируем подсказку при завершении анимации скрытия.
             setShouldMount(false)
