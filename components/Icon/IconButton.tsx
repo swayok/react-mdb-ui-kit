@@ -9,7 +9,10 @@ import {TextColors} from '../../types'
 import {
     IconProps,
     Icon,
+    IconTooltipProps,
 } from './Icon'
+
+export type IconButtonTooltipProps = Omit<IconTooltipProps, 'onClick' | 'onMouseDown'>
 
 export interface IconButtonProps extends Omit<
     IconProps,
@@ -20,7 +23,7 @@ export interface IconButtonProps extends Omit<
     color?: TextColors | 'link'
     onClick?: (event: MouseEvent<HTMLDivElement>) => void
     onMouseDown?: (event: MouseEvent<HTMLDivElement>) => void
-    tooltipProps?: Omit<IconProps['tooltipProps'], 'onClick' | 'onMouseDown'>
+    tooltipProps?: IconButtonTooltipProps
     iconClassName?: string
     iconStyle?: CSSProperties
     // Если ture: использовать CSS классы 'd-inline-block with-icon' для задания vertical align иконки.

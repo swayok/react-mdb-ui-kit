@@ -17,12 +17,17 @@ import {MdiIconProps} from './MDIIcon'
 import {Tooltip} from '../Tooltip/Tooltip'
 import {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
 
+export type IconHrefTooltipProps = Pick<
+    DefaultTooltipProps,
+    'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'
+>
+
 export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string
     external?: boolean
     color?: TextColors | 'link'
     tooltip: string | ReactNode
-    tooltipProps?: Pick<DefaultTooltipProps, 'tooltipPlacement' | 'tooltipClassName' | 'tooltipStyle'>
+    tooltipProps?: IconHrefTooltipProps
     iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
     size?: number | null

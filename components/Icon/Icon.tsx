@@ -18,16 +18,18 @@ import {
 } from '../Tooltip/TooltipTypes'
 import {ReactNode} from 'react'
 
+export type IconTooltipProps = Omit<
+    DefaultTooltipProps,
+    'title' | 'className' | 'tooltipMaxWidth' | 'tooltipDisableClickHandler'
+    | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement'
+>
+
 export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'> {
     path: MdiIconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
     tooltip?: string | ReactNode
-    tooltipProps?: Omit<
-        DefaultTooltipProps,
-        'title' | 'className' | 'tooltipMaxWidth' | 'tooltipDisableClickHandler'
-        | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement'
-    >
+    tooltipProps?: IconTooltipProps
     tooltipDisableClickHandler?: boolean
     tooltipToggleTag?: string
     tooltipToggleClassName?: string
