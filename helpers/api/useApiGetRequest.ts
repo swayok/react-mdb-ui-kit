@@ -39,13 +39,21 @@ export interface UseApiGetRequestHookReturn<
     ApiDataType,
     ModifiedDataType = ApiDataType | undefined,
 > {
-    data: ModifiedDataType
-    loading: boolean
-    setIsLoading: Dispatch<SetStateAction<boolean>>
-    error: ApiError | null
-    setError: Dispatch<SetStateAction<ApiError | null>>
-    reload: (silent?: boolean) => Promise<ApiDataType>
+    // Данные, полученные из API.
+    data: Readonly<ModifiedDataType>
+    // Задание данных.
     setData: Dispatch<SetStateAction<ModifiedDataType | undefined>>
+    // Состояние отправки запроса в API.
+    // Устанавливается в true при каждой отправке запроса в API.
+    isLoading: boolean
+    setIsLoading: Dispatch<SetStateAction<boolean>>
+    // Ошибка при загрузке данных.
+    error: ApiError | null
+    // Задание ошибки загрузки данных.
+    setError: Dispatch<SetStateAction<ApiError | null>>
+    // Перезагрузка данных.
+    // Если silent === true, то loading не переводится в true.
+    reload: (silent?: boolean) => Promise<ApiDataType>
 }
 
 export interface UseApiGetRequestHookState<
@@ -106,7 +114,7 @@ export function useApiGetRequest<
     hookState.current = {
         data: data!,
         setData,
-        loading: isLoading,
+        isLoading,
         setIsLoading,
         error,
         setError,
@@ -167,7 +175,7 @@ export function useApiGetRequest<
     return {
         data: data!,
         setData,
-        loading: isLoading,
+        isLoading,
         setIsLoading,
         error,
         setError,

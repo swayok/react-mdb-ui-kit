@@ -11,6 +11,7 @@ import {
 import {filterOptions} from '../../helpers/options_list/filterOptions'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {
+    type AnyObject,
     FormSelectOption,
     FormSelectOptionsList,
 } from '../../types'
@@ -23,10 +24,15 @@ import {ComboboxInputProps} from './InputTypes'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.
-export function ComboboxInput(props: ComboboxInputProps) {
+export function ComboboxInput<
+    OptionValueType = string,
+    OptionExtras extends AnyObject = AnyObject,
+>(props: ComboboxInputProps<OptionValueType, OptionExtras>) {
 
     const {
         options = [],
+        optionsFiltering = true,
+        focusFirstItemOnOpen = true,
         inputRef,
         value,
         title,
@@ -36,7 +42,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onClick,
         onChange,
         onKeyDown,
-        maxHeight = 500,
+        maxDropdownHeight = 500,
         dropUpOffset = label && label.length > 0 ? 8 : 0,
         ...inputProps
     } = props
@@ -45,8 +51,8 @@ export function ComboboxInput(props: ComboboxInputProps) {
     const [
         filteredOptions,
         setFilteredOptions,
-    ] = useState<FormSelectOptionsList<string> | string[]>(
-        options as FormSelectOptionsList<string>
+    ] = useState<FormSelectOptionsList<OptionValueType, OptionExtras> | string[]>(
+        options
     )
 
     const {
@@ -65,12 +71,13 @@ export function ComboboxInput(props: ComboboxInputProps) {
         setActiveIndex,
     } = useSelectInputDropdown({
         inputRef,
-        focusFirstItemOnOpen: true,
+        focusFirstItemOnOpen,
         onSearch: useEventCallback((
             event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
             onChange?.(
                 event.currentTarget.value,
+                undefined,
                 event as FormEvent<HTMLInputElement>
             )
         }),
@@ -79,28 +86,33 @@ export function ComboboxInput(props: ComboboxInputProps) {
 
     // Обновление списка опций.
     useEffect(() => {
-        setActiveIndex(0)
+        setActiveIndex(focusFirstItemOnOpen ? 0 : null)
         setFilteredOptions(
-            filterOptions(
-                value ?? '',
-                options as FormSelectOptionsList<string>,
-                false,
-                true
-            )
+            optionsFiltering
+                ? filterOptions(
+                    value ?? '',
+                    options as FormSelectOptionsList<OptionValueType, OptionExtras>,
+                    false,
+                    true
+                )
+                : options
         )
     }, [options, value])
 
+    // Нажатие опцию.
     const onItemClick = (
-        option: FormSelectOption | string,
+        option: FormSelectOption<OptionValueType, OptionExtras> | string,
         event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
     ) => {
         onChange?.(
             typeof option === 'string' ? option : String(option.value ?? ''),
+            typeof option === 'string' ? undefined : option,
             event
         )
         setIsOpen(false)
     }
 
+    // Ввод символа в поле ввода.
     const onSearchKeyDown = useEventCallback((
         event: KeyboardEvent<HTMLInputElement>
     ) => {
@@ -116,9 +128,14 @@ export function ComboboxInput(props: ComboboxInputProps) {
             onItemClick(filteredOptions[activeIndex], event)
             event.preventDefault()
         }
-        onKeyDown?.(event)
+        onKeyDown?.(
+            event,
+            activeIndex,
+            activeIndex ? filteredOptions[activeIndex] : null
+        )
     })
 
+    // Фокусировка на поле ввода.
     const onSearchFocus = useEventCallback((
         event: FocusEvent<HTMLInputElement>
     ) => {
@@ -128,6 +145,7 @@ export function ComboboxInput(props: ComboboxInputProps) {
         onFocus?.(event)
     })
 
+    // Нажатие на поле ввода.
     const onSearchClick = useEventCallback((
         event: MouseEvent<HTMLInputElement>
     ) => {
@@ -161,12 +179,12 @@ export function ComboboxInput(props: ComboboxInputProps) {
                         ref={setMenuRef}
                         {...getFloatingProps()}
                         style={floatingStyles}
-                        maxHeight={maxHeight}
+                        maxHeight={maxDropdownHeight}
                     >
                         <DropdownMenuScrollableContainer>
                             {filteredOptions.map((option, index) => (
                                 <DropdownItem
-                                    key={typeof option === 'string' ? option : option.value}
+                                    key={typeof option === 'string' ? option : String(option.value)}
                                     {...getItemProps({
                                         onClick(event) {
                                             onItemClick(option, event)

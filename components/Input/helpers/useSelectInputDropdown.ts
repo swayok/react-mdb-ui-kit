@@ -47,6 +47,7 @@ export function useSelectInputDropdown(
         focusFirstItemOnOpen = 'auto',
         closeOnScrollOutside = false,
         onSearch: optionsOnSearch,
+        onOpenChange,
         ...floatingOptions
     } = options
 
@@ -59,6 +60,16 @@ export function useSelectInputDropdown(
 
     const floatingConfig = useInputFloatingMenu({
         ...floatingOptions,
+        onOpenChange(
+            open,
+            event,
+            reason
+        ) {
+            if (!open && !focusFirstItemOnOpen) {
+                setActiveIndex(null)
+            }
+            onOpenChange?.(open, event, reason)
+        },
         dropdownWidth,
     })
 
@@ -81,6 +92,7 @@ export function useSelectInputDropdown(
         virtual: true,
         loop: true,
         focusItemOnOpen: focusFirstItemOnOpen,
+        focusItemOnHover: false,
     })
 
     const {
@@ -104,7 +116,7 @@ export function useSelectInputDropdown(
     })
 
     const isActiveListItem = useCallback(
-        (index: number) => activeIndex === index,
+        (index: number) => activeIndex !== null && activeIndex === index,
         [activeIndex]
     )
 

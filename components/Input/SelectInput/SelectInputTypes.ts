@@ -161,15 +161,31 @@ export interface SelectInputProps<
 }
 
 // Свойства компонента ComboboxInput.
-export interface ComboboxInputProps extends Omit<InputProps, 'onChange'> {
-    options?: FormSelectOptionsList<string | number | null> | string[]
-    maxHeight?: SelectInputBasicProps['maxHeight']
+export interface ComboboxInputProps<
+    OptionValueType = string | number | null,
+    OptionExtras extends AnyObject = AnyObject,
+> extends Omit<InputProps, 'onChange' | 'onKeyDown'> {
+    options?: FormSelectOptionsList<OptionValueType, OptionExtras> | string[]
+    // Включить/отключить фильтрацию опций по value?
+    // По умолчанию: true.
+    optionsFiltering?: boolean
+    // Нужно ли посвечивать первую опцию при открытии выпадающего меню?
+    // По умолчанию: true.
+    focusFirstItemOnOpen?: boolean
+    // Максимальная высота меню в пикселях.
+    maxDropdownHeight?: SelectInputBasicProps['maxHeight']
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
     // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
     dropUpOffset?: number
     onChange?: (
-        value: string,
+        value: string | OptionValueType,
+        option: FormSelectOption<OptionValueType, OptionExtras> | undefined,
         event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+    ) => void
+    onKeyDown?: (
+        event: KeyboardEvent<HTMLInputElement>,
+        focusedOptionIndex: number | null,
+        focusedOption: FormSelectOption<OptionValueType, OptionExtras> | string | null
     ) => void
 }
 

@@ -127,6 +127,16 @@ export interface ApiResponseData extends AnyObject {
     _redirect_back?: string
 }
 
+// Ответ от сервера на запрос списка объектов с пагинацией.
+export interface PaginationResponseData<
+    ApiDataType = AnyObject,
+> extends ApiResponseData {
+    // Список элементов для запрошенной страницы.
+    records: ApiDataType[]
+    // Общее количество элементов в списке.
+    count?: number | null
+}
+
 // Опция для SelectInput.
 export interface FormSelectOption<
     Value = string,
