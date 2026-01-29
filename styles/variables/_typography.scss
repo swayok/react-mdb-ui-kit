@@ -91,13 +91,13 @@ $legend-margin-bottom: 0.5rem !default;
 $legend-font-size: 1.5rem !default;
 $legend-font-weight: null !default;
 
+// <mark>
 $mark-padding: 0.2em !default;
+$mark-bg: colors.$amber-100 !default;
 
 $dt-font-weight: $font-weight-bold !default;
 
 $list-inline-padding: 0.5rem !default;
-
-$mark-bg: #fcf8e3 !default;
 
 $limited-text-block-width: 600px !default;
 

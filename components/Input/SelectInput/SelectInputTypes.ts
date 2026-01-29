@@ -169,6 +169,9 @@ export interface ComboboxInputProps<
     // Включить/отключить фильтрацию опций по value?
     // По умолчанию: true.
     optionsFiltering?: boolean
+    // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
+    // По умолчанию: false.
+    optionLabelIsHtml?: boolean
     // Нужно ли посвечивать первую опцию при открытии выпадающего меню?
     // По умолчанию: true.
     focusFirstItemOnOpen?: boolean

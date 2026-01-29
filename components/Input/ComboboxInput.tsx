@@ -18,6 +18,7 @@ import {
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenuContent} from '../Dropdown/DropdownMenuContent'
 import {DropdownMenuScrollableContainer} from '../Dropdown/DropdownMenuScrollableContainer'
+import {HtmlContent} from '../Typography/HtmlContent'
 import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 import {Input} from './Input'
 import {ComboboxInputProps} from './InputTypes'
@@ -33,6 +34,7 @@ export function ComboboxInput<
         options = [],
         optionsFiltering = true,
         focusFirstItemOnOpen = true,
+        optionLabelIsHtml = false,
         inputRef,
         value,
         title,
@@ -192,7 +194,13 @@ export function ComboboxInput<
                                     })}
                                     hover={isActiveListItem(index)}
                                 >
-                                    {typeof option === 'string' ? option : option.label}
+                                    {optionLabelIsHtml ? (
+                                        <HtmlContent
+                                            html={typeof option === 'string' ? option : option.label}
+                                        />
+                                    ) : (
+                                        <>{typeof option === 'string' ? option : option.label}</>
+                                    )}
                                 </DropdownItem>
                             ))}
                         </DropdownMenuScrollableContainer>
