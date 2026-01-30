@@ -2,7 +2,6 @@ import {FloatingList} from '@floating-ui/react'
 import {
     ChangeEvent,
     FocusEvent,
-    FormEvent,
     KeyboardEvent,
     MouseEvent,
     useEffect,
@@ -80,7 +79,7 @@ export function ComboboxInput<
             onChange?.(
                 event.currentTarget.value,
                 undefined,
-                event as FormEvent<HTMLInputElement>
+                event as ChangeEvent<HTMLInputElement>
             )
         }),
         dropUpOffset,

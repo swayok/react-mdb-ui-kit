@@ -2,9 +2,8 @@ import numeral from 'numeral'
 import {
     ChangeEvent,
     ClipboardEvent,
-    CompositionEvent,
     FocusEvent,
-    FormEvent,
+    InputEvent,
     MouseEvent,
     useMemo,
     useRef,
@@ -107,8 +106,8 @@ export function NumericInput(props: NumericInputProps) {
             propEventHandlersRef.current!.onClick?.(event)
         },
         // Проверка лимита целой части.
-        onBeforeInput(event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
-            const char: string = (event as CompositionEvent<HTMLInputElement>).data
+        onBeforeInput(event: InputEvent<HTMLInputElement | HTMLTextAreaElement>) {
+            const char: string = event.data
             switch (isValidCharacter(char, event.currentTarget, utilityFnSettingsRef.current!)) {
                 case 'valid':
                     // Валидация всего значения поля ввода не требуется.

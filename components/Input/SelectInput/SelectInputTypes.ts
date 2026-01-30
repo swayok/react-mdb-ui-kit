@@ -1,6 +1,6 @@
 import type {OpenChangeReason} from '@floating-ui/react'
 import type {
-    FormEvent,
+    ChangeEvent,
     KeyboardEvent,
     MouseEvent,
     ReactNode,
@@ -183,7 +183,7 @@ export interface ComboboxInputProps<
     onChange?: (
         value: string | OptionValueType,
         option: FormSelectOption<OptionValueType, OptionExtras> | undefined,
-        event: FormEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+        event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
     ) => void
     onKeyDown?: (
         event: KeyboardEvent<HTMLInputElement>,
