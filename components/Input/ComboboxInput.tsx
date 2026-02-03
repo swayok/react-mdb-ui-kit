@@ -129,6 +129,9 @@ export function ComboboxInput<
             onItemClick(filteredOptions[activeIndex], event)
             event.preventDefault()
         }
+        if (isOpen && event.key === 'Enter') {
+            setIsOpen(false)
+        }
         onKeyDown?.(
             event,
             activeIndex,
