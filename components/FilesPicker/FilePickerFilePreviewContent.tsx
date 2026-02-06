@@ -42,7 +42,7 @@ export function FilePickerFilePreviewContent(props: Props) {
         style,
     } = props
 
-    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.type] ?? {
+    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.mimeType ?? file.file.type] ?? {
         mime: '',
         type: 'file',
         extensions: [],

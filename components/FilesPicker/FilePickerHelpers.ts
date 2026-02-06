@@ -1,4 +1,6 @@
-import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
+import {
+    FileAPISelectedFileInfo,
+} from '../../helpers/file_api/FileAPI'
 import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'
 import {MinMax} from '../../types'
 import {
@@ -33,6 +35,7 @@ export abstract class FilePickerHelpers {
                     UID: String(item.id),
                     file: {
                         type: item.mimeType,
+                        mimeType: item.mimeType,
                         name: item.uploadName,
                         size: 0,
                         isImage: item.mimeType.startsWith('image/'),
@@ -106,9 +109,20 @@ export abstract class FilePickerHelpers {
         convertImageToJpeg?: boolean
     ): string {
         const fileName: string = useUidAsFileName ? file.UID : file.file.name
-        if (file.file.isImage && convertImageToJpeg) {
-            // Заменяем расширение файла на .jpg.
-            return fileName.replace(/\.[a-zA-Z0-9]{1,6}$/, '.jpg')
+        if (file.file.isImage) {
+            let extension: string | null = null
+            switch (this.getImageMimeTypeForConversion(file, convertImageToJpeg)) {
+                case 'image/jpeg':
+                    extension = '.jpg'
+                    break
+                case 'image/png':
+                    extension = '.png'
+                    break
+            }
+            if (extension) {
+                // Заменяем расширение файла на extension.
+                return fileName.replace(/\.[a-zA-Z0-9]{1,6}$/, extension)
+            }
         }
         return fileName
     }
@@ -124,7 +138,7 @@ export abstract class FilePickerHelpers {
     ): Promise<Blob | File> {
         if (
             !file.file.isImage
-            || file.file.type === 'image/svg+xml'
+            || (file.file.mimeType ?? file.file.type) === 'image/svg+xml'
         ) {
             return Promise.resolve(file.file)
         }
@@ -142,11 +156,14 @@ export abstract class FilePickerHelpers {
                                 resolve(data)
                             }
                         },
-                        convertImageToJpeg ? 'image/jpeg' : undefined,
+                        this.getImageMimeTypeForConversion(file, convertImageToJpeg),
                         imagesCompression
                     )
                 })
-                .catch(() => reject(new Error('failed_to_resize_file')))
+                .catch(error => {
+                    console.error('[FileApiImageManipulation] error', error)
+                    reject(new Error('failed_to_resize_file'))
+                })
         }))
     }
 
@@ -157,23 +174,32 @@ export abstract class FilePickerHelpers {
         translations: ManagedFilePickerProps['translations'],
         maxFileSizeKb?: number
     ): string | FilePickerContextMimeTypeInfo {
-        const extension = file.name.replace(/^.+\.([a-zA-Z0-9]{3,4})$/, '$1').toLowerCase()
-        if (!mimes[file.type]) {
-            console.log('[FilePicker] No preview config for mime type: ' + file.type)
-            return translations.error.mime_type_forbidden(extension || file.type)
+        const mimeType: string = file.mimeType ?? file.type
+        if (!mimes[mimeType]) {
+            console.log('[FilePicker] No preview config for mime type: ' + mimeType)
+            return translations.error.mime_type_forbidden(file.extension ?? mimeType)
         }
-        const mimesForType: FilePickerContextMimeTypeInfo = mimes[file.type]
+        const mimesForType: FilePickerContextMimeTypeInfo = mimes[mimeType]
         if (
             (
                 mimesForType.extensions
-                && !(mimesForType.extensions).includes(extension)
+                && !(mimesForType.extensions).includes(file.extension ?? '')
             )
-            || file.name.toLowerCase() === extension
+            || file.name.toLowerCase() === file.extension
         ) {
-            return translations.error.mime_type_and_extension_mismatch(extension, file.type)
+            return translations.error.mime_type_and_extension_mismatch(
+                file.extension ?? '',
+                mimeType
+            )
         }
-        if (mimesForType.preview !== 'image' && maxFileSizeKb && file.size / 1024 > maxFileSizeKb) {
-            return translations.error.file_too_large(Math.round(maxFileSizeKb / 1024 * 100) / 100)
+        if (
+            mimesForType.preview !== 'image'
+            && maxFileSizeKb
+            && file.size / 1024 > maxFileSizeKb
+        ) {
+            return translations.error.file_too_large(
+                Math.round(maxFileSizeKb / 1024 * 100) / 100
+            )
         }
         return mimesForType
     }
@@ -194,5 +220,25 @@ export abstract class FilePickerHelpers {
     // Размер файла в мегабайтах.
     static getFileSizeMb(file: FilePickerFileInfo): number {
         return Math.round(file.file.size / 1024 / 1024 * 100) / 100
+    }
+
+    // Получить измененный MIME-тип картинки, который нужно отправить на сервер.
+    static getImageMimeTypeForConversion(
+        file: FilePickerFileInfo,
+        convertImageToJpeg?: boolean
+    ): 'image/jpeg' | 'image/png' | undefined {
+        if (convertImageToJpeg) {
+            return 'image/jpeg'
+        }
+        const srcMimeType = file.file.mimeType ?? file.file.type
+        if (
+            srcMimeType === 'image/heic'
+            || srcMimeType === 'image/heif'
+            || srcMimeType === 'image/avif'
+        ) {
+            return 'image/png'
+        }
+        // Не нужно менять тип.
+        return undefined
     }
 }

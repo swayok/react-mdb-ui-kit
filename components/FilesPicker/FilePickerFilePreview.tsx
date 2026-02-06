@@ -162,6 +162,9 @@ export function FilePickerFilePreview(
                             'd-flex flex-row align-items-center justify-content-center',
                             !FilePickerHelpers.canDeleteFile(file) || isDisabled ? 'disabled' : null
                         )}
+                        style={{
+                            zIndex: file.error ? 102 : 2,
+                        }}
                         href="#"
                         onClick={e => {
                             e.preventDefault()

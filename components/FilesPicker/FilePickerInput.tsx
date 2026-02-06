@@ -233,6 +233,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
             //         },
             //     })
             // }
+            ToastService.error(translations.error.failed_to_resize_image)
             console.error('[FilePickerInput] processNewFile error: ', {
                 file,
                 error: e,

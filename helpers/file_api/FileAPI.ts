@@ -4,6 +4,8 @@ import {AnyObject} from '../../types'
 // Данные прикрепленного файла.
 export type FileAPISelectedFileInfo = File & {
     isImage: boolean
+    mimeType?: string
+    extension?: string | null
     previewDataUrl?: string
 }
 
@@ -38,9 +40,15 @@ export class FileAPI {
         const ret: Array<FileAPISelectedFileInfo> = []
         if (input.files) {
             for (let i = 0; i < input.files.length; i++) {
+                const file: File = input.files[i]
+                const mimeType: string = this.getMimeType(file)
                 ret.push(Object.assign(
                     input.files[i],
-                    {isImage: this.isImage(input.files[i])}
+                    {
+                        isImage: this.isImageMimeType(mimeType),
+                        extension: this.getFileExtension(file),
+                        mimeType,
+                    }
                 ))
             }
         }
@@ -134,6 +142,37 @@ export class FileAPI {
      * Является ли прикрепленный файл картинкой?
      */
     static isImage(file: FileAPISelectedFileInfo | File): boolean {
-        return !!(file.type && file.type.match(/^image/) !== null)
+        return this.isImageMimeType(this.getMimeType(file))
+    }
+
+    /**
+     * Является ли mimetype картинкой?
+     */
+    static isImageMimeType(mimeType?: string): boolean {
+        return !!mimeType && mimeType.match(/^image/) !== null
+    }
+
+    /**
+     * Определить mimetype файла.
+     */
+    static getMimeType(file: FileAPISelectedFileInfo | File): string {
+        let mimeType: string | null = file.type === '' ? null : file.type
+        if (!mimeType || mimeType === 'application/octet-stream') {
+            const extension: string | null = this.getFileExtension(file)
+            if (extension === 'heic' || extension === 'heif') {
+                mimeType = 'image/heic'
+            }
+        }
+        return mimeType ?? 'application/octet-stream'
+    }
+
+    /**
+     * Получить расширение файла.
+     * Возвращает null, если расширения нет.
+     */
+    static getFileExtension(file: FileAPISelectedFileInfo | File): string | null {
+        const extension = file.name.replace(/^.+\.([a-zA-Z0-9]{3,4})$/, '$1')
+            .toLowerCase()
+        return extension === '' ? null : extension
     }
 }

@@ -153,12 +153,15 @@ export function FilePickerFilePreviewWithoutInfo(
                 {!file.isDeleted && (
                     <a
                         className={clsx(
-                            'file-picker-preview-delete z-index-2',
+                            'file-picker-preview-delete',
                             'd-flex flex-row align-items-center justify-content-center',
                             (!FilePickerHelpers.canDeleteFile(file) || isDisabled)
                                 ? 'disabled'
                                 : null
                         )}
+                        style={{
+                            zIndex: file.error ? 102 : 2,
+                        }}
                         href="#"
                         onClick={e => {
                             e.preventDefault()

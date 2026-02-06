@@ -38,6 +38,25 @@ export const filePickerDefaultPreviews: AnyObject<FilePickerContextMimeTypeInfo>
         extensions: ['png'],
         preview: 'image',
     },
+    // 2026-02: Браузеры не имеют нативной поддержки HEIC и HEIF форматов.
+    // Костыль через пакет https://github.com/alexcorvi/heic2any
+    // требует на клиенте загружать 2+Мб, что за гранью допустимого по времени.
+    // На сервере конвертация тоже пока недоступна т.к. нужно по-особенному
+    // собирать imagick, чтобы он поддерживал HEIC и HEIF форматы.
+    // К тому же файлы heic обычно имеют размер в несколько Мб, что сильно
+    // затрудняет работу с ними через сервер.
+    // 'image/heic': {
+    //     mime: 'image/heic',
+    //     type: 'image',
+    //     extensions: ['heic'],
+    //     preview: 'image',
+    // },
+    // 'image/heif': {
+    //     mime: 'image/heif',
+    //     type: 'image',
+    //     extensions: ['heif'],
+    //     preview: 'image',
+    // },
     'image/avif': {
         mime: 'image/avif',
         type: 'image',
