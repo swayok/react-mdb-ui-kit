@@ -24,15 +24,23 @@ export interface UseModalControlsHookReturn {
 
 // Контроль открытия модального окна.
 export function useModalControls(
-    initialState: boolean | null = null
+    initialState: boolean | null = null,
+    onClose?: () => void,
+    onClosed?: () => void
 ): UseModalControlsHookReturn {
     const [
         isModalVisible,
         setIsModalVisible,
     ] = useState<boolean | null>(initialState)
 
-    const closeModal = useEventCallback(() => setIsModalVisible(false))
-    const unmountModal = useEventCallback(() => setIsModalVisible(null))
+    const closeModal = useEventCallback(() => {
+        setIsModalVisible(false)
+        onClose?.()
+    })
+    const unmountModal = useEventCallback(() => {
+        setIsModalVisible(null)
+        onClosed?.()
+    })
 
     return {
         isModalVisible,

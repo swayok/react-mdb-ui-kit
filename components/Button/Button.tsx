@@ -18,7 +18,7 @@ import {
 import {Ripple} from '../Ripple/Ripple'
 import {RippleProps} from '../Ripple/RippleTypes'
 
-export interface ButtonProps extends Omit<HtmlComponentProps<HTMLButtonElement | HTMLAnchorElement>, 'label'> {
+export interface ButtonProps extends Omit<HtmlComponentProps<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement>, 'label'> {
     LinkComponent?: ComponentType
     hidden?: boolean
     visible?: boolean
