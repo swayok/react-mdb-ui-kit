@@ -28,6 +28,7 @@ export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'
     path: MdiIconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
+    labelClassName?: string | number
     tooltip?: string | ReactNode
     tooltipProps?: IconTooltipProps
     tooltipDisableClickHandler?: boolean
@@ -44,6 +45,7 @@ export function Icon(props: IconProps) {
     const {
         className,
         label,
+        labelClassName = 'ms-1',
         tooltip,
         tooltipProps = {},
         centerIconInTooltip,
@@ -110,7 +112,14 @@ export function Icon(props: IconProps) {
                     {...commonTooltipProps}
                 >
                     {icon}
-                    <div className="flex-1 ms-1 mdi-icon-label">{label}</div>
+                    <div
+                        className={clsx(
+                            'flex-1 mdi-icon-label',
+                            labelClassName
+                        )}
+                    >
+                        {label}
+                    </div>
                 </Tooltip>
             )
         } else {
@@ -132,7 +141,14 @@ export function Icon(props: IconProps) {
             return (
                 <div className="mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start">
                     {icon}
-                    <div className="flex-1 ms-1 mdi-icon-label">{label}</div>
+                    <div
+                        className={clsx(
+                            'flex-1 mdi-icon-label',
+                            labelClassName
+                        )}
+                    >
+                        {label}
+                    </div>
                 </div>
             )
         } else {
