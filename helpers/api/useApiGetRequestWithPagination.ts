@@ -127,7 +127,7 @@ export interface UseApiGetRequestWithPaginationHookState<
     ModifiedDataType = ApiDataType,
 > extends Omit<
         UseApiGetRequestWithPaginationHookReturn<ApiDataType, ModifiedDataType>,
-    'loadPage' | 'loadNextPage' | 'loadPrevPage' | 'reset' | 'resetState'
+        'loadPage' | 'loadNextPage' | 'loadPrevPage' | 'reset' | 'resetState'
     > {
     sendRequest: (offset: number, limit: number) => Promise<PaginationResponseData<ApiDataType>>
     defaultOnSuccess: (
