@@ -27,11 +27,23 @@ export interface UseApiGetRequestHookConfig<
     modifyLoadedData?: (data: ApiDataType) => ModifiedDataType
     // Сбрасывать данные в initialData при ошибке загрузки?
     resetDataOnError?: boolean
-    // Замена стандартного обработчика успешной загрузки данных.
-    // Вызов modifyLoadedData() не выполняется.
-    onSuccess?: (
+    // Получение данных из кэша.
+    getFromCache?: (
+        hookState: Readonly<UseApiGetRequestHookState<ApiDataType, ModifiedDataType>>
+    ) => ApiDataType | undefined
+    // Сохранение данных в кэш.
+    saveToCache?: (
         responseData: ApiDataType,
         hookState: Readonly<UseApiGetRequestHookState<ApiDataType, ModifiedDataType>>
+    ) => void
+    // Замена стандартного обработчика успешной загрузки данных.
+    // Вызов modifyLoadedData() не выполняется.
+    // Если нужно вызвать стандартный обработчик, используйте
+    // hookState.defaultOnSuccess(data).
+    onSuccess?: (
+        responseData: ApiDataType,
+        hookState: Readonly<UseApiGetRequestHookState<ApiDataType, ModifiedDataType>>,
+        isFromCache: boolean
     ) => void
     // Обработка ошибки загрузки данных.
     onError?: (error: ApiError, silent: boolean) => void
@@ -90,6 +102,8 @@ export function useApiGetRequest<
         initialData,
         modifyLoadedData,
         resetDataOnError = false,
+        getFromCache,
+        saveToCache,
         onSuccess,
         onError,
     } = (options ?? {})
@@ -138,9 +152,32 @@ export function useApiGetRequest<
         },
     }
 
+    // Обработка успешной загрузки данных.
+    const handleSuccess = useEventCallback(
+        (data: ApiDataType, isFromCache?: boolean): ApiDataType => {
+            if (!isFromCache) {
+                saveToCache?.(data, hookState.current!)
+            }
+            if (onSuccess) {
+                onSuccess(data, hookState.current!, false)
+            } else {
+                hookState.current!.defaultOnSuccess(data)
+            }
+            return data
+        }
+    )
+
     // Запуск запроса и обработка ответа.
     const executeRequest = useEventCallback(
         (silent?: boolean): Promise<ApiDataType> => {
+            if (getFromCache) {
+                const cachedData = getFromCache(hookState.current!)
+                if (cachedData !== undefined) {
+                    return Promise.resolve(
+                        handleSuccess(cachedData, true)
+                    )
+                }
+            }
             if (!silent) {
                 setIsLoading(true)
                 setError(null)
@@ -149,14 +186,7 @@ export function useApiGetRequest<
                 }
             }
             return sendRequest()
-                .then((data: ApiDataType) => {
-                    if (onSuccess) {
-                        onSuccess(data, hookState.current!)
-                    } else {
-                        hookState.current!.defaultOnSuccess(data)
-                    }
-                    return data
-                })
+                .then((data: ApiDataType) => handleSuccess(data, false))
                 .catch((error: ApiError) => {
                     if (!silent) {
                         setError(error)
