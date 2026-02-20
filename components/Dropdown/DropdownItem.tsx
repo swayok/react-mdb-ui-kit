@@ -58,7 +58,7 @@ export function DropdownItem<
 
     const onMouseDown = useEventCallback(
         (e: MouseEvent<HTMLElement>) => {
-            if (disabled || disableAllItems) {
+            if (disabled || disableAllItems || e.button !== 0) {
                 e.preventDefault()
                 return
             }

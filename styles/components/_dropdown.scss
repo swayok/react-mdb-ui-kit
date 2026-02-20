@@ -56,7 +56,6 @@
         background-clip: padding-box;
         border: dropdown.$dropdown-border-width solid dropdown.$dropdown-border-color;
         box-shadow: dropdown.$dropdown-box-shadow;
-        overflow-y: hidden;
         @include border-radius.border-radius(dropdown.$dropdown-border-radius);
         @include rfs.font-size(dropdown.$dropdown-font-size);
 

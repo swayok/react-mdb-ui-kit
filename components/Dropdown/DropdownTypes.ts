@@ -218,6 +218,10 @@ export interface DropdownMenuProps<
     inline?: boolean
     // Отключить автофокус на меню при открытии?
     noFocus?: boolean
+    // Добавить элемент перед DropdownMenuScrollableContainer.
+    BeforeScrollableContainer?: ReactNode
+    // Добавить элемент после DropdownMenuScrollableContainer.
+    AfterScrollableContainer?: ReactNode
 }
 
 // Свойства компонента DropdownMenu по умолчанию.

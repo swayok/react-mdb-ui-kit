@@ -53,6 +53,8 @@ export function DropdownMenu<
         height,
         maxHeight,
         children,
+        BeforeScrollableContainer,
+        AfterScrollableContainer,
         ...otherProps
     } = props
 
@@ -112,22 +114,22 @@ export function DropdownMenu<
         whileElementsMounted: autoUpdate,
     })
 
-    const onKeyDown = useEventCallback((
-        event: KeyboardEvent<RefType>
-    ) => {
-        if (
-            activeIndex !== null
-            && elementsRef.current[activeIndex]
-            && (
-                event.key === 'Enter'
-                || event.key === ' '
-            )
-        ) {
-            (elementsRef.current[activeIndex])?.click()
-            event.preventDefault()
+    const onKeyDown = useEventCallback(
+        (event: KeyboardEvent<RefType>) => {
+            if (
+                activeIndex !== null
+                && elementsRef.current[activeIndex]
+                && (
+                    event.key === 'Enter'
+                    || event.key === ' '
+                )
+            ) {
+                (elementsRef.current[activeIndex])?.click()
+                event.preventDefault()
+            }
+            propsOnKeyDown?.(event)
         }
-        propsOnKeyDown?.(event)
-    })
+    )
 
     const Portal = inline ? Fragment : FloatingPortal
 
@@ -155,6 +157,7 @@ export function DropdownMenu<
                                 ...floatingStyles,
                             }}
                         >
+                            {BeforeScrollableContainer}
                             <DropdownMenuScrollableContainer
                                 style={{
                                     height,
@@ -163,6 +166,7 @@ export function DropdownMenu<
                             >
                                 {children}
                             </DropdownMenuScrollableContainer>
+                            {AfterScrollableContainer}
                         </DropdownMenuContent>
                     </FloatingFocusManager>
                 </Portal>
