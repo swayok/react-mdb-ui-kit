@@ -21,7 +21,7 @@ import {ReactNode} from 'react'
 export type IconTooltipProps = Omit<
     DefaultTooltipProps,
     'title' | 'className' | 'tooltipMaxWidth' | 'tooltipDisableClickHandler'
-    | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement'
+    | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement' | 'width'
 >
 
 export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'> {

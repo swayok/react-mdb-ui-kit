@@ -43,7 +43,6 @@ export function DropdownMenu<
         flip: shouldFlip = true,
         shift: shouldShift = false,
         offset: propsOffset = 2,
-        renderOnMount,
         ref,
         apiRef,
         style = {},
@@ -137,7 +136,7 @@ export function DropdownMenu<
         <FloatingList
             elementsRef={elementsRef}
         >
-            {(isOpen || renderOnMount) && (
+            {isOpen && (
                 <Portal>
                     <FloatingFocusManager
                         context={context}

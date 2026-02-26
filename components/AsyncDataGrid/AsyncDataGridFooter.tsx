@@ -1,10 +1,8 @@
-import {mdiRefresh} from '@mdi/js'
-import clsx from 'clsx'
 import {DataGridFooterWrapper} from '../DataGrid/DataGridFooterWrapper'
 import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'
 import {DataGridPagination} from '../DataGrid/DataGridPagination'
-import {Icon} from '../Icon/Icon'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
+import {AsyncDataGridFooterReload} from './AsyncDataGridFooterReload'
 import {AsyncDataGridFooterProps} from './AsyncDataGridTypes'
 
 // Подвал таблицы с данными.
@@ -20,6 +18,7 @@ export function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
     const {
         disabled,
         reloader = true,
+        autoReloadMs,
         limitChanger = true,
         paginationProps = {
             numbers: true,
@@ -37,7 +36,6 @@ export function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
         setLimit,
         setOffset,
         loading,
-        reload,
     } = useAsyncDataGridContext()
 
     const isDisabled: boolean = !!disabled || loading
@@ -66,26 +64,10 @@ export function AsyncDataGridFooter(props: AsyncDataGridFooterProps) {
                     onOffsetChange={setOffset}
                 />
                 {reloader && (
-                    <div
-                        className={clsx(
-                            'page-item',
-                            isDisabled ? 'disabled' : null
-                        )}
-                    >
-                        <div
-                            className={clsx(
-                                'page-link with-icon ms-2 clickable',
-                                isDisabled ? 'disabled' : null
-                            )}
-                            onClick={() => {
-                                if (!isDisabled) {
-                                    reload()
-                                }
-                            }}
-                        >
-                            <Icon path={mdiRefresh} />
-                        </div>
-                    </div>
+                    <AsyncDataGridFooterReload
+                        disabled={disabled}
+                        autoReloadMs={autoReloadMs}
+                    />
                 )}
             </div>
         </DataGridFooterWrapper>

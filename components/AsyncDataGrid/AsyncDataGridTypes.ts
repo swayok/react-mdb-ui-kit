@@ -211,6 +211,15 @@ export interface AsyncDataGridDefaultLayoutProps<
 // Свойства подвала таблицы с данными, получаемыми с сервера.
 export interface AsyncDataGridFooterProps extends DataGridFooterProps {
     reloader?: boolean
+    // Автоматическая перезагрузка данных каждые N миллисекунд.
+    autoReloadMs?: number
+}
+
+// Свойства кнопки перезагрузки данных в подвале таблицы.
+export interface AsyncDataGridFooterReloadProps {
+    disabled?: boolean
+    // Автоматическая перезагрузка данных каждые N миллисекунд.
+    autoReloadMs?: number
 }
 
 // Свойства таблицы с данными, получаемыми с сервера (<table>).

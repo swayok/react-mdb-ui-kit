@@ -173,8 +173,6 @@ export interface DropdownMenuProps<
 > extends Omit<MorphingHtmlComponentProps<RefType>, 'width'> {
     // API выпадающего меню.
     apiRef?: ApiRef<DropdownApi>
-    // Нужно ли рендерить меню при монтировании компонента?
-    renderOnMount?: boolean
     /**
      * Может ли меню менять сторону отображения в зависимости от доступного места на экране?
      * @see https://floating-ui.com/docs/flip

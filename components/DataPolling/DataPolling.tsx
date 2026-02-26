@@ -9,7 +9,7 @@ import {
 
 // Свойства компонента DataPolling.
 export interface DataPollingProps {
-    condition: boolean
+    condition?: boolean
     name: string
     interval: number
     handler: PollingServiceHandlerFn
@@ -22,7 +22,7 @@ export interface DataPollingProps {
 export function DataPolling(props: DataPollingProps): null {
 
     const {
-        condition,
+        condition = true,
         name,
         interval,
         handler: propsHandler,
@@ -46,9 +46,11 @@ export function DataPolling(props: DataPollingProps): null {
             PollingService.stopPolling(name)
         }
     }, [condition])
+
     // Остановить, если компонент демонтирован.
     useEffect(() => () => {
         PollingService.stopPolling(name)
     }, [])
+
     return null
 }
