@@ -140,9 +140,10 @@ $include-text-utilities: true !default;
 $include-text-color-utilities: true !default;
 $include-bg-color-utilities: true !default;
 $include-gradient-utilities: true !default;
-$include-interaction-utilities: true !default; // user-select & pointer-events
-$include-border-radius-utilities: true !default; // user-select & pointer-events
-$include-visibility-utilities: true !default; // user-select & pointer-events
+// user-select & pointer-events
+$include-interaction-utilities: true !default;
+$include-border-radius-utilities: true !default;
+$include-visibility-utilities: true !default;
 $include-rfs-scaling-for-utilities: true !default;
 $include-shadow-utilities: true !default;
 $include-letter-spacing-utilities: true !default;
