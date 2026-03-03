@@ -9,7 +9,7 @@ import {ReusableSvg} from './ReusableSvg'
 // Свойства компонента MDIIcon.
 export interface MdiIconProps extends Omit<
     HtmlComponentPropsWithRef<SVGSVGElement>,
-    'size' | 'label' | 'width' | 'height'
+    'size' | 'label' | 'width' | 'height' | 'children'
 > {
     id?: string
     path: string
@@ -29,9 +29,6 @@ export interface MdiIconProps extends Omit<
     // в этом случае невозможно будет изменять содержимое SVG, включая цвет
     // через CSS класс поскольку внутри <svg> не будет <path>, <g> и т.п.
     reuse?: string
-    // CSS класс контейнера, в котором будет сохранён оригинал иконки.
-    // Класс нужно задавать, если стиль иконки зависит от CSS-класса родительского DOM элемента.
-    reusableItemContainerClassName?: string
 }
 
 // Иконка.
@@ -47,7 +44,6 @@ export function MDIIcon(props: MdiIconProps) {
         spin = false,
         style: propsStyle = {},
         reuse,
-        reusableItemContainerClassName,
         ...otherProps
     } = props
 
@@ -134,6 +130,7 @@ export function MDIIcon(props: MdiIconProps) {
             role,
             viewBox: '0 0 24 24',
             style: collectStyles(),
+            fill: reuse ? 'currentColor' : undefined,
             ...otherProps,
         }
     }
@@ -152,8 +149,6 @@ export function MDIIcon(props: MdiIconProps) {
             <ReusableSvg
                 {...commonProps}
                 reuse={'icon-' + reuse}
-                reusableItemContainerClass={reusableItemContainerClassName}
-                uid={index}
             >
                 {content}
             </ReusableSvg>

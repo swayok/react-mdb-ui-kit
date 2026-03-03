@@ -382,7 +382,7 @@ export interface InputGroupIconProps extends Omit<MorphingHtmlComponentProps, 's
     Pick<
         IconProps,
         'path' | 'color' | 'rotate' | 'vertical' | 'spin' | 'size' | 'label'
-        | 'reuse' | 'reusableItemContainerClassName' | 'onClick'
+        | 'reuse' | 'onClick'
         | 'tooltip' | 'centerIconInTooltip'
     >,
     PickByPrefix<IconProps, 'tooltip'>

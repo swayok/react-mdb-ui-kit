@@ -26,10 +26,11 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string
     external?: boolean
     color?: TextColors | 'link'
-    tooltip: string | ReactNode
+    tooltip?: string | ReactNode
     tooltipProps?: IconHrefTooltipProps
     iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
+    reuse?: MdiIconProps['reuse']
     size?: number | null
     iconClassName?: string
     iconStyle?: CSSProperties
@@ -62,6 +63,7 @@ export function IconHref(props: IconHrefProps) {
         visible,
         children,
         inline = false,
+        reuse,
         ...linkProps
     } = props
 
@@ -101,6 +103,7 @@ export function IconHref(props: IconHrefProps) {
         >
             <Icon
                 size={size}
+                reuse={reuse}
                 {...iconProps}
                 className={iconClassName}
                 style={iconStyle}

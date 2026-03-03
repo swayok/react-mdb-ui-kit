@@ -1,4 +1,5 @@
 import {ReactNode} from 'react'
+import * as ReactDOMClient from 'react-dom/client'
 import {AnyObject} from '../types'
 
 export interface ReusableSvgRepositoryConfig {
@@ -9,23 +10,17 @@ export type ReusableSvgRepositorySetSvgElementFn = (
     element: SVGSVGElement | null
 ) => void
 
-type ReusableSvgRepositoryRememberFallbackFn = (
-    resolve: ReusableSvgRepositorySetSvgElementFn
-) => ReactNode | ReactNode[]
-
-interface CachedSvgElement {
-    uid: string | number
-    children: ReactNode | ReactNode[]
-}
-
 // Репозиторий для кеширования SVG элементов.
 export abstract class ReusableSvgRepository {
+
+    // ID контейнера для кешированных SVG элементов.
+    private static containerId: string = '__reusable-svg-container'
 
     // Контейнер для кешированных SVG элементов.
     private static container: HTMLDivElement | null = null
 
-    // Кешированные SVG элементы.
-    private static svgElements: AnyObject<CachedSvgElement, string> = {}
+    // Кешированные SVG элементы (ID SVG элемента).
+    private static svgElements: AnyObject<string | null> = {}
 
     // Настройки репозитория.
     private static config: ReusableSvgRepositoryConfig = {}
@@ -41,61 +36,57 @@ export abstract class ReusableSvgRepository {
     // Получить содержимое SVG элемента.
     static getSvgContents(
         name: string,
-        uid: string | number,
-        fallback: ReusableSvgRepositoryRememberFallbackFn,
-        reusableItemContainerClassName?: string
+        children: ReactNode | ReactNode[],
+        svgProps: AnyObject
     ): ReactNode | ReactNode[] {
-        const reusableId = this.getSvgId(name)
-        if (name in this.svgElements) {
-            return this.svgElements[name].uid === uid
-                ? this.svgElements[name].children
-                : <use href={'#' + reusableId} />
+        if (!(name in this.svgElements)) {
+            this.svgElements[name] = this.rememberSvgElement(
+                name,
+                children,
+                (svgProps.viewBox as string | undefined)
+            )
         }
-        // Запоминаем сразу uid, чтобы в дальнейшем для этого uid отдавать результат.
-        this.svgElements[name] = {
-            uid,
-            children: fallback(
-                element => this.rememberSvgElement(
-                    name,
-                    element,
-                    reusableItemContainerClassName
-                )
-            ),
+        if (!this.svgElements[name]) {
+            return null
         }
-        return this.svgElements[name].children
+        return (
+            <svg {...svgProps}>
+                <use href={'#' + this.svgElements[name]} />
+            </svg>
+        )
     }
 
     // Запомнить SVG элемент.
     private static rememberSvgElement(
         name: string,
-        svgElement: SVGSVGElement | null,
-        reusableItemContainerClassName?: string
-    ): void {
-        if (!svgElement) {
-            return
-        }
+        svgChildren: ReactNode | ReactNode[],
+        viewBox?: string | null
+    ): string {
         const reusableId: string = this.getSvgId(name)
-        const existing: HTMLElement | null = document.getElementById(reusableId)
-        if (existing) {
-            existing.parentElement?.remove()
-        }
-        // Создаем контейнер для хранения оригинала иконки.
-        const iconContainer: HTMLDivElement = document.createElement('div')
-        iconContainer.style.display = 'none'
-        if (reusableItemContainerClassName) {
-            iconContainer.className = reusableItemContainerClassName
-        }
-        // Клонируем иконку и добавляем ее в невидимый контейнер.
-        const clone: SVGSVGElement = svgElement.cloneNode(true) as SVGSVGElement
-        clone.id = reusableId
-        iconContainer.append(clone)
-        this.getContainer().appendChild(iconContainer)
+        const reusableIdContainer: string = reusableId + '-container'
+        const svg: SVGSVGElement = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'svg'
+        )
+        svg.id = reusableIdContainer
+        svg.style.display = 'none'
+        this.getContainer().appendChild(svg)
+        ReactDOMClient.createRoot(svg).render(
+            <symbol
+                id={reusableId}
+                viewBox={viewBox ?? undefined}
+            >
+                {svgChildren}
+            </symbol>
+        )
+        return reusableId
     }
 
     // Получить контейнер кешированных SVG элементов.
     private static getContainer(): Node {
         if (!this.container) {
             this.container = document.createElement('div')
+            this.container.id = this.containerId
             this.container.style.display = 'none'
             document.body.appendChild(this.container)
         }

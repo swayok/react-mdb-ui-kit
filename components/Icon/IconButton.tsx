@@ -7,8 +7,8 @@ import {
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {TextColors} from '../../types'
 import {
-    IconProps,
     Icon,
+    IconProps,
     IconTooltipProps,
 } from './Icon'
 
@@ -42,7 +42,6 @@ export function IconButton(props: IconButtonProps) {
         disabled,
         className,
         iconClassName,
-        reusableItemContainerClassName,
         style,
         iconStyle,
         inline = false,
@@ -103,10 +102,6 @@ export function IconButton(props: IconButtonProps) {
                     style,
                 }}
                 className={iconClassName}
-                reusableItemContainerClassName={clsx(
-                    wrapperClassName,
-                    reusableItemContainerClassName
-                )}
                 style={iconStyle}
                 {...otherProps}
             />
@@ -121,7 +116,6 @@ export function IconButton(props: IconButtonProps) {
             >
                 <Icon
                     className={iconClassName}
-                    reusableItemContainerClassName={clsx(wrapperClassName, reusableItemContainerClassName)}
                     style={iconStyle}
                     {...otherProps}
                 />

@@ -5,6 +5,7 @@ import {TabSheetTabButton} from '../components/TabSheet/TabSheetTabButton'
 import {BadgesDemo} from './groups/BadgesDemo'
 import {DataGridDemo} from './groups/DataGridDemo'
 import {DropdownsDemo} from './groups/DropdownsDemo'
+import {IconsDemo} from './groups/IconsDemo'
 import {ImagesPreviewDemo} from './groups/ImagesPreviewDemo'
 import {RatingStarsDemo} from './groups/RatingStarsDemo'
 import {TablesDemo} from './groups/TablesDemo'
@@ -22,6 +23,9 @@ export function ComponentsDemo() {
             urlQueryArgName="components"
         >
             <TabSheetHeader>
+                <TabSheetTabButton name="icons">
+                    Icons
+                </TabSheetTabButton>
                 <TabSheetTabButton name="rating-stars">
                     Rating Stars
                 </TabSheetTabButton>
@@ -45,6 +49,9 @@ export function ComponentsDemo() {
                 </TabSheetTabButton>
             </TabSheetHeader>
             <TabSheetBody>
+                <TabContentForDemoTabsheet name="icons">
+                    <IconsDemo />
+                </TabContentForDemoTabsheet>
                 <TabContentForDemoTabsheet name="rating-stars">
                     <RatingStarsDemo />
                 </TabContentForDemoTabsheet>

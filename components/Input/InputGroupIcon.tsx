@@ -17,7 +17,6 @@ export function InputGroupIcon(props: InputGroupIconProps) {
         size,
         label,
         reuse,
-        reusableItemContainerClassName,
         onClick,
         iconClassName,
         // Tooltip props:
@@ -57,7 +56,6 @@ export function InputGroupIcon(props: InputGroupIconProps) {
         label,
         reuse,
         className: iconClassName,
-        reusableItemContainerClassName,
         onClick,
         // Tooltip props:
         tooltipProps,

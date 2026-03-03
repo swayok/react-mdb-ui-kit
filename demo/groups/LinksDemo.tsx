@@ -125,7 +125,7 @@ export function LinksDemo() {
     )
 }
 
-const linkColors = [
+export const linkColors = [
     'primary',
     'secondary',
     'success',
@@ -146,7 +146,6 @@ const linkColors = [
     'green',
     'teal',
     'cyan',
-    'white',
     'gray',
     'gray-dark',
 ]

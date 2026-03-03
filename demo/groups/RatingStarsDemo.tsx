@@ -10,7 +10,7 @@ export function RatingStarsDemo() {
 
     return (
         <>
-            <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-columns-gap-3">
+            <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3">
                 {values.map(value => (
                     <div key={value}>
                         Rating {value}:

@@ -17,6 +17,10 @@
             transition: fill 0.2s linear;
         }
 
+        use {
+            transition: color 0.2s linear;
+        }
+
         &.mdi-rotatable {
             transition: transform 0.1s linear;
             transform: rotate(0deg);
