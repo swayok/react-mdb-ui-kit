@@ -159,7 +159,7 @@ export function IconsDemo() {
                 />
             </div>
 
-            <SectionDivider label="Reusable icons (<IconHref reuse='mdiAccount'>)" />
+            <SectionDivider label="Reusable icons (<IconHref reuse='mdiAccount-href'>)" />
             <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
                 <IconHref
                     path={mdiAccount}
@@ -172,7 +172,7 @@ export function IconsDemo() {
                     path={mdiAccount}
                     color="primary"
                     href="#"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-href"
                 >
                     First (primary)
                 </IconHref>
@@ -180,7 +180,7 @@ export function IconsDemo() {
                     path={mdiAccount}
                     color="primary"
                     href="#"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-href"
                 >
                     Reuse 1 (primary)
                 </IconHref>
@@ -188,13 +188,21 @@ export function IconsDemo() {
                     path={mdiAccount}
                     color="blue"
                     href="#"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-href"
                 >
                     Reuse 2 (blue)
                 </IconHref>
+                <IconHref
+                    path={mdiAccount}
+                    color="green"
+                    href="#"
+                    reuse="mdiAccount"
+                >
+                    Reuse from {'<Icon/>'}
+                </IconHref>
             </div>
 
-            <SectionDivider label="Reusable icons (<IconButton reuse='mdiAccount'>)" />
+            <SectionDivider label="Reusable icons (<IconButton reuse='mdiAccount-btn'>)" />
             <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
                 <IconButton
                     path={mdiAccount}
@@ -204,21 +212,27 @@ export function IconsDemo() {
                 <IconButton
                     path={mdiAccount}
                     color="primary"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-btn"
                     label="First (primary)"
                 />
                 <IconButton
                     path={mdiAccount}
                     color="primary"
                     href="#"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-btn"
                     label="Reuse 1 (primary)"
                 />
                 <IconButton
                     path={mdiAccount}
                     color="blue"
-                    reuse="mdiAccount"
+                    reuse="mdiAccount-btn"
                     label="Reuse 2 (blue)"
+                />
+                <IconButton
+                    path={mdiAccount}
+                    color="green"
+                    reuse="mdiAccount"
+                    label="Reuse from <Icon/>"
                 />
             </div>
         </>
