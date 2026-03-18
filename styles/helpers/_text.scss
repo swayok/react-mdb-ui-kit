@@ -36,6 +36,11 @@
         word-break: normal;
     }
 
+    .text-multiline-break-all {
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+
     .text-transform-none {
         text-transform: none !important;
     }
