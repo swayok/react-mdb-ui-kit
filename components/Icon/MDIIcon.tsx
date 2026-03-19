@@ -1,16 +1,17 @@
 import {
     CSSProperties,
+    type RefAttributes,
     SVGAttributes,
+    SVGProps,
     useId,
 } from 'react'
-import {HtmlComponentPropsWithRef} from '../../types'
 import {ReusableSvg} from './ReusableSvg'
 
 // Свойства компонента MDIIcon.
 export interface MdiIconProps extends Omit<
-    HtmlComponentPropsWithRef<SVGSVGElement>,
+    SVGProps<SVGSVGElement>,
     'size' | 'label' | 'width' | 'height' | 'children'
-> {
+>, RefAttributes<SVGSVGElement> {
     id?: string
     path: string
     title?: string

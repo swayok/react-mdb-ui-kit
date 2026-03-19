@@ -1,8 +1,11 @@
-import {RefObject} from 'react'
+import {
+    RefObject,
+    SVGProps,
+    useMemo,
+} from 'react'
 import {ReusableSvgRepository} from '../../helpers/ReusableSvgRepository'
-import {HtmlComponentProps} from '../../types'
 
-export interface ReusableSvgProps extends HtmlComponentProps<SVGSVGElement> {
+export interface ReusableSvgProps extends SVGProps<SVGSVGElement> {
     ref?: RefObject<SVGSVGElement>
     // HTML ID для переиспользования. Допустимые символы: a-z, A-Z, 0-9, -, _.
     // Если на странице большое количество одинаковых иконок, то браузер будет
@@ -25,9 +28,18 @@ export function ReusableSvg(props: ReusableSvgProps) {
         ...otherProps
     } = props
 
-    return ReusableSvgRepository.getSvgContents(
-        reuse,
-        children,
-        otherProps
+    const svgId = useMemo(
+        () => ReusableSvgRepository.rememberSvgElement(
+            reuse,
+            children,
+            otherProps.viewBox
+        ),
+        [reuse]
+    )
+
+    return (
+        <svg {...otherProps}>
+            <use href={'#' + svgId} />
+        </svg>
     )
 }

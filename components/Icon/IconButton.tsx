@@ -5,7 +5,9 @@ import {
     ReactNode,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {TextColors} from '../../types'
+import {
+    TextColors,
+} from '../../types'
 import {
     Icon,
     IconProps,

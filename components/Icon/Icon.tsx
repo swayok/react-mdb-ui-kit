@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import {
+    HtmlComponentProps,
     SvgIconInfo,
     TextColors,
 } from '../../types'
@@ -24,7 +25,15 @@ export type IconTooltipProps = Omit<
     | 'tag' | 'tooltipTextClassName' | 'tooltipPlacement' | 'width'
 >
 
-export interface IconProps extends Omit<MdiIconProps, 'path' | 'color' | 'title'> {
+export interface IconProps extends Omit<
+    HtmlComponentProps<HTMLDivElement>,
+    keyof MdiIconProps | 'label'
+>,
+    Omit<
+        MdiIconProps,
+        'path' | 'color' | 'title'
+    >
+{
     path: MdiIconProps['path'] | SvgIconInfo
     color?: TextColors
     label?: string | number
@@ -59,6 +68,7 @@ export function Icon(props: IconProps) {
         color,
         ...otherProps
     } = props
+
     let icon
     const colorClassName = color ? 'text-' + color : null
     if (typeof path == 'string') {

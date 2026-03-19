@@ -33,36 +33,23 @@ export abstract class ReusableSvgRepository {
         }
     }
 
-    // Получить содержимое SVG элемента.
-    static getSvgContents(
-        name: string,
-        children: ReactNode | ReactNode[],
-        svgProps: AnyObject
-    ): ReactNode | ReactNode[] {
-        if (!(name in this.svgElements)) {
-            this.svgElements[name] = this.rememberSvgElement(
-                name,
-                children,
-                (svgProps.viewBox as string | undefined)
-            )
-        }
-        if (!this.svgElements[name]) {
-            return null
-        }
-        return (
-            <svg {...svgProps}>
-                <use href={'#' + this.svgElements[name]} />
-            </svg>
-        )
+    // Получить ID кешированного SVG элемента.
+    static getCachedSvgElementId(name: string): string | null {
+        return this.svgElements[name] ?? null
     }
 
     // Запомнить SVG элемент.
-    private static rememberSvgElement(
+    // Внимание! Вызывать только из useMemo(() => rememberSvgElement(...), [name])!!
+    static rememberSvgElement(
         name: string,
         svgChildren: ReactNode | ReactNode[],
         viewBox?: string | null
     ): string {
         const reusableId: string = this.getSvgId(name)
+        if (name in this.svgElements) {
+            return reusableId
+        }
+        this.svgElements[name] = reusableId
         const reusableIdContainer: string = reusableId + '-container'
         const svg: SVGSVGElement = document.createElementNS(
             'http://www.w3.org/2000/svg',
@@ -71,14 +58,17 @@ export abstract class ReusableSvgRepository {
         svg.id = reusableIdContainer
         svg.style.display = 'none'
         this.getContainer().appendChild(svg)
-        ReactDOMClient.createRoot(svg).render(
-            <symbol
-                id={reusableId}
-                viewBox={viewBox ?? undefined}
-            >
-                {svgChildren}
-            </symbol>
-        )
+        // Тайм-аут тут нужен, чтобы React не ругался на render внутри setTimeout.
+        setTimeout(() => {
+            ReactDOMClient.createRoot(svg).render(
+                <symbol
+                    id={reusableId}
+                    viewBox={viewBox ?? undefined}
+                >
+                    {svgChildren}
+                </symbol>
+            )
+        }, 0)
         return reusableId
     }
 
