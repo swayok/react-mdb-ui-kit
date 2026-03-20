@@ -64,6 +64,21 @@ export function DropdownItem<
             }
             propsOnMouseDown?.(e as MouseEvent<HTMLAnchorElement>)
             propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
+            // Не вызывать тут tree?.events.emit('click') т.к. оно будет мешать
+            // переходу по ссылке (<a href>).
+        }
+    )
+
+    // tree.events.emit('click') вынесен в onClick(),
+    // чтобы не мешал обработке клика по ссылке (<a href>).
+    // В onMouseDown() оно отменяет обработку клика по ссылке
+    // и переход на страницу не происходит.
+    const onClick = useEventCallback(
+        (e: MouseEvent<HTMLElement>) => {
+            if (disabled || disableAllItems || e.button !== 0) {
+                e.preventDefault()
+                return
+            }
             tree?.events.emit('click')
         }
     )
@@ -106,6 +121,7 @@ export function DropdownItem<
                 ...otherProps,
                 onFocus,
                 onMouseDown,
+                onClick,
             })}
             ref={mergedRef}
             tabIndex={isHovered ? 0 : -1}
