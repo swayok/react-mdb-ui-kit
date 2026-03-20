@@ -1,6 +1,6 @@
 import {
     Component,
-    ReactNode,
+    type ReactNode,
 } from 'react'
 
 interface Props {

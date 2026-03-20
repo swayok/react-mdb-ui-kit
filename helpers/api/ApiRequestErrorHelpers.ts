@@ -1,13 +1,13 @@
 import {
     ApiError,
-    ApiResponse,
+    type ApiResponse,
     HtmlErrorResponseData,
     OtherErrorResponseData,
     ValidationErrorsResponseData,
 } from '../../services/ApiRequestService'
 import {NavigationService} from '../../services/NavigationService'
 import {ToastService} from '../../services/ToastService'
-import {
+import type {
     AnyObject,
     ApiResponseData,
     HttpErrorsTranslations,

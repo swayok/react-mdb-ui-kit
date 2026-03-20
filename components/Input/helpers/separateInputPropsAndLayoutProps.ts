@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {HtmlComponentProps} from '../../../types'
-import {InputLayoutProps} from '../InputTypes'
+import type {HtmlComponentProps} from '../../../types'
+import type {InputLayoutProps} from '../InputTypes'
 
 // Разделить свойства компонента InputLayout и свойства поля ввода.
 export function separateInputPropsAndLayoutProps<

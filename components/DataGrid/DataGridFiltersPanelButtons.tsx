@@ -3,11 +3,11 @@ import {
     mdiClose,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {ReactNode} from 'react'
+import type {ReactNode} from 'react'
 import {Button} from '../Button/Button'
 import {IconButton} from '../Icon/IconButton'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFiltersPanelButtonsProps} from './DataGridTypes'
+import type {DataGridFiltersPanelButtonsProps} from './DataGridTypes'
 
 // Кнопки для панели фильтрации: применить и сбросить.
 export function DataGridFiltersPanelButtons(props: DataGridFiltersPanelButtonsProps) {

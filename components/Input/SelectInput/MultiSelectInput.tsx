@@ -4,7 +4,7 @@ import {
     useMemo,
 } from 'react'
 import {useEventCallback} from '../../../helpers/useEventCallback'
-import {
+import type {
     AnyObject,
     FormSelectOption,
     FormSelectOptionsList,
@@ -12,7 +12,7 @@ import {
 import {flattenOptions} from '../helpers/flattenOptions'
 import {MultiSelectInputOptions} from './MultiSelectInputOptions'
 import {SelectInputBase} from './SelectInputBase'
-import {
+import type {
     FlattenedOptionOrGroup,
     MultiSelectInputOptionExtras,
     MultiSelectInputOptionsGroupInfo,

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CardProps} from './CardTypes'
+import type {CardProps} from './CardTypes'
 
 // Контейнер каточки (блок с белым фоном, скругленными углами и тенью).
 // Структура:

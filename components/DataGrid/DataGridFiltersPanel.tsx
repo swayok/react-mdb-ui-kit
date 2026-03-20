@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {DataGridFiltersPanelButtons} from './DataGridFiltersPanelButtons'
 import {DataGridFiltersPanelLabel} from './DataGridFiltersPanelLabel'
-import {DataGridFiltersPanelProps} from './DataGridTypes'
+import type {DataGridFiltersPanelProps} from './DataGridTypes'
 
 // Панель фильтрации для таблицы.
 export function DataGridFiltersPanel(props: DataGridFiltersPanelProps) {

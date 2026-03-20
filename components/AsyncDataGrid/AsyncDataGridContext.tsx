@@ -3,9 +3,9 @@ import {
     createContext,
     useContext,
 } from 'react'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {dataGridDefaultTranslations} from '../DataGrid/DataGridContext'
-import {AsyncDataGridContextProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridContextProps} from './AsyncDataGridTypes'
 
 // Лимиты количества строк в таблице.
 export const asyncDataGridDefaultLimits: AsyncDataGridContextProps['limits'] = [10, 20, 50]

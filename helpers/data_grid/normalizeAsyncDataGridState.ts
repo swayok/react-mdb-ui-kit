@@ -1,5 +1,5 @@
-import {AsyncDataGridStateForUrlQuery} from '../../components/AsyncDataGrid/AsyncDataGridTypes'
-import {DataGridOrderingDirection} from '../../components/DataGrid/DataGridTypes'
+import type {AsyncDataGridStateForUrlQuery} from '../../components/AsyncDataGrid/AsyncDataGridTypes'
+import type {DataGridOrderingDirection} from '../../components/DataGrid/DataGridTypes'
 
 export interface NormalizedAsyncDataGridState<FiltersDataType extends object = object> {
     limit: number

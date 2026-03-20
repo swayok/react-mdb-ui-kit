@@ -1,13 +1,13 @@
 import {mdiPlus} from '@mdi/js'
 import clsx from 'clsx'
-import {MouseEvent} from 'react'
+import type {MouseEvent} from 'react'
 import {getResponsiveCssGridClassNames} from '../../helpers/getResponsiveCssGridClassNames'
 import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse/Collapse'
 import {Icon} from '../Icon/Icon'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreview} from './FilePickerFilePreview'
-import {
+import type {
     FilePickerFileInfo,
     FilePickerPreviewsProps,
 } from './FilePickerTypes'

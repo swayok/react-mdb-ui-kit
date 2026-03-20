@@ -6,7 +6,7 @@ import {
     normalizeDimensionForReactStyles,
     renderSortingIcon,
 } from './dataGridHelpers'
-import {
+import type {
     DataGridHeaderWrapperProps,
     DataGridOrderingDirection,
 } from './DataGridTypes'

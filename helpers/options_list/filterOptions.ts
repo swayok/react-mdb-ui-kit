@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {FormSelectOption} from '../../types'
+import type {FormSelectOption} from '../../types'
 
 // Фильтрация опций по ключевым словам.
 export function filterOptions<

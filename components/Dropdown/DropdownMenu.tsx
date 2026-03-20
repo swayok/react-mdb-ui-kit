@@ -11,20 +11,20 @@ import {
 import {
     Fragment,
     HTMLProps,
-    KeyboardEvent,
+    type KeyboardEvent,
     useImperativeHandle,
     useMemo,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
 import {useDropdownContext} from './DropdownContext'
 import {DropdownMenuContent} from './DropdownMenuContent'
 import {DropdownMenuScrollableContainer} from './DropdownMenuScrollableContainer'
-import {
+import type {
     DropdownApi,
     DropdownMenuProps,
 } from './DropdownTypes'

@@ -1,5 +1,5 @@
 import numeral from 'numeral'
-import {
+import type {
     AnyObject,
     BasicLanguageConfig,
     BasicRegionConfig,

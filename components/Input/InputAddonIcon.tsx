@@ -1,6 +1,6 @@
 import {Icon} from '../Icon/Icon'
 import {InputAddonText} from './InputAddonText'
-import {InputAddonIconProps} from './InputTypes'
+import type {InputAddonIconProps} from './InputTypes'
 
 // Дополнение к полю ввода в виде иконки (отображается в правой части поля ввода).
 // Пример использования: <Input...><InputAddonIcon></Input>.

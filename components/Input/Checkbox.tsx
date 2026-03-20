@@ -1,17 +1,17 @@
 import clsx from 'clsx'
 import {
-    ChangeEvent,
+    type ChangeEvent,
     useCallback,
     useEffect,
     useId,
 } from 'react'
 import {UserBehaviorService} from '../../services/UserBehaviorService'
-import {
+import type {
     HtmlComponentProps,
     ReactComponentOrTagName,
 } from '../../types'
 import {HtmlContent} from '../Typography/HtmlContent'
-import {
+import type {
     CheckboxProps,
     InputValidationErrorProps,
 } from './InputTypes'

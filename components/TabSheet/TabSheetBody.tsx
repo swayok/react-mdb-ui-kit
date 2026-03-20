@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {TabSheetBodyProps} from './TabSheetTypes'
+import type {TabSheetBodyProps} from './TabSheetTypes'
 
 // Контейнер с блоками содержимого вкладок (<TabSheetTabContent>).
 export function TabSheetBody(props: TabSheetBodyProps) {

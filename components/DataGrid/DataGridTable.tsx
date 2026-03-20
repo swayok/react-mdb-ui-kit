@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {FadeSwitch} from '../Animation/FadeSwitch'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridNoItems} from './DataGridNoItems'
-import {DataGridTableProps} from './DataGridTypes'
+import type {DataGridTableProps} from './DataGridTypes'
 
 // Таблица с данными (<table>).
 export function DataGridTable<

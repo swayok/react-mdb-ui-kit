@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ModalDialogProps} from './ModalTypes'
+import type {ModalDialogProps} from './ModalTypes'
 
 // Контейнер модального окна.
 // Отвечает за размеры и расположение.

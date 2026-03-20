@@ -1,5 +1,5 @@
 import {
-    CSSProperties,
+    type CSSProperties,
     type RefAttributes,
     SVGAttributes,
     SVGProps,

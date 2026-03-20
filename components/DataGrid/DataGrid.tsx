@@ -3,7 +3,7 @@ import {
     useEffect,
     useState,
 } from 'react'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {
     DataGridContext,
     dataGridDefaultLimit,
@@ -14,7 +14,7 @@ import {
     normalizeOffset,
     reorderDataGridRows,
 } from './dataGridHelpers'
-import {
+import type {
     DataGridContextProps,
     DataGridOrderByValuesType,
     DataGridOrdering,

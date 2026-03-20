@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import {
-    CSSProperties,
-    MouseEvent,
-    ReactNode,
+    type CSSProperties,
+    type MouseEvent,
+    type ReactNode,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {
+import type {
     TextColors,
 } from '../../types'
 import {

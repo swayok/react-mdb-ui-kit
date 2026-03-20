@@ -1,10 +1,10 @@
-import {MouseEvent} from 'react'
-import {
+import type {MouseEvent} from 'react'
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
 import {useFilePickerContext} from './FilePickerContext'
-import {FilePickerTriggerProps} from './FilePickerTypes'
+import type {FilePickerTriggerProps} from './FilePickerTypes'
 
 // Элемент, при нажатии на который запускается выбор файла для прикрепления.
 export function FilePickerTrigger<

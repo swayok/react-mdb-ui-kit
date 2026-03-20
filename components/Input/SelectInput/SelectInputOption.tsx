@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import {MouseEvent} from 'react'
+import type {MouseEvent} from 'react'
 import {useEventCallback} from '../../../helpers/useEventCallback'
-import {AnyObject} from '../../../types'
+import type {AnyObject} from '../../../types'
 import {DropdownItem} from '../../Dropdown/DropdownItem'
 import {SelectInputOptionLabel} from './SelectInputOptionLabel'
-import {SelectInputOptionProps} from './SelectInputTypes'
+import type {SelectInputOptionProps} from './SelectInputTypes'
 
 // Отображение одной опции в выпадающем меню.
 export function SelectInputOption<

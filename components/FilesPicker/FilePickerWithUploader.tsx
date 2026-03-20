@@ -1,5 +1,5 @@
 import {
-    ChangeEvent,
+    type ChangeEvent,
     Component,
     createRef,
     RefObject,
@@ -17,7 +17,7 @@ import {
 import {getCookieValue} from '../../helpers/getCookieValue'
 import {NavigationService} from '../../services/NavigationService'
 import {ToastService} from '../../services/ToastService'
-import {
+import type {
     AnyObject,
     MinMax,
 } from '../../types'
@@ -30,7 +30,7 @@ import {
     filePickerFallbackPreview,
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
-import {
+import type {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,

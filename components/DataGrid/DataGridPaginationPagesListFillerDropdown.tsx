@@ -1,7 +1,7 @@
 import {mdiCheck} from '@mdi/js'
 import clsx from 'clsx'
 import {
-    ReactNode,
+    type ReactNode,
     useCallback,
     useRef,
 } from 'react'
@@ -9,10 +9,10 @@ import {Button} from '../Button/Button'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
-import {DropdownApi} from '../Dropdown/DropdownTypes'
+import type {DropdownApi} from '../Dropdown/DropdownTypes'
 import {Icon} from '../Icon/Icon'
 import {Input} from '../Input/Input'
-import {DataGridPaginationPagesListFillerDropdownProps} from './DataGridTypes'
+import type {DataGridPaginationPagesListFillerDropdownProps} from './DataGridTypes'
 
 // Выпадающее меню со списком всех номеров страниц для пагинатора.
 // Пагинация выглядит так:

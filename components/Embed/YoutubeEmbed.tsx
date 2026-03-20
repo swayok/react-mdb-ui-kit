@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {HtmlComponentProps} from '../../types'
+import type {HtmlComponentProps} from '../../types'
 
 interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'children'> {
     embedUrl: string

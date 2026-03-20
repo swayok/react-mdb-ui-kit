@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CardFooterProps} from './CardTypes'
+import type {CardFooterProps} from './CardTypes'
 
 // Подвал карточки.
 export function CardFooter(props: CardFooterProps) {

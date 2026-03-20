@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {InputSize} from '../InputTypes'
+import type {InputSize} from '../InputTypes'
 
 // CSS-классы для Input компонента.
 export function getInputClassName(config: {

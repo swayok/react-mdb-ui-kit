@@ -1,6 +1,6 @@
 import {useDataGridContext} from './DataGridContext'
 import {DataGridHeaderWrapper} from './DataGridHeaderWrapper'
-import {
+import type {
     DataGridHeaderProps,
     DataGridOrderingDirection,
 } from './DataGridTypes'

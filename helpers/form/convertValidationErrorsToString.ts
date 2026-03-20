@@ -1,4 +1,4 @@
-import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
+import type {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
 
 // Преобразование списка/объекта ошибок в одну строку.
 export function convertValidationErrorsToString(

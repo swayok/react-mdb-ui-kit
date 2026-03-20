@@ -1,6 +1,6 @@
-import {AnyObject} from '../../../types'
+import type {AnyObject} from '../../../types'
 import {HtmlContent} from '../../Typography/HtmlContent'
-import {SelectInputOptionLabelProps} from './SelectInputTypes'
+import type {SelectInputOptionLabelProps} from './SelectInputTypes'
 
 // Подпись для опции или группы опций в выпадающем меню.
 export function SelectInputOptionLabel<

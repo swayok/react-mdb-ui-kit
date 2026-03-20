@@ -1,13 +1,13 @@
 import {
-    Dispatch,
-    SetStateAction,
+    type Dispatch,
+    type SetStateAction,
     useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react'
 import {ApiError} from '../../services/ApiRequestService'
-import {PaginationResponseData} from '../../types'
+import type {PaginationResponseData} from '../../types'
 import {useEventCallback} from '../useEventCallback'
 
 // Настройки хука.

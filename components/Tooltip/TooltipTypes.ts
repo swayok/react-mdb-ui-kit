@@ -1,7 +1,7 @@
 import {Placement} from '@floating-ui/utils'
 import type {
-    CSSProperties,
-    ReactNode,
+    type CSSProperties,
+    type ReactNode,
 } from 'react'
 import type {
     HtmlComponentProps,

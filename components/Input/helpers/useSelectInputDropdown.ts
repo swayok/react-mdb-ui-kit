@@ -7,16 +7,16 @@ import {
     useRole,
 } from '@floating-ui/react'
 import {
-    ChangeEvent,
-    Dispatch,
-    RefObject,
-    SetStateAction,
+    type ChangeEvent,
+    type Dispatch,
+    type RefObject,
+    type SetStateAction,
     useCallback,
     useRef,
     useState,
 } from 'react'
 import {useEventCallback} from '../../../helpers/useEventCallback'
-import {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
+import type {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
 import {
     useInputFloatingMenu,
     UseInputFloatingMenuHookOptions,

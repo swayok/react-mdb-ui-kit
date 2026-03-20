@@ -2,7 +2,7 @@ import {
     useEffect,
     useRef,
 } from 'react'
-import {RippleWaveProps} from './RippleTypes'
+import type {RippleWaveProps} from './RippleTypes'
 
 // Отыгрывание анимации "Волна".
 export function RippleWave(props: RippleWaveProps) {

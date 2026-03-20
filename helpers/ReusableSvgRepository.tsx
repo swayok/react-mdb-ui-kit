@@ -1,6 +1,6 @@
-import {ReactNode} from 'react'
+import type {ReactNode} from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 
 export interface ReusableSvgRepositoryConfig {
     containerClassName?: string

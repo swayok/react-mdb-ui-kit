@@ -3,7 +3,7 @@ import {AsyncDataLoadingError} from '../Loading/AsyncDataLoadingError'
 import {FadeIn} from '../Animation/FadeIn'
 import {Loading} from '../Loading/Loading'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridLoadingProps} from './AsyncDataGridTypes'
 
 // Индикатор загрузки данных для таблицы с сервера.
 export function AsyncDataGridLoading(props: AsyncDataGridLoadingProps) {

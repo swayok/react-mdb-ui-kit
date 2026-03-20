@@ -4,14 +4,14 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {
-    CSSProperties,
+    type CSSProperties,
     useEffect,
     useRef,
     useState,
 } from 'react'
 import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'
 import {Icon} from '../Icon/Icon'
-import {
+import type {
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from './FilePickerTypes'

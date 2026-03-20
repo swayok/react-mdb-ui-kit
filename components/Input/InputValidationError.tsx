@@ -5,8 +5,8 @@ import {
 } from 'react'
 import {Collapse} from '../Collapse/Collapse'
 import {Tooltip} from '../Tooltip/Tooltip'
-import {TooltipProps} from '../Tooltip/TooltipTypes'
-import {InputValidationErrorProps} from './InputTypes'
+import type {TooltipProps} from '../Tooltip/TooltipTypes'
+import type {InputValidationErrorProps} from './InputTypes'
 import {convertValidationErrorsToString} from 'swayok-react-mdb-ui-kit/helpers/form/convertValidationErrorsToString'
 
 // Отображение ошибки валидации для поля ввода.

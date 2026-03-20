@@ -1,15 +1,15 @@
 import numeral from 'numeral'
 import {
-    ChangeEvent,
-    ClipboardEvent,
-    FocusEvent,
-    InputEvent,
-    MouseEvent,
+    type ChangeEvent,
+    type ClipboardEvent,
+    type FocusEvent,
+    type InputEvent,
+    type MouseEvent,
     useMemo,
     useRef,
 } from 'react'
 import {Input} from './Input'
-import {
+import type {
     InputProps,
     NumericInputProps,
 } from './InputTypes'

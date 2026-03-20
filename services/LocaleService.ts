@@ -1,6 +1,6 @@
 import {LanguagesManager} from '../helpers/i18n/LanguagesManager'
 import {RegionsManager} from '../helpers/i18n/RegionsManager'
-import {
+import type {
     AnyObject,
     BasicLanguageConfig,
     BasicRegionConfig,

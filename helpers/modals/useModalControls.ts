@@ -1,9 +1,9 @@
 import {
-    Dispatch,
-    SetStateAction,
+    type Dispatch,
+    type SetStateAction,
     useState,
 } from 'react'
-import {ModalProps} from '../../components/Modal/ModalTypes'
+import type {ModalProps} from '../../components/Modal/ModalTypes'
 import {useEventCallback} from '../useEventCallback'
 
 // Возвращаемые данные и функции хука.

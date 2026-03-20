@@ -1,6 +1,6 @@
 import {
-    FunctionComponent,
-    MouseEvent,
+    type FunctionComponent,
+    type MouseEvent,
     useCallback,
     useEffect,
     useState,

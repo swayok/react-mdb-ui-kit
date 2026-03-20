@@ -3,7 +3,7 @@ import {DataGridItemsCount} from '../DataGrid/DataGridItemsCount'
 import {DataGridPagination} from '../DataGrid/DataGridPagination'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
 import {AsyncDataGridFooterReload} from './AsyncDataGridFooterReload'
-import {AsyncDataGridFooterProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridFooterProps} from './AsyncDataGridTypes'
 
 // Подвал таблицы с данными.
 // Слева:

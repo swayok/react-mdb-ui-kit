@@ -1,6 +1,6 @@
 import {DateTimeService} from '../../services/DateTimeService'
 import {NumbersService} from '../../services/NumbersService'
-import {
+import type {
     AnyObject,
     BasicLanguageConfig,
     FormSelectOption,

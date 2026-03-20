@@ -1,5 +1,5 @@
 import {FilePickerHelpers} from './FilePickerHelpers'
-import {
+import type {
     FilePickerFileInfo,
     FilePickerTranslations,
     FilePickerWithUploaderFileInfo,

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DataGridHeadersProps} from './DataGridTypes'
+import type {DataGridHeadersProps} from './DataGridTypes'
 
 // Заголовки колонок таблицы (<thead> -> <tr> -> <DataGridHeader>+).
 export function DataGridHeaders(props: DataGridHeadersProps) {

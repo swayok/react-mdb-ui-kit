@@ -1,14 +1,14 @@
 import {useCallback} from 'react'
 import {useVirtuosoLibAsync} from '../../../helpers/vendor/useVirtuosoLibAsync'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
-import {
+import type {
     AnyObject,
     FormSelectOption,
 } from '../../../types'
 import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
-import {
+import type {
     FlattenedOptionOrGroup,
     VirtualizedSelectInputOptionsProps,
 } from './SelectInputTypes'

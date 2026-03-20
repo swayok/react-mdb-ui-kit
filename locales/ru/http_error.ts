@@ -1,4 +1,4 @@
-import {HttpErrorsTranslations} from '../../types'
+import type {HttpErrorsTranslations} from '../../types'
 
 const translations: HttpErrorsTranslations = {
     go_back: 'Вернуться',

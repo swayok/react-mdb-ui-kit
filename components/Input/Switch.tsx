@@ -1,5 +1,5 @@
 import {Checkbox} from './Checkbox'
-import {CheckboxProps} from './InputTypes'
+import type {CheckboxProps} from './InputTypes'
 
 // Чекбокс в виде переключателя.
 export function Switch(props: Omit<CheckboxProps, 'type'>) {

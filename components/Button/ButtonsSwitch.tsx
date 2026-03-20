@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {ReactNode} from 'react'
-import {
+import type {ReactNode} from 'react'
+import type {
     ButtonColors,
     FormSelectOption,
     FormSelectOptionsList,
@@ -8,7 +8,7 @@ import {
 } from '../../types'
 import {
     Button,
-    ButtonProps,
+    type ButtonProps,
 } from './Button'
 
 export interface ButtonsSwitchProps<ValueType = string> extends Omit<HtmlComponentProps<HTMLDivElement>, 'value' | 'label' | 'onChange'> {

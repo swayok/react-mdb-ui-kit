@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {ReactNode} from 'react'
-import {HtmlComponentProps} from '../../types'
+import type {ReactNode} from 'react'
+import type {HtmlComponentProps} from '../../types'
 
 interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'value'> {
     label: string

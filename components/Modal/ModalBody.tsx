@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ModalBodyProps} from './ModalTypes'
+import type {ModalBodyProps} from './ModalTypes'
 
 // Контейнер содержимого модального окна.
 export function ModalBody(props: ModalBodyProps) {

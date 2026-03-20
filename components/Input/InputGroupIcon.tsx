@@ -3,7 +3,7 @@ import {
     IconProps,
     Icon,
 } from '../Icon/Icon'
-import {InputGroupIconProps} from './InputTypes'
+import type {InputGroupIconProps} from './InputTypes'
 
 // Иконка для вставки в <InputGroup>.
 export function InputGroupIcon(props: InputGroupIconProps) {

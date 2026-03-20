@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {InputGroupProps} from './InputTypes'
+import type {InputGroupProps} from './InputTypes'
 
 // Группа для объединения поля ввода и дополнений к нему (кнопки, подписи, иконки).
 export function InputGroup(props: InputGroupProps) {

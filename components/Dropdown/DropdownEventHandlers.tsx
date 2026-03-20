@@ -1,6 +1,6 @@
 import {useFloatingTree} from '@floating-ui/react'
 import {useEffect} from 'react'
-import {DropdownEventHandlersProps} from './DropdownTypes'
+import type {DropdownEventHandlersProps} from './DropdownTypes'
 
 // Обработчик событий в дереве Dropdown компонентов.
 export function DropdownEventHandlers(props: DropdownEventHandlersProps) {

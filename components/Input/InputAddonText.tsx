@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {InputAddonTextProps} from './InputTypes'
+import type {InputAddonTextProps} from './InputTypes'
 
 // Дополнение к полю ввода (отображается в правой части поля ввода).
 // Пример использования: <Input...><InputAddonText>text</InputAddonText></Input>.

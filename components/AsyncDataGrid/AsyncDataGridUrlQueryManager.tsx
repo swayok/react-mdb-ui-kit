@@ -6,9 +6,9 @@ import {
 import {decodeAsyncDataGridState} from '../../helpers/data_grid/decodeAsyncDataGridState'
 import {encodeAsyncDataGridState} from '../../helpers/data_grid/encodeAsyncDataGridState'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AsyncDataGridUrlQueryManagerProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridUrlQueryManagerProps} from './AsyncDataGridTypes'
 
 // Хранение и восстановление состояния таблицы из URL query.
 export function AsyncDataGridUrlQueryManager<

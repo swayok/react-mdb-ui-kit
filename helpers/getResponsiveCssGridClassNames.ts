@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CssGridColumnsConfig} from '../types'
+import type {CssGridColumnsConfig} from '../types'
 
 // Собрать классы для CSS Grid по настройкам.
 export function getResponsiveCssGridClassNames(

@@ -1,5 +1,5 @@
 import {
-    ChangeEvent,
+    type ChangeEvent,
     useCallback,
     useEffect,
     useMemo,
@@ -12,7 +12,7 @@ import {
     FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import {ToastService} from '../../services/ToastService'
-import {
+import type {
     AnyObject,
     MinMax,
 } from '../../types'
@@ -25,7 +25,7 @@ import {
     filePickerFallbackPreview,
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
-import {
+import type {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,

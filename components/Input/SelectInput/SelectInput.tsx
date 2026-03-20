@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    ChangeEvent,
+    type ChangeEvent,
     useDeferredValue,
     useEffect,
     useMemo,
@@ -13,13 +13,13 @@ import {stripTags} from '../../../helpers/stripTags'
 import {useEventCallback} from '../../../helpers/useEventCallback'
 import {useMergedRefs} from '../../../helpers/useMergedRefs'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
-import {AnyObject} from '../../../types'
-import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
+import type {AnyObject} from '../../../types'
+import type {DropdownContextProps} from '../../Dropdown/DropdownTypes'
 import {flattenOptions} from '../helpers/flattenOptions'
 import {Input} from '../Input'
 import {SelectInputBase} from './SelectInputBase'
 import {SelectInputOptions} from './SelectInputOptions'
-import {
+import type {
     FlattenedOption,
     FlattenedOptionOrGroup,
     SelectInputBasicApi,

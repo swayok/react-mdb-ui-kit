@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DropdownMenuScrollableContainerProps} from './DropdownTypes'
+import type {DropdownMenuScrollableContainerProps} from './DropdownTypes'
 
 // Контейнер с полосой прокрутки для выпадающего меню
 export function DropdownMenuScrollableContainer(

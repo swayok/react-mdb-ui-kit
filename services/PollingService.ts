@@ -1,5 +1,5 @@
 import {RefObject} from 'react'
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 
 export type PollingServiceHandlerFn = () => Promise<unknown>
 

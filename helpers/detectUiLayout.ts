@@ -1,4 +1,4 @@
-import {UILayout} from '../types'
+import type {UILayout} from '../types'
 
 // Определение разметки UI.
 export function detectUiLayout(): UILayout {

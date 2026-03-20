@@ -7,13 +7,13 @@ import {
 import {handleErrorResponse} from '../../helpers/api/ApiRequestErrorHelpers'
 import {toggleValueInArray} from '../../helpers/form/toggleValueInArray'
 import {ApiError} from '../../services/ApiRequestService'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {
     DataGridContext,
     dataGridDefaultTranslations,
 } from '../DataGrid/DataGridContext'
 import {normalizeOffset} from '../DataGrid/dataGridHelpers'
-import {
+import type {
     DataGridContextProps,
     DataGridOrderingDirection,
 } from '../DataGrid/DataGridTypes'
@@ -23,7 +23,7 @@ import {
     asyncDataGridDefaultLimit,
     asyncDataGridDefaultLimits,
 } from './AsyncDataGridContext'
-import {
+import type {
     AsyncDataGridContextMenuProps,
     AsyncDataGridContextProps,
     AsyncDataGridProps,

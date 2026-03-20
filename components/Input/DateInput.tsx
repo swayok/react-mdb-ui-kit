@@ -4,10 +4,10 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {
-    ComponentType,
-    FocusEvent,
+    type ComponentType,
+    type FocusEvent,
     lazy,
-    MouseEvent,
+    type MouseEvent,
     Suspense,
     useImperativeHandle,
     useMemo,
@@ -22,7 +22,7 @@ import {IconButton} from '../Icon/IconButton'
 import {useInputDropdown} from './helpers/useInputDropdown'
 import {Input} from './Input'
 import {InputAddonText} from './InputAddonText'
-import {
+import type {
     DateInputProps,
     DateInputSingleDateValue,
     DateInputValue,

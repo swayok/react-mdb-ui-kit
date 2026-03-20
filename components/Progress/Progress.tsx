@@ -4,7 +4,7 @@ import {
     isValidElement,
 } from 'react'
 import {ProgressBar} from './ProgressBar'
-import {ProgressProps} from './ProgressTypes'
+import type {ProgressProps} from './ProgressTypes'
 
 // Индикатор прогресса (внешний компонент).
 // Должен содержать компонент <ProgressBar>, другие компоненты запрещены.

@@ -2,9 +2,9 @@ import {
     mdiRayStartArrow,
     mdiSwapVertical,
 } from '@mdi/js'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {Icon} from '../Icon/Icon'
-import {
+import type {
     DataGridContextProps,
     DataGridOrderByValuesType,
     DataGridOrderingDirection,

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ProgressBarProps} from './ProgressTypes'
+import type {ProgressBarProps} from './ProgressTypes'
 
 // Индикатор прогресса (внутренний компонент, отображает прогресс в %).
 export function ProgressBar(props: ProgressBarProps) {

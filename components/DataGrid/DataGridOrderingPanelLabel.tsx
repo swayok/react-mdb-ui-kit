@@ -1,5 +1,5 @@
 import {useDataGridContext} from './DataGridContext'
-import {DataGridOrderingPanelLabelProps} from './DataGridTypes'
+import type {DataGridOrderingPanelLabelProps} from './DataGridTypes'
 
 // Заголовок панели фильтрации.
 export function DataGridOrderingPanelLabel(props: DataGridOrderingPanelLabelProps) {

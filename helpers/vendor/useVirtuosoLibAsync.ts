@@ -1,6 +1,6 @@
 import {
     ComponentType,
-    ReactNode,
+    type ReactNode,
     Ref,
     useEffect,
     useState,
@@ -17,7 +17,7 @@ import {
     VirtuosoHandle as _VirtuosoHandle,
     VirtuosoProps as _VirtuosoProps,
 } from 'react-virtuoso'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 
 function Placeholder(): ReactNode {
     return null

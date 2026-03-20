@@ -11,7 +11,7 @@ import {useEventCallback} from '../../helpers/useEventCallback'
 import {DataPolling} from '../DataPolling/DataPolling'
 import {Icon} from '../Icon/Icon'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AsyncDataGridFooterReloadProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridFooterReloadProps} from './AsyncDataGridTypes'
 
 // Кнопка перезагрузки данных в подвале таблицы.
 export function AsyncDataGridFooterReload(props: AsyncDataGridFooterReloadProps) {

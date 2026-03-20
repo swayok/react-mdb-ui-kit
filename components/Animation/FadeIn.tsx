@@ -1,5 +1,5 @@
 import {
-    ReactNode,
+    type ReactNode,
     RefObject,
     useRef,
 } from 'react'

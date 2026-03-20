@@ -1,6 +1,6 @@
-import {CKEditorConfig} from 'ckeditor4-react'
-import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
-import {CKEditorInstance} from '../../types'
+import type {CKEditorConfig} from 'ckeditor4-react'
+import type {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
+import type {CKEditorInstance} from '../../types'
 
 // Получить стандартные настройки для CKEditor.
 export function getDefaultWysiwygConfig(

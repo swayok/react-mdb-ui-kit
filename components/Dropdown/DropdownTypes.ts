@@ -7,16 +7,16 @@ import type {
     ShiftOptions,
     UseInteractionsReturn,
 } from '@floating-ui/react'
-import type {
-    ComponentProps,
-    Dispatch,
-    FocusEvent,
-    HTMLAttributeAnchorTarget,
-    ReactNode,
-    RefCallback,
-    RefObject,
-    SetStateAction,
-    SyntheticEvent,
+import {
+    type ComponentProps,
+    type Dispatch,
+    type FocusEvent,
+    type HTMLAttributeAnchorTarget,
+    type ReactNode,
+    type RefCallback,
+    type RefObject,
+    type SetStateAction,
+    type SyntheticEvent,
 } from 'react'
 import type {LinkProps} from 'react-router-dom'
 import type {

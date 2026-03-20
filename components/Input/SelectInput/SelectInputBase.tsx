@@ -5,24 +5,24 @@ import {
 import {mdiChevronDown} from '@mdi/js'
 import clsx from 'clsx'
 import {
-    FocusEvent,
-    KeyboardEvent,
-    MouseEvent,
+    type FocusEvent,
+    type KeyboardEvent,
+    type MouseEvent,
     useImperativeHandle,
     useMemo,
     useRef,
 } from 'react'
 import {useEventCallback} from '../../../helpers/useEventCallback'
-import {AnyObject} from '../../../types'
+import type {AnyObject} from '../../../types'
 import {Button} from '../../Button/Button'
 import {DropdownContext} from '../../Dropdown/DropdownContext'
 import {DropdownMenuContent} from '../../Dropdown/DropdownMenuContent'
-import {DropdownContextProps} from '../../Dropdown/DropdownTypes'
+import type {DropdownContextProps} from '../../Dropdown/DropdownTypes'
 import {Icon} from '../../Icon/Icon'
 import {useSelectInputDropdown} from '../helpers/useSelectInputDropdown'
 import {Input} from '../Input'
 import {InputWrapper} from '../InputWrapper'
-import {
+import type {
     SelectInputBasicApi,
     SelectInputBasicProps,
 } from './SelectInputTypes'

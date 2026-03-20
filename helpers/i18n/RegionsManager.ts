@@ -1,5 +1,5 @@
 import {NumbersService} from '../../services/NumbersService'
-import {
+import type {
     BasicRegionConfig,
     FormSelectOption,
     FormSelectOptionsList,

@@ -1,8 +1,8 @@
 import {useRef} from 'react'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {TooltipProps} from '../Tooltip/TooltipTypes'
+import type {TooltipProps} from '../Tooltip/TooltipTypes'
 import {InputLabel} from './InputLabel'
-import {InputLayoutComponentProps} from './InputTypes'
+import type {InputLayoutComponentProps} from './InputTypes'
 import {InputUi} from './InputUi'
 import {InputWrapper} from './InputWrapper'
 

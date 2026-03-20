@@ -1,6 +1,6 @@
 import {Checkbox} from '../../components/Input/Checkbox'
 import {CheckboxesGroup} from '../../components/Input/CheckboxesGroup'
-import {CheckboxProps} from '../../components/Input/InputTypes'
+import type {CheckboxProps} from '../../components/Input/InputTypes'
 import {Radio} from '../../components/Input/Radio'
 import {SectionDivider} from '../../components/Typography/SectionDivider'
 

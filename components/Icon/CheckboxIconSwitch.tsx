@@ -3,7 +3,7 @@ import {
     mdiCheckboxMarkedCircle,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {TextColors} from '../../types'
+import type {TextColors} from '../../types'
 import {
     IconButton,
     IconButtonProps,

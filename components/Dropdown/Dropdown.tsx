@@ -24,7 +24,7 @@ import {
     useDropdownContext,
 } from './DropdownContext'
 import {DropdownEventHandlers} from './DropdownEventHandlers'
-import {
+import type {
     DropdownContextProps,
     DropdownProps,
 } from './DropdownTypes'

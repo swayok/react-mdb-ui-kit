@@ -3,7 +3,7 @@ import {
     useState,
 } from 'react'
 import {ReorderableListContext} from './ReorderableListContext'
-import {
+import type {
     ReorderableListContextProps,
     ReorderableListProps,
 } from './ReorderableListTypes'

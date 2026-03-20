@@ -1,9 +1,9 @@
 import {
-    ReactNode,
+    type ReactNode,
     useEffect,
 } from 'react'
 import {WebSocketService} from '../../services/WebSocketService'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 
 // Свойства компонента WebSocketConnector.
 export interface WebSocketConnectorProps {

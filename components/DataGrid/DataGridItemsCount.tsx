@@ -3,10 +3,10 @@ import {
     useCallback,
     useMemo,
 } from 'react'
-import {FormSelectOption} from '../../types'
+import type {FormSelectOption} from '../../types'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
-import {DataGridItemsCountProps} from './DataGridTypes'
+import type {DataGridItemsCountProps} from './DataGridTypes'
 import {useEventCallback} from 'swayok-react-mdb-ui-kit/helpers/useEventCallback'
 
 // Количество строк в таблице, диапазон отображаемых строк и выбор лимита строк на странице.

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    MouseEvent,
+    type MouseEvent,
     useCallback,
     useEffect,
     useMemo,
@@ -11,7 +11,7 @@ import {
     getRippleColor,
     getRippleWaveStyles,
 } from './rippleHelpers'
-import {
+import type {
     RippleProps,
     RippleWaveStyle,
 } from './RippleTypes'

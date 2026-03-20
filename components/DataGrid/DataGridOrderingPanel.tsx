@@ -13,7 +13,7 @@ import {IconButton} from '../Icon/IconButton'
 import {SelectInput} from '../Input/SelectInput/SelectInput'
 import {useDataGridContext} from './DataGridContext'
 import {DataGridOrderingPanelLabel} from './DataGridOrderingPanelLabel'
-import {
+import type {
     DataGridOrderingPanelOptionType,
     DataGridOrderingPanelProps,
 } from './DataGridTypes'

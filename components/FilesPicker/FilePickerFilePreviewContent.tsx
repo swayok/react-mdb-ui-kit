@@ -3,7 +3,7 @@ import {CSSProperties} from 'react'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
 import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
-import {
+import type {
     FilePickerContextMimeTypeInfo,
     FilePickerFileInfo,
     FilePickerPreviewSizes,

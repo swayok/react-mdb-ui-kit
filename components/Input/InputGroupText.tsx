@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {InputGroupTextProps} from './InputTypes'
+import type {InputGroupTextProps} from './InputTypes'
 
 // Текст для вставки в <InputGroup>.
 export function InputGroupText(props: InputGroupTextProps) {

@@ -3,7 +3,7 @@ import {FadeSwitch} from '../Animation/FadeSwitch'
 import {Modal} from '../Modal/Modal'
 import {ModalContent} from '../Modal/ModalContent'
 import {ModalHeaderCloseButton} from '../Modal/ModalHeaderCloseButton'
-import {ImagesCarouselModalProps} from './ImagesPreviewerTypes'
+import type {ImagesCarouselModalProps} from './ImagesPreviewerTypes'
 
 // Модальное окно просмотра списка картинок.
 export function ImagesCarouselModal(props: ImagesCarouselModalProps) {

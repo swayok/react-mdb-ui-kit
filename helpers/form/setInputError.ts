@@ -1,5 +1,5 @@
-import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
-import {AnyObject} from '../../types'
+import type {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
+import type {AnyObject} from '../../types'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>
 

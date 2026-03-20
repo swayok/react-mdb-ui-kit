@@ -4,8 +4,8 @@ import {
 } from '@floating-ui/react'
 import clsx from 'clsx'
 import {
-    FocusEvent,
-    MouseEvent,
+    type FocusEvent,
+    type MouseEvent,
     useMemo,
 } from 'react'
 import {
@@ -14,13 +14,13 @@ import {
 } from 'react-router-dom'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {
+import type {
     AnyObject,
     MergedComponentProps,
     ReactComponentOrTagName,
 } from '../../types'
 import {useDropdownContext} from './DropdownContext'
-import {DropdownItemProps} from './DropdownTypes'
+import type {DropdownItemProps} from './DropdownTypes'
 
 // Элемент выпадающего меню.
 export function DropdownItem<

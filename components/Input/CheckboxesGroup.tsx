@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import {useMemo} from 'react'
-import {
+import type {
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
 } from '../../types'
 import {SectionDivider} from '../Typography/SectionDivider'
 import {Checkbox} from './Checkbox'
-import {CheckboxesGroupProps} from './InputTypes'
+import type {CheckboxesGroupProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 
 /**

@@ -1,6 +1,6 @@
 import {Badge} from '../../components/Typography/Badge'
 import {SectionDivider} from '../../components/Typography/SectionDivider'
-import {BackgroundColors} from '../../types'
+import type {BackgroundColors} from '../../types'
 
 // Демонстрация компонента <Badge>.
 export function BadgesDemo() {

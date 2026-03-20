@@ -4,10 +4,10 @@ import {
     useCallback,
     useState,
 } from 'react'
-import {HtmlComponentProps} from '../../types'
+import type {HtmlComponentProps} from '../../types'
 import {useReorderableListContext} from './ReorderableListContext'
 import {ReorderableListItemContext} from './ReorderableListItemContext'
-import {ReorderableListItemItemProps} from './ReorderableListTypes'
+import type {ReorderableListItemItemProps} from './ReorderableListTypes'
 
 // Перетаскиваемый элемент списка.
 export function ReorderableListItem<PayloadType = unknown>(

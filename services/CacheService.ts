@@ -1,4 +1,4 @@
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 import {DateTimeService} from './DateTimeService'
 
 // Сервис кэширования данных в window.localStorage или this.sessionStorage.

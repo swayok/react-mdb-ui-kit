@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ModalContentProps} from './ModalTypes'
+import type {ModalContentProps} from './ModalTypes'
 
 // Контейнер для основных элементов модального окна.
 // Внутри обычно несколько компонентов: ModalHeader, ModalBody, ModalFooter.

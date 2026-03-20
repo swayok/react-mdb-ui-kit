@@ -5,7 +5,7 @@ import {
 } from '@mdi/js'
 import clsx from 'clsx'
 import {Icon} from './Icon'
-import {MdiIconProps} from './MDIIcon'
+import type {MdiIconProps} from './MDIIcon'
 
 interface Props {
     rating: number

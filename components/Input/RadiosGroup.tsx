@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import {useId} from 'react'
-import {
+import type {
     AnyObject,
     FormSelectOption,
     FormSelectOptionsList,
 } from '../../types'
 import {SectionDivider} from '../Typography/SectionDivider'
-import {RadiosGroupProps} from './InputTypes'
+import type {RadiosGroupProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 import {Radio} from './Radio'
 

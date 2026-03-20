@@ -16,7 +16,7 @@ import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewContent} from './FilePickerFilePreviewContent'
 import {FilePickerFilePreviewContentScaler} from './FilePickerFilePreviewContentScaler'
 import {FilePickerHelpers} from './FilePickerHelpers'
-import {
+import type {
     FilePickerFileInfo,
     FilePickerFilePreviewProps,
     FilePickerPreviewSizes,

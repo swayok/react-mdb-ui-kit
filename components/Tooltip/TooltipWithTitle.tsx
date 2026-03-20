@@ -14,18 +14,18 @@ import {
 } from '@floating-ui/react'
 import clsx from 'clsx'
 import {
-    ReactNode,
+    type ReactNode,
     RefObject,
     useEffect,
     useState,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
-import {TooltipProps} from './TooltipTypes'
+import type {TooltipProps} from './TooltipTypes'
 
 interface Props extends Omit<TooltipProps, 'title'> {
     title: string | ReactNode

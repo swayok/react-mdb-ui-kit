@@ -7,7 +7,7 @@ import {useState} from 'react'
 import {IconButton} from '../Icon/IconButton'
 import {Input} from './Input'
 import {InputAddonText} from './InputAddonText'
-import {PasswordInputProps} from './InputTypes'
+import type {PasswordInputProps} from './InputTypes'
 
 // Поле ввода значения.
 export function PasswordInput(props: PasswordInputProps) {

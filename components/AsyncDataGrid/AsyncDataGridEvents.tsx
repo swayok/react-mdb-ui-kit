@@ -2,9 +2,9 @@ import {
     useEffect,
     useRef,
 } from 'react'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {useAsyncDataGridContext} from './AsyncDataGridContext'
-import {AsyncDataGridEventsProps} from './AsyncDataGridTypes'
+import type {AsyncDataGridEventsProps} from './AsyncDataGridTypes'
 
 // Выполняет заданные функции, когда происходят определенные события с таблицей.
 export function AsyncDataGridEvents<

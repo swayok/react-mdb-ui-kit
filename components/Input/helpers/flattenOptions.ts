@@ -1,10 +1,10 @@
-import {
+import type {
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
     FormSelectOptionsAndGroupsList,
 } from '../../../types'
-import {FlattenedOptionOrGroup} from '../SelectInput/SelectInputTypes'
+import type {FlattenedOptionOrGroup} from '../SelectInput/SelectInputTypes'
 
 export type InfoCollectorFn<
     GroupInfoType extends AnyObject = AnyObject,

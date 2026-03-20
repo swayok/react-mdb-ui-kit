@@ -1,17 +1,17 @@
 import clsx from 'clsx'
 import {
-    FocusEvent,
+    type FocusEvent,
     RefCallback,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
-import {MergedComponentProps} from '../../types'
+import type {MergedComponentProps} from '../../types'
 import {
     Button,
-    ButtonProps,
+    type ButtonProps,
 } from '../Button/Button'
 import {useDropdownContext} from './DropdownContext'
-import {DropdownToggleProps} from './DropdownTypes'
+import type {DropdownToggleProps} from './DropdownTypes'
 
 // Кнопка открытия выпадающего меню.
 export function DropdownToggle<

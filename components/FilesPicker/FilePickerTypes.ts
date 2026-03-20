@@ -1,5 +1,5 @@
 import type {
-    ReactNode,
+    type ReactNode,
     RefObject,
 } from 'react'
 import type {
@@ -7,7 +7,7 @@ import type {
     FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import type {ApiRequestMethod} from '../../services/ApiRequestService'
-import {
+import type {
     AnyObject,
     CssGridColumnsConfig,
     HtmlComponentProps,

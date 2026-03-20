@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CardBodyProps} from './CardTypes'
+import type {CardBodyProps} from './CardTypes'
 
 // Контейнер содержимого карточки
 export function CardBody(props: CardBodyProps) {

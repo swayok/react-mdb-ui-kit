@@ -1,6 +1,6 @@
 import {useId} from 'react'
 import {Button} from '../Button/Button'
-import {FileInputAsButtonProps} from './InputTypes'
+import type {FileInputAsButtonProps} from './InputTypes'
 
 // Поле выбора файла в виде кнопки.
 export function FileInputAsButton(props: FileInputAsButtonProps) {

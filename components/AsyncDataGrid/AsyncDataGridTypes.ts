@@ -1,5 +1,5 @@
 import type {
-    CSSProperties,
+    type CSSProperties,
     FunctionComponent,
     MouseEvent,
     ReactNode,

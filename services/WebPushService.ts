@@ -1,4 +1,4 @@
-import {ApiResponseData} from '../types'
+import type {ApiResponseData} from '../types'
 import {ApiRequestService} from './ApiRequestService'
 
 // Настройки WebPushService.

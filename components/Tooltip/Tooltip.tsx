@@ -1,8 +1,8 @@
-import {
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
-import {TooltipProps} from './TooltipTypes'
+import type {TooltipProps} from './TooltipTypes'
 import {TooltipWithTitle} from './TooltipWithTitle'
 
 // Всплывающая подсказка.

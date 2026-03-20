@@ -8,7 +8,7 @@ import clsx from 'clsx'
 import {useCallback} from 'react'
 import {Icon} from '../Icon/Icon'
 import {DataGridPaginationPagesList} from './DataGridPaginationPagesList'
-import {DataGridPaginationProps} from './DataGridTypes'
+import type {DataGridPaginationProps} from './DataGridTypes'
 
 // Пагинация таблицы с данными.
 export function DataGridPagination(props: DataGridPaginationProps) {

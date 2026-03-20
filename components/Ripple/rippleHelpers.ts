@@ -1,5 +1,5 @@
-import {MouseEvent} from 'react'
-import {
+import type {MouseEvent} from 'react'
+import type {
     RipplePositionAndDimensions,
     RippleWaveStyle,
 } from './RippleTypes'

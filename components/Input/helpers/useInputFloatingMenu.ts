@@ -19,7 +19,7 @@ import {
 import {useEventCallback} from '../../../helpers/useEventCallback'
 import {useMergedRefs} from '../../../helpers/useMergedRefs'
 import {getDropdownMenuPlacement} from '../../Dropdown/getDropdownMenuPlacement'
-import {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
+import type {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
 import {applyDropdownMenuSize} from './applyDropdownMenuSize'
 
 export interface UseInputFloatingMenuHookOptions extends Pick<

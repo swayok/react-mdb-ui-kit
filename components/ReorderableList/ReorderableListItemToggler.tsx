@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import {
-    MouseEvent,
+    type MouseEvent,
     useContext,
     useEffect,
 } from 'react'
-import {
+import type {
     AnyObject,
     MorphingHtmlComponentPropsWithoutRef,
 } from '../../types'

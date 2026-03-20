@@ -3,7 +3,7 @@ import {
     createContext,
     useContext,
 } from 'react'
-import {TabSheetContextProps} from './TabSheetTypes'
+import type {TabSheetContextProps} from './TabSheetTypes'
 
 // Контекст для компонентов Tabsheet.
 const TabSheetContextInstance = createContext<

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DropdownDividerProps} from './DropdownTypes'
+import type {DropdownDividerProps} from './DropdownTypes'
 
 // Разделитель элементов выпадающего меню.
 export function DropdownDivider(props: DropdownDividerProps) {

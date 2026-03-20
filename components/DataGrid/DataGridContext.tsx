@@ -3,8 +3,8 @@ import {
     createContext,
     useContext,
 } from 'react'
-import {AnyObject} from '../../types'
-import {
+import type {AnyObject} from '../../types'
+import type {
     DataGridContextProps,
     DataGridTranslations,
 } from './DataGridTypes'

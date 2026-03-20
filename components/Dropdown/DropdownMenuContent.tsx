@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import {
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
-import {DropdownMenuContentProps} from './DropdownTypes'
+import type {DropdownMenuContentProps} from './DropdownTypes'
 
 // Выпадающее меню (отображение).
 export function DropdownMenuContent<

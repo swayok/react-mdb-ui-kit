@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {Icon} from '../Icon/Icon'
 import {DataGridPaginationPagesListFillerDropdown} from './DataGridPaginationPagesListFillerDropdown'
-import {DataGridPaginationPagesListProps} from './DataGridTypes'
+import type {DataGridPaginationPagesListProps} from './DataGridTypes'
 
 // Кнопка, открывающая выпадающее меню со списком номеров страниц
 // в промежутке между явно отображаемыми номерами страниц в пагинаторе.

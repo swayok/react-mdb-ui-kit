@@ -1,6 +1,6 @@
 import {
-    Dispatch,
-    SetStateAction,
+    type Dispatch,
+    type SetStateAction,
     useEffect,
     useRef,
     useState,

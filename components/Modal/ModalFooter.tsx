@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ModalFooterProps} from './ModalTypes'
+import type {ModalFooterProps} from './ModalTypes'
 
 // Подвал модального окна.
 // Обычно содержит 1 или несколько кнопок (Button, ModalFooterCloseButton).

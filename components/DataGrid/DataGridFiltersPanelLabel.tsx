@@ -1,5 +1,5 @@
 import {useDataGridContext} from './DataGridContext'
-import {DataGridFiltersPanelLabelProps} from './DataGridTypes'
+import type {DataGridFiltersPanelLabelProps} from './DataGridTypes'
 
 // Заголовок панели фильтрации.
 export function DataGridFiltersPanelLabel(props: DataGridFiltersPanelLabelProps) {

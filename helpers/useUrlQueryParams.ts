@@ -4,7 +4,7 @@ import {
     URLSearchParamsInit,
     useSearchParams,
 } from 'react-router-dom'
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 
 // Подмена useSearchParams с добавлением типизации (набора ключей)
 export function useUrlQueryParams<KeysOrObject extends string | object>(

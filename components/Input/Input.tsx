@@ -1,9 +1,9 @@
 import {
-    ChangeEvent,
-    ClipboardEvent,
-    FocusEvent,
-    InputEvent,
-    KeyboardEvent,
+    type ChangeEvent,
+    type ClipboardEvent,
+    type FocusEvent,
+    type InputEvent,
+    type KeyboardEvent,
     useRef,
     useState,
 } from 'react'
@@ -14,7 +14,7 @@ import {getInputClassName} from './helpers/getInputClassName'
 import {getInputSize} from './helpers/getInputSize'
 import {separateInputPropsAndLayoutProps} from './helpers/separateInputPropsAndLayoutProps'
 import {InputLayout} from './InputLayout'
-import {
+import type {
     InputProps,
     InputSize,
 } from './InputTypes'

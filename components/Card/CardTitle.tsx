@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CardTitleProps} from './CardTypes'
+import type {CardTitleProps} from './CardTypes'
 
 // Заголовок карточки.
 export function CardTitle(props: CardTitleProps) {

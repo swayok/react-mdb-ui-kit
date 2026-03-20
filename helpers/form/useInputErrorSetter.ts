@@ -1,11 +1,11 @@
 import {
-    Dispatch,
-    SetStateAction,
+    type Dispatch,
+    type SetStateAction,
     useCallback,
     useRef,
 } from 'react'
-import {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
-import {AnyObject} from '../../types'
+import type {InputValidationErrorMessageType} from '../../components/Input/InputTypes'
+import type {AnyObject} from '../../types'
 import {setInputError} from './setInputError'
 
 type SetValueFn<T> = (value: Readonly<T>) => T | Readonly<T>

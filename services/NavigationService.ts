@@ -6,7 +6,7 @@ import {
     useNavigate,
 } from 'react-router-dom'
 import {makeUrl} from '../helpers/makeUrl'
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 
 type ExtractRouteParam<Path, NextPart> = Path extends `:${infer Param}`
     ? Record<Param, string> & NextPart

@@ -7,7 +7,7 @@ import {
 } from 'react'
 import ReactDOM from 'react-dom'
 import {ModalDialog} from './ModalDialog'
-import {ModalProps} from './ModalTypes'
+import type {ModalProps} from './ModalTypes'
 
 // Отслеживание количества открытых окон для управления скролбаром страницы.
 export let openedModals: number = 0

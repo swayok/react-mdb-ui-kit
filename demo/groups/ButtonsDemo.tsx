@@ -2,7 +2,7 @@ import {mdiPencilBoxOutline} from '@mdi/js'
 import {Button} from '../../components/Button/Button'
 import {Icon} from '../../components/Icon/Icon'
 import {SectionDivider} from '../../components/Typography/SectionDivider'
-import {ButtonColors} from '../../types'
+import type {ButtonColors} from '../../types'
 
 export function ButtonsDemo() {
 

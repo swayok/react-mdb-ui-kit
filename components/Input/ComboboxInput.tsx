@@ -1,16 +1,16 @@
 import {FloatingList} from '@floating-ui/react'
 import {
-    ChangeEvent,
-    FocusEvent,
-    KeyboardEvent,
-    MouseEvent,
+    type ChangeEvent,
+    type FocusEvent,
+    type KeyboardEvent,
+    type MouseEvent,
     useEffect,
     useState,
 } from 'react'
 import {filterOptions} from '../../helpers/options_list/filterOptions'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {
-    type AnyObject,
+import type {
+    AnyObject,
     FormSelectOption,
     FormSelectOptionsList,
 } from '../../types'
@@ -20,7 +20,7 @@ import {DropdownMenuScrollableContainer} from '../Dropdown/DropdownMenuScrollabl
 import {HtmlContent} from '../Typography/HtmlContent'
 import {useSelectInputDropdown} from './helpers/useSelectInputDropdown'
 import {Input} from './Input'
-import {ComboboxInputProps} from './InputTypes'
+import type {ComboboxInputProps} from './InputTypes'
 
 // Поле ввода строки с автодополнением по набору опций.
 // Опции передаются извне. Автозагрузка опций из API не поддерживается.

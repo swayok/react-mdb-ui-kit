@@ -2,7 +2,7 @@ import {
     createContext,
     useContext,
 } from 'react'
-import {ReorderableListContextProps} from './ReorderableListTypes'
+import type {ReorderableListContextProps} from './ReorderableListTypes'
 
 // Контекст компонента ReorderableList.
 export const ReorderableListContext = createContext<

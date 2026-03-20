@@ -1,4 +1,4 @@
-import {KeyboardEvent} from 'react'
+import type {KeyboardEvent} from 'react'
 
 // Обработчики по умолчанию.
 export interface UserBehaviorHandlers {
@@ -6,11 +6,11 @@ export interface UserBehaviorHandlers {
         input: HTMLInputElement | HTMLTextAreaElement,
         id: string,
         value?: string | number | null
-    ) => void;
-    onBlur: (value?: string | null) => void;
-    onPaste: () => void;
-    onKeyDown: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    onCheckboxOrRadioChange: (input: HTMLInputElement, id: string) => void;
+    ) => void
+    onBlur: (value?: string | null) => void
+    onPaste: () => void
+    onKeyDown: (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    onCheckboxOrRadioChange: (input: HTMLInputElement, id: string) => void
 }
 
 // Сервис отслеживания поведения пользователя при заполнении полей ввода.

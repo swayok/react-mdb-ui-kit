@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify'
-import {MorphingHtmlComponentPropsWithoutRef} from '../../types'
+import type {MorphingHtmlComponentPropsWithoutRef} from '../../types'
 
 interface Props extends Omit<MorphingHtmlComponentPropsWithoutRef, 'children' | 'dangerouslySetInnerHTML'> {
     // Результат выполнения {trans().path.to.html}.

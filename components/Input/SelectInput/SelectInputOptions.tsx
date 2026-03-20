@@ -1,6 +1,6 @@
 import {useEventCallback} from '../../../helpers/useEventCallback'
 import {UserBehaviorService} from '../../../services/UserBehaviorService'
-import {
+import type {
     AnyObject,
     FormSelectOption,
 } from '../../../types'
@@ -8,7 +8,7 @@ import {DropdownMenuScrollableContainer} from '../../Dropdown/DropdownMenuScroll
 import {shouldDisplaySelectInputOption} from '../helpers/shouldDisplaySelectInputOption'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
-import {
+import type {
     FlattenedOptionOrGroup,
     SelectInputOptionsProps,
 } from './SelectInputTypes'

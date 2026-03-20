@@ -5,7 +5,7 @@ import {
 import clsx from 'clsx'
 import {LanguagesManager} from '../../helpers/i18n/LanguagesManager'
 import {RegionsManager} from '../../helpers/i18n/RegionsManager'
-import {
+import type {
     BasicRegionConfig,
     FormSelectOption,
 } from '../../types'
@@ -13,9 +13,9 @@ import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownItem} from '../Dropdown/DropdownItem'
 import {DropdownMenu} from '../Dropdown/DropdownMenu'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
-import {DropdownPlacement} from '../Dropdown/DropdownTypes'
+import type {DropdownPlacement} from '../Dropdown/DropdownTypes'
 import {Icon} from '../Icon/Icon'
-import {MdiIconProps} from '../Icon/MDIIcon'
+import type {MdiIconProps} from '../Icon/MDIIcon'
 
 interface Props {
     currentRegion: BasicRegionConfig

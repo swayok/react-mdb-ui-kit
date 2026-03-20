@@ -1,8 +1,8 @@
 import clsx from 'clsx'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {DataGridFooter} from './DataGridFooter'
 import {DataGridTable} from './DataGridTable'
-import {
+import type {
     DataGridDefaultLayoutProps,
     DataGridFooterProps,
     DataGridTableProps,

@@ -3,13 +3,13 @@ import {
     mdiPlus,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {MouseEvent} from 'react'
+import type {MouseEvent} from 'react'
 import {ToastService} from '../../services/ToastService'
 import {Collapse} from '../Collapse/Collapse'
 import {Icon} from '../Icon/Icon'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewWithoutInfo} from './FilePickerFilePreviewWithoutInfo'
-import {
+import type {
     FilePickerPreviewSizes,
     FilePickerPreviewsWithoutInfoProps,
 } from './FilePickerTypes'
@@ -93,9 +93,11 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
 
     const adderPosition: number = getNextFilePosition() + 100000
 
+    // noinspection SuspiciousTypeOfGuard
     const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
         ? {width: previewSize, height: previewSize}
         : previewSize
+    // noinspection SuspiciousTypeOfGuard
     const pickerButtonSizes: FilePickerPreviewSizes = typeof pickerButtonSize === 'number'
         ? {width: pickerButtonSize, height: pickerButtonSize}
         : pickerButtonSize

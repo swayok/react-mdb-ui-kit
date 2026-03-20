@@ -1,4 +1,4 @@
-import {InputSize} from '../InputTypes'
+import type {InputSize} from '../InputTypes'
 
 // Вычислить размер поля ввода.
 export function getInputSize(

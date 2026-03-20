@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DataGridNoItemsProps} from './DataGridTypes'
+import type {DataGridNoItemsProps} from './DataGridTypes'
 
 // Сообщение о том, что в таблице нет строк.
 export function DataGridNoItems(props: DataGridNoItemsProps) {

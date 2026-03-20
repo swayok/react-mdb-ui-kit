@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {
+import type {
     HtmlComponentProps,
     SvgIconInfo,
     TextColors,
@@ -13,11 +13,11 @@ import {
     SvgIconProps,
 } from './SvgIcon'
 import {Tooltip} from '../Tooltip/Tooltip'
-import {
+import type {
     DefaultTooltipProps,
     TooltipProps,
 } from '../Tooltip/TooltipTypes'
-import {ReactNode} from 'react'
+import type {ReactNode} from 'react'
 
 export type IconTooltipProps = Omit<
     DefaultTooltipProps,

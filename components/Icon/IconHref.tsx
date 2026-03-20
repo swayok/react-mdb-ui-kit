@@ -1,21 +1,21 @@
 import clsx from 'clsx'
 import {
-    AnchorHTMLAttributes,
-    CSSProperties,
-    MouseEvent,
-    ReactNode,
+    type AnchorHTMLAttributes,
+    type CSSProperties,
+    type MouseEvent,
+    type ReactNode,
 } from 'react'
 import {Link} from 'react-router-dom'
-import {
+import type {
     AnyObject,
     ReactComponentOrTagName,
     SvgIconInfo,
     TextColors,
 } from '../../types'
 import {Icon} from './Icon'
-import {MdiIconProps} from './MDIIcon'
+import type {MdiIconProps} from './MDIIcon'
 import {Tooltip} from '../Tooltip/Tooltip'
-import {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
+import type {DefaultTooltipProps} from '../Tooltip/TooltipTypes'
 
 export type IconHrefTooltipProps = Pick<
     DefaultTooltipProps,

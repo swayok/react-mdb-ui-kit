@@ -1,5 +1,5 @@
 import {Placement} from '@floating-ui/react'
-import {DropdownDropDirection} from './DropdownTypes'
+import type {DropdownDropDirection} from './DropdownTypes'
 
 // Получить позицию выпадающего меню.
 export function getDropdownMenuPlacement(

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DropdownTextProps} from './DropdownTypes'
+import type {DropdownTextProps} from './DropdownTypes'
 
 // Текстовый блок для DropdownMenu со стилями как у DropdownItem.
 export function DropdownText(props: DropdownTextProps) {

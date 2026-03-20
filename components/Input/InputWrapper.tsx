@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {Tooltip} from '../Tooltip/Tooltip'
-import {InputWrapperProps} from './InputTypes'
+import type {InputWrapperProps} from './InputTypes'
 import {InputValidationError} from './InputValidationError'
 
 // Обертка для поля ввода и подписи к нему.

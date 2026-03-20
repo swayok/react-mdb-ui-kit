@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import {
-    MouseEvent,
+    type MouseEvent,
     useCallback,
     useMemo,
 } from 'react'
 import {Ripple} from '../Ripple/Ripple'
-import {RippleProps} from '../Ripple/RippleTypes'
+import type {RippleProps} from '../Ripple/RippleTypes'
 import {useTabSheetContext} from './TabSheetContext'
-import {TabSheetTabButtonProps} from './TabSheetTypes'
+import type {TabSheetTabButtonProps} from './TabSheetTypes'
 
 // Кнопка переключения на вкладку.
 export function TabSheetTabButton<TabName extends string = string>(

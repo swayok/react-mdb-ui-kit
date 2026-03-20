@@ -4,7 +4,7 @@ import {
     HTMLProps,
     useContext,
 } from 'react'
-import {DropdownContextProps} from './DropdownTypes'
+import type {DropdownContextProps} from './DropdownTypes'
 
 // Контекст для компонентов Dropdown.
 export const DropdownContext = createContext<DropdownContextProps>({

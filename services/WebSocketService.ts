@@ -1,6 +1,6 @@
 import Echo, {Channel} from 'laravel-echo'
 import {RefObject} from 'react'
-import {AnyObject} from '../types'
+import type {AnyObject} from '../types'
 
 interface WebSocketServiceAuthInfo {
     userId: number
@@ -117,7 +117,7 @@ export abstract class WebSocketService {
                 console.log(`[WebSocketService] Connected to '${channelName}' channel`)
                 // Ловим все события для отладки
                 // @ts-ignore
-                if (process?.env?.NODE_ENV !== 'production') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('[WebSocketService] Started listening for all subscriptions, events and errors')
                     channel.subscribed(() => {
                         console.log('[WebSocketService] subscription success')

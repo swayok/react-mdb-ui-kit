@@ -1,11 +1,11 @@
 import {mdiChevronRight} from '@mdi/js'
-import {
+import type {
     HtmlComponentProps,
     MergedComponentProps,
 } from '../../types'
 import {Icon} from '../Icon/Icon'
 import {DropdownToggle} from './DropdownToggle'
-import {SubmenuDropdownToggleProps} from './DropdownTypes'
+import type {SubmenuDropdownToggleProps} from './DropdownTypes'
 
 // Кнопка открытия вложенного выпадающего меню.
 export function SubmenuDropdownToggle(

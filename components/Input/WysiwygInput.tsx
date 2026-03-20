@@ -1,8 +1,8 @@
-import {CKEditorConfig} from 'ckeditor4-react'
-import {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
+import type {CKEditorConfig} from 'ckeditor4-react'
+import type {CKEditorEventPayload} from 'ckeditor4-react/dist/types'
 import clsx from 'clsx'
 import {
-    ChangeEvent,
+    type ChangeEvent,
     lazy,
     Suspense,
     useEffect,
@@ -12,12 +12,12 @@ import {
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'
 import {getDefaultWysiwygConfig} from '../../helpers/vendor/getDefaultWysiwygConfig'
-import {CKEditorInstance} from '../../types'
+import type {CKEditorInstance} from '../../types'
 import {getInputClassName} from './helpers/getInputClassName'
 import {getInputSize} from './helpers/getInputSize'
 import {separateInputPropsAndLayoutProps} from './helpers/separateInputPropsAndLayoutProps'
 import {InputLayout} from './InputLayout'
-import {
+import type {
     InputSize,
     WysiwygInputProps,
 } from './InputTypes'

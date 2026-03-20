@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {InputLabelProps} from './InputTypes'
+import type {InputLabelProps} from './InputTypes'
 
 // Подпись для поля ввода.
 export function InputLabel(props: InputLabelProps) {

@@ -5,13 +5,13 @@ import {
     mdiCheckboxMarkedOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {AnyObject} from '../../../types'
+import type {AnyObject} from '../../../types'
 import {DropdownMenuScrollableContainer} from '../../Dropdown/DropdownMenuScrollableContainer'
 import {Icon} from '../../Icon/Icon'
-import {MdiIconProps} from '../../Icon/MDIIcon'
+import type {MdiIconProps} from '../../Icon/MDIIcon'
 import {SelectInputOption} from './SelectInputOption'
 import {SelectInputOptionsGroupHeader} from './SelectInputOptionsGroupHeader'
-import {
+import type {
     FlattenedOptionOrGroup,
     MultiSelectInputOptionExtras,
     MultiSelectInputOptionsGroupInfo,

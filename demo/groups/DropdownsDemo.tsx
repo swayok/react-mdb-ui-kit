@@ -2,7 +2,7 @@ import {
     mdiMenu,
     mdiMenuClose,
 } from '@mdi/js'
-import {
+import type {
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
 } from '../../types'

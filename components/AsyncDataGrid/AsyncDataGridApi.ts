@@ -1,7 +1,7 @@
 import {ApiRequestService} from '../../services/ApiRequestService'
-import {AnyObject} from '../../types'
-import {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
-import {AsyncDataGridRows} from './AsyncDataGridTypes'
+import type {AnyObject} from '../../types'
+import type {DataGridOrderingDirection} from '../DataGrid/DataGridTypes'
+import type {AsyncDataGridRows} from './AsyncDataGridTypes'
 
 // Имя ключа, используемого для отправки фильтров в API.
 export const asyncDataGridApiFiltersKey = 'filters'

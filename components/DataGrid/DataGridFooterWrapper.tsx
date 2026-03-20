@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DataGridFooterWrapperProps} from './DataGridTypes'
+import type {DataGridFooterWrapperProps} from './DataGridTypes'
 
 // Обертка подвала таблицы с данными.
 export function DataGridFooterWrapper(props: DataGridFooterWrapperProps) {

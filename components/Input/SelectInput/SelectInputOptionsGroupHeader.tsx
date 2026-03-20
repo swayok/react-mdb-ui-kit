@@ -1,8 +1,8 @@
 import clsx from 'clsx'
-import {AnyObject} from '../../../types'
+import type {AnyObject} from '../../../types'
 import {DropdownHeader} from '../../Dropdown/DropdownHeader'
 import {SelectInputOptionLabel} from './SelectInputOptionLabel'
-import {SelectInputOptionsGroupHeaderProps} from './SelectInputTypes'
+import type {SelectInputOptionsGroupHeaderProps} from './SelectInputTypes'
 
 // Отображение заголовка группы опций в выпадающем меню.
 export function SelectInputOptionsGroupHeader<

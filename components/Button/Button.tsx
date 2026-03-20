@@ -8,7 +8,7 @@ import {
     Link,
     LinkProps,
 } from 'react-router-dom'
-import {
+import type {
     AnyObject,
     ButtonColors,
     HtmlComponentProps,
@@ -16,7 +16,7 @@ import {
     ReactComponentOrTagName,
 } from '../../types'
 import {Ripple} from '../Ripple/Ripple'
-import {RippleProps} from '../Ripple/RippleTypes'
+import type {RippleProps} from '../Ripple/RippleTypes'
 
 export interface ButtonProps extends Omit<HtmlComponentProps<HTMLButtonElement | HTMLAnchorElement | HTMLLabelElement>, 'label'> {
     LinkComponent?: ComponentType

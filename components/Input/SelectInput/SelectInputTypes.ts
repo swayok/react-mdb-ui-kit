@@ -1,10 +1,10 @@
 import type {OpenChangeReason} from '@floating-ui/react'
-import type {
-    ChangeEvent,
-    KeyboardEvent,
-    MouseEvent,
-    ReactNode,
-    Ref,
+import {
+    type ChangeEvent,
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactNode,
+    type Ref,
 } from 'react'
 import type {
     AnyObject,

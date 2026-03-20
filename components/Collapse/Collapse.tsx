@@ -6,7 +6,7 @@ import {
     useRef,
 } from 'react'
 import {getCssTransitionDuration} from '../../helpers/getCssTransitionDuration'
-import {MorphingHtmlComponentPropsWithoutRef} from '../../types'
+import type {MorphingHtmlComponentPropsWithoutRef} from '../../types'
 
 export interface CollapseProps extends Omit<MorphingHtmlComponentPropsWithoutRef, 'onTransitionEnd'> {
     navbar?: boolean

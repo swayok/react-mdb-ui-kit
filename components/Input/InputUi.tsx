@@ -1,16 +1,11 @@
 import clsx from 'clsx'
 import {
     useEffect,
-    useImperativeHandle,
     useMemo,
     useRef,
-    useState,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
-import {
-    InputUiApi,
-    InputUiProps,
-} from './InputTypes'
+import type {InputUiProps} from './InputTypes'
 
 const activeInputLabelSizeMultipliers = {
     normal: 0.9,

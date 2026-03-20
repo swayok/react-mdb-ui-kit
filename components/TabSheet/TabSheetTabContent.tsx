@@ -4,7 +4,7 @@ import {
     useState,
 } from 'react'
 import {useTabSheetContext} from './TabSheetContext'
-import {TabSheetTabContentProps} from './TabSheetTypes'
+import type {TabSheetTabContentProps} from './TabSheetTypes'
 
 // Длительность анимаций fade in/out.
 const animationDuration: number = 150

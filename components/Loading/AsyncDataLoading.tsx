@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {
-    CSSProperties,
-    ReactNode,
+    type CSSProperties,
+    type ReactNode,
 } from 'react'
 import {AsyncDataLoadingError} from './AsyncDataLoadingError'
 import {FadeSwitch} from '../Animation/FadeSwitch'

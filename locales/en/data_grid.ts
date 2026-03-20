@@ -1,4 +1,4 @@
-import {DataGridTranslations} from '../../components/DataGrid/DataGridTypes'
+import type {DataGridTranslations} from '../../components/DataGrid/DataGridTypes'
 
 const translations: DataGridTranslations = {
     filters: {

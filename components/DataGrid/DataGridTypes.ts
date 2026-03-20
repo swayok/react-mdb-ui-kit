@@ -1,8 +1,8 @@
 import type {
-    CSSProperties,
+    type CSSProperties,
     FunctionComponent,
     HTMLAttributes,
-    ReactNode,
+    type ReactNode,
     TableHTMLAttributes,
     TdHTMLAttributes,
 } from 'react'

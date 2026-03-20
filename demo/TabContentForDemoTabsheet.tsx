@@ -1,4 +1,4 @@
-import {ReactNode} from 'react'
+import type {ReactNode} from 'react'
 import {Card} from '../components/Card/Card'
 import {CardBody} from '../components/Card/CardBody'
 import {TabSheetTabContent} from '../components/TabSheet/TabSheetTabContent'

@@ -1,14 +1,14 @@
 import type {CKEditorConfig} from 'ckeditor4-react'
-import type {
-    ChangeEvent,
-    ClipboardEvent,
-    ComponentType,
-    CSSProperties,
-    FocusEvent,
-    KeyboardEvent,
-    ReactNode,
-    Ref,
-    RefObject,
+import {
+    type ChangeEvent,
+    type ClipboardEvent,
+    type ComponentType,
+    type CSSProperties,
+    type FocusEvent,
+    type KeyboardEvent,
+    type ReactNode,
+    type Ref,
+    type RefObject,
 } from 'react'
 import type {CalendarProps} from 'react-calendar'
 import type {

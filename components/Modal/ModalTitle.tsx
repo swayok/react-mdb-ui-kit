@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {ModalTitleProps} from './ModalTypes'
+import type {ModalTitleProps} from './ModalTypes'
 
 // Заголовок модального окна.
 export function ModalTitle(props: ModalTitleProps) {

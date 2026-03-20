@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {DataGridCellProps} from './DataGridTypes'
+import type {DataGridCellProps} from './DataGridTypes'
 
 // Ячейка таблицы.
 export function DataGridCell(props: DataGridCellProps) {

@@ -11,10 +11,10 @@ import {
 import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
 import {mdiFilePdfOutline} from '../../helpers/icons'
 import file_picker from '../../locales/en/file_picker'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {FilePickerAudioFilePreview} from './FilePickerAudioFilePreview'
 import {FilePickerFilePreviewAsIcon} from './FilePickerFilePreviewAsIcon'
-import {
+import type {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,

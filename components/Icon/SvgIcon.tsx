@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import {
-    CSSProperties,
+    type CSSProperties,
     RefObject,
 } from 'react'
-import {
+import type {
     HtmlComponentProps,
     SvgIconInfo,
 } from '../../types'

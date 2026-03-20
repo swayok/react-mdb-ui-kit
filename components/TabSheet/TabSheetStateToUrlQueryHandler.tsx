@@ -3,9 +3,9 @@ import {
     useMemo,
 } from 'react'
 import {useUrlQueryParams} from '../../helpers/useUrlQueryParams'
-import {AnyObject} from '../../types'
+import type {AnyObject} from '../../types'
 import {useTabSheetContext} from './TabSheetContext'
-import {TabSheetStateToUrlQueryHandlerProps} from './TabSheetTypes'
+import type {TabSheetStateToUrlQueryHandlerProps} from './TabSheetTypes'
 
 // Контроль сохранения и восстановления текущей вкладки из URL Query.
 export function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHandlerProps) {
