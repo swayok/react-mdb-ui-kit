@@ -3,8 +3,8 @@ import {
     useRef,
 } from 'react'
 import {
-    WebsocketEventData,
-    WebsocketEventHandler,
+    type WebsocketEventData,
+    type WebsocketEventHandler,
     WebSocketService,
 } from '../../services/WebSocketService'
 

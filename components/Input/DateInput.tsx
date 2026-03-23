@@ -13,7 +13,7 @@ import {
     useMemo,
     useRef,
 } from 'react'
-import {CalendarProps} from 'react-calendar'
+import type {CalendarProps} from 'react-calendar'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {DateTimeService} from '../../services/DateTimeService'
 import {UserBehaviorService} from '../../services/UserBehaviorService'

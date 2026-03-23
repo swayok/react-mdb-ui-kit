@@ -1,6 +1,6 @@
 import {
     FloatingList,
-    FloatingRootContext,
+    type FloatingRootContext,
 } from '@floating-ui/react'
 import {mdiChevronDown} from '@mdi/js'
 import clsx from 'clsx'

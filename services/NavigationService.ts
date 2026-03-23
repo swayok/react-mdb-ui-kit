@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {
-    Location,
-    NavigateFunction,
+    type Location,
+    type NavigateFunction,
     useLocation,
     useNavigate,
 } from 'react-router-dom'

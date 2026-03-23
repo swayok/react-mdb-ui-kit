@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CSSProperties} from 'react'
+import type {CSSProperties} from 'react'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
 import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'

@@ -10,7 +10,7 @@ import {
 } from '@floating-ui/react'
 import {
     Fragment,
-    HTMLProps,
+    type HTMLProps,
     type KeyboardEvent,
     useImperativeHandle,
     useMemo,

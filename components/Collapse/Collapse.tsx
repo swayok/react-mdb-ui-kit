@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    RefObject,
+    type RefObject,
     useEffectEvent,
     useLayoutEffect,
     useRef,

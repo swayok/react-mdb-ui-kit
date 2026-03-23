@@ -1,9 +1,9 @@
 import {
-    ApiError,
+    type ApiError,
     type ApiResponse,
-    HtmlErrorResponseData,
-    OtherErrorResponseData,
-    ValidationErrorsResponseData,
+    type HtmlErrorResponseData,
+    type OtherErrorResponseData,
+    type ValidationErrorsResponseData,
 } from '../../services/ApiRequestService'
 import {NavigationService} from '../../services/NavigationService'
 import {ToastService} from '../../services/ToastService'

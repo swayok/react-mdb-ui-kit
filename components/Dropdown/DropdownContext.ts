@@ -1,7 +1,7 @@
-import {FloatingRootContext} from '@floating-ui/react'
+import type {FloatingRootContext} from '@floating-ui/react'
 import {
     createContext,
-    HTMLProps,
+    type HTMLProps,
     useContext,
 } from 'react'
 import type {DropdownContextProps} from './DropdownTypes'

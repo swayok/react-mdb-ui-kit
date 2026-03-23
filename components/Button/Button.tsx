@@ -1,12 +1,12 @@
 import clsx from 'clsx'
-import {
+import type {
     ComponentType,
     Ref,
     RefObject,
 } from 'react'
 import {
     Link,
-    LinkProps,
+    type LinkProps,
 } from 'react-router-dom'
 import type {
     AnyObject,

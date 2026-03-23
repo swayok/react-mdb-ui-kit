@@ -1,8 +1,8 @@
 import {
     type CSSProperties,
     type RefAttributes,
-    SVGAttributes,
-    SVGProps,
+    type SVGAttributes,
+    type SVGProps,
     useId,
 } from 'react'
 import {ReusableSvg} from './ReusableSvg'

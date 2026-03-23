@@ -6,7 +6,7 @@ import {
     useRef,
     useState,
 } from 'react'
-import {ApiError} from '../../services/ApiRequestService'
+import {type ApiError} from '../../services/ApiRequestService'
 import type {PaginationResponseData} from '../../types'
 import {useEventCallback} from '../useEventCallback'
 

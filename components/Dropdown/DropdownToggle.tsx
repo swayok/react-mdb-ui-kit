@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {
-    type FocusEvent,
+import type {
+    FocusEvent,
     RefCallback,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'

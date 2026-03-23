@@ -1,12 +1,12 @@
 import {
-    MouseEvent,
+    type MouseEvent,
     useCallback,
     useEffect,
     useState,
 } from 'react'
 import {handleErrorResponse} from '../../helpers/api/ApiRequestErrorHelpers'
 import {toggleValueInArray} from '../../helpers/form/toggleValueInArray'
-import {ApiError} from '../../services/ApiRequestService'
+import type {ApiError} from '../../services/ApiRequestService'
 import type {AnyObject} from '../../types'
 import {
     DataGridContext,

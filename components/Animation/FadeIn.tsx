@@ -1,6 +1,6 @@
 import {
     type ReactNode,
-    RefObject,
+    type RefObject,
     useRef,
 } from 'react'
 import {CSSTransition} from 'react-transition-group'

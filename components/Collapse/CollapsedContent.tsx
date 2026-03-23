@@ -7,7 +7,7 @@ import {
 } from 'react'
 import {
     Collapse,
-    CollapseProps,
+    type CollapseProps,
 } from './Collapse'
 
 // Свойства кнопки открытия/закрытия для компонента <CollapsedContent>.

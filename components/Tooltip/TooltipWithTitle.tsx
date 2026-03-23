@@ -15,7 +15,7 @@ import {
 import clsx from 'clsx'
 import {
     type ReactNode,
-    RefObject,
+    type RefObject,
     useEffect,
     useState,
 } from 'react'

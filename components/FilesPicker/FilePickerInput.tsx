@@ -7,7 +7,7 @@ import {
 } from 'react'
 import {
     FileAPI,
-    FileAPISelectedFileInfo,
+    type FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import {ToastService} from '../../services/ToastService'
 import type {

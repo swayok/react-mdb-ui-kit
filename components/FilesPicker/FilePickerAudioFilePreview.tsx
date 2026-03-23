@@ -1,7 +1,7 @@
 import {useMemo} from 'react'
-import {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
+import type {FileAPISelectedFileInfo} from '../../helpers/file_api/FileAPI'
 import {
-    IconProps,
+    type IconProps,
     Icon,
 } from '../Icon/Icon'
 

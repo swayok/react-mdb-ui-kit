@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import {
     type ReactNode,
-    RefObject,
+    type RefObject,
     useRef,
 } from 'react'
 import {

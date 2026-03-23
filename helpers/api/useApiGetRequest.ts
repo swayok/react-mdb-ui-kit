@@ -5,7 +5,7 @@ import {
     useRef,
     useState,
 } from 'react'
-import {ApiError} from '../../services/ApiRequestService'
+import {type ApiError} from '../../services/ApiRequestService'
 import {useEventCallback} from '../useEventCallback'
 
 export interface UseApiGetRequestHookConfig<

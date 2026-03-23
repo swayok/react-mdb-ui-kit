@@ -1,5 +1,5 @@
 import type {
-    type ReactNode,
+    ReactNode,
     RefObject,
 } from 'react'
 import type {

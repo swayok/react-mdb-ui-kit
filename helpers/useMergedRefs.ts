@@ -1,7 +1,7 @@
 import {
-    Ref,
-    RefCallback,
-    RefObject,
+    type Ref,
+    type RefCallback,
+    type RefObject,
     useMemo,
 } from 'react'
 

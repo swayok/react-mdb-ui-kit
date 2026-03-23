@@ -1,4 +1,4 @@
-import {
+import type {
     FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'

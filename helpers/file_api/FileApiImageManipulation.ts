@@ -1,4 +1,4 @@
-import {ImageBlobReduce} from 'image-blob-reduce'
+import {type ImageBlobReduce} from 'image-blob-reduce'
 
 type CanvasToBlobMime = 'image/jpeg' | 'image/png' | 'image/webp' | string
 

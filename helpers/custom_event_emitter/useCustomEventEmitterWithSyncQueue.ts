@@ -3,11 +3,11 @@ import {
     useMemo,
 } from 'react'
 import {
-    CancelSubscriptionFn,
+    type CancelSubscriptionFn,
     CustomEventEmitter,
 } from './CustomEventEmitter'
 import {
-    SyncQueueTask,
+    type SyncQueueTask,
     useSyncTaskQueue,
 } from '../task_queue/useSyncTaskQueue'
 

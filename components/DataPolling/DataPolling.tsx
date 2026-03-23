@@ -4,7 +4,7 @@ import {
 } from 'react'
 import {
     PollingService,
-    PollingServiceHandlerFn,
+    type PollingServiceHandlerFn,
 } from '../../services/PollingService'
 
 // Свойства компонента DataPolling.

@@ -8,8 +8,8 @@ import {
 } from 'react'
 import {
     FileAPI,
-    FileAPIImageFileInfo,
-    FileAPISelectedFileInfo,
+    type FileAPIImageFileInfo,
+    type FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import {ToastService} from '../../services/ToastService'
 import type {

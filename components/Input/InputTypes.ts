@@ -37,7 +37,7 @@ import type {IconProps} from '../Icon/Icon'
 import type {MdiIconProps} from '../Icon/MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
 import type {InputWithDropdownApi} from './SelectInput/SelectInputTypes'
-import {NormalizedNestedLaravelValidationErrors} from 'swayok-react-mdb-ui-kit/helpers/api/ApiRequestErrorHelpers'
+import type {NormalizedNestedLaravelValidationErrors} from 'swayok-react-mdb-ui-kit/helpers/api/ApiRequestErrorHelpers'
 
 export type * from './SelectInput/SelectInputTypes'
 

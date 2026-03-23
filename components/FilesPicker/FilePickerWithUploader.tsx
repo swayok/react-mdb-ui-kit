@@ -2,7 +2,7 @@ import {
     type ChangeEvent,
     Component,
     createRef,
-    RefObject,
+    type RefObject,
 } from 'react'
 import {
     extractAndNormalizeValidationErrorsFromResponseData,
@@ -11,8 +11,8 @@ import {
 } from '../../helpers/api/ApiRequestErrorHelpers'
 import {
     FileAPI,
-    FileAPIImageFileInfo,
-    FileAPISelectedFileInfo,
+    type FileAPIImageFileInfo,
+    type FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
 import {getCookieValue} from '../../helpers/getCookieValue'
 import {NavigationService} from '../../services/NavigationService'

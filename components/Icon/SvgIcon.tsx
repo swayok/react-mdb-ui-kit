@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import {
-    type CSSProperties,
+import type {
+    CSSProperties,
     RefObject,
 } from 'react'
 import type {

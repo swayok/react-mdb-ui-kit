@@ -1,6 +1,6 @@
 import {
     generatePath,
-    PathParam,
+    type PathParam,
 } from 'react-router-dom'
 
 // Сборка URL из частей.

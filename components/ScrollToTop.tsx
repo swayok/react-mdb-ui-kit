@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {
-    ScrollBehavior,
+    type ScrollBehavior,
     scrollToTop,
 } from '../helpers/scrollToTop'
 

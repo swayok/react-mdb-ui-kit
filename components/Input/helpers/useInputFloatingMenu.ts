@@ -1,18 +1,18 @@
 import {
     autoUpdate,
     flip,
-    FlipOptions,
+    type FlipOptions,
     offset,
-    OpenChangeReason,
+    type OpenChangeReason,
     shift,
     size,
     useFloating,
-    UseFloatingReturn,
+    type UseFloatingReturn,
 } from '@floating-ui/react'
 import {
-    Ref,
-    RefCallback,
-    RefObject,
+    type Ref,
+    type RefCallback,
+    type RefObject,
     useMemo,
     useState,
 } from 'react'

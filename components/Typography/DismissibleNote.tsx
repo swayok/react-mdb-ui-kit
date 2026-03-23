@@ -6,7 +6,7 @@ import {Collapse} from '../Collapse/Collapse'
 import {ModalHeaderCloseButton} from '../Modal/ModalHeaderCloseButton'
 import {
     Note,
-    NoteProps,
+    type NoteProps,
 } from './Note'
 
 interface Props extends NoteProps {

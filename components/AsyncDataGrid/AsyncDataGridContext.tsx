@@ -1,5 +1,5 @@
 import {
-    Context,
+    type Context,
     createContext,
     useContext,
 } from 'react'

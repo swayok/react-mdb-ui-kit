@@ -2,7 +2,7 @@ import {
     useClick,
     useDismiss,
     useInteractions,
-    UseInteractionsReturn,
+    type UseInteractionsReturn,
     useListNavigation,
     useRole,
 } from '@floating-ui/react'
@@ -19,8 +19,8 @@ import {useEventCallback} from '../../../helpers/useEventCallback'
 import type {SelectInputBasicProps} from '../SelectInput/SelectInputTypes'
 import {
     useInputFloatingMenu,
-    UseInputFloatingMenuHookOptions,
-    UseInputFloatingMenuHookReturn,
+    type UseInputFloatingMenuHookOptions,
+    type UseInputFloatingMenuHookReturn,
 } from './useInputFloatingMenu'
 
 interface UseSelectInputDropdownHookOptions extends UseInputFloatingMenuHookOptions,

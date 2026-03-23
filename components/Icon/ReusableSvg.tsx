@@ -1,6 +1,6 @@
 import {
-    RefObject,
-    SVGProps,
+    type RefObject,
+    type SVGProps,
     useMemo,
 } from 'react'
 import {ReusableSvgRepository} from '../../helpers/ReusableSvgRepository'

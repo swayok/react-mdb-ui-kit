@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    IconProps,
+    type IconProps,
     Icon,
 } from '../Icon/Icon'
 import type {InputGroupIconProps} from './InputTypes'

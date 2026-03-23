@@ -1,5 +1,5 @@
 import Echo, {Channel} from 'laravel-echo'
-import {RefObject} from 'react'
+import {type RefObject} from 'react'
 import type {AnyObject} from '../types'
 
 interface WebSocketServiceAuthInfo {

@@ -1,21 +1,21 @@
 import {
-    ComponentType,
+    type ComponentType,
     type ReactNode,
-    Ref,
+    type Ref,
     useEffect,
     useState,
 } from 'react'
 import {
-    GroupedTableVirtuosoHandle as _GroupedTableVirtuosoHandle,
-    GroupedTableVirtuosoProps as _GroupedTableVirtuosoProps,
-    GroupedVirtuosoHandle as _GroupedVirtuosoHandle,
-    GroupedVirtuosoProps as _GroupedVirtuosoProps,
-    TableVirtuosoHandle as _TableVirtuosoHandle,
-    TableVirtuosoProps as _TableVirtuosoProps,
-    VirtuosoGridHandle as _VirtuosoGridHandle,
-    VirtuosoGridProps as _VirtuosoGridProps,
-    VirtuosoHandle as _VirtuosoHandle,
-    VirtuosoProps as _VirtuosoProps,
+    type GroupedTableVirtuosoHandle as _GroupedTableVirtuosoHandle,
+    type GroupedTableVirtuosoProps as _GroupedTableVirtuosoProps,
+    type GroupedVirtuosoHandle as _GroupedVirtuosoHandle,
+    type GroupedVirtuosoProps as _GroupedVirtuosoProps,
+    type TableVirtuosoHandle as _TableVirtuosoHandle,
+    type TableVirtuosoProps as _TableVirtuosoProps,
+    type VirtuosoGridHandle as _VirtuosoGridHandle,
+    type VirtuosoGridProps as _VirtuosoGridProps,
+    type VirtuosoHandle as _VirtuosoHandle,
+    type VirtuosoProps as _VirtuosoProps,
 } from 'react-virtuoso'
 import type {AnyObject} from '../../types'
 

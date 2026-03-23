@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import type {TextColors} from '../../types'
 import {
     IconButton,
-    IconButtonProps,
+    type IconButtonProps,
 } from './IconButton'
 
 interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {

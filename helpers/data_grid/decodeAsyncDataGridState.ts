@@ -2,7 +2,7 @@ import type {AsyncDataGridStateForUrlQuery} from '../../components/AsyncDataGrid
 import type {DataGridOrderingDirection} from '../../components/DataGrid/DataGridTypes'
 import {
     normalizeAsyncDataGridState,
-    NormalizedAsyncDataGridState,
+    type NormalizedAsyncDataGridState,
 } from './normalizeAsyncDataGridState'
 
 // Конвертирует строку из URL query в параметры выборки.

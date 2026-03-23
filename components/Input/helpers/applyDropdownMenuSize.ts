@@ -1,4 +1,4 @@
-import {MiddlewareState} from '@floating-ui/dom'
+import type {MiddlewareState} from '@floating-ui/dom'
 import type {InputDropdownWidthCalculationStrategy} from '../SelectInput/SelectInputTypes'
 
 export interface ApplyDropdownMenuSizeFnInfo extends MiddlewareState {

@@ -5,12 +5,12 @@ import type {
     TextColors,
 } from '../../types'
 import {
-    MdiIconProps,
+    type MdiIconProps,
     MDIIcon,
 } from './MDIIcon'
 import {
     SvgIcon,
-    SvgIconProps,
+    type SvgIconProps,
 } from './SvgIcon'
 import {Tooltip} from '../Tooltip/Tooltip'
 import type {

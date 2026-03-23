@@ -10,8 +10,8 @@ import type {
 } from '../../types'
 import {
     Icon,
-    IconProps,
-    IconTooltipProps,
+    type IconProps,
+    type IconTooltipProps,
 } from './Icon'
 
 export type IconButtonTooltipProps = Omit<IconTooltipProps, 'onClick' | 'onMouseDown'>

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import {CSSProperties} from 'react'
+import type {CSSProperties} from 'react'
 import {useAsyncDataGridContext} from '../AsyncDataGrid/AsyncDataGridContext'
 import {Ripple} from '../Ripple/Ripple'
 import {

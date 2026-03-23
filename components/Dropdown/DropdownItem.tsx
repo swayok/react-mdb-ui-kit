@@ -10,7 +10,7 @@ import {
 } from 'react'
 import {
     Link,
-    LinkProps,
+    type LinkProps,
 } from 'react-router-dom'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {useMergedRefs} from '../../helpers/useMergedRefs'

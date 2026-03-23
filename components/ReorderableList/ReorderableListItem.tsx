@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {
-    DragEvent,
+    type DragEvent,
     useCallback,
     useState,
 } from 'react'

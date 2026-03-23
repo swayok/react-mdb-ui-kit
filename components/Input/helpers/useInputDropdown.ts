@@ -2,14 +2,14 @@ import {
     useClick,
     useDismiss,
     useInteractions,
-    UseInteractionsReturn,
+    type UseInteractionsReturn,
     useRole,
 } from '@floating-ui/react'
-import {Ref} from 'react'
+import type {Ref} from 'react'
 import {
     useInputFloatingMenu,
-    UseInputFloatingMenuHookOptions,
-    UseInputFloatingMenuHookReturn,
+    type UseInputFloatingMenuHookOptions,
+    type UseInputFloatingMenuHookReturn,
 } from './useInputFloatingMenu'
 
 interface UseInputDropdownHookOptions extends UseInputFloatingMenuHookOptions {

@@ -1,7 +1,7 @@
 import {useMemo} from 'react'
 import {
-    NavigateOptions,
-    URLSearchParamsInit,
+    type NavigateOptions,
+    type URLSearchParamsInit,
     useSearchParams,
 } from 'react-router-dom'
 import type {AnyObject} from '../types'
