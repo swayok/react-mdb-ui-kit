@@ -5,7 +5,7 @@ export interface WysiwygGlobalConfigType {
     // Версия CSS/JS файлов, загружаемых в Wysiwyg редактор.
     assetsVersion?: string
     // Путь к CSS файлу для iframe внутри Wysiwyg редактора.
-    cssUrl?: string
+    cssUrl?: string | string[]
 }
 
 // Часть методов и свойств CKEditor.
