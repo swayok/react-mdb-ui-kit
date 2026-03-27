@@ -27,6 +27,10 @@ export const AsyncDataGridApi = {
         abortController?: AbortController
     ): Promise<AsyncDataGridRows<RowDataType>> {
         const effectiveFilters: AnyObject = removeEmptyFiltersForAsyncDataGrid(filters)
+        /**
+         * @see ApiRequestService.get()
+         * @see ApiRequestService.post()
+         */
         return ApiRequestService[apiMethod === 'POST' ? 'post' : 'get']<
             AsyncDataGridRows<RowDataType>
         >(

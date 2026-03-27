@@ -199,7 +199,7 @@ export class ApiRequestService {
                     fullUrl += '?' + this.convertDataObjectToUrlSearchParams(data).toString()
                 }
             } else {
-                requestInit.body = JSON.stringify(data)
+                requestInit.body = this.getPostDataAsJson(data)
                 requestInit.headers.set('Content-Type', 'application/json; charset=utf-8')
                 logData('Request', data)
             }
@@ -481,6 +481,7 @@ export class ApiRequestService {
         if (value === undefined) {
             return
         }
+
         if (value === null) {
             formData.append(key, '')
         } else if (typeof value === 'boolean') {
@@ -489,6 +490,8 @@ export class ApiRequestService {
             for (let i = 0; i < value.length; i++) {
                 this.addValueToFormData(formData, `${key}[${i}]`, value[i])
             }
+        } else if (value instanceof Date) {
+            formData.append(key, this.convertDateToString(value))
         } else if (value?.constructor === Object) {
             // Обычный объект.
             for (const subKey in value) {
@@ -504,6 +507,20 @@ export class ApiRequestService {
         }
     }
 
+    // Преобразовать объект в JSON-строку.
+    static getPostDataAsJson(data: AnyObject): string {
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const backupFn = Date.prototype.toJSON
+        // Подменяем toJSON для Date, чтобы он возвращал ISO-строку.
+        Date.prototype.toJSON = function () {
+            return ApiRequestService.convertDateToString(this)
+        }
+        const ret = JSON.stringify(data)
+        // Восстанавливаем toJSON для Date.
+        Date.prototype.toJSON = backupFn
+        return ret
+    }
+
     // Создание URLSearchParams из объекта с данными. Рекурсивный вариант.
     static convertDataObjectToUrlSearchParams(data: AnyObject): URLSearchParams {
         const params: URLSearchParams = new URLSearchParams()
@@ -516,7 +533,7 @@ export class ApiRequestService {
                 if (p in obj) {
                     const key: string = prefix ? prefix + '[' + String(p) + ']' : String(p)
                     // @ts-ignore - и для object и для array obj.hasOwnProperty(p) проверяет наличие значения для ключа
-                    let value: unknown = obj[p]
+                    const value: unknown = obj[p]
                     if (value === undefined) {
                         // Такое вполне может быть если объект содержит вот такое: obj = {v: undefined, q: 'test'}.
                         // В этом случае obj.hasOwnProperty('v') вернет true, но obj['v'] или obj.v вернет undefined.
@@ -524,18 +541,31 @@ export class ApiRequestService {
                         // arr = ['test', undefined]; arr.hasOwnProperty(1) => true; arr[1] => undefined.
                         continue
                     }
-                    if (value !== null && typeof value === 'object') {
+
+                    if (value === null) {
+                        params.set(key, '')
+                        continue
+                    }
+
+                    if (value instanceof Date) {
+                        params.set(key, this.convertDateToString(value))
+                        continue
+                    }
+
+                    if (typeof value === 'object') {
                         // Объект или массив: уходим в рекурсию.
                         fillParams(value, key)
-                    } else {
-                        // Простое значение.
-                        if (value === null) {
-                            value = ''
-                        } else if (typeof value === 'boolean') {
-                            value = value ? '1' : '0'
-                        }
-                        params.set(key, String(value))
+                        continue
                     }
+
+                    // Простое значение.
+                    if (typeof value === 'boolean') {
+                        params.set(key, value ? '1' : '0')
+                        continue
+                    }
+
+                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                    params.set(key, String(value))
                 }
             }
         }
@@ -543,6 +573,11 @@ export class ApiRequestService {
         fillParams(data)
 
         return params
+    }
+
+    // Конвертация объекта Date в строку для отправки на сервер.
+    static convertDateToString(date: Date): string {
+        return date.toUTCString()
     }
 
     // Вывод данных из FormData в консоль.
