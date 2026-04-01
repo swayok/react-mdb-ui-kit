@@ -1,15 +1,17 @@
 import {mdiDotsHorizontal} from '@mdi/js'
 import clsx from 'clsx'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {DropdownToggle} from '../Dropdown/DropdownToggle'
 import {Icon} from '../Icon/Icon'
 import {DataGridPaginationPagesListFillerDropdown} from './DataGridPaginationPagesListFillerDropdown'
 import type {DataGridPaginationPagesListProps} from './DataGridTypes'
+import {getVisibleDataGridPageNumbers} from './helpers/getVisibleDataGridPageNumbers'
 
-// Кнопка, открывающая выпадающее меню со списком номеров страниц
-// в промежутке между явно отображаемыми номерами страниц в пагинаторе.
-// Пагинация выглядит так:
+// Навигация по номерам страниц в DataGridPagination.
+// Результат выглядит так:
 // [1] [2] [3] [...] [90] [91] [92],
-// где [...] - этот компонент.
+// где [...] - выпадающее меню со списком всех номеров страниц или полем ввода номера страницы,
+// если страниц слишком много для нормального взаимодействия.
 export function DataGridPaginationPagesList(props: DataGridPaginationPagesListProps) {
 
     const {
@@ -18,7 +20,7 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
         offset,
         limit,
         disabled,
-        onPageChange,
+        onPageChange: propsOnPageChange,
         maxVisiblePages,
         ...otherProps
     } = props
@@ -29,7 +31,16 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
     const {
         items,
         hasFiller,
-    } = getVisiblePageNumbers(pagesCount, currentPage, maxVisiblePages ?? 7)
+    } = getVisibleDataGridPageNumbers(pagesCount, currentPage, maxVisiblePages ?? 7)
+
+    const onPageChange = useEventCallback((pageNumber: number) => {
+        if (disabled) {
+            return
+        }
+        setTimeout(() => {
+            propsOnPageChange?.(pageNumber)
+        }, 0)
+    })
 
     const renderItem = (
         numberOrFiller: number | '...',
@@ -62,9 +73,7 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
                     <div
                         className="page-link"
                         onClick={() => {
-                            if (!disabled) {
-                                onPageChange(numberOrFiller)
-                            }
+                            onPageChange(numberOrFiller)
                         }}
                     >
                         {numberOrFiller}
@@ -99,58 +108,5 @@ export function DataGridPaginationPagesList(props: DataGridPaginationPagesListPr
                 {items.map(renderItem)}
             </div>
         )
-    }
-}
-
-// Собрать список номеров страниц, которые нужно отобразить в панели.
-// Если страниц слишком много, то в середину списка будет добавлен "...".
-function getVisiblePageNumbers(
-    pagesCount: number,
-    currentPage: number,
-    maxVisiblePages: number
-): {
-    items: (number | '...')[]
-    hasFiller: boolean
-} {
-    const items: (number | '...')[] = []
-    let hasFiller = false
-    if (pagesCount <= maxVisiblePages) {
-        // pages count within limits - show all without fillers
-        for (let i = 1; i <= pagesCount; i++) {
-            items.push(i)
-        }
-    } else {
-        if (currentPage <= maxVisiblePages - 3) {
-            // at the beginning of the list
-            for (let i = 1; i <= maxVisiblePages - 2; i++) {
-                items.push(i)
-            }
-            items.push('...')
-            items.push(pagesCount)
-            hasFiller = true
-        } else if (currentPage > pagesCount - maxVisiblePages + 3) {
-            // at the end of the list
-            items.push(1)
-            items.push('...')
-            for (let i = pagesCount - maxVisiblePages + 3; i <= pagesCount; i++) {
-                items.push(i)
-            }
-            hasFiller = true
-        } else {
-            // in the middle of the list
-            items.push(1)
-            items.push('...')
-            const delta = Math.floor((maxVisiblePages - 4) / 2)
-            for (let i = currentPage - delta; i <= currentPage + delta; i++) {
-                items.push(i)
-            }
-            items.push('...')
-            items.push(pagesCount)
-            hasFiller = true
-        }
-    }
-    return {
-        items,
-        hasFiller,
     }
 }

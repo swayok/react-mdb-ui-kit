@@ -2,9 +2,9 @@ import {mdiCheck} from '@mdi/js'
 import clsx from 'clsx'
 import {
     type ReactNode,
-    useCallback,
     useRef,
 } from 'react'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {Button} from '../Button/Button'
 import {Dropdown} from '../Dropdown/Dropdown'
 import {DropdownItem} from '../Dropdown/DropdownItem'
@@ -17,7 +17,7 @@ import type {DataGridPaginationPagesListFillerDropdownProps} from './DataGridTyp
 // Выпадающее меню со списком всех номеров страниц для пагинатора.
 // Пагинация выглядит так:
 // [1] [2] [3] [...] [90] [91] [92],
-// где [...] - родительский компонент, по нажатию на который отображается это меню.
+// где [...] - этот компонент.
 export function DataGridPaginationPagesListFillerDropdown(
     props: DataGridPaginationPagesListFillerDropdownProps
 ) {
@@ -37,7 +37,7 @@ export function DataGridPaginationPagesListFillerDropdown(
     const showPageNumberInputInFiller: boolean = pagesCount > 100
 
     // Открытие/закрытие меню.
-    const onMenuToggle = useCallback((nextShow: boolean) => {
+    const onMenuToggle = useEventCallback((nextShow: boolean) => {
         if (showPageNumberInputInFiller) {
             if (nextShow) {
                 setTimeout(() => {
@@ -47,7 +47,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                 pageNumberInputRef.current.value = ''
             }
         }
-    }, [])
+    })
 
     let content: ReactNode | null
     if (showPageNumberInputInFiller) {

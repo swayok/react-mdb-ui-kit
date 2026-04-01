@@ -63,7 +63,6 @@ export function DropdownItem<
                 return
             }
             propsOnMouseDown?.(e as MouseEvent<HTMLAnchorElement>)
-            propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
             // Не вызывать тут tree?.events.emit('click') т.к. оно будет мешать
             // переходу по ссылке (<a href>).
         }
@@ -79,6 +78,8 @@ export function DropdownItem<
                 e.preventDefault()
                 return
             }
+            propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
+            // Отправляем событие click в дерево, чтобы обработало закрытие выпадающего меню.
             tree?.events.emit('click')
         }
     )

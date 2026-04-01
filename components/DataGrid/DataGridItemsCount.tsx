@@ -42,7 +42,9 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
 
     const handleLimitChange = useEventCallback((value: number) => {
         if (!disabled) {
-            onLimitChange?.(value)
+            setTimeout(() => {
+                onLimitChange?.(value)
+            }, 0)
         }
     })
 
@@ -76,7 +78,7 @@ export function DataGridItemsCount(props: DataGridItemsCountProps) {
                 {
                     translations.items_count.items_shown(
                         totalCount === 0 ? 0 : offset + 1,
-                        Math.min(totalCount, filteredCount ?? 0, offset + limit)
+                        Math.min(totalCount, filteredCount ?? totalCount, offset + limit)
                     )
                 }
             </span>

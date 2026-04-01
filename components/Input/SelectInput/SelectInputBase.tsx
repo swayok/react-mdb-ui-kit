@@ -235,9 +235,6 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                             onClick: onTogglerClick,
                             onFocus: onTogglerFocus,
                             onKeyDown: onTogglerKeyDown,
-                            onBlur(e) {
-                                setIsOpen(false, e.nativeEvent, 'focus-out')
-                            },
                         })}
                         color="link"
                         hasIcon="after"
