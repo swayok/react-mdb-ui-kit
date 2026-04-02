@@ -3,7 +3,10 @@ import {
     mdiEyeOff,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {useState} from 'react'
+import {
+    useEffect,
+    useState,
+} from 'react'
 import {IconButton} from '../Icon/IconButton'
 import {Input} from './Input'
 import {InputAddonText} from './InputAddonText'
@@ -22,6 +25,12 @@ export function PasswordInput(props: PasswordInputProps) {
         masked,
         setMasked,
     ] = useState<boolean>(true)
+
+    useEffect(() => {
+        if (!withUnmaskToggler) {
+            setMasked(true)
+        }
+    }, [withUnmaskToggler])
 
     return (
         <Input
