@@ -5,6 +5,7 @@ import {
     FloatingList,
     FloatingPortal,
     offset,
+    type ReferenceType,
     shift,
     useFloating,
 } from '@floating-ui/react'
@@ -68,11 +69,6 @@ export function DropdownMenu<
         activeIndex,
     } = useDropdownContext<HTMLElement, RefType>()
 
-    // API компонента для использования во внешних компонентах.
-    useImperativeHandle(apiRef, (): DropdownApi => ({
-        setIsOpen,
-    }))
-
     // Вычисление расположения выпадающего меню относительно DropdownToggle.
     // Не работает, если нет компонента DropdownToggle внутри Dropdown.
     const placement = useMemo(
@@ -95,6 +91,7 @@ export function DropdownMenu<
     const {
         floatingStyles,
         context,
+        refs,
     } = useFloating<HTMLButtonElement>({
         rootContext,
         placement,
@@ -129,6 +126,36 @@ export function DropdownMenu<
             propsOnKeyDown?.(event)
         }
     )
+
+    // Задает позицию относительно элемента или места нажатия кнопки мыши.
+    const setPositionReference = useEventCallback((
+        nodeOrMouseEvent: ReferenceType | MouseEvent | null
+    ) => {
+        if (nodeOrMouseEvent instanceof MouseEvent) {
+            refs.setPositionReference({
+                getBoundingClientRect() {
+                    return {
+                        width: 0,
+                        height: 0,
+                        x: nodeOrMouseEvent.clientX,
+                        y: nodeOrMouseEvent.clientY,
+                        top: nodeOrMouseEvent.clientY,
+                        right: nodeOrMouseEvent.clientX,
+                        bottom: nodeOrMouseEvent.clientY,
+                        left: nodeOrMouseEvent.clientX,
+                    }
+                },
+            })
+        } else {
+            refs.setPositionReference(nodeOrMouseEvent)
+        }
+    })
+
+    // API компонента для использования во внешних компонентах.
+    useImperativeHandle(apiRef, (): DropdownApi => ({
+        setIsOpen,
+        setPositionReference,
+    }))
 
     const Portal = inline ? Fragment : FloatingPortal
 

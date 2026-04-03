@@ -4,6 +4,7 @@ import type {
     FloatingRootContext,
     OffsetOptions,
     OpenChangeReason,
+    ReferenceType,
     ShiftOptions,
     UseInteractionsReturn,
 } from '@floating-ui/react'
@@ -104,6 +105,7 @@ export interface DropdownEventHandlersProps {
 // API выпадающего меню.
 export interface DropdownApi {
     setIsOpen: DropdownContextProps['setIsOpen']
+    setPositionReference: (nodeOrEvent: ReferenceType | MouseEvent | null) => void
 }
 
 // Метаданные события изменения видимости выпадающего меню.

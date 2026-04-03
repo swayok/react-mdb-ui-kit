@@ -7,6 +7,7 @@ import type {
 } from 'react'
 import type {
     AnyObject,
+    ApiRef,
     ApiResponseData,
 } from '../../types'
 import type {
@@ -88,13 +89,7 @@ export interface AsyncDataGridContextProps<
     selectRow: (rowId: number | string, selected: boolean) => void
 
     // Открыть контекстное меню для строки.
-    openContextMenu?: (
-        event: MouseEvent<HTMLTableRowElement>,
-        rowData: RowDataType,
-        rowIndex: number,
-        // Установка индикатора выполнения действия над строкой.
-        setIsProcessing: (isProcessing: boolean) => void
-    ) => void
+    openContextMenu?: AsyncDataGridContextMenuApi<RowDataType>['open']
     // Закрыть контекстное меню для строки.
     closeContextMenu?: () => void
 
@@ -318,16 +313,41 @@ export interface AsyncDataGridUrlQueryManagerProps {
     onReady?: () => void
 }
 
+// API компонента AsyncDataGridContextMenu.
+export interface AsyncDataGridContextMenuApi<
+    RowDataType extends object = AnyObject,
+> {
+    open: (
+        event: MouseEvent<HTMLTableRowElement>,
+        rowData: RowDataType,
+        rowIndex: number,
+        // Установка индикатора выполнения действия над строкой.
+        setIsProcessing: (isProcessing: boolean) => void
+    ) => void
+    close: () => void
+}
+
 // Свойства компонента, отображающего контекстное меню для строки таблицы.
 export interface AsyncDataGridContextMenuProps<
     RowDataType extends object = AnyObject,
 > {
-    show: boolean
-    mouseEvent?: MouseEvent<HTMLElement>
-    rowIndex?: number
-    rowData?: RowDataType
+    apiRef: ApiRef<AsyncDataGridContextMenuApi<RowDataType>>
     permissions: AsyncDataGridContextProps['permissions']
     disabled?: boolean
-    setIsProcessing: AsyncDataGridContextProps['setIsLoading']
-    onClose: () => void
 }
+
+// API компонента DataGridContextMenuDropdown.
+export interface DataGridContextMenuDropdownApi {
+    open: (mouseEvent: MouseEvent<HTMLElement>) => void
+    close: () => void
+}
+
+// Свойства компонента выпадающего меню для контекстного меню строки таблицы.
+export interface DataGridContextMenuDropdownProps {
+    apiRef: ApiRef<DataGridContextMenuDropdownApi>
+    menuClassName?: string
+    onClosed: () => void
+    children?: ReactNode | ReactNode[]
+    recordId?: string | number | null
+}
+

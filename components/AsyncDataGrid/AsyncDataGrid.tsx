@@ -2,10 +2,12 @@ import {
     type MouseEvent,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from 'react'
 import {handleErrorResponse} from '../../helpers/api/ApiRequestErrorHelpers'
 import {toggleValueInArray} from '../../helpers/form/toggleValueInArray'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import type {ApiError} from '../../services/ApiRequestService'
 import type {AnyObject} from '../../types'
 import {
@@ -24,7 +26,7 @@ import {
     asyncDataGridDefaultLimits,
 } from './AsyncDataGridContext'
 import type {
-    AsyncDataGridContextMenuProps,
+    AsyncDataGridContextMenuApi,
     AsyncDataGridContextProps,
     AsyncDataGridProps,
     AsyncDataGridRows,
@@ -137,53 +139,26 @@ export function AsyncDataGrid<
         setSelectedRows,
     ] = useState<(number | string)[]>([])
 
-    const selectRow = useCallback(
+    // Пометить строку как выбранную.
+    const selectRow = useEventCallback(
         (rowId: number | string, selected: boolean) => {
             setSelectedRows(ids => toggleValueInArray(ids, rowId, selected))
-        },
-        []
+        }
     )
 
-    // Контекстное меню для строк.
-    const [
-        contextMenuProps,
-        setContextMenuProps,
-    ] = useState<Omit<AsyncDataGridContextMenuProps<RowDataType>, 'onClose' | 'permissions'>>(
-        () => ({
-            show: false,
-            setIsProcessing() {
-            },
-        })
-    )
+    const contextMenuApiRef = useRef<
+        AsyncDataGridContextMenuApi<RowDataType>
+    >(null)
 
     // Открыть контекстное меню для строки.
-    const openContextMenu: AsyncDataGridContextProps<RowDataType>['openContextMenu'] = useCallback(
-        (
-            event: MouseEvent<HTMLTableRowElement>,
-            rowData: RowDataType,
-            rowIndex: number,
-            setIsProcessing: (isProcessing: boolean) => void
-        ) => {
-            setContextMenuProps({
-                mouseEvent: event,
-                rowData,
-                rowIndex,
-                show: true,
-                setIsProcessing,
-            })
-        },
-        []
-    )
-
-    // Закрыть контекстное меню для строки.
-    const closeContextMenu: AsyncDataGridContextProps<RowDataType>['closeContextMenu'] = useCallback(
-        () => setContextMenuProps({
-            show: false,
-            setIsProcessing() {
-            },
-        }),
-        []
-    )
+    const openContextMenu: AsyncDataGridContextProps<RowDataType>['openContextMenu'] = useEventCallback((
+        event: MouseEvent<HTMLTableRowElement>,
+        rowData: RowDataType,
+        rowIndex: number,
+        setIsProcessing: (isProcessing: boolean) => void
+    ) => {
+        contextMenuApiRef.current?.open(event, rowData, rowIndex, setIsProcessing)
+    })
 
     // Контроллер отмены запроса к API.
     const [
@@ -192,176 +167,161 @@ export function AsyncDataGrid<
     ] = useState<AbortController | null>(null)
 
     // Установить лимит строк на странице.
-    const onSetLimit = useCallback(
-        (newLimit: number): void => {
-            setLimit(newLimit)
-            setOffset(normalizeOffset(newLimit, offset))
-            setChangesCount(changesCount => changesCount + 1)
-        },
-        [offset]
-    )
+    const onSetLimit = useEventCallback((
+        newLimit: number
+    ): void => {
+        setLimit(newLimit)
+        setOffset(normalizeOffset(newLimit, offset))
+        setChangesCount(changesCount => changesCount + 1)
+    })
 
     // Изменить смещение отображаемых строк (по сути перейти на другую страницу).
-    const onSetOffset = useCallback(
-        (offset: number): void => {
-            setOffset(offset)
-            setChangesCount(changesCount => changesCount + 1)
-        },
-        []
-    )
+    const onSetOffset = useEventCallback((
+        offset: number
+    ): void => {
+        setOffset(offset)
+        setChangesCount(changesCount => changesCount + 1)
+    })
 
     // Изменить сортировку.
-    const onSetOrder = useCallback(
-        (
-            column: string,
-            direction: DataGridOrderingDirection,
-            resetOffset: boolean = false
-        ): void => {
-            if (resetOffset) {
-                setOffset(0)
-            }
-            setOrderBy(column)
-            setOrderDirection(direction)
-            setChangesCount(changesCount => changesCount + 1)
-        },
-        []
-    )
+    const onSetOrder = useEventCallback((
+        column: string,
+        direction: DataGridOrderingDirection,
+        resetOffset: boolean = false
+    ): void => {
+        if (resetOffset) {
+            setOffset(0)
+        }
+        setOrderBy(column)
+        setOrderDirection(direction)
+        setChangesCount(changesCount => changesCount + 1)
+    })
 
     // Применить фильтры.
-    const applyFilters = useCallback(
-        (
-            filters: FiltersDataType,
-            resetOffset: boolean = false
-        ): void => {
-            if (resetOffset) {
-                setOffset(0)
-            }
-            setFilters(filters)
-            setChangesCount(changesCount => changesCount + 1)
-        },
-        []
-    )
+    const applyFilters = useEventCallback((
+        filters: FiltersDataType,
+        resetOffset: boolean = false
+    ): void => {
+        if (resetOffset) {
+            setOffset(0)
+        }
+        setFilters(filters)
+        setChangesCount(changesCount => changesCount + 1)
+    })
 
     // Сбросить фильтры к значениям "по умолчанию".
-    const resetFilters = useCallback(
-        (resetOffset: boolean = false): void => {
-            applyFilters(
-                {...defaultFilters},
-                resetOffset
-            )
-        },
-        [applyFilters]
-    )
+    const resetFilters = useEventCallback((
+        resetOffset: boolean = false
+    ): void => {
+        applyFilters(
+            {...defaultFilters},
+            resetOffset
+        )
+    })
 
     // Получен новый набор строк.
-    const onSetRows = useCallback(
-        (newRows: RowDataType[], newTotalCount?: number) => {
-            setRows(newRows)
-            if (newTotalCount !== undefined) {
-                setTotalCount(newTotalCount)
-            }
-            // Сбрасываем выбранные строки.
-            setSelectedRows([])
-        },
-        []
-    )
+    const onSetRows = useEventCallback((
+        newRows: RowDataType[],
+        newTotalCount?: number
+    ) => {
+        setRows(newRows)
+        if (newTotalCount !== undefined) {
+            setTotalCount(newTotalCount)
+        }
+        // Сбрасываем выбранные строки.
+        setSelectedRows([])
+    })
 
     // Обновление данные в текущем наборе строк.
     // Так можно внести изменения в одну или несколько строк,
     // не перезагружая данные из API.
-    const updateRows = useCallback(
-        (callback: (rows: RowDataType[]) => RowDataType[]): void => {
-            setRows(callback)
-        },
-        []
-    )
+    const updateRows = useEventCallback((
+        callback: (rows: RowDataType[]) => RowDataType[]
+    ): void => {
+        setRows(callback)
+    })
 
     // Изменение данных одной строки.
-    const updateRow = useCallback(
-        (
-            updates: Partial<RowDataType>,
-            matcher: string | ((row: RowDataType, updates: Partial<RowDataType>) => boolean) = 'id',
-            replace: boolean = false
-        ) => {
-            let matcherFn: ((row: RowDataType, updates: Partial<RowDataType>) => boolean)
-            if (!matcher || typeof matcher === 'string') {
-                const key: string = matcher || 'id'
-                matcherFn = (row: RowDataType, updates: Partial<RowDataType>): boolean => (
-                    key in updates
-                    && key in row
-                    && row[key as keyof RowDataType] === updates[key as keyof RowDataType]
-                )
-            } else {
-                matcherFn = matcher
-            }
-            updateRows((rows: RowDataType[]) => rows.map(
-                (row: RowDataType) => {
-                    if (!matcherFn(row, updates)) {
-                        return row
-                    }
-                    return replace
-                        ? updates as RowDataType
-                        : {...row, ...updates}
+    const updateRow = useEventCallback((
+        updates: Partial<RowDataType>,
+        matcher: string | ((row: RowDataType, updates: Partial<RowDataType>) => boolean) = 'id',
+        replace: boolean = false
+    ) => {
+        let matcherFn: ((row: RowDataType, updates: Partial<RowDataType>) => boolean)
+        if (!matcher || typeof matcher === 'string') {
+            const key: string = matcher || 'id'
+            matcherFn = (row: RowDataType, updates: Partial<RowDataType>): boolean => (
+                key in updates
+                && key in row
+                && row[key as keyof RowDataType] === updates[key as keyof RowDataType]
+            )
+        } else {
+            matcherFn = matcher
+        }
+        updateRows((rows: RowDataType[]) => rows.map(
+            (row: RowDataType) => {
+                if (!matcherFn(row, updates)) {
+                    return row
                 }
-            ))
-        },
-        []
-    )
+                return replace
+                    ? updates as RowDataType
+                    : {...row, ...updates}
+            }
+        ))
+    })
 
     // Загрузить новый набор строк.
-    const loadData = useCallback(
-        (silent: boolean = false): void => {
-            abortController?.abort()
-            const newAbortController: AbortController = new AbortController()
-            setAbortController(newAbortController)
-            setLoadingError(false)
-            setValidationErrors(null)
-            setDrawsCount(drawsCount => drawsCount + 1)
-            if (!silent) {
-                setIsLoading(true)
-            }
-            AsyncDataGridApi.getRows<RowDataType, FiltersDataType>(
-                apiUrl,
-                apiMethod,
-                {
-                    limit,
-                    offset,
-                    order: orderBy
-                        ? [{column: orderBy, direction: orderDirection}]
-                        : undefined,
-                },
-                {...filters, ...forcedFilters},
-                newAbortController
-            )
-                .then((response: AsyncDataGridRows<RowDataType>) => {
-                    onSetRows(response.records || [], response.count || 0)
-                    if (response.permissions) {
-                        setPermissions(response.permissions)
-                    }
+    const loadData = useEventCallback((
+        silent: boolean = false
+    ): void => {
+        abortController?.abort()
+        const newAbortController: AbortController = new AbortController()
+        setAbortController(newAbortController)
+        setLoadingError(false)
+        setValidationErrors(null)
+        setDrawsCount(drawsCount => drawsCount + 1)
+        if (!silent) {
+            setIsLoading(true)
+        }
+        AsyncDataGridApi.getRows<RowDataType, FiltersDataType>(
+            apiUrl,
+            apiMethod,
+            {
+                limit,
+                offset,
+                order: orderBy
+                    ? [{column: orderBy, direction: orderDirection}]
+                    : undefined,
+            },
+            {...filters, ...forcedFilters},
+            newAbortController
+        )
+            .then((response: AsyncDataGridRows<RowDataType>) => {
+                onSetRows(response.records || [], response.count || 0)
+                if (response.permissions) {
+                    setPermissions(response.permissions)
+                }
+                setIsLoading(false)
+            })
+            .catch((error: ApiError) => {
+                if (error.errorType !== 'abort') {
+                    handleErrorResponse(error, {
+                        validationErrors(errors) {
+                            setValidationErrors(errors)
+                        },
+                    })
+                    setLoadingError(true)
                     setIsLoading(false)
-                })
-                .catch((error: ApiError) => {
-                    if (error.errorType !== 'abort') {
-                        handleErrorResponse(error, {
-                            validationErrors(errors) {
-                                setValidationErrors(errors)
-                            },
-                        })
-                        setLoadingError(true)
-                        setIsLoading(false)
-                    }
-                })
-        },
-        [apiUrl, filters, limit, offset, orderBy, orderDirection]
-    )
+                }
+            })
+    })
 
     // Перезагрузка набора строк из API.
-    const reload = useCallback(
-        (silent?: boolean) => {
-            loadData(silent)
-        },
-        [loadData]
-    )
+    const reload = useEventCallback((
+        silent?: boolean
+    ) => {
+        loadData(silent)
+    })
 
     // Загрузка данных при изменении URL, фильтров или кол-ва выборок.
     useEffect(() => {
@@ -466,7 +426,7 @@ export function AsyncDataGrid<
         setSelectedRows,
         selectRow,
         openContextMenu: ContextMenu ? openContextMenu : undefined,
-        closeContextMenu: ContextMenu ? closeContextMenu : undefined,
+        closeContextMenu: ContextMenu ? contextMenuApiRef.current?.close : undefined,
         reload,
     }
 
@@ -497,9 +457,8 @@ export function AsyncDataGrid<
                     // Контекстное меню должно быть в начале, чтобы можно было вычислить
                     // смещения таблицы относительно страницы.
                     <ContextMenu
-                        {...contextMenuProps}
+                        apiRef={contextMenuApiRef}
                         permissions={permissions}
-                        onClose={closeContextMenu}
                     />
                 )}
                 {children}
