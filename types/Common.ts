@@ -2,10 +2,12 @@
 import type {
     AllHTMLAttributes,
     ComponentProps,
+    Dispatch,
     ForwardedRef,
     RefAttributes,
     RefCallback,
     RefObject,
+    SetStateAction,
 } from 'react'
 import type {
     DropdownHeaderProps,
@@ -71,6 +73,11 @@ export type AnyUrlParams = Record<string, string | undefined>
  * Базовый тип URL параметров для хука useParams<UrlParams>().
  */
 export type AnyRouteParams = AnyUrlParams
+
+/**
+ * Типизация функции setValue из useState.
+ */
+export type ReactSetState<T> = Dispatch<SetStateAction<T>>
 
 // Информация о типе устройства и ширине страницы.
 export interface UILayout {
