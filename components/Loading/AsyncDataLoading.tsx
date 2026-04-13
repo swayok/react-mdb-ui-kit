@@ -28,31 +28,46 @@ export interface AsyncDataLoadingProps<DataType = undefined> {
 // с кнопкой перезагрузки данных (retryButtonTitle, onReload).
 export function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingProps<DataType>) {
 
+    const {
+        loading,
+        loadingLabel,
+        loadingShowDelay,
+        error,
+        errorMessage,
+        onReload,
+        retryButtonTitle,
+        showContent,
+        className,
+        style,
+        loadedData,
+        render,
+    } = props
+
     // Можно ли показывать контент?
-    const canShowContent = (): boolean => props.showContent ?? props.showContent === undefined
+    const canShowContent = (): boolean => showContent ?? showContent === undefined
 
     // Отрисовка контента.
     const renderContents = () => {
-        if (props.error) {
+        if (error) {
             return (
                 <AsyncDataLoadingError
-                    onReload={props.onReload}
-                    errorMessage={props.errorMessage}
-                    retryButtonTitle={props.retryButtonTitle}
+                    onReload={onReload}
+                    errorMessage={errorMessage}
+                    retryButtonTitle={retryButtonTitle}
                     style={{position: 'relative', zIndex: 2}}
                 />
             )
-        } else if (props.loading === false && !props.error && canShowContent()) {
-            return props.render(props.loadedData as DataType) ?? <div />
+        } else if (loading === false && !error && canShowContent()) {
+            return render(loadedData as DataType) ?? <div />
         } else {
             return <div />
         }
     }
 
     let key: string = 'content'
-    if (props.error) {
+    if (error) {
         key = 'error'
-    } else if (props.loading || !canShowContent()) {
+    } else if (loading || !canShowContent()) {
         key = 'loading'
     }
 
@@ -60,15 +75,15 @@ export function AsyncDataLoading<DataType = undefined>(props: AsyncDataLoadingPr
         <div
             className={clsx(
                 'async-data-loading-container',
-                props.loading ? 'is-loading' : 'is-loaded',
-                props.className
+                loading ? 'is-loading' : 'is-loaded',
+                className
             )}
-            style={props.style}
+            style={style}
         >
             <Loading
-                loading={!!props.loading && !props.error}
-                showDelay={props.loadingShowDelay}
-                label={props.loadingLabel}
+                loading={!!loading && !error}
+                showDelay={loadingShowDelay}
+                label={loadingLabel}
                 floating
             />
             <FadeSwitch transitionKey={key}>
