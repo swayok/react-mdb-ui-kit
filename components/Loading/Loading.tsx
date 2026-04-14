@@ -17,12 +17,26 @@ export interface LoadingProps {
     floating?: boolean
     style?: CSSProperties
     label?: string | ReactNode
+    labelClassName?: string
     // Отложить отображение анимации на указанное кол-во миллисекунд.
     showDelay?: number | null
 }
 
 // Индикатор загрузки.
 export function Loading(props: LoadingProps) {
+
+    const {
+        loading,
+        overlayColor,
+        overlayFillsParent,
+        className,
+        indicatorClassName,
+        floating,
+        style,
+        label,
+        labelClassName,
+        showDelay,
+    } = props
 
     const [
         showOverlay,
@@ -32,37 +46,26 @@ export function Loading(props: LoadingProps) {
         showSpinner,
         setShowSpinner,
     ] = useState<boolean>(false)
-    const [
-        spinnerTimeoutId,
-        setSpinnerTimeoutId,
-    ] = useState<number | null>(null)
 
     const outerTransitionRef = useRef<HTMLDivElement>(null)
     const innerTransitionRef = useRef<HTMLDivElement>(null)
 
+    // Отображение анимации загрузки.
     useEffect(() => {
-        setShowOverlay(props.loading)
-        if (props.loading && props.showDelay) {
-            setSpinnerTimeoutId(
-                window.setTimeout(() => {
-                    setShowSpinner(props.loading)
-                    setSpinnerTimeoutId(null)
-                }, props.showDelay)
-            )
+        setShowOverlay(loading)
+        if (loading && showDelay && showDelay > 0) {
+            const timeoutId = window.setTimeout(() => {
+                setShowSpinner(loading)
+            }, showDelay)
+            return () => {
+                window.clearTimeout(timeoutId)
+            }
         } else {
-            if (spinnerTimeoutId) {
-                window.clearTimeout(spinnerTimeoutId)
+            setShowSpinner(loading)
+            return () => {
             }
-            setSpinnerTimeoutId(null)
-            setShowSpinner(props.loading)
         }
-        return () => {
-            if (spinnerTimeoutId) {
-                window.clearTimeout(spinnerTimeoutId)
-            }
-            setSpinnerTimeoutId(null)
-        }
-    }, [props.loading, props.showDelay])
+    }, [loading, showDelay])
 
     return (
         <CSSTransition
@@ -76,13 +79,13 @@ export function Loading(props: LoadingProps) {
             <div
                 className={clsx(
                     'loading-indicator-overlay',
-                    props.overlayColor ? 'with-background' : null,
-                    props.overlayColor,
-                    props.overlayFillsParent ? 'fill-parent' : null,
-                    props.floating ? 'floating' : null,
-                    props.className
+                    overlayColor ? 'with-background' : null,
+                    overlayColor,
+                    overlayFillsParent ? 'fill-parent' : null,
+                    floating ? 'floating' : null,
+                    className
                 )}
-                style={props.style}
+                style={style}
                 ref={outerTransitionRef}
             >
                 <CSSTransition
@@ -97,15 +100,15 @@ export function Loading(props: LoadingProps) {
                         ref={innerTransitionRef}
                         className={clsx(
                             'loading-indicator',
-                            props.indicatorClassName
+                            indicatorClassName
                         )}
                     >
                         <div className="loading-indicator-spinner-container">
                             <div className="loading-indicator-spinner" />
                         </div>
-                        {props.label && (
-                            <div className="loading-indicator-label">
-                                {props.label}
+                        {label && (
+                            <div className={clsx('loading-indicator-label', labelClassName)}>
+                                {label}
                             </div>
                         )}
                     </div>
