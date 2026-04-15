@@ -5,12 +5,35 @@
 @use "body";
 
 // Индикатор загрузки.
-$loading-indicator-color: colors.$primary;
-$loading-indicator-text-color: colors.$gray-700;
-$loading-indicator-with-logo-color: colors.$primary;
-$loading-indicator-with-logo-text-color: colors.$gray-700;
+$loading-indicator-color: colors.$primary !default;
+$loading-indicator-text-color: colors.$gray-700 !default;
+$loading-indicator-with-logo-color: colors.$primary !default;
+$loading-indicator-with-logo-text-color: colors.$gray-700 !default;
+$loading-indicator-z-index: 2000 !default;
 
-$loading-indicator-overlay-default-bg: body.$body-bg;
-$loading-indicator-overlay-default-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-default-bg, color-utils.get-opacity($loading-indicator-overlay-default-bg) * 0.6);
-$loading-indicator-overlay-white-bg: colors.$white;
-$loading-indicator-overlay-white-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-white-bg, color-utils.get-opacity($loading-indicator-overlay-white-bg) * 0.6);
+$loading-indicator-overlay-default-bg: body.$body-bg !default;
+$loading-indicator-overlay-default-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-default-bg, color-utils.get-opacity($loading-indicator-overlay-default-bg) * 0.6) !default;
+$loading-indicator-overlay-white-bg: colors.$white !default;
+$loading-indicator-overlay-white-bg-semitransparent: color-utils.fade-out($loading-indicator-overlay-white-bg, color-utils.get-opacity($loading-indicator-overlay-white-bg) * 0.6) !default;
+$loading-indicator-overlay-z-index: 100 !default;
+$loading-indicator-overlay-min-height: 70px !default;
+$loading-indicator-overlay-min-width: 50px !default;
+$loading-indicator-overlay-floating-min-height: 100px !default;
+
+$loading-indicator-spinner-outer-border-width: 2px !default;
+$loading-indicator-spinner-outer-size: 50px !default;
+$loading-indicator-spinner-outer-animation-duration: 725ms !default;
+$loading-indicator-spinner-inner-border-width: $loading-indicator-spinner-outer-border-width !default;
+$loading-indicator-spinner-inner-size: 36px !default;
+$loading-indicator-spinner-inner-animation-duration: 1225ms !default;
+
+$loading-indicator-logo-size: 50px !default;
+$loading-indicator-logo-spinner-outer-size: 60px !default;
+$loading-indicator-logo-spinner-outer-border-width: 2px !default;
+$loading-indicator-logo-spinner-position-offset: -1 * ($loading-indicator-logo-spinner-outer-size - $loading-indicator-logo-size) !default;
+$loading-indicator-logo-spinner-inner-size: 50px !default;
+$loading-indicator-logo-spinner-inner-border-width: $loading-indicator-logo-spinner-outer-border-width !default;
+$loading-indicator-logo-spinner-inner-position-offset: $loading-indicator-logo-spinner-position-offset - ($loading-indicator-logo-spinner-outer-size - $loading-indicator-logo-spinner-inner-size) !default;
+
+$async-data-loading-container-height: $loading-indicator-overlay-floating-min-height !default;
+$async-data-loading-container-z-index: $loading-indicator-overlay-z-index !default;

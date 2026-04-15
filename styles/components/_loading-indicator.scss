@@ -1,4 +1,5 @@
 // Loading indicator.
+@use "sass:math";
 @use "../variables/loading-indicator";
 @use "../variables/features";
 
@@ -80,9 +81,9 @@
 
     .loading-indicator-overlay {
         position: relative;
-        min-height: 70px;
-        min-width: 50px;
-        z-index: 100;
+        min-height: loading-indicator.$loading-indicator-overlay-min-height;
+        min-width: loading-indicator.$loading-indicator-overlay-min-width;
+        z-index: loading-indicator.$loading-indicator-overlay-z-index;
         background-color: transparent;
         display: flex;
         flex-direction: column;
@@ -102,7 +103,7 @@
             top: 0;
             left: 0;
             right: 0;
-            min-height: 150px;
+            min-height: loading-indicator.$loading-indicator-overlay-floating-min-height;
         }
 
         &.with-background {
@@ -126,7 +127,7 @@
         }
 
         .loading-indicator {
-            z-index: 2000;
+            z-index: loading-indicator.$loading-indicator-z-index;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -134,31 +135,31 @@
 
             .loading-indicator-logo {
                 position: relative;
-                width: 50px;
-                height: 50px;
+                width: loading-indicator.$loading-indicator-logo-size;
+                height: loading-indicator.$loading-indicator-logo-size;
 
                 .loading-indicator-spinner-container {
                     position: absolute;
-                    top: -10px;
-                    left: -10px;
+                    top: loading-indicator.$loading-indicator-logo-spinner-position-offset;
+                    left: loading-indicator.$loading-indicator-logo-spinner-position-offset;
 
                     .loading-indicator-spinner {
-                        width: 60px;
-                        height: 60px;
+                        width: loading-indicator.$loading-indicator-logo-spinner-outer-size;
+                        height: loading-indicator.$loading-indicator-logo-spinner-outer-size;
 
                         &:before {
-                            width: 60px;
-                            height: 60px;
-                            border-width: 2px;
+                            width: loading-indicator.$loading-indicator-logo-spinner-outer-size;
+                            height: loading-indicator.$loading-indicator-logo-spinner-outer-size;
+                            border-width: loading-indicator.$loading-indicator-logo-spinner-outer-border-width;
                             border-color: loading-indicator.$loading-indicator-with-logo-color;
                         }
 
                         &:after {
-                            width: 50px;
-                            height: 50px;
-                            margin-top: -20px;
-                            margin-left: -20px;
-                            border-width: 2px;
+                            width: loading-indicator.$loading-indicator-logo-spinner-inner-size;
+                            height: loading-indicator.$loading-indicator-logo-spinner-inner-size;
+                            margin-top: loading-indicator.$loading-indicator-logo-spinner-inner-position-offset;
+                            margin-left: loading-indicator.$loading-indicator-logo-spinner-inner-position-offset;
+                            border-width: loading-indicator.$loading-indicator-logo-spinner-inner-border-width;
                             border-color: loading-indicator.$loading-indicator-with-logo-color;
                         }
                     }
@@ -168,39 +169,39 @@
             .loading-indicator-spinner-container {
                 .loading-indicator-spinner {
                     position: relative;
-                    width: 50px;
-                    height: 50px;
+                    width: loading-indicator.$loading-indicator-spinner-outer-size;
+                    height: loading-indicator.$loading-indicator-spinner-outer-size;
 
                     &:before {
                         content: '';
                         position: absolute;
-                        width: 50px;
-                        height: 50px;
+                        width: loading-indicator.$loading-indicator-spinner-outer-size;
+                        height: loading-indicator.$loading-indicator-spinner-outer-size;
                         top: 50%;
                         left: 50%;
-                        margin-top: -25px;
-                        margin-left: -25px;
-                        border: 2px solid loading-indicator.$loading-indicator-color;
+                        margin-top: -1 * math.div(loading-indicator.$loading-indicator-spinner-outer-size, 2);
+                        margin-left: -1 * math.div(loading-indicator.$loading-indicator-spinner-outer-size, 2);
+                        border: loading-indicator.$loading-indicator-spinner-outer-border-width solid loading-indicator.$loading-indicator-color;
                         border-radius: 50%;
                         border-left-color: transparent !important;
                         border-right-color: transparent !important;
-                        animation: loading-indicator-spinner-animation 725ms infinite linear;
+                        animation: loading-indicator-spinner-animation loading-indicator.$loading-indicator-spinner-outer-animation-duration infinite linear;
                     }
 
                     &:after {
                         content: '';
                         position: absolute;
-                        width: 36px;
-                        height: 36px;
+                        width: loading-indicator.$loading-indicator-spinner-inner-size;
+                        height: loading-indicator.$loading-indicator-spinner-inner-size;
                         top: 50%;
                         left: 50%;
-                        margin-top: -18px;
-                        margin-left: -18px;
-                        border: 2px solid loading-indicator.$loading-indicator-color;
+                        margin-top: -1 * math.div(loading-indicator.$loading-indicator-spinner-inner-size, 2);
+                        margin-left: -1 * math.div(loading-indicator.$loading-indicator-spinner-inner-size, 2);
+                        border: loading-indicator.$loading-indicator-spinner-inner-border-width solid loading-indicator.$loading-indicator-color;
                         border-radius: 50%;
                         border-left-color: transparent !important;
                         border-right-color: transparent !important;
-                        animation: loading-indicator-spinner-animation 1225ms infinite linear;
+                        animation: loading-indicator-spinner-animation loading-indicator.$loading-indicator-spinner-inner-animation-duration infinite linear;
                     }
                 }
             }
@@ -232,9 +233,9 @@
 
     // Обертка компонента <AsyncDataLoading/>.
     .async-data-loading-container {
-        min-height: 150px;
+        min-height: loading-indicator.$async-data-loading-container-height;
         transition: height 0.2s linear;
         position: relative;
-        z-index: 100;
+        z-index: loading-indicator.$async-data-loading-container-z-index;
     }
 }
