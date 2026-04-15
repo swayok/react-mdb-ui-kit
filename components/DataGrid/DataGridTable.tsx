@@ -29,6 +29,7 @@ export function DataGridTable<
         renderRow,
         TotalsRow,
         noItemsMessage,
+        noItemsClassName,
 
         ...tableProps
     } = props
@@ -39,7 +40,10 @@ export function DataGridTable<
     const renderNoItemsMessage = () => {
         if (!noItemsMessage || typeof noItemsMessage === 'string') {
             return (
-                <DataGridNoItems flexFill={flexFill}>
+                <DataGridNoItems
+                    flexFill={flexFill}
+                    className={noItemsClassName}
+                >
                     {noItemsMessage ?? translations.no_items}
                 </DataGridNoItems>
             )
@@ -53,6 +57,7 @@ export function DataGridTable<
             className={clsx(
                 'data-grid-table-container position-relative table-responsive',
                 flexFill ? 'data-grid-flex flex-1 overflow-y-scroll' : null,
+                visibleRows.length === 0 ? 'data-grid-empty' : null,
                 wrapperClassName
             )}
             id={wrapperId}

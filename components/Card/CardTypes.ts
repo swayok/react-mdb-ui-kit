@@ -40,6 +40,8 @@ export interface CardHeaderProps extends MorphingHtmlComponentProps {
     borderColor?: BorderColors
     // Цвет фона.
     background?: BackgroundColors
+    // Отобразить вложенные элементы в строку с указанным justify-content.
+    flexRow?: 'start' | 'center' | 'between' | 'end'
 }
 
 // Свойства компонента CardTitle.

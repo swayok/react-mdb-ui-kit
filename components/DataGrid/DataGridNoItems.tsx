@@ -6,7 +6,7 @@ export function DataGridNoItems(props: DataGridNoItemsProps) {
 
     const {
         children,
-        className,
+        className = 'fs-6 py-5 px-4',
         flexFill,
         ...otherProps
     } = props
@@ -15,7 +15,7 @@ export function DataGridNoItems(props: DataGridNoItemsProps) {
         <div
             {...otherProps}
             className={clsx(
-                'data-grid-no-items fs-6 pt-5 pb-5 ps-4 pe-4',
+                'data-grid-no-items',
                 flexFill ? 'flex-1 d-flex flex-column justify-content-center align-items-center' : 'text-center',
                 className
             )}

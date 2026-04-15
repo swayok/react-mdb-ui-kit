@@ -395,4 +395,5 @@ export interface DataGridTableProps<
     ) => ReactNode | ReactNode[]
     TotalsRow?: FunctionComponent
     noItemsMessage?: string | ReactNode
+    noItemsClassName?: string
 }

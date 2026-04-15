@@ -9,6 +9,7 @@ export function CardHeader(props: CardHeaderProps) {
         border,
         borderColor,
         background,
+        flexRow,
         tag: Tag = 'div',
         ...otherProps
     } = props
@@ -18,6 +19,7 @@ export function CardHeader(props: CardHeaderProps) {
         border !== undefined ? `border-${border}` : null,
         border !== undefined && borderColor ? `border-${borderColor}` : null,
         background ? `bg-${background}` : null,
+        flexRow ? `d-flex flex-row justify-content-${flexRow}` : null,
         className
     )
 

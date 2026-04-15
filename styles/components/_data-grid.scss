@@ -13,7 +13,7 @@
         position: relative;
         z-index: 1;
         background-color: data-grid.$table-container-bg;
-        min-height: 150px;
+        min-height: data-grid.$data-grid-container-min-height;
 
         > table.data-grid,
         > .animated-content-container > table.data-grid {
@@ -21,7 +21,7 @@
             z-index: 1;
 
             > tbody {
-                font-weight: 400;
+                font-weight: data-grid.$data-grid-body-font-weight;
 
                 > tr.data-grid-row-selected > td {
                     background-color: data-grid.$data-grid-selected-row-bg;
@@ -79,10 +79,10 @@
                 .data-grid-column-header {
                     position: static; // нужно для позиционирования иконки сортировки.
                     height: 100%;
-                    min-height: 24px;
-                    line-height: 1.3;
-                    padding-top: 1rem;
-                    padding-bottom: 1rem;
+                    min-height: data-grid.$data-grid-header-min-height;
+                    line-height: data-grid.$data-grid-header-line-height;
+                    padding-top: data-grid.$data-grid-header-y-padding;
+                    padding-bottom: data-grid.$data-grid-header-y-padding;
 
                     &.cursor {
                         user-select: none;
@@ -105,7 +105,7 @@
                     background-color: data-grid.$data-grid-header-bg;
                     border-color: data-grid.$data-grid-header-borders;
                     color: data-grid.$data-grid-header-color;
-                    font-weight: 600;
+                    font-weight: data-grid.$data-grid-footer-font-weight;
                 }
             }
 
@@ -294,32 +294,41 @@
             }
         }
 
-        > .data-grid-no-items {
-            position: relative;
-            z-index: 10;
-        }
+        &,
+        & > .animated-content-container {
+            > .data-grid-no-items {
+                min-height: data-grid.$data-grid-container-min-height;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                z-index: 10;
+            }
 
-        > .data-grid-loading {
-            position: absolute;
-            z-index: z-index.$z-index-tooltip + 1;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
+            > .data-grid-loading {
+                position: absolute;
+                z-index: z-index.$z-index-tooltip + 1;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
 
-        > .data-grid-error {
-            position: absolute;
-            z-index: z-index.$z-index-tooltip + 1;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: data-grid.$data-grid-error-bg;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            > .data-grid-error {
+                position: absolute;
+                z-index: z-index.$z-index-tooltip + 1;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: data-grid.$data-grid-error-bg;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         thead.data-grid-headers-hidden {
