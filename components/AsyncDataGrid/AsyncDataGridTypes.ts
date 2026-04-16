@@ -239,6 +239,7 @@ export interface AsyncDataGridTableProps<
         context: AsyncDataGridContextProps<RowDataType>
     ) => ReactNode | ReactNode[]
     noItemsMessage?: string | ReactNode
+    hideTableOnLoadingError?: boolean
 }
 
 // Свойства индикатора загрузки данных для таблицы с сервера.

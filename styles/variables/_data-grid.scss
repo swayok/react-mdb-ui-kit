@@ -13,7 +13,7 @@
 $table-filters-bg: colors.$white !default;
 
 $table-container-bg: colors.$white !default;
-$data-grid-container-min-height: 100px !default;
+$data-grid-container-min-height: 120px !default;
 $data-grid-body-font-weight: 400 !default;
 
 $data-grid-header-min-height: 24px !default;
@@ -30,6 +30,7 @@ $data-grid-footer-font-weight: 600 !default;
 $data-grid-vertical-separator-color: colors.$border-color !default;
 
 $data-grid-error-bg: rgba($table-container-bg, 0.6) !default;
+$data-grid-error-min-height: $data-grid-container-min-height !default;
 
 $data-grid-selected-row-bg: colors.$blue-50 !default;
 

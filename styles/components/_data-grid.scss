@@ -319,6 +319,7 @@
             > .data-grid-error {
                 position: absolute;
                 z-index: z-index.$z-index-tooltip + 1;
+                min-height: data-grid.$data-grid-error-min-height;
                 top: 0;
                 left: 0;
                 right: 0;
@@ -329,6 +330,10 @@
                 align-items: center;
                 justify-content: center;
             }
+        }
+
+        &.data-grid-with-error {
+            min-height: data-grid.$data-grid-error-min-height;
         }
 
         thead.data-grid-headers-hidden {

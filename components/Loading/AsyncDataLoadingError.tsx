@@ -1,9 +1,11 @@
-import clsx from 'clsx'
 import type {CSSProperties} from 'react'
+import type {ButtonColors} from '../../types'
 import {Button} from '../Button/Button'
 
 export interface AsyncDataLoadingErrorProps {
     className?: string
+    textClassName?: string
+    buttonColor?: ButtonColors
     style?: CSSProperties
     errorMessage: string
     retryButtonTitle: string
@@ -13,7 +15,9 @@ export interface AsyncDataLoadingErrorProps {
 // Ошибка загрузки данных с сервера.
 export function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
     const {
-        className,
+        className = 'text-center py-4 px-3',
+        textClassName = 'text-center text-danger fs-5 mb-3',
+        buttonColor = 'primary',
         style,
         errorMessage,
         retryButtonTitle,
@@ -22,19 +26,16 @@ export function AsyncDataLoadingError(props: AsyncDataLoadingErrorProps) {
 
     return (
         <div
-            className={clsx(
-                'text-center fs-5 pt-4 pb-4 ps-3 pe-3',
-                className
-            )}
+            className={className}
             style={style}
         >
-            <div className="text-center text-danger mb-3">
+            <div className={textClassName}>
                 {errorMessage}
             </div>
             {onReload && (
                 <Button
                     onClick={() => onReload?.()}
-                    color="primary"
+                    color={buttonColor}
                 >
                     {retryButtonTitle}
                 </Button>

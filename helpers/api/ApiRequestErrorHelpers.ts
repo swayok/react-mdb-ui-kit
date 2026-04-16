@@ -247,7 +247,7 @@ export function handleResponseParsingError(error: ApiError, handlers: ErrorHandl
     handlers.handleMessage?.(error, config.translator().response_parsing.toast, 'error')
 }
 
-// Обработка ошибки, когда запрос отменен по тайм-ауту.
+// Обработка ошибки, когда запрос отменён по тайм-ауту.
 export function handleRequestTimeoutResponse(error: ApiError, handlers: ErrorHandlers): void {
     console.log('[API][ERROR][Timeout]')
     handlers.handleMessage?.(error, config.translator().code408.toast, 'error')

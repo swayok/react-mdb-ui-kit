@@ -28,6 +28,7 @@ export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
         Headers,
         renderRow,
         noItemsMessage,
+        hideTableOnLoadingError,
 
         ...tableProps
     } = props
@@ -42,34 +43,45 @@ export function AsyncDataGridTable<RowDataType extends object = AnyObject>(
         reload,
     } = context
 
+    const hideTable: boolean = (
+        loadingError
+        && (
+            hideTableOnLoadingError
+            || !!fillHeight
+        )
+    )
+
     return (
         <div
             className={clsx(
                 'data-grid-table-container position-relative table-responsive',
                 fillHeight ? 'data-grid-flex full-height overflow-y-scroll' : null,
+                loadingError ? 'data-grid-with-error' : null,
                 wrapperClassName
             )}
             id={wrapperId}
         >
-            <table
-                className={clsx(
-                    'table data-grid m-0',
-                    striped ? 'table-striped-manually' : null,
-                    hover ? 'table-hover' : null,
-                    small ? 'table-sm' : null,
-                    bordered ? 'table-bordered' : null,
-                    verticalAlign ? 'align-' + verticalAlign : null,
-                    className
-                )}
-                {...tableProps}
-            >
-                {Headers}
-                {rows.length > 0 && !loadingError && (
-                    <tbody>
-                        {rows.map((rowData: RowDataType, index: number) => renderRow(rowData, index, context))}
-                    </tbody>
-                )}
-            </table>
+            {!hideTable && (
+                <table
+                    className={clsx(
+                        'table data-grid m-0',
+                        striped ? 'table-striped-manually' : null,
+                        hover ? 'table-hover' : null,
+                        small ? 'table-sm' : null,
+                        bordered ? 'table-bordered' : null,
+                        verticalAlign ? 'align-' + verticalAlign : null,
+                        className
+                    )}
+                    {...tableProps}
+                >
+                    {Headers}
+                    {rows.length > 0 && !loadingError && (
+                        <tbody>
+                            {rows.map((rowData: RowDataType, index: number) => renderRow(rowData, index, context))}
+                        </tbody>
+                    )}
+                </table>
+            )}
             <FadeIn visible={totalCount === 0 && !loading}>
                 {(!noItemsMessage || typeof noItemsMessage === 'string') ? (
                     <DataGridNoItems flexFill={fillHeight}>
