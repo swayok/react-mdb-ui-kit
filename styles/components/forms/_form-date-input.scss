@@ -23,7 +23,7 @@
                     background-color: form-input-base.$input-disabled-bg;
                 }
 
-                &.empty-value:focus {
+                &.empty-value:not(.active):focus {
                     ~ .form-label {
                         transform: none;
                         color: form-outline-input.$form-outline-label-color;
