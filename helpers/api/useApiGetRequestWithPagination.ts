@@ -281,27 +281,22 @@ export function useApiGetRequestWithPagination<
         listModificationMode: RecordsListModificationMode,
         silent?: boolean
     ): Promise<PaginationResponseData<ApiDataType>> => {
-        let oldOffset: number
-        let offset: number = 0
-        setOffset(stateOffset => {
-            oldOffset = stateOffset
-            switch (page) {
-                case 'same':
-                    offset = stateOffset
-                    break
-                case 'prev':
-                    offset = Math.max(0, stateOffset - limit)
-                    break
-                case 'next':
-                    offset = stateOffset + limit
-                    break
-                default:
-                    offset = calculateOffset(page, limit)
-            }
-            return offset
-        })
+        const oldOffset: number = offset
+        let newOffset: number = oldOffset
+        switch (page) {
+            case 'same':
+                break
+            case 'prev':
+                newOffset = Math.max(0, oldOffset - limit)
+                break
+            case 'next':
+                newOffset = oldOffset + limit
+                break
+            default:
+                newOffset = calculateOffset(page, limit)
+        }
+        setOffset(newOffset)
         if (!silent) {
-            setIsLoading(true)
             setError(null)
             if (listModificationMode !== 'replace') {
                 setIsLoadingNextPage(true)
@@ -310,10 +305,11 @@ export function useApiGetRequestWithPagination<
                 listModificationMode === 'replace'
                 && resetDataBeforeLoadPageRequest
             ) {
+                setIsLoading(true)
                 setRecords([])
             }
         }
-        return sendRequest(offset, limit)
+        return sendRequest(newOffset, limit)
             .then((data: PaginationResponseData<ApiDataType>) => {
                 if (onSuccess) {
                     onSuccess(data, listModificationMode, hookState.current!)
@@ -328,8 +324,10 @@ export function useApiGetRequestWithPagination<
                 }
                 setIsLoading(false)
                 setIsLoadingNextPage(false)
-                setOffset(oldOffset)
-                onError?.(error, !!silent)
+                if (error.errorType !== 'abort') {
+                    setOffset(oldOffset)
+                    onError?.(error, !!silent)
+                }
             }) as Promise<PaginationResponseData<ApiDataType>>
     })
 
