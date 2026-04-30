@@ -17,7 +17,7 @@ export function makeUrl<QueryArgsType extends object, Path extends string = stri
 ): string {
     try {
         if (params && Object.keys(params).length > 0) {
-            urlPath = generatePath(urlPath, params) as Path
+            urlPath = generatePath(urlPath, params as never) as Path
         }
         if (queryArgs && Object.keys(queryArgs).length > 0) {
             const queryString: URLSearchParams = new URLSearchParams(queryArgs as Record<string, string>)
