@@ -2,7 +2,6 @@ import {
     type Dispatch,
     type SetStateAction,
     useEffect,
-    useRef,
     useState,
 } from 'react'
 import {type ApiError} from '../../services/ApiRequestService'
@@ -124,11 +123,21 @@ export function useApiGetRequest<
         setIsLoading,
     ] = useState(defaultIsLoadingState)
 
-    const hookState = useRef<
-        UseApiGetRequestHookState<ApiDataType, ModifiedDataType>
-    >(null)
+    // Стандартный обработчик успешной загрузки данных.
+    const defaultOnSuccess = useEventCallback((
+        data: ApiDataType
+    ) => {
+        if (modifyLoadedData) {
+            setData(modifyLoadedData(data))
+        } else {
+            setData(data as unknown as ModifiedDataType)
+        }
+        setIsLoading(false)
+        setError(null)
+    })
 
-    hookState.current = {
+    // Получить текущее состояние хука.
+    const getHookState = (): UseApiGetRequestHookState<ApiDataType, ModifiedDataType> => ({
         data,
         setData,
         isLoading,
@@ -136,34 +145,26 @@ export function useApiGetRequest<
         error,
         setError,
         sendRequest,
-        defaultOnSuccess(data: ApiDataType) {
-            if (modifyLoadedData) {
-                setData(modifyLoadedData(data))
-            } else {
-                setData(data as unknown as ModifiedDataType)
-            }
-            setIsLoading(false)
-            setError(null)
-        },
+        defaultOnSuccess,
         options: {
             initialData: initialData!,
             modifyLoadedData,
             onError,
         },
-    }
+    })
 
     // Обработка успешной загрузки данных.
     const handleSuccess = useEventCallback(
-        (data: ApiDataType, isFromCache?: boolean): ApiDataType => {
+        (responseData: ApiDataType, isFromCache?: boolean): ApiDataType => {
             if (!isFromCache) {
-                saveToCache?.(data, hookState.current!)
+                saveToCache?.(responseData, getHookState())
             }
             if (onSuccess) {
-                onSuccess(data, hookState.current!, false)
+                onSuccess(responseData, getHookState(), false)
             } else {
-                hookState.current!.defaultOnSuccess(data)
+                defaultOnSuccess(responseData)
             }
-            return data
+            return responseData
         }
     )
 
@@ -171,7 +172,7 @@ export function useApiGetRequest<
     const executeRequest = useEventCallback(
         (silent?: boolean): Promise<ApiDataType> => {
             if (getFromCache) {
-                const cachedData = getFromCache(hookState.current!)
+                const cachedData = getFromCache(getHookState())
                 if (cachedData !== undefined) {
                     return Promise.resolve(
                         handleSuccess(cachedData, true)

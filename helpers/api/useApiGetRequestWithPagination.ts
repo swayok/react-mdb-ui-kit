@@ -3,7 +3,6 @@ import {
     type SetStateAction,
     useCallback,
     useEffect,
-    useRef,
     useState,
 } from 'react'
 import {type ApiError} from '../../services/ApiRequestService'
@@ -204,19 +203,52 @@ export function useApiGetRequestWithPagination<
         setIsAllRecordsLoaded,
     ] = useState<boolean>(false)
 
-    const page: number = Math.floor(offset / limit) + 1
+    const currentPageNumber: number = Math.floor(offset / limit) + 1
     const isFirstPage: boolean = offset <= 0
     const isLastPage: boolean = isAllRecordsLoaded
 
-    const hookState = useRef<
-        UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType>
-    >(null)
+    // Стандартный обработчик успешной загрузки данных.
+    const defaultOnSuccess = useEventCallback((
+        data: PaginationResponseData<ApiDataType>,
+        listModificationMode: RecordsListModificationMode
+    ) => {
+        const modifiedRecords = modifyLoadedData
+            ? modifyLoadedData(data.records)
+            : data.records as unknown as ModifiedDataType[]
+        const isLastBatch: boolean = modifiedRecords.length < limit
+        setRecords(records => {
+            switch (listModificationMode) {
+                case 'append':
+                    return [...records, ...modifiedRecords]
+                case 'prepend':
+                    return [...modifiedRecords, ...records]
+                default:
+                    return modifiedRecords
+            }
+        })
+        setIsLoading(false)
+        setError(null)
+        setIsLoadingNextPage(false)
+        setIsAllRecordsLoaded(isLastBatch)
+        if (data.count) {
+            setTotalCount(data.count)
+        }
+        if (
+            onAllRecordsLoaded
+            && !isAllRecordsLoaded
+            && isLastBatch
+        ) {
+            onAllRecordsLoaded?.(listModificationMode, currentPageNumber)
+        }
+        return data
+    })
 
-    hookState.current = {
+    // Получить текущее состояние хука.
+    const getHookState = (): UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType> => ({
         limit,
         setLimit,
         offset,
-        page,
+        page: currentPageNumber,
         setOffset,
         records,
         setRecords,
@@ -232,47 +264,14 @@ export function useApiGetRequestWithPagination<
         error,
         setError,
         sendRequest,
-        defaultOnSuccess(
-            data: PaginationResponseData<ApiDataType>,
-            listModificationMode: RecordsListModificationMode
-        ) {
-            const modifiedRecords = modifyLoadedData
-                ? modifyLoadedData(data.records)
-                : data.records as unknown as ModifiedDataType[]
-            const isLastBatch: boolean = modifiedRecords.length < limit
-            setRecords(records => {
-                switch (listModificationMode) {
-                    case 'append':
-                        return [...records, ...modifiedRecords]
-                    case 'prepend':
-                        return [...modifiedRecords, ...records]
-                    default:
-                        return modifiedRecords
-                }
-            })
-            setIsLoading(false)
-            setError(null)
-            setIsLoadingNextPage(false)
-            setIsAllRecordsLoaded(isLastBatch)
-            if (data.count) {
-                setTotalCount(data.count)
-            }
-            if (
-                onAllRecordsLoaded
-                && !isAllRecordsLoaded
-                && isLastBatch
-            ) {
-                onAllRecordsLoaded?.(listModificationMode, page)
-            }
-            return data
-        },
+        defaultOnSuccess,
         options: {
             initialRecords,
             modifyLoadedData,
             onError,
             limit,
         },
-    }
+    })
 
     // Запуск запроса и обработка ответа.
     const executeRequest = useEventCallback((
@@ -312,9 +311,9 @@ export function useApiGetRequestWithPagination<
         return sendRequest(newOffset, limit)
             .then((data: PaginationResponseData<ApiDataType>) => {
                 if (onSuccess) {
-                    onSuccess(data, listModificationMode, hookState.current!)
+                    onSuccess(data, listModificationMode, getHookState())
                 } else {
-                    hookState.current!.defaultOnSuccess(data, listModificationMode)
+                    defaultOnSuccess(data, listModificationMode)
                 }
                 return data
             })
@@ -412,7 +411,7 @@ export function useApiGetRequestWithPagination<
         setIsAllRecordsLoaded,
         error,
         setError,
-        page,
+        page: currentPageNumber,
         resetState,
         reset,
         loadPage,
