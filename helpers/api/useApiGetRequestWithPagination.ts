@@ -1,7 +1,6 @@
 import {
     type Dispatch,
     type SetStateAction,
-    useCallback,
     useEffect,
     useState,
 } from 'react'
@@ -244,34 +243,36 @@ export function useApiGetRequestWithPagination<
     })
 
     // Получить текущее состояние хука.
-    const getHookState = (): UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType> => ({
-        limit,
-        setLimit,
-        offset,
-        page: currentPageNumber,
-        setOffset,
-        records,
-        setRecords,
-        isLoading,
-        setIsLoading,
-        isLoadingNextPage,
-        setIsLoadingNextPage,
-        isFirstPage,
-        isLastPage,
-        setIsAllRecordsLoaded,
-        totalCount,
-        setTotalCount,
-        error,
-        setError,
-        sendRequest,
-        defaultOnSuccess,
-        options: {
-            initialRecords,
-            modifyLoadedData,
-            onError,
+    const getHookState = useEventCallback(
+        (): UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType> => ({
             limit,
-        },
-    })
+            setLimit,
+            offset,
+            page: currentPageNumber,
+            setOffset,
+            records,
+            setRecords,
+            isLoading,
+            setIsLoading,
+            isLoadingNextPage,
+            setIsLoadingNextPage,
+            isFirstPage,
+            isLastPage,
+            setIsAllRecordsLoaded,
+            totalCount,
+            setTotalCount,
+            error,
+            setError,
+            sendRequest,
+            defaultOnSuccess,
+            options: {
+                initialRecords,
+                modifyLoadedData,
+                onError,
+                limit,
+            },
+        })
+    )
 
     // Запуск запроса и обработка ответа.
     const executeRequest = useEventCallback((
@@ -377,7 +378,7 @@ export function useApiGetRequestWithPagination<
     ))
 
     // Сбросить состояния в начальные значения.
-    const resetState: UseApiGetRequestWithPaginationHookReturn<ApiDataType>['resetState'] = useCallback(
+    const resetState: UseApiGetRequestWithPaginationHookReturn<ApiDataType>['resetState'] = useEventCallback(
         (
             loading: boolean = initialIsLoading,
             useInitialRecordsFromOptions: boolean = true
@@ -389,8 +390,7 @@ export function useApiGetRequestWithPagination<
             setIsLoading(loading)
             setIsLoadingNextPage(false)
             setIsAllRecordsLoaded(false)
-        },
-        []
+        }
     )
 
     return {

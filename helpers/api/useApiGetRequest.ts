@@ -137,21 +137,23 @@ export function useApiGetRequest<
     })
 
     // Получить текущее состояние хука.
-    const getHookState = (): UseApiGetRequestHookState<ApiDataType, ModifiedDataType> => ({
-        data,
-        setData,
-        isLoading,
-        setIsLoading,
-        error,
-        setError,
-        sendRequest,
-        defaultOnSuccess,
-        options: {
-            initialData: initialData!,
-            modifyLoadedData,
-            onError,
-        },
-    })
+    const getHookState = useEventCallback(
+        (): UseApiGetRequestHookState<ApiDataType, ModifiedDataType> => ({
+            data,
+            setData,
+            isLoading,
+            setIsLoading,
+            error,
+            setError,
+            sendRequest,
+            defaultOnSuccess,
+            options: {
+                initialData: initialData!,
+                modifyLoadedData,
+                onError,
+            },
+        })
+    )
 
     // Обработка успешной загрузки данных.
     const handleSuccess = useEventCallback(
