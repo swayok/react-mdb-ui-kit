@@ -17,7 +17,7 @@
         word-wrap: break-word;
         background-color: card.$card-bg;
         background-clip: border-box;
-        border: card.$card-border-width solid card.$card-border-color;
+        border: card.$card-border-width card.$card-border-style card.$card-border-color;
         box-shadow: card.$card-box-shadow;
         @include border-radius.border-radius(card.$card-border-radius);
 

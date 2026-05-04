@@ -14,6 +14,7 @@ $card-spacer-x: $card-spacer-base !default;
 $card-box-shadow: shadows.$box-shadow-4 !default;
 $card-title-spacer-y: 0 !default;
 $card-border-width: 0 !default;
+$card-border-style: none !default;
 $card-border-radius: borders.$border-radius-xl !default;
 $card-border-color: rgba(colors.$black, 0.125) !default;
 $card-inner-border-radius: calc-utils.subtract($card-border-radius, $card-border-width) !default;
