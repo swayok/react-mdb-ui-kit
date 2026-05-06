@@ -260,11 +260,11 @@
                     }
 
                     > .data-grid-column-sticky-left:before {
-                        right: -1px;
+                        right: 0;
                     }
 
                     > .data-grid-column-sticky-right:before {
-                        left: -1px;
+                        left: -1;
                     }
 
                     > th.data-grid-column-sticky-left,
