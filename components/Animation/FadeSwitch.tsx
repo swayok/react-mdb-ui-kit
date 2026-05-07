@@ -8,10 +8,11 @@ import {
     CSSTransition,
     SwitchTransition,
 } from 'react-transition-group'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 
 interface Props {
     transitionKey: string | boolean | number
-    transitionRef?: RefObject<HTMLElement>
+    transitionRef?: RefObject<HTMLElement | null>
     // Длительность анимации.
     // По умолчанию: в зависимости от значения свойства animation.
     animationTimeout?: number
@@ -40,26 +41,20 @@ export function FadeSwitch(props: Props) {
         animation = 'fade',
         className,
         children,
+        animationTimeout: propsAnimationTimeout,
     } = props
 
-    let animationTimeout: number = props.animationTimeout ?? 300
-    if (!props.animationTimeout) {
-        switch (animation) {
-            case 'fade-switch':
-                animationTimeout = 100
-                break
-            case 'page-switch':
-                animationTimeout = 200
-                break
-        }
-    }
+    const mergedRef = useMergedRefs(
+        transitionRef,
+        containerRef
+    )
 
     return (
         <SwitchTransition mode="out-in">
             <CSSTransition
                 key={String(transitionKey)}
                 classNames={animation}
-                timeout={animationTimeout}
+                timeout={getAnimationTimeout(animation, propsAnimationTimeout)}
                 unmountOnExit={unmountOnExit}
                 mountOnEnter={mountOnEnter}
                 nodeRef={transitionRef}
@@ -69,7 +64,7 @@ export function FadeSwitch(props: Props) {
                 ) : (
                     <div
                         className={clsx('animated-content-container', className)}
-                        ref={transitionRef as RefObject<HTMLDivElement>}
+                        ref={mergedRef}
                     >
                         {children}
                     </div>
@@ -77,4 +72,22 @@ export function FadeSwitch(props: Props) {
             </CSSTransition>
         </SwitchTransition>
     )
+}
+
+// Определить длительность анимации.
+function getAnimationTimeout(
+    animation: Props['animation'],
+    propsAnimationTimeout?: number
+): number {
+    if (propsAnimationTimeout && propsAnimationTimeout > 0) {
+        return propsAnimationTimeout
+    }
+    switch (animation) {
+        case 'fade-switch':
+            return 100
+        case 'page-switch':
+            return 200
+        default:
+            return 300
+    }
 }

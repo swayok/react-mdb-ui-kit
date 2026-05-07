@@ -2,6 +2,7 @@ import {
     type Dispatch,
     type SetStateAction,
     useEffect,
+    useEffectEvent,
     useState,
 } from 'react'
 import {type ApiError} from '../../services/ApiRequestService'
@@ -331,12 +332,17 @@ export function useApiGetRequestWithPagination<
             }) as Promise<PaginationResponseData<ApiDataType>>
     })
 
-    // Запуск запроса при монтировании или изменении key (через executeRequest).
-    useEffect(() => {
+    // Запуск запроса при монтировании, если autoStart = true.
+    const executeRequestOnMount = useEffectEvent(() => {
         if (autoStart) {
             void executeRequest('same', limit, 'replace')
         }
-    }, [executeRequest])
+    })
+
+    // Запуск запроса при монтировании, если autoStart = true.
+    useEffect(() => {
+        executeRequestOnMount()
+    }, [])
 
     // Загрузить список для указанной страницы.
     const reset: UseApiGetRequestWithPaginationHookReturn<ApiDataType>['reset'] = useEventCallback(
