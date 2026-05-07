@@ -7,8 +7,10 @@ import {ApiRequestDebugService} from './ApiRequestDebugService'
 export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.
     baseApiUrl: string
-    // Максимальное время ожидания ответа от API.
-    timeout: number
+    // Максимальное время ожидания ответа от API на GET запросы.
+    getTimeout: number
+    // Максимальное время ожидания ответа от API на POST/PUT/DELETE запросы.
+    postTimeout: number
     // Можно ли выводить логи запросов?
     allowRequestsLogs: boolean
     // Список запросов, которые не нужно выводить в консоль.
@@ -68,7 +70,8 @@ export class ApiRequestService {
     // Настройки сервиса.
     private static config: ApiRequestServiceConfig = {
         baseApiUrl: '/api',
-        timeout: 20000,
+        getTimeout: 20000,
+        postTimeout: 30000,
         allowRequestsLogs: true,
         notLoggableRequests: [],
     }
@@ -150,7 +153,7 @@ export class ApiRequestService {
             let fullUrl: string = this.config.baseApiUrl + relativeUrl
 
             // Контроллер отмены выполнения запроса извне или по тайм-ауту.
-            requestInit.signal = this.getAbortSignal(abortController, options.timeout)
+            requestInit.signal = this.getAbortSignal(type, abortController, options.timeout)
 
             data ??= {}
             const typeToLog = type
@@ -240,12 +243,13 @@ export class ApiRequestService {
 
     // Создать и настроить сигнал отмены запроса.
     private static getAbortSignal(
+        type: ApiRequestMethod,
         abortController?: AbortController | null,
         customTimeout?: ApiRequestOptions['timeout']
     ): AbortSignal {
         const timeout: number = customTimeout === false
             ? 86400000
-            : (customTimeout ?? this.config.timeout)
+            : (customTimeout ?? (type === 'get' ? this.config.getTimeout : this.config.postTimeout))
         const timeoutSignal: AbortSignal = AbortSignal.timeout(timeout)
         if (abortController) {
             return AbortSignal.any([
@@ -502,8 +506,11 @@ export class ApiRequestService {
             // Файл.
             // Имя файла не существует в Blob, но может существовать в обертке над Blob.
             formData.append(key, value, (value as unknown as {name: string;}).name)
+        } else if (typeof value === 'object') {
+            formData.append(key, JSON.stringify(value))
         } else {
-            formData.append(key, String(value as string | number))
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            formData.append(key, String(value))
         }
     }
 
