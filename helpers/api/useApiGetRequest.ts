@@ -1,7 +1,9 @@
 import {
     type Dispatch,
     type SetStateAction,
+    useCallback,
     useEffect,
+    useRef,
     useState,
 } from 'react'
 import {type ApiError} from '../../services/ApiRequestService'
@@ -73,7 +75,7 @@ export interface UseApiGetRequestHookState<
     ApiDataType,
     ModifiedDataType = ApiDataType | undefined,
 > extends Omit<UseApiGetRequestHookReturn<ApiDataType, ModifiedDataType>, 'reload'> {
-    sendRequest: () => Promise<ApiDataType>
+    sendRequest: (abortController: AbortController) => Promise<ApiDataType>
     defaultOnSuccess: (data: ApiDataType) => void
     options: Omit<Readonly<
         UseApiGetRequestHookConfig<ApiDataType, ModifiedDataType>>,
@@ -88,7 +90,7 @@ export function useApiGetRequest<
     ApiDataType,
     ModifiedDataType = ApiDataType | undefined,
 >(
-    sendRequest: () => Promise<ApiDataType>,
+    sendRequest: UseApiGetRequestHookState<ApiDataType, ModifiedDataType>['sendRequest'],
     options?: UseApiGetRequestHookConfig<ApiDataType, ModifiedDataType>,
     // Отвечает за перезагрузку данных при изменении значения, если options.autoStart === true.
     key?: string | number | null
@@ -122,6 +124,15 @@ export function useApiGetRequest<
         isLoading,
         setIsLoading,
     ] = useState(defaultIsLoadingState)
+
+    const abortControllerRef = useRef<AbortController | null>(null)
+
+    const abortRequest = useCallback(() => {
+        if (!abortControllerRef.current?.signal.aborted) {
+            abortControllerRef.current?.abort()
+        }
+        abortControllerRef.current = null
+    }, [])
 
     // Стандартный обработчик успешной загрузки данных.
     const defaultOnSuccess = useEventCallback((
@@ -158,6 +169,7 @@ export function useApiGetRequest<
     // Обработка успешной загрузки данных.
     const handleSuccess = useEventCallback(
         (responseData: ApiDataType, isFromCache?: boolean): ApiDataType => {
+            abortControllerRef.current = null
             if (!isFromCache) {
                 saveToCache?.(responseData, getHookState())
             }
@@ -181,6 +193,7 @@ export function useApiGetRequest<
                     )
                 }
             }
+            abortRequest()
             if (!silent) {
                 setIsLoading(true)
                 setError(null)
@@ -188,9 +201,16 @@ export function useApiGetRequest<
                     setData(initialData!)
                 }
             }
-            return sendRequest()
-                .then((data: ApiDataType) => handleSuccess(data, false))
+
+            abortControllerRef.current = new AbortController()
+            const promise = sendRequest(abortControllerRef.current)
+
+            promise
                 .catch((error: ApiError) => {
+                    if (error.errorType === 'abort') {
+                        return
+                    }
+                    abortControllerRef.current = null
                     if (!silent) {
                         setError(error)
                     }
@@ -199,7 +219,10 @@ export function useApiGetRequest<
                         setData(initialData!)
                     }
                     onError?.(error, !!silent)
-                }) as Promise<ApiDataType>
+                })
+
+            return promise
+                .then((data: ApiDataType) => handleSuccess(data, false))
         }
     )
 
@@ -208,6 +231,7 @@ export function useApiGetRequest<
         if (autoStart) {
             void executeRequest()
         }
+        return abortRequest
     }, [key])
 
     return {
