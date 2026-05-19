@@ -9,26 +9,26 @@ import type {AnyObject} from '../types'
 // Подмена useSearchParams с добавлением типизации (набора ключей)
 export function useUrlQueryParams<KeysOrObject extends string | object>(
     defaultInit?: TypedURLSearchParamsInit<KeysOrObject>
-): [TypedUrlQueryParams<KeysOrObject>, SetTypedUrlQueryParams<KeysOrObject>] {
+): UseUrlQueryParamsHookReturn<KeysOrObject> {
     const [
-        params,
-        setParams,
+        urlQueryParams,
+        setUrlQueryParams,
     ] = useSearchParams(
         defaultInit as URLSearchParamsInit
     ) as [TypedUrlQueryParams<KeysOrObject>, SetTypedUrlQueryParams<KeysOrObject>]
-    return [
-        useMemo(() => {
-            params.length = 0
-            params.data = {}
-            params.forEach((value: string, key: string): void => {
-                params.length++
+
+    return {
+        urlQueryParams,
+        setUrlQueryParams,
+        urlQueryData: useMemo(() => {
+            const data: Partial<RecordType<KeysOrObject>> = {}
+            urlQueryParams.forEach((value: string, key: string): void => {
                 // @ts-ignore Незачем тут зарываться в типизацию key.
-                params.data[key] = value
+                data[key] = value
             })
-            return params
-        }, [params]),
-        setParams,
-    ]
+            return data
+        }, [urlQueryParams]),
+    }
 }
 
 type RecordType<KeysOrObject extends string | object> = KeysOrObject extends string
@@ -38,6 +38,12 @@ type RecordType<KeysOrObject extends string | object> = KeysOrObject extends str
 type ParamValueType<KeysOrObject extends string | object> = KeysOrObject extends string
     ? string | null
     : Exclude<KeysOrObject[keyof KeysOrObject], undefined> | null
+
+export interface UseUrlQueryParamsHookReturn<KeysOrObject extends string | object> {
+    urlQueryParams: TypedUrlQueryParams<KeysOrObject>
+    setUrlQueryParams: SetTypedUrlQueryParams<KeysOrObject>
+    urlQueryData: Partial<RecordType<KeysOrObject>>
+}
 
 // Generic типы с возможностью задать набор ключей для параметров в URL Query
 export interface TypedUrlQueryParams<KeysOrObject extends string | object> extends URLSearchParams {
@@ -61,10 +67,6 @@ export interface TypedUrlQueryParams<KeysOrObject extends string | object> exten
         ) => void,
         thisArg?: unknown
     ): void
-
-    length: number
-
-    data: Partial<RecordType<KeysOrObject>>
 }
 
 export type TypedURLSearchParamsInit<KeysOrObject extends string | object>

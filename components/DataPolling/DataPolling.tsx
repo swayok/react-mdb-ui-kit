@@ -1,6 +1,6 @@
 import {
     useEffect,
-    useRef,
+    useEffectEvent,
 } from 'react'
 import {
     PollingService,
@@ -25,23 +25,22 @@ export function DataPolling(props: DataPollingProps): null {
         condition = true,
         name,
         interval,
-        handler: propsHandler,
+        handler,
         immediate,
     } = props
 
-    const handlerRef = useRef<PollingServiceHandlerFn>(
-        propsHandler
+    const startPolling = useEffectEvent(
+        () => PollingService.startPolling(
+            name,
+            interval,
+            handler,
+            !!immediate
+        )
     )
-    handlerRef.current = propsHandler
 
     useEffect(() => {
         if (condition) {
-            PollingService.startPolling(
-                name,
-                interval,
-                handlerRef,
-                !!immediate
-            )
+            startPolling()
         } else {
             PollingService.stopPolling(name)
         }

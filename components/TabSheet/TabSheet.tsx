@@ -35,7 +35,7 @@ export function TabSheet<TabName extends string = string>(
     } = props
 
     // Аргументы в сроке адреса.
-    const [urlQueryParams] = useUrlQueryParams()
+    const {urlQueryParams} = useUrlQueryParams()
 
     // Открытая вкладка.
     const [

@@ -15,7 +15,6 @@ import {
 import clsx from 'clsx'
 import {
     type ReactNode,
-    type RefObject,
     useEffect,
     useState,
 } from 'react'
@@ -123,22 +122,26 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
         }
     })
 
-    const tooltipRef = refs.floating as RefObject<HTMLElement | null>
+    const tooltipRef = refs.floating
     // Управление анимацией через CSS класс 'show'.
     // Если добавлять класс в className, то анимация появления работать не будет.
-    useEffect(() => {
-        if (!tooltipRef.current) {
-            return
-        }
-        if (isOpened) {
-            tooltipRef.current.classList.add('show')
-        } else {
-            tooltipRef.current.classList.remove('show')
-            if (noHideAnimation) {
-                setShouldMount(false)
+    useEffect(
+        () => {
+            if (!tooltipRef.current) {
+                return
             }
-        }
-    }, [tooltipRef.current, isOpened])
+            if (isOpened) {
+                tooltipRef.current.classList.add('show')
+            } else {
+                tooltipRef.current.classList.remove('show')
+                if (noHideAnimation) {
+                    setShouldMount(false)
+                }
+            }
+        },
+        // tooltipRef.current тут важен! Без него ничего не работает!
+        [tooltipRef.current, isOpened]
+    )
 
     return (
         <>

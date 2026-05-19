@@ -24,10 +24,10 @@ export function TabSheetStateToUrlQueryHandler(props: TabSheetStateToUrlQueryHan
     }, [defaultTab])
 
     // Аргументы в сроке адреса.
-    const [
+    const {
         urlQueryParams,
         setUrlQueryParams,
-    ] = useUrlQueryParams(defaultQueryArgs)
+    } = useUrlQueryParams(defaultQueryArgs)
 
     // Запоминание текущей вкладки в строке адреса.
     useEffect(() => {

@@ -1,4 +1,3 @@
-import {type RefObject} from 'react'
 import type {AnyObject} from '../types'
 
 export type PollingServiceHandlerFn = () => Promise<unknown>
@@ -19,7 +18,7 @@ export abstract class PollingService {
         // Частота запуска.
         interval: number,
         // Функция, которую нужно запускать.
-        handlerRef: RefObject<PollingServiceHandlerFn>,
+        handler: PollingServiceHandlerFn,
         // Запустить сразу же или через interval?
         immediate: boolean = false
     ): void {
@@ -30,10 +29,10 @@ export abstract class PollingService {
         console.log('[Polling] started: ' + name)
         this.fails[name] = 0
         if (immediate) {
-            this.pollingCallback(name, interval, handlerRef)
+            this.pollingCallback(name, interval, handler)
         }
         this.timeouts[name] = window.setTimeout(
-            () => this.pollingCallback(name, interval, handlerRef),
+            () => this.pollingCallback(name, interval, handler),
             interval
         )
     }
@@ -65,14 +64,14 @@ export abstract class PollingService {
     private static pollingCallback(
         name: string,
         interval: number,
-        handlerRef: RefObject<PollingServiceHandlerFn>
+        handler: PollingServiceHandlerFn
     ): void {
-        handlerRef.current()
+        handler()
             .then(() => {
                 this.clearPollingTimeout(name)
                 this.fails[name] = 0
                 this.timeouts[name] = window.setTimeout(
-                    () => this.pollingCallback(name, interval, handlerRef),
+                    () => this.pollingCallback(name, interval, handler),
                     interval
                 )
             })
@@ -80,7 +79,7 @@ export abstract class PollingService {
                 this.clearPollingTimeout(name)
                 this.fails[name] = (this.fails[name] || 0) + 1
                 this.timeouts[name] = window.setTimeout(
-                    () => this.pollingCallback(name, interval, handlerRef),
+                    () => this.pollingCallback(name, interval, handler),
                     interval * (this.fails[name] + 1)
                 )
             })

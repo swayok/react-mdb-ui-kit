@@ -1,6 +1,6 @@
 import {
     useEffect,
-    useRef,
+    useEffectEvent,
 } from 'react'
 import {
     type WebsocketEventData,
@@ -31,20 +31,21 @@ export function WebSocketEventsHandler<
     const {
         subscriptionId,
         event,
-        handler: propsHandler,
+        handler,
         channels,
     } = props
 
-    const handlerRef = useRef(propsHandler)
-    handlerRef.current = propsHandler
-
-    useEffect(
+    const subscribe = useEffectEvent(
         () => WebSocketService.subscribe<EventData>(
             subscriptionId,
             event,
-            handlerRef,
+            handler,
             channels
-        ),
+        )
+    )
+
+    useEffect(
+        () => subscribe(),
         [subscriptionId, event, channels]
     )
     return null

@@ -1,5 +1,4 @@
 import Echo, {Channel} from 'laravel-echo'
-import {type RefObject} from 'react'
 import type {AnyObject} from '../types'
 
 interface WebSocketServiceAuthInfo {
@@ -167,7 +166,7 @@ export abstract class WebSocketService {
     static subscribe<EventType extends WebsocketEventData = WebsocketEventData>(
         id: string,
         event: string,
-        handlerRef: RefObject<WebsocketEventHandler<EventType>>,
+        handler: WebsocketEventHandler<EventType>,
         channels?: string[] | null
     ): WebsocketUnsubscribeHandler {
         if (this.subscriptions[id]) {
@@ -185,7 +184,7 @@ export abstract class WebSocketService {
         this.subscriptions[id] = {
             id,
             event,
-            handler: (eventData: EventType) => handlerRef.current(eventData),
+            handler,
             channels: channels ?? null,
         }
         this.activateSubscription(this.subscriptions[id])

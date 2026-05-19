@@ -6,6 +6,7 @@ import {
     useRef,
 } from 'react'
 import {getCssTransitionDuration} from '../../helpers/getCssTransitionDuration'
+import {useMergedRefs} from '../../helpers/useMergedRefs'
 import type {MorphingHtmlComponentPropsWithoutRef} from '../../types'
 
 export interface CollapseProps extends Omit<MorphingHtmlComponentPropsWithoutRef, 'onTransitionEnd'> {
@@ -43,7 +44,7 @@ export function Collapse(props: CollapseProps) {
     } = props
 
     const localRef = useRef<HTMLElement>(null)
-    const containerRef = wrapperRef ?? localRef
+    const mergedRef = useMergedRefs(wrapperRef, localRef)
     const isRenderedOnce = useRef<boolean>(false)
     const cssProperty: 'width' | 'height' = horizontal ? 'width' : 'height'
 
@@ -54,32 +55,32 @@ export function Collapse(props: CollapseProps) {
 
     // Подписываемся на отслеживание размеров содержимого.
     useLayoutEffect(() => {
-        if (containerRef.current) {
+        if (localRef.current) {
             const resizeObserver = new ResizeObserver(() => {
                 if (
-                    containerRef.current?.classList.contains('opened')
+                    localRef.current?.classList.contains('opened')
                 ) {
-                    updateContentSize(containerRef.current)
+                    updateContentSize(localRef.current)
                 }
             })
-            resizeObserver.observe(containerRef.current)
+            resizeObserver.observe(localRef.current)
             return () => {
                 resizeObserver.disconnect()
             }
         }
         return () => {
         }
-    }, [containerRef.current])
+    }, [])
 
     // Обработка изменения свойства show.
     const handleShowChange = useEffectEvent((
         show: boolean
     ): number | undefined => {
-        if (!containerRef.current) {
+        if (!localRef.current) {
             return
         }
 
-        const container: HTMLElement = containerRef.current
+        const container: HTMLElement = localRef.current
         const isFirstRender: boolean = !isRenderedOnce.current
         isRenderedOnce.current = true
 
@@ -176,7 +177,7 @@ export function Collapse(props: CollapseProps) {
                 className
             )}
             {...otherProps}
-            ref={containerRef}
+            ref={mergedRef}
         >
             {children}
         </Tag>

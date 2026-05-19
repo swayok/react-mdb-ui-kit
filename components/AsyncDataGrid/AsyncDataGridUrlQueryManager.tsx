@@ -40,10 +40,10 @@ export function AsyncDataGridUrlQueryManager<
     } = useAsyncDataGridContext<RowDataType, FiltersDataType>()
 
     // Параметры URL.
-    const [
+    const {
         urlQueryParams,
         setUrlQueryParams,
-    ] = useUrlQueryParams({})
+    } = useUrlQueryParams({})
 
     // Хеш настроек "по умолчанию".
     const defaultHash: string = useMemo(
