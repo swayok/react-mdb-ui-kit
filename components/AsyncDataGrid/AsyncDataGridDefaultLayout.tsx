@@ -5,8 +5,6 @@ import {AsyncDataGridFooter} from './AsyncDataGridFooter'
 import {AsyncDataGridTable} from './AsyncDataGridTable'
 import type {
     AsyncDataGridDefaultLayoutProps,
-    AsyncDataGridFooterProps,
-    AsyncDataGridTableProps,
 } from './AsyncDataGridTypes'
 
 // Стандартная разметка таблицы с данными, получаемыми с сервера.
@@ -34,8 +32,9 @@ export function AsyncDataGridDefaultLayout<
         Headers,
         renderRow,
         hideFooter,
-        footerProps = {} as Partial<AsyncDataGridFooterProps>,
-        tableProps = {} as Partial<AsyncDataGridTableProps<RowDataType>>,
+        noItemsMessage,
+        footerProps = {},
+        tableProps = {},
     } = props
 
     const fillHeight: boolean = !inline
@@ -63,6 +62,7 @@ export function AsyncDataGridDefaultLayout<
                 verticalAlign="top"
                 wrapperClassName={tableWrapperClassName}
                 fillHeight={fillHeight}
+                noItemsMessage={noItemsMessage}
                 {...tableProps}
                 Headers={Headers}
                 renderRow={renderRow}

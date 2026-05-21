@@ -33,7 +33,7 @@ export interface CardFooterProps extends MorphingHtmlComponentProps {
 }
 
 // Свойства компонента CardHeader.
-export interface CardHeaderProps extends MorphingHtmlComponentProps {
+export interface CardHeaderProps extends Omit<MorphingHtmlComponentProps, 'label'> {
     // Толщина нижней границы: 0, 1, 2, 3, 4, 5.
     border?: number
     // Цвет границы.

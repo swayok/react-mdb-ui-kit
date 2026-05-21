@@ -185,8 +185,9 @@ export interface AsyncDataGridDefaultLayoutProps<
     tableWrapperClassName?: string
     tableProps?: Partial<Omit<
         AsyncDataGridTableProps<RowDataType>,
-        'Headers' | 'renderRow' | 'fillHeight'
+        'Headers' | 'renderRow' | 'fillHeight' | 'noItemsMessage'
     >>
+    noItemsMessage?: AsyncDataGridTableProps['noItemsMessage']
     striped?: AsyncDataGridTableProps['striped']
     hover?: AsyncDataGridTableProps['hover']
     bordered?: AsyncDataGridTableProps['bordered']
