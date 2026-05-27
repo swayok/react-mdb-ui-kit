@@ -1,6 +1,9 @@
 import clsx from 'clsx'
 import type {ReactNode} from 'react'
-import type {HtmlComponentProps} from '../../types'
+import type {
+    HtmlComponentProps,
+    TextColors,
+} from '../../types'
 
 interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'value'> {
     label: string
@@ -13,6 +16,8 @@ interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'value'> {
     noMargin?: boolean
     children?: ReactNode | string
     labelClassName?: string
+    // Цвет текста для подписи. По умолчанию 'muted'.
+    labelColor?: TextColors | null
     valueClassName?: string
     // Обернуть содержимое в круглые скобки.
     wrapInBraces?: boolean
@@ -28,6 +33,7 @@ export function LabeledValue(props: Props) {
         noMargin,
         className,
         labelClassName,
+        labelColor = 'muted',
         valueClassName,
         wrapInBraces,
         children,
@@ -36,6 +42,8 @@ export function LabeledValue(props: Props) {
 
     const Tag = inline ? 'span' : 'div'
     const InnerTag = flex ? 'div' : 'span'
+
+    const labelClass = clsx(labelClassName, labelColor ? `text-${labelColor}` : null)
 
     return (
         <Tag
@@ -46,7 +54,7 @@ export function LabeledValue(props: Props) {
             )}
             {...otherProps}
         >
-            {wrapInBraces && '('}<InnerTag className={clsx(labelClassName, 'text-muted')}>
+            {wrapInBraces && '('}<InnerTag className={labelClass}>
                 {label}:
             </InnerTag> <InnerTag
                 className={clsx(
