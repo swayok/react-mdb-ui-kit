@@ -68,7 +68,7 @@ export interface UseApiGetRequestHookReturn<
     setError: Dispatch<SetStateAction<ApiError | null>>
     // Перезагрузка данных.
     // Если silent === true, то loading не переводится в true.
-    reload: (silent?: boolean) => Promise<ApiDataType>
+    reload: (silent?: boolean) => Promise<ApiDataType | undefined>
 }
 
 export interface UseApiGetRequestHookState<
@@ -184,7 +184,7 @@ export function useApiGetRequest<
 
     // Запуск запроса и обработка ответа.
     const executeRequest = useEventCallback(
-        (silent?: boolean): Promise<ApiDataType> => {
+        (silent?: boolean): Promise<ApiDataType | undefined> => {
             if (getFromCache) {
                 const cachedData = getFromCache(getHookState())
                 if (cachedData !== undefined) {
@@ -205,10 +205,11 @@ export function useApiGetRequest<
             abortControllerRef.current = new AbortController()
             const promise = sendRequest(abortControllerRef.current)
 
-            promise
+            return promise
+                .then((data: ApiDataType) => handleSuccess(data, false))
                 .catch((error: ApiError) => {
                     if (error.errorType === 'abort') {
-                        return
+                        return undefined
                     }
                     abortControllerRef.current = null
                     if (!silent) {
@@ -219,10 +220,8 @@ export function useApiGetRequest<
                         setData(initialData!)
                     }
                     onError?.(error, !!silent)
+                    return undefined
                 })
-
-            return promise
-                .then((data: ApiDataType) => handleSuccess(data, false))
         }
     )
 
