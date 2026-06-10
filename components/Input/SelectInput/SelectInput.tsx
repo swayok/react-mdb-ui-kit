@@ -198,10 +198,10 @@ export function SelectInput<
             regexp: event.target.value.trim().length > 0
                 ? new RegExp(
                     event.target.value.trim()
-                        .replace(/[{}\][*?:'"()!@#$^%&+,;`<>/\\]/, '')
+                        .replace(/[{}\][*?:'"()!@#$^%&+,;`<>/\\]/g, '.?')
                         .replace(/[её]/igu, '[её]')
-                        .replace(/\./, '\\.')
-                        .replace(/\s+/, '.*'),
+                        .replace(/\./g, '\\.')
+                        .replace(/\s+/g, '.*'),
                     'igu'
                 )
                 : null,

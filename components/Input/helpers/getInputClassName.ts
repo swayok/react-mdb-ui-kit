@@ -7,6 +7,7 @@ export function getInputClassName(config: {
     active?: boolean
     isFocused?: boolean
     activeOnFocus?: boolean
+    noLabel?: boolean
     hasNotEmptyValue?: boolean
     invalid?: boolean
     textarea?: boolean
@@ -20,6 +21,7 @@ export function getInputClassName(config: {
         config.size === 'small' ? 'form-control-sm' : null,
         config.size === 'large' ? 'form-control-lg' : null,
         config.invalid ? 'is-invalid' : null,
+        config.noLabel ? 'no-label' : null,
         config.className
     )
 }

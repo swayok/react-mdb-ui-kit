@@ -167,6 +167,7 @@ export function Input(props: InputProps) {
                     size,
                     active,
                     isFocused,
+                    noLabel: !props.label,
                     hasNotEmptyValue,
                     activeOnFocus,
                     invalid: layoutProps.invalid,
@@ -181,8 +182,7 @@ export function Input(props: InputProps) {
                 onKeyDown={handleOnKeyDown}
                 value={value}
                 id={id}
-                /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-                ref={mergedInputRef as any}
+                ref={mergedInputRef}
                 {...otherProps}
             />
         </InputLayout>
