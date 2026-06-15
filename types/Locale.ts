@@ -8,6 +8,10 @@ import type {AnyObject} from './Common'
  * @see RegionsManager
  */
 export interface LocaleGlobalConfigType {
+    // Доступные языки.
+    languages?: string[]
+    // Доступные регионы.
+    regions?: string[]
     // Язык интерфейса.
     language?: string
     // URL Query параметр для смены языка.
