@@ -63,7 +63,7 @@ export abstract class WebSocketService {
         if (!this.isValidConfig(laravelEchoConfig)) {
             return
         }
-        this.laravelEchoConfig = laravelEchoConfig!
+        this.laravelEchoConfig = {...laravelEchoConfig!}
         if (this.authInfo) {
             this.connect(
                 this.authInfo.userId,
