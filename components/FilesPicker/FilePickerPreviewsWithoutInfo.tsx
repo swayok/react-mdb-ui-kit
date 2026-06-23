@@ -44,6 +44,8 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
         alwaysVisible,
         scaleImageOnHover = true,
         adderIcon,
+        adderTitle,
+        adderTitleClassName = 'mx-n2 text-center fs-7',
         showDeletedFiles = false,
         animatePreviews,
         ...otherProps
@@ -124,7 +126,7 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
             <a
                 className={clsx(
                     'file-picker-previews-adder rounded-6 p-3 cursor',
-                    'd-flex flex-row justify-content-center align-items-center',
+                    'd-flex flex-column justify-content-center align-items-center',
                     reorderable ? 'file-picker-previews-reorderable' : null,
                     !canAttachMoreFiles() || isDisabled ? 'disabled' : null,
                     pickerButtonClassName
@@ -149,6 +151,11 @@ export function FilePickerPreviewsWithoutInfo(props: FilePickerPreviewsWithoutIn
                     path={adderIcon ?? (maxFiles === 1 ? mdiFolderOpenOutline : mdiPlus)}
                     size={iconSize}
                 />
+                {adderTitle && (
+                    <div className={adderTitleClassName}>
+                        {adderTitle}
+                    </div>
+                )}
             </a>
             {/* Заполнитель пустого пространства в конце */}
             {(files.length + existingFiles.length) % 2 === 0 && (

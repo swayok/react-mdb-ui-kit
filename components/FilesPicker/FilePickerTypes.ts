@@ -279,7 +279,7 @@ export interface FilePickerPreviewSizes {
 export interface FilePickerPreviewsWithoutInfoProps extends HtmlComponentProps<HTMLDivElement> {
     // Размер контейнера предпросмотра прикрепленного файла.
     previewSize?: number | FilePickerPreviewSizes
-    // Размер кнопрки пикрепления картинки.
+    // Размер кнопки прикрепления картинки.
     // По умолчанию: previewSize.
     pickerButtonSize?: number | FilePickerPreviewSizes
     // Размер предпросмотра картинки.
@@ -297,6 +297,10 @@ export interface FilePickerPreviewsWithoutInfoProps extends HtmlComponentProps<H
     pickerButtonClassName?: string
     // Иконка для кнопки добавления картинки.
     adderIcon?: string
+    // Подпись для кнопки добавления картинки.
+    adderTitle?: string
+    // CSS классы для подписи кнопки добавления картинки.
+    adderTitleClassName?: string
     // Увеличивать картинку при наведении курсора?
     scaleImageOnHover?: boolean
     // Показывать удаленные файлы, полученные из БД.
