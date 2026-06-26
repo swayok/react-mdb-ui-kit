@@ -41,6 +41,8 @@ export function InputLayout(props: InputLayoutComponentProps) {
         tooltipTextClassName,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler = true,
+        tooltipToggleOnClick,
     } = props
 
     const labelRef = useRef<HTMLLabelElement>(null)
@@ -62,6 +64,8 @@ export function InputLayout(props: InputLayoutComponentProps) {
         tooltipTextClassName,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler,
+        tooltipToggleOnClick,
     }
 
     return (

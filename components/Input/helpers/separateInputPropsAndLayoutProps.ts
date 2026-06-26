@@ -37,6 +37,8 @@ export function separateInputPropsAndLayoutProps<
         tooltipTextClassName,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler,
+        tooltipToggleOnClick,
 
         ...inputProps
     } = props
@@ -71,6 +73,8 @@ export function separateInputPropsAndLayoutProps<
             tooltipTextClassName,
             tooltipDisableClickHandler,
             tooltipDisableHover,
+            tooltipDisableKeyboardEventHandler,
+            tooltipToggleOnClick,
         },
     }
 }

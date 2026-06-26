@@ -17,9 +17,11 @@ export function Tooltip<InjectedComponentProps extends object = HtmlComponentPro
             tag: Tag = 'div',
             tooltipPlacement,
             title,
+            // Свойства для подсказки.
             tooltipDisableClickHandler,
             tooltipDisableHover,
-            // Свойства для подсказки.
+            tooltipDisableKeyboardEventHandler,
+            tooltipToggleOnClick,
             tooltipClassName,
             tooltipTextClassName,
             tooltipStyle,

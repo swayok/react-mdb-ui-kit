@@ -41,6 +41,8 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
         title,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler,
+        tooltipToggleOnClick = false,
         ref,
         // Свойства для подсказки.
         tooltipClassName,
@@ -99,6 +101,8 @@ export function TooltipWithTitle<InjectedComponentProps extends object = HtmlCom
     const focus = useFocus(context)
     const click = useClick(context, {
         enabled: !tooltipDisableClickHandler,
+        keyboardHandlers: !tooltipDisableKeyboardEventHandler,
+        toggle: tooltipToggleOnClick,
     })
     const dismiss = useDismiss(context)
     const role = useRole(context, {role: tooltipRole})

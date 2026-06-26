@@ -28,6 +28,9 @@ export function InputValidationError(props: InputValidationErrorProps) {
         tooltipTextClassName,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler,
+        tooltipToggleOnClick,
+
         ...otherProps
     } = props
 
@@ -56,6 +59,8 @@ export function InputValidationError(props: InputValidationErrorProps) {
         tooltipTextClassName,
         tooltipDisableClickHandler,
         tooltipDisableHover,
+        tooltipDisableKeyboardEventHandler,
+        tooltipToggleOnClick,
     }
 
     return (

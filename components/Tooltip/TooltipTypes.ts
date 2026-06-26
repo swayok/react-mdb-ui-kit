@@ -16,6 +16,8 @@ export interface TooltipProps extends MorphingComponentProps {
     title?: string | ReactNode
     tooltipDisableClickHandler?: boolean
     tooltipDisableHover?: boolean
+    tooltipDisableKeyboardEventHandler?: boolean
+    tooltipToggleOnClick?: boolean
     tooltipClassName?: string
     tooltipTextClassName?: string
     tooltipStyle?: CSSProperties

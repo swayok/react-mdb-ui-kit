@@ -227,6 +227,8 @@ export function SelectInputBase(props: SelectInputBasicProps) {
                     tooltipTextClassName={inputProps.tooltipTextClassName}
                     tooltipDisableClickHandler={inputProps.tooltipDisableClickHandler}
                     tooltipDisableHover={inputProps.tooltipDisableHover}
+                    tooltipDisableKeyboardEventHandler={inputProps.tooltipDisableKeyboardEventHandler}
+                    tooltipToggleOnClick={inputProps.tooltipToggleOnClick}
                 >
                     <Button
                         {...getReferenceProps({

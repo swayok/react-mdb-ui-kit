@@ -183,6 +183,7 @@ type InputTooltipProps = Pick<
     TooltipProps,
     'title' | 'tooltipMaxWidth' | 'tooltipOffset' | 'tooltipTextClassName'
     | 'tooltipDisableClickHandler' | 'tooltipDisableHover' | 'tooltipPlacement'
+    | 'tooltipDisableKeyboardEventHandler' | 'tooltipToggleOnClick'
 >
 
 // Часть свойств компонента InputLayout для расширения в других компонентах.
