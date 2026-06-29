@@ -22,6 +22,7 @@ export function DropdownMenuContent<
         textNowrapOnItems,
         style = {},
         fillContainer,
+        zIndex,
         children,
         ...otherProps
     } = props
@@ -35,13 +36,15 @@ export function DropdownMenuContent<
                 shadow ? `shadow-${shadow}` : null,
                 variant ? `dropdown-menu-${variant}` : null,
                 fillContainer ? 'full-width' : null,
-                textNowrapOnItems ? 'text-nowrap-on-items' : null
+                textNowrapOnItems ? 'text-nowrap-on-items' : null,
+                typeof zIndex === 'string' ? zIndex : null
             )}
             style={{
                 maxHeight,
                 width,
                 minWidth,
                 maxWidth,
+                zIndex: typeof zIndex === 'number' ? zIndex : undefined,
                 ...style,
             }}
         >

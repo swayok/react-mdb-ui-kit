@@ -82,6 +82,14 @@
             outline: none;
             box-shadow: dropdown.$dropdown-focus-visible-box-shadow;
         }
+
+        &.in-modal {
+            z-index: z-index.$z-index-dropdown-in-modal;
+        }
+
+        &.in-popover {
+            z-index: z-index.$z-index-dropdown-in-popover;
+        }
     }
 
     // Allow for dropdowns to go bottom up (aka, dropup-menu)

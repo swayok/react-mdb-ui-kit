@@ -1,5 +1,8 @@
 import clsx from 'clsx'
-import type {ReactNode} from 'react'
+import type {
+    ReactNode,
+    MouseEvent,
+} from 'react'
 import type {
     HtmlComponentProps,
     TextColors,
@@ -21,6 +24,8 @@ interface Props extends Omit<HtmlComponentProps<HTMLDivElement>, 'value'> {
     valueClassName?: string
     // Обернуть содержимое в круглые скобки.
     wrapInBraces?: boolean
+    // Обработчик клика по значению.
+    onValueClick?: (e: MouseEvent<HTMLDivElement | HTMLSpanElement>) => void
 }
 
 // Блок вида "Название: значение" ({label}: {value})
@@ -37,6 +42,7 @@ export function LabeledValue(props: Props) {
         valueClassName,
         wrapInBraces,
         children,
+        onValueClick,
         ...otherProps
     } = props
 
@@ -54,13 +60,12 @@ export function LabeledValue(props: Props) {
             )}
             {...otherProps}
         >
-            {wrapInBraces && '('}<InnerTag className={labelClass}>
-                {label}:
-            </InnerTag> <InnerTag
+            {wrapInBraces && '('}<InnerTag className={labelClass}>{label}:</InnerTag> <InnerTag
                 className={clsx(
                     valueClassName,
                     flex === 'with-icon' ? 'with-icon-flex gap-1' : null
                 )}
+                onClick={onValueClick}
             >
                 {children}
             </InnerTag>{wrapInBraces && ')'}

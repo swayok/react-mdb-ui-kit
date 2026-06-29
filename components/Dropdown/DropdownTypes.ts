@@ -209,6 +209,8 @@ export interface DropdownMenuProps<
     minWidth?: string | number | null
     // Максимальная ширина меню.
     maxWidth?: string | number | null
+    // Z-index меню.
+    zIndex?: 'in-modal' | 'in-popover' | number | null
     // Меню должно заполнять контейнер, в котором находится.
     fillContainer?: boolean
     // Добавить white-space: nowrap ко всем .dropdown-item?
@@ -239,7 +241,7 @@ export type DropdownMenuContentProps = Pick<
     DropdownMenuProps,
     'className' | 'style' | 'shadow' | 'tag' | 'variant' | 'ref'
     | 'maxHeight' | 'minWidth' | 'maxWidth' | 'width'
-    | 'textNowrapOnItems' | 'fillContainer' | 'children'
+    | 'textNowrapOnItems' | 'fillContainer' | 'children' | 'zIndex'
 >
 
 // Свойства компонента DropdownItem.
