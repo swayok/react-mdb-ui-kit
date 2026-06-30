@@ -261,6 +261,9 @@ export interface DropdownItemProps extends MorphingComponentProps {
     active?: boolean
     // Нужно ли отобразить подсветку как при наведении?
     hover?: boolean
+    // Закрывать выпадающее меню при клике на элемент?
+    // По умолчанию: true.
+    closeOnClick?: boolean
     disabled?: boolean
     /**
      * Элемент содержит подменю?

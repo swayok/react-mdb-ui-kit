@@ -37,6 +37,7 @@ export function DropdownItem<
         hover,
         external,
         submenu,
+        closeOnClick = true,
         tag,
         LinkComponent = Link,
         target,
@@ -56,6 +57,7 @@ export function DropdownItem<
     const isHovered: boolean = hover || item.index === activeIndex
     const tree = useFloatingTree()
 
+    // Начало нажатия на элемент.
     const onMouseDown = useEventCallback(
         (e: MouseEvent<HTMLElement>) => {
             if (disabled || disableAllItems || e.button !== 0) {
@@ -80,10 +82,13 @@ export function DropdownItem<
             }
             propsOnClick?.(e as MouseEvent<HTMLAnchorElement>)
             // Отправляем событие click в дерево, чтобы обработало закрытие выпадающего меню.
-            tree?.events.emit('click')
+            if (closeOnClick) {
+                tree?.events.emit('click')
+            }
         }
     )
 
+    // Фокусировка на элементе.
     const onFocus = useEventCallback(
         (e: FocusEvent<HTMLElement>) => {
             propsOnFocus?.(e as FocusEvent<HTMLAnchorElement>)
