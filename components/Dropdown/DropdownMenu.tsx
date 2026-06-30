@@ -52,6 +52,7 @@ export function DropdownMenu<
         onKeyDown: propsOnKeyDown,
         height,
         maxHeight,
+        alwaysMounted = false,
         children,
         BeforeScrollableContainer,
         AfterScrollableContainer,
@@ -163,14 +164,14 @@ export function DropdownMenu<
         <FloatingList
             elementsRef={elementsRef}
         >
-            {isOpen && (
+            {(isOpen || alwaysMounted) && (
                 <Portal>
                     <FloatingFocusManager
                         context={context}
                         modal={false}
                         initialFocus={isNested ? -1 : 0}
                         returnFocus={!isNested}
-                        disabled={noFocus}
+                        disabled={noFocus || !isOpen}
                     >
                         <DropdownMenuContent
                             ref={mergedRef}
@@ -181,6 +182,7 @@ export function DropdownMenu<
                             style={{
                                 ...style,
                                 ...floatingStyles,
+                                ...(alwaysMounted && !isOpen ? {display: 'none'} : {}),
                             }}
                         >
                             {BeforeScrollableContainer}

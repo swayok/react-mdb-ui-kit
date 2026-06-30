@@ -220,6 +220,12 @@ export interface DropdownMenuProps<
     inline?: boolean
     // Отключить автофокус на меню при открытии?
     noFocus?: boolean
+    // Держать меню всегда смонтированным?
+    // В случае, когда в меню содержаться элементы со сложными обработчиками или,
+    // например, открывающие модальные окна, которые отрисовываются самим меню,
+    // то обычно требуется держать меню смонтированным.
+    // Не рекомендуется включать эту опцию, если нет необходимости.
+    alwaysMounted?: boolean
     // Добавить элемент перед DropdownMenuScrollableContainer.
     BeforeScrollableContainer?: ReactNode
     // Добавить элемент после DropdownMenuScrollableContainer.
