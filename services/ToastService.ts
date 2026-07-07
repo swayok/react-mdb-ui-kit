@@ -64,12 +64,14 @@ export abstract class ToastService {
                 message,
                 duration: duration || this.duration[type],
             }))
+        if (type === 'error') {
+            this.config.onErrorToast?.(new Error(message))
+        }
     }
 
     // Показать уведомление об ошибке.
     static error(message: string, duration?: number): void {
         this.show('error', message, duration)
-        this.config.onErrorToast?.(new Error(message))
     }
 
     // Показать информационное уведомление.
