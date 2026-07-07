@@ -263,18 +263,23 @@ export class ApiRequestService {
         type: ApiRequestMethod,
         abortController?: AbortController | null,
         customTimeout?: ApiRequestOptions['timeout']
-    ): AbortSignal {
-        const timeout: number = customTimeout === false
-            ? 86400000
-            : (customTimeout ?? (type === 'get' ? this.config.getTimeout : this.config.postTimeout))
-        const timeoutSignal: AbortSignal = AbortSignal.timeout(timeout)
-        if (abortController) {
-            return AbortSignal.any([
-                timeoutSignal,
-                abortController.signal,
-            ])
+    ): AbortSignal | null {
+        try {
+            const timeout: number = customTimeout === false
+                ? 86400000
+                : (customTimeout ?? (type === 'get' ? this.config.getTimeout : this.config.postTimeout))
+            const timeoutSignal: AbortSignal = AbortSignal.timeout(timeout)
+            if (abortController) {
+                return AbortSignal.any([
+                    timeoutSignal,
+                    abortController.signal,
+                ])
+            }
+            return timeoutSignal
+        } catch (error) {
+            this.logException('<unknown>', error, '[getAbortSignal]')
+            return null
         }
-        return timeoutSignal
     }
 
     // Отправить запрос и обработать ответ.
@@ -444,7 +449,10 @@ export class ApiRequestService {
                 },
                 errorType,
             }
-            this.logException(fullUrl, error, '[sendRequest] Response processing error', false)
+            // Ошибки отмены запроса не логируем и не отправляем в PostHog.
+            if (errorType !== 'abort') {
+                this.logException(fullUrl, error, '[sendRequest] Response processing error', false)
+            }
             logData(
                 rejectInfo.errorType,
                 {
