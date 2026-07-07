@@ -3,7 +3,12 @@ import {type INotyfOptions} from 'notyf/notyf.options'
 
 export type ToastType = 'info' | 'success' | 'error'
 
-export const defaultToastServiceConfig: Partial<INotyfOptions> = {
+export interface ToastServiceConfig extends Partial<INotyfOptions> {
+    // Вызывается при отображении уведомления об ошибке.
+    onErrorToast?: (error: Error) => void
+}
+
+export const defaultToastServiceConfig: Partial<ToastServiceConfig> = {
     position: {
         x: 'right',
         y: 'bottom',
@@ -17,6 +22,7 @@ export const defaultToastServiceConfig: Partial<INotyfOptions> = {
         },
     ],
 }
+
 
 export interface ToastServiceToastDurations {
     error: number
@@ -38,10 +44,10 @@ export abstract class ToastService {
     private static toast: Notyf
 
     // Настройки.
-    private static config: Partial<INotyfOptions> = defaultToastServiceConfig
+    private static config: Partial<ToastServiceConfig> = defaultToastServiceConfig
 
     // Настройка библиотеки отображения уведомлений.
-    static configure(config: Partial<INotyfOptions>): void {
+    static configure(config: Partial<ToastServiceConfig>): void {
         this.config = {...defaultToastServiceConfig, ...config}
     }
 
@@ -63,6 +69,7 @@ export abstract class ToastService {
     // Показать уведомление об ошибке.
     static error(message: string, duration?: number): void {
         this.show('error', message, duration)
+        this.config.onErrorToast?.(new Error(message))
     }
 
     // Показать информационное уведомление.

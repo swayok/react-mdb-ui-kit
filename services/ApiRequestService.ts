@@ -19,6 +19,8 @@ export interface ApiRequestServiceConfig {
     notLoggableRequests?: string[]
     // Добавить опции или заголовки к вопросу.
     beforeSend?: (headers: Headers, request: RequestInit) => void
+    // Обработчик ошибок.
+    onException?: (url: string, error: unknown | Error | ApiError, place?: string) => void
 }
 
 export interface ValidationErrorsResponseData extends ApiResponseData {
@@ -174,7 +176,11 @@ export class ApiRequestService {
             }
             requestInit.method = type
 
-            const logData = (action: 'Request' | string, data: AnyObject, isError: boolean = false) => {
+            const logData = (
+                action: 'Request' | string,
+                data: AnyObject,
+                isError: boolean = false
+            ) => {
                 if (isError && 'type' in data && data.type === 'abort') {
                     return
                 }
@@ -207,7 +213,12 @@ export class ApiRequestService {
                 logData('Request', data)
             }
 
-            this.config.beforeSend?.(requestInit.headers, requestInit)
+            try {
+                this.config.beforeSend?.(requestInit.headers, requestInit)
+            } catch (error) {
+                this.logException(fullUrl, error, 'config.beforeSend')
+                // Не останавливаемся: пробуем выполнить запрос, возможно он пройдет успешно.
+            }
 
             this.sendRequest<T>(fullUrl, requestInit, logData)
                 .then((response: ApiResponse<T> | ApiError) => {
@@ -232,6 +243,12 @@ export class ApiRequestService {
                         },
                         errorType: 'js_error',
                     }
+                    this.logException(
+                        fullUrl,
+                        rejectInfo,
+                        'request() -> sendRequest()',
+                        false
+                    )
                     logData('JS Error', {
                         type: rejectInfo.errorType,
                         details: reason,
@@ -282,7 +299,7 @@ export class ApiRequestService {
                         status: response.status,
                         data,
                     }
-                } catch (_e) {
+                } catch (error) {
                     // Не JSON.
                     const responseText: string = await response.text()
                     const rejectInfo: ApiError = {
@@ -298,6 +315,8 @@ export class ApiRequestService {
                         },
                         errorType: 'parse_error',
                     }
+                    // Да, нужно логировать оригинальную ошибку в консоль.
+                    this.logException(fullUrl, error, '[HTTP Success] Response Body to JSON', true)
                     logData(
                         'Parse error:',
                         {
@@ -337,7 +356,8 @@ export class ApiRequestService {
                 const responseText: string | object = await response.text()
                 try {
                     rejectInfo.data = JSON.parse(responseText)
-                } catch (_e) {
+                } catch (error) {
+                    this.logException(fullUrl, error, '[HTTP Error Response] Response Body to JSON error', true)
                     // Не JSON.
                     rejectInfo.data = {
                         text: responseText,
@@ -366,11 +386,8 @@ export class ApiRequestService {
                         true
                     )
 
-                } catch (_e) {
-                    // todo: Раскомментировать если будем использовать Sentry
-                    // if (Config.isProduction) {
-                    //     Sentry.captureException(exception, {extra: rejectInfo as any});
-                    // }
+                } catch (error) {
+                    this.logException(fullUrl, error, '[HTTP Error Response] JSON data processing error', true)
                 }
             }
 
@@ -427,6 +444,7 @@ export class ApiRequestService {
                 },
                 errorType,
             }
+            this.logException(fullUrl, error, '[sendRequest] Response processing error', false)
             logData(
                 rejectInfo.errorType,
                 {
@@ -592,5 +610,22 @@ export class ApiRequestService {
         const test: AnyObject = {}
         data.forEach((v, k) => test[k] = v)
         console.log(test)
+    }
+
+    // Логирование ошибок.
+    static logException(
+        url: string,
+        error: unknown | Error | ApiError,
+        place?: string,
+        logToConsole: boolean = true
+    ): void {
+        try {
+            if (logToConsole) {
+                console.error(`[API][Exception][${url}] ${place ?? ''}`, error)
+            }
+            this.config.onException?.(url, error, place)
+        } catch (loggingError) {
+            console.error('[API][Exception] Error while logging exception', loggingError)
+        }
     }
 }
