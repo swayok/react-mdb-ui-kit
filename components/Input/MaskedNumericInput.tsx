@@ -23,6 +23,10 @@ export function MaskedNumericInput(props: MaskedNumericInputProps) {
         placeholder = template,
         minCursorPosition,
         allowedChars = /\d/,
+        // Открывает цифровую клавиатуру на мобильных устройствах.
+        inputMode = 'numeric',
+        // Автозаполнение: по умолчанию выключено, можно переопределить (например, "tel").
+        autoComplete = 'off',
         onChange,
         onFocus,
         onBlur,
@@ -72,6 +76,8 @@ export function MaskedNumericInput(props: MaskedNumericInputProps) {
         <Input
             inputRef={mergedInputRef}
             placeholder={placeholder}
+            inputMode={inputMode}
+            autoComplete={autoComplete}
             {...otherProps}
             value={value ? formatValueForMask(value, template, focused) : ''}
             allowedChars={allowedChars}

@@ -129,9 +129,20 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
+        from: Location | null = null,
+        hardRedirect: boolean = false
+    ): void {
+        this._navigate('navigate', relativeUrl, params, queryArgs, from, hardRedirect)
+    }
+
+    // Переход на страницу с полной перезагрузкой.
+    static navigateWithHardReload<QueryArgsType extends object = AnyObject<string>>(
+        relativeUrl: string,
+        params: ExtractRouteParams<string> | null = null,
+        queryArgs: QueryArgsType | null = null,
         from: Location | null = null
     ): void {
-        this._navigate('navigate', relativeUrl, params, queryArgs, from)
+        this._navigate('navigate', relativeUrl, params, queryArgs, from, true)
     }
 
     // Замена текущей страницы.
@@ -191,7 +202,8 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
-        from: Location | null = null
+        from: Location | null = null,
+        hardRedirect: boolean = false
     ): void {
         if (!this.navigator) {
             this.navigateAfterNavigatorAppearsTo = () => {
@@ -209,10 +221,14 @@ export class NavigationService {
             JSON.stringify({relativeUrl, params, queryArgs, url}, null, 2)
         )
 
-        void this.navigator(url, {
-            replace: action === 'replace',
-            state: from ? {from} : undefined,
-        })
+        if (hardRedirect) {
+            document.location.href = url
+        } else {
+            void this.navigator(url, {
+                replace: action === 'replace',
+                state: from ? {from} : undefined,
+            })
+        }
     }
 
     // Сборка относительного URL из частей.
