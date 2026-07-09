@@ -5,7 +5,7 @@ export type ToastType = 'info' | 'success' | 'error'
 
 export interface ToastServiceConfig extends Partial<INotyfOptions> {
     // Вызывается при отображении уведомления об ошибке.
-    onErrorToast?: (error: Error) => void
+    onErrorToast?: (errorMessage: string) => void
 }
 
 export const defaultToastServiceConfig: Partial<ToastServiceConfig> = {
@@ -65,7 +65,7 @@ export abstract class ToastService {
                 duration: duration || this.duration[type],
             }))
         if (type === 'error') {
-            this.config.onErrorToast?.(new Error(message))
+            this.config.onErrorToast?.(message)
         }
     }
 
