@@ -56,16 +56,21 @@ export function Collapse(props: CollapseProps) {
     // Подписываемся на отслеживание размеров содержимого.
     useLayoutEffect(() => {
         if (localRef.current) {
-            const resizeObserver = new ResizeObserver(() => {
-                if (
-                    localRef.current?.classList.contains('opened')
-                ) {
-                    updateContentSize(localRef.current)
+            try {
+                const resizeObserver = new ResizeObserver(() => {
+                    if (
+                        localRef.current?.classList.contains('opened')
+                    ) {
+                        updateContentSize(localRef.current)
+                    }
+                })
+                resizeObserver.observe(localRef.current)
+                return () => {
+                    resizeObserver.disconnect()
                 }
-            })
-            resizeObserver.observe(localRef.current)
-            return () => {
-                resizeObserver.disconnect()
+            } catch (e) {
+                // Ничего страшного, если ResizeObserver не поддерживается браузером.
+                console.error('[Collapse][ResizeObserver] error:', e)
             }
         }
         return () => {
