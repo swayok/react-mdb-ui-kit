@@ -1,3 +1,4 @@
+import {getFailSafeLocalStorage} from 'swayok-react-mdb-ui-kit/helpers/local_storage/getFailSafeLocalStorage'
 import type {AnyObject} from '../types'
 import {DateTimeService} from './DateTimeService'
 
@@ -55,7 +56,7 @@ export class CacheServiceClass<NameT extends string = string> {
                 return null
             }
         }
-        const json: null | string = window.localStorage.getItem(this.getLocalStorageName(name))
+        const json: null | string = this.getLocalStorage().getItem(this.getLocalStorageName(name))
         if (!json) {
             return null
         }
@@ -103,7 +104,7 @@ export class CacheServiceClass<NameT extends string = string> {
             if (useSessionStorage) {
                 this.sessionStorage[name] = cacheItem
             } else {
-                window.localStorage.setItem(
+                this.getLocalStorage().setItem(
                     this.getLocalStorageName(name),
                     JSON.stringify(cacheItem)
                 )
@@ -199,7 +200,17 @@ export class CacheServiceClass<NameT extends string = string> {
     // Удалить данные из кэша.
     forget(name: string): void {
         delete this.sessionStorage[name]
-        window.localStorage.removeItem(this.getLocalStorageName(name))
+        this.getLocalStorage().removeItem(this.getLocalStorageName(name))
+    }
+
+    // Получить объект LocalStorage.
+    // Стоит учитывать, что доступ к LocalStorage может быть ограничен и
+    // будет вызывать ошибки вида:
+    // Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+    // Для этого требуется либо использовать DummyStorage (ничего не хранить),
+    // либо FallbackStorage (хранить в массиве до перезагрузки страницы).
+    private getLocalStorage(): Storage {
+        return getFailSafeLocalStorage()
     }
 
     // Модификация имени ключа в window.localStorage.
