@@ -3,6 +3,7 @@ import type {
     ApiResponseData,
 } from '../types'
 import {ApiRequestDebugService} from './ApiRequestDebugService'
+import {installAbortSignalPolyfill} from 'abort-signal-polyfill'
 
 export interface ApiRequestServiceConfig {
     // Базовый URL API. Полный URL: {baseApiUrl}  + '/' +  {requestUrl}.
@@ -65,6 +66,11 @@ export interface ApiRequestOptions extends Omit<
 }
 
 export type ApiRequestMethod = 'get' | 'post' | 'put' | 'delete'
+
+// Оказалось, что AbortSignal.any() и AbortSignal.timeout() часто отсутствуют в
+// мобильных браузерах, даже на свежих устройствах с последними версиями ОС и браузеров.
+// Поэтому приходится пользоваться полифилом.
+installAbortSignalPolyfill()
 
 // Сервис отправки запросов к API.
 export class ApiRequestService {
