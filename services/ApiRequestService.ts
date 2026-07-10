@@ -296,11 +296,12 @@ export class ApiRequestService {
     ): Promise<ApiResponse<T> | ApiError> {
         try {
             const response: Response = await fetch(fullUrl, requestInit)
+            const responseText: string = await response.text()
 
             if (response.status >= 200 && response.status < 400) {
                 // Успешное выполнение.
                 try {
-                    const data: T = await response.json() as T
+                    const data: T = JSON.parse(responseText) as T
                     logData('Response: ' + response.status, data)
                     return {
                         url: fullUrl,
@@ -312,7 +313,6 @@ export class ApiRequestService {
                     }
                 } catch (error) {
                     // Не JSON.
-                    const responseText: string = await response.text()
                     const rejectInfo: ApiError = {
                         name: 'JSON Parsing Error',
                         message: 'Failed to parse response data into JSON object.',
@@ -359,12 +359,11 @@ export class ApiRequestService {
                 rejectInfo.name = 'Network Error'
                 rejectInfo.message = 'Failed to send request to API: network malfunction.'
                 rejectInfo.data = {
-                    text: await response.text(),
+                    text: responseText,
                 }
             } else if (response.status >= 400) {
                 // Нормальная HTTP ошибка.
                 // Нужно проверить, что там в ответе.
-                const responseText: string | object = await response.text()
                 try {
                     rejectInfo.data = JSON.parse(responseText)
                 } catch (error) {
@@ -425,14 +424,16 @@ export class ApiRequestService {
             ) {
                 // Запрос отменён извне или по тайм-ауту.
                 if (
-                    requestInit.signal.reason === 'timeout'
+                    error.name === 'TimeoutError'
+                    || requestInit.signal.reason === 'timeout'
                     || requestInit.signal.reason?.name === 'TimeoutError'
                 ) {
                     errorType = 'timeout'
                     errorName = 'Request Timeout'
                     errorMessage = 'API request execution took to long.'
                 } else if (
-                    requestInit.signal.reason instanceof DOMException
+                    error.name === 'AbortError'
+                    || requestInit.signal.reason instanceof DOMException
                     || requestInit.signal.reason === 'abort'
                     || requestInit.signal.reason?.name === 'AbortError'
                 ) {
@@ -455,8 +456,8 @@ export class ApiRequestService {
                 },
                 errorType,
             }
-            // Ошибки отмены запроса не логируем и не отправляем в PostHog.
-            if (errorType !== 'abort') {
+            // Ошибки отмены запроса и тайм-аута не логируем и не отправляем в PostHog.
+            if (errorType !== 'abort' && errorType !== 'timeout') {
                 this.logException(fullUrl, error, '[sendRequest] Response processing error', false)
             }
             logData(
