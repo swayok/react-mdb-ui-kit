@@ -191,6 +191,11 @@ export class NavigationService {
         this._navigate('replace', this.getIntendedUrl(permissions))
     }
 
+    // Переход на страницу по данным объекта Location.
+    static navigateToLocation(location: Location) {
+        this._navigate('replace', this.makeUrlFromLocation(location))
+    }
+
     // Перезагрузка страницы не используя React Router.
     static hardReload() {
         document.location.reload()
