@@ -34,7 +34,7 @@
                 height: images-previewer.$images-previewer-image-preview-height;
                 overflow: hidden;
                 background-repeat: no-repeat;
-                background-size: cover;
+                background-size: contain;
                 background-position: center center;
                 cursor: pointer;
                 position: relative;
