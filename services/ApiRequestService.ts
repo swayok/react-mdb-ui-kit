@@ -21,7 +21,12 @@ export interface ApiRequestServiceConfig {
     // Добавить опции или заголовки к вопросу.
     beforeSend?: (headers: Headers, request: RequestInit) => void
     // Обработчик ошибок.
-    onException?: (url: string, error: unknown | Error | ApiError, place?: string) => void
+    onException?: (
+        url: string,
+        error: unknown | Error | ApiError,
+        place?: string,
+        context?: AnyObject
+    ) => void
 }
 
 export interface ValidationErrorsResponseData extends ApiResponseData {
@@ -222,7 +227,7 @@ export class ApiRequestService {
             try {
                 this.config.beforeSend?.(requestInit.headers, requestInit)
             } catch (error) {
-                this.logException(fullUrl, error, 'config.beforeSend')
+                this.logException(fullUrl, error, 'config.beforeSend', requestInit)
                 // Не останавливаемся: пробуем выполнить запрос, возможно он пройдет успешно.
             }
 
@@ -253,6 +258,7 @@ export class ApiRequestService {
                         fullUrl,
                         rejectInfo,
                         'request() -> sendRequest()',
+                        undefined,
                         false
                     )
                     logData('JS Error', {
@@ -327,7 +333,13 @@ export class ApiRequestService {
                         errorType: 'parse_error',
                     }
                     // Да, нужно логировать оригинальную ошибку в консоль.
-                    this.logException(fullUrl, error, '[HTTP Success] Response Body to JSON', true)
+                    this.logException(
+                        fullUrl,
+                        error,
+                        '[HTTP Success] Response Body to JSON',
+                        rejectInfo,
+                        true
+                    )
                     logData(
                         'Parse error:',
                         {
@@ -367,11 +379,17 @@ export class ApiRequestService {
                 try {
                     rejectInfo.data = JSON.parse(responseText)
                 } catch (error) {
-                    this.logException(fullUrl, error, '[HTTP Error Response] Response Body to JSON error', true)
                     // Не JSON.
                     rejectInfo.data = {
                         text: responseText,
                     }
+                    this.logException(
+                        fullUrl,
+                        error,
+                        '[HTTP Error Response] Response Body to JSON error',
+                        rejectInfo,
+                        true
+                    )
                 }
                 try {
                     if (
@@ -397,7 +415,13 @@ export class ApiRequestService {
                     )
 
                 } catch (error) {
-                    this.logException(fullUrl, error, '[HTTP Error Response] JSON data processing error', true)
+                    this.logException(
+                        fullUrl,
+                        error,
+                        '[HTTP Error Response] JSON data processing error',
+                        rejectInfo,
+                        true
+                    )
                 }
             }
 
@@ -458,7 +482,13 @@ export class ApiRequestService {
             }
             // Ошибки отмены запроса и тайм-аута не логируем и не отправляем в PostHog.
             if (errorType !== 'abort' && errorType !== 'timeout') {
-                this.logException(fullUrl, error, '[sendRequest] Response processing error', false)
+                this.logException(
+                    fullUrl,
+                    error,
+                    '[sendRequest] Response processing error',
+                    rejectInfo,
+                    false
+                )
             }
             logData(
                 rejectInfo.errorType,
@@ -632,15 +662,16 @@ export class ApiRequestService {
         url: string,
         error: unknown | Error | ApiError,
         place?: string,
+        context?: AnyObject,
         logToConsole: boolean = true
     ): void {
         try {
             if (logToConsole) {
-                console.error(`[API][Exception][${url}] ${place ?? ''}`, error)
+                console.error(`[API][Exception][${url}] ${place ?? ''}`, error, context)
             }
-            this.config.onException?.(url, error, place)
+            this.config.onException?.(url, error, place, context)
         } catch (loggingError) {
-            console.error('[API][Exception] Error while logging exception', loggingError)
+            console.error('[API][Exception] Error while logging exception', loggingError, context)
         }
     }
 }
