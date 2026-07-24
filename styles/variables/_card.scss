@@ -21,16 +21,23 @@ $card-inner-border-radius: calc-utils.subtract($card-border-radius, $card-border
 
 $card-header-border-width: borders.$border-width !default;
 $card-header-padding-y: math.div($card-spacer-y, 2) !default;
+$card-header-padding-top: $card-header-padding-y !default;
+$card-header-padding-bottom: if($card-header-border-width == 0, 0, $card-header-padding-y) !default;;
 $card-header-padding-x: $card-spacer-x !default;
 $card-header-bg: rgba(255, 255, 255, 0) !default;
 $card-header-color: null !default;
 
+$card-footer-border-width: borders.$border-width !default;
+$card-footer-padding-y: $card-header-padding-y !default;
+$card-footer-padding-top: if($card-footer-border-width == 0, 0, $card-footer-padding-y) !default;
+$card-footer-padding-bottom: $card-footer-padding-y !default;
+$card-footer-padding-x: $card-header-padding-x !default;
+$card-footer-bg: $card-header-bg !default;
+$card-footer-color: $card-header-color !default;
+
 $card-height: null !default;
 $card-color: null !default;
 $card-bg: colors.$white !default;
-
-$card-footer-bg: $card-header-bg !default;
-$card-footer-border-width: borders.$border-width !default;
 
 $card-img-overlay-padding: $card-spacer-base !default;
 $card-group-margin: math.div(grid.$grid-gutter-width, 2) !default;
