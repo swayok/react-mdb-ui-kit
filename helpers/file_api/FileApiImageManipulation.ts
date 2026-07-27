@@ -91,18 +91,20 @@ export async function convertHeicFileToBlob(
     file: File,
     targetType: 'image/jpeg' | 'image/png',
     quality: number = 0.92
-): Promise<Blob> {
-    // noinspection TypeScriptCheckImport
-    // @ts-ignore
-    const heicToModule = await import('heic-to')
-    const heicToFn = (heicToModule.default ?? (heicToModule as {heicTo?: unknown;}).heicTo) as (
-        params: {blob: File | Blob; type: string; quality?: number;}
-    ) => Promise<Blob>
-    return heicToFn({
-        blob: file,
-        type: targetType,
-        quality,
-    })
+): Promise<Blob | null> {
+    try {
+        // @ts-ignore На случай если пакет не установлен.
+        const heicToModule = await import('heic-to')
+        // @ts-ignore
+        return heicToModule.heicTo({
+            blob: file,
+            type: targetType,
+            quality,
+        })
+    } catch (e) {
+        console.error('Failed to import "heic-to" module', {cause: e})
+        return null
+    }
 }
 
 // Конвертировать <canvas> в Blob.

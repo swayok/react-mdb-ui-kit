@@ -213,11 +213,18 @@ export function FilePickerInput(props: FilePickerInputProps) {
                     const targetMimeType: 'image/jpeg' | 'image/png' = targetExtension === 'png'
                         ? 'image/png'
                         : 'image/jpeg'
-                    const convertedBlob: Blob = await convertHeicFileToBlob(
+                    const convertedBlob: Blob | null = await convertHeicFileToBlob(
                         processedFile.file,
                         targetMimeType,
                         imagesCompression
                     )
+                    if (!convertedBlob) {
+                        processedFile.error = translations.error.mime_type_forbidden(
+                            file.extension ?? targetMimeType
+                        )
+                        ToastService.error(processedFile.error, 5000)
+                        return processedFile
+                    }
                     const newExtension: string = convertHeifTo === 'png' ? '.png' : '.jpg'
                     const convertedFileName: string = processedFile.file.name.replace(
                         /\.[a-zA-Z0-9]{1,6}$/,
