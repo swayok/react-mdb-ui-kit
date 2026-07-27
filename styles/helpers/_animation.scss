@@ -84,4 +84,21 @@
             }
         }
     }
+
+    // Анимация fade-in-out.
+    @keyframes fade-in-out-animation-50 {
+        0% {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.5;
+        }
+    }
+
+    .fade-in-out-animation-50 {
+        animation: fade-in-out-animation-50 1s infinite ease-in-out;
+    }
 }

@@ -1,6 +1,5 @@
 import {
     type ChangeEvent,
-    useCallback,
     useEffect,
     useMemo,
     useRef,
@@ -11,8 +10,9 @@ import {
 } from '../../helpers/file_api/FileAPI'
 import {
     convertHeicFileToBlob,
-    isHeicOrHeifFile,
+    isHeicOrHeifMime,
 } from '../../helpers/file_api/FileApiImageManipulation'
+import {useEventCallback} from '../../helpers/useEventCallback'
 import {ToastService} from '../../services/ToastService'
 import type {
     AnyObject,
@@ -92,7 +92,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
     }, [files])
 
     // Вычислить позицию для нового прикрепленного файла.
-    const getNextFilePosition = useCallback((): number => {
+    const getNextFilePosition = useEventCallback((): number => {
         const fileWithMaxPosition: FilePickerFileInfo | null = files.reduce(
             (carry: FilePickerFileInfo | null, file: FilePickerFileInfo): FilePickerFileInfo => {
                 if (!carry) {
@@ -103,7 +103,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
             null
         )
         return fileWithMaxPosition ? fileWithMaxPosition.position + positionDelta : 0
-    }, [files])
+    })
 
     // Посчитать количество прикрепленных, но не удаленных файлов.
     const notDeletedFilesCount: number = useMemo(
@@ -112,15 +112,14 @@ export function FilePickerInput(props: FilePickerInputProps) {
     )
 
     // Можно ли прикрепить больше файлов?
-    const canAttachMoreFiles = useCallback(
-        (pendingFilesToBeAdded: number = 0): boolean => {
-            if (maxFiles === null || maxFiles <= 1) {
-                return true
-            }
-            return (notDeletedFilesCount + pendingFilesToBeAdded) < maxFiles
-        },
-        [maxFiles, notDeletedFilesCount]
-    )
+    const canAttachMoreFiles = useEventCallback((
+        pendingFilesToBeAdded: number = 0
+    ): boolean => {
+        if (maxFiles === null || maxFiles <= 1) {
+            return true
+        }
+        return (notDeletedFilesCount + pendingFilesToBeAdded) < maxFiles
+    })
 
     // Получить разрешенные типы файлов.
     const allowedFileTypes: AnyObject<FilePickerContextMimeTypeInfo> = useMemo(
@@ -156,8 +155,165 @@ export function FilePickerInput(props: FilePickerInputProps) {
         [allowedMimeTypes, allowFiles, allowImages]
     )
 
+    // Сжатие картинки и обновление состояния через onChange() после сжатия.
+    const compressImageFileAndUpdateState = useEventCallback((
+        originalFile: FileAPISelectedFileInfo,
+        processedFile: FilePickerFileInfo
+    ): void => {
+        FilePickerHelpers.compressFile(
+            processedFile,
+            maxImageSize,
+            convertImagesToJpeg,
+            imagesCompression
+        )
+            .then(async compressedFile => {
+                // 1. Получаем имя файла.
+                const normalizedFileName = FilePickerHelpers.getNormalizedFileName(
+                    processedFile,
+                    useUidAsFileName,
+                    convertImagesToJpeg
+                )
+                // 2. Заменяем оригинальный файл измененным, с нормализованным названием.
+                const compressedFileInfo = Object.assign(
+                    new File([compressedFile], normalizedFileName, {
+                        lastModified: processedFile.file.lastModified,
+                        type: compressedFile.type,
+                    }),
+                    {
+                        isImage: true,
+                        isProcessing: false,
+                    }
+                )
+                // 3. Получаем дополнительные данные о картинке (размеры, exif, превью).
+                const imageInfo = await FileAPI.getImageInfo(compressedFileInfo, true)
+                // 4. Обновляем файл в списке, если требуется или дополняем данные в processedFile.
+                const index = files.findIndex(f => f.UID === processedFile.UID)
+                if (index === -1) {
+                    // Данные еще не добавлены в value.
+                    processedFile.file = compressedFileInfo
+                    processedFile.info = imageInfo
+                    return
+                }
+                // Данные уже добавлены в value.
+                const updates = [...files]
+                updates[index].file = compressedFileInfo
+                updates[index].info = imageInfo
+                onChange(updates)
+            })
+            .catch(error => {
+                logException?.(error, processedFile)
+                const errorMessage = translations.error.failed_to_resize_image
+                ToastService.error(originalFile.name + ':' + errorMessage)
+                // Обновляем файл в списке.
+                const index = files.findIndex(f => f.UID === processedFile.UID)
+                if (index === -1) {
+                    // Данные еще не добавлены в value.
+                    processedFile.error = errorMessage
+                    return
+                } else {
+                    // Данные уже добавлены в value.
+                    const updates = [...files]
+                    updates[index].error = errorMessage
+                    onChange(updates)
+                }
+                console.error('[FilePickerInput] compressFile error: ', {
+                    file: originalFile,
+                    error,
+                })
+                throw error
+            })
+    })
+
+    // Конвертировать HEIC/HEIF файл в JPEG или PNG.
+    const convertHeicFile = useEventCallback(async (
+        originalFile: FileAPISelectedFileInfo,
+        processedFile: FilePickerFileInfo
+    ): Promise<boolean> => {
+        const targetExtension: 'png' | 'jpg' = convertHeifTo === 'png' && !convertImagesToJpeg
+            ? 'png'
+            : 'jpg'
+        const targetMimeType: 'image/jpeg' | 'image/png' = targetExtension === 'png'
+            ? 'image/png'
+            : 'image/jpeg'
+        const convertedBlob: Blob | null = await convertHeicFileToBlob(
+            processedFile.file,
+            targetMimeType,
+            imagesCompression
+        )
+        if (!convertedBlob) {
+            processedFile.error = translations.error.mime_type_forbidden(
+                originalFile.extension ?? targetMimeType
+            )
+            ToastService.error(processedFile.error, 5000)
+            return false
+        }
+        const newExtension: string = convertHeifTo === 'png' ? '.png' : '.jpg'
+        const convertedFileName: string = processedFile.file.name.replace(
+            /\.[a-zA-Z0-9]{1,6}$/,
+            newExtension
+        )
+        processedFile.file = Object.assign(
+            new File(
+                [convertedBlob],
+                convertedFileName,
+                {
+                    lastModified: processedFile.file.lastModified,
+                    type: targetMimeType,
+                }
+            ),
+            {
+                isProcessing: false,
+                isImage: true,
+                mimeType: targetMimeType,
+                extension: convertHeifTo === 'png' ? 'png' : 'jpg',
+            }
+        )
+        return true
+    })
+
+    // Обработка прикрепленной картинки.
+    const processNewImage = useEventCallback(async (
+        originalFile: FileAPISelectedFileInfo,
+        processedFile: FilePickerFileInfo,
+        mimeTypeInfo: FilePickerContextMimeTypeInfo
+    ): Promise<FilePickerFileInfo> => {
+        // Файл - валидная картинка.
+        // 1. Если файл в формате HEIC/HEIF - конвертируем его в JPEG или PNG
+        // с помощью пакета heic-to (браузеры не умеют работать с HEIC/HEIF нативно).
+        if (isHeicOrHeifMime(mimeTypeInfo.mime)) {
+            processedFile.file.isProcessing = true
+
+            convertHeicFile(originalFile, processedFile)
+                .then(success => {
+                    if (!success) {
+                        processedFile.error = translations.error.mime_type_forbidden(
+                            originalFile.extension ?? mimeTypeInfo.mime
+                        )
+                        ToastService.error(processedFile.error, 5000)
+                        return
+                    }
+                    compressImageFileAndUpdateState(originalFile, processedFile)
+                })
+                .catch(error => {
+                    logException?.(error, processedFile)
+                    const errorMessage = translations.error.failed_to_resize_image
+                    ToastService.error(originalFile.name + ':' + errorMessage)
+                    processedFile.error = errorMessage
+                })
+
+            return processedFile
+        }
+        // 2. Сжимаем и конвертируем в JPEG, если необходимо.
+        // Также обновляет файл через onChange(), если необходимо.
+        compressImageFileAndUpdateState(originalFile, processedFile)
+
+        // 3. Получаем дополнительные данные о картинке (размеры, exif, превью).
+        processedFile.info = await FileAPI.getImageInfo(processedFile.file, true)
+        return processedFile
+    })
+
     // Обработка прикрепленного файла (валидация, уменьшение).
-    const processNewFile = async (
+    const processNewFile = useEventCallback(async (
         file: FileAPISelectedFileInfo,
         position: number,
         pendingFilesToBeAdded: number
@@ -181,111 +337,47 @@ export function FilePickerInput(props: FilePickerInputProps) {
         }
         let processedFile: FilePickerFileInfo | null = null
         try {
-            const mimeTypeInfo: string | FilePickerContextMimeTypeInfo = FilePickerHelpers.validateFileTypeAndSize(
+            const validationResult: string | FilePickerContextMimeTypeInfo = FilePickerHelpers.validateFileTypeAndSize(
                 file,
                 allowedFileTypes,
                 translations,
                 maxFileSizeKb
             )
-            const isInvalidFileType: boolean = typeof mimeTypeInfo === 'string'
-            if (isInvalidFileType) {
-                ToastService.error(
-                    translations.error.invalid_file(file.name, mimeTypeInfo as string),
-                    6000
-                )
-            }
+            const isInvalidFileType: boolean = typeof validationResult === 'string'
             processedFile = {
                 UID: fileUID,
                 file,
-                error: isInvalidFileType ? mimeTypeInfo as string : null,
+                error: isInvalidFileType ? validationResult as string : null,
                 info: null,
                 position,
                 isNew: true,
             }
-            if (file.isImage && !isInvalidFileType) {
-                // Файл - валидная картинка.
-                // 1. Если файл в формате HEIC/HEIF - конвертируем его в JPEG или PNG
-                // с помощью пакета heic-to (браузеры не умеют работать с HEIC/HEIF нативно).
-                if (isHeicOrHeifFile(processedFile.file)) {
-                    const targetExtension: 'png' | 'jpg' = convertHeifTo === 'png' && !convertImagesToJpeg
-                        ? 'png'
-                        : 'jpg'
-                    const targetMimeType: 'image/jpeg' | 'image/png' = targetExtension === 'png'
-                        ? 'image/png'
-                        : 'image/jpeg'
-                    const convertedBlob: Blob | null = await convertHeicFileToBlob(
-                        processedFile.file,
-                        targetMimeType,
-                        imagesCompression
-                    )
-                    if (!convertedBlob) {
-                        processedFile.error = translations.error.mime_type_forbidden(
-                            file.extension ?? targetMimeType
-                        )
-                        ToastService.error(processedFile.error, 5000)
-                        return processedFile
-                    }
-                    const newExtension: string = convertHeifTo === 'png' ? '.png' : '.jpg'
-                    const convertedFileName: string = processedFile.file.name.replace(
-                        /\.[a-zA-Z0-9]{1,6}$/,
-                        newExtension
-                    )
-                    processedFile.file = Object.assign(
-                        new File(
-                            [convertedBlob],
-                            convertedFileName,
-                            {
-                                lastModified: processedFile.file.lastModified,
-                                type: targetMimeType,
-                            }
-                        ),
-                        {
-                            isImage: true,
-                            mimeType: targetMimeType,
-                            extension: convertHeifTo === 'png' ? 'png' : 'jpg',
-                        }
-                    )
-                }
-                // 2. Получаем имя файла.
-                const normalizedFileName = FilePickerHelpers.getNormalizedFileName(
-                    processedFile,
-                    useUidAsFileName,
-                    convertImagesToJpeg
+            if (isInvalidFileType) {
+                ToastService.error(
+                    translations.error.invalid_file(file.name, validationResult as string),
+                    6000
                 )
-                // 3. Сжимаем и конвертируем в JPEG, если необходимо.
-                const compressedFile: Blob | File = await FilePickerHelpers.compressFile(
-                    processedFile,
-                    maxImageSize,
-                    convertImagesToJpeg,
-                    imagesCompression
-                )
-                // 4. Заменяем оригинальный файл измененным, с нормализованным названием.
-                processedFile.file = Object.assign(
-                    new File([compressedFile], normalizedFileName, {
-                        lastModified: processedFile.file.lastModified,
-                        type: compressedFile.type,
-                    }),
-                    {
-                        isImage: true,
-                    }
-                )
-                // 5. Получаем дополнительные данные о картинке (размеры, exif, превью).
-                processedFile.info = await FileAPI.getImageInfo(processedFile.file, true)
+                return processedFile
             }
-            return processedFile
+            return file.isImage
+                ? await processNewImage(
+                    file,
+                    processedFile,
+                    validationResult as FilePickerContextMimeTypeInfo
+                )
+                : processedFile
         } catch (e) {
             logException?.(e, processedFile)
-            ToastService.error(translations.error.failed_to_resize_image)
             console.error('[FilePickerInput] processNewFile error: ', {
                 file,
                 error: e,
             })
             throw e
         }
-    }
+    })
 
     // Обработка одного или нескольких выбранных файлов.
-    const onNewFilesSelected = async (
+    const onNewFilesSelected = useEventCallback(async (
         event: ChangeEvent<HTMLInputElement>
     ): Promise<void> => {
         if (disabled) {
@@ -335,67 +427,65 @@ export function FilePickerInput(props: FilePickerInputProps) {
                 onChange(files.concat(newFilesList))
             }
         }
-    }
+    })
 
     // Обработка нажатия на кнопку удаления файла.
-    const onFileDelete = useCallback(
-        (file: FilePickerFileInfo) => {
-            for (let i = 0; i < files.length; i++) {
-                if (file.UID === files[i].UID) {
-                    const updates: FilePickerFileInfo[] = files.slice()
-                    if (file.isNew) {
-                        // Новый файл можно удалять безвозвратно.
-                        updates.splice(i, 1)
-                    } else {
-                        // Файл из БД: Нужно пометить как удаленный.
-                        updates[i] = {
-                            ...updates[i],
-                            isDeleted: true,
-                        }
+    const onFileDelete = useEventCallback((
+        file: FilePickerFileInfo
+    ) => {
+        for (let i = 0; i < files.length; i++) {
+            if (file.UID === files[i].UID) {
+                const updates: FilePickerFileInfo[] = files.slice()
+                if (file.isNew) {
+                    // Новый файл можно удалять безвозвратно.
+                    updates.splice(i, 1)
+                } else {
+                    // Файл из БД: Нужно пометить как удаленный.
+                    updates[i] = {
+                        ...updates[i],
+                        isDeleted: true,
                     }
-                    onChange(updates)
-                    return
                 }
-            }
-        },
-        [onChange, files]
-    )
-
-    // Обработка нажатия на кнопку восстановления файла.
-    const onExistingFileRestore = useCallback(
-        (file: FilePickerFileInfo) => {
-            if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
-                ToastService.error(translations.error.too_many_files(maxFiles!))
+                onChange(updates)
                 return
             }
-            for (let i = 0; i < files.length; i++) {
-                if (file.UID === files[i].UID) {
-                    if (files[i].isNew) {
-                        return
-                    }
-                    const updatedFile = {
-                        ...files[i],
-                        isDeleted: false,
-                    }
-                    if (maxFiles === 1) {
-                        // Режим одного файла.
-                        // Заменяем весь список файлов на восстановленный.
-                        onChange([updatedFile])
-                    } else {
-                        // Разрешено прикрепление нескольких файлов.
-                        const updates: FilePickerFileInfo[] = files.slice()
-                        updates[i] = updatedFile
-                        onChange(updates)
-                    }
+        }
+    })
+
+    // Обработка нажатия на кнопку восстановления файла.
+    const onExistingFileRestore = useEventCallback((
+        file: FilePickerFileInfo
+    ) => {
+        if (maxFiles !== 1 && !canAttachMoreFiles(1)) {
+            ToastService.error(translations.error.too_many_files(maxFiles!))
+            return
+        }
+        for (let i = 0; i < files.length; i++) {
+            if (file.UID === files[i].UID) {
+                if (files[i].isNew) {
                     return
                 }
+                const updatedFile = {
+                    ...files[i],
+                    isDeleted: false,
+                }
+                if (maxFiles === 1) {
+                    // Режим одного файла.
+                    // Заменяем весь список файлов на восстановленный.
+                    onChange([updatedFile])
+                } else {
+                    // Разрешено прикрепление нескольких файлов.
+                    const updates: FilePickerFileInfo[] = files.slice()
+                    updates[i] = updatedFile
+                    onChange(updates)
+                }
+                return
             }
-        },
-        [onChange, files, canAttachMoreFiles, maxFiles]
-    )
+        }
+    })
 
     // Окончание перетаскивания файлов.
-    const onDragFinish = (
+    const onDragFinish = useEventCallback((
         _draggedElementPosition: number,
         draggedElementPayload: FilePickerFileInfo,
         _droppedOnElementPosition: number,
@@ -423,7 +513,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
         }
         draggedElementPayload.position = newPosition
         onChange(updates)
-    }
+    })
 
     // Можно ли менять позиции файлов?
     const reorderable: boolean = (
@@ -433,14 +523,11 @@ export function FilePickerInput(props: FilePickerInputProps) {
 
     // Данные контекста.
     const context: FilePickerContextProps = {
-        pickFile: useCallback(
-            () => {
-                if (!disabled) {
-                    inputRef.current?.click()
-                }
-            },
-            [disabled, inputRef]
-        ),
+        pickFile: useEventCallback(() => {
+            if (!disabled) {
+                inputRef.current?.click()
+            }
+        }),
         maxFiles,
         previews: allowedFileTypes,
         fallbackPreview: filePickerFallbackPreview,
@@ -455,9 +542,8 @@ export function FilePickerInput(props: FilePickerInputProps) {
         translations,
         getNextFilePosition,
         isUploading: false,
-        startUploading: useCallback(
-            () => Promise.reject(new Error('action_not_allowed')),
-            []
+        startUploading: useEventCallback(
+            () => Promise.reject(new Error('action_not_allowed'))
         ),
     }
 

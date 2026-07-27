@@ -20,6 +20,7 @@ export interface LoadingProps {
     labelClassName?: string
     // Отложить отображение анимации на указанное кол-во миллисекунд.
     showDelay?: number | null
+    mode?: 'spinner' | 'fading-overlay'
 }
 
 // Индикатор загрузки.
@@ -36,6 +37,7 @@ export function Loading(props: LoadingProps) {
         label,
         labelClassName,
         showDelay,
+        mode = 'spinner',
     } = props
 
     const [
@@ -83,36 +85,39 @@ export function Loading(props: LoadingProps) {
                     overlayColor,
                     overlayFillsParent ? 'fill-parent' : null,
                     floating ? 'floating' : null,
+                    mode === 'fading-overlay' ? 'fade-in-out-animation-50' : null,
                     className
                 )}
                 style={style}
                 ref={outerTransitionRef}
             >
-                <CSSTransition
-                    in={showSpinner}
-                    classNames="loading-indicator-spinner"
-                    timeout={500}
-                    mountOnEnter
-                    unmountOnExit
-                    nodeRef={innerTransitionRef}
-                >
-                    <div
-                        ref={innerTransitionRef}
-                        className={clsx(
-                            'loading-indicator',
-                            indicatorClassName
-                        )}
+                {mode === 'spinner' && (
+                    <CSSTransition
+                        in={showSpinner}
+                        classNames="loading-indicator-spinner"
+                        timeout={500}
+                        mountOnEnter
+                        unmountOnExit
+                        nodeRef={innerTransitionRef}
                     >
-                        <div className="loading-indicator-spinner-container">
-                            <div className="loading-indicator-spinner" />
-                        </div>
-                        {label && (
-                            <div className={clsx('loading-indicator-label', labelClassName)}>
-                                {label}
+                        <div
+                            ref={innerTransitionRef}
+                            className={clsx(
+                                'loading-indicator',
+                                indicatorClassName
+                            )}
+                        >
+                            <div className="loading-indicator-spinner-container">
+                                <div className="loading-indicator-spinner" />
                             </div>
-                        )}
-                    </div>
-                </CSSTransition>
+                            {label && (
+                                <div className={clsx('loading-indicator-label', labelClassName)}>
+                                    {label}
+                                </div>
+                            )}
+                        </div>
+                    </CSSTransition>
+                )}
             </div>
         </CSSTransition>
     )

@@ -11,6 +11,7 @@ import {
 } from 'react'
 import {FileApiImageManipulation} from '../../helpers/file_api/FileApiImageManipulation'
 import {Icon} from '../Icon/Icon'
+import {Loading} from '../Loading/Loading'
 import type {
     FilePickerFileInfo,
     FilePickerPreviewSizes,
@@ -48,6 +49,9 @@ export function FilePickerFilePreviewImage(props: Props) {
         }
         if (!file.file.previewDataUrl) {
             const longestSide = sizes.width > sizes.height ? sizes.width : sizes.height
+            if (file.file.isProcessing) {
+                return
+            }
             new FileApiImageManipulation(file.file)
                 // *2 для нормального качества широких или высоких картинок
                 .setMaxSize(Math.round(longestSide * 2))
@@ -79,6 +83,15 @@ export function FilePickerFilePreviewImage(props: Props) {
             ref={containerRef}
             style={sizes}
         >
+            {file.file.isProcessing && ((
+                <Loading
+                    loading
+                    floating
+                    overlayFillsParent
+                    overlayColor="semitransparent-white"
+                    mode="fading-overlay"
+                />
+            ))}
             <div
                 className="file-picker-preview-image-placeholder d-flex align-items-center justify-content-center"
                 style={{

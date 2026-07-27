@@ -80,7 +80,10 @@ export class FileApiImageManipulation<FileType extends File = File> {
 
 // Является ли файл HEIC/HEIF изображением?
 export function isHeicOrHeifFile(file: File): boolean {
-    const mimeType: string = (file as File & {mimeType?: string;}).mimeType ?? file.type
+    return file.type === 'image/heic' || file.type === 'image/heif'
+}
+
+export function isHeicOrHeifMime(mimeType: string): boolean {
     return mimeType === 'image/heic' || mimeType === 'image/heif'
 }
 

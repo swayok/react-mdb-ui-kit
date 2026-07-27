@@ -4,6 +4,7 @@ import type {AnyObject} from '../../types'
 // Данные прикрепленного файла.
 export type FileAPISelectedFileInfo = File & {
     isImage: boolean
+    isProcessing?: boolean
     mimeType?: string
     extension?: string | null
     previewDataUrl?: string
