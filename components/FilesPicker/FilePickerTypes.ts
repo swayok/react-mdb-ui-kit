@@ -193,6 +193,9 @@ export interface FilePickerInputProps {
     maxImageSize?: number
     // Конвертирование картинок в jpeg.
     convertImagesToJpeg?: boolean
+    // Конвертирование HEIF картинок в jpeg или png.
+    // По умолчанию: jpeg.
+    convertHeifTo?: 'jpeg' | 'png'
     // Качество картинки при конвертации (от 0 до 1, по умолчанию: 0,92).
     imagesCompression?: number
     // Локализация.
@@ -208,6 +211,8 @@ export interface FilePickerInputProps {
     onChange: (files: FilePickerFileInfo[]) => void
     // Дополнительный обработчик ошибки при прикреплении файла.
     onAttachmentError?: (error: string, file: FilePickerFileInfo) => void
+    // Логирование ошибок.
+    logException?: (error: unknown, file?: FilePickerFileInfo | null) => void
 }
 
 // Свойства компонента выбора файлов для загрузки на сервер,

@@ -78,6 +78,33 @@ export class FileApiImageManipulation<FileType extends File = File> {
     }
 }
 
+// Является ли файл HEIC/HEIF изображением?
+export function isHeicOrHeifFile(file: File): boolean {
+    const mimeType: string = (file as File & {mimeType?: string;}).mimeType ?? file.type
+    return mimeType === 'image/heic' || mimeType === 'image/heif'
+}
+
+// Конвертировать HEIC/HEIF файл в JPEG или PNG.
+// Используется пакет heic-to: https://www.npmjs.com/package/heic-to
+// Загружается как отдельный чанк (lazy import) т.к. библиотека heic-to довольно большая.
+export async function convertHeicFileToBlob(
+    file: File,
+    targetType: 'image/jpeg' | 'image/png',
+    quality: number = 0.92
+): Promise<Blob> {
+    // noinspection TypeScriptCheckImport
+    // @ts-ignore
+    const heicToModule = await import('heic-to')
+    const heicToFn = (heicToModule.default ?? (heicToModule as {heicTo?: unknown;}).heicTo) as (
+        params: {blob: File | Blob; type: string; quality?: number;}
+    ) => Promise<Blob>
+    return heicToFn({
+        blob: file,
+        type: targetType,
+        quality,
+    })
+}
+
 // Конвертировать <canvas> в Blob.
 export async function canvasToBlob(
     canvas: HTMLCanvasElement,

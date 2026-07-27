@@ -9,6 +9,10 @@ import {
     FileAPI,
     type FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
+import {
+    convertHeicFileToBlob,
+    isHeicOrHeifFile,
+} from '../../helpers/file_api/FileApiImageManipulation'
 import {ToastService} from '../../services/ToastService'
 import type {
     AnyObject,
@@ -52,6 +56,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
         disabled = false,
         maxImageSize = 1920,
         convertImagesToJpeg = false,
+        convertHeifTo = 'jpeg',
         imagesCompression = 0.92,
         translations = filePickerDefaultTranslations,
         dropInvalidFiles = maxFiles === 1,
@@ -60,6 +65,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
         value = [],
         onChange,
         onAttachmentError,
+        logException,
         children,
     } = props
 
@@ -173,6 +179,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
                 throw new Error('already_attached')
             }
         }
+        let processedFile: FilePickerFileInfo | null = null
         try {
             const mimeTypeInfo: string | FilePickerContextMimeTypeInfo = FilePickerHelpers.validateFileTypeAndSize(
                 file,
@@ -187,7 +194,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
                     6000
                 )
             }
-            const processedFile: FilePickerFileInfo = {
+            processedFile = {
                 UID: fileUID,
                 file,
                 error: isInvalidFileType ? mimeTypeInfo as string : null,
@@ -197,20 +204,55 @@ export function FilePickerInput(props: FilePickerInputProps) {
             }
             if (file.isImage && !isInvalidFileType) {
                 // Файл - валидная картинка.
-                // 1. Получаем имя файла.
+                // 1. Если файл в формате HEIC/HEIF - конвертируем его в JPEG или PNG
+                // с помощью пакета heic-to (браузеры не умеют работать с HEIC/HEIF нативно).
+                if (isHeicOrHeifFile(processedFile.file)) {
+                    const targetExtension: 'png' | 'jpg' = convertHeifTo === 'png' && !convertImagesToJpeg
+                        ? 'png'
+                        : 'jpg'
+                    const targetMimeType: 'image/jpeg' | 'image/png' = targetExtension === 'png'
+                        ? 'image/png'
+                        : 'image/jpeg'
+                    const convertedBlob: Blob = await convertHeicFileToBlob(
+                        processedFile.file,
+                        targetMimeType,
+                        imagesCompression
+                    )
+                    const newExtension: string = convertHeifTo === 'png' ? '.png' : '.jpg'
+                    const convertedFileName: string = processedFile.file.name.replace(
+                        /\.[a-zA-Z0-9]{1,6}$/,
+                        newExtension
+                    )
+                    processedFile.file = Object.assign(
+                        new File(
+                            [convertedBlob],
+                            convertedFileName,
+                            {
+                                lastModified: processedFile.file.lastModified,
+                                type: targetMimeType,
+                            }
+                        ),
+                        {
+                            isImage: true,
+                            mimeType: targetMimeType,
+                            extension: convertHeifTo === 'png' ? 'png' : 'jpg',
+                        }
+                    )
+                }
+                // 2. Получаем имя файла.
                 const normalizedFileName = FilePickerHelpers.getNormalizedFileName(
                     processedFile,
                     useUidAsFileName,
                     convertImagesToJpeg
                 )
-                // 2. Сжимаем и конвертируем в JPEG, если необходимо.
+                // 3. Сжимаем и конвертируем в JPEG, если необходимо.
                 const compressedFile: Blob | File = await FilePickerHelpers.compressFile(
                     processedFile,
                     maxImageSize,
                     convertImagesToJpeg,
                     imagesCompression
                 )
-                // Заменяем оригинальный файл измененным, с нормализованным названием.
+                // 4. Заменяем оригинальный файл измененным, с нормализованным названием.
                 processedFile.file = Object.assign(
                     new File([compressedFile], normalizedFileName, {
                         lastModified: processedFile.file.lastModified,
@@ -220,19 +262,12 @@ export function FilePickerInput(props: FilePickerInputProps) {
                         isImage: true,
                     }
                 )
-                // 3. Получаем дополнительные данные о картинке (размеры, exif, превью).
+                // 5. Получаем дополнительные данные о картинке (размеры, exif, превью).
                 processedFile.info = await FileAPI.getImageInfo(processedFile.file, true)
             }
             return processedFile
         } catch (e) {
-            // todo: Раскомментировать если будем использовать Sentry
-            // if (Config.isProduction) {
-            //     Sentry.captureException(e, {
-            //         extra: {
-            //             file,
-            //         },
-            //     })
-            // }
+            logException?.(e, processedFile)
             ToastService.error(translations.error.failed_to_resize_image)
             console.error('[FilePickerInput] processNewFile error: ', {
                 file,
@@ -266,7 +301,8 @@ export function FilePickerInput(props: FilePickerInputProps) {
                     onAttachmentError?.(processedFile.error, processedFile)
                 }
             } catch (e: unknown) {
-                if (e !== null) { // < except for a file is already added or there no more places left
+                if (e !== null) {
+                    // Except for a file is already added or there no more places left.
                     console.error('[FilePicker] Failed to process new file', {
                         index: i,
                         file: selectedFiles[i],
