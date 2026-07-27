@@ -1,10 +1,13 @@
 import clsx from 'clsx'
-import type {CSSProperties} from 'react'
+import {
+    type CSSProperties,
+    type ReactNode,
+} from 'react'
 import {useFilePickerContext} from './FilePickerContext'
 import {FilePickerFilePreviewFile} from './FilePickerFilePreviewFile'
 import {FilePickerFilePreviewImage} from './FilePickerFilePreviewImage'
 import type {
-    FilePickerContextMimeTypeInfo,
+    FilePickerContextMimeTypePreviewRenderer,
     FilePickerFileInfo,
     FilePickerPreviewSizes,
 } from './FilePickerTypes'
@@ -42,49 +45,49 @@ export function FilePickerFilePreviewContent(props: Props) {
         style,
     } = props
 
-    const previewInfo: FilePickerContextMimeTypeInfo = previews[file.file.mimeType ?? file.file.type] ?? {
-        mime: '',
-        type: 'file',
-        extensions: [],
-        preview: fallbackPreview,
-    } as FilePickerContextMimeTypeInfo
-
-    // noinspection SuspiciousTypeOfGuard
-    const imagePreviewSizes: FilePickerPreviewSizes = typeof imagePreviewSize === 'number'
-        ? {width: imagePreviewSize, height: imagePreviewSize}
-        : imagePreviewSize
+    let content: ReactNode
+    if (file.file.isImage) {
+        content = (
+            <FilePickerFilePreviewImage
+                file={file}
+                sizes={typeof imagePreviewSize === 'number'
+                    ? {width: imagePreviewSize, height: imagePreviewSize}
+                    : imagePreviewSize}
+                style={style}
+                borderRadius={borderRadius}
+            />
+        )
+    } else {
+        content = (
+            <FilePickerFilePreviewFile
+                file={file}
+                sizes={previewSizes}
+                renderer={
+                    previews[file.file.mimeType ?? file.file.type]?.preview as FilePickerContextMimeTypePreviewRenderer
+                    ?? fallbackPreview
+                }
+                borderRadius={borderRadius}
+                allowFileNameTooltip={allowFileNameTooltip}
+                style={style}
+                additionalClassName={fileClassName}
+            />
+        )
+    }
 
     return (
         <div
             className={clsx(
                 'file-picker-preview',
-                previewInfo.preview === 'image'
+                file.file.isImage
                     ? 'file-picker-preview-for-image'
                     : 'file-picker-preview-for-file',
                 className,
                 additionalClassName,
-                previewInfo.preview === 'image' ? imageClassName : null
+                file.file.isImage ? imageClassName : null
             )}
             style={previewSizes}
         >
-            {previewInfo.preview === 'image' ? (
-                <FilePickerFilePreviewImage
-                    file={file}
-                    sizes={imagePreviewSizes}
-                    style={style}
-                    borderRadius={borderRadius}
-                />
-            ) : (
-                <FilePickerFilePreviewFile
-                    file={file}
-                    sizes={previewSizes}
-                    renderer={previewInfo.preview}
-                    borderRadius={borderRadius}
-                    allowFileNameTooltip={allowFileNameTooltip}
-                    style={style}
-                    additionalClassName={fileClassName}
-                />
-            )}
+            {content}
         </div>
     )
 }

@@ -158,6 +158,8 @@ export interface ManagedFilePickerProps<T extends FilePickerFileInfo = FilePicke
         existingFiles: T[],
         newFiles: T[]
     ) => void
+    // Логирование ошибок.
+    logException?: (error: unknown, file?: FilePickerFileInfo | null) => void
 }
 
 /**
@@ -234,6 +236,8 @@ export interface FilePickerWithUploaderProps extends Omit<ManagedFilePickerProps
     deleteUrl?: string | null
     // HTTP метод удаления файлов с сервера, по умолчанию: delete.
     deleteMethod: ApiRequestMethod
+    // Логирование ошибок.
+    logException?: (error: unknown, file?: FilePickerFileInfo | null) => void
 }
 
 // Свойства компонента FilePickerTrigger.
@@ -418,4 +422,10 @@ export interface FilePickerFilePreviewProps<
     animate?: boolean
     // Увеличивать картинку при наведении курсора?
     scaleImageOnHover?: boolean
+}
+
+// Результат валидации файла.
+export interface FilePickerFileValidationResult {
+    error: string | null
+    mimeTypeInfo: FilePickerContextMimeTypeInfo | null
 }

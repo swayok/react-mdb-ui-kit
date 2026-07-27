@@ -12,6 +12,7 @@ import {
     convertHeicFileToBlob,
     isHeicOrHeifMime,
 } from '../../helpers/file_api/FileApiImageManipulation'
+import {useDragDropTouchPolyfill} from '../../helpers/useDragDropTouchPolyfill'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import {ToastService} from '../../services/ToastService'
 import type {
@@ -31,6 +32,7 @@ import type {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
+    FilePickerFileValidationResult,
     FilePickerInputProps,
 } from './FilePickerTypes'
 
@@ -47,19 +49,18 @@ const positionDelta: number = 1
  * через вызов onChange.
  */
 export function FilePickerInput(props: FilePickerInputProps) {
-
     const {
         allowImages = true,
         allowFiles = true,
         maxFiles = null,
-        maxFileSizeKb = 8 * 1024,
+        maxFileSizeKb = 8192,
         disabled = false,
         maxImageSize = 1920,
         convertImagesToJpeg = false,
         convertHeifTo = 'jpeg',
         imagesCompression = 0.92,
         translations = filePickerDefaultTranslations,
-        dropInvalidFiles = maxFiles === 1,
+        dropInvalidFiles: propsDropInvalidFiles,
         allowedMimeTypes,
         useUidAsFileName,
         value = [],
@@ -69,13 +70,13 @@ export function FilePickerInput(props: FilePickerInputProps) {
         children,
     } = props
 
+    const dropInvalidFiles: boolean = propsDropInvalidFiles ?? (maxFiles === 1)
+
     // Поле ввода, которое используется для обработки выбора файла.
     const inputRef = useRef<HTMLInputElement>(null)
 
-    useEffect(() => {
-        // Полифил для мобильных устройств для имитации drag-and-drop событий из touch событий.
-        void import('drag-drop-touch')
-    }, [])
+    // Полифил для мобильных устройств для имитации drag-and-drop событий из touch событий.
+    useDragDropTouchPolyfill()
 
     // Нормализация списка файлов.
     const files: FilePickerFileInfo[] = useMemo(
@@ -196,8 +197,11 @@ export function FilePickerInput(props: FilePickerInputProps) {
                 }
                 // Данные уже добавлены в value.
                 const updates = [...files]
-                updates[index].file = compressedFileInfo
-                updates[index].info = imageInfo
+                updates[index] = {
+                    ...updates[index],
+                    file: compressedFileInfo,
+                    info: imageInfo,
+                }
                 onChange(updates)
             })
             .catch(error => {
@@ -213,7 +217,10 @@ export function FilePickerInput(props: FilePickerInputProps) {
                 } else {
                     // Данные уже добавлены в value.
                     const updates = [...files]
-                    updates[index].error = errorMessage
+                    updates[index] = {
+                        ...updates[index],
+                        error: errorMessage,
+                    }
                     onChange(updates)
                 }
                 console.error('[FilePickerInput] compressFile error: ', {
@@ -337,35 +344,35 @@ export function FilePickerInput(props: FilePickerInputProps) {
         }
         let processedFile: FilePickerFileInfo | null = null
         try {
-            const validationResult: string | FilePickerContextMimeTypeInfo = FilePickerHelpers.validateFileTypeAndSize(
+            const validationResult: FilePickerFileValidationResult = FilePickerHelpers.validateFileTypeAndSize(
                 file,
                 allowedFileTypes,
                 translations,
                 maxFileSizeKb
             )
-            const isInvalidFileType: boolean = typeof validationResult === 'string'
             processedFile = {
                 UID: fileUID,
                 file,
-                error: isInvalidFileType ? validationResult as string : null,
+                error: validationResult.error,
                 info: null,
                 position,
                 isNew: true,
             }
-            if (isInvalidFileType) {
+            if (validationResult.error) {
                 ToastService.error(
-                    translations.error.invalid_file(file.name, validationResult as string),
+                    translations.error.invalid_file(file.name, validationResult.error),
                     6000
                 )
                 return processedFile
             }
-            return file.isImage
-                ? await processNewImage(
+            if (file.isImage) {
+                return await processNewImage(
                     file,
                     processedFile,
-                    validationResult as FilePickerContextMimeTypeInfo
+                    validationResult.mimeTypeInfo!
                 )
-                : processedFile
+            }
+            return processedFile
         } catch (e) {
             logException?.(e, processedFile)
             console.error('[FilePickerInput] processNewFile error: ', {

@@ -27,6 +27,7 @@ interface Props {
 
 // Предпросмотр прикрепленной картинки.
 export function FilePickerFilePreviewImage(props: Props) {
+
     const {
         file,
         sizes,
@@ -71,7 +72,7 @@ export function FilePickerFilePreviewImage(props: Props) {
             containerRef.current.innerHTML = ''
             containerRef.current.style.backgroundImage = `url("${file.file.previewDataUrl}")`
         }
-    }, [containerRef.current, file.file.previewDataUrl])
+    }, [file.file.previewDataUrl, file.file.isProcessing])
 
     return (
         <div

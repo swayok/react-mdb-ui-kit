@@ -8,6 +8,7 @@ import type {
     FilePickerContextProps,
     FilePickerFileInfo,
     FilePickerFileInfoFromDB,
+    FilePickerFileValidationResult,
     FilePickerUploadInfo,
     FilePickerWithUploaderFileInfo,
     ManagedFilePickerProps,
@@ -173,11 +174,14 @@ export abstract class FilePickerHelpers {
         mimes: FilePickerContextProps['previews'],
         translations: ManagedFilePickerProps['translations'],
         maxFileSizeKb?: number
-    ): string | FilePickerContextMimeTypeInfo {
+    ): FilePickerFileValidationResult {
         const mimeType: string = file.mimeType ?? file.type
         if (!mimes[mimeType]) {
             console.log('[FilePicker] No preview config for mime type: ' + mimeType)
-            return translations.error.mime_type_forbidden(file.extension ?? mimeType)
+            return {
+                error: translations.error.mime_type_forbidden(file.extension ?? mimeType),
+                mimeTypeInfo: null,
+            }
         }
         const mimesForType: FilePickerContextMimeTypeInfo = mimes[mimeType]
         if (
@@ -187,21 +191,30 @@ export abstract class FilePickerHelpers {
             )
             || file.name.toLowerCase() === file.extension
         ) {
-            return translations.error.mime_type_and_extension_mismatch(
-                file.extension ?? '',
-                mimeType
-            )
+            return {
+                error: translations.error.mime_type_and_extension_mismatch(
+                    file.extension ?? '',
+                    mimeType
+                ),
+                mimeTypeInfo: mimesForType,
+            }
         }
         if (
             mimesForType.preview !== 'image'
             && maxFileSizeKb
             && file.size / 1024 > maxFileSizeKb
         ) {
-            return translations.error.file_too_large(
-                Math.round(maxFileSizeKb / 1024 * 100) / 100
-            )
+            return {
+                error: translations.error.file_too_large(
+                    Math.round(maxFileSizeKb / 1024 * 100) / 100
+                ),
+                mimeTypeInfo: mimesForType,
+            }
         }
-        return mimesForType
+        return {
+            error: null,
+            mimeTypeInfo: mimesForType,
+        }
     }
 
     // Может ли пользователь удалить этот файл?

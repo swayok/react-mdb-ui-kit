@@ -31,9 +31,9 @@ import {
 } from './FilePickerContext'
 import {FilePickerHelpers} from './FilePickerHelpers'
 import type {
-    FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
+    FilePickerFileValidationResult,
     FilePickerUploadInfo,
     FilePickerWithUploaderFileInfo,
     FilePickerWithUploaderProps,
@@ -371,19 +371,19 @@ export class FilePickerWithUploader extends Component<
             }
         }
         return new Promise<FilePickerWithUploaderFileInfo>((resolve, reject) => {
+            let processedFile: FilePickerWithUploaderFileInfo | null = null
             try {
-                const mimeTypeInfo: string | FilePickerContextMimeTypeInfo = this.validateFileType(file)
-                const isInvalidFileType: boolean = typeof mimeTypeInfo === 'string'
-                if (isInvalidFileType) {
+                const validationResult: FilePickerFileValidationResult = this.validateFileType(file)
+                if (validationResult.error) {
                     ToastService.error(
-                        this.props.translations.error.invalid_file(file.name, mimeTypeInfo as string),
+                        this.props.translations.error.invalid_file(file.name, validationResult.error),
                         6000
                     )
                 }
-                const processedFile: FilePickerWithUploaderFileInfo = {
+                processedFile = {
                     UID: fileUID,
                     file,
-                    error: isInvalidFileType ? mimeTypeInfo as string : null,
+                    error: validationResult.error,
                     info: null,
                     position,
                     uploadingCancelled: false,
@@ -397,39 +397,33 @@ export class FilePickerWithUploader extends Component<
                         uploadingXhr: null,
                     },
                 }
-                if (isInvalidFileType || !file.isImage) {
+                if (validationResult.error || !file.isImage) {
                     // Файл должен быть отображен либо с ошибкой, либо без превью (если не картинка).
                     resolve(processedFile)
                 } else {
                     FileAPI
                         .getImageInfo(file, true)
                         .then((info: FileAPIImageFileInfo | null) => {
-                            processedFile.info = info
+                            processedFile!.info = info
                             // console.log('[FilePicker] image info', info);
-                            resolve(processedFile)
+                            resolve(processedFile!)
                         })
                         .catch(reject)
                 }
-            } catch (e) {
-                // todo: Раскомментировать если будем использовать Sentry
-                // if (Config.isProduction) {
-                //     Sentry.captureException(e, {
-                //         extra: {
-                //             file,
-                //         },
-                //     })
-                // }
+            } catch (error) {
+                this.props.logException?.(error, processedFile)
                 console.error('[FilePickerWithUploader] processNewFile error: ', {
                     file,
-                    error: e,
+                    error,
                 })
-                reject(e as Error)
+                // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+                reject(error)
             }
         })
     }
 
     // Валидация типа файла.
-    private validateFileType = (file: FileAPISelectedFileInfo): string | FilePickerContextMimeTypeInfo =>
+    private validateFileType = (file: FileAPISelectedFileInfo): FilePickerFileValidationResult =>
         FilePickerHelpers.validateFileTypeAndSize(
             file,
             this.getAllowedFileTypes(),

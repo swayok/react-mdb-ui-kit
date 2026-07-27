@@ -11,6 +11,7 @@ import {
     type FileAPIImageFileInfo,
     type FileAPISelectedFileInfo,
 } from '../../helpers/file_api/FileAPI'
+import {useDragDropTouchPolyfill} from '../../helpers/useDragDropTouchPolyfill'
 import {ToastService} from '../../services/ToastService'
 import type {
     AnyObject,
@@ -29,6 +30,7 @@ import type {
     FilePickerContextMimeTypeInfo,
     FilePickerContextProps,
     FilePickerFileInfo,
+    FilePickerFileValidationResult,
     FilePickerUploadInfo,
     ManagedFilePickerProps,
 } from './FilePickerTypes'
@@ -59,6 +61,7 @@ export function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileIn
         onFileRestored,
         onReorder,
         onExistingFileDelete,
+        logException,
         apiRef,
         children,
     } = props
@@ -72,10 +75,8 @@ export function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileIn
         setFiles,
     ] = useState<FilePickerFileInfo[]>([])
 
-    useEffect(() => {
-        // Полифил для мобильных устройств для имитации drag-and-drop событий из touch событий.
-        void import('drag-drop-touch')
-    }, [])
+    // Полифил для мобильных устройств для имитации drag-and-drop событий из touch событий.
+    useDragDropTouchPolyfill()
 
     // Вычислить позицию для нового прикрепленного файла.
     const getNextFilePosition = useCallback((): number => {
@@ -168,56 +169,50 @@ export function ManagedFilePicker(props: ManagedFilePickerProps<FilePickerFileIn
             }
         }
         return new Promise<FilePickerFileInfo>((resolve, reject) => {
+            let processedFile: FilePickerFileInfo | null = null
             try {
-                const mimeTypeInfo: string | FilePickerContextMimeTypeInfo = FilePickerHelpers.validateFileTypeAndSize(
+                const validationResult: FilePickerFileValidationResult = FilePickerHelpers.validateFileTypeAndSize(
                     file,
                     allowedFileTypes,
                     translations,
                     maxFileSizeKb
                 )
-                const isInvalidFileType: boolean = typeof mimeTypeInfo === 'string'
-                if (isInvalidFileType) {
+                if (validationResult.error) {
                     ToastService.error(
-                        translations.error.invalid_file(file.name, mimeTypeInfo as string),
+                        translations.error.invalid_file(file.name, validationResult.error),
                         6000
                     )
                 }
-                const processedFile: FilePickerFileInfo = {
+                processedFile = {
                     UID: fileUID,
                     file,
-                    error: isInvalidFileType ? mimeTypeInfo as string : null,
+                    error: validationResult.error,
                     info: null,
                     position,
                     isDeleted: false,
                     isNew: true,
                 }
-                if (isInvalidFileType || !file.isImage) {
+                if (validationResult.error || !file.isImage) {
                     // Файл должен быть отображен либо с ошибкой, либо без превью (если не картинка).
                     resolve(processedFile)
                 } else {
                     FileAPI
                         .getImageInfo(file, true)
                         .then((info: FileAPIImageFileInfo | null) => {
-                            processedFile.info = info
+                            processedFile!.info = info
                             // console.log('[FilePicker] image info', info);
-                            resolve(processedFile)
+                            resolve(processedFile!)
                         })
                         .catch(reject)
                 }
-            } catch (e) {
-                // todo: Раскомментировать если будем использовать Sentry
-                // if (Config.isProduction) {
-                //     Sentry.captureException(e, {
-                //         extra: {
-                //             file,
-                //         },
-                //     })
-                // }
+            } catch (error) {
+                logException?.(error, processedFile)
                 console.error('[FilePicker] processNewFile error: ', {
                     file,
-                    error: e,
+                    error,
                 })
-                reject(e as Error)
+                // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+                reject(error)
             }
         })
     }

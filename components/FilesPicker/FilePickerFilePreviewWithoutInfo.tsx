@@ -4,7 +4,10 @@ import {
     mdiCloseCircleOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
-import {useRef} from 'react'
+import {
+    useMemo,
+    useRef,
+} from 'react'
 import {CSSTransition} from 'react-transition-group'
 import {ToastService} from '../../services/ToastService'
 import {Card} from '../Card/Card'
@@ -55,16 +58,23 @@ export function FilePickerFilePreviewWithoutInfo(
         ...containerProps
     } = props
 
-    // noinspection SuspiciousTypeOfGuard
-    const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
-        ? {width: previewSize, height: previewSize}
-        : previewSize
+    const sizes: {preview: FilePickerPreviewSizes; icon: number;} = useMemo(
+        () => {
+            const previewSizes: FilePickerPreviewSizes = typeof previewSize === 'number'
+                ? {width: previewSize, height: previewSize}
+                : previewSize
 
-    const iconSize: number = Math.max(
-        50,
-        Math.round(
-            (previewSizes.width < previewSizes.height ? previewSizes.width : previewSizes.height) / 2
-        )
+            const iconSize: number = Math.max(
+                50,
+                Math.round(
+                    (previewSizes.width < previewSizes.height ? previewSizes.width : previewSizes.height) / 2
+                )
+            )
+            return {
+                preview: previewSizes,
+                icon: iconSize,
+            }
+        }, [previewSize]
     )
 
     // Не продолжаем, если файл удалён при определенном наборе значений других свойств.
@@ -82,7 +92,7 @@ export function FilePickerFilePreviewWithoutInfo(
                 className
             )}
             style={{
-                ...previewSizes,
+                ...sizes.preview,
                 order: file.position,
             }}
             wrapperRef={transitionRef}
@@ -90,7 +100,7 @@ export function FilePickerFilePreviewWithoutInfo(
             <CardBody
                 className="position-relative p-0"
                 style={{
-                    ...previewSizes,
+                    ...sizes.preview,
                     ...style,
                 }}
                 {...containerProps}
@@ -105,7 +115,7 @@ export function FilePickerFilePreviewWithoutInfo(
                 >
                     <FilePickerFilePreviewContent
                         file={file}
-                        previewSizes={previewSizes}
+                        previewSizes={sizes.preview}
                         imagePreviewSize={imagePreviewSize}
                         imageClassName={imageClassName}
                         fileClassName={fileClassName}
@@ -123,7 +133,7 @@ export function FilePickerFilePreviewWithoutInfo(
                                         left: 0,
                                         minHeight: 'auto',
                                         minWidth: 'auto',
-                                        ...previewSizes,
+                                        ...sizes.preview,
                                     }}
                                 />
                             </div>
@@ -136,13 +146,13 @@ export function FilePickerFilePreviewWithoutInfo(
                                     top: 0,
                                     left: 0,
                                     zIndex: 101,
-                                    ...previewSizes,
+                                    ...sizes.preview,
                                 }}
                                 onClick={() => ToastService.error(file.error!)}
                             >
                                 <Icon
                                     path={mdiAlertCircle}
-                                    size={iconSize}
+                                    size={sizes.icon}
                                     color="red"
                                     className="bg-white rounded-circle"
                                 />
