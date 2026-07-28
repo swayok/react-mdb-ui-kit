@@ -4,7 +4,6 @@ import type {
     AnyObject,
     BasicLanguageConfig,
     BasicRegionConfig,
-    FormSelectOption,
     FormSelectOptionsList,
     PartialRecord,
 } from '../types'
@@ -67,12 +66,12 @@ export class LocaleService<
 
     // Получить список опций для компонентов смены региона и языка.
     getLanguagesListAsOptions(): FormSelectOptionsList<LanguageCode, LanguageConfig> {
-        return this.languagesManager.getLanguagesListAsOptions() as FormSelectOption<LanguageCode, LanguageConfig>[]
+        return this.languagesManager.getLanguagesListAsOptions()
     }
 
     // Получить список опций для компонентов смены региона и языка.
     getRegionsListAsOptions(): FormSelectOptionsList<RegionCode, RegionConfig> {
-        return this.regionsManager.getRegionsListAsOptions() as FormSelectOption<RegionCode, RegionConfig>[]
+        return this.regionsManager.getRegionsListAsOptions()
     }
 
     // Определение локали разными способами.
