@@ -61,7 +61,10 @@ export class RegionsManager<
     getRegionsListAsOptions(): FormSelectOptionsList<RegionCode, RegionConfigType> {
         const ret: FormSelectOption<RegionCode, RegionConfigType>[] = []
         for (const key in this.regions) {
-            const config: RegionConfigType = this.regions[key]!
+            const config: RegionConfigType | null = this.regions[key] ?? null
+            if (!config) {
+                continue
+            }
             ret.push({
                 value: config.region,
                 label: config.label,
@@ -104,8 +107,8 @@ export class RegionsManager<
             return null
         }
         for (const key in this.regions) {
-            const region = this.regions[key]!
-            if (region.variations.includes(regionOrLocale.toLowerCase())) {
+            const region = this.regions[key] ?? null
+            if (region?.variations.includes(regionOrLocale.toLowerCase())) {
                 return region
             }
         }
@@ -118,8 +121,8 @@ export class RegionsManager<
     ): RegionConfigType {
         if (languageOrLocale) {
             for (const key in this.regions) {
-                const region = this.regions[key]!
-                if (region.variations.includes(languageOrLocale.toLowerCase())) {
+                const region = this.regions[key] ?? null
+                if (region?.variations.includes(languageOrLocale.toLowerCase())) {
                     return region
                 }
             }
