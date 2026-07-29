@@ -34,6 +34,7 @@ export function ComboboxInput<
         optionsFiltering = true,
         focusFirstItemOnOpen = true,
         optionLabelIsHtml = false,
+        selectOptionOnTabKey = true,
         inputRef,
         value,
         title,
@@ -120,7 +121,7 @@ export function ComboboxInput<
         if (
             isOpen
             && activeIndex !== null
-            && (event.key === 'Enter' || event.key === 'Tab')
+            && (event.key === 'Enter' || (selectOptionOnTabKey && event.key === 'Tab'))
             && !event.shiftKey
             && !event.altKey
             && !event.ctrlKey
@@ -129,7 +130,7 @@ export function ComboboxInput<
             onItemClick(filteredOptions[activeIndex], event)
             event.preventDefault()
         }
-        if (isOpen && event.key === 'Enter') {
+        if (isOpen && (event.key === 'Enter' || event.key === 'Tab')) {
             setIsOpen(false)
         }
         onKeyDown?.(

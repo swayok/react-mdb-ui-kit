@@ -180,6 +180,11 @@ export interface ComboboxInputProps<
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
     // Требуется для того, чтобы не загораживать подпись в активном режиме отображения.
     dropUpOffset?: number
+    // Вызвать onOptionSelect при нажатии Tab на клавиатуре?
+    // По умолчанию: true.
+    selectOptionOnTabKey?: boolean
+    // Обработчик изменения значения поля ввода.
+    // В value либо введенная строка, либо значение выбранной опции (option.value).
     onChange?: (
         value: string | OptionValueType,
         option: FormSelectOption<OptionValueType, OptionExtras> | undefined,
