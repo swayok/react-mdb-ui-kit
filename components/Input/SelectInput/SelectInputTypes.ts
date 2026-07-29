@@ -164,7 +164,8 @@ export interface SelectInputProps<
 export interface ComboboxInputProps<
     OptionValueType = string | number | null,
     OptionExtras extends AnyObject = AnyObject,
-> extends Omit<InputProps, 'onChange' | 'onKeyDown'> {
+> extends Omit<InputProps, 'onChange' | 'onKeyDown'>,
+    Pick<DropdownMenuProps, 'drop' | 'align' | 'flip' | 'shift' | 'shadow' | 'isRTL' | 'variant'> {
     options?: FormSelectOptionsList<OptionValueType, OptionExtras> | string[]
     // Включить/отключить фильтрацию опций по value?
     // По умолчанию: true.

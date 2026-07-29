@@ -25,7 +25,7 @@ export const AccessDeniedErrorHttpCode: number = 403
  * Глобальные настройки обработки ошибок от API.
  */
 export interface ApiRequestErrorHelpersConfig {
-    logoutRoute: string
+    logoutRoute: string | (() => string)
     translator: () => HttpErrorsTranslations
 }
 
@@ -357,7 +357,11 @@ export function handleAuthorisationErrorResponse(response: ApiError, handlers: E
     if (!response.data._message) {
         handlers.handleMessage?.(response, config.translator().code401.toast, 'error')
     }
-    NavigationService.navigate(config.logoutRoute)
+    NavigationService.navigate(getLogoutRoute())
+}
+
+function getLogoutRoute(): string {
+    return typeof config.logoutRoute === 'function' ? config.logoutRoute() : config.logoutRoute
 }
 
 // Обработка ошибки ограничения доступа.

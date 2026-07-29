@@ -30,11 +30,6 @@ export function ComboboxInput<
 >(props: ComboboxInputProps<OptionValueType, OptionExtras>) {
 
     const {
-        options = [],
-        optionsFiltering = true,
-        focusFirstItemOnOpen = true,
-        optionLabelIsHtml = false,
-        selectOptionOnTabKey = true,
         inputRef,
         value,
         title,
@@ -44,8 +39,23 @@ export function ComboboxInput<
         onClick,
         onChange,
         onKeyDown,
+
+        // Dropdown.
+        options = [],
+        optionsFiltering = true,
+        optionLabelIsHtml = false,
+        focusFirstItemOnOpen = true,
+        selectOptionOnTabKey = true,
         maxDropdownHeight = 500,
         dropUpOffset = label && label.length > 0 ? 8 : 0,
+        drop,
+        align,
+        flip,
+        shift,
+        shadow,
+        isRTL,
+        variant,
+
         ...inputProps
     } = props
 
@@ -74,6 +84,11 @@ export function ComboboxInput<
     } = useSelectInputDropdown({
         inputRef,
         focusFirstItemOnOpen,
+        shift,
+        drop,
+        align,
+        flip,
+        isRTL,
         onSearch: useEventCallback((
             event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
@@ -185,6 +200,8 @@ export function ComboboxInput<
                         {...getFloatingProps()}
                         style={floatingStyles}
                         maxHeight={maxDropdownHeight}
+                        shadow={shadow}
+                        variant={variant}
                     >
                         <DropdownMenuScrollableContainer>
                             {filteredOptions.map((option, index) => (
