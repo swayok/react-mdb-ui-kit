@@ -1,7 +1,6 @@
 import {
     autoUpdate,
     flip,
-    type FlipOptions,
     offset,
     type OpenChangeReason,
     shift,
@@ -63,7 +62,7 @@ export function useInputFloatingMenu(
         drop = 'down',
         dropUpOffset,
         isRTL,
-        flip: shouldFlip = {padding: 10} as FlipOptions,
+        flip: shouldFlip = {padding: 10},
         offset: optionsOffset = 2,
         shift: shouldShift = false,
         /**
@@ -113,11 +112,20 @@ export function useInputFloatingMenu(
         [align, drop, isRTL]
     )
 
+    // If flip has an explicit boundary, also apply it to the size middleware
+    // so that availableHeight is calculated within the same boundary.
+    // This prevents the dropdown from overflowing the container's header
+    // when opening upwards.
+    const flipBoundary = typeof shouldFlip === 'object' && shouldFlip !== null
+        ? shouldFlip.boundary
+        : undefined
+
     const sizeMiddleware = size({
         apply(info) {
             return applyDropdownMenuSize(info, maxHeight, dropdownWidth, dropUpOffset)
         },
         padding: 10,
+        ...(flipBoundary !== undefined ? {boundary: flipBoundary} : {}),
     }, [dropdownWidth, maxHeight, dropUpOffset])
 
     // noinspection SuspiciousTypeOfGuard
@@ -148,11 +156,13 @@ export function useInputFloatingMenu(
 
     const setInputRef = useMergedRefs(
         inputRef,
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         refs.setReference
     )
 
     const setMenuRef = useMergedRefs(
         menuRef,
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         refs.setFloating
     )
 
