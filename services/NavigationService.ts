@@ -23,7 +23,6 @@ export interface NavigationServiceConfig {
     // URL с локалью.
     baseUrl: string
     baseApiUrl: string
-    defaultPrivateUrl: string | ((permissions?: object) => string)
 }
 
 export type NavigationCallback = (url: Location) => void
@@ -35,7 +34,6 @@ export class NavigationService {
         rootUrl: '/',
         baseUrl: '/',
         baseApiUrl: '/api',
-        defaultPrivateUrl: '/account',
     }
     // Функция для перехода между страницами.
     private static navigator: NavigateFunction | null = null
@@ -54,12 +52,6 @@ export class NavigationService {
         config.rootUrl = config.rootUrl.replace(/\/$/, '') + '/'
         config.baseUrl = config.baseUrl.replace(/\/$/, '') + '/'
         config.baseApiUrl = config.baseApiUrl.replace(/\/$/, '') + '/'
-        if (typeof config.defaultPrivateUrl === 'function') {
-            const originalFn = config.defaultPrivateUrl
-            config.defaultPrivateUrl = permissions => originalFn(permissions).replace(/\/$/, '')
-        } else {
-            config.defaultPrivateUrl = config.defaultPrivateUrl.replace(/\/$/, '')
-        }
         this.config = config
     }
 
@@ -187,8 +179,8 @@ export class NavigationService {
     }
 
     // Переход на страницу, запрошенную до перенаправления на авторизацию.
-    static navigateToIntendedUrl(permissions?: Record<string, boolean | undefined>) {
-        this._navigate('replace', this.getIntendedUrl(permissions))
+    static navigateToIntendedUrl(fallbackUrl: string) {
+        this._navigate('replace', this.getIntendedUrl(fallbackUrl))
     }
 
     // Переход на страницу по данным объекта Location.
@@ -267,7 +259,7 @@ export class NavigationService {
     }
 
     // Получение URL, запрошенного до перенаправления на авторизацию.
-    static getIntendedUrl(permissions?: Record<string, boolean | undefined>): string {
+    static getIntendedUrl(fallbackUrl: string): string {
         const location = this.location
         if (
             location?.state?.from?.pathname
@@ -278,12 +270,7 @@ export class NavigationService {
             const from: Location = location.state.from
             return this.makeUrlFromLocation(from)
         } else {
-            // console.log('B', this.config.defaultPrivateUrl, typeof this.config.defaultPrivateUrl === 'function'
-            //     ? this.config.defaultPrivateUrl(permissions)
-            //     : this.config.defaultPrivateUrl)
-            return typeof this.config.defaultPrivateUrl === 'function'
-                ? this.config.defaultPrivateUrl(permissions)
-                : this.config.defaultPrivateUrl
+            return fallbackUrl
         }
     }
 

@@ -282,24 +282,30 @@ export function formatValueForMask(value: string, template: string, focused: boo
 
 // Удаление фиксированной части из начала значения и не цифровых символов.
 function removeTemplateCharacters(value: string, template: string): string {
-    const fixedTemplatePart: string = template.replace(/^([^_ ]+).*$/, '$1').replace(/([+*.])/g, '\\$1')
-    return value.replace(new RegExp(`^${fixedTemplatePart}`), '').replace(/[^0-9]+/g, '')
+    const fixedPrefix: string = template
+        .replace(/^([^_ ]+).*$/, '$1')
+        .replace(/([+*.])/g, '\\$1')
+    // Strip the fixed prefix from the start of the value using plain string comparison.
+    if (fixedPrefix.length > 0 && value.startsWith(fixedPrefix)) {
+        value = value.substring(fixedPrefix.length)
+    }
+    return value.replace(/[^0-9]+/g, '')
 }
 
 // Проверка функции removeTemplateCharacters.
 export function testRemoveTemplateCharacters() {
     const ret = []
     let values = [
-        '+79771234567',
-        '+7 (977) 123-45-67',
-        '+7(977)123-45-67',
-        '+7(977)1234567',
-        '7(977)1234567', // < Тут ожидается несоответствие с expectedValue, т.к. нет + в начале.
+        '+39771234567',
+        '+3 (977) 123-45-67',
+        '+3(977)123-45-67',
+        '+3(977)1234567',
+        '3(977)1234567', // < Тут ожидается несоответствие с expectedValue, т.к. нет + в начале.
         '(977)1234567',
         '(977)123-45-67',
         '9771234567',
     ]
-    let template = '+7 (___) ___-__-__'
+    let template = '+3 (___) ___-__-__'
     let expectedValue = '9771234567'
     for (const value of values) {
         const result = removeTemplateCharacters(value, template)
