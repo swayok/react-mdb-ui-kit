@@ -160,6 +160,13 @@
             min-height: form-input-group.$input-group-addon-min-height-lg;
             @include rfs.font-size(form-input-group.$input-group-addon-font-size-lg);
         }
+
+        &.with-icon,
+        &.with-icon-flex {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
     }
 
     // Несколько .form-outline полей ввода в группе.

@@ -27,7 +27,9 @@ $form-outline-label-transition: all 0.2s linear 0.15s !default;
 $form-outline-label-color: form-input-base.$input-placeholder-color !default;
 
 // Focus & active:
-$form-outline-active-label-transform: translateY(-1.32rem) scale(0.9) !default;
+$form-outline-active-label-translate-y: -1.32rem !default;
+$form-outline-active-label-scale: 0.9 !default;
+$form-outline-active-label-transform: translateY($form-outline-active-label-translate-y) scale($form-outline-active-label-scale) !default;
 $form-outline-active-label-transition: all 0.25s linear !default;
 $form-outline-active-label-color: colors.$primary !default;
 $form-outline-focus-border-width: 0.125rem !default;
@@ -39,7 +41,10 @@ $form-outline-input-padding-top-sm: 0.344rem !default;
 $form-outline-input-padding-bottom-sm: 0.344rem !default;
 $form-outline-label-padding-top-sm: $form-outline-input-padding-top-sm !default;
 $form-outline-label-font-size-sm: form-input-base.$input-font-size-sm !default;
-$form-outline-active-label-transform-sm: translateY(-1rem) translateX(0.1rem) scale(0.9) !default;
+$form-outline-active-label-translate-x-sm: 0.1rem !default;
+$form-outline-active-label-translate-y-sm: -1rem !default;
+$form-outline-active-label-scale-sm: $form-outline-active-label-scale !default;
+$form-outline-active-label-transform-sm: translateY($form-outline-active-label-translate-y-sm) translateX($form-outline-active-label-translate-x-sm) scale($form-outline-active-label-scale-sm) !default;
 $form-outline-input-font-size-sm: form-input-base.$input-font-size-sm !default;
 $form-outline-input-line-height-sm: $form-outline-input-line-height !default;
 $form-notch-border-radius-sm: form-input-base.$input-border-radius-sm !default;
