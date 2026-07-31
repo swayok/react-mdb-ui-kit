@@ -121,7 +121,8 @@
     }
 
     // Dividers (basically an `<hr>`) within the dropdown
-    .dropdown-divider {
+    .dropdown-divider,
+    hr.dropdown-divider {
         height: 0;
         margin: dropdown.$dropdown-divider-margin-y 0;
         overflow: hidden;
@@ -189,6 +190,10 @@
     a.dropdown-item {
         display: block;
         white-space: nowrap; // prevent links from randomly breaking onto new lines
+
+        &.with-icon-flex {
+            display: flex;
+        }
     }
 
     .dropdown-menu.show {
