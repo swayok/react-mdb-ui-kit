@@ -189,6 +189,8 @@ export interface DropdownMenuProps<
     drop?: DropdownDropDirection
     // Позиция выпадающего меню (горизонтальная).
     align?: DropdownAlign
+    // Использовать position: fixed вместо position: absolute?
+    fixedPositioning?: boolean
     /**
      * Уровень отбрасываемой тени.
      * Добавляет CSS класс `shadow-${shadow}`.

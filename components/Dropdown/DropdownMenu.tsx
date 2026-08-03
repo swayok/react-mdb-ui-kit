@@ -44,6 +44,7 @@ export function DropdownMenu<
         flip: shouldFlip = true,
         shift: shouldShift = false,
         offset: propsOffset = 2,
+        fixedPositioning = false,
         ref,
         apiRef,
         style = {},
@@ -96,6 +97,7 @@ export function DropdownMenu<
     } = useFloating<HTMLButtonElement>({
         rootContext,
         placement,
+        strategy: fixedPositioning ? 'fixed' : 'absolute',
         middleware: [
             offset(
                 typeof propsOffset === 'number'
