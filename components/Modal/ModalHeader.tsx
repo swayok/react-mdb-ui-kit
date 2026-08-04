@@ -21,6 +21,7 @@ export function ModalHeader(props: ModalHeaderProps) {
     const classes = clsx(
         'modal-header',
         border || border === undefined ? 'border-bottom' : null,
+        border === false ? 'border-bottom-0' : null,
         className
     )
 

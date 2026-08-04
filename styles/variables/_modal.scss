@@ -35,8 +35,10 @@ $modal-header-border-width: $modal-content-border-width !default;
 $modal-footer-border-width: $modal-header-border-width !default;
 $modal-header-padding-y: $modal-inner-padding !default;
 $modal-header-padding-x: $modal-inner-padding !default;
-$modal-header-close-button-margin: 0 math.div($modal-header-padding-x, -4) 0 0 !default;
 
+$modal-header-close-button-padding-x: 0.5rem !default;
+$modal-header-close-button-padding-y: 0.5rem !default;
+$modal-header-close-button-margin: 0 ($modal-header-close-button-padding-x * -0.5) 0 0 !default;
 $modal-header-close-button-floating-top: 0.75rem !default;
 $modal-header-close-button-floating-right: 0.75rem !default;
 
