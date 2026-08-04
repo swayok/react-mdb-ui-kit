@@ -37,6 +37,9 @@ $modal-header-padding-y: $modal-inner-padding !default;
 $modal-header-padding-x: $modal-inner-padding !default;
 $modal-header-close-button-margin: 0 math.div($modal-header-padding-x, -4) 0 0 !default;
 
+$modal-header-close-button-floating-top: 0.75rem !default;
+$modal-header-close-button-floating-right: 0.75rem !default;
+
 $modal-sm: 300px !default;
 $modal-md: 500px !default;
 $modal-lg: 800px !default;

@@ -35,8 +35,8 @@
 
         .btn-close.floating {
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
+            top: modal.$modal-header-close-button-floating-top;
+            right: modal.$modal-header-close-button-floating-right;
             // Чтобы не просвечивать сквозь окно поверх окна.
             z-index: z-index.$z-index-modal-backdrop - 10;
         }
