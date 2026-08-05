@@ -160,7 +160,7 @@
         flex-shrink: 0;
         align-items: flex-start;
         justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
-        padding: modal.$modal-header-padding-y modal.$modal-header-padding-x;
+        padding: modal.$modal-header-padding;
         border-bottom: modal.$modal-header-border-width solid modal.$modal-header-border-color;
         @include border-radius.border-top-radius(modal.$modal-content-inner-border-radius);
 
@@ -181,7 +181,7 @@
         }
 
         &.border-bottom-0 {
-            padding-bottom: 0;
+            padding-bottom: modal.$modal-header-no-border-padding-bottom;
         }
     }
 
@@ -208,15 +208,13 @@
         flex-shrink: 0;
         align-items: center; // vertically center
         justify-content: flex-end; // Right align buttons with flex property because text-align doesn't work on flex items
-        padding: modal.$modal-inner-padding - math.div(modal.$modal-footer-margin-between, 2);
+        gap: modal.$modal-footer-gap-between-inner-elements;
+        padding: modal.$modal-footer-padding;
         border-top: modal.$modal-footer-border-width solid modal.$modal-footer-border-color;
         @include border-radius.border-bottom-radius(modal.$modal-content-inner-border-radius);
 
-        // Place margin between footer elements
-        // This solution is far from ideal because of the universal selector usage,
-        // but is needed to fix https://github.com/twbs/bootstrap/issues/24800
-        > * {
-            margin: math.div(modal.$modal-footer-margin-between, 2);
+        &.border-top-0 {
+            padding-top: modal.$modal-footer-no-border-padding-bottom;
         }
     }
 

@@ -9,9 +9,9 @@
 
 // Modals
 // scss-docs-start modal-variables
-$modal-inner-padding: spacers.$spacer !default;
-
-$modal-footer-margin-between: 0.5rem !default;
+$modal-inner-padding-x: spacers.$spacer !default;
+$modal-inner-padding-y: spacers.$spacer !default;
+$modal-inner-padding: $modal-inner-padding-y $modal-inner-padding-x !default;
 
 $modal-dialog-margin: 0.5rem !default;
 $modal-dialog-margin-y-sm-up: 1.75rem !default;
@@ -29,18 +29,27 @@ $modal-content-box-shadow-sm-up: shadows.$box-shadow-4 !default;
 
 $modal-backdrop-bg: #515151 !default;
 $modal-backdrop-opacity: 0.5 !default;
+
 $modal-header-border-color: colors.$border-color !default;
-$modal-footer-border-color: $modal-header-border-color !default;
 $modal-header-border-width: $modal-content-border-width !default;
-$modal-footer-border-width: $modal-header-border-width !default;
-$modal-header-padding-y: $modal-inner-padding !default;
-$modal-header-padding-x: $modal-inner-padding !default;
+$modal-header-padding-x: $modal-inner-padding-x !default;
+$modal-header-padding-y: $modal-inner-padding-y !default;
+$modal-header-padding: $modal-header-padding-y $modal-header-padding-x !default;
+$modal-header-no-border-padding-bottom: $modal-inner-padding-y * 0.5 !default;
 
 $modal-header-close-button-padding-x: 0.5rem !default;
 $modal-header-close-button-padding-y: 0.5rem !default;
-$modal-header-close-button-margin: 0 ($modal-header-close-button-padding-x * -0.5) 0 0 !default;
+$modal-header-close-button-margin: 0 ($modal-header-close-button-padding-x * -1) 0 0 !default;
 $modal-header-close-button-floating-top: 0.75rem !default;
 $modal-header-close-button-floating-right: 0.75rem !default;
+
+$modal-footer-border-width: $modal-header-border-width !default;
+$modal-footer-border-color: $modal-header-border-color !default;
+$modal-footer-padding-x: $modal-header-padding-x !default;
+$modal-footer-padding-y: $modal-header-padding-y !default;
+$modal-footer-padding: $modal-footer-padding-y $modal-footer-padding-x !default;
+$modal-footer-no-border-padding-bottom: $modal-header-no-border-padding-bottom !default;
+$modal-footer-gap-between-inner-elements: 0.5rem !default;
 
 $modal-sm: 300px !default;
 $modal-md: 500px !default;

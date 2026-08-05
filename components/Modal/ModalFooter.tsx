@@ -18,6 +18,7 @@ export function ModalFooter(props: ModalFooterProps) {
             className={clsx(
                 'modal-footer',
                 border || border === undefined ? 'border-top' : '',
+                border === false ? 'border-top-0' : '',
                 flexBetween ? 'justify-content-between flex-nowrap' : null,
                 center && !flexBetween ? 'justify-content-center' : null,
                 className
