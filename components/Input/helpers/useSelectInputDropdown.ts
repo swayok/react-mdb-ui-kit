@@ -1,4 +1,5 @@
 import {
+    type OpenChangeReason,
     useClick,
     useDismiss,
     useInteractions,
@@ -26,6 +27,8 @@ import {
 interface UseSelectInputDropdownHookOptions extends UseInputFloatingMenuHookOptions,
     Pick<SelectInputBasicProps, 'closeOnScrollOutside' | 'focusFirstItemOnOpen'> {
     onSearch?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    onDropdownClose?: (activeIndex: number | null, reason?: OpenChangeReason, event?: Event) => void
+    scrollSelectedItemIntoView?: boolean | ScrollIntoViewOptions
 }
 
 interface UseSelectInputDropdownHookReturn extends UseInputFloatingMenuHookReturn, UseInteractionsReturn {
@@ -46,6 +49,8 @@ export function useSelectInputDropdown(
         dropdownWidth = 'fit-input',
         focusFirstItemOnOpen = 'auto',
         closeOnScrollOutside = false,
+        onDropdownClose,
+        scrollSelectedItemIntoView = false,
         onSearch: optionsOnSearch,
         onOpenChange,
         ...floatingOptions
@@ -69,6 +74,9 @@ export function useSelectInputDropdown(
                 setActiveIndex(null)
             }
             onOpenChange?.(open, event, reason)
+            if (!open) {
+                onDropdownClose?.(activeIndex, reason, event)
+            }
         },
         dropdownWidth,
     })
@@ -93,6 +101,7 @@ export function useSelectInputDropdown(
         loop: true,
         focusItemOnOpen: focusFirstItemOnOpen,
         focusItemOnHover: false,
+        scrollItemIntoView: scrollSelectedItemIntoView,
     })
 
     const {

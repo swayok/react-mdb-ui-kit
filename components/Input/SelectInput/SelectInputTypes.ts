@@ -2,6 +2,7 @@ import type {OpenChangeReason} from '@floating-ui/react'
 import {
     type ChangeEvent,
     type KeyboardEvent,
+    type FocusEvent,
     type MouseEvent,
     type ReactNode,
     type Ref,
@@ -176,6 +177,10 @@ export interface ComboboxInputProps<
     // Нужно ли посвечивать первую опцию при открытии выпадающего меню?
     // По умолчанию: true.
     focusFirstItemOnOpen?: boolean
+    // Нужно ли посвечивать выбранную опцию при открытии выпадающего меню?
+    // Опция определяется по value.
+    // По умолчанию: true.
+    focusSelectedOptionOnOpen?: boolean
     // Максимальная высота меню в пикселях.
     maxDropdownHeight?: SelectInputBasicProps['maxHeight']
     // Дополнительный отступ для выпадающего меню, если оно открывается над полем ввода.
@@ -184,12 +189,21 @@ export interface ComboboxInputProps<
     // Вызвать onOptionSelect при нажатии Tab на клавиатуре?
     // По умолчанию: true.
     selectOptionOnTabKey?: boolean
+    // Событие закрытия выпадающего меню.
+    onDropdownClose?: (
+        activeOption?: FormSelectOption<OptionValueType, OptionExtras> | string,
+        reason?: OpenChangeReason,
+        event?: Event
+    ) => void
     // Обработчик изменения значения поля ввода.
     // В value либо введенная строка, либо значение выбранной опции (option.value).
     onChange?: (
         value: string | OptionValueType,
         option: FormSelectOption<OptionValueType, OptionExtras> | undefined,
-        event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+        event: ChangeEvent<HTMLInputElement>
+            | MouseEvent<HTMLElement>
+            | KeyboardEvent<HTMLElement>
+            | FocusEvent<HTMLElement>
     ) => void
     onKeyDown?: (
         event: KeyboardEvent<HTMLInputElement>,

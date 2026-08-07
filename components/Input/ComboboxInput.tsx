@@ -1,4 +1,7 @@
-import {FloatingList} from '@floating-ui/react'
+import {
+    FloatingList,
+    type OpenChangeReason,
+} from '@floating-ui/react'
 import {
     type ChangeEvent,
     type FocusEvent,
@@ -45,7 +48,9 @@ export function ComboboxInput<
         optionsFiltering = true,
         optionLabelIsHtml = false,
         focusFirstItemOnOpen = true,
+        focusSelectedOptionOnOpen = true,
         selectOptionOnTabKey = true,
+        onDropdownClose: propsOnDropdownClose,
         maxDropdownHeight = 500,
         dropUpOffset = label && label.length > 0 ? 8 : 0,
         drop,
@@ -89,6 +94,7 @@ export function ComboboxInput<
         align,
         flip,
         isRTL,
+        dropUpOffset,
         onSearch: useEventCallback((
             event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
@@ -98,7 +104,31 @@ export function ComboboxInput<
                 event as ChangeEvent<HTMLInputElement>
             )
         }),
-        dropUpOffset,
+        onOpenChange: useEventCallback(open => {
+            if (open && focusSelectedOptionOnOpen) {
+                const index = filteredOptions.findIndex(
+                    option => (
+                        typeof option === 'string'
+                            ? option === value
+                            : option.value === value
+                    )
+                )
+                if (index !== -1) {
+                    setActiveIndex(index)
+                }
+            }
+        }),
+        onDropdownClose: useEventCallback((
+            activeIndex: number | null,
+            reason?: OpenChangeReason,
+            event?: Event
+        ) => {
+            propsOnDropdownClose?.(
+                activeIndex ? filteredOptions[activeIndex] : undefined,
+                reason,
+                event
+            )
+        }),
     })
 
     // Обновление списка опций.
@@ -117,9 +147,9 @@ export function ComboboxInput<
     }, [options, value])
 
     // Нажатие опцию.
-    const onItemClick = (
+    const onItemClick = useEventCallback((
         option: FormSelectOption<OptionValueType, OptionExtras> | string,
-        event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
+        event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement> | FocusEvent<HTMLElement>
     ) => {
         onChange?.(
             typeof option === 'string' ? option : String(option.value ?? ''),
@@ -127,7 +157,7 @@ export function ComboboxInput<
             event
         )
         setIsOpen(false)
-    }
+    })
 
     // Ввод символа в поле ввода.
     const onSearchKeyDown = useEventCallback((

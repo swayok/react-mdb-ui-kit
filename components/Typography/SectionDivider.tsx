@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import {
     type CSSProperties,
     type ReactNode,
+    type RefObject,
 } from 'react'
 
 export interface SectionDividerProps {
@@ -12,13 +13,24 @@ export interface SectionDividerProps {
     margins?: 'normal' | 'large' | 'small' | 'none' | string
     className?: string
     style?: CSSProperties
+    ref?: RefObject<HTMLDivElement | null>
 }
 
 // Разделитель с подписью.
 export function SectionDivider(props: SectionDividerProps) {
 
+    const {
+        label,
+        labelClassName,
+        color,
+        margins: propsMargins,
+        className,
+        style,
+        ref,
+    } = props
+
     let margins: string = ''
-    switch (props.margins) {
+    switch (propsMargins) {
         case 'none':
             break
         case 'small':
@@ -31,31 +43,32 @@ export function SectionDivider(props: SectionDividerProps) {
             margins = 'mt-3 mb-3'
             break
         default:
-            margins = props.margins ?? 'mt-3 mb-3'
+            margins = propsMargins ?? 'mt-3 mb-3'
             break
     }
 
     const noLabel: boolean = (
-        !props.label
+        !label
         || (
-            typeof props.label === 'string'
-            && props.label.trim().length === 0
+            typeof label === 'string'
+            && label.trim().length === 0
         )
     )
 
     return (
         <div
+            ref={ref}
             className={clsx(
                 'section-divider',
-                (!props.color || props.color === 'default') ? null : props.color,
+                (!color || color === 'default') ? null : color,
                 margins,
-                props.className
+                className
             )}
-            style={props.style}
+            style={style}
         >
             {!noLabel && (
-                <span className={props.labelClassName}>
-                    {props.label}
+                <span className={labelClassName}>
+                    {label}
                 </span>
             )}
         </div>
