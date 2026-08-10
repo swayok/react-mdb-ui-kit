@@ -147,5 +147,5 @@ export const linkColors = [
     'teal',
     'cyan',
     'gray',
-    'gray-dark',
+    'dark-gray',
 ]

@@ -1,6 +1,4 @@
 @use "sass:list";
-// stylelint-disable property-disallowed-list
-// Single side border-radius
 @use "sass:meta";
 @use "../variables/borders";
 @use "../variables/features";
@@ -27,6 +25,7 @@
     }
 }
 
+// Single side border-radius
 @mixin border-top-radius($radius: borders.$border-radius) {
     @if features.$enable-rounded {
         border-top-left-radius: valid-radius($radius);
