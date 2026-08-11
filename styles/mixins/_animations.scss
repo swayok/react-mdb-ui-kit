@@ -1,5 +1,4 @@
 @mixin fade($prefix, $transitionDuration) {
-    .#{$prefix}-init,
     .#{$prefix}-enter,
     .#{$prefix}-appear, {
         opacity: 0;
@@ -12,9 +11,7 @@
     }
 
     .#{$prefix}-enter-active,
-    .#{$prefix}-appear-active,
-    .#{$prefix}-enter-done,
-    .#{$prefix}-appear-done {
+    .#{$prefix}-appear-active {
         transition: opacity $transitionDuration linear;
         opacity: 1;
 
@@ -36,8 +33,7 @@
         }
     }
 
-    .#{$prefix}-exit-active,
-    .#{$prefix}-exit-done {
+    .#{$prefix}-exit-active {
         transition: opacity $transitionDuration linear;
         opacity: 0;
 
