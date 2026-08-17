@@ -21,7 +21,7 @@ export interface MdiIconProps extends Omit<
     rotate?: number
     spin?: boolean | number
     style?: CSSProperties
-    size?: number | null
+    size?: number | null | {width: number; height: number;}
     // HTML ID иконки для переиспользования. Допустимые символы: a-z, A-Z, 0-9, -, _.
     // Если на странице большое количество одинаковых иконок, то браузер будет
     // довольно сильно тормозить из-за этого.
@@ -104,7 +104,12 @@ export function MDIIcon(props: MdiIconProps) {
         }
         const style: CSSProperties = Object.assign({}, propsStyle || {})
         if (size !== null) {
-            style.height = style.width = size + 'px'
+            if (typeof size === 'object') {
+                style.height = size.height + 'px'
+                style.width = size.width + 'px'
+            } else {
+                style.height = style.width = size + 'px'
+            }
         }
         if (transform.length > 0) {
             style.transform = transform.join(' ')

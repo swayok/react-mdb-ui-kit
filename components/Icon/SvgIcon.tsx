@@ -7,6 +7,7 @@ import type {
     HtmlComponentProps,
     SvgIconInfo,
 } from '../../types'
+import type {MdiIconProps} from './MDIIcon'
 
 export interface SvgIconProps extends Omit<HtmlComponentProps<SVGSVGElement>, 'size' | 'label' | 'width' | 'height'> {
     id?: string
@@ -16,7 +17,7 @@ export interface SvgIconProps extends Omit<HtmlComponentProps<SVGSVGElement>, 's
     vertical?: boolean
     rotate?: number
     style?: CSSProperties
-    size?: number | null
+    size?: MdiIconProps['size']
 }
 
 // Отображение не оптимизированной SVG иконки по примеру <MDIIcon>.
@@ -35,7 +36,12 @@ export function SvgIcon(props: SvgIconProps) {
     const transform = []
     const style: CSSProperties = {...customStyle}
     if (size !== null) {
-        style.height = style.width = size + 'px'
+        if (typeof size === 'object') {
+            style.height = size.height + 'px'
+            style.width = size.width + 'px'
+        } else {
+            style.height = style.width = size + 'px'
+        }
     }
     if (horizontal) {
         transform.push('scaleX(-1)')

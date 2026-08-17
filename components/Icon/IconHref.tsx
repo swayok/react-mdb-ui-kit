@@ -31,7 +31,7 @@ export interface IconHrefProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     iconProps?: Omit<MdiIconProps, 'onClick' | 'path' | 'size' | 'className'>
     path: string | SvgIconInfo
     reuse?: MdiIconProps['reuse']
-    size?: number | null
+    size?: MdiIconProps['size']
     iconClassName?: string
     iconStyle?: CSSProperties
     disabled?: boolean
