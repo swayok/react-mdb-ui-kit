@@ -40,38 +40,39 @@
         }
     }
 
-    svg.custom-icon {
-        pointer-events: none;
-        flex-shrink: 0;
+    @if (features.$enable-custom-svg-icons) {
+        svg.custom-icon {
+            pointer-events: none;
+            flex-shrink: 0;
 
-        g, path, rect, circle, ellipse {
-            transition: fill 0.2s linear, stroke 0.2s linear;
-        }
-
-        &.colored-by-fill {
-            fill: icons.$icon-text-color;
-            stroke: none;
-        }
-
-        &.colored-by-stroke {
-            fill: none;
-            stroke: icons.$icon-text-color;
-        }
-
-        &.custom-icon-rotatable {
-            transition: transform 0.1s linear;
-            transform: rotate(0deg);
-            transform-origin: 50% 50%;
-        }
-
-        @each $color, $value in color-lists.$icon-colors {
-            &.text-#{$color} {
-                @include svg-icons.custom-icon-color($value !important);
+            g, path, rect, circle, ellipse {
+                transition: fill 0.2s linear, stroke 0.2s linear;
             }
-        ;
 
-            a:hover &.text-#{$color} {
-                @include svg-icons.custom-icon-color(color-utils.lighten($value, 10%) !important);
+            &.colored-by-fill {
+                fill: icons.$icon-text-color;
+                stroke: none;
+            }
+
+            &.colored-by-stroke {
+                fill: none;
+                stroke: icons.$icon-text-color;
+            }
+
+            &.custom-icon-rotatable {
+                transition: transform 0.1s linear;
+                transform: rotate(0deg);
+                transform-origin: 50% 50%;
+            }
+
+            @each $color, $value in color-lists.$icon-colors {
+                &.text-#{$color} {
+                    @include svg-icons.custom-icon-color($value !important);
+                }
+
+                a:hover &.text-#{$color} {
+                    @include svg-icons.custom-icon-color(color-utils.lighten($value, 10%) !important);
+                }
             }
         }
     }
@@ -84,11 +85,13 @@
                 links.$link-disabled-color
         );
 
-        @include svg-icons.contained-custom-svg-icon-color-in-link(
+        @if (features.$enable-custom-svg-icons) {
+            @include svg-icons.contained-custom-svg-icon-color-in-link(
                 links.$link-color,
                 links.$link-hover-color,
                 links.$link-disabled-color
-        );
+            );
+        }
     }
 
     @each $color, $value in color-lists.$link-colors {
@@ -98,6 +101,14 @@
                     color-utils.link-hover-color($value, links.$link-shade-percentage) !important,
                     links.$link-disabled-color !important
             );
+
+            @if (features.$enable-custom-svg-icons) {
+                @include svg-icons.contained-custom-svg-icon-color-in-link(
+                    $value !important,
+                    color-utils.link-hover-color($value, links.$link-shade-percentage) !important,
+                    links.$link-disabled-color !important
+                );
+            }
         }
     }
 
