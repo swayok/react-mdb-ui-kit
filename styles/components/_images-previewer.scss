@@ -13,7 +13,7 @@
         .images-previewer-current-image {
             overflow: hidden;
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain;
             background-position: center center;
             min-height: images-previewer.$images-previewer-current-image-min-height;
             width: 100%;
