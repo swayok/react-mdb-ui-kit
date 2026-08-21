@@ -17,7 +17,7 @@ export function IconsDemo() {
                 margins="none"
                 className="mb-3"
             />
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-2">
                 {iconColors.map(color => (
                     <div key={color}>
                         <Icon
@@ -44,7 +44,7 @@ export function IconsDemo() {
                     />
                 </symbol>
             </svg>
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-1">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-1">
                 <div className="with-icon-flex gap-2">
                     <svg
                         viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ export function IconsDemo() {
             </div>
 
             <SectionDivider label="Reusable icons in links (inline implementation)" />
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-1">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-1">
                 <a
                     href="#"
                     className="with-icon-flex gap-2 link-primary"
@@ -133,7 +133,7 @@ export function IconsDemo() {
             </div>
 
             <SectionDivider label="Reusable icons (<Icon reuse='mdiAccount'>)" />
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-2">
                 <Icon
                     path={mdiAccount}
                     color="primary"
@@ -160,7 +160,7 @@ export function IconsDemo() {
             </div>
 
             <SectionDivider label="Reusable icons (<IconHref reuse='mdiAccount-href'>)" />
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-2">
                 <IconHref
                     path={mdiAccount}
                     color="primary"
@@ -203,7 +203,7 @@ export function IconsDemo() {
             </div>
 
             <SectionDivider label="Reusable icons (<IconButton reuse='mdiAccount-btn'>)" />
-            <div className="d-grid grid-columns-3 grid-columns-gap-3 grid-rows-gap-2">
+            <div className="d-grid grid-columns-3 col-gap-3 row-gap-2">
                 <IconButton
                     path={mdiAccount}
                     color="primary"

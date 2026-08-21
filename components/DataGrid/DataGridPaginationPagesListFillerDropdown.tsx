@@ -162,7 +162,7 @@ export function DataGridPaginationPagesListFillerDropdown(
                 align="start"
             >
                 <div
-                    className="d-grid grid-columns-gap-2 grid-rows-gap-2 p-2 shadow-2-strong"
+                    className="d-grid col-gap-2 row-gap-2 p-2 shadow-2-strong"
                     style={{
                         gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
                     }}

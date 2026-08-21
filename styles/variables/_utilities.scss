@@ -10,6 +10,12 @@
 @use "features";
 
 $utilities: () !default;
+// Overriding $utilities is not a common use case,
+// usually we need to add some utilities.
+// But in modern sass we need to use @use 'utilities' with (...)
+// to override variables and we cannot extend $utilities this way.
+// To fix this we use $custom-utilities variable which is merged into $utilities.
+$custom-utilities: () !default;
 
 @if (features.$include-vertical-align-utilities) {
     $utilities: map.merge(
@@ -890,3 +896,9 @@ $utilities: () !default;
             $utilities
     );
 }
+
+// Add custom utilities to utilities.
+$utilities: map.merge(
+    $custom-utilities,
+    $utilities
+);

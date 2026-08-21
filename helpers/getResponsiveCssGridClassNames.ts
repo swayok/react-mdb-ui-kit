@@ -9,8 +9,8 @@ export function getResponsiveCssGridClassNames(
 ): string {
     return clsx(
         'd-grid',
-        'grid-columns-gap-' + columnGap,
-        'grid-rows-gap-' + rowsGap,
+        'col-gap-' + columnGap,
+        'row-gap-' + rowsGap,
         columns.xs ? 'grid-columns-' + columns.xs : null,
         columns.sm ? 'grid-columns-sm-' + columns.sm : null,
         columns.md ? 'grid-columns-md-' + columns.md : null,

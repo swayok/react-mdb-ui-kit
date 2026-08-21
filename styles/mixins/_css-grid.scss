@@ -13,16 +13,4 @@
             grid-template-rows: repeat($i, 1fr);
         }
     }
-
-    @each $step, $value in css-grid.$css-grid-column-gaps {
-        .grid-columns-gap#{$infix}-#{$step} {
-            grid-column-gap: $value;
-        }
-    }
-
-    @each $step, $value in css-grid.$css-grid-row-gaps {
-        .grid-rows-gap#{$infix}-#{$step} {
-            grid-row-gap: $value;
-        }
-    }
 }

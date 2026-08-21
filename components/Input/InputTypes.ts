@@ -156,7 +156,7 @@ export interface CheckboxesGroupProps<
     groupLabelStyle?: CSSProperties
     // CSS класс для контейнера полей ввода (<Items>).
     // Пример inputsContainerClassName для 2х колонок:
-    // 'd-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3'.
+    // 'd-grid grid-columns-2 col-gap-3 row-gap-3'.
     groupItemsContainerClassName?: string
     groupItemsContainerStyle?: CSSProperties
     // Настройки валидности введенных данных.
@@ -562,7 +562,7 @@ export interface RadiosGroupProps<
     radioLabelStyle?: CSSProperties
     // CSS класс для контейнера полей ввода (<Items>).
     // Пример inputsContainerClassName для 2х колонок:
-    // 'd-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3'.
+    // 'd-grid grid-columns-2 col-gap-3 row-gap-3'.
     radiosContainerClassName?: string
     radiosContainerStyle?: CSSProperties
     // Обработчик изменения значения одного из чекбоксов.

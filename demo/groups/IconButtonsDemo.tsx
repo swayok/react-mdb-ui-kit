@@ -9,7 +9,7 @@ import {buttonColors} from './ButtonsDemo'
 export function IconButtonsDemo() {
 
     return (
-        <div className="d-grid grid-columns-2 grid-columns-gap-3">
+        <div className="d-grid grid-columns-2 col-gap-3">
             {colors.map((color, index) => (
                 <div
                     key={index}

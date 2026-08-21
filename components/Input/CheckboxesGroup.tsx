@@ -149,7 +149,7 @@ export function CheckboxesGroup<
                 <div
                     className={clsx(
                         'options-group-items',
-                        `d-grid grid-columns-${columns} grid-columns-gap-3 grid-rows-gap-3`,
+                        `d-grid grid-columns-${columns} col-gap-3 row-gap-3`,
                         groupItemsContainerClassName
                     )}
                     style={groupItemsContainerStyle}

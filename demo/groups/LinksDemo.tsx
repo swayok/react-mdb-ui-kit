@@ -21,7 +21,7 @@ export function LinksDemo() {
                 </a>
             </div>
             <SectionDivider label="Link Colors" />
-            <div className="d-grid grid-columns-2 grid-columns-gap-2">
+            <div className="d-grid grid-columns-2 col-gap-2">
                 {linkColors.map((color, index) => (
                     <div key={index}>
                         .link-{color}:
@@ -52,7 +52,7 @@ export function LinksDemo() {
                 </a>
             </div>
             <SectionDivider label="Link With Icon Colors (.with-icon)" />
-            <div className="d-grid grid-columns-2 grid-columns-gap-2">
+            <div className="d-grid grid-columns-2 col-gap-2">
                 {linkColors.map((color, index) => (
                     <div key={index}>
                         .link-{color}: <a
@@ -75,7 +75,7 @@ export function LinksDemo() {
                 </div>
             </div>
             <SectionDivider label="Clickable Colors" />
-            <div className="d-grid grid-columns-2 grid-columns-gap-3">
+            <div className="d-grid grid-columns-2 col-gap-3">
                 {linkColors.map((color, index) => (
                     <div
                         key={index}
@@ -104,7 +104,7 @@ export function LinksDemo() {
                 </div>
             </div>
             <SectionDivider label="Clickable Colors (.with-icon)" />
-            <div className="d-grid grid-columns-2 grid-columns-gap-3">
+            <div className="d-grid grid-columns-2 col-gap-3">
                 {linkColors.map((color, index) => (
                     <div
                         key={index}

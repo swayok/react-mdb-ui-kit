@@ -8,7 +8,7 @@ export function ButtonsDemo() {
 
     return (
         <>
-            <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3">
+            <div className="d-grid grid-columns-2 col-gap-3 row-gap-3">
                 <div>
                     <div className="mb-3">
                         <Button>
@@ -66,7 +66,7 @@ export function ButtonsDemo() {
             {buttonColors.map(color => (
                 <div key={color}>
                     <SectionDivider label={'Color: ' + color} />
-                    <div className="d-grid grid-columns-2 grid-columns-gap-3 grid-rows-gap-3 mb-3">
+                    <div className="d-grid grid-columns-2 col-gap-3 row-gap-3 mb-3">
                         <div>
                             <Button color={color}>
                                 Solid: {color}
