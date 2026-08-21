@@ -120,6 +120,10 @@ export type CheckboxColors = 'green' | 'blue' | 'red' | 'orange' | string
 
 export type TableHighlightColors = 'green' | 'blue' | 'red' | 'orange' | 'gray' | string
 
+export type ShadowValue = '0' | '1' | '2' | '3' | '4' | '5' | '6'
+
+export type ShadowStrength = 'strong' | 'soft'
+
 // Минимальное и максимальное значение.
 export interface MinMax {
     min: number

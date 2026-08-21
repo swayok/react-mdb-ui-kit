@@ -137,6 +137,9 @@ $include-margin-utilities: true !default;
 $include-negative-margin-utilities: true !default;
 $include-padding-utilities: true !default;
 $include-text-utilities: true !default;
+// When enabled disables rfs font scaling for fs-* utilities.
+$include-responsive-font-sizes: false !default;
+$include-responsive-font-weights: false !default;
 $include-text-color-utilities: true !default;
 $include-bg-color-utilities: true !default;
 $include-gradient-utilities: true !default;

@@ -2,6 +2,8 @@ import type {
     BackgroundColors,
     BorderColors,
     MorphingHtmlComponentProps,
+    ShadowStrength,
+    ShadowValue,
 } from '../../types'
 
 // Свойства компонента Card.
@@ -14,7 +16,7 @@ export interface CardProps extends MorphingHtmlComponentProps {
     background?: BackgroundColors
     // Тень: inner, 0, 1, 2, 3, 4, 5, 6.
     // Суффиксы: '{w}-soft' ('2-soft'), '{w}-strong' ('2-strong').
-    shadow?: number | string
+    shadow?: ShadowValue | `${ShadowValue}-${ShadowStrength}` | string | null
     // Расположение текста в карточке.
     alignment?: 'end' | 'center' | 'start'
 }

@@ -659,7 +659,8 @@ $custom-utilities: () !default;
                     ),
                 ),
                 'font-size': (
-                    rfs: true,
+                    responsive: features.$include-responsive-font-sizes,
+                    rfs: features.$include-responsive-font-sizes == false,
                     property: font-size,
                     class: fs,
                     values: utility-values.$font-size-values,
@@ -670,6 +671,7 @@ $custom-utilities: () !default;
                     values: italic normal,
                 ),
                 'font-weight': (
+                    responsive: features.$include-responsive-font-weights,
                     property: font-weight,
                     class: fw,
                     values: utility-values.$font-weight-values,

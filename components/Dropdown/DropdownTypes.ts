@@ -26,6 +26,8 @@ import type {
     MergedComponentProps,
     MorphingComponentProps,
     MorphingHtmlComponentProps,
+    ShadowStrength,
+    ShadowValue,
 } from '../../types'
 import type {ButtonProps} from '../Button/Button'
 
@@ -164,10 +166,6 @@ export type DefaultDropdownToggleProps = MergedComponentProps<
     Omit<DropdownToggleProps, 'tag' | 'ref'>,
     ButtonProps
 >
-
-type ShadowValue = '0' | '1' | '2' | '3' | '4' | '5' | '6'
-
-type ShadowStrength = 'strong' | 'soft'
 
 // Ссылка на обертку и API выпадающего меню.
 export interface DropdownMenuProps<
