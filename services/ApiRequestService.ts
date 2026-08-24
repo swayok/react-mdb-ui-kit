@@ -158,8 +158,9 @@ export class ApiRequestService {
     ): Promise<ApiResponse<T>> {
         return new Promise<ApiResponse<T>>((resolve, reject) => {
             const requestInit: RequestInit = {
-                keepalive: false, // Если true, то виснет при отправке файлов.
-                mode: 'same-origin',
+                keepalive: type === 'get', // Если true для POST/PUT/DELETE, то виснет при отправке файлов.
+                mode: 'same-origin', // Запрещаем CORS запросы.
+                credentials: 'same-origin', // Отправляем Cookies только при запросах к основному домену.
                 ...options,
             }
             const relativeUrl = '/' + url.replace(/^(\/)+/, '')
