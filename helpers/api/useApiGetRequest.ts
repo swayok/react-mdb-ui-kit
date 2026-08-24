@@ -16,6 +16,8 @@ export interface UseApiGetRequestHookConfig<
     // Запустить загрузку сразу же при монтировании компонента?
     // По умолчанию: true.
     autoStart?: boolean
+    // Значение RequestInit для запросов по умолчанию.
+    defaultRequestConfig?: RequestInit
     // Начальное значение состояния isLoading.
     // По умолчанию: true.
     defaultIsLoadingState?: boolean
@@ -68,14 +70,14 @@ export interface UseApiGetRequestHookReturn<
     setError: Dispatch<SetStateAction<ApiError | null>>
     // Перезагрузка данных.
     // Если silent === true, то loading не переводится в true.
-    reload: (silent?: boolean) => Promise<ApiDataType | undefined>
+    reload: (silent?: boolean, requestConfig?: RequestInit) => Promise<ApiDataType | undefined>
 }
 
 export interface UseApiGetRequestHookState<
     ApiDataType,
     ModifiedDataType = ApiDataType | undefined,
 > extends Omit<UseApiGetRequestHookReturn<ApiDataType, ModifiedDataType>, 'reload'> {
-    sendRequest: (abortController: AbortController) => Promise<ApiDataType>
+    sendRequest: (abortController: AbortController, requestConfig?: RequestInit) => Promise<ApiDataType>
     defaultOnSuccess: (data: ApiDataType) => void
     options: Omit<Readonly<
         UseApiGetRequestHookConfig<ApiDataType, ModifiedDataType>>,
@@ -107,6 +109,7 @@ export function useApiGetRequest<
         saveToCache,
         onSuccess,
         onError,
+        defaultRequestConfig,
     } = (options ?? {})
 
     // Данные.
@@ -183,52 +186,56 @@ export function useApiGetRequest<
     )
 
     // Запуск запроса и обработка ответа.
-    const executeRequest = useEventCallback(
-        (silent?: boolean): Promise<ApiDataType | undefined> => {
-            if (getFromCache) {
-                const cachedData = getFromCache(getHookState())
-                if (cachedData !== undefined) {
-                    return Promise.resolve(
-                        handleSuccess(cachedData, true)
-                    )
-                }
+    const executeRequest = useEventCallback((
+        silent?: boolean,
+        requestConfig?: RequestInit
+    ): Promise<ApiDataType | undefined> => {
+        if (getFromCache) {
+            const cachedData = getFromCache(getHookState())
+            if (cachedData !== undefined) {
+                return Promise.resolve(
+                    handleSuccess(cachedData, true)
+                )
             }
-            abortRequest()
-            if (!silent) {
-                setIsLoading(true)
-                setError(null)
-                if (resetDataBeforeReload) {
+        }
+        abortRequest()
+        if (!silent) {
+            setIsLoading(true)
+            setError(null)
+            if (resetDataBeforeReload) {
+                setData(initialData!)
+            }
+        }
+
+        abortControllerRef.current = new AbortController()
+        const promise = sendRequest(
+            abortControllerRef.current,
+            requestConfig ?? defaultRequestConfig
+        )
+
+        return promise
+            .then((data: ApiDataType) => handleSuccess(data, false))
+            .catch((error: ApiError) => {
+                if (error.errorType === 'abort') {
+                    return undefined
+                }
+                abortControllerRef.current = null
+                if (!silent) {
+                    setError(error)
+                }
+                setIsLoading(false)
+                if (resetDataOnError) {
                     setData(initialData!)
                 }
-            }
-
-            abortControllerRef.current = new AbortController()
-            const promise = sendRequest(abortControllerRef.current)
-
-            return promise
-                .then((data: ApiDataType) => handleSuccess(data, false))
-                .catch((error: ApiError) => {
-                    if (error.errorType === 'abort') {
-                        return undefined
-                    }
-                    abortControllerRef.current = null
-                    if (!silent) {
-                        setError(error)
-                    }
-                    setIsLoading(false)
-                    if (resetDataOnError) {
-                        setData(initialData!)
-                    }
-                    onError?.(error, !!silent)
-                    return undefined
-                })
-        }
-    )
+                onError?.(error, !!silent)
+                return undefined
+            })
+    })
 
     // Запуск запроса при монтировании или изменении key (через executeRequest).
     useEffect(() => {
         if (autoStart) {
-            void executeRequest()
+            void executeRequest(false, defaultRequestConfig)
         }
         return abortRequest
     }, [key])

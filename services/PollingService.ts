@@ -1,12 +1,23 @@
 import type {AnyObject} from '../types'
 
-export type PollingServiceHandlerFn = () => Promise<unknown>
+export type PollingServiceHandlerFn = (
+    // Дополнительные настройки запроса.
+    requestConfig: RequestInit
+) => Promise<unknown>
+
+export type VisibilityChangeCallbackFn = (visible: boolean) => void
 
 // Сервис для контроля регулярно выполняющихся действий.
 export abstract class PollingService {
 
     static timeouts: AnyObject<number> = {}
     static fails: AnyObject<number> = {}
+    // Работа с видимостью страницы.
+    // Если страница скрыта, то не нужно запускать выполнение функций.
+    static isVisibilityChangeHandlerInitiated: boolean = false
+    static isPageVisible: boolean = true
+    // Интервал попыток запуска функций при скрытой странице.
+    static invisibilityPollingInterval: number = 3000
 
     // Запуск выполнения функции handle с именем name каждые interval миллисекунд.
     // Если функция отрабатывает ошибкой, то интервал увеличивается (interval * fails_count).
@@ -35,6 +46,7 @@ export abstract class PollingService {
             () => this.pollingCallback(name, interval, handler),
             interval
         )
+        this.initPageVisibilityChangeHandler()
     }
 
     // Остановка выполнения функции name.
@@ -66,7 +78,23 @@ export abstract class PollingService {
         interval: number,
         handler: PollingServiceHandlerFn
     ): void {
-        handler()
+        if (!this.isPageVisible) {
+            // Откладываем выполнение функции, пока страница не станет видимой.
+            // При этом снижаем интервал опроса this.invisibilityPollingInterval.
+            // В этом случае функция запуститься вскоре после того как страница станет видимой.
+            this.timeouts[name] = window.setTimeout(
+                () => this.pollingCallback(name, interval, handler),
+                this.invisibilityPollingInterval
+            )
+            return
+        }
+        handler({
+            keepalive: false,
+            headers: {
+                'Cache-Control': 'no-cache',
+                'X-Is-Polling': 'true',
+            },
+        })
             .then(() => {
                 this.clearPollingTimeout(name)
                 this.fails[name] = 0
@@ -83,5 +111,17 @@ export abstract class PollingService {
                     interval * (this.fails[name] + 1)
                 )
             })
+    }
+
+    // Инициализация обработчика изменения видимости страницы.
+    private static initPageVisibilityChangeHandler() {
+        if (this.isVisibilityChangeHandlerInitiated) {
+            return
+        }
+        this.isVisibilityChangeHandlerInitiated = true
+        const handleVisibilityChange = () => {
+            this.isPageVisible = document.visibilityState === 'visible'
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange)
     }
 }
