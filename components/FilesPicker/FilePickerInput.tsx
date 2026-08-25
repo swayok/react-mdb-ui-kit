@@ -249,7 +249,7 @@ export function FilePickerInput(props: FilePickerInputProps) {
         )
         if (!convertedBlob) {
             processedFile.error = translations.error.mime_type_forbidden(
-                originalFile.extension ?? targetMimeType
+                originalFile.extension ?? targetExtension
             )
             ToastService.error(processedFile.error, 5000)
             return false
