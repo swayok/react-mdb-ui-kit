@@ -42,7 +42,7 @@ export class CacheServiceClass<NameT extends string = string> {
     // Получить актуальные данные из кэша.
     get<Type = unknown>(
         name: NameT,
-        regionOrLang?: string
+        regionOrLang: string | 'any' = 'any'
     ): null | Type {
         if (regionOrLang === undefined) {
             regionOrLang = this.defaultRegionOrLang()
@@ -80,9 +80,9 @@ export class CacheServiceClass<NameT extends string = string> {
         // Срок жизни кеша в минутах. Минимум: 1 минута. По умолчанию: this.defaultLifetimeMinutes.
         lifetimeMinutes?: number,
         // Регион или язык, для которого актуален кэш. При несовпадении, кеш сбрасывается.
-        regionOrLang?: string,
+        regionOrLang: string | 'any' = 'any',
         // Если true, то нужно сохранить данные в this.sessionStorage, а не в window.localStorage.
-        useSessionStorage?: boolean
+        useSessionStorage: boolean = false
     ): void {
         if (lifetimeMinutes === undefined) {
             lifetimeMinutes = this.defaultLifetimeMinutes
@@ -131,7 +131,7 @@ export class CacheServiceClass<NameT extends string = string> {
         name: NameT,
         loader: () => Promise<Type>,
         lifetimeMinutes?: number,
-        regionOrLang?: string,
+        regionOrLang: string | 'any' = 'any',
         useSessionStorage?: boolean,
         refresh: boolean = false
     ): Promise<Type> {
@@ -159,7 +159,7 @@ export class CacheServiceClass<NameT extends string = string> {
         name: NameT,
         loader: () => Promise<Type>,
         lifetimeMinutes?: number,
-        regionOrLang?: string,
+        regionOrLang: string | 'any' = 'any',
         refresh: boolean = false
     ): Promise<Type> {
         let data: Type | null = refresh ? null : this.get<Type>(name, regionOrLang)
@@ -186,7 +186,7 @@ export class CacheServiceClass<NameT extends string = string> {
         name: NameT,
         loader: () => Promise<Type>,
         lifetimeMinutes?: number,
-        regionOrLang?: string,
+        regionOrLang: string | 'any' = 'any',
         refresh: boolean = false
     ): Promise<Type> {
         let data: Type | null = refresh ? null : this.get<Type>(name, regionOrLang)
