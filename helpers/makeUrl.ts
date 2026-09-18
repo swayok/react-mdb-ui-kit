@@ -16,14 +16,23 @@ export function makeUrl<QueryArgsType extends object, Path extends string = stri
     queryArgs: QueryArgsType | null = null
 ): string {
     try {
-        if (params && Object.keys(params).length > 0) {
-            urlPath = generatePath(urlPath, params as never) as Path
+        // Шаблон в URL.
+        let url: string = params
+            ? generatePath(urlPath, params as never)
+            : urlPath
+        // Добавление URL Query аргументов.
+        if (queryArgs !== null) {
+            // Чистим от пустых значений (null и пустые строки).
+            const cleanQueryArgs: [string, string][] = Object.entries(queryArgs)
+                .filter(([, v]) => v != null && String(v).trim() !== '')
+                .map(entry => [entry[0], String(entry[1])])
+
+            if (cleanQueryArgs.length > 0) {
+                const queryString: URLSearchParams = new URLSearchParams(cleanQueryArgs)
+                url = (url + '?' + queryString.toString())
+            }
         }
-        if (queryArgs && Object.keys(queryArgs).length > 0) {
-            const queryString: URLSearchParams = new URLSearchParams(queryArgs as Record<string, string>)
-            urlPath = (urlPath + '?' + queryString.toString()) as Path
-        }
-        return urlPath
+        return url
     } catch (error) {
         console.error('[makeUrl] Error', error, {urlPath, params, queryArgs})
         return '#'
