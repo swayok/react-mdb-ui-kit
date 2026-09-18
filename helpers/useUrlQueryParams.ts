@@ -40,8 +40,10 @@ type ParamValueType<KeysOrObject extends string | object> = KeysOrObject extends
     : Exclude<KeysOrObject[keyof KeysOrObject], undefined> | null
 
 export interface UseUrlQueryParamsHookReturn<KeysOrObject extends string | object> {
+    // Текущие параметры в URL Query. Стабильное значение, изменяемое при изменении URL Query.
     urlQueryParams: TypedUrlQueryParams<KeysOrObject>
     setUrlQueryParams: SetTypedUrlQueryParams<KeysOrObject>
+    // Стабильное значение, изменяемое только при изменении urlQueryParams.
     urlQueryData: Partial<RecordType<KeysOrObject>>
 }
 

@@ -2,6 +2,7 @@ import {
     generatePath,
     type PathParam,
 } from 'react-router-dom'
+import {getCleanUrlSearchParamsEntries} from './getCleanUrlSearchParamsEntries'
 
 // Сборка URL из частей.
 export function makeUrl<QueryArgsType extends object, Path extends string = string>(
@@ -13,7 +14,9 @@ export function makeUrl<QueryArgsType extends object, Path extends string = stri
         [key in PathParam<Path>]: string | null;
     } | null = null,
     // URL Query аргументы, которые нужно добавить в URL.
-    queryArgs: QueryArgsType | null = null
+    queryArgs: QueryArgsType | null = null,
+    // Нужно ли сортировать ключи в URL Query?
+    sortQueryArgs?: boolean
 ): string {
     try {
         // Шаблон в URL.
@@ -23,9 +26,10 @@ export function makeUrl<QueryArgsType extends object, Path extends string = stri
         // Добавление URL Query аргументов.
         if (queryArgs !== null) {
             // Чистим от пустых значений (null и пустые строки).
-            const cleanQueryArgs: [string, string][] = Object.entries(queryArgs)
-                .filter(([, v]) => v != null && String(v).trim() !== '')
-                .map(entry => [entry[0], String(entry[1])])
+            const cleanQueryArgs: [string, string][] = getCleanUrlSearchParamsEntries(
+                queryArgs,
+                sortQueryArgs
+            )
 
             if (cleanQueryArgs.length > 0) {
                 const queryString: URLSearchParams = new URLSearchParams(cleanQueryArgs)

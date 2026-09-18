@@ -121,10 +121,19 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false,
         from: Location | null = null,
         hardRedirect: boolean = false
     ): void {
-        this._navigate('navigate', relativeUrl, params, queryArgs, from, hardRedirect)
+        this._navigate(
+            'navigate',
+            relativeUrl,
+            params,
+            queryArgs,
+            sortQueryArgs,
+            from,
+            hardRedirect
+        )
     }
 
     // Переход на страницу с полной перезагрузкой.
@@ -132,22 +141,33 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false,
         from: Location | null = null
     ): void {
-        this._navigate('navigate', relativeUrl, params, queryArgs, from, true)
+        this._navigate(
+            'navigate',
+            relativeUrl,
+            params,
+            queryArgs,
+            sortQueryArgs,
+            from,
+            true
+        )
     }
 
     // Замена текущей страницы.
     static replace<QueryArgsType extends Record<string, string> = AnyObject<string>>(
         relativeUrl: null | string,
         params: ExtractRouteParams<string> | null = null,
-        queryArgs: QueryArgsType | null = null
+        queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false
     ): void {
         this._navigate(
             'replace',
             relativeUrl ?? this.location?.pathname ?? '/',
             params,
-            queryArgs
+            queryArgs,
+            sortQueryArgs
         )
     }
 
@@ -199,19 +219,29 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false,
         from: Location | null = null,
         hardRedirect: boolean = false
     ): void {
         if (!this.navigator) {
             this.navigateAfterNavigatorAppearsTo = () => {
-                this._navigate(action, relativeUrl, params, queryArgs, from)
+                this._navigate(
+                    action,
+                    relativeUrl,
+                    params,
+                    queryArgs,
+                    sortQueryArgs,
+                    from,
+                    hardRedirect
+                )
             }
             return
         }
         const url: string = this.makeUrl(
             relativeUrl.replace(new RegExp('^(http.+)?' + this.config.baseUrl), ''),
             params,
-            queryArgs
+            queryArgs,
+            sortQueryArgs
         )
         console.log(
             '[NavigationService][' + action + ']',
@@ -232,9 +262,10 @@ export class NavigationService {
     static makeUrl<QueryArgsType extends object = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
-        queryArgs: QueryArgsType | null = null
+        queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false
     ): string {
-        return makeUrl(relativeUrl, params, queryArgs)
+        return makeUrl(relativeUrl, params, queryArgs, sortQueryArgs)
     }
 
     // Сборка абсолютного URL из частей.
@@ -242,20 +273,22 @@ export class NavigationService {
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
         queryArgs: QueryArgsType | null = null,
-        useRootUrl: boolean = false
+        useRootUrl: boolean = false,
+        sortQueryArgs: boolean = false
     ): string {
         return (useRootUrl ? this.config.rootUrl : this.config.baseUrl)
-            + this.makeUrl(relativeUrl, params, queryArgs).replace(/^\//, '')
+            + this.makeUrl(relativeUrl, params, queryArgs, sortQueryArgs).replace(/^\//, '')
     }
 
     // Сборка абсолютного URL для API из частей.
     static makeFullApiUrl<QueryArgsType extends object = AnyObject<string>>(
         relativeUrl: string,
         params: ExtractRouteParams<string> | null = null,
-        queryArgs: QueryArgsType | null = null
+        queryArgs: QueryArgsType | null = null,
+        sortQueryArgs: boolean = false
     ): string {
         return this.config.baseApiUrl
-            + this.makeUrl(relativeUrl, params, queryArgs).replace(/^\//, '')
+            + this.makeUrl(relativeUrl, params, queryArgs, sortQueryArgs).replace(/^\//, '')
     }
 
     // Получение URL, запрошенного до перенаправления на авторизацию.
