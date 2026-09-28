@@ -210,7 +210,9 @@ export class ApiRequestService {
             if (!requestInit.headers || !(requestInit.headers instanceof Headers)) {
                 requestInit.headers = new Headers(requestInit.headers)
             }
-            requestInit.headers.set('Accept', 'application/json')
+            if (!requestInit.headers.has('Accept')) {
+                requestInit.headers.set('Accept', 'application/json')
+            }
 
             if (data instanceof FormData) {
                 requestInit.body = data
@@ -232,7 +234,12 @@ export class ApiRequestService {
                 // Не останавливаемся: пробуем выполнить запрос, возможно он пройдет успешно.
             }
 
-            this.sendRequest<T>(fullUrl, requestInit, logData)
+            this.sendRequest<T>(
+                fullUrl,
+                requestInit,
+                requestInit.headers.get('Accept') ?? 'application/json',
+                logData
+            )
                 .then((response: ApiResponse<T> | ApiError) => {
                     if (response.success) {
                         resolve(response)
@@ -299,14 +306,26 @@ export class ApiRequestService {
     private static async sendRequest<T extends ApiResponseData = ApiResponseData>(
         fullUrl: string,
         requestInit: RequestInit,
+        expectedResponseType: string,
         logData: (action: 'Request' | string, data: AnyObject, isError?: boolean) => void
     ): Promise<ApiResponse<T> | ApiError> {
         try {
             const response: Response = await fetch(fullUrl, requestInit)
-            const responseText: string = await response.text()
-
             if (response.status >= 200 && response.status < 400) {
                 // Успешное выполнение.
+                if (expectedResponseType !== 'application/json') {
+                    // Файл или HTML.
+                    return {
+                        url: fullUrl,
+                        request: requestInit,
+                        response,
+                        success: true,
+                        status: response.status,
+                        data: {} as T,
+                    }
+                }
+                // JSON.
+                const responseText: string = await response.text()
                 try {
                     const data: T = JSON.parse(responseText) as T
                     logData('Response: ' + response.status, data)
@@ -365,6 +384,7 @@ export class ApiRequestService {
                 data: {},
                 errorType: 'http_error',
             }
+            const responseText: string = await response.text()
             if (response.status < 100) {
                 // Что-то пошло не так. Вообще такое должно было уйти в catch(),
                 // но лучше перестраховаться.
