@@ -12,7 +12,7 @@
         min-height: form-autogrow-textarea.$input-textarea-autogrow-min-height;
         resize: none;
 
-        &.minimal {
+        .form-outline &.minimal.form-control {
             min-height: form-autogrow-textarea.$input-textarea-autogrow-minimal-min-height;
             height: form-autogrow-textarea.$input-textarea-autogrow-minimal-min-height;
             line-height: form-autogrow-textarea.$input-textarea-autogrow-minimal-line-height;
