@@ -7,8 +7,10 @@
     .rating-stars {
 
         .rating-stars-star {
-            @include svg-icons.contained-mdi-icon-color(rating-stars.$rating-stars-static-icon-color);
             line-height: rating-stars.$rating-stars-line-height;
+
+            @include svg-icons.contained-mdi-icon-color(rating-stars.$rating-stars-static-icon-color);
+            @include svg-icons.contained-custom-svg-icon-color(rating-stars.$rating-stars-static-icon-color);
 
             > svg {
                 vertical-align: top;
@@ -21,10 +23,15 @@
                 cursor: pointer;
 
                 @include svg-icons.contained-mdi-icon-color-in-link(
+                    rating-stars.$rating-stars-interactive-inactive-icon-color,
+                    rating-stars.$rating-stars-interactive-active-icon-color,
+                    rating-stars.$rating-stars-interactive-disabled-icon-color
+                );
+                @include svg-icons.contained-custom-svg-icon-color-in-link(
                         rating-stars.$rating-stars-interactive-inactive-icon-color,
                         rating-stars.$rating-stars-interactive-active-icon-color,
                         rating-stars.$rating-stars-interactive-disabled-icon-color
-                )
+                );
             }
         }
     }
