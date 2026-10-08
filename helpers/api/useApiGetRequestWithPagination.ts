@@ -7,12 +7,14 @@ import {
 } from 'react'
 import {type ApiError} from '../../services/ApiRequestService'
 import type {PaginationResponseData} from '../../types'
+import {useAbortControllerRef} from '../useAbortControllerRef'
 import {useEventCallback} from '../useEventCallback'
 
 // Настройки хука.
 export interface UseApiGetRequestWithPaginationHookConfig<
     ApiDataType,
     ModifiedDataType = ApiDataType,
+    AdditionalRequestData = unknown,
 > {
     // Количество загружаемых элементов на страницу.
     // По умолчанию: 20.
@@ -35,22 +37,33 @@ export interface UseApiGetRequestWithPaginationHookConfig<
     initialRecords?: ModifiedDataType[]
     // Модификация загруженных данных.
     modifyLoadedData?: (data: ApiDataType[]) => ModifiedDataType[]
+    // Дополнительные данные для запроса, которые передаются в sendRequest().
+    // Это способ передать в sendRequest() свойства компонента, от которых зависит запрос.
+    additionalRequestData?: AdditionalRequestData
     // Замена стандартного обработчика успешной загрузки данных.
     // Вызов modifyLoadedData() не выполняется.
     onSuccess?: (
         responseData: PaginationResponseData<ApiDataType>,
         listModificationMode: RecordsListModificationMode,
-        hookState: Readonly<UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType>>
+        hookState: Readonly<UseApiGetRequestWithPaginationHookState<
+            ApiDataType,
+            ModifiedDataType,
+            AdditionalRequestData
+        >>
     ) => void
     onAllRecordsLoaded?: (listModificationMode: RecordsListModificationMode, page: number) => void
     // Обработка ошибки загрузки данных.
     onError?: (error: ApiError, silent: boolean) => void
+    // Игнорировать ошибку типа 'abort'?
+    // По умолчанию: true.
+    ignoreAbortError?: boolean
 }
 
 // API хука.
 export interface UseApiGetRequestWithPaginationHookReturn<
     ApiDataType,
     ModifiedDataType = ApiDataType,
+    AdditionalRequestData = unknown,
 > {
     // Список элементов списка.
     records: Readonly<ModifiedDataType[]>
@@ -95,7 +108,7 @@ export interface UseApiGetRequestWithPaginationHookReturn<
     // Список элементов будет перезаписан новым спискам, полученным из API.
     // Подходит для навигации по списку с произвольным выбором страницы,
     // когда отображаются только элементы текущей страницы.
-    loadPage: (page: number, silent?: boolean) => Promise<PaginationResponseData<ApiDataType>>
+    loadPage: UseApiGetRequestWithPaginationHookLoadPageFn<ApiDataType, AdditionalRequestData>
     // Загрузить следующую страницу списка.
     // Если append = true, то список элементов будет дополнен новым списком, полученным из API.
     // Этот режим подходит для организации infinite scroll или списка с догрузкой
@@ -121,20 +134,55 @@ export interface UseApiGetRequestWithPaginationHookReturn<
     ) => void
 }
 
+// Функция отправки запроса в API.
+export type UseApiGetRequestWithPaginationHookSendRequestFn<
+    ApiDataType,
+    AdditionalRequestData = unknown,
+> = (
+    offset: number,
+    limit: number,
+    abortController: AbortController,
+    // Дополнительные данные, от которых зависит запрос.
+    // Это способ передать в sendRequest() еще не измененные свойства компонента.
+    // Пример: const onFilterChange = (newFilter: string) => {
+    //      setFilter(newFilter)
+    //      loadPage(1, false, 'replace', newFilter)
+    // }
+    // Если вызвать loadPage без newFilter, то будет использовано старое значение filter.
+    additionalRequestData?: AdditionalRequestData
+) => Promise<PaginationResponseData<ApiDataType>>
+
+// Функция загрузки списка для конкретной страницы.
+export type UseApiGetRequestWithPaginationHookLoadPageFn<
+    ApiDataType,
+    AdditionalRequestData = unknown,
+> = (
+    page: number | 'prev' | 'next',
+    // Не менять значение isLoading / isLoadingNextPage?
+    silent?: boolean,
+    // По умолчанию: 'replace'
+    modificationMode?: 'replace' | 'append' | 'prepend',
+    // Дополнительные данные для запроса, которые передаются в sendRequest().
+    // Это способ передать в sendRequest() еще не измененные свойства компонента, от которых зависит запрос.
+    additionalRequestData?: AdditionalRequestData
+) => Promise<PaginationResponseData<ApiDataType>>
+
+// Состояние хука.
 export interface UseApiGetRequestWithPaginationHookState<
     ApiDataType,
     ModifiedDataType = ApiDataType,
+    AdditionalRequestData = unknown,
 > extends Omit<
-        UseApiGetRequestWithPaginationHookReturn<ApiDataType, ModifiedDataType>,
+        UseApiGetRequestWithPaginationHookReturn<ApiDataType, ModifiedDataType, AdditionalRequestData>,
         'loadPage' | 'loadNextPage' | 'loadPrevPage' | 'reset' | 'resetState'
     > {
-    sendRequest: (offset: number, limit: number) => Promise<PaginationResponseData<ApiDataType>>
+    sendRequest: UseApiGetRequestWithPaginationHookSendRequestFn<ApiDataType, AdditionalRequestData>
     defaultOnSuccess: (
         responseData: PaginationResponseData<ApiDataType>,
         listModificationMode: RecordsListModificationMode
     ) => PaginationResponseData<ApiDataType>
     options: Omit<Readonly<
-        UseApiGetRequestWithPaginationHookConfig<ApiDataType, ModifiedDataType>>,
+        UseApiGetRequestWithPaginationHookConfig<ApiDataType, ModifiedDataType, AdditionalRequestData>>,
         'onSuccess' | 'autoStart' | 'initialPage' | 'defaultIsLoadingState' | 'resetDataBeforeLoadPageRequest'
     >
 }
@@ -146,10 +194,11 @@ export type RecordsListModificationMode = 'replace' | 'append' | 'prepend'
 export function useApiGetRequestWithPagination<
     ApiDataType,
     ModifiedDataType = ApiDataType,
+    AdditionalRequestData = unknown,
 >(
-    sendRequest: (offset: number, limit: number) => Promise<PaginationResponseData<ApiDataType>>,
-    options: UseApiGetRequestWithPaginationHookConfig<ApiDataType, ModifiedDataType> = {}
-): UseApiGetRequestWithPaginationHookReturn<ApiDataType, ModifiedDataType> {
+    sendRequest: UseApiGetRequestWithPaginationHookSendRequestFn<ApiDataType, AdditionalRequestData>,
+    options: UseApiGetRequestWithPaginationHookConfig<ApiDataType, ModifiedDataType, AdditionalRequestData> = {}
+): UseApiGetRequestWithPaginationHookReturn<ApiDataType, ModifiedDataType, AdditionalRequestData> {
 
     const {
         limit: initialLimit = 20,
@@ -159,9 +208,11 @@ export function useApiGetRequestWithPagination<
         resetDataBeforeLoadPageRequest = false,
         initialRecords = [],
         modifyLoadedData,
+        additionalRequestData: additionalRequestDataFromOptions,
         onSuccess,
         onAllRecordsLoaded,
         onError,
+        ignoreAbortError = true,
     } = options
 
     // Количество элементов на страницу списка.
@@ -202,6 +253,8 @@ export function useApiGetRequestWithPagination<
         isAllRecordsLoaded,
         setIsAllRecordsLoaded,
     ] = useState<boolean>(false)
+
+    const abortControllerRef = useAbortControllerRef()
 
     const currentPageNumber: number = Math.floor(offset / limit) + 1
     const isFirstPage: boolean = offset <= 0
@@ -245,7 +298,7 @@ export function useApiGetRequestWithPagination<
 
     // Получить текущее состояние хука.
     const getHookState = useEventCallback(
-        (): UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType> => ({
+        (): UseApiGetRequestWithPaginationHookState<ApiDataType, ModifiedDataType, AdditionalRequestData> => ({
             limit,
             setLimit,
             offset,
@@ -280,8 +333,14 @@ export function useApiGetRequestWithPagination<
         page: number | 'prev' | 'next' | 'same',
         limit: number,
         listModificationMode: RecordsListModificationMode,
-        silent?: boolean
+        silent?: boolean,
+        additionalRequestData?: AdditionalRequestData
     ): Promise<PaginationResponseData<ApiDataType>> => {
+        // Отменяем предыдущий запрос, если он еще не завершен.
+        if (abortControllerRef.current && !abortControllerRef.current.signal.aborted) {
+            abortControllerRef.current.abort()
+            abortControllerRef.current = null
+        }
         const oldOffset: number = offset
         let newOffset: number = oldOffset
         switch (page) {
@@ -299,9 +358,7 @@ export function useApiGetRequestWithPagination<
         setOffset(newOffset)
         if (!silent) {
             setError(null)
-            if (listModificationMode !== 'replace') {
-                setIsLoadingNextPage(true)
-            }
+            setIsLoadingNextPage(listModificationMode !== 'replace')
             if (
                 listModificationMode === 'replace'
                 && resetDataBeforeLoadPageRequest
@@ -310,7 +367,15 @@ export function useApiGetRequestWithPagination<
                 setRecords([])
             }
         }
-        return sendRequest(newOffset, limit)
+        abortControllerRef.current = new AbortController()
+        return sendRequest(
+            newOffset,
+            limit,
+            abortControllerRef.current,
+            typeof additionalRequestData === 'undefined'
+                ? additionalRequestDataFromOptions
+                : additionalRequestData
+        )
             .then((data: PaginationResponseData<ApiDataType>) => {
                 if (onSuccess) {
                     onSuccess(data, listModificationMode, getHookState())
@@ -320,6 +385,10 @@ export function useApiGetRequestWithPagination<
                 return data
             })
             .catch((error: ApiError) => {
+                if (!ignoreAbortError && error.errorType === 'abort') {
+                    // Запрос был отменен: ничего не делаем.
+                    return
+                }
                 if (!silent) {
                     setError(error)
                 }
@@ -354,15 +423,20 @@ export function useApiGetRequestWithPagination<
     )
 
     // Загрузка списка для конкретной страницы.
-    const loadPage = useEventCallback((
+    const loadPage: UseApiGetRequestWithPaginationHookLoadPageFn<
+        ApiDataType,
+        AdditionalRequestData
+    > = useEventCallback((
         page: number | 'prev' | 'next',
         silent?: boolean,
-        modificationMode: 'replace' | 'append' | 'prepend' = 'replace'
+        modificationMode: 'replace' | 'append' | 'prepend' = 'replace',
+        additionalRequestData?: AdditionalRequestData
     ): Promise<PaginationResponseData<ApiDataType>> => executeRequest(
         page,
         limit,
         modificationMode,
-        silent
+        silent,
+        additionalRequestData
     ))
 
     // Загрузка списка для следующей страницы.
