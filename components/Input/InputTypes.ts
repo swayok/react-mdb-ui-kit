@@ -487,6 +487,28 @@ export interface NumericInputProps extends Omit<
     ) => void
 }
 
+// Свойства компонента IntegerInput.
+export interface IntegerInputProps extends Omit<
+    InputProps,
+    'onChange' | 'onPaste' | 'onBeforeInput' | 'allowedChars' | 'value' | 'textarea'
+> {
+    // Значение.
+    value?: string | number | null
+    // Разрешить отрицательные числа?
+    allowNegative?: boolean
+    // Минимальное значение.
+    min?: number
+    // Максимальное значение.
+    max?: number
+    // Кол-во цифр в целой части вводимого числа.
+    maxLength?: number
+    onChange: (
+        e: ChangeEvent<HTMLInputElement>,
+        rawValue: string,
+        cleanValue: number | null
+    ) => void
+}
+
 // Свойства компонента OptionsSliderInput.
 export interface OptionsSliderInputProps<
     OptionValueType = number,
