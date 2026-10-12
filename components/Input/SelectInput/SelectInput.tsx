@@ -62,6 +62,7 @@ export function SelectInput<
         withPermanentOption,
         disableOptions = [],
         renderOptionLabel,
+        renderOptionsGroupLabel,
         trackBehaviorAs,
         selectFirstIfNotFound = true,
         closeDropdownOnSelect = true,
@@ -320,6 +321,7 @@ export function SelectInput<
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
                     height={maxHeight}
@@ -334,6 +336,7 @@ export function SelectInput<
                     labelsContainHtml={labelsContainHtml}
                     hideEmptyOptionInDropdown={hideEmptyOptionInDropdown}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     keywordsRegexp={keywordsRegexp}
                     search={search}
                     disableOptions={disableOptions}

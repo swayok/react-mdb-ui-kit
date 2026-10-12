@@ -30,6 +30,7 @@ export function SelectInputOptions<
         onChange,
         trackBehaviorAs,
         renderOptionLabel,
+        renderOptionsGroupLabel,
     } = props
 
     // Обработчик выбора опции.
@@ -60,6 +61,7 @@ export function SelectInputOptions<
                     index={option.index}
                     depth={option.depth}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     labelContainsHtml={labelsContainHtml}
                 />
             )
@@ -84,6 +86,7 @@ export function SelectInputOptions<
                     depth={option.depth}
                     isActive={selectedOption?.value === option.data.value}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     labelContainsHtml={labelsContainHtml}
                     disabled={option.data.disabled ?? disableOptions?.includes(option.data.value)}
                     onSelect={onSelect}

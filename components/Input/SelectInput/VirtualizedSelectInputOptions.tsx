@@ -31,6 +31,7 @@ export function VirtualizedSelectInputOptions<
         onChange,
         trackBehaviorAs,
         renderOptionLabel,
+        renderOptionsGroupLabel,
     } = props
 
     const virtuoso = useVirtuosoLibAsync<
@@ -81,6 +82,7 @@ export function VirtualizedSelectInputOptions<
                     index={index}
                     depth={option.depth}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     labelContainsHtml={labelsContainHtml}
                 />
             )
@@ -102,6 +104,7 @@ export function VirtualizedSelectInputOptions<
                     depth={option.depth}
                     isActive={selectedValue === option.data.value}
                     renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     labelContainsHtml={labelsContainHtml}
                     disabled={(
                         !!option.data.disabled

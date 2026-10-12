@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import type {AnyObject} from '../../../types'
 import {DropdownHeader} from '../../Dropdown/DropdownHeader'
-import {SelectInputOptionLabel} from './SelectInputOptionLabel'
+import {SelectInputOptionsGroupLabel} from './SelectInputOptionsGroupLabel'
 import type {SelectInputOptionsGroupHeaderProps} from './SelectInputTypes'
 
 // Отображение заголовка группы опций в выпадающем меню.
@@ -14,7 +14,7 @@ export function SelectInputOptionsGroupHeader<
         group,
         index,
         depth,
-        renderOptionLabel,
+        renderOptionsGroupLabel,
         labelContainsHtml,
         visible = true,
     } = props
@@ -38,9 +38,9 @@ export function SelectInputOptionsGroupHeader<
                 className as string
             )}
         >
-            <SelectInputOptionLabel
-                option={group}
-                renderOptionLabel={renderOptionLabel}
+            <SelectInputOptionsGroupLabel
+                group={group}
+                renderOptionsGroupLabel={renderOptionsGroupLabel}
                 labelContainsHtml={labelContainsHtml}
             />
         </DropdownHeader>

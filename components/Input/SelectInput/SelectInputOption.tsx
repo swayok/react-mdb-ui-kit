@@ -62,7 +62,7 @@ export function SelectInputOption<
                 'item-offset-' + depth,
                 isEmptyOption ? 'empty-option' : null,
                 className,
-                optionProps?.className as string
+                optionProps?.className
             )}
         >
             {beforeLabel}

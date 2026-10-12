@@ -15,7 +15,7 @@ export function SelectInputOptionLabel<
     } = props
 
     if (renderOptionLabel && typeof renderOptionLabel === 'function') {
-        return renderOptionLabel(option, false)
+        return renderOptionLabel(option)
     }
 
     const label: string = option.label || String(option.value)

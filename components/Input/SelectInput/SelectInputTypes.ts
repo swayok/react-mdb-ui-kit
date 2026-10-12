@@ -1,8 +1,8 @@
 import type {OpenChangeReason} from '@floating-ui/react'
 import {
     type ChangeEvent,
-    type KeyboardEvent,
     type FocusEvent,
+    type KeyboardEvent,
     type MouseEvent,
     type ReactNode,
     type Ref,
@@ -11,7 +11,6 @@ import type {
     AnyObject,
     FormSelectOption,
     FormSelectOptionGroup,
-    FormSelectOptionOrGroup,
     FormSelectOptionsAndGroupsList,
     FormSelectOptionsList,
 } from '../../../types'
@@ -128,10 +127,11 @@ export interface SelectInputProps<
     selectFirstIfNotFound?: boolean
     // Конвертация опции для отображения в поле ввода (по умолчанию отображается FormSelectOption['label']).
     valueToString?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string
-    // Отрисовка подписи для опции или группы опций в выпадающем меню.
-    renderOptionLabel?: (
-        option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>,
-        isGroup: boolean
+    // Отрисовка подписи для опции в выпадающем меню.
+    renderOptionLabel?: (option: FormSelectOption<OptionValueType, OptionExtrasType>) => string | ReactNode
+    // Отрисовка подписи группы опций в выпадающем меню.
+    renderOptionsGroupLabel?: (
+        group: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
     ) => string | ReactNode
     // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
     labelsContainHtml?: boolean
@@ -230,10 +230,9 @@ export interface MultiSelectInputProps<
     // Нужно ли перемещать выбранные опции в начало списка опций?
     stickSelectedOptionsToTop?: boolean
     // Отрисовка подписи для опции или группы опций в выпадающем меню.
-    renderOptionLabel?: (
-        option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>,
-        isGroup: boolean
-    ) => string | ReactNode
+    renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
+    // Отрисовка подписи группы опций в выпадающем меню.
+    renderOptionsGroupLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionsGroupLabel']
     // Задать true, если FormSelectOption['label'] может содержать HTML, а не только обычный текст.
     labelsContainHtml?: boolean
     // Todo: Вкл/Выкл поиска по опциям.
@@ -245,7 +244,7 @@ export interface MultiSelectInputProps<
     // Если задано 'auto', то виртуализация будет включена, когда опций больше 50.
     // Проблема: если в опции суммарно занимают меньшую высоту, чем maxHeight,
     // то выпадающее меню всё-равно будет иметь высоту maxHeight, т.е. не уменьшится.
-    enableVirtualization?: SelectInputProps['enableVirtualization']
+    enableVirtualization?: SelectInputProps<OptionValueType, OptionExtrasType>['enableVirtualization']
 }
 
 // Данные в option.extra для списка опций компонента MultiSelectInput.
@@ -271,6 +270,7 @@ export interface SelectInputOptionProps<
     isActive?: boolean
     disabled?: boolean
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
+    renderOptionsGroupLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionsGroupLabel']
     labelContainsHtml?: boolean
     className?: string
     beforeLabel?: ReactNode
@@ -287,8 +287,18 @@ export interface SelectInputOptionLabelProps<
     OptionValueType = string,
     OptionExtrasType extends AnyObject = AnyObject,
 > {
-    option: Omit<FormSelectOptionOrGroup<OptionValueType, OptionExtrasType>, 'options'>
+    option: FormSelectOption<OptionValueType, OptionExtrasType>
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
+    labelContainsHtml?: boolean
+}
+
+// Свойства компонента SelectInputOptionsGroupLabel.
+export interface SelectInputOptionsGroupLabelProps<
+    OptionValueType = string,
+    OptionExtrasType extends AnyObject = AnyObject,
+> {
+    group: Omit<FormSelectOptionGroup<OptionValueType, OptionExtrasType>, 'options'>
+    renderOptionsGroupLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionsGroupLabel']
     labelContainsHtml?: boolean
 }
 
@@ -299,7 +309,7 @@ export interface SelectInputOptionsProps<
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
         'hideEmptyOptionInDropdown'
-        | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
+        | 'search' | 'renderOptionLabel' | 'renderOptionsGroupLabel' | 'labelsContainHtml'
         | 'disableOptions' | 'onChange' | 'trackBehaviorAs'
     > {
     options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]
@@ -316,7 +326,7 @@ export interface MultiSelectInputOptionsProps<
     > = MultiSelectInputOptionsGroupInfo<OptionValueType>,
 > extends Pick<
         MultiSelectInputProps<OptionValueType, OptionExtrasType>,
-        | 'search' | 'renderOptionLabel' | 'labelsContainHtml'
+        | 'search' | 'renderOptionLabel' | 'renderOptionsGroupLabel' | 'labelsContainHtml'
         | 'disableOptions' | 'trackBehaviorAs'
     > {
     options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType, GroupInfoType>[]
@@ -343,6 +353,7 @@ export interface SelectInputOptionsGroupHeaderProps<
     depth: number
     isActive?: boolean
     renderOptionLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionLabel']
+    renderOptionsGroupLabel?: SelectInputProps<OptionValueType, OptionExtrasType>['renderOptionsGroupLabel']
     labelContainsHtml?: boolean
 }
 
@@ -353,7 +364,7 @@ export interface VirtualizedSelectInputOptionsProps<
 > extends Pick<
         SelectInputProps<OptionValueType, OptionExtrasType>,
         'hideEmptyOptionInDropdown' | 'search'
-        | 'renderOptionLabel' | 'labelsContainHtml' | 'disableOptions'
+        | 'renderOptionLabel' | 'renderOptionsGroupLabel' | 'labelsContainHtml' | 'disableOptions'
         | 'onChange' | 'trackBehaviorAs'
     > {
     options: FlattenedOptionOrGroup<OptionValueType, OptionExtrasType>[]

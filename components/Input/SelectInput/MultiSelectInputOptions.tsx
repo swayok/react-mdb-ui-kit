@@ -31,6 +31,7 @@ export function MultiSelectInputOptions<
         options,
         labelsContainHtml,
         renderOptionLabel,
+        renderOptionsGroupLabel,
         selectedValues,
         disableOptions,
         onSelect,
@@ -53,7 +54,7 @@ export function MultiSelectInputOptions<
                     group={option.data}
                     index={option.index}
                     depth={option.depth}
-                    renderOptionLabel={renderOptionLabel}
+                    renderOptionsGroupLabel={renderOptionsGroupLabel}
                     labelContainsHtml={labelsContainHtml}
                 />
             )
@@ -92,6 +93,7 @@ export function MultiSelectInputOptions<
                 depth={option.depth}
                 labelContainsHtml={labelsContainHtml}
                 renderOptionLabel={renderOptionLabel}
+                renderOptionsGroupLabel={renderOptionsGroupLabel}
                 isActive={selected}
                 onSelect={(
                     selectedOption,
