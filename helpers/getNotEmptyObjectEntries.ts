@@ -1,6 +1,6 @@
 import type {AnyObject} from '../types'
 
-// Удаляет из объекта все пустые значения (null и пустые строки).
+// Удаляет из объекта все пустые значения (null, пустые строки, пустые массивы).
 // Возвращает массив пар ключ-значение, подходящий для использования
 // в Object.fromEntries(ret).
 export function getNotEmptyObjectEntries<T extends AnyObject>(
@@ -13,6 +13,7 @@ export function getNotEmptyObjectEntries<T extends AnyObject>(
         value !== undefined
         && value != null
         && (typeof value !== 'string' || value.trim() !== '')
+        && (!Array.isArray(value) || value.length > 0)
     ))
     if (sort) {
         entries = entries.sort(
