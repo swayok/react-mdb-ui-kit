@@ -4,6 +4,7 @@ import {
     mdiStarOutline,
 } from '@mdi/js'
 import clsx from 'clsx'
+import type {CSSProperties} from 'react'
 import type {SvgIconInfo} from '../../types'
 import {Icon} from './Icon'
 import type {MdiIconProps} from './MDIIcon'
@@ -11,6 +12,7 @@ import type {MdiIconProps} from './MDIIcon'
 export interface RatingStarsProps {
     rating: number
     className?: string
+    style?: CSSProperties
     starSize?: number
     onClick?: (value: number) => void
     inactiveIconColor?: MdiIconProps['color']
@@ -26,6 +28,7 @@ export function RatingStars(props: RatingStarsProps) {
     const {
         rating,
         className = 'gap-1',
+        style,
         starSize,
         onClick,
         inactiveIconColor,
@@ -76,6 +79,7 @@ export function RatingStars(props: RatingStarsProps) {
                 className,
                 onClick ? 'interactive' : null
             )}
+            style={style}
         >
             {stars}
         </div>
