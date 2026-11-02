@@ -18,7 +18,7 @@ export interface CollapseProps extends Omit<MorphingHtmlComponentPropsWithoutRef
     // Если false и show === true, то содержимое отображается с анимацией открытия.
     showImmediately?: boolean
     // Ссылка на контейнер компонента.
-    wrapperRef?: RefObject<HTMLElement>
+    wrapperRef?: RefObject<HTMLElement | null>
     // Функция, вызываемая при завершении анимации.
     onTransitionEnd?: (opened: boolean, ref: null | HTMLElement) => void
     // Добавляет CSS класс d-block чтобы компонент не скрывался через {display: 'none'}.
