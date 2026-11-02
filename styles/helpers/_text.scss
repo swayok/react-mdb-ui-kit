@@ -41,6 +41,11 @@
         word-break: break-all;
     }
 
+    .text-multiline-break-word {
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
     .text-transform-none {
         text-transform: none !important;
     }
