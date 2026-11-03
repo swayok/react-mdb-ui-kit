@@ -184,6 +184,41 @@ export function SelectInputBase(props: SelectInputBasicProps) {
         onSearchInputKeyDown,
     }))
 
+    // Этот хук должен вызываться всегда, независимо от hidden,
+    // иначе нарушается порядок хуков между рендерами (Rules of Hooks).
+    const contextProviderProps = useMemo(
+        (): DropdownContextProps => ({
+            // Реально изменяемые данные, необходимые для DropdownItem.
+            setIsOpen,
+            activeIndex,
+            getItemProps,
+            // Неизменные данные.
+            disableAllItems: false,
+            setDisableAllItems() {
+            },
+            setActiveIndex() {
+            },
+            hasFocusInside: false,
+            setHasFocusInside() {
+            },
+            isOpen: false,
+            parentContext: null,
+            toggleElement: null,
+            setToggleElement() {
+            },
+            menuElement: null,
+            setMenuElement() {
+            },
+            isNested: false,
+            itemForParent: null,
+            rootContext: {} as FloatingRootContext,
+            elementsRef: listItemsRef,
+            getReferenceProps: props => props as AnyObject,
+            getFloatingProps: props => props as AnyObject,
+        }),
+        [activeIndex, getItemProps, setIsOpen]
+    )
+
     if (hidden) {
         return null
     }
@@ -278,39 +313,6 @@ export function SelectInputBase(props: SelectInputBasicProps) {
             )
             break
     }
-
-    const contextProviderProps = useMemo(
-        (): DropdownContextProps => ({
-            // Реально изменяемые данные, необходимые для DropdownItem.
-            setIsOpen,
-            activeIndex,
-            getItemProps,
-            // Неизменные данные.
-            disableAllItems: false,
-            setDisableAllItems() {
-            },
-            setActiveIndex() {
-            },
-            hasFocusInside: false,
-            setHasFocusInside() {
-            },
-            isOpen: false,
-            parentContext: null,
-            toggleElement: null,
-            setToggleElement() {
-            },
-            menuElement: null,
-            setMenuElement() {
-            },
-            isNested: false,
-            itemForParent: null,
-            rootContext: {} as FloatingRootContext,
-            elementsRef: listItemsRef,
-            getReferenceProps: props => props as AnyObject,
-            getFloatingProps: props => props as AnyObject,
-        }),
-        [activeIndex, getItemProps, setIsOpen]
-    )
 
     return (
         <div className={wrapperClasses}>
