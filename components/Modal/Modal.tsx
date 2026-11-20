@@ -162,6 +162,11 @@ export function Modal(props: ModalProps) {
         if (innerShow) {
             openedModals = Math.max(0, openedModals - 1)
         }
+        if (openedModals === 0) {
+            document.body.classList.remove('modal-open')
+            document.body.style.overflow = ''
+            document.body.style.paddingRight = ''
+        }
     }, [])
 
     useEffect(() => {
