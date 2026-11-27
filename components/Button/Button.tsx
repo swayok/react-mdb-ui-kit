@@ -56,7 +56,7 @@ export function Button<
         hidden,
         visible,
         type = 'button',
-        role = 'button',
+        role,
         large,
         small,
         href,
@@ -121,7 +121,8 @@ export function Button<
 
     const calculatedProps: AnyObject = {
         disabled,
-        role,
+        // <label> играет роль кнопки; ссылкам и <button> роль не нужна.
+        role: role ?? (Tag === 'label' ? 'button' : undefined),
     }
     if (Tag === 'button') {
         calculatedProps.type = type

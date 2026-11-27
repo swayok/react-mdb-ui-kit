@@ -94,6 +94,8 @@ export function IconHref(props: IconHrefProps) {
             {...tooltipProps}
             tooltipDisableClickHandler
             {...linkProps}
+            // Имя ссылки-иконки для скринридеров: явный aria-label или текст подсказки.
+            aria-label={linkProps['aria-label'] ?? (typeof tooltip === 'string' ? tooltip : undefined)}
             onClick={(event: MouseEvent<HTMLAnchorElement>) => {
                 if (disabled) {
                     event.preventDefault()

@@ -67,6 +67,8 @@ export function SvgIcon(props: SvgIconProps) {
             )}
             style={style}
             data-use="0"
+            // Декоративная иконка скрыта от скринридеров, если у неё нет своего имени.
+            aria-hidden={props['aria-label'] ? undefined : true}
             {...rest}
         >
             <g
