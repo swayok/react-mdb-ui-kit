@@ -71,11 +71,14 @@ export function Icon(props: IconProps) {
 
     let icon
     const colorClassName = color ? 'text-' + color : null
+    // У svg иконок по умолчанию pointer-events: none - без pe-auto onClick не сработает.
+    const pointerEventsClassName = otherProps.onClick ? 'pe-auto' : null
     if (typeof path == 'string') {
         const modifiedClassName = clsx(
             'mdi-icon',
             props.rotate !== undefined ? 'mdi-rotatable' : null,
             colorClassName,
+            pointerEventsClassName,
             className
         )
         icon = (
@@ -96,7 +99,8 @@ export function Icon(props: IconProps) {
                 iconInfo={path}
                 className={clsx(
                     className,
-                    colorClassName
+                    colorClassName,
+                    pointerEventsClassName
                 )}
                 {...customIconProps as Partial<SvgIconProps>}
             />
