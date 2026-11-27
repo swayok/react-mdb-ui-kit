@@ -20,7 +20,7 @@ interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {
 }
 
 // Иконка-кнопка, работающая по аналогии с <checkbox> (вкл/выкл).
-// Имя кнопки (aria-label) по умолчанию: 'Select'.
+// Имя кнопки (aria-label) по умолчанию: 'Select'; состояние - aria-pressed.
 export function CheckboxIconSwitch(props: IconButtonSwitchProps) {
     const {
         active,
@@ -44,6 +44,8 @@ export function CheckboxIconSwitch(props: IconButtonSwitchProps) {
                 active ? activeClassName : inactiveClassName
             )}
             aria-label={ariaLabel}
+            // Состояние переключателя для скринридеров.
+            aria-pressed={active}
             {...otherProps}
         />
     )
