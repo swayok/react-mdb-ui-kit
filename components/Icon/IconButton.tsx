@@ -3,9 +3,11 @@ import {
     type CSSProperties,
     type MouseEvent,
     type ReactNode,
+    type Ref,
 } from 'react'
 import {useEventCallback} from '../../helpers/useEventCallback'
 import type {
+    AnyObject,
     TextColors,
 } from '../../types'
 import {
@@ -18,13 +20,16 @@ export type IconButtonTooltipProps = Omit<IconTooltipProps, 'onClick' | 'onMouse
 
 export interface IconButtonProps extends Omit<
     IconProps,
-    'onClick' | 'onMouseDown'
+    'onClick' | 'onMouseDown' | 'ref'
     | 'tooltipDisableClickHandler' | 'tooltipToggleClassName' | 'tooltipProps'
 > {
     tooltip?: string | ReactNode
+    // Имя кнопки для скринридеров. По умолчанию: tooltip, если это строка.
+    'aria-label'?: string
     color?: TextColors | 'link'
-    onClick?: (event: MouseEvent<HTMLDivElement>) => void
-    onMouseDown?: (event: MouseEvent<HTMLDivElement>) => void
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => void
+    onMouseDown?: (event: MouseEvent<HTMLButtonElement>) => void
+    ref?: Ref<HTMLButtonElement>
     tooltipProps?: IconButtonTooltipProps
     iconClassName?: string
     iconStyle?: CSSProperties
@@ -34,7 +39,9 @@ export interface IconButtonProps extends Omit<
     inline?: boolean
 }
 
-// Иконка-кнопка со всплывающей подсказкой при наведении
+// Иконка-кнопка (<button type="button">) со всплывающей подсказкой при наведении.
+// ref, id, tabIndex, role, aria-* и обработчики событий (on*) задаются кнопке,
+// остальные свойства - иконке. Это позволяет передавать IconButton как tag в DropdownToggle и т.п.
 export function IconButton(props: IconButtonProps) {
 
     const {
@@ -49,16 +56,42 @@ export function IconButton(props: IconButtonProps) {
         inline = false,
         // Tooltip props:
         tooltip,
-        tooltipToggleTag = 'div',
+        'aria-label': ariaLabel = typeof tooltip === 'string' ? tooltip : undefined,
+        ref,
+        id,
+        tabIndex,
+        role,
+        tooltipToggleTag = 'button',
         tooltipMaxWidth,
         tooltipTextClassName,
         tooltipPlacement,
         centerIconInTooltip,
         tooltipProps,
-        ...otherProps
+        ...restProps
     } = props
 
+    const buttonProps: AnyObject = {
+        ref,
+        id,
+        tabIndex,
+        role,
+        type: 'button',
+        'aria-label': ariaLabel,
+        // Не атрибут disabled: на отключённой кнопке не срабатывают события мыши и не показывается подсказка.
+        'aria-disabled': disabled || undefined,
+    }
+    const otherProps: AnyObject = {}
+    const rest: AnyObject = restProps
+    for (const key in rest) {
+        if (key.startsWith('aria-') || /^on[A-Z]/.test(key)) {
+            buttonProps[key] = rest[key]
+        } else {
+            otherProps[key] = rest[key]
+        }
+    }
+
     const wrapperClassName: string = clsx(
+        'button-reset',
         'clickable',
         inline ? 'd-inline-block with-icon' : 'with-icon-flex',
         color ? 'link-' + color : null,
@@ -67,7 +100,7 @@ export function IconButton(props: IconButtonProps) {
     )
 
     const handleClick = useEventCallback(
-        (event: MouseEvent<HTMLDivElement>) => {
+        (event: MouseEvent<HTMLButtonElement>) => {
             if (!disabled) {
                 onClick?.(event)
             }
@@ -75,7 +108,7 @@ export function IconButton(props: IconButtonProps) {
     )
 
     const handleMouseDown = useEventCallback(
-        (event: MouseEvent<HTMLDivElement>) => {
+        (event: MouseEvent<HTMLButtonElement>) => {
             if (!disabled) {
                 onMouseDown?.(event)
             }
@@ -99,18 +132,20 @@ export function IconButton(props: IconButtonProps) {
                 tooltipProps={{
                     tooltipRole: 'label',
                     ...tooltipProps,
+                    ...buttonProps,
                     onClick: handleClick,
                     onMouseDown: handleMouseDown,
                     style,
                 }}
                 className={iconClassName}
                 style={iconStyle}
-                {...otherProps}
+                {...otherProps as IconProps}
             />
         )
     } else {
         return (
-            <div
+            <button
+                {...buttonProps}
                 className={wrapperClassName}
                 onClick={handleClick}
                 onMouseDown={handleMouseDown}
@@ -119,9 +154,9 @@ export function IconButton(props: IconButtonProps) {
                 <Icon
                     className={iconClassName}
                     style={iconStyle}
-                    {...otherProps}
+                    {...otherProps as IconProps}
                 />
-            </div>
+            </button>
         )
     }
 }

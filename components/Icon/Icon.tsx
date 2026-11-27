@@ -122,14 +122,14 @@ export function Icon(props: IconProps) {
                     {...commonTooltipProps}
                 >
                     {icon}
-                    <div
+                    <span
                         className={clsx(
                             'flex-1 mdi-icon-label',
                             labelClassName
                         )}
                     >
                         {label}
-                    </div>
+                    </span>
                 </Tooltip>
             )
         } else {
@@ -149,17 +149,18 @@ export function Icon(props: IconProps) {
     } else {
         if (label !== undefined) {
             return (
-                <div className="mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start">
+                // <span>, а не <div>: иконка с подписью может находиться внутри <button> (IconButton).
+                <span className="mdi-icon-wrapper d-flex flex-row align-items-center justify-content-start">
                     {icon}
-                    <div
+                    <span
                         className={clsx(
                             'flex-1 mdi-icon-label',
                             labelClassName
                         )}
                     >
                         {label}
-                    </div>
-                </div>
+                    </span>
+                </span>
             )
         } else {
             return icon
