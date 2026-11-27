@@ -1,0 +1,26 @@
+// Сброс стилей <button>: выглядит как простой <div>, утилиты перебивают сброс (специфичность 0).
+// Отличие от <div>: в блочном потоке кнопка сжимается по содержимому — для полной ширины добавить .w-100.
+// Фокус с клавиатуры (:focus-visible) не сбрасывается — контур остаётся от браузера.
+:where(.button-reset) {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    text-align: inherit;
+}
+
+// Reboot задаёт `button {text-transform: none}` и `[type='button'] {-webkit-appearance: button}` —
+// специфичность 0 им проигрывает, поэтому эти свойства сбрасываются обычным классом.
+// Утилиты (.text-uppercase и др.) по-прежнему побеждают — они с !important.
+.button-reset {
+    text-transform: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+}
