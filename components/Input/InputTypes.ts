@@ -11,6 +11,7 @@ import {
     type RefObject,
 } from 'react'
 import type {CalendarProps} from 'react-calendar'
+import type {NormalizedNestedLaravelValidationErrors} from 'swayok-react-mdb-ui-kit/helpers/api/ApiRequestErrorHelpers'
 import type {
     AnyObject,
     AnyRef,
@@ -34,10 +35,8 @@ import type {
     DropdownProps,
 } from '../Dropdown/DropdownTypes'
 import type {IconProps} from '../Icon/Icon'
-import type {MdiIconProps} from '../Icon/MDIIcon'
 import type {TooltipProps} from '../Tooltip/TooltipTypes'
 import type {InputWithDropdownApi} from './SelectInput/SelectInputTypes'
-import type {NormalizedNestedLaravelValidationErrors} from 'swayok-react-mdb-ui-kit/helpers/api/ApiRequestErrorHelpers'
 
 export type * from './SelectInput/SelectInputTypes'
 
@@ -357,7 +356,7 @@ export interface FileInputAsButtonProps extends Omit<ButtonProps, 'onChange' | '
 }
 
 // Свойства компонента InputAddonIcon.
-export interface InputAddonIconProps extends MdiIconProps {
+export interface InputAddonIconProps extends IconProps {
     iconClassName?: string
 }
 
