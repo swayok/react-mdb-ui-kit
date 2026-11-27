@@ -64,6 +64,7 @@ function DropdownWrapper(props: DropdownProps) {
         autoClose = true,
         closeOnScrollOutside = false,
         disabled,
+        role: panelRole = 'menu',
         children,
     } = useUncontrolled(props, {open: 'onOpenChange'})
 
@@ -126,7 +127,7 @@ function DropdownWrapper(props: DropdownProps) {
         ignoreMouse: isNested,
         keyboardHandlers: true,
     })
-    const role = useRole(rootContext, {role: 'menu'})
+    const role = useRole(rootContext, {role: panelRole})
     // noinspection PointlessBooleanExpressionJS
     const dismiss = useDismiss(rootContext, {
         bubbles: true,
@@ -134,6 +135,8 @@ function DropdownWrapper(props: DropdownProps) {
         outsidePress: autoClose === true || autoClose === 'outside',
     })
     const listNavigation = useListNavigation(rootContext, {
+        // В панели-диалоге стрелки нужны полям ввода, а не переключению пунктов.
+        enabled: panelRole === 'menu',
         listRef: elementsRef,
         activeIndex,
         nested: isNested,
@@ -173,6 +176,7 @@ function DropdownWrapper(props: DropdownProps) {
         setToggleElement,
         menuElement,
         setMenuElement,
+        role: panelRole,
         isNested,
         itemForParent: isNested ? itemForParent : null,
         elementsRef,

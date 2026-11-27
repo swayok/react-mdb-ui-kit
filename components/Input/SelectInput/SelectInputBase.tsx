@@ -209,6 +209,8 @@ export function SelectInputBase(props: SelectInputBasicProps) {
             menuElement: null,
             setMenuElement() {
             },
+            // Пункты списка остаются role="menuitem", как и раньше.
+            role: 'menu',
             isNested: false,
             itemForParent: null,
             rootContext: {} as FloatingRootContext,

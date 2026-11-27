@@ -33,6 +33,7 @@ export const DropdownContext = createContext<DropdownContextProps>({
     setToggleElement() {
     },
     menuElement: null,
+    role: 'menu',
     setMenuElement() {
     },
     isNested: false,

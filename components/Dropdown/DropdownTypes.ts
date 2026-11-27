@@ -53,6 +53,8 @@ export interface DropdownContextProps<
     toggleElement: ToggleRefType | null
     setToggleElement: Dispatch<SetStateAction<ToggleRefType | null>>
     menuElement: MenuRefType | null
+    // Роль выпадающей панели (см. DropdownProps.role).
+    role: DropdownRole
     setMenuElement: Dispatch<SetStateAction<MenuRefType | null>>
     isNested: boolean
     itemForParent: {
@@ -64,9 +66,19 @@ export interface DropdownContextProps<
     elementsRef: RefObject<(HTMLElement | null)[]>
 }
 
+// Роль выпадающей панели.
+export type DropdownRole = 'menu' | 'dialog'
+
 // Свойства компонента Dropdown.
 export interface DropdownProps {
     ref?: never
+    /**
+     * Роль выпадающей панели.
+     * 'menu' - меню из DropdownItem: role="menu" у панели, role="menuitem" у пунктов, навигация стрелками.
+     * 'dialog' - для панелей с формой/произвольным контентом: role="dialog", без menuitem и навигации стрелками.
+     * По умолчанию: 'menu'.
+     */
+    role?: DropdownRole
     // Начальное состояние выпадающего меню.
     defaultOpen?: boolean
     /**

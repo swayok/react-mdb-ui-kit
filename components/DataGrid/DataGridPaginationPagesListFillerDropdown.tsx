@@ -180,6 +180,8 @@ export function DataGridPaginationPagesListFillerDropdown(
             className={className}
         >
             <Dropdown
+                // Поле ввода номера страницы - диалог, сетка номеров страниц - меню.
+                role={showPageNumberInputInFiller ? 'dialog' : 'menu'}
                 focusFirstItemOnOpen={false}
                 autoClose={true}
                 onOpenChange={onMenuToggle}

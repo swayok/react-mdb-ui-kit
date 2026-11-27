@@ -51,6 +51,7 @@ export function DropdownItem<
         activeIndex,
         getItemProps,
         setHasFocusInside,
+        role: contextRole,
     } = useDropdownContext()
 
     const item = useListItem()
@@ -131,7 +132,7 @@ export function DropdownItem<
             })}
             ref={mergedRef}
             tabIndex={isHovered ? 0 : -1}
-            role="menuitem"
+            role={contextRole === 'menu' ? 'menuitem' : undefined}
             {...componentProps}
             disabled={disableAllItems || disabled}
             className={clsx(
