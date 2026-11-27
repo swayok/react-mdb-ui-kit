@@ -1,4 +1,5 @@
 import {
+    type ElementProps,
     FloatingNode,
     FloatingTree,
     safePolygon,
@@ -14,6 +15,8 @@ import {
     useRole,
 } from '@floating-ui/react'
 import {
+    useId,
+    useMemo,
     useRef,
     useState,
 } from 'react'
@@ -145,6 +148,21 @@ function DropdownWrapper(props: DropdownProps) {
         virtual: true,
     })
 
+    // Имя панели-диалога: floating-ui для role="dialog" не задаёт aria-labelledby (в отличие от menu),
+    // а у диалога должно быть доступное имя - берём его у кнопки открытия.
+    const toggleId = useId()
+    const dialogLabel = useMemo(
+        (): ElementProps | undefined => (
+            panelRole === 'dialog'
+                ? {
+                    reference: {id: toggleId},
+                    floating: {'aria-labelledby': toggleId},
+                }
+                : undefined
+        ),
+        [panelRole, toggleId]
+    )
+
     const {
         getReferenceProps,
         getFloatingProps,
@@ -155,6 +173,7 @@ function DropdownWrapper(props: DropdownProps) {
         dismiss,
         role,
         listNavigation,
+        dialogLabel,
     ])
 
     // Контекст.
