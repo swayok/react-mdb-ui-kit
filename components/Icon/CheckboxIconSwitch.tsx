@@ -19,10 +19,12 @@ interface IconButtonSwitchProps extends Omit<IconButtonProps, 'path'> {
     inactiveClassName?: string
 }
 
-// Иконка-кнопка, работающая по аналогии с <checkbox> (вкл/выкл)
+// Иконка-кнопка, работающая по аналогии с <checkbox> (вкл/выкл).
+// Имя кнопки (aria-label) по умолчанию: 'Select'.
 export function CheckboxIconSwitch(props: IconButtonSwitchProps) {
     const {
         active,
+        'aria-label': ariaLabel = 'Select',
         activeIcon = mdiCheckboxMarkedCircle,
         activeColor = 'green',
         activeClassName,
@@ -41,6 +43,7 @@ export function CheckboxIconSwitch(props: IconButtonSwitchProps) {
                 className,
                 active ? activeClassName : inactiveClassName
             )}
+            aria-label={ariaLabel}
             {...otherProps}
         />
     )

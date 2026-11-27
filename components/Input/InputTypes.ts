@@ -343,6 +343,10 @@ export interface DateInputProps extends Omit<InputProps, 'children' | 'onChange'
     calendarProps?: Omit<CalendarProps, 'onChange' | 'value'>
     // Показать иконку календаря? По умолчанию: true.
     showCalendarIcon?: boolean
+    // Имя (aria-label) кнопки очистки значения. По умолчанию: 'Clear'.
+    clearValueLabel?: string
+    // Имя (aria-label) кнопки календаря. По умолчанию: 'Open calendar'.
+    calendarLabel?: string
     // Нужно ли закрывать выпадающее меню при выборе опции.
     closeDropdownOnSelect?: boolean
 }
@@ -532,6 +536,10 @@ export interface OptionsSliderInputProps<
 // Свойства компонента PasswordInput.
 export interface PasswordInputProps extends Omit<InputProps, 'type'> {
     withUnmaskToggler?: boolean
+    // Имя (aria-label) кнопки показа пароля. По умолчанию: 'Show password'.
+    showPasswordLabel?: string
+    // Имя (aria-label) кнопки скрытия пароля. По умолчанию: 'Hide password'.
+    hidePasswordLabel?: string
 }
 
 // Свойства компонента RadiosGroup.

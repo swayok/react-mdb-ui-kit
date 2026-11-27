@@ -47,6 +47,8 @@ export function DateInput(props: DateInputProps) {
         },
         trackBehaviorAs,
         showCalendarIcon = true,
+        clearValueLabel = 'Clear',
+        calendarLabel = 'Open calendar',
         title,
         active,
         hidden,
@@ -216,6 +218,7 @@ export function DateInput(props: DateInputProps) {
                         {showCleanValueButton && (
                             <IconButton
                                 path={mdiClose}
+                                aria-label={clearValueLabel}
                                 size={24}
                                 className={clsx(
                                     'clean-value-icon',
@@ -234,6 +237,7 @@ export function DateInput(props: DateInputProps) {
                         {showCalendarIcon && (
                             <IconButton
                                 path={mdiCalendarMonthOutline}
+                                aria-label={calendarLabel}
                                 size={24}
                                 color="muted"
                                 className="calendar-icon"

@@ -16,6 +16,8 @@ import type {PasswordInputProps} from './InputTypes'
 export function PasswordInput(props: PasswordInputProps) {
     const {
         withUnmaskToggler = false,
+        showPasswordLabel = 'Show password',
+        hidePasswordLabel = 'Hide password',
         wrapperClassName = 'mb-4',
         children,
         ...otherProps
@@ -44,6 +46,7 @@ export function PasswordInput(props: PasswordInputProps) {
                     <IconButton
                         color="muted"
                         path={masked ? mdiEye : mdiEyeOff}
+                        aria-label={masked ? showPasswordLabel : hidePasswordLabel}
                         onClick={() => {
                             setMasked(!masked)
                         }}
